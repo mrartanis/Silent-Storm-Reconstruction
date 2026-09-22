@@ -2280,6 +2280,16 @@ void CMission::ExecWorldCommands()
 				pActivePlayer->GetCamera()->FreezeCamera( bLock );
 			pScene->SetCutFloorLock( bLock );
 		}
+		// retail CMissionBase::ExecWorldCommand @0x5a15e4: CameraSetClipping(near, far) queues a
+		// CUICmdSetCameraClipDistance; dispatch it to the currently selected camera. This used to fall
+		// through the command chain and disappear, so campaign camera scripts could never change their
+		// near/far planes even though the Lua binding and the command's save-load class were present.
+		else if ( CDynamicCast<NWorld::CUICmdSetCameraClipDistance>( pCmd ) )
+		{
+			NWorld::CUICmdSetCameraClipDistance *pClip =
+				CDynamicCast<NWorld::CUICmdSetCameraClipDistance>( pCmd );
+			GetCamera()->SetClipDistance( pClip->fMinDistance, pClip->fMaxDistance );
+		}
 		// release CMissionBase::ExecWorldCommand @0x1a30c0: a camera-locator command (CUICmdUnitCamera
 		// auto-focus) goes to the dedicated pExecLocator slot, NOT the general pCmdExec -- so it never stalls
 		// the UI-command drain and is preempted by priority (MustReplaceCameraExecutor: higher wins; equal
@@ -2293,6 +2303,22 @@ void CMission::ExecWorldCommands()
 				pExecLocator->Cancel();
 			pExecLocator = NGame::CreateCameraExecutor( pLoc, this );
 			// does NOT stall pCmdExec: continue draining the queue (the focus runs in its own slot)
+		}
+		// retail CMissionBase::ExecWorldCommand @0x5a1642: when the AI commander changes the unit it is
+		// about to drive, tint that unit according to its diplomacy toward the active player. The retail
+		// call intentionally does not retain Select()'s return value: CRenderGame's selection set owns the
+		// live association and replaces it when the same unit is selected again.
+		else if ( CDynamicCast<NWorld::CUICmdAIUnitWillMove>( pCmd ) )
+		{
+			NWorld::CUICmdAIUnitWillMove *pWillMove =
+				CDynamicCast<NWorld::CUICmdAIUnitWillMove>( pCmd );
+			if ( IsValid( pWillMove->pUnit ) && IsValid( pActivePlayer ) && IsValid( pWorld ) && IsValid( pRender ) )
+			{
+				NDb::EDiplomacyState eDiplomacy = pWorld->GetDiplomacyState(
+					pActivePlayer->GetPlayer(), pWillMove->pUnit->GetPlayer() );
+				pRender->Select( pWillMove->pUnit,
+					eDiplomacy == NDb::DS_ENEMY ? GetSelectionColor( 2 ) : GetSelectionColor( 5 ) );
+			}
 		}
 		// LUA convergence PART B: PlaySound opens a sound channel on the mission's sound scene and
 		// parks the live handle in the command (retail CMissionBase::ExecWorldCommand @0x1a30c0:

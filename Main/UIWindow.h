@@ -79,8 +79,8 @@ protected:
 	vector<CMObj<CWindow> > listChildren;
 	// retail window-scripting/tooltip tail (@0xd4220 tags 14-17). sToolTipAnchor/eToolTipAnchorType are
 	// copied from the originating NDb::CUIControl on EVENT_TEMPLATECREATE; eventsMap/pScript belong to
-	// the Lua "onmessage" window-scripting layer (this tree's lua build lacks lua_tocallinfo, so the
-	// maps stay empty at runtime -- serialized for save-format parity).
+	// the Lua "onmessage" window-scripting layer. The storage is serialized for save-format parity;
+	// the callback property itself remains an explicitly documented non-campaign limitation.
 	SPoint sToolTipAnchor;
 	NDb::EUIAnchor eToolTipAnchorType;
 	unordered_map<CPtr<NScript::CScript>,int,SPtrHash> eventsMap;
