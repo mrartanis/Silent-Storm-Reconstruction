@@ -68,6 +68,7 @@ void UnpackVariantFlags( const string &str, vector<SVariantFlags> *pFlags )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CGlobalMap::Import()
 {
+	NDatabase::ImportField( "ScriptID", &pScript );
 	NDatabase::ImportField( "Scenario", &pScenario );
 	NDatabase::ImportField( "Background", &pBackground );
 	NDatabase::ImportField( "BaseZoneID", &pBaseZone );
@@ -78,6 +79,7 @@ void CGlobalMap::Import()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CChapterMap::Import()
 {
+	campZonesSet.clear();
 	for ( int nTemp = 0; nTemp < 4; nTemp++ )
 	{
 		int nID = 0;
@@ -87,8 +89,9 @@ void CChapterMap::Import()
 			campZonesSet.push_back( nID );
 	}
 
-	NDatabase::ImportField( "Background", &pBackground );
+	NDatabase::ImportField( "ScriptID", &pScript );
 	NDatabase::ImportField( "PWLImageID", &pPWLImage );		// retail CChapterMap import (s2_dbimport.h:3274): the chapter loading splash
+	NDatabase::ImportField( "Background", &pBackground );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CTemplate

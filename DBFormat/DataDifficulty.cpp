@@ -60,7 +60,8 @@ void CDBDifficulty::Import()
 	NDatabase::ImportField( "AlwaysCritical", &bAlwaysCritical );
 	NDatabase::ImportField( "HeadshotShouldKill", &bHeadshotShouldKill );
 	NDatabase::ImportField( "AICheckCorpses", &bAICheckCorpses );
-	NDatabase::ImportField( "BackstabMeleeMultiplier", &fBackstabMeleeMultiplier );
+	// The shipped table calls this column BackstabMeleeMult; "Multiplier" is only the C++ member name.
+	NDatabase::ImportField( "BackstabMeleeMult", &fBackstabMeleeMultiplier );
 	NDatabase::ImportField( "BackstabMinDamageMult", &fBackstabMinDamageMult );
 	NDatabase::ImportField( "BackstabMaxDamageMult", &fBackstabMaxDamageMult );
 }

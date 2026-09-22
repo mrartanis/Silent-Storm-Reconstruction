@@ -87,6 +87,121 @@ struct SColumnInfo
 	int operator&( CStructureSaver &f ) { f.Add( 2, &szName ); f.Add( 3, &eType ); return 0; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Diagnostics for the release columnar database.  Keep this state outside CDBTableDataStorage so
+// the reconstructed class retains the 136-byte release layout documented below.  During a table's
+// Import() pass every field lookup marks the corresponding column.  Columns left unconsumed are the
+// actionable schema gaps requested by reconstruction stage 0.4; malformed row widths and unknown
+// table type ids are reported separately by the load loop.
+struct SStorageDiagnostics
+{
+	int nTableID;
+	vector<bool> usedInt;
+	vector<bool> usedFloat;
+	vector<bool> usedString;
+	SStorageDiagnostics(): nTableID( 0 ) {}
+};
+static SStorageDiagnostics *pStorageDiagnostics = 0;
+
+struct SUnresolvedReference
+{
+	string szField;
+	int nSourceTable;
+	int nTargetTable;
+	int nFirstSourceRecord;
+	int nFirstTargetRecord;
+	int nCount;
+	SUnresolvedReference(): nSourceTable( 0 ), nTargetTable( 0 ), nFirstSourceRecord( 0 ),
+		nFirstTargetRecord( 0 ), nCount( 0 ) {}
+};
+static vector<SUnresolvedReference> unresolvedReferences;
+
+struct SMissingStorageField
+{
+	string szField;
+	string szType;
+	int nSourceTable;
+	int nFirstSourceRecord;
+	int nCount;
+	SMissingStorageField(): nSourceTable( 0 ), nFirstSourceRecord( 0 ), nCount( 0 ) {}
+};
+static vector<SMissingStorageField> missingStorageFields;
+
+static void AddMissingStorageField( const char *pszField, const char *pszType,
+	int nSourceTable, int nSourceRecord )
+{
+	for ( int i = 0; i < (int)missingStorageFields.size(); ++i )
+		if ( missingStorageFields[i].nSourceTable == nSourceTable &&
+			missingStorageFields[i].szType == pszType && missingStorageFields[i].szField == pszField )
+		{
+			++missingStorageFields[i].nCount;
+			return;
+		}
+	SMissingStorageField item;
+	item.szField = pszField;
+	item.szType = pszType;
+	item.nSourceTable = nSourceTable;
+	item.nFirstSourceRecord = nSourceRecord;
+	item.nCount = 1;
+	missingStorageFields.push_back( item );
+}
+
+static void ReportMissingStorageFields()
+{
+	for ( int i = 0; i < (int)missingStorageFields.size(); ++i )
+	{
+		const SMissingStorageField &item = missingStorageFields[i];
+		DebugTrace( "DB-SCHEMA MISSING source-table=0x%08X source-record=%d type=%s field=%s count=%d\n",
+			item.nSourceTable, item.nFirstSourceRecord, item.szType.c_str(), item.szField.c_str(),
+			item.nCount );
+	}
+}
+
+static void MarkStorageField( const vector<string> &names, vector<bool> *pUsed, const char *pszName )
+{
+	if ( !pStorageDiagnostics || !pUsed )
+		return;
+	for ( int i = 0; i < (int)names.size(); ++i )
+		if ( names[i] == pszName )
+		{
+			if ( i < (int)pUsed->size() )
+				(*pUsed)[i] = true;
+			return;
+		}
+}
+
+static void AddUnresolvedReference( const char *pszField, int nSourceTable, int nSourceRecord,
+	int nTargetTable, int nTargetRecord )
+{
+	for ( int i = 0; i < (int)unresolvedReferences.size(); ++i )
+		if ( unresolvedReferences[i].nSourceTable == nSourceTable &&
+			unresolvedReferences[i].nTargetTable == nTargetTable &&
+			unresolvedReferences[i].szField == pszField )
+		{
+			++unresolvedReferences[i].nCount;
+			return;
+		}
+	SUnresolvedReference item;
+	item.szField = pszField;
+	item.nSourceTable = nSourceTable;
+	item.nTargetTable = nTargetTable;
+	item.nFirstSourceRecord = nSourceRecord;
+	item.nFirstTargetRecord = nTargetRecord;
+	item.nCount = 1;
+	unresolvedReferences.push_back( item );
+}
+
+static void ReportUnresolvedReferences()
+{
+	for ( int i = 0; i < (int)unresolvedReferences.size(); ++i )
+	{
+		const SUnresolvedReference &item = unresolvedReferences[i];
+		DebugTrace( "DB-SCHEMA UNRESOLVED source-table=0x%08X source-record=%d field=%s "
+			"target-table=0x%08X target-record=%d count=%d\n", item.nSourceTable,
+			item.nFirstSourceRecord, item.szField.c_str(), item.nTargetTable,
+			item.nFirstTargetRecord, item.nCount );
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 class CDBTableDataStorage: public CObjectBase
 {
 	OBJECT_BASIC_METHODS( CDBTableDataStorage );
@@ -129,6 +244,7 @@ public:
 	}
 	int GetInt( const char *psz )
 	{
+		MarkStorageField( intFileds, pStorageDiagnostics ? &pStorageDiagnostics->usedInt : 0, psz );
 		int n = FindIndex( intFileds, psz );
 		if ( n < 0 || nCurrentRecord < 0 || nCurrentRecord >= (int)records_int.size() ||
 				 n >= (int)records_int[nCurrentRecord].size() )
@@ -138,6 +254,7 @@ public:
 	bool GetBool( const char *psz ) { return GetInt( psz ) != 0; }
 	float GetFloat( const char *psz )
 	{
+		MarkStorageField( floatFileds, pStorageDiagnostics ? &pStorageDiagnostics->usedFloat : 0, psz );
 		int n = FindIndex( floatFileds, psz );
 		if ( n < 0 || nCurrentRecord < 0 || nCurrentRecord >= (int)records_float.size() ||
 				 n >= (int)records_float[nCurrentRecord].size() )
@@ -146,6 +263,7 @@ public:
 	}
 	std::wstring GetWString( const char *psz )
 	{
+		MarkStorageField( stringFileds, pStorageDiagnostics ? &pStorageDiagnostics->usedString : 0, psz );
 		int n = FindIndex( stringFileds, psz );
 		if ( n < 0 || nCurrentRecord < 0 || nCurrentRecord >= (int)records_wstring.size() ||
 				 n >= (int)records_wstring[nCurrentRecord].size() )
@@ -157,10 +275,90 @@ public:
 	bool HasIntField( const char *psz )    { return FindIndex( intFileds, psz ) >= 0; }
 	bool HasFloatField( const char *psz )  { return FindIndex( floatFileds, psz ) >= 0; }
 	bool HasStringField( const char *psz ) { return FindIndex( stringFileds, psz ) >= 0; }
+	int GetCurrentRecordID() const
+	{
+		const int n = FindIndex( intFileds, "ID" );
+		if ( n < 0 || nCurrentRecord < 0 || nCurrentRecord >= (int)records_int.size() ||
+			n >= (int)records_int[nCurrentRecord].size() )
+			return 0;
+		return records_int[nCurrentRecord][n];
+	}
 };
 REGISTER_SAVELOAD_CLASS( 0xa1843130, CDBTableDataStorage )
 // when set, the Import path reads from this columnar storage instead of the ADO COLETable
 static CDBTableDataStorage *pStorageSource = 0;
+
+static void ReportStorageShape( int nTableID, CDBTableDataStorage *pStorage )
+{
+	if ( !pStorage )
+		return;
+	const int nRows = (int)pStorage->records_int.size(); // every runtime table has the integer ID column
+	DebugTrace( "DB-SCHEMA TABLE type=0x%08X rows=%d int-fields=%d float-fields=%d string-fields=%d\n",
+		nTableID, nRows, (int)pStorage->intFileds.size(), (int)pStorage->floatFileds.size(),
+		(int)pStorage->stringFileds.size() );
+	if ( !pStorage->floatFileds.empty() && (int)pStorage->records_float.size() != nRows )
+		DebugTrace( "DB-SCHEMA ERROR table=0x%08X rows int=%d float=%d\n", nTableID,
+			nRows, (int)pStorage->records_float.size() );
+	if ( !pStorage->stringFileds.empty() && (int)pStorage->records_wstring.size() != nRows )
+		DebugTrace( "DB-SCHEMA ERROR table=0x%08X rows int=%d string=%d\n", nTableID,
+			nRows, (int)pStorage->records_wstring.size() );
+	for ( int nRow = 0; nRow < nRows; ++nRow )
+	{
+		if ( (int)pStorage->records_int[nRow].size() != (int)pStorage->intFileds.size() )
+		{
+			DebugTrace( "DB-SCHEMA ERROR table=0x%08X row=%d int-width=%d fields=%d\n", nTableID,
+				nRow, (int)pStorage->records_int[nRow].size(), (int)pStorage->intFileds.size() );
+			break;
+		}
+	}
+	for ( int nRow = 0; nRow < (int)pStorage->records_float.size(); ++nRow )
+	{
+		if ( (int)pStorage->records_float[nRow].size() != (int)pStorage->floatFileds.size() )
+		{
+			DebugTrace( "DB-SCHEMA ERROR table=0x%08X row=%d float-width=%d fields=%d\n", nTableID,
+				nRow, (int)pStorage->records_float[nRow].size(), (int)pStorage->floatFileds.size() );
+			break;
+		}
+	}
+	for ( int nRow = 0; nRow < (int)pStorage->records_wstring.size(); ++nRow )
+	{
+		if ( (int)pStorage->records_wstring[nRow].size() != (int)pStorage->stringFileds.size() )
+		{
+			DebugTrace( "DB-SCHEMA ERROR table=0x%08X row=%d string-width=%d fields=%d\n", nTableID,
+				nRow, (int)pStorage->records_wstring[nRow].size(), (int)pStorage->stringFileds.size() );
+			break;
+		}
+	}
+}
+
+static void BeginStorageDiagnostics( int nTableID, CDBTableDataStorage *pStorage,
+	SStorageDiagnostics *pDiagnostics )
+{
+	pDiagnostics->nTableID = nTableID;
+	pDiagnostics->usedInt.assign( pStorage->intFileds.size(), false );
+	pDiagnostics->usedFloat.assign( pStorage->floatFileds.size(), false );
+	pDiagnostics->usedString.assign( pStorage->stringFileds.size(), false );
+	pStorageDiagnostics = pDiagnostics;
+	// ID is consumed in the preceding PreCreate pass, outside the instrumented Import pass.
+	MarkStorageField( pStorage->intFileds, &pDiagnostics->usedInt, "ID" );
+}
+
+static void ReportUnusedStorageFields( CDBTableDataStorage *pStorage,
+	const SStorageDiagnostics &diagnostics )
+{
+	for ( int i = 0; i < (int)diagnostics.usedInt.size(); ++i )
+		if ( !diagnostics.usedInt[i] )
+			DebugTrace( "DB-SCHEMA UNCONSUMED table=0x%08X type=int field=%s\n",
+				diagnostics.nTableID, pStorage->intFileds[i].c_str() );
+	for ( int i = 0; i < (int)diagnostics.usedFloat.size(); ++i )
+		if ( !diagnostics.usedFloat[i] )
+			DebugTrace( "DB-SCHEMA UNCONSUMED table=0x%08X type=float field=%s\n",
+				diagnostics.nTableID, pStorage->floatFileds[i].c_str() );
+	for ( int i = 0; i < (int)diagnostics.usedString.size(); ++i )
+		if ( !diagnostics.usedString[i] )
+			DebugTrace( "DB-SCHEMA UNCONSUMED table=0x%08X type=string field=%s\n",
+				diagnostics.nTableID, pStorage->stringFileds[i].c_str() );
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void PrintProviderError(_ConnectionPtr pConnection)
 {
@@ -452,6 +650,15 @@ CDBTableBase* NDatabase::GetTable( int nTableID )
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static int GetTableID( CDBTableBase *pTable )
+{
+	NDatabase::CTablesHash &tables = NDatabase::GetTables();
+	for ( NDatabase::CTablesHash::iterator i = tables.begin(); i != tables.end(); ++i )
+		if ( &i->second == pTable )
+			return i->first;
+	return 0;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 static CDBTableBase* NDatabase::GetTableByName( const char *pszTable )
 {
 	list<STableDescr> &tableDescrs = GetTableDescrs();
@@ -593,7 +800,11 @@ bool NDatabase::ImportField( const char *pszFieldName, int *pData )
 	if ( pStorageSource )
 	{
 		if ( !pStorageSource->HasIntField( pszFieldName ) )
+		{
+			AddMissingStorageField( pszFieldName, "int", pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+				pStorageSource->GetCurrentRecordID() );
 			return false;
+		}
 		*pData = pStorageSource->GetInt( pszFieldName );
 		return true;
 	}
@@ -608,7 +819,11 @@ bool NDatabase::ImportField( const char *pszFieldName, bool *pData )
 	if ( pStorageSource )
 	{
 		if ( !pStorageSource->HasIntField( pszFieldName ) )   // bools live in the int columns
+		{
+			AddMissingStorageField( pszFieldName, "bool", pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+				pStorageSource->GetCurrentRecordID() );
 			return false;
+		}
 		*pData = pStorageSource->GetBool( pszFieldName );
 		return true;
 	}
@@ -623,7 +838,11 @@ bool NDatabase::ImportField( const char *pszFieldName, float *pData )
 	if ( pStorageSource )
 	{
 		if ( !pStorageSource->HasFloatField( pszFieldName ) )
+		{
+			AddMissingStorageField( pszFieldName, "float", pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+				pStorageSource->GetCurrentRecordID() );
 			return false;
+		}
 		*pData = pStorageSource->GetFloat( pszFieldName );
 		return true;
 	}
@@ -638,7 +857,11 @@ bool NDatabase::ImportField( const char *pszFieldName, std::string *pData )
 	if ( pStorageSource )
 	{
 		if ( !pStorageSource->HasStringField( pszFieldName ) )
+		{
+			AddMissingStorageField( pszFieldName, "string", pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+				pStorageSource->GetCurrentRecordID() );
 			return false;
+		}
 		// narrow strings are stored as wstrings in the columnar storage (ASCII content)
 		std::wstring ws = pStorageSource->GetWString( pszFieldName );
 		pData->resize( ws.size() );
@@ -657,7 +880,11 @@ bool NDatabase::ImportField( const char *pszFieldName, std::wstring *pData )
 	if ( pStorageSource )
 	{
 		if ( !pStorageSource->HasStringField( pszFieldName ) )
+		{
+			AddMissingStorageField( pszFieldName, "wstring", pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+				pStorageSource->GetCurrentRecordID() );
 			return false;
+		}
 		*pData = pStorageSource->GetWString( pszFieldName );
 		return true;
 	}
@@ -726,9 +953,23 @@ void NDatabase::ImportField( const char *pszFieldName, CDBRecord **pRef, CDBTabl
 {
 	ASSERT( pDestTable );
 	*pRef = 0;
+	if ( pStorageSource && !pStorageSource->HasIntField( pszFieldName ) )
+	{
+		AddMissingStorageField( pszFieldName, "reference",
+			pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0,
+			pStorageSource->GetCurrentRecordID() );
+		return;
+	}
 	int nID = pStorageSource ? pStorageSource->GetInt( pszFieldName ) : table.GetInt( pszFieldName );
 	if ( pDestTable )
 		*pRef = pDestTable->GetDBRecord( nID );
+	if ( nID > 0 && !*pRef )
+	{
+		const int nSourceTable = pStorageDiagnostics ? pStorageDiagnostics->nTableID : 0;
+		const int nSourceRecord = pStorageSource ? pStorageSource->GetInt( "ID" ) : 0;
+		AddUnresolvedReference( pszFieldName, nSourceTable, nSourceRecord,
+			GetTableID( pDestTable ), nID );
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Post-load link builder (DBFormat/DataMap.cpp). For the dev-format (v0) game.db these links are
@@ -743,6 +984,8 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 {
 	CTablesHash &tables = GetTables();
 	NDatabase::bIsDatabaseLoading = true;
+	unresolvedReferences.clear();
+	missingStorageFields.clear();
 	bool bDidColumnarLoad = false;
 	{
 		CStructureSaver f( file, mode );
@@ -763,8 +1006,19 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 			{
 				r->pLeft = GetTable( r->nTableLeft );
 				r->pRight = GetTable( r->nTableRight );
+				if ( !r->pLeft || !r->pRight )
+					DebugTrace( "DB-SCHEMA ERROR relation=%s unresolved tables left=0x%08X right=0x%08X\n",
+						r->szTable.c_str(), r->nTableLeft, r->nTableRight );
 			}
 			int nTables = 0;
+			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
+			{
+				CDBTableDataStorage *pStorage = it->second;
+				ReportStorageShape( it->first, pStorage );
+				if ( !GetTable( it->first ) )
+					DebugTrace( "DB-SCHEMA ERROR unknown table type=0x%08X rows=%d\n", it->first,
+						pStorage ? (int)pStorage->records_int.size() : 0 );
+			}
 			// phase 1: create every record shell first, so cross-table refs resolve in phase 2
 			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
 			{
@@ -784,7 +1038,11 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 				if ( !pTable || !pStorage )
 					continue;
 				pStorageSource = pStorage;
+				SStorageDiagnostics diagnostics;
+				BeginStorageDiagnostics( it->first, pStorage, &diagnostics );
 				pTable->Import();
+				pStorageDiagnostics = 0;
+				ReportUnusedStorageFields( pStorage, diagnostics );
 				pStorageSource = 0;
 				++nTables;
 			}
@@ -797,6 +1055,8 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 		}
 	}
 	NDatabase::bIsDatabaseLoading = false;
+			ReportUnresolvedReferences();
+			ReportMissingStorageFields();
 	// v1 columnar load rebuilt the records but not the cross-record links - build them now (the v0
 	// path loads them already-built, so skip it there to avoid double-pushing into pAnimations etc.)
 	if ( bDidColumnarLoad )

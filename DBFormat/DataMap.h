@@ -63,11 +63,12 @@ class CGlobalMap: public CDBRecord
 	OBJECT_BASIC_METHODS(CGlobalMap);
 public:
 	ZDATA_(CDBRecord)
+	CPtr<CScript> pScript;                  // retail +0x10, column ScriptID, save tag 2
 	CPtr<CUITexture> pBackground;
 	CPtr<CDBScenario> pScenario;
 	CPtr<CDBScenarioZone> pBaseZone;
 	CPtr<CDBScenarioZone> pStartZone;            // release pStartZone (GlobalMaps.StartZoneID): the faction intro-mission zone
-	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&pBackground); f.Add(3,&pScenario); f.Add(4,&pBaseZone); f.Add(5,&pStartZone); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&pScript); f.Add(3,&pBackground); f.Add(4,&pScenario); f.Add(5,&pBaseZone); f.Add(6,&pStartZone); return 0; }
 	virtual void Import();
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,9 +78,10 @@ class CChapterMap: public CDBRecord
 public:
 	ZDATA_(CDBRecord)
 	vector<int> campZonesSet;
-	CPtr<CUITexture> pPWLImage;		// retail NDb::CChapterMap +0x20, col "PWLImageID" (place-where-lost / loading splash)
-	CPtr<CUITexture> pBackground;	// +0x24, col "Background" (the chapter-MAP screen background -- a different resource)
-	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&campZonesSet); f.Add(3,&pBackground); f.Add(4,&pPWLImage); return 0; }
+	CPtr<CScript> pScript;          // retail +0x1c, column ScriptID, save tag 3
+	CPtr<CUITexture> pPWLImage;		// retail +0x20, save tag 4 (place-where-lost / loading splash)
+	CPtr<CUITexture> pBackground;	// retail +0x24, save tag 5 (chapter-map screen background)
+	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&campZonesSet); f.Add(3,&pScript); f.Add(4,&pPWLImage); f.Add(5,&pBackground); return 0; }
 	virtual void Import();
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
