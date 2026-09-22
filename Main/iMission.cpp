@@ -3305,6 +3305,7 @@ void CICBeginMission::Exec()
 	{
 		pGlobalGame->HealOnLeaveZone();
 		pGlobalGame->UpdateScenarioOnLeaveZone();
+		pGlobalGame->UpdateMedalsOnLeaveZone();
 	}
 
 	// Retail 1.1 0x60bb3d / 1.2 0x60c28d: scenario-zone parameters

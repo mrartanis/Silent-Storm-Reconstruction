@@ -286,6 +286,7 @@ void CICContinueChapter::Exec()
 	//
 	pGlobalGame->HealOnLeaveZone();
 	pGlobalGame->UpdateScenarioOnLeaveZone();
+	pGlobalGame->UpdateMedalsOnLeaveZone();
 	//
 	CChapterMap *pRes = new CChapterMap();
 	if ( !pRes->Initialize( pGlobalGame ) )
