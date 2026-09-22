@@ -84,9 +84,11 @@ void CBinkVideoPlayer::Play( bool bLoop )
 
 	if ( ( dwPlayFlags & BPF_DIRECTSOUND ) != 0 )
 	{
+		#if defined(_M_IX86)
 		void *pSoundApi = NFMSound::GetSoundAPI();
 		if ( pSoundApi != 0 )
 			BinkSetSoundSystem( BinkOpenDirectSound, (U32)pSoundApi );
+		#endif // The historical Bink API transports a 32-bit sound-device pointer.
 	}
 
 	if ( !OpenBink( szFileName.c_str() ) )

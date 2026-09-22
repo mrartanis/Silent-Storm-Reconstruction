@@ -1,8 +1,8 @@
 # ============================================================================
 #  Silent Storm engine -- CMake build
 #
-#  Win32 / x86 only
-#  Configure with:            cmake -S . -B build -A Win32
+#  Windows x86 and x64
+#  Configure with:            cmake -S . -B build -A x64
 #  Build with:                cmake --build build --config Release
 #
 #  Replaces the old A5new.sln. Third-party code lives under third_party/.
@@ -13,8 +13,14 @@ project(A5 CXX C RC)
 if(NOT MSVC)
   message(FATAL_ERROR "MSVC toolset required.")
 endif()
-if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
-  message(FATAL_ERROR "Win32/x86 only -- configure with:  cmake -S . -B build -A Win32")
+if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4 AND NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+  message(FATAL_ERROR "Unsupported pointer size: ${CMAKE_SIZEOF_VOID_P}")
+endif()
+
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  set(S2_MSVC_MACHINE x64)
+else()
+  set(S2_MSVC_MACHINE x86)
 endif()
 
 set(CMAKE_CXX_STANDARD 14)
@@ -27,7 +33,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 # Engine-wide compile settings: __fastcall default (/Gr), big translation units,
 # C++ exceptions, parallel compile, and the common WIN32 defines. externA5 is
 # libpng's API-decoration macro -- 'extern' here (we build libpng statically).
-add_compile_options(/Gr /Zm300 $<$<COMPILE_LANGUAGE:CXX>:/EHsc> /wd4996)  # no /MP: ADOImport uses #import
+add_compile_options(/Gr /Zm300 /FS $<$<COMPILE_LANGUAGE:CXX>:/EHsc> /wd4996)  # no /MP: ADOImport uses #import
 add_compile_definitions(
   WIN32 _WINDOWS externA5=extern
   $<$<CONFIG:Debug>:_DEBUG FAST_DEBUG>
@@ -108,7 +114,7 @@ foreach(_d LifeStudioHeadAPI GDPFile)
   add_custom_command(OUTPUT "${_implib_dir}/${_d}.lib"
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${_implib_dir}"
     COMMAND "${_vcbin}/lib.exe" /nologo "/def:${root}/third_party/lifestudio/def/${_d}.def"
-            "/out:${_implib_dir}/${_d}.lib" /machine:x86
+            "/out:${_implib_dir}/${_d}.lib" "/machine:${S2_MSVC_MACHINE}"
     DEPENDS "${root}/third_party/lifestudio/def/${_d}.def" VERBATIM
     COMMENT "Generating import lib ${_d}.lib")
   list(APPEND _ls_implibs "${_implib_dir}/${_d}.lib")
@@ -118,6 +124,13 @@ add_custom_target(ls_implibs DEPENDS ${_ls_implibs})
 # LifeStudio Init/Compute glue is real source -> a normal static lib.
 add_library(lifestudio_init STATIC "${root}/third_party/lifestudio/src/lsglue.cpp")
 target_include_directories(lifestudio_init PRIVATE "${root}/third_party/lifestudio/include")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  # The retained LifeStudio import libraries encode x86 C++ symbol names.  Keep
+  # face-animation calls linkable on x64 through explicit no-op factories until
+  # the media replacement stage supplies a real backend.
+  target_sources(lifestudio_init PRIVATE "${root}/third_party/lifestudio/src/lifestudio_x64_stub.cpp")
+  target_compile_definitions(lifestudio_init PUBLIC LIFESTUDIOHEADAPI_EXPORTS_LIB)
+endif()
 
 # The three interop shims: clean-room include dir + the generated import libs.
 add_library(fmod_shim INTERFACE)
@@ -131,8 +144,11 @@ target_link_directories(bink_shim INTERFACE "${_implib_dir}") # ...and its #prag
 
 add_library(lifestudio_shim INTERFACE)
 target_include_directories(lifestudio_shim INTERFACE "${root}/third_party/lifestudio/include")
-target_link_libraries(lifestudio_shim INTERFACE
-  lifestudio_init "${_implib_dir}/LifeStudioHeadAPI.lib" "${_implib_dir}/GDPFile.lib")
+target_link_libraries(lifestudio_shim INTERFACE lifestudio_init)
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+  target_link_libraries(lifestudio_shim INTERFACE
+    "${_implib_dir}/LifeStudioHeadAPI.lib" "${_implib_dir}/GDPFile.lib")
+endif()
 
 # ----------------------------------------------------------------------------
 #  engine modules  (each is a directory of *.cpp + a StdAfx.h PCH)
@@ -196,6 +212,12 @@ s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
                           fmod_shim lifestudio_shim bink_shim
                           dxguid dinput8 odbc32 odbccp32 d3d9 user32 Gdi32)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  # The x64 import DLLs are link-only stubs. Until miniaudio/FFmpeg replace
+  # the old media APIs, run the core with sound explicitly disabled.
+  target_compile_definitions(Game PRIVATE S2_X64_MEDIA_STUBS)
+  target_compile_definitions(Main PRIVATE S2_X64_MEDIA_STUBS)
+endif()
 add_dependencies(Game ls_implibs)   # the lib/def import libs must exist before Game links
 # tools
 s2_module(DataImport     console LINK DBFormat FileIO Misc odbc32 odbccp32 DEFINES _CONSOLE)
@@ -210,7 +232,7 @@ set(_dx_roots
 set(_dx_libdirs "")
 foreach(_r IN LISTS _dx_roots)
   if(IS_DIRECTORY "${_r}")
-    list(APPEND _dx_libdirs "${_r}/Lib/x86")
+    list(APPEND _dx_libdirs "${_r}/Lib/${S2_MSVC_MACHINE}")
   endif()
 endforeach()
 find_library(D3DX9_LIB d3dx9 PATHS ${_dx_libdirs})

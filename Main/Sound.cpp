@@ -529,6 +529,9 @@ bool InitSound( HWND _hWnd )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static bool SetMode( bool bInitSound )
 {
+	#if defined(S2_X64_MEDIA_STUBS)
+	return true;
+	#endif
 	if ( !bInitSound )
 		return true;
 

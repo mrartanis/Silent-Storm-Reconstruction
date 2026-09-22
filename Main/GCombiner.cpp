@@ -220,6 +220,7 @@ static struct SNormalizeInit
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // disable no emms warning, emms is placed after all mmx calcs
 #pragma warning( disable : 4799 )
+#if defined(_M_IX86)
 static void MMXTransformVector( NGfx::SCompactVector *pRes, const NGfx::SCompactVector *pSrc, const SMMXFixups *pFixups,
 	const NGfx::SCompactTransformer *pTrans )
 {
@@ -432,6 +433,45 @@ static void MMXTransformVector3( NGfx::SCompactVector *pRes, const NGfx::SCompac
 		movd [esi], mm1
 	}
 }
+#else
+static CVec3 TransformCompactVector( const NGfx::SCompactVector *pSrc, const NGfx::SCompactTransformer *pTrans )
+{
+	const CVec3 src = NGfx::GetVector( *pSrc );
+	const float scale = 1.0f / 2048.0f;
+	return CVec3(
+		( src.x * pTrans->a.nX + src.y * pTrans->b.nX + src.z * pTrans->c.nX ) * scale,
+		( src.x * pTrans->a.nY + src.y * pTrans->b.nY + src.z * pTrans->c.nY ) * scale,
+		( src.x * pTrans->a.nZ + src.y * pTrans->b.nZ + src.z * pTrans->c.nZ ) * scale );
+}
+static void StoreCompactVector( NGfx::SCompactVector *pRes, CVec3 value )
+{
+	Normalize( &value );
+	NGfx::CalcCompactVector( pRes, value );
+}
+static void MMXTransformVector( NGfx::SCompactVector *pRes, const NGfx::SCompactVector *pSrc, const SMMXFixups *,
+	const NGfx::SCompactTransformer *pTrans )
+{
+	StoreCompactVector( pRes, TransformCompactVector( pSrc, pTrans ) );
+}
+static void MMXTransformVector2( NGfx::SCompactVector *pRes, const NGfx::SCompactVector *pSrc, const SMMXFixups *,
+	const NGfx::SCompactTransformer *pTrans, char w1,
+	const NGfx::SCompactTransformer *pTrans2, char w2 )
+{
+	const float weight1 = static_cast<unsigned char>(w1) * ( 1.0f / 255.0f );
+	const float weight2 = static_cast<unsigned char>(w2) * ( 1.0f / 255.0f );
+	StoreCompactVector( pRes, TransformCompactVector( pSrc, pTrans ) * weight1 + TransformCompactVector( pSrc, pTrans2 ) * weight2 );
+}
+static void MMXTransformVector3( NGfx::SCompactVector *pRes, const NGfx::SCompactVector *pSrc, const SMMXFixups *,
+	const NGfx::SCompactTransformer *pTrans, char w1,
+	const NGfx::SCompactTransformer *pTrans2, char w2,
+	const NGfx::SCompactTransformer *pTrans3, char w3 )
+{
+	const float weight1 = static_cast<unsigned char>(w1) * ( 1.0f / 255.0f );
+	const float weight2 = static_cast<unsigned char>(w2) * ( 1.0f / 255.0f );
+	const float weight3 = static_cast<unsigned char>(w3) * ( 1.0f / 255.0f );
+	StoreCompactVector( pRes, TransformCompactVector( pSrc, pTrans ) * weight1 + TransformCompactVector( pSrc, pTrans2 ) * weight2 + TransformCompactVector( pSrc, pTrans3 ) * weight3 );
+}
+#endif
 #pragma warning( default : 4799 )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void TransformVertexT( CVec3 *pRes, const SHMatrix &m, const NGfx::SCompactVector &src )
@@ -530,7 +570,9 @@ struct SGenericTransformer
 			res.texLM.dw = 0;
 			MMXTransformVector( &res.texU, &pSrc->texU, &fixups, &transformer );
 			MMXTransformVector( &res.texV, &pSrc->texV, &fixups, &transformer );
+			#if defined(_M_IX86)
 			_asm emms;
+			#endif
 			//TransformVertexT( &res.texU, vertexTransform, pSrc->texU );
 			//TransformVertexT( &res.texV, vertexTransform, pSrc->texV );
 		}
@@ -587,7 +629,9 @@ struct SGenericTransformer
 				MMXTransformVector3( &texU, &pSrc->texU, &fixups, &blend1, nW1, &blend2, nW2, &blend3, nW3 );
 				MMXTransformVector3( &texV, &pSrc->texV, &fixups, &blend1, nW1, &blend2, nW2, &blend3, nW3 );
 			}	
+			#if defined(_M_IX86)
 			_asm emms;
+			#endif
 
 /*			CVec3 tnormal, ttexU, ttexV;
 			if ( pWeight->fWeights[1] == 0 )

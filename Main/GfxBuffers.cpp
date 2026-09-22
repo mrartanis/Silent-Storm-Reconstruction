@@ -861,6 +861,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static __forceinline void ReallyFastShiftingTransfer( const unsigned short *pSrc, int *pDst, int nSize, int nShift )
 {
+	#if defined(_M_IX86)
 	_asm
 	{
 		mov esi, pSrc
@@ -908,8 +909,12 @@ last_lp:
 		add edi, 4
 		dec ecx
 		jnz last_lp
-fff:
+	fff:
 	}
+	#else
+	for ( int i = 0; i < nSize; ++i )
+		pDst[i] = static_cast<int>(pSrc[i]) + nShift;
+	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct S32Triangle

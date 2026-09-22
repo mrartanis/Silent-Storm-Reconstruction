@@ -141,6 +141,7 @@ private:
 		{
 			if ( bDoMask )
 			{
+				#if defined(_M_IX86)
 				_asm
 				{
 					pxor mm2, mm2
@@ -167,15 +168,20 @@ private:
 						packuswb mm0, mm0
 						movd [esi], mm0
 					}
-					//const NGfx::SPixel8888 &color = tex.Fetch();
-					//NGfx::SPixel8888 &dst = *pDst;
-					//int a = color.a;
-					//dst.r = color.r + ( ( dst.r * ( 256 - a ) ) >> 8 );
-					//dst.g = color.g + ( ( dst.g * ( 256 - a ) ) >> 8 );
-					//dst.b = color.b + ( ( dst.b * ( 256 - a ) ) >> 8 );
-					//dst.a = color.a + ( ( dst.a * ( 256 - a ) ) >> 8 );
 				}
 				__asm emms
+				#else
+				for ( ; pDst < pFinish; ++pDst )
+				{
+					const NGfx::SPixel8888 color = tex.Fetch();
+					NGfx::SPixel8888 &dst = *pDst;
+					const int a = color.a;
+					dst.r = color.r + ( ( dst.r * ( 256 - a ) ) >> 8 );
+					dst.g = color.g + ( ( dst.g * ( 256 - a ) ) >> 8 );
+					dst.b = color.b + ( ( dst.b * ( 256 - a ) ) >> 8 );
+					dst.a = color.a + ( ( dst.a * ( 256 - a ) ) >> 8 );
+				}
+				#endif
 			}
 			else
 			{

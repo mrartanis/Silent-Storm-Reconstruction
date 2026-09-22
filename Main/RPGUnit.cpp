@@ -10,6 +10,7 @@
 #include "..\DBFormat\DataChest.h"	// NDb::CRPGChestReal / SLootItem (ctor pBackpack consumption)
 #include "rpgPerk.h"
 #include "rpgPerkConstants.h"
+#include <cstdint>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {
@@ -454,7 +455,12 @@ void CUnit::SetHead( NDb::CComplexHead *pNewHead )
 	if ( !pNewHead )
 		return;
 	pHeadInfo = new NLSHead::CHeadInfo( pNewHead );
-	pHeadInfo->SetSeed( SRandomSeed( (int)this ) );
+	const std::uintptr_t address = reinterpret_cast<std::uintptr_t>( this );
+	std::uint32_t seed = static_cast<std::uint32_t>( address );
+	#if defined(_M_X64)
+	seed ^= static_cast<std::uint32_t>( address >> 32 );
+	#endif
+	pHeadInfo->SetSeed( SRandomSeed( static_cast<int>( seed ) ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // SetHeadInfo @0x192070 -- install an already-built live head directly (the CObj assignment open-codes the

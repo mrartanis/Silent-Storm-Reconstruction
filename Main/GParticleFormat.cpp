@@ -1,8 +1,39 @@
 #include "StdAfx.h"
 #include "GParticleFormat.h"
 #include "Bound.h"
+#include <cstdint>
+#include <cstring>
+#include <stdexcept>
 namespace NGScene
 {
+// Effect files store 32-bit offsets, not in-memory pointers. The old loader
+// overlaid SParticle on the file and happened to work only with x86 pointers.
+#pragma pack( push, 2 )
+struct SKeyTrackDisk
+{
+	short nKeys;
+	std::uint32_t keysOffset;
+};
+struct SParticleDisk
+{
+	short nTStart;
+	short nTEnd;
+	SKeyTrackDisk pos, rot, scale, color, sprite;
+};
+#pragma pack( pop )
+static_assert( sizeof(SKeyTrackDisk) == 6, "effect track wire size" );
+static_assert( sizeof(SParticleDisk) == 34, "effect particle wire size" );
+
+template<class TValue>
+static void ResolveTrack( TKeyTrack<TValue> *dst, const SKeyTrackDisk &src,
+	char *data, size_t dataBytes )
+{
+	if ( src.nKeys < 0 || src.keysOffset > dataBytes ||
+		static_cast<size_t>(src.nKeys) > (dataBytes - src.keysOffset) / sizeof(TKey<TValue>) )
+		throw std::runtime_error( "invalid effect key track" );
+	dst->nKeys = src.nKeys;
+	dst->keys = src.nKeys ? reinterpret_cast<TKey<TValue>*>(data + src.keysOffset) : 0;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CParticlesInfo
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,78 +112,39 @@ void CParticlesLoader::RecalcValue( CFileRequest *pRequest )
 {
 	pValue = new CParticlesInfo;
 	pValue->pData = pRequest;
-	//CFileRequest &file = *pRequest;
-
-	//file->Read( &pValue->nBytes, sizeof(int) );
-	//pValue->pData.resize( pValue->nBytes );
-	char *pData = (char*)pValue->pData->GetStream()->GetBufferForWrite();
-	pValue->nBytes = *(int*)pData;
+	CMemoryStream *stream = pRequest->GetStream();
+	if ( stream->GetSize() < 4 )
+		throw std::runtime_error( "effect file too short" );
+	char *pData = reinterpret_cast<char*>(stream->GetBufferForWrite());
+	std::memcpy( &pValue->nBytes, pData, sizeof(int) );
+	if ( pValue->nBytes < 12 || pValue->nBytes > stream->GetSize() - 4 )
+		throw std::runtime_error( "invalid effect payload size" );
 	pData += 4;
-	//file->Read( pData, pValue->nBytes );
-
-	char *p = pData;
-	pValue->fTEnd = *( (float*)p );
-	p += sizeof(float);
-	pValue->fFrameRate = *( (float*)p );
-	p += sizeof(float);
-	pValue->nParticles = *( (int*)p );
-	p += sizeof(int);
-	pValue->particles = (SParticle*)p;
+	std::memcpy( &pValue->fTEnd, pData, sizeof(float) );
+	std::memcpy( &pValue->fFrameRate, pData + 4, sizeof(float) );
+	std::memcpy( &pValue->nParticles, pData + 8, sizeof(int) );
+	if ( pValue->nParticles < 0 ||
+		static_cast<size_t>(pValue->nParticles) >
+		(static_cast<size_t>(pValue->nBytes) - 12) / sizeof(SParticleDisk) )
+		throw std::runtime_error( "invalid effect particle count" );
+	const char *diskData = pData + 12;
+	pValue->particleStorage.resize( pValue->nParticles );
+	pValue->particles = pValue->particleStorage.empty() ? 0 : &pValue->particleStorage[0];
 
 	for ( int nP = 0; nP < pValue->nParticles; ++nP )
 	{
+		SParticleDisk disk;
+		std::memcpy( &disk, diskData + nP * sizeof(disk), sizeof(disk) );
 		SParticle &particle = pValue->particles[nP];
-		particle.pos.keys = (TKey<CVec3>*)(pData + (int)particle.pos.keys);
-		particle.rot.keys = (TKey<float>*)(pData + (int)particle.rot.keys);
-		particle.scale.keys = (TKey<CVec2>*)(pData + (int)particle.scale.keys);
-		particle.color.keys = (TKey<DWORD>*)(pData + (int)particle.color.keys);
-		particle.sprite.keys = (TKey<short>*)(pData + (int)particle.sprite.keys);
+		particle.nTStart = disk.nTStart;
+		particle.nTEnd = disk.nTEnd;
+		ResolveTrack( &particle.pos, disk.pos, pData, pValue->nBytes );
+		ResolveTrack( &particle.rot, disk.rot, pData, pValue->nBytes );
+		ResolveTrack( &particle.scale, disk.scale, pData, pValue->nBytes );
+		ResolveTrack( &particle.color, disk.color, pData, pValue->nBytes );
+		ResolveTrack( &particle.sprite, disk.sprite, pData, pValue->nBytes );
 	}
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/*bool CParticlesLoader::NeedUpdate()
-{
-	bool bRes = TParent::NeedUpdate();
-	return bIsFakeTexture || bRes;
-}*/
-/*
-void CParticlesLoader::Recalc()
-{
-	pValue = new CParticlesInfo;
-	try
-	{
-		CResourceFileOpener file( "Effects", GetKey() );
-		
-		file->Read( &pValue->nBytes, sizeof(int) );
-		pValue->pData.resize( pValue->nBytes );
-		char *pData = &pValue->pData[0];
-		file->Read( pData, pValue->nBytes );
-
-		char *p = pData;
-		pValue->fTEnd = *( (float*)p );
-		p += sizeof(float);
-		pValue->fFrameRate = *( (float*)p );
-		p += sizeof(float);
-		pValue->nParticles = *( (int*)p );
-		p += sizeof(int);
-		pValue->particles = (SParticle*)p;
-
-		for ( int nP = 0; nP < pValue->nParticles; ++nP )
-		{
-			SParticle &particle = pValue->particles[nP];
-			particle.pos.keys = (TKey<CVec3>*)(pData + (int)particle.pos.keys);
-			particle.rot.keys = (TKey<float>*)(pData + (int)particle.rot.keys);
-			particle.scale.keys = (TKey<CVec2>*)(pData + (int)particle.scale.keys);
-			particle.color.keys = (TKey<DWORD>*)(pData + (int)particle.color.keys);
-			particle.sprite.keys = (TKey<short>*)(pData + (int)particle.sprite.keys);
-		}
-	}
-	catch(...)
-	{
-		return;
-	}
-}
-*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 using namespace NGScene;

@@ -33,21 +33,29 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 			(unsigned)pEP->ExceptionRecord->ExceptionCode, pEP->ExceptionRecord->ExceptionAddress );
 		if ( pEP->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION &&
 			pEP->ExceptionRecord->NumberParameters >= 2 )
-			fprintf( pF, "  access=%s data-addr=0x%08X\n",
+			fprintf( pF, "  access=%s data-addr=%p\n",
 				pEP->ExceptionRecord->ExceptionInformation[0] ? "WRITE" : "READ",
-				(unsigned)pEP->ExceptionRecord->ExceptionInformation[1] );
+				reinterpret_cast<void *>(pEP->ExceptionRecord->ExceptionInformation[1]) );
 		HANDLE hProc = GetCurrentProcess();
 		SymSetOptions( SYMOPT_DEFERRED_LOADS | SYMOPT_UNDNAME | SYMOPT_LOAD_LINES );
 		if ( SymInitialize( hProc, NULL, TRUE ) )
 		{
 			CONTEXT ctx = *pEP->ContextRecord;
 			STACKFRAME64 sf; memset( &sf, 0, sizeof(sf) );
+			#if defined(_M_X64)
+			const DWORD machine = IMAGE_FILE_MACHINE_AMD64;
+			sf.AddrPC.Offset = ctx.Rip;    sf.AddrPC.Mode    = AddrModeFlat;
+			sf.AddrFrame.Offset = ctx.Rbp; sf.AddrFrame.Mode = AddrModeFlat;
+			sf.AddrStack.Offset = ctx.Rsp; sf.AddrStack.Mode = AddrModeFlat;
+			#else
+			const DWORD machine = IMAGE_FILE_MACHINE_I386;
 			sf.AddrPC.Offset = ctx.Eip;    sf.AddrPC.Mode    = AddrModeFlat;
 			sf.AddrFrame.Offset = ctx.Ebp; sf.AddrFrame.Mode = AddrModeFlat;
 			sf.AddrStack.Offset = ctx.Esp; sf.AddrStack.Mode = AddrModeFlat;
+			#endif
 			for ( int n = 0; n < 40; ++n )
 			{
-				if ( !StackWalk64( IMAGE_FILE_MACHINE_I386, hProc, GetCurrentThread(), &sf, &ctx,
+				if ( !StackWalk64( machine, hProc, GetCurrentThread(), &sf, &ctx,
 						NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL ) )
 					break;
 				DWORD64 addr = sf.AddrPC.Offset;
@@ -162,12 +170,16 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		MessageBox( 0, "Failed to initialize Direct3D8", "Error", MB_OK );
 		return 0;
 	}
+	#if !defined(S2_X64_MEDIA_STUBS)
 	if ( !NSound::InitSound( NWinFrame::GetWnd() ) )
 	{
 		ASSERT(0); // FMod not found
 		MessageBox( 0, "Failed to initialize FMod", "Error", MB_OK );
 		return 0;
 	}
+	#else
+	OutputDebugStringA( "x64 core: FMOD unavailable; sound disabled until miniaudio backend\n" );
+	#endif
 	if ( !NInput::InitInput( NWinFrame::GetWnd() ) )
 	{
 		ASSERT(0); // DX8input not found
@@ -180,6 +192,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 	vector<string> szParams;
 	bool bDoLoad = false;
+	bool bHarnessActive = false;
 	string szLoadSlot;
 	NStr::SplitStringWithMultipleBrackets( lpCmdLine, szParams, ' ' );
 	string szCfg( "start.cfg" );
@@ -197,6 +210,8 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			remove( "_console.log" );
 			SaveLoadDiag( "BOOT harness (no auto-load)\n" );
 		}
+		else if ( szParams[i] == "-harness-active" ) // simulate foreground frames in unattended tests
+			bHarnessActive = true;
 		else if ( szParams[i] == "-320" )
 			NGlobal::SetVar( "gfx_resolution", 320 );
 		else if ( szParams[i] == "-400" )
@@ -275,6 +290,10 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		}
 	}
 	//
+	#if defined(S2_X64_MEDIA_STUBS)
+	NGlobal::SetVar( "sound_mode", 0 );
+	NGlobal::SetVar( "sound_init", 0 );
+	#endif
 	if ( !NGScene::SetModeFromConfig() )
 	{
 		ASSERT(0); // no mode found
@@ -308,6 +327,10 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	{
 		NWinFrame::PumpMessages();
 		bool bActive = NWinFrame::IsAppActive();
+		// A hidden debugger leaves the window inactive. The ordinary harness still
+		// preserves retail pause-on-background behavior; this explicit test mode
+		// advances mission frames exactly as a focused window would.
+		bool bStepActive = bActive || ( g_bHarnessLog && bHarnessActive );
 		NInput::PumpMessages( bActive );
 		// Re-emit the coalesced Win32 keyboard stream (WM_KEYDOWN/WM_CHAR, OS auto-repeated)
 		// as NInput messages, exactly as the retail main loop does (WinMain @0x9810: right
@@ -315,7 +338,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		sWinInputConv.Do();
 		if ( NWinFrame::IsExit() )
 			break;
-		if ( !NMainLoop::StepApp( bActive, bActive ) )
+		if ( !NMainLoop::StepApp( bStepActive, bActive ) )
 			break;
 		// retail WinMain @0x9810 calls this every frame right here (@0x40a70b, immediately after
 		// StepApp): it re-derives the RDTSC->seconds scale against a rolling QPC window. Dev only ever
@@ -326,7 +349,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		NHPTimer::UpdateHPTimerFrequency();
 		if ( g_bHarnessLog && !HarnessPoll() )   // [HARNESS] frame-polled command channel
 			break;
-		if ( !bActive )
+		if ( !bStepActive )
 			Sleep( 40 );
 	}
 	//

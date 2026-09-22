@@ -203,7 +203,7 @@ void CSound3D::Update( double dInterval )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-signed char __stdcall SynchCallback( FSOUND_STREAM *stream, void *buff, int len, int param );
+signed char __stdcall SynchCallback( FSOUND_STREAM *stream, void *buff, int len, intptr_t param );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CStream: public CObjectBase
 {
@@ -244,7 +244,7 @@ public:
 			// stream is erased by the next NFMSound::Update)
 			if ( FSOUND_Stream_GetLengthMs( pStream ) < nStartMs )
 				return;
-			FSOUND_Stream_SetSyncCallback( pStream, &SynchCallback, (int)this );
+			FSOUND_Stream_SetSyncCallback( pStream, &SynchCallback, reinterpret_cast<intptr_t>(this) );
 			nChannel = FSOUND_Stream_Play( 0, pStream );
 			ASSERT( nChannel != -1 );
 			if ( nStartMs > 0 )
@@ -328,7 +328,7 @@ public:
 		FSOUND_StopSound( nChannel );
 		nChannel = FSOUND_Stream_Play( 0, pStream );
 		FSOUND_Stream_SetTime( pStream, 1040 );
-		bool bRet = FSOUND_Stream_SetSyncCallback( pStream, &SynchCallback, (int)this );
+		bool bRet = FSOUND_Stream_SetSyncCallback( pStream, &SynchCallback, reinterpret_cast<intptr_t>(this) );
 		return true;
 		PlayStream( szFileName.c_str(), bLoop );
 		return true;
@@ -377,14 +377,14 @@ public:
 	void SetVolume( int n ) { FSOUND_SetVolumeAbsolute( nChannel, n ); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-signed char __stdcall SynchCallback( FSOUND_STREAM *stream, void *buff, int len, int param )
+signed char __stdcall SynchCallback( FSOUND_STREAM *stream, void *buff, int len, intptr_t param )
 {
 	if ( !buff )
 		return false;
 	string str = (char*)buff;
 	int nmsec = FSOUND_Stream_GetTime( stream );
 //	DebugTrace( "SynchCallback mark %s time=%dmsec\n", str.c_str(), nmsec );
-	CPtr<CStream> pStream( (CStream*)param );
+	CPtr<CStream> pStream( reinterpret_cast<CStream*>(param) );
 	if ( !IsValid(pStream) )
 		return true;
 //	if ( str == "END" )

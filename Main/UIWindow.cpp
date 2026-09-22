@@ -10,6 +10,7 @@
 #include "UIWindow.h"
 #include "UICommCtrls.h"	// CToolTip -- CWindow::pToolTip is the typed retail CObj<CToolTip>
 #include "A5Script.h"		// NScript::CScript -- retail CWindow window-scripting members (eventsMap/pScript)
+#include <cstdint>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NUI
 {
@@ -499,10 +500,14 @@ void CWindow::Update( const STime &sTime, NGScene::I2DGameView *pView )
 	for ( int i = 0; i < (int)listChildren.size(); i++ )
 	{
 		CWindow *pChild = listChildren[i].GetPtr();
-		unsigned u = (unsigned)pChild;
-		if ( pChild == 0 || u < 0x00010000 || u >= 0x7f000000 || ( u & 3 ) )
+		const std::uintptr_t u = reinterpret_cast<std::uintptr_t>( pChild );
+		if ( pChild == 0 || u < 0x00010000 || ( u & (alignof(void*) - 1) ) )
 			continue;
-		if ( IsBadReadPtr( pChild, 4 ) || IsBadReadPtr( *(void**)pChild, 4 ) || !IsValid( listChildren[i] ) )
+		#if defined(_M_IX86)
+		if ( u >= 0x7f000000 )
+			continue;
+		#endif
+		if ( IsBadReadPtr( pChild, sizeof(void*) ) || IsBadReadPtr( *(void**)pChild, sizeof(void*) ) || !IsValid( listChildren[i] ) )
 			continue;
 		pChild->Update( sTime, pView );
 	}

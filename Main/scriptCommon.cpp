@@ -19,6 +19,7 @@
 #include "scriptPosition.h"
 #include "..\Script\lstate.h"
 #include "wDebris.h"
+#include <cstdint>
 //
 // lua_showlog (retail @0x9c70f8, default 0, saved; registered in the A5Script block)
 bool bShowLuaLog = false;
@@ -26,7 +27,7 @@ bool bShowLuaLog = false;
 namespace NScript
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void ShowLuaLog( const string &szFuncName, int nThread, const vector<SLuaParams> &params, bool bOK );
+static void ShowLuaLog( const string &szFuncName, std::uintptr_t nThread, const vector<SLuaParams> &params, bool bOK );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int luaGetParamCount( lua_State* pState )
 {
@@ -52,10 +53,10 @@ bool luaPrepareData( lua_State* pState,
 	// outcomes are echoed through ShowLuaLog (the thread id is pState->pCT)
 	if ( szParams != "" && !(*ppScript)->CheckArgs( szParams.c_str(), szFuncName.c_str(), pParams, bShowLuaLog ) )
 	{
-		ShowLuaLog( szFuncName, (int)pState->pCT.GetPtr(), *pParams, false );
+		ShowLuaLog( szFuncName, reinterpret_cast<std::uintptr_t>(pState->pCT.GetPtr()), *pParams, false );
 		return false;
 	}
-	ShowLuaLog( szFuncName, (int)pState->pCT.GetPtr(), *pParams, true );
+	ShowLuaLog( szFuncName, reinterpret_cast<std::uintptr_t>(pState->pCT.GetPtr()), *pParams, true );
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,12 +170,12 @@ static string luaOutUserData( void *pData, bool bPrint )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail NScript::ShowLuaLog @0x2e49e0: lua_showlog echo of every script call --
 // "  LUA(<thread>):  fn(  args  )" (+" check failed" when the arg check rejected it)
-static void ShowLuaLog( const string &szFuncName, int nThread, const vector<SLuaParams> &params, bool bOK )
+static void ShowLuaLog( const string &szFuncName, std::uintptr_t nThread, const vector<SLuaParams> &params, bool bOK )
 {
 	if ( !bShowLuaLog )
 		return;
-	char szBuf[16];
-	sprintf( szBuf, "%x", nThread );
+	char szBuf[2 * sizeof(void*) + 1];
+	sprintf( szBuf, "%llx", static_cast<unsigned long long>(nThread) );
 	csScript << CC_GREY << "  LUA(" << szBuf << "):  " << CC_ORANGE << szFuncName.c_str();
 	csScript << "(  ";
 	string szArgs;

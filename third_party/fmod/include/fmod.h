@@ -62,7 +62,8 @@ enum FSOUND_SPEAKERMODES
 	FSOUND_SPEAKERMODE_SURROUND
 };
 
-typedef signed char (__stdcall *FSOUND_STREAMCALLBACK)( FSOUND_STREAM *stream, void *buff, int len, int param );
+#include <stdint.h>
+typedef signed char (__stdcall *FSOUND_STREAMCALLBACK)( FSOUND_STREAM *stream, void *buff, int len, intptr_t param );
 
 // ---- system ----
 signed char    __stdcall FSOUND_SetOutput( int outputtype );
@@ -122,7 +123,7 @@ signed char    __stdcall FSOUND_Stream_SetTime( FSOUND_STREAM *stream, int ms );
 int            __stdcall FSOUND_Stream_GetTime( FSOUND_STREAM *stream );
 int            __stdcall FSOUND_Stream_GetLengthMs( FSOUND_STREAM *stream );
 signed char    __stdcall FSOUND_Stream_SetPosition( FSOUND_STREAM *stream, unsigned int position );
-signed char    __stdcall FSOUND_Stream_SetSyncCallback( FSOUND_STREAM *stream, FSOUND_STREAMCALLBACK callback, int userdata );
+signed char    __stdcall FSOUND_Stream_SetSyncCallback( FSOUND_STREAM *stream, FSOUND_STREAMCALLBACK callback, intptr_t userdata );
 
 #ifdef __cplusplus
 }

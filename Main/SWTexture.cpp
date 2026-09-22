@@ -148,6 +148,7 @@ void CBilinearTexture::Recalc()
 		fdU = ( (float)pic.GetXSize() - 1.01f ) / ( nXSize - 1 );
 	if ( nYSize > 1 )
 		fdV = ( (float)pic.GetYSize() - 1.01f ) / ( nYSize - 1 );
+	#if defined(_M_IX86)
 	int nUPos, nDU = Float2Int( fdU * 0x8000 ), nVPos, nDV = Float2Int( fdV * 0x8000 );
 	int nNextY = pic.GetXSize() * 4;
 	int64 shift = 0x10001000100010;
@@ -216,6 +217,40 @@ void CBilinearTexture::Recalc()
 		nVPos += nDV;
 	}
 	_asm emms
+	#else
+	const int nDU = Float2Int( fdU * 0x8000 );
+	const int nDV = Float2Int( fdV * 0x8000 );
+	int nVPos = 0;
+	for ( int y = 0; y < nYSize; ++y )
+	{
+		const int y0 = nVPos >> 15;
+		const int yWeight = nVPos & 0x7fff;
+		int nUPos = 0;
+		for ( int x = 0; x < nXSize; ++x )
+		{
+			const int x0 = nUPos >> 15;
+			const int xWeight = nUPos & 0x7fff;
+			const NGfx::SPixel8888 &a = pic[y0][x0];
+			const NGfx::SPixel8888 &b = pic[y0][x0 + 1];
+			const NGfx::SPixel8888 &c = pic[y0 + 1][x0];
+			const NGfx::SPixel8888 &d = pic[y0 + 1][x0 + 1];
+			NGfx::SPixel8888 &out = pValue->mips[0][y][x];
+			const int xWeightInv = 0x8000 - xWeight;
+			const int yWeightInv = 0x8000 - yWeight;
+			#define S2_BILINEAR_COMPONENT(component) \
+				out.component = static_cast<unsigned char>( \
+					( ( ( int(a.component) * xWeightInv + int(b.component) * xWeight ) >> 15 ) * yWeightInv + \
+					  ( ( int(c.component) * xWeightInv + int(d.component) * xWeight ) >> 15 ) * yWeight ) >> 15 )
+			S2_BILINEAR_COMPONENT( r );
+			S2_BILINEAR_COMPONENT( g );
+			S2_BILINEAR_COMPONENT( b );
+			S2_BILINEAR_COMPONENT( a );
+			#undef S2_BILINEAR_COMPONENT
+			nUPos += nDU;
+		}
+		nVPos += nDV;
+	}
+	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace

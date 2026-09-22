@@ -1,12 +1,17 @@
 param(
     [Parameter(Mandatory)][string]$RunDirectory,
-    [string]$Debugger='C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\cdb.exe',
+    [string]$Debugger,
     [string]$GameArguments='-windowed -800 -harness'
 )
 $ErrorActionPreference='Stop'
 $run=(Resolve-Path $RunDirectory).Path
 if(!(Test-Path "$run\evidence\run.json")){throw 'Not a prepared lab run'}
 $runMetadata = Get-Content "$run\evidence\run.json" -Raw | ConvertFrom-Json
+if(!$Debugger){
+    $buildMetadata = Get-Content "$run\evidence\build.json" -Raw | ConvertFrom-Json
+    $debugArch = if($buildMetadata.Architecture -eq 'x64'){'x64'}else{'x86'}
+    $Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\$debugArch\cdb.exe"
+}
 $runMetadata.Arguments = $GameArguments
 $runMetadata | ConvertTo-Json | Set-Content "$run\evidence\run.json"
 $debugPath=$run.Replace('\','/')

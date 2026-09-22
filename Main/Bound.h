@@ -89,6 +89,7 @@ inline void CalcBound( TRes *pRes, const TSet &a, TGetPoint GetPoint )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // should not be mixed with fpu & mmx code from StartMMXBound to StoreMMXBoundResult
 #pragma warning( disable : 4799 )
+#if defined(_M_IX86)
 inline void StartMMXBound( CVec3 *pMin, CVec3 *pMax )
 {
 	__asm
@@ -144,6 +145,39 @@ inline void StoreMMXBoundResult( CVec3 *pMin, CVec3 *pMax )
 		emms
 	}
 }
+#else
+struct SBoundState
+{
+	CVec3 ptMin, ptMax;
+};
+inline SBoundState &GetBoundState()
+{
+	static thread_local SBoundState state;
+	return state;
+}
+inline void StartMMXBound( CVec3 *pMin, CVec3 *pMax )
+{
+	SBoundState &state = GetBoundState();
+	state.ptMin = *pMin;
+	state.ptMax = *pMax;
+}
+inline void AddMMXBoundPoint( const CVec3 *p )
+{
+	SBoundState &state = GetBoundState();
+	state.ptMin.x = Min( state.ptMin.x, p->x );
+	state.ptMin.y = Min( state.ptMin.y, p->y );
+	state.ptMin.z = Min( state.ptMin.z, p->z );
+	state.ptMax.x = Max( state.ptMax.x, p->x );
+	state.ptMax.y = Max( state.ptMax.y, p->y );
+	state.ptMax.z = Max( state.ptMax.z, p->z );
+}
+inline void StoreMMXBoundResult( CVec3 *pMin, CVec3 *pMax )
+{
+	SBoundState &state = GetBoundState();
+	*pMin = state.ptMin;
+	*pMax = state.ptMax;
+}
+#endif
 #pragma warning( default : 4799 )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

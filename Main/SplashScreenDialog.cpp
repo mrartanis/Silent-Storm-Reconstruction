@@ -109,9 +109,8 @@ bool CSplashScreen::SBitmap::Draw( HDC *pHDC )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 LRESULT CALLBACK SplashScreenWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	// Unconditional user-data fetch (precedes the dispatch in the original).  The GWL_USERDATA
-	// long is the CSplashScreen base pointer stored by Create.
-	LONG userData = GetWindowLongA( hWnd, GWL_USERDATA );
+	// Unconditional user-data fetch (precedes the dispatch in the original).
+	LONG_PTR userData = GetWindowLongPtrA( hWnd, GWLP_USERDATA );
 
 	if ( uMsg == WM_PAINT )
 	{
@@ -120,7 +119,7 @@ LRESULT CALLBACK SplashScreenWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 			PAINTSTRUCT ps;
 			HDC hDC = BeginPaint( hWnd, &ps );
 			if ( userData != 0 )
-				( (CSplashScreen *)userData )->bitmap.Draw( &hDC );  // bitmap subobject == base + 0x18
+				reinterpret_cast<CSplashScreen *>(userData)->bitmap.Draw( &hDC );  // bitmap subobject == base + 0x18
 			EndPaint( hWnd, &ps );
 			ValidateRect( hWnd, NULL );
 		}
@@ -245,7 +244,7 @@ bool CSplashScreen::Create( const string &szImage, bool bTopmost )
 		int cyScreen = GetSystemMetrics( SM_CYSCREEN );
 		MoveWindow( hWnd, ( cxScreen - nWidth ) / 2, ( cyScreen - nHeight ) / 2,
 		            nWidth, nHeight, FALSE );
-		SetWindowLongA( hWnd, GWL_USERDATA, (LONG)(LONG_PTR)this );
+		SetWindowLongPtrA( hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this) );
 		::UpdateWindow( hWnd );
 	}
 	return ::IsWindow( hWnd ) != 0;

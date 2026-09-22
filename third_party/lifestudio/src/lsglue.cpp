@@ -57,6 +57,7 @@ unsigned int __stdcall TemporarySignFunction()
 
 void __stdcall Init()
 {
+	#if defined(_M_IX86)
   // Hand the DLL the address of our Compute() callback, encoded exactly the way
   // the DLL expects to decode it (it recovers the full 32-bit pointer regardless
   // of where Compute() happens to load).
@@ -64,6 +65,11 @@ void __stdcall Init()
   IOptions::Create(&tmp,
                    static_cast<unsigned int>(addr) & 0x1EF4FFFFu,
                    (static_cast<unsigned int>(addr) >> 16) + 0x33E50000u);
+	#else
+	// The original Init ABI encodes a 32-bit callback pointer for the proprietary
+	// x86 DLL.  x64 uses the local no-op face-animation factory until a backend is
+	// ported, so never truncate the callback address or call that ABI here.
+	#endif
   TemporarySignFunction();
 }
 

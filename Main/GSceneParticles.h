@@ -220,6 +220,7 @@ public:
 		float fU2 = tPlace.vUVs[1].nU * (1.0f/NGfx::N_VEC_FULL_TEX_SIZE);
 		float fV2 = tPlace.vUVs[1].nV * (1.0f/NGfx::N_VEC_FULL_TEX_SIZE);
 		DWORD dwResColor = dwPColor;
+		#if defined(_M_IX86)
 		__asm
 		{
 			mov eax, dwColor
@@ -247,6 +248,16 @@ public:
 			packuswb mm0, mm0
 			movd dwResColor, mm0
 		}
+		#else
+		auto modulate = []( DWORD a, DWORD b, int shift ) -> DWORD
+		{
+			return ( ( ( a >> shift ) & 0xff ) * ( ( b >> shift ) & 0xff ) + 127 ) / 255;
+		};
+		dwResColor = modulate( dwColor, dwPColor, 0 ) |
+			( modulate( dwColor, dwPColor, 8 ) << 8 ) |
+			( modulate( dwColor, dwPColor, 16 ) << 16 ) |
+			( modulate( dwColor, dwPColor, 24 ) << 24 );
+		#endif
 		StartMMXBound( &bcPart.ptMin, &bcPart.ptMax );
 		NGfx::SGeomVecT1C1 *pRes = &pWriteBuffer->res[pWriteBuffer->nTarget];
 		pWriteBuffer->nTarget += 4;
