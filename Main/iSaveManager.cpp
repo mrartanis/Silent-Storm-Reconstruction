@@ -205,7 +205,9 @@ void CSaveManager::GetSlotScreenShot( const string &szName, CArray2D<NGfx::SPixe
 		SSaveFileHeader sHeader;
 		sFile.Read( &sHeader, sizeof(SSaveFileHeader) );
 
-		if ( sHeader.nMagic != N_SAVE_MAGIC_NUMBER )
+		// Retail GetSlotScreenShot @0x232720 accepts the same two wire-compatible magics as
+		// CICLoad::Exec. Old autosaves therefore remain visible/selectable in the save menu.
+		if ( sHeader.nMagic != N_SAVE_MAGIC_NUMBER && sHeader.nMagic != N_SAVE_MAGIC_NUMBER_V0 )
 			throw L"Invalid save file";
 
 		pScreenShot->SetSizes( N_SAVE_SCREENSHOT_X, N_SAVE_SCREENSHOT_Y );
