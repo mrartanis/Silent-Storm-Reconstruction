@@ -15,9 +15,9 @@ if($LASTEXITCODE){throw 'Cannot inspect source worktree'}
 if($sourceStatus.Count -ne 0){throw 'Reproducible build archive requires a clean source worktree; commit changes first'}
 New-Item -ItemType Directory $archive | Out-Null
 $sha=(& git -C $repo rev-parse HEAD).Trim()
-$sourceStatus | Set-Content "$archive\git-status.txt"
 & git -C $repo archive --format=zip "--output=$archive\source.zip" HEAD
-& git -C $repo diff --binary | Set-Content "$archive\source.patch"
+Set-Content -LiteralPath "$archive\git-status.txt" -Value '' -NoNewline
+Set-Content -LiteralPath "$archive\source.patch" -Value '' -NoNewline
 & $cmake --version | Set-Content "$archive\cmake-version.txt"
 $build=Join-Path $LabRoot $(if($Architecture -eq 'x64'){'build-x64'}else{'build-x86'})
 & $cmake --fresh -S $repo -B $build -G 'Visual Studio 17 2022' -A $Architecture "-DCMAKE_GENERATOR_INSTANCE=$ToolRoot" "-DS2_GAME_DIR=$LabRoot\baseline" 2>&1 | Tee-Object "$archive\configure.log"
@@ -35,8 +35,8 @@ if($Architecture -eq 'x64'){
 }
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
-Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 [ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});ToolRoot=$ToolRoot;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
+Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 Write-Output "Archived build: $archive"
 
 
