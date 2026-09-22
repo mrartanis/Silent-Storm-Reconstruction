@@ -1,5 +1,16 @@
 # Блокер пути ввода
 
+Текущий способ управления игрой: собрать `diagnostics/Build-Input.ps1` или
+использовать `G:\SS\lab\input-tools\LabInput.exe`; передать ему PID запущенного
+в LabRun `Game.exe` и действие `focus`, `move dx dy`, `click` или
+`key scan-code`. Инструмент проверяет, что процесс находится внутри
+`G:\SS\lab` и его окно активно. Движение мыши относительное; клавиатура
+передаётся scan codes, нажатие и отпускание раздельные. Для выбора точки
+сначала снять игровое окно `Capture-Window.ps1` и ориентироваться на игровой,
+а не системный курсор. Работа этого пути подтверждена этапом 0; обычные
+клики computer-use его не заменяют. Записи ниже о блокере и ожидании
+разрешения описывают историю диагностики до появления `LabInput`.
+
 Обновление после разрешения пользователя 2026-09-22: разрешён альтернативный ввод SendInput или другой необходимый способ. Создан LabInput.cpp (только процессы внутри G:\SS\lab, проверка foreground, относительное движение, scan codes, отдельные down/up). DirectInputProbe с новой опцией exclusive практически получил F7 down/up, dx=10, dy=5 и left-button down/up. Материалы: G:\SS\lab\evidence\sendinput-20260922. Ограничение на альтернативный ввод снято прямым указанием пользователя; предыдущие записи об ожидании разрешения исторические.
 
 Исследование способов ввода 2026-09-22: кандидат для следующего эксперимента — SendInput с MOUSEEVENTF_MOVE без MOUSEEVENTF_ABSOLUTE, отдельными down/up кнопки и KEYEVENTF_SCANCODE для клавиатуры. Microsoft описывает [относительное движение](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput), [scan codes](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput) и [exclusive mouse](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ee416848(v=vs.85)). Это гипотеза подходящего ввода, а не практическая проверка совместимости с нашей игрой.
