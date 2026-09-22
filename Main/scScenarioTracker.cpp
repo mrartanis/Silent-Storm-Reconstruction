@@ -786,9 +786,9 @@ NDb::CSide *GetSideForScenario( CScenarioTracker *pScenario )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // script-goal/task API (retail @0x302990 / @0x300720 / @0x3007a0). Goals are appended to the zone's
-// scriptGoals; their completion state is set on the runtime CScenarioGoal/CScenarioTask. ELISION: the
-// retail falls back to a clue-attached goal via GetGoalByID -- omitted (script goals live only in
-// scriptGoals here). The bHasCalcedCanLeaveZone cache-clear IS ported (InvalidateLeaveZoneCache).
+// scriptGoals; their completion state is set on the runtime CScenarioGoal/CScenarioTask. Retail
+// first searches scriptGoals and then falls back to the runtime goals attached to the zone's clues.
+// Both kinds are player-facing objectives and both are addressable by the same DB goal id.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // First scriptGoal in the zone whose DB goal record id matches nGoalID, or null.
 static CScenarioGoal* FindScriptGoal( CScenarioZone *pZone, int nGoalID )
@@ -801,6 +801,25 @@ static CScenarioGoal* FindScriptGoal( CScenarioZone *pZone, int nGoalID )
 			return pGoal;
 	}
 	return 0;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Retail GetGoalByID(vector<CPtr<CScenarioClue> >*,int) @0x2f6cc0.
+static CScenarioGoal* FindClueGoal( CScenarioZone *pZone, int nGoalID )
+{
+	const vector< CPtr<CScenarioClue> > &clues = pZone->GetClues();
+	for ( int i = 0; i < clues.size(); ++i )
+	{
+		CScenarioGoal *pGoal = IsValid( clues[i] ) ? clues[i]->GetGoal() : 0;
+		if ( IsValid( pGoal ) && IsValid( pGoal->GetDBGoal() ) && pGoal->GetDBGoal()->GetRecordID() == nGoalID )
+			return pGoal;
+	}
+	return 0;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+static CScenarioGoal* FindGoal( CScenarioZone *pZone, int nGoalID )
+{
+	CScenarioGoal *pGoal = FindScriptGoal( pZone, nGoalID );
+	return IsValid( pGoal ) ? pGoal : FindClueGoal( pZone, nGoalID );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CScenarioTracker::AddScriptGoal( CScenarioZone *pZone, int nGoalID )
@@ -817,11 +836,12 @@ bool CScenarioTracker::ScriptGoalSetComplete( CScenarioZone *pZone, int nGoalID,
 {
 	if ( !IsValid( pZone ) )
 		return false;
-	CScenarioGoal *pGoal = FindScriptGoal( pZone, nGoalID );
+	// Retail clears this before either lookup, including the not-found path.
+	InvalidateLeaveZoneCache();
+	CScenarioGoal *pGoal = FindGoal( pZone, nGoalID );
 	if ( !IsValid( pGoal ) )
 		return false;
 	pGoal->SetState( bComplete ? TS_COMPLETED : TS_FAILED );
-	InvalidateLeaveZoneCache();	// retail @0x300720
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -829,13 +849,13 @@ bool CScenarioTracker::ScriptTaskSetComplete( CScenarioZone *pZone, int nGoalID,
 {
 	if ( !IsValid( pZone ) )
 		return false;
-	CScenarioGoal *pGoal = FindScriptGoal( pZone, nGoalID );
+	InvalidateLeaveZoneCache();
+	CScenarioGoal *pGoal = FindGoal( pZone, nGoalID );
 	if ( !IsValid( pGoal ) )
 		return false;
 	if ( nTaskIdx < 0 || nTaskIdx >= (int)pGoal->GetTasks().size() )
 		return false;
 	pGoal->GetTasks()[ nTaskIdx ]->SetState( bComplete ? TS_COMPLETED : TS_FAILED );
-	InvalidateLeaveZoneCache();	// retail @0x3007a0
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

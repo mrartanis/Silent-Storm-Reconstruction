@@ -62,9 +62,8 @@ BEGIN_SCRIPT_COMMAND( ScenarioAddGoal, "n" )
 	return 0;
 END_SCRIPT_COMMAND
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail @0x2edbd0 ("nb[true]"): set a script goal's completion state in the current zone; warn on failure.
-// NOTE (build-validation scope): goals are STORED + queryable, but the dev has no objectives-journal UI to
-// DISPLAY them -- so this currently has no player-visible effect. The display is a separate absent subsystem.
+// retail @0x2edbd0 ("nb[true]"): set a script or clue-attached goal's completion state in the
+// current zone; warn on failure. The objectives journal renders the resulting state.
 BEGIN_SCRIPT_COMMAND( ScenarioSetGoalComplete, "nb[true]" )
 	CPtr<NScenario::CScenarioTracker> pTracker = pScript->GetScenarioTracker();
 	NRPG::CGlobalGame *pGG = pScript->GetGlobalGame();
@@ -76,8 +75,8 @@ BEGIN_SCRIPT_COMMAND( ScenarioSetGoalComplete, "nb[true]" )
 	return 0;
 END_SCRIPT_COMMAND
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail @0x2edd40 ("nnb[true]"): set a script goal's task[idx] completion state; warn on failure. (Same
-// display caveat as ScenarioSetGoalComplete.) The warning prints the task index then the goal id (retail order).
+// retail @0x2edd40 ("nnb[true]"): set a script or clue-attached goal's task[idx] completion state;
+// warn on failure. The warning prints the task index then the goal id (retail order).
 BEGIN_SCRIPT_COMMAND( ScenarioSetTaskComplete, "nnb[true]" )
 	CPtr<NScenario::CScenarioTracker> pTracker = pScript->GetScenarioTracker();
 	NRPG::CGlobalGame *pGG = pScript->GetGlobalGame();
