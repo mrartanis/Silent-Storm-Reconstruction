@@ -329,9 +329,9 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		bool bActive = NWinFrame::IsAppActive();
 		// A hidden debugger leaves the window inactive. The ordinary harness still
 		// preserves retail pause-on-background behavior; this explicit test mode
-		// advances mission frames exactly as a focused window would.
+		// advances mission/input frames exactly as a focused window would.
 		bool bStepActive = bActive || ( g_bHarnessLog && bHarnessActive );
-		NInput::PumpMessages( bActive );
+		NInput::PumpMessages( bStepActive );
 		// Re-emit the coalesced Win32 keyboard stream (WM_KEYDOWN/WM_CHAR, OS auto-repeated)
 		// as NInput messages, exactly as the retail main loop does (WinMain @0x9810: right
 		// after NInput::PumpMessages, before StepApp) -- this is what gives held keys repeat.
