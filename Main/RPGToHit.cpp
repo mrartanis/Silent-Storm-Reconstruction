@@ -4,6 +4,7 @@
 #include "aiPosition.h"
 
 #include "..\DBFormat\DataRPG.h"
+#include "..\DBFormat\DataMap.h"   // NDb::DS_ALLY -- retail aura diplomacy gate
 
 #include "RPGGame.h"
 #include "RPGUnit.h"
@@ -339,13 +340,58 @@ float CToHitCalcer::GetAllAdd()
 	return fRes;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// release-new terms. Weather (CWorld::BadWeather) + aura (NRPG::GetAuraAdd) are release-new subsystems
-// ABSENT in this predecessor dev tree -> 0 (documented elisions); the careful-shoot perk uses the
-// present IUnitMission::HasPerk(0x45,&out).
+// Retail CheckAuraPerk @0x289ec0: add both float parameters of an aura perk when it is present.
+static void CheckAuraPerk( IUnitMission *pUnit, int nPerkID, float *pToHit, float *pEvasion )
+{
+	float fToHit = 0;
+	float fEvasion = 0;
+	if ( IsValid( pUnit ) && pUnit->HasPerk( nPerkID, &fToHit, &fEvasion ) )
+	{
+		*pToHit += fToHit;
+		*pEvasion += fEvasion;
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Retail GetAuraAdd @0x289f00. Allied units within 3.125 metres contribute perk 0x1c. The owner's
+// final aura perk depends on whether at least one nearby ally belongs to the same scenario player:
+// 0x42 when it does, 0x5d otherwise. Both the attack and evasion terms are accumulated.
+static void GetAuraAdd( float *pToHit, float *pEvasion, CUnitServer *pUnit )
+{
+	*pToHit = 0;
+	*pEvasion = 0;
+	if ( !IsValid( pUnit ) )
+		return;
+
+	NWorld::CWorld *pWorld = pUnit->GetWorld();
+	if ( !IsValid( pWorld ) )
+		return;
+
+	list<CPtr<CUnitServer> > units;
+	pWorld->GetUnitsNear( pUnit->GetPosition().GetCP(), &units, 3.125f );
+	bool bSamePlayerAlly = false;
+	for ( list<CPtr<CUnitServer> >::iterator i = units.begin(); i != units.end(); ++i )
+	{
+		CUnitServer *pOther = *i;
+		if ( !IsValid( pOther ) || pOther == pUnit )
+			continue;
+		if ( pUnit->GetDiplomacyState( pOther ) != NDb::DS_ALLY )
+			continue;
+		CheckAuraPerk( pOther->GetUnitRPG(), 0x1c, pToHit, pEvasion );
+		if ( pOther->GetPlayer() == pUnit->GetPlayer() )
+			bSamePlayerAlly = true;
+	}
+	CheckAuraPerk( pUnit->GetUnitRPG(), bSamePlayerAlly ? 0x42 : 0x5d, pToHit, pEvasion );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Release-new terms. Weather and aura were absent from the predecessor tree, but their complete retail
+// substrate is now present (CWorld weather tracking, nearby-unit enumeration, diplomacy and perks).
 float CToHitCalcer::GetWeatherPenalty()
 {
-	// release @0x2b85a0: return 5.0 when pUnitServer is valid+alive and the world has bad weather.
-	return 0; // weather subsystem absent -> elided
+	// retail @0x2b85a0: any non-sunny weather (rain or snow) subtracts 5 percentage points.
+	if ( IsValid( pUnitServer ) && IsValid( pUnitServer->GetWorld() ) &&
+		pUnitServer->GetWorld()->GetWeather() != NWorld::IWorld::WEATHER_SUNNY )
+		return 5.0f;
+	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 float CToHitCalcer::GetCarefulShootPerk()
@@ -361,8 +407,10 @@ float CToHitCalcer::GetCarefulShootPerk()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 float CToHitCalcer::GetAuraToHitAdd()
 {
-	// release @0x2b7090: NRPG::GetAuraAdd(pUnitServer,&toHit,&evasion) -> toHit. Aura subsystem absent.
-	return 0; // elided
+	float fToHit = 0;
+	float fEvasion = 0;
+	GetAuraAdd( &fToHit, &fEvasion, pUnitServer );
+	return fToHit;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int CToHitCalcer::GetToHit()
@@ -498,8 +546,10 @@ float CUnitToHitCalcer::GetCA()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 float CUnitToHitCalcer::GetTAuraEvasionAdd()
 {
-	// release @0x2b7890: NRPG::GetAuraAdd(pTarget,&toHit,&evasion) -> evasion. Aura subsystem absent.
-	return 0; // elided
+	float fToHit = 0;
+	float fEvasion = 0;
+	GetAuraAdd( &fToHit, &fEvasion, pTarget );
+	return fEvasion;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitToHitCalcer::Log()

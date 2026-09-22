@@ -67,11 +67,9 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Release migration (byte-faithful, session 25): the per-shot accumulator now keeps a FLOAT hit-cover
 // (was int nHitCover), plus the attacking unit's server (pUnitServer) and a night flag (bNight). The
-// ctor takes the CUnitServer* and pulls the mission out of it (server->GetUnitRPG()). The aura /
-// weather / day-night to-hit subsystems are release-new and ABSENT in this predecessor dev tree
-// (no NRPG::GetAuraAdd, no CWorld::BadWeather/IsNight) -> GetAuraToHitAdd/GetWeatherPenalty return 0
-// and bNight is wired false at every call site (documented elisions); the members/methods are kept so
-// the save format (operator& tags 9/18/19) is byte-exact and the subsystems can be wired in later.
+// ctor takes the CUnitServer* and pulls the mission out of it (server->GetUnitRPG()). The release-new
+// weather and aura modifiers are restored through CWorld weather, nearby allies and unit perks. The
+// day/night flag is supplied by the game-side callers. Save tags 9/18/19 match retail.
 class CToHitCalcer: public IToHitCalcer
 {
 	ZDATA
@@ -110,8 +108,7 @@ public:
 	virtual float GetCA();
 	virtual float GetAllAdd();
 	virtual int GetSkill() { return nSkill; }
-	// release-new terms (RVA 0x2b85a0 / 0x2b8540 / 0x2b7090). Weather + aura are absent in this
-	// predecessor tree -> 0 (documented elision); careful-shoot perk uses the present IUnitMission::HasPerk.
+	// release-new terms (RVA 0x2b85a0 / 0x2b8540 / 0x2b7090).
 	float GetWeatherPenalty();
 	float GetCarefulShootPerk();
 	virtual float GetAuraToHitAdd();
@@ -143,7 +140,7 @@ public:
 	virtual float GetTMove();
 	virtual float GetAllAdd();
 	virtual float GetCA();          // release-new override (headshot weighting + ORIGINAL BUG no-cover fdiv)
-	float GetTAuraEvasionAdd();      // aura subsystem absent -> 0 (documented elision)
+	float GetTAuraEvasionAdd();
 
 	CUnitToHitCalcer() {}
 	CUnitToHitCalcer(	NWorld::CUnitServer *_pUnitServer, NAI::EPose _eCurPose, int _nDistance,
