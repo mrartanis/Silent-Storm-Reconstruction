@@ -202,6 +202,9 @@ int main(int argc, char **argv)
 #endif
     sequence->RegisterMMTree(tree);
     duration = sequence->SequenceTime();
+    if (std::getenv("S2_FACE_TRACE_METADATA"))
+      std::fprintf(stderr, "sequence-metadata,duration=%d,tracks=%d\n",
+                   duration, sequence->TracksCount());
     if (duration <= 0)
     {
       std::fprintf(stderr, "invalid sequence duration\n");

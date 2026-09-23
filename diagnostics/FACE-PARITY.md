@@ -74,6 +74,15 @@ other channels. The complete exported corpus and proprietary bytes stay in
 the ignored lab directory. Use the representative subset for a wider red/green
 x64 gate; additional named speech/expression cases still need classification.
 
+Native `MMSF` envelope progress: `NativeSequenceData` now reads the v1
+32-byte header with checked payload length, duration and track count. The
+x86 `ISequencer::SequenceTime` and `TracksCount` values matched those header
+fields for five structurally different sampled files. The x64 decoder parsed
+all 6,780 exported sequences; `NativeSequenceDataTests` passes on both x86
+and x64. The fourth header field (offset 20) has unknown semantics and is
+preserved without interpretation. No track/keyframe or muscle-tree decoding
+is claimed, and the strict x64 vertex parity test remains red.
+
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
 `head-56-0.bin`, the source stream is 31,612 bytes and the saved form is
