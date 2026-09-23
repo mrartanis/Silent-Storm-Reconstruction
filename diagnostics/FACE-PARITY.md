@@ -369,11 +369,22 @@ has 36 muscles, 419 vertices and seven bones. `Morph.txt` defines the
 archetype parameter combinations; `Links.dat` appears to carry channel links
 and still needs decoding.
 `Test-FaceGDPTransformParity.ps1` runs the same GDP and MMT through the x86
-and x64 `FaceGDPProbe` executables, comparing neutral and one-macro generated
-vertices directly. The test currently fails at x64 `ITransformer::Load` even
+and x64 `FaceGDPProbe` executables, comparing neutral, positive/negative
+`Nose`, `Age` and `Gender` generated vertices directly. The x86 reference
+shows `Age` and `Gender` each alter all 419 vertices at both extremes;
+`Nose=0.5` alters 48. The test currently fails at x64 `ITransformer::Load` even
 for neutral output; unlike `Test-FaceGDPParity.ps1`, it does not pass an
 x86-precomputed animator to the native side. This is the implementation gate
 for native generation.
+
+The x64 `IAnimator::Save` now round-trips a loaded original-format or
+saved-format stream byte-for-byte. `Test-FaceGDPParity.ps1` checks that
+round-trip on the x86-generated FaceGen animators before comparing vertices.
+This preserves an already generated stream; it does not synthesize a new one.
+An exploratory least-squares fit of the neutral x86 output to the 16 unique
+archetype `*_A.mld` positions suggests near-linear blending of adult male,
+adult female and older African/Asian/Arab forms. Its maximum raw-position
+residual is about 5.8e-4, so this is a clue, not an exact native recipe.
 
 Further x86 runtime inspection identified what the compact format omits.
 With `S2_FACE_VERTEX_INFLUENCES_PATH` and

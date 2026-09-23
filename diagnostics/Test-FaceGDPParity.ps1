@@ -40,10 +40,15 @@ try {
         $reference = "$prefix-vertices.csv"
         $reloaded = "$prefix-x86-reloaded.csv"
         $candidate = "$prefix-x64.csv"
+        $nativeRoundtrip = "$prefix-x64-roundtrip.bin"
         & $x86Face $generated $reloaded
         if ($LASTEXITCODE -ne 0) { throw "x86 generated stream reload failed: $case" }
-        & $x64Face $generated $candidate
+        & $x64Face $generated $candidate $nativeRoundtrip
         if ($LASTEXITCODE -ne 0) { throw "x64 generated stream load failed: $case" }
+        if ((Get-FileHash -LiteralPath $generated).Hash -ne
+            (Get-FileHash -LiteralPath $nativeRoundtrip).Hash) {
+            throw "x64 saved-stream roundtrip differs: $case"
+        }
         $left = @(Import-Csv -LiteralPath $reference)
         $repeat = @(Import-Csv -LiteralPath $reloaded)
         $right = @(Import-Csv -LiteralPath $candidate)

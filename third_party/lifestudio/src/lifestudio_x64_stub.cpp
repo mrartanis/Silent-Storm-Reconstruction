@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstring>
 #include <fstream>
 #include <iterator>
 #include <limits>
@@ -86,6 +87,7 @@ const char *NativeMacroMuscleName(IMacroMuscle *muscle)
 class AnimatorStub : public IAnimator
 {
   NativeLifeStudio::HeadData head;
+  std::vector<char> rawBytes;
   std::vector<float> muscleAmplitudes;
   std::vector<float> muscleSignedSquares;
   std::vector<float> muscleAbsoluteSums;
@@ -102,6 +104,7 @@ public:
     if (size < 0 || !NativeLifeStudio::DecodeHeadVertices(bytes, static_cast<std::size_t>(size), &parsed))
     {
       head = {};
+      rawBytes.clear();
       muscleAmplitudes.clear();
       muscleSignedSquares.clear();
       muscleAbsoluteSums.clear();
@@ -113,6 +116,7 @@ public:
       return false;
     }
     head = std::move(parsed);
+    rawBytes.assign(bytes, bytes + size);
     muscleAmplitudes.assign(head.muscles.size(), 0.0f);
     muscleSignedSquares.assign(head.muscles.size(), 0.0f);
     muscleAbsoluteSums.assign(head.muscles.size(), 0.0f);
@@ -126,8 +130,13 @@ public:
     loaded = true;
     return true;
   }
-  int SaveBufferSize() { return 0; }
-  bool Save(char *) { return false; }
+  int SaveBufferSize() { return loaded ? static_cast<int>(rawBytes.size()) : 0; }
+  bool Save(char *output)
+  {
+    if (!loaded || !output || rawBytes.empty()) return false;
+    std::memcpy(output, rawBytes.data(), rawBytes.size());
+    return true;
+  }
   IMuscle *MuscleByName(const char *) { return 0; }
   IMuscle *Muscle(int) { return 0; }
   int MusclesCount() const { return 0; }
