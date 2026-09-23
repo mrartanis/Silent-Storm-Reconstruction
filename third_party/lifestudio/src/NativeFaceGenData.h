@@ -68,6 +68,12 @@ bool BlendFaceGenGeometry(const FaceGenData &data,
 bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
                                    const std::vector<float> &weights,
                                    FaceGenGeometry *result);
+// Build the game's blended 36-muscle animation base, including curves,
+// influence projections and bone transforms. This is an intermediate input
+// to Generate, not the final morphed output animator.
+bool BlendFaceGenAnimationHead(const FaceGenData &data,
+                               const std::vector<float> &weights,
+                               HeadData *result);
 // Evaluate the five GDP selector inputs for the named game sliders. This does
 // not perform TriangLib's archetype interpolation or generate an animator.
 bool EvaluateGameFaceGenParameters(

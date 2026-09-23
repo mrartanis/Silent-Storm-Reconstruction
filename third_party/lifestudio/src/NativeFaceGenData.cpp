@@ -1,5 +1,6 @@
 #include "NativeFaceGenData.h"
 #include "LifeStudioHeadAPITransform.h"
+#include "NativeCurve.h"
 #include <algorithm>
 #include <array>
 #include <cstdint>
@@ -309,6 +310,135 @@ bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
                                    FaceGenGeometry *result)
 {
   return BlendGeometry(data, weights, true, result);
+}
+
+bool BlendFaceGenAnimationHead(const FaceGenData &data,
+                               const std::vector<float> &weights,
+                               HeadData *result)
+{
+  if (!result || data.archetypes.empty()) return false;
+  FaceGenGeometry geometry;
+  if (!BlendFaceGenAnimationGeometry(data, weights, &geometry)) return false;
+  const HeadData &first = data.archetypes.front().animation;
+  for (const auto &archetype : data.archetypes)
+  {
+    const HeadData &source = archetype.animation;
+    if (source.vertexCount != first.vertexCount ||
+        source.muscles.size() != first.muscles.size() ||
+        source.vertices.size() != first.vertices.size() ||
+        source.implicitVertices.size() != first.implicitVertices.size() ||
+        source.bones.size() != first.bones.size()) return false;
+    for (std::size_t vertex = 0; vertex < first.vertices.size(); ++vertex)
+    {
+      if (source.vertices[vertex].index != first.vertices[vertex].index ||
+          source.vertices[vertex].influences.size() !=
+              first.vertices[vertex].influences.size()) return false;
+      for (std::size_t influence = 0;
+           influence < first.vertices[vertex].influences.size(); ++influence)
+        if (source.vertices[vertex].influences[influence].muscleIndex !=
+            first.vertices[vertex].influences[influence].muscleIndex) return false;
+    }
+    for (std::size_t vertex = 0; vertex < first.implicitVertices.size(); ++vertex)
+      if (source.implicitVertices[vertex].index != first.implicitVertices[vertex].index)
+        return false;
+    for (std::size_t bone = 0; bone < first.bones.size(); ++bone)
+      if (source.bones[bone].name != first.bones[bone].name ||
+          source.bones[bone].muscleIndices != first.bones[bone].muscleIndices)
+        return false;
+  }
+  double total = 0.0;
+  for (float weight : weights) total += weight;
+  if (!(total > 0.0)) return false;
+  HeadData blended = first;
+  for (std::size_t muscle = 0; muscle < blended.muscles.size(); ++muscle)
+  {
+    auto &target = blended.muscles[muscle];
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      target.pointA[axis] = geometry.musclePointA[muscle][axis];
+      target.pointB[axis] = geometry.musclePointB[muscle][axis];
+    }
+    for (int knot = 0; knot < 5; ++knot)
+    {
+      double x = 0.0, y = 0.0;
+      for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
+      {
+        const auto &source = data.archetypes[archetype].animation.muscles[muscle];
+        x += weights[archetype] * source.falloffX[knot];
+        y += weights[archetype] * source.falloffY[knot];
+      }
+      target.falloffX[knot] = static_cast<float>(x / total);
+      target.falloffY[knot] = static_cast<float>(y / total);
+    }
+  }
+  for (auto &vertex : blended.vertices)
+  {
+    if (vertex.index >= geometry.vertices.size()) return false;
+    for (int axis = 0; axis < 3; ++axis)
+      vertex.sourcePosition[axis] = geometry.vertices[vertex.index][axis];
+    for (auto &influence : vertex.influences)
+    {
+      if (influence.muscleIndex >= blended.muscles.size()) return false;
+      const auto &muscle = blended.muscles[influence.muscleIndex];
+      double numerator = 0.0, denominator = 0.0;
+      for (int axis = 0; axis < 3; ++axis)
+      {
+        const double segment = muscle.pointB[axis] - muscle.pointA[axis];
+        numerator += (vertex.sourcePosition[axis] - muscle.pointA[axis]) * segment;
+        denominator += segment * segment;
+      }
+      if (!(denominator > 0.0)) return false;
+      influence.componentA = static_cast<float>(numerator / denominator);
+      const float position = std::max(0.0f, std::min(1.0f, influence.componentA));
+      double distanceSquared = 0.0;
+      for (int axis = 0; axis < 3; ++axis)
+      {
+        const double nearest = muscle.pointA[axis] + position *
+            (muscle.pointB[axis] - muscle.pointA[axis]);
+        const double difference = vertex.sourcePosition[axis] - nearest;
+        distanceSquared += difference * difference;
+      }
+      const float distance = static_cast<float>(std::sqrt(distanceSquared));
+      influence.componentB = 0.0f;
+      if (distance <= muscle.falloffX.back())
+      {
+        const std::vector<float> x(muscle.falloffX.begin(), muscle.falloffX.end());
+        const std::vector<float> y(muscle.falloffY.begin(), muscle.falloffY.end());
+        if (!EvaluateHermiteCurve(x, y, distance, &influence.componentB)) return false;
+        influence.componentB = std::max(0.0f, std::min(1.0f, influence.componentB));
+      }
+    }
+  }
+  for (auto &vertex : blended.implicitVertices)
+  {
+    if (vertex.index >= geometry.vertices.size()) return false;
+    for (int axis = 0; axis < 3; ++axis)
+      vertex.sourcePosition[axis] = geometry.vertices[vertex.index][axis];
+  }
+  for (std::size_t bone = 0; bone < blended.bones.size(); ++bone)
+  {
+    auto &target = blended.bones[bone];
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      double translation = 0.0;
+      for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
+        translation += weights[archetype] *
+            data.archetypes[archetype].animation.bones[bone].matrixA[9 + axis];
+      target.matrixA[9 + axis] = static_cast<float>(translation / total);
+    }
+    for (int row = 0; row < 3; ++row)
+      for (int column = 0; column < 3; ++column)
+        target.matrixB[row * 3 + column] = target.matrixA[column * 3 + row];
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      double translation = 0.0;
+      for (int row = 0; row < 3; ++row)
+        translation -= target.matrixA[9 + row] * target.matrixB[row * 3 + axis];
+      target.matrixB[9 + axis] = static_cast<float>(translation);
+    }
+  }
+  *result = std::move(blended);
+  return true;
 }
 
 bool EvaluateGameFaceGenParameters(

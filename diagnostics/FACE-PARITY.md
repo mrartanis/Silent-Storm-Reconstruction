@@ -453,10 +453,12 @@ observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
 
 The blend subtests deliberately feed x86-selected weights to the native
 blender; the optional game-weight subtest separately checks native selection.
-The same gate also compares the 36-muscle animation-base geometry on all
-eleven cases, including the editor default; its maximum vertex and anchor
-deltas were 2.86e-6 and 1.91e-6. Both intermediate heads are now geometrically
-matched, but this still does not construct the final output animator.
+The same gate also compares the complete decoded 36-muscle animation base on
+all eleven cases, including the editor default. Vertex and anchor deltas are
+at most 2.86e-6 and 1.91e-6; it also checks curves, influence projections,
+bone transforms and their topology. Both intermediate heads are now matched
+at the decoded-field level, but this still does not construct the final
+output animator.
 Neither proves full `ITransformer` generation. For example, neutral x86
 weights begin `0.05, 0.05, 0.025, 0`
 for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
@@ -526,11 +528,20 @@ differ. `S2_FACE_SELECTOR_COORDS_PATH=<csv>` dumps those arrays. On EuroM,
 their 419 positions match the `*_M.mld` source positions; 64 positions differ
 from `*_A.mld`, by as much as 0.6854. The correct 36-muscle animation base
 therefore blends `*_M.mld` vertex coordinates with `*_A.mld` muscle anchors.
-`BlendFaceGenAnimationGeometry` now does this, and the new animation-base
-subtest passes all eleven cases at 1e-4. This only proves those geometric
-fields. Muscle curves, influences, bones, full animator serialization and
-the post-blend worker remain to be implemented and compared before native
-generation can be considered complete.
+`BlendFaceGenAnimationGeometry` now does this. A further x86 field comparison
+established that muscle curves are weighted averages (maximum delta 1.67e-5),
+explicit vertex influence membership is unchanged and `componentA` is the
+vertex's projection onto the newly blended muscle segment (maximum delta
+2.60e-7). For each bone, x86 retains the first archetype's orientation,
+averages only its translation, and recomputes the inverse matrix. That rule
+matches the editor-default reference within 9.54e-7. The native
+`BlendFaceGenAnimationHead` implements these rules and reconstructs the
+runtime falloff component. The 11-case `--animation-fields` gate now checks
+the complete decoded base head, with maximum observed curve, projection,
+falloff and bone deltas of 1.53e-5, 5.07e-7, 8.35e-7 and 9.54e-7 on the
+editor default. Full animator serialization and the post-blend `Generate`
+worker remain to be implemented and compared before native generation can
+be considered complete.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
