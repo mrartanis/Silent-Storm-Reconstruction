@@ -115,6 +115,7 @@ int main()
   NativeLifeStudio::MMTreeOperationRecord effect;
   effect.offset = 88;
   effect.headerWords[0] = 3;
+  effect.headerWords[1] = 20;
   effect.headerWords[2] = 56;
   effect.payloadSize = 56;
   effect.serializedType = 5;
@@ -130,7 +131,7 @@ int main()
   std::vector<NativeLifeStudio::MMTreeEffectSample> samples;
   assert(NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
                                                root, "TEST", 0.5f, &samples));
-  assert(samples.size() == 1 && samples[0].kind == 3 &&
+  assert(samples.size() == 1 && samples[0].kind == 3 && samples[0].channel == 20 &&
          samples[0].targetName == "M" && samples[0].expression == 0.5f);
   assert(!NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
                                                 root, "MISSING", 0.5f, &samples));

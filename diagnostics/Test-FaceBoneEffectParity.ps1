@@ -64,13 +64,20 @@ if ($LASTEXITCODE -ne 0) { throw 'Native macro-effect evaluation failed' }
 if (@($effects | Where-Object kind -eq '3').Count) {
     throw 'This test requires an isolated bone-only macro'
 }
-$expected = [double[]]::new($bones.Count)
+$expectedY = [double[]]::new($bones.Count)
+$expectedZ = [double[]]::new($bones.Count)
 $matched = 0
 foreach ($effect in $effects) {
     if ([int]$effect.kind -ne 4) { continue }
+    $channel = [int]$effect.channel
+    if ($channel -notin 16,17,20,21) { throw "Unsupported bone channel: $channel" }
     foreach ($bone in $bones) {
         if ($effect.target -eq $bone.name) {
-            $expected[[int]$bone.index] += [double]::Parse($effect.value, $culture)
+            if ($channel -in 16,20) {
+                $expectedY[[int]$bone.index] += [double]::Parse($effect.value, $culture)
+            } else {
+                $expectedZ[[int]$bone.index] += [double]::Parse($effect.value, $culture)
+            }
             ++$matched
             break
         }
@@ -85,17 +92,20 @@ if ($first.Length -ne 4 + 556 * $bones.Count -or $repeat.Length -ne $first.Lengt
 }
 $maximumAmplitude = 0.0
 for ($i = 0; $i -lt $bones.Count; ++$i) {
-    $offset = 4 + 556 * $i + 528
-    for ($byte = 0; $byte -lt 4; ++$byte) {
-        if ($first[$offset + $byte] -ne $repeat[$offset + $byte]) {
-            throw "x86 bone amplitude is nondeterministic: bone[$i]"
+    foreach ($channel in 'Y','Z') {
+        $offset = 4 + 556 * $i + $(if ($channel -eq 'Y') { 528 } else { 524 })
+        for ($byte = 0; $byte -lt 4; ++$byte) {
+            if ($first[$offset + $byte] -ne $repeat[$offset + $byte]) {
+                throw "x86 bone amplitude is nondeterministic: bone[$i] channel=$channel"
+            }
         }
-    }
-    $actual = [BitConverter]::ToSingle($first, $offset)
-    $delta = [Math]::Abs([double]$actual - $expected[$i])
-    $maximumAmplitude = [Math]::Max($maximumAmplitude, $delta)
-    if ($delta -gt 0.00001) {
-        throw "Bone effect mismatch: bone[$i] x86=$actual native=$($expected[$i])"
+        $actual = [BitConverter]::ToSingle($first, $offset)
+        $expected = if ($channel -eq 'Y') { $expectedY[$i] } else { $expectedZ[$i] }
+        $delta = [Math]::Abs([double]$actual - $expected)
+        $maximumAmplitude = [Math]::Max($maximumAmplitude, $delta)
+        if ($delta -gt 0.00001) {
+            throw "Bone effect mismatch: bone[$i] channel=$channel x86=$actual native=$expected"
+        }
     }
 }
 $x86Vertices = @(Import-Csv -LiteralPath (Join-Path $output 'first-face.csv'))
@@ -105,6 +115,11 @@ if ($x86Vertices.Count -ne $x64Vertices.Count -or $x86Vertices.Count -ne $repeat
     throw 'Different bone-effect vertex-row counts'
 }
 $maximumVertex = 0.0
+$movingVertices = 0
+$neutralByVertex = @{}
+foreach ($row in $x86Vertices) {
+    if ($row.case -eq 'neutral') { $neutralByVertex[$row.vertex] = $row }
+}
 for ($i = 0; $i -lt $x86Vertices.Count; ++$i) {
     $a = $x86Vertices[$i]
     $b = $x64Vertices[$i]
@@ -121,6 +136,14 @@ for ($i = 0; $i -lt $x86Vertices.Count; ++$i) {
         if ($delta -gt $Tolerance) {
             throw "Bone-effect vertex mismatch: vertex=$($a.vertex) axis=$axis delta=$delta"
         }
+        if ($a.case -eq 'sequence' -and $neutralByVertex.ContainsKey($a.vertex)) {
+            $neutral = $neutralByVertex[$a.vertex]
+            if ([Math]::Abs([double]::Parse($a.$axis, $culture) -
+                            [double]::Parse($neutral.$axis, $culture)) -gt $Tolerance) {
+                ++$movingVertices
+            }
+        }
     }
 }
-Write-Output "FACE BONE EFFECT PARITY PASS: $MacroName expression=$expressionText, bones=$matched, amplitude delta=$maximumAmplitude, vertex delta=$maximumVertex."
+if (!$movingVertices) { throw 'Bone effect produced no moving head vertex; geometry parity is vacuous' }
+Write-Output "FACE BONE EFFECT PARITY PASS: $MacroName expression=$expressionText, matched effects=$matched, moving components=$movingVertices, amplitude delta=$maximumAmplitude, vertex delta=$maximumVertex."

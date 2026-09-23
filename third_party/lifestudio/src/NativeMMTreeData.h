@@ -39,6 +39,7 @@ struct MMTreeEffectSample
 {
   std::size_t operationOffset = 0;
   std::uint32_t kind = 0; // Serialized effect class 3 (muscle) or 4 (bone).
+  std::uint32_t channel = 0; // Leaf header word 1; distinguishes bone axes.
   std::string targetName;
   float expression = 0.0f;
 };

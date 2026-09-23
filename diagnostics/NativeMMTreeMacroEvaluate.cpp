@@ -27,9 +27,9 @@ int main(int argc, char **argv)
       !NativeLifeStudio::EvaluateMMTreeMacro(bytes.data(), bytes.size(), root,
                                               argv[2], expression, &effects))
     return 3;
-  std::printf("kind,target,value,operation-offset\n");
+  std::printf("kind,target,value,operation-offset,channel\n");
   for (const auto &effect : effects)
-    std::printf("%u,%s,%.9g,%zu\n", effect.kind, effect.targetName.c_str(),
-                effect.expression, effect.operationOffset);
+    std::printf("%u,%s,%.9g,%zu,%u\n", effect.kind, effect.targetName.c_str(),
+                effect.expression, effect.operationOffset, effect.channel);
   return 0;
 }

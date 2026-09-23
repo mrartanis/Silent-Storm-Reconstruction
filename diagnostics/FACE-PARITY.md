@@ -57,7 +57,7 @@ required parity check. The initial corpus from `AI_CTRL` contains three heads
 and two sequences (six pairs, 2514 rows each); all six x86 pairs are
 deterministic and deform vertices. The current x64 bridge decodes the tree,
 evaluates macro events and applies sampled muscle effects to vertices, but
-only the verified upper-eyelid bone channel is animated, and full parity
+the verified local-Y and local-Z bone channels are animated, and full parity
 remains incomplete; the strict gate is red.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
@@ -208,24 +208,28 @@ negative `componentA` was confirmed to contribute no motion in the isolated
 lip case. Both direct macros pass a strict 419-vertex comparison on head 56,
 with no component over 1e-4 and maximum delta 1.91e-6. That is a scoped
 geometric result, **not** complete facial animation: the forced `##BLINK`
-case has 94 mismatched components (maximum 0.00179) after the upper-eyelid
-bone transform. Other class-4 channels and simultaneous muscle influences
-remain incomplete. With only the verified eyelid channel enabled, the full
-six-case strict gate is still red: 291–719 components per case exceed 1e-4,
-with maximum delta 0.11–0.31. The wider experimental rule that interpreted
-every class-4 channel as local-Y rotation was rejected: it changed these
-numbers but was unsupported by the x86 bone-state evidence.
+case has 94 mismatched components (maximum 0.00179) after the bone transforms.
+Simultaneous muscle influences and bone/muscle composition remain incomplete.
+With both verified rotation channels enabled, the full six-case strict gate
+is still red: 293–614 components per case exceed 1e-4, with maximum delta
+0.15–0.36. A previous experiment that interpreted every class-4 effect as
+local-Y rotation was discarded because the x86 bone snapshots contradicted it.
 
-For the isolated `Eyelid_Up_Bone_L.1` and `Eyelid_Up_Bone_R.1` macros,
-the original x86 `ComputePhysics` rotates the corresponding bone around local
-Y by minus the class-4 effect value, between the serialized B and A matrices.
+The x86 `ComputePhysics` bone snapshot identifies leaf channels 16/20 as
+local-Y rotation (amplitude at byte 528) and 17/21 as local-Z rotation
+(amplitude at byte 524). The rotations run between the serialized B and A
+matrices. Local-Y uses minus the effect value as angle; local-Z uses the value.
 For multiple influences, each bone-transformed or unchanged vertex position
-is blended by its `componentB`, normalized by the sum of those weights. The
-effect value and all 419 vertex positions now match the x86 reference for both
-eyelids on all three sampled heads (maximum vertex difference 2.39e-6).
-`Test-FaceBoneEffectParity.ps1` repeats the x86 run, checks the opaque bone's
-observed amplitude field at byte 528, and enforces x64 vertex parity.
-This does not establish correctness for eye, jaw, neck, or head rotations.
+is blended by its `componentB`, normalized by the sum of positive weights.
+When all weights are zero, x86 uses equal weights across the influences;
+this was confirmed by jaw vertex 127 on heads 86 and 102. Isolated macros
+for both upper eyelids, both eyes, and jaw now match the x86 reference on all
+three sampled heads, with maximum vertex difference 2.39e-6. `EyesYaw`
+also passes as a two-bone effect. `Test-FaceBoneEffectParity.ps1` repeats the
+x86 run, checks the two opaque amplitude fields, requires actual vertex
+motion, and enforces x64 vertex parity. `HeadPitch` changes bone state but
+no head vertices in this probe, so it is not counted as geometric parity.
+The combined sequence gate remains red and requires more work.
 
 ```powershell
 & .\diagnostics\Test-MMTreeMacroEffects.ps1 `
@@ -242,9 +246,9 @@ This does not establish correctness for eye, jaw, neck, or head rotations.
 `Test-FaceMuscleStateParity.ps1` takes the same head, sequence, tree, game
 root and probe paths plus `-Time 15000`; unlike the forced-macro test, it
 compares muscle state after the real sequence has rendered that frame.
-`Test-FaceBoneEffectParity.ps1` takes the same paths plus
-`-MacroName 'Eyelid_Up_Bone_L.1'` (or the right-side name) and uses the
-native head and macro evaluators. It requires a bone-only macro.
+`Test-FaceBoneEffectParity.ps1` takes the same paths plus a bone-only macro
+name (for example `Eyelid_Up_Bone_L.1`, `Eye_Bone_L.1`, `Jaw_Bone.1` or
+`EyesYaw`) and uses the native head and macro evaluators.
 
 An isolated x64 game run at `G:\SS\lab\runs\stage2-x64-face-native-load-01`
 loaded the existing `AI_CTRL` save to `LOAD-SLOT-DONE` and exited through the
@@ -299,8 +303,8 @@ bone; it does not hard-code eye indices or fitted coefficients. The separate
 `Test-FaceNeutralParity.ps1` gate compares all 419 neutral vertices on each
 of the three heads against a repeated x86 oracle. It passes at 1e-4 tolerance,
 with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This **does not**
-establish animated parity: only one class-4 channel is verified; other bone
-channels, full multi-influence interactions and FaceGen remain to be
+establish animated parity: isolated local-Y and local-Z channels pass, but
+combined bone/muscle interaction and FaceGen remain to be
 implemented natively, and the strict
 `Test-FaceParity.ps1` gate remains red.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
