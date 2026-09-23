@@ -12,6 +12,16 @@ result is repeatable. `Test-FaceParity.ps1` runs the original x86 DLL twice
 and demands byte-identical references, then compares every vertex coordinate
 and row identity with the native x64 probe (default absolute tolerance 1e-4).
 It also requires at least one actual moving vertex in the corpus.
+The same reference run now records the sequencer's `AddMacroMuscle` and
+`MultMacroMuscle` calls in `*-x86-muscles.csv`, repeats them, and checks that
+the trace is byte-identical. `S2_FACE_MUSCLE_TRACE_PATH` enables this trace
+for a standalone `FaceProbe` run. The `muscle` column is an ordinal assigned
+on first observation within one probe process, not an asset ID or stable
+muscle name; compare traces for the same input and call order. The wrapper
+forwards each call to the real x86 animator, so the vertex oracle remains
+unchanged. This intermediate oracle is intended to isolate native sequencer
+errors from native bone/vertex-processing errors. It does not yet compare a
+native x64 muscle trace.
 
 Build `FaceProbe` in both `G:\SS\lab\build-x86` and `build-x64` with CMake.
 Build x86 `Game` with this source tree. Prepare a fresh isolated LabRun, copy
@@ -38,6 +48,8 @@ and two sequences (six pairs, 2514 rows each); all six x86 pairs are
 deterministic and deform vertices. The current x64 stub fails before comparison
 because it cannot load the muscle tree or sequence. This is the expected red
 test, not a passing result.
+For the current two sequences, the reference trace contains 1 and 13
+macro-muscle calls respectively per probe run (for each of the three heads).
 
 Coverage still needed before declaring native facial animation complete:
 multiple sequence types (idle, speech, expression masks), overlapping tracks,

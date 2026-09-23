@@ -15,6 +15,69 @@
 
 using namespace LifeStudioHeadAPI;
 
+// The x86 sequencer's RenderMacroMuscles calls IAnimator::Add/MultMacroMuscle.
+// Interpose only on this diagnostic path to observe the sequence's real output
+// without depending on the DLL's non-public enumerator callback ABI.
+class TraceAnimator : public IAnimator
+{
+  IAnimator *real;
+  int time;
+  FILE *traceOut;
+  static std::vector<IMacroMuscle *> known;
+  static std::size_t Id(IMacroMuscle *muscle)
+  {
+    auto it = std::find(known.begin(), known.end(), muscle);
+    if (it != known.end()) return std::size_t(it - known.begin());
+    known.push_back(muscle);
+    return known.size() - 1;
+  }
+public:
+  TraceAnimator(IAnimator *animator, int frameTime, FILE *output): real(animator), time(frameTime), traceOut(output) {}
+  bool Load(const char *data, int size) override { return real->Load(data, size); }
+  int SaveBufferSize() override { return real->SaveBufferSize(); }
+  bool Save(char *data) override { return real->Save(data); }
+  IMuscle *MuscleByName(const char *name) override { return real->MuscleByName(name); }
+  IMuscle *Muscle(int i) override { return real->Muscle(i); }
+  int MusclesCount() const override { return real->MusclesCount(); }
+  IBone *BoneByName(const char *name) override { return real->BoneByName(name); }
+  IBone *Bone(int i) override { return real->Bone(i); }
+  IBone *BoneByType(unsigned long type, IBone *prev) override { return real->BoneByType(type, prev); }
+  int BonesCount() const override { return real->BonesCount(); }
+  void FillUnused(bool fill) override { real->FillUnused(fill); }
+  bool FillUnused() const override { return real->FillUnused(); }
+  bool Process(float *vertices, int step) override { return real->Process(vertices, step); }
+  int VerticesCount() const override { return real->VerticesCount(); }
+  void ClearAllMacroMuscles() override { real->ClearAllMacroMuscles(); }
+  void AddMacroMuscle(IMacroMuscle *muscle, float value) override
+  {
+    std::fprintf(traceOut, "muscle,%d,%zu,add,%.9g\n", time, Id(muscle), value);
+    real->AddMacroMuscle(muscle, value);
+  }
+  void MultMacroMuscle(IMacroMuscle *muscle, float value) override
+  {
+    std::fprintf(traceOut, "muscle,%d,%zu,mult,%.9g\n", time, Id(muscle), value);
+    real->MultMacroMuscle(muscle, value);
+  }
+  void ComputePhysics() override { real->ComputePhysics(); }
+  void RegisterMacroMuscle(IMacroMuscle *muscle) override { real->RegisterMacroMuscle(muscle); }
+  void UnregisterMacroMuscle(IMacroMuscle *muscle) override { real->UnregisterMacroMuscle(muscle); }
+  void ClearAllRegistration() override { real->ClearAllRegistration(); }
+  void CollectUserItems(bool use) override { real->CollectUserItems(use); }
+  bool CollectUserItems() const override { return real->CollectUserItems(); }
+  UserID UserItem(const char *name) override { return real->UserItem(name); }
+  int UserValuesCount(UserID id) override { return real->UserValuesCount(id); }
+  float UserValue(UserID id, int i) override { return real->UserValue(id, i); }
+  void ClearUserItems() override { real->ClearUserItems(); }
+  void ComputeBonesHierarchy() override { real->ComputeBonesHierarchy(); }
+  bool HasNeck() const override { return real->HasNeck(); }
+  void NeckProcessing2(bool use) override { real->NeckProcessing2(use); }
+  bool NeckProcessing2() const override { return real->NeckProcessing2(); }
+  IAnimator *Clone() override { return real->Clone(); }
+  // This diagnostic adapter is stack-owned by WriteFrame.
+  void Destroy() override {}
+};
+std::vector<IMacroMuscle *> TraceAnimator::known;
+
 static std::vector<char> ReadAll(const char *path)
 {
   std::ifstream file(path, std::ios::binary);
@@ -24,7 +87,8 @@ static std::vector<char> ReadAll(const char *path)
 }
 
 static bool WriteFrame(FILE *out, const std::vector<char> &animData,
-                       IMMTree *tree, ISequencer *sequence, const char *label, int time)
+                       IMMTree *tree, ISequencer *sequence, FILE *traceOut,
+                       const char *label, int time)
 {
   IAnimator *anim = IAnimator::Create();
   if (!anim)
@@ -40,7 +104,15 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
   {
     anim->ClearAllMacroMuscles();
     if (sequence)
-      sequence->RenderMacroMuscles(anim, time);
+    {
+      if (traceOut || std::getenv("S2_FACE_TRACE_ANIMATOR"))
+      {
+        TraceAnimator trace(anim, time, traceOut ? traceOut : stderr);
+        sequence->RenderMacroMuscles(&trace, time);
+      }
+      else
+        sequence->RenderMacroMuscles(anim, time);
+    }
     if (!std::getenv("S2_FACE_SKIP_PHYSICS"))
       anim->ComputePhysics();
     if (!std::getenv("S2_FACE_SKIP_FILL_UNUSED"))
@@ -118,6 +190,16 @@ int main(int argc, char **argv)
       if (tree) tree->Destroy();
       return 3;
     }
+#if defined(_M_IX86)
+    if (std::getenv("S2_FACE_TRACE_VTABLE"))
+    {
+      const std::uintptr_t base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+      void **vtable = *reinterpret_cast<void ***>(sequence);
+      for (int i = 0; i < 18; ++i)
+        std::fprintf(stderr, "sequence-vtable[%d] RVA=0x%zx\n", i,
+                     reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+    }
+#endif
     sequence->RegisterMMTree(tree);
     duration = sequence->SequenceTime();
     if (duration <= 0)
@@ -131,17 +213,30 @@ int main(int argc, char **argv)
   FILE *out = std::fopen(argv[2], "wb");
   if (!out)
     return 2;
+  FILE *traceOut = nullptr;
+  if (const char *tracePath = std::getenv("S2_FACE_MUSCLE_TRACE_PATH"))
+  {
+    traceOut = std::fopen(tracePath, "wb");
+    if (!traceOut)
+    {
+      std::fprintf(stderr, "cannot write muscle trace: %s\n", tracePath);
+      std::fclose(out);
+      return 2;
+    }
+    std::fprintf(traceOut, "kind,time,muscle,operation,value\n");
+  }
   std::fprintf(out, "case,time,vertex,x,y,z\n");
-  bool ok = WriteFrame(out, animData, tree, nullptr, "neutral", 0);
+  bool ok = WriteFrame(out, animData, tree, nullptr, traceOut, "neutral", 0);
   if (ok && sequence)
   {
     std::vector<int> times = {0, duration / 4, duration / 2, 3 * duration / 4, duration - 1};
     std::sort(times.begin(), times.end());
     times.erase(std::unique(times.begin(), times.end()), times.end());
     for (int time : times)
-      ok = WriteFrame(out, animData, tree, sequence, "sequence", time) && ok;
+      ok = WriteFrame(out, animData, tree, sequence, traceOut, "sequence", time) && ok;
   }
   std::fclose(out);
+  if (traceOut) std::fclose(traceOut);
   if (sequence) sequence->Destroy();
   if (tree) tree->Destroy();
   if (!ok)
