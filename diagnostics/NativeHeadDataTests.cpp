@@ -22,16 +22,17 @@ static void F32(std::vector<unsigned char> *bytes, std::size_t offset, float val
 
 int main()
 {
-  // Synthetic original-format stream: one bone, one weighted and one implicit
+  // Synthetic original-format stream: one muscle, one weighted and one implicit
   // vertex. No proprietary fixture is required by this unit test.
   constexpr std::size_t vertexBase = 28 + 172;
   constexpr std::size_t implicitBase = vertexBase + 28 + 12;
   std::vector<unsigned char> good(implicitBase + 24, 0);
   U32(&good, 0, 0xAD5A018Du);
-  U32(&good, 4, 1); // bones
+  U32(&good, 4, 1); // muscles
+  U32(&good, 16, 0); // bones in the still-undecoded trailing section
   U32(&good, 8, 2); // total vertices
   U32(&good, 12, 1); // one explicit, one implicit
-  U32(&good, 24, 5); // fixed-size bone record: type, name and anchors
+  U32(&good, 24, 5); // fixed-size muscle record: type, name and anchors
   std::memcpy(good.data() + 28, "a_Test", 6);
   F32(&good, 24 + 68, 1.0f);
   F32(&good, 24 + 72, 2.0f);
@@ -44,7 +45,7 @@ int main()
   F32(&good, vertexBase + 16, -2.5f);
   F32(&good, vertexBase + 20, 3.75f);
   U32(&good, vertexBase + 24, 1); // one influence triple
-  U32(&good, vertexBase + 28, 0); // bone index
+  U32(&good, vertexBase + 28, 0); // muscle index
   F32(&good, vertexBase + 32, 0.5f);
   F32(&good, vertexBase + 36, 0.75f);
   U32(&good, implicitBase, 0); // implicit vertex id
@@ -56,12 +57,14 @@ int main()
   assert(NativeLifeStudio::DecodeHeadVertices(good.data(), good.size(), &parsed));
   assert(parsed.vertexCount == 2 && parsed.explicitVertexCount == 1);
   assert(parsed.vertices[0].index == 1 && parsed.vertices[0].influences.size() == 1);
+  assert(parsed.vertices[0].influences[0].muscleIndex == 0);
   assert(parsed.vertices[0].sourcePosition[1] == -2.5f);
   assert(parsed.implicitVertices.size() == 1 && parsed.implicitVertices[0].index == 0);
   assert(parsed.implicitVertices[0].sourcePosition[2] == 6.0f);
-  assert(parsed.bones.size() == 1 && parsed.bones[0].name == "a_Test" &&
-         parsed.bones[0].type == 5 && parsed.bones[0].pointA[1] == 2.0f &&
-         parsed.bones[0].pointB[2] == 6.0f);
+  assert(parsed.muscleCount == 1 && parsed.boneCount == 0);
+  assert(parsed.muscles.size() == 1 && parsed.muscles[0].name == "a_Test" &&
+         parsed.muscles[0].type == 5 && parsed.muscles[0].pointA[1] == 2.0f &&
+         parsed.muscles[0].pointB[2] == 6.0f);
   auto badBone = good;
   std::memset(badBone.data() + 28, 'A', 64); // missing name terminator
   assert(!NativeLifeStudio::DecodeHeadVertices(badBone.data(), badBone.size(), &parsed));
@@ -83,7 +86,7 @@ int main()
   U32(&bad, vertexBase + 24, 0xFFFFFFFFu); // impossible influence count
   assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
   bad = good;
-  U32(&bad, vertexBase + 28, 1); // out-of-range bone index
+  U32(&bad, vertexBase + 28, 1); // out-of-range muscle index
   assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
   return 0;
 }

@@ -110,7 +110,7 @@ or requiring preconverted copyrighted assets.
 Native decoder progress: `lifestudio_native_data` reads the original
 `0xAD5A018D` header and both bounds-checked vertex tables directly on x64,
 without the DLL. `NativeHeadDecode` parsed all three current head streams:
-36 bones, 419 total vertices, 287 explicitly stored and 132 stored at the
+36 muscles, 7 bones, 419 total vertices, 287 explicitly stored and 132 stored at the
 tail as implicit records. Their raw coordinates were compared with the x86
 neutral `Process` output. All 132 implicit positions matched at the printed
 precision; the maximum differences over the full heads were 0.00906, 0.00938
@@ -121,18 +121,27 @@ those differences, so the remaining correction is in `Process` or its inputs.
 Copying positions is still not a parity implementation.
 `NativeHeadDataTests` covers a synthetic valid stream and truncation/invalid
 count/index cases under CTest. The decoder now also extracts each original
-172-byte bone record's type, null-terminated name, and two three-dimensional
-anchor points, and rejects nonfinite anchors or influences outside the bone
-table. All three real heads still parse with the same 36 named bones and 1,083
-valid bone influences. The 22 neutral-pose discrepancies belong to vertices
-influenced by the two eye bones. For each eye, the x86 output is consistent
+172-byte **muscle** record's type, null-terminated name, and two
+three-dimensional anchor points, and rejects nonfinite anchors or influences
+outside the muscle table. All three real heads have the same 36 named muscles,
+7 separate bones, and 1,083 valid muscle influences. The 22 neutral-pose
+discrepancies belong to vertices influenced by the two `_aEye_*` muscles.
+This classification was verified against the original x86 API:
+`MusclesCount()=36`, `BonesCount()=7`, `VerticesCount()=419`. An optional
+`S2_FACE_BONE_SNAPSHOT_PREFIX` probe snapshot confirmed seven opaque runtime
+bone objects; the source stream's trailing 1,192-byte region contains seven
+separate bone records, still awaiting a checked native decoder. The earlier
+description of the 36 fixed-size records as bones was incorrect and has been
+corrected throughout the native data model.
+For each eye, the x86 output is consistent
 with one near-identity affine YZ transform (fit residual below 4e-7 on all
 three heads); that is diagnostic evidence, **not** a hard-coded correction or
 a proven general animation formula. `IAnimator::Process` in the x86 DLL calls
-per-vertex bone evaluation before filling unused vertices, so the next native
-step is reproducing those bone calculations from source data. Neither this
+per-vertex influence evaluation before filling unused vertices, so the next native
+step is reproducing those muscle/bone calculations from source data. Neither this
 decoder nor the test currently satisfies the full x64 parity gate. Muscle
-structures, sequence evaluation and FaceGen remain to be implemented natively.
+behavior, the trailing bone section, sequence evaluation and FaceGen remain
+to be implemented natively.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
 known gap rather than accepting it as finished animation; the full

@@ -34,8 +34,8 @@ int main(int argc, char **argv)
                  vertex.sourcePosition[0], vertex.sourcePosition[1],
                  vertex.sourcePosition[2]);
   std::fclose(out);
-  std::fprintf(stderr, "bones=%u vertices=%u explicit=%u implicit=%zu\n",
-               head.boneCount, head.vertexCount, head.explicitVertexCount,
+  std::fprintf(stderr, "muscles=%u bones=%u vertices=%u explicit=%u implicit=%zu\n",
+               head.muscleCount, head.boneCount, head.vertexCount, head.explicitVertexCount,
                head.implicitVertices.size());
   return 0;
 }

@@ -15,6 +15,34 @@
 
 using namespace LifeStudioHeadAPI;
 
+#if defined(_M_IX86)
+// Diagnostic snapshot of the original DLL's opaque bone objects. These bytes
+// are local reverse-engineering evidence, never fixture data committed to Git.
+static void SnapshotBones(IAnimator *anim, const char *stage)
+{
+  const char *prefix = std::getenv("S2_FACE_BONE_SNAPSHOT_PREFIX");
+  if (!prefix || !stage)
+    return;
+  const int count = anim->BonesCount();
+  if (count <= 0 || count > 1000)
+    return;
+  char path[1200];
+  if (std::snprintf(path, sizeof(path), "%s-%s.bin", prefix, stage) >= static_cast<int>(sizeof(path)))
+    return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file)
+    return;
+  std::fwrite(&count, sizeof(count), 1, file);
+  for (int i = 0; i < count; ++i)
+  {
+    IBone *bone = anim->Bone(i);
+    if (!bone || std::fwrite(bone, 1, 556, file) != 556)
+      break;
+  }
+  std::fclose(file);
+}
+#endif
+
 // The x86 sequencer's RenderMacroMuscles calls IAnimator::Add/MultMacroMuscle.
 // Interpose only on this diagnostic path to observe the sequence's real output
 // without depending on the DLL's non-public enumerator callback ABI.
@@ -94,6 +122,13 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
   if (!anim)
     return false;
   bool ok = anim->Load(animData.data(), static_cast<int>(animData.size()));
+  if (ok && !sequence && std::getenv("S2_FACE_TRACE_METADATA"))
+    std::fprintf(stderr, "animator-metadata,muscles=%d,bones=%d,vertices=%d\n",
+                 anim->MusclesCount(), anim->BonesCount(), anim->VerticesCount());
+#if defined(_M_IX86)
+  if (ok && !sequence)
+    SnapshotBones(anim, "neutral-load");
+#endif
   if (ok && tree)
     anim->RegisterMacroMuscle(tree->RootMacroMuscle());
   const int count = ok ? anim->VerticesCount() : 0;
@@ -118,6 +153,10 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
     if (!std::getenv("S2_FACE_SKIP_FILL_UNUSED"))
       anim->FillUnused(true);
     ok = anim->Process(vertices.data(), 3);
+#if defined(_M_IX86)
+    if (ok && !sequence)
+      SnapshotBones(anim, "neutral-process");
+#endif
   }
   if (ok)
     for (int i = 0; i < count; ++i)

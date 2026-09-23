@@ -7,7 +7,7 @@
 
 namespace NativeLifeStudio
 {
-struct BoneRecord
+struct MuscleRecord
 {
   std::uint32_t type;
   std::string name;
@@ -17,7 +17,7 @@ struct BoneRecord
 
 struct InfluenceRecord
 {
-  std::uint32_t index;
+  std::uint32_t muscleIndex;
   float componentA;
   float componentB;
 };
@@ -39,15 +39,16 @@ struct ImplicitVertexRecord
 
 struct HeadData
 {
+  std::uint32_t muscleCount = 0;
   std::uint32_t boneCount = 0;
   std::uint32_t vertexCount = 0;
   std::uint32_t explicitVertexCount = 0;
-  std::vector<BoneRecord> bones;
+  std::vector<MuscleRecord> muscles;
   std::vector<VertexRecord> vertices;
   std::vector<ImplicitVertexRecord> implicitVertices;
 };
 
-// Decode named bone anchors and both vertex tables of the original
-// 0xAD5A018D stream. This does not yet calculate bone/muscle deformation.
+// Decode named muscle anchors and both vertex tables of the original
+// 0xAD5A018D stream. The separate bone section is not yet decoded.
 bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result);
 }
