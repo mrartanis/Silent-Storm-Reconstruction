@@ -228,7 +228,8 @@ bool EvaluateChildren(const void *bytes, std::size_t size,
                             offsets, samples, depth + 1))
         return false;
     }
-    else if (operation.headerWords[0] == 3 || operation.headerWords[0] == 4)
+    else if (operation.headerWords[0] == 3 || operation.headerWords[0] == 4 ||
+             operation.headerWords[0] == 5)
     {
       const MMTreeOperationRecord *target = &operation;
       if (operation.referenceOffset)

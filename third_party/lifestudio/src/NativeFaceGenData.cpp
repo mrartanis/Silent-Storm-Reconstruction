@@ -270,4 +270,37 @@ bool BlendFaceGenGeometry(const FaceGenData &data,
   *result = std::move(blended);
   return true;
 }
+
+bool EvaluateGameFaceGenParameters(
+    const void *treeBytes, std::size_t treeSize, const MMTreeRoot &tree,
+    const std::vector<std::pair<std::string, float>> &sliders,
+    std::array<float, 5> *result)
+{
+  if (!treeBytes || !result) return false;
+  std::array<double, 5> sums{};
+  std::array<unsigned, 5> counts{};
+  for (const auto &slider : sliders)
+  {
+    if (!std::isfinite(slider.second) || slider.second < -1.0f ||
+        slider.second > 1.0f) return false;
+    std::vector<MMTreeEffectSample> effects;
+    if (!EvaluateMMTreeMacro(treeBytes, treeSize, tree,
+                             slider.first, slider.second, &effects))
+      return false;
+    for (const auto &effect : effects)
+      if (effect.kind == 3)
+        for (std::size_t index = 0; index < kParameters.size(); ++index)
+          if (effect.targetName == kParameters[index])
+          {
+            sums[index] += effect.expression;
+            ++counts[index];
+          }
+  }
+  std::array<float, 5> parameters{};
+  for (std::size_t index = 0; index < parameters.size(); ++index)
+    if (counts[index])
+      parameters[index] = static_cast<float>(100.0 * sums[index] / counts[index]);
+  *result = parameters;
+  return true;
+}
 }

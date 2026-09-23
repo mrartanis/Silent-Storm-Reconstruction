@@ -2,12 +2,16 @@ param(
     [Parameter(Mandatory)][string]$GameRoot,
     [Parameter(Mandatory)][string]$X86GDPProbe,
     [Parameter(Mandatory)][string]$X64BlendCheck,
+    [string]$X64SelectorParamCheck,
     [Parameter(Mandatory)][string]$OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
 $game = (Resolve-Path -LiteralPath $GameRoot).Path
 $x86 = (Resolve-Path -LiteralPath $X86GDPProbe).Path
 $x64 = (Resolve-Path -LiteralPath $X64BlendCheck).Path
+$nativeParameters = if ($X64SelectorParamCheck) {
+    (Resolve-Path -LiteralPath $X64SelectorParamCheck).Path
+} else { $null }
 $gdp = Join-Path $game 'Res\FaceGenHead.gdp'
 $tree = Join-Path $game 'Res\FaceGenHead.mmt'
 foreach ($path in @($gdp, $tree)) {
@@ -28,10 +32,14 @@ function Get-PEMachine([string]$executable) {
 if ((Get-PEMachine $x86) -ne 0x14c -or (Get-PEMachine $x64) -ne 0x8664) {
     throw 'Blend parity requires the original x86 GDP probe and native x64 blend check'
 }
+if ($nativeParameters -and (Get-PEMachine $nativeParameters) -ne 0x8664) {
+    throw 'Selector-parameter parity requires a native x64 check'
+}
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $oldPath = $env:PATH
 $oldWeights = $env:S2_FACE_SELECTOR_WEIGHTS_PATH
+$oldParameters = $env:S2_FACE_SELECTOR_PARAMS_PATH
 $oldDump = $env:S2_FACE_DUMP_TRANSFORMER_INPUT_PREFIX
 try {
     $env:PATH = "$game;$oldPath"
@@ -42,30 +50,58 @@ try {
         [pscustomobject]@{ Name='gender'; Macro='Gender'; Value='1' },
         [pscustomobject]@{ Name='gender-negative'; Macro='Gender'; Value='-1' },
         [pscustomobject]@{ Name='nose'; Macro='Nose'; Value='0.5' },
-        [pscustomobject]@{ Name='nose-negative'; Macro='Nose'; Value='-0.5' }
+        [pscustomobject]@{ Name='nose-negative'; Macro='Nose'; Value='-0.5' },
+        [pscustomobject]@{ Name='nationality'; Macro='Nationality'; Value='1' },
+        [pscustomobject]@{ Name='nationality-negative'; Macro='Nationality'; Value='-1' },
+        [pscustomobject]@{
+            Name='game-editor-mid'; Macro=$null; Value=$null
+            Extra=@('Age','0', 'Gender','0', 'Nationality','0', 'Nose','0.5')
+        },
+        [pscustomobject]@{
+            Name='game-editor-default'; Macro=$null; Value=$null
+            Extra=@(
+                'Age','0', 'Gender','0', 'Nationality','-1',
+                'Lips','0', 'Chin','0', 'Nose','0', 'Brows','0', 'Cheeks','0',
+                'HairColor','1', 'WomanHair','1', 'EyesColor','-1',
+                'FaceDamage','-1', 'FacialColor','-1'
+            )
+        }
     )) {
         $prefix = Join-Path $output $case.Name
         $weights = "$prefix-weights.csv"
+        $parameters = "$prefix-params.csv"
         $head = "$prefix-morphed-head.bin"
         $env:S2_FACE_SELECTOR_WEIGHTS_PATH = $weights
+        $env:S2_FACE_SELECTOR_PARAMS_PATH = if ($nativeParameters) { $parameters } else { $null }
         $env:S2_FACE_DUMP_TRANSFORMER_INPUT_PREFIX = $prefix
         $probeArgs = @($gdp, $tree, $prefix)
-        if ($case.Macro) { $probeArgs += @($case.Macro, $case.Value) }
+        $macroArgs = @()
+        if ($case.Macro) { $macroArgs += @($case.Macro, $case.Value) }
+        if ($case.Extra) { $macroArgs += $case.Extra }
+        $probeArgs += $macroArgs
         & $x86 @probeArgs
         if ($LASTEXITCODE -ne 0) { throw "x86 GDP probe failed: $($case.Name)" }
         $rows = @(Import-Csv -LiteralPath $weights)
         if ($rows.Count -ne 16) { throw "Expected 16 selector weights: $($case.Name)" }
         & $x64 $gdp $weights $head
         if ($LASTEXITCODE -ne 0) { throw "Native blend parity failed: $($case.Name)" }
+        if ($nativeParameters) {
+            & $nativeParameters $tree $parameters @macroArgs
+            if ($LASTEXITCODE -ne 0) { throw "Native selector-parameter parity failed: $($case.Name)" }
+        }
     }
     if ((Get-FileHash -LiteralPath (Join-Path $output 'neutral-morphed-head.bin')).Hash -ne
         (Get-FileHash -LiteralPath (Join-Path $output 'nose-morphed-head.bin')).Hash) {
         throw 'Nose unexpectedly changed the serialized morph-head base'
     }
-    Write-Output 'FACEGEN BLEND PARITY PASS: 7 x86 cases, 419 vertices and 129 muscle anchors each, tolerance=0.0001'
+    Write-Output 'FACEGEN BLEND PARITY PASS: 11 x86 cases, 419 vertices and 129 muscle anchors each, tolerance=0.0001'
+    if ($nativeParameters) {
+        Write-Output 'FACEGEN SELECTOR-PARAMETER PARITY PASS: 11 x86 cases, 5 inputs each, tolerance=0.0001'
+    }
 }
 finally {
     $env:PATH = $oldPath
     $env:S2_FACE_SELECTOR_WEIGHTS_PATH = $oldWeights
+    $env:S2_FACE_SELECTOR_PARAMS_PATH = $oldParameters
     $env:S2_FACE_DUMP_TRANSFORMER_INPUT_PREFIX = $oldDump
 }

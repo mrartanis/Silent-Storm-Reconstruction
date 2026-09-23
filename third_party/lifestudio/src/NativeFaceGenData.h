@@ -1,9 +1,11 @@
 #pragma once
 
 #include "NativeHeadData.h"
+#include "NativeMMTreeData.h"
 #include <array>
 #include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace LifeStudioHeadAPI { struct ITransformerInput; }
@@ -61,4 +63,10 @@ bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
 bool BlendFaceGenGeometry(const FaceGenData &data,
                           const std::vector<float> &weights,
                           FaceGenGeometry *result);
+// Evaluate the five GDP selector inputs for the named game sliders. This does
+// not perform TriangLib's archetype interpolation or generate an animator.
+bool EvaluateGameFaceGenParameters(
+    const void *treeBytes, std::size_t treeSize, const MMTreeRoot &tree,
+    const std::vector<std::pair<std::string, float>> &sliders,
+    std::array<float, 5> *result);
 }

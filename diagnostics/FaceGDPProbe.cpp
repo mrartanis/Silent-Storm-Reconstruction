@@ -26,14 +26,11 @@ static bool WriteBytes(const std::string &path, const std::vector<char> &bytes)
 
 int main(int argc, char **argv)
 {
-  if (argc != 4 && argc != 6)
+  if (argc < 4 || (argc - 4) % 2)
   {
-    std::fprintf(stderr, "usage: FaceGDPProbe head.gdp head.mmt output-prefix [macro-name amplitude]\n");
+    std::fprintf(stderr, "usage: FaceGDPProbe head.gdp head.mmt output-prefix [macro-name amplitude]...\n");
     return 2;
   }
-  char *end = nullptr;
-  const float amplitude = argc == 6 ? std::strtof(argv[5], &end) : 0.0f;
-  if (argc == 6 && (end == argv[5] || *end)) return 2;
   Init();
   IGDPFile *gdp = IGDPFile::Create(argv[1]);
   if (!gdp)
@@ -113,6 +110,23 @@ int main(int argc, char **argv)
   {
     const auto base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
     const auto bytes = reinterpret_cast<const unsigned char *>(transformer);
+    const auto selector = bytes + 0x0c;
+    const auto ruleSpace = *reinterpret_cast<const void *const *>(selector + 0x14);
+    if (ruleSpace)
+    {
+      MEMORY_BASIC_INFORMATION info{};
+      if (VirtualQuery(*reinterpret_cast<void *const *>(ruleSpace), &info, sizeof(info)) == sizeof(info))
+      {
+        char modulePath[MAX_PATH]{};
+        GetModuleFileNameA(static_cast<HMODULE>(info.AllocationBase), modulePath, MAX_PATH);
+        std::fprintf(stderr, "transformer-rule-space-module=%s\n", modulePath);
+        void **ruleVtable = *reinterpret_cast<void ***>(const_cast<void *>(ruleSpace));
+        const auto moduleBase = reinterpret_cast<std::uintptr_t>(info.AllocationBase);
+        for (int i = 0; i < 5; ++i)
+          std::fprintf(stderr, "transformer-rule-space-vtable[%d] RVA=0x%zx\n", i,
+                       reinterpret_cast<std::uintptr_t>(ruleVtable[i]) - moduleBase);
+      }
+    }
     for (int offset : {0x10, 0x14, 0x9c, 0xa0, 0xe0, 0xf4})
     {
       const auto value = *reinterpret_cast<const std::uintptr_t *>(bytes + offset);
@@ -135,12 +149,20 @@ int main(int argc, char **argv)
     transformer->OutputAnimator(animator);
     transformer->RegisterMacroMuscle(tree->RootMacroMuscle());
     transformer->ClearAllMacroMuscles();
-    if (argc == 6)
+    for (int argument = 4; ok && argument < argc; argument += 2)
     {
-      IMacroMuscle *macro = tree->FindMacroMuscle(argv[4]);
+      char *end = nullptr;
+      const float amplitude = std::strtof(argv[argument + 1], &end);
+      if (end == argv[argument + 1] || *end)
+      {
+        std::fprintf(stderr, "invalid amplitude: %s\n", argv[argument + 1]);
+        ok = false;
+        break;
+      }
+      IMacroMuscle *macro = tree->FindMacroMuscle(argv[argument]);
       if (!macro)
       {
-        std::fprintf(stderr, "unknown macro: %s\n", argv[4]);
+        std::fprintf(stderr, "unknown macro: %s\n", argv[argument]);
         ok = false;
       }
       else
@@ -150,6 +172,21 @@ int main(int argc, char **argv)
     {
       transformer->ComputePhysics();
 #if defined(_M_IX86)
+      if (const char *path = std::getenv("S2_FACE_SELECTOR_PARAMS_PATH"))
+      {
+        const auto bytes = reinterpret_cast<const unsigned char *>(transformer);
+        const int count = *reinterpret_cast<const int *>(bytes + 0xe0);
+        const auto values = *reinterpret_cast<const float *const *>(bytes + 0x100);
+        FILE *csv = count == 5 && values ? std::fopen(path, "wb") : nullptr;
+        if (!csv) ok = false;
+        else
+        {
+          std::fprintf(csv, "index,value\n");
+          for (int index = 0; index < count; ++index)
+            std::fprintf(csv, "%d,%.9g\n", index, values[index]);
+          ok = std::fclose(csv) == 0;
+        }
+      }
       if (const char *path = std::getenv("S2_FACE_SELECTOR_WEIGHTS_PATH"))
       {
         const auto selector = reinterpret_cast<const unsigned char *>(transformer) + 0x0c;

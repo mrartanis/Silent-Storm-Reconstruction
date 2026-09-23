@@ -436,7 +436,8 @@ GDP archetype order. Normalizing those weights and blending each archetype's
 the transformer's saved 129-muscle morph head. `BlendFaceGenGeometry` performs
 this blend natively; `Test-FaceGenBlendParity.ps1` obtains fresh x86 weights
 and intermediate heads, then checks native x64 geometry for neutral, both
-signs of Age and Gender, and both signs of Nose. All seven cases pass at
+signs of Age and Gender, both signs of Nose and Nationality, and two
+advanced-editor slider combinations. All eleven cases pass at
 1e-4: 419 vertices and 129 pairs of muscle anchors per case, with maximum
 observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
 
@@ -445,6 +446,7 @@ observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
   -GameRoot 'G:\SS\lab\baseline' `
   -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
   -X64BlendCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenBlendCheck.exe' `
+  -X64SelectorParamCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenSelectorParamCheck.exe' `
   -OutputDirectory 'G:\SS\lab\runs\face-blend-gate'
 ```
 
@@ -455,6 +457,35 @@ for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
 does not change them; `Age` and `Gender` do. Reconstructing that selection
 rule and the remaining animation-generation passes is still required before
 the direct x64 transform parity gate can turn green.
+
+Scope of the native port is the **game's calls**, not every LifeStudio
+FaceGen feature. `Main/iAdvFaceGen.cpp::UpdateHead` sets 14 named sliders,
+with discrete positions 0..100 mapped to `[-1,+1]`; `Main/LSHead.cpp`
+passes recognized macro names to the mesh and texture transformers, asks
+both to `ComputePhysics/Generate`, saves the mesh animator into a committed
+head, and reads texture `UserItem/UserValue` channels from the separate
+texture rig. The editor defaults to Age=0, Gender=0, Nationality=-1,
+Lips/Chin/Nose/Brows/Cheeks=0, hair controls=+1, and color/damage/glasses
+controls=-1. `EyeGlasses` is not a macro in this MMT; the game handles its
+model swap separately. In a one-slider x86 probe, only Age, Gender and
+Nationality changed the 16 archetype weights; the remaining recognized
+sliders leave those weights unchanged but may still affect morph geometry or
+texture channels. A no-macro probe is **not** equivalent to the editor's
+explicit `Nationality=0` state. `S2_FACE_SELECTOR_PARAMS_PATH=<path>` exports
+the transformer's five selector inputs for diagnostics; the default is five
+zeros, while `Nationality=1` sets the three ethnicity inputs to approximately
+`100,-58.44155,-55.84415`. The selector's interpolation is supplied by the
+x86-only `TriangLib.dll`; it is not yet native. The game-used transformation,
+including texture outputs and committed-head save/reload, is the remaining
+target rather than a general-purpose FaceGen API clone.
+The native MMT evaluator now accepts the game's class-5 user-item leaves,
+allowing it to evaluate Age/Gender/Nationality macros without rejecting their
+texture effects. `EvaluateGameFaceGenParameters` maps the resulting effects
+to the five Morph.txt selector inputs. The optional selector-parameter check
+in the command above compares those five x64 inputs directly with freshly
+exported x86 values on all eleven cases; its maximum observed delta is
+3.82e-6. This verifies the game-used parameter calculation, **not** the
+TriangLib interpolation from parameters to archetype weights.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
