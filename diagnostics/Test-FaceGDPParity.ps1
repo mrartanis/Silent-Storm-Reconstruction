@@ -4,6 +4,7 @@ param(
     [Parameter(Mandatory)][string]$X86FaceProbe,
     [Parameter(Mandatory)][string]$X64FaceProbe,
     [Parameter(Mandatory)][string]$OutputDirectory,
+    [string]$NativeHeadDecode,
     [string]$MacroName = 'Nose',
     [double]$Amplitude = 0.5,
     [string]$SequenceFile,
@@ -17,10 +18,13 @@ $mmt = Join-Path $game 'Res\FaceGenHead.mmt'
 $x86GDP = (Resolve-Path -LiteralPath $X86GDPProbe).Path
 $x86Face = (Resolve-Path -LiteralPath $X86FaceProbe).Path
 $x64Face = (Resolve-Path -LiteralPath $X64FaceProbe).Path
+if ($NativeHeadDecode) { $nativeHead = (Resolve-Path -LiteralPath $NativeHeadDecode).Path }
 if ($SequenceFile) { $sequence = (Resolve-Path -LiteralPath $SequenceFile).Path }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $oldPath = $env:PATH
+$oldInfluences = $env:S2_FACE_VERTEX_INFLUENCES_PATH
+$oldSnapshotTime = $env:S2_FACE_STATE_SNAPSHOT_TIME
 $results = @()
 try {
     $env:PATH = "$game;$oldPath"
@@ -69,7 +73,7 @@ try {
         }
         $results += [pscustomobject]@{
             Case=$case
-            Vertices=$left.Count
+            Rows=$left.Count
             MaximumDelta=$max.ToString('G9', $culture)
             Mismatches=$bad
         }
@@ -77,8 +81,14 @@ try {
             $tree = Join-Path $game 'tree.mma'
             $animatedX86 = "$prefix-animated-x86.csv"
             $animatedX64 = "$prefix-animated-x64.csv"
+            if ($nativeHead) {
+                $env:S2_FACE_VERTEX_INFLUENCES_PATH = "$prefix-x86-influences.csv"
+                $env:S2_FACE_STATE_SNAPSHOT_TIME = '0'
+            }
             & $x86Face $generated $animatedX86 $sequence $tree
             if ($LASTEXITCODE -ne 0) { throw 'x86 FaceGen animation oracle failed' }
+            $env:S2_FACE_VERTEX_INFLUENCES_PATH = $null
+            $env:S2_FACE_STATE_SNAPSHOT_TIME = $null
             & $x64Face $generated $animatedX64 $sequence $tree
             if ($LASTEXITCODE -ne 0) { throw 'x64 FaceGen animation probe failed' }
             $animatedLeft = @(Import-Csv -LiteralPath $animatedX86)
@@ -107,15 +117,46 @@ try {
             }
             $results += [pscustomobject]@{
                 Case='morph+sequence'
-                Vertices=$animatedLeft.Count
+                Rows=$animatedLeft.Count
                 MaximumDelta=$animatedMax.ToString('G9', $culture)
                 Mismatches=$animatedBad
+            }
+            if ($nativeHead) {
+                $nativeRows = @(& $nativeHead $generated '--influences' | ConvertFrom-Csv)
+                if ($LASTEXITCODE -ne 0) { throw 'Native FaceGen influence decode failed' }
+                $referenceRows = @(Import-Csv -LiteralPath "$prefix-x86-influences.csv")
+                if (!$referenceRows.Count -or $referenceRows.Count -ne $nativeRows.Count) {
+                    throw 'FaceGen runtime influence count mismatch'
+                }
+                $weightMax = 0.0
+                $weightBad = 0
+                for ($i = 0; $i -lt $referenceRows.Count; ++$i) {
+                    $a = $referenceRows[$i]
+                    $b = $nativeRows[$i]
+                    if ($a.vertex -ne $b.vertex -or $a.muscle -ne $b.muscle) {
+                        throw "FaceGen influence identity mismatch: row $i"
+                    }
+                    foreach ($pair in @(@('componentA','component-a'), @('componentB','component-b'))) {
+                        $delta = [Math]::Abs([double]::Parse($a.($pair[0]), $culture) -
+                                             [double]::Parse($b.($pair[1]), $culture))
+                        $weightMax = [Math]::Max($weightMax, $delta)
+                        if ($delta -gt $Tolerance) { ++$weightBad }
+                    }
+                }
+                $results += [pscustomobject]@{
+                    Case='morph+weights'
+                    Rows=$referenceRows.Count
+                    MaximumDelta=$weightMax.ToString('G9', $culture)
+                    Mismatches=$weightBad
+                }
             }
         }
     }
 }
 finally {
     $env:PATH = $oldPath
+    $env:S2_FACE_VERTEX_INFLUENCES_PATH = $oldInfluences
+    $env:S2_FACE_STATE_SNAPSHOT_TIME = $oldSnapshotTime
 }
 Write-Output (($results | Format-Table -AutoSize | Out-String).TrimEnd())
 if (($results | Where-Object Mismatches -GT 0).Count) {

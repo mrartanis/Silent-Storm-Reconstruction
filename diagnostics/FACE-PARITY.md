@@ -338,13 +338,13 @@ the original DLL's 0x37D30DC0 `Save` format, including variable-length
 muscle and bone records and compact vertex tables. `Test-FaceGDPParity.ps1`
 recreates neutral and `Nose=0.5` x86 generated streams, checks that x86 can
 reload them unchanged, and compares their 419 processed vertices to x64. Both
-cases pass at 1e-4 tolerance with maximum component delta 1.91e-6.
-Passing `-SequenceFile` adds an animated x86/x64 comparison. This currently
-fails for `sequence-6008-0.bin`: 690 coordinate mismatches across 2,514 rows,
-maximum delta 0.1866033. The compact saved stream has one influence
-coefficient where the source stream has two; x64's neutral-factor
-interpretation is sufficient for the still pose but not verified for motion.
-The native GDP/transformer path itself remains a stub. Oracle artifacts are in the ignored
+cases pass at 1e-4 tolerance. Passing `-SequenceFile` adds an animated x86/x64
+comparison. With `sequence-6008-0.bin`, all 2,514 animated vertex rows now
+pass at 1e-4, with maximum component delta 2.38e-6. The earlier 690-row
+failure (maximum delta 0.1866033) exposed the omitted saved-stream weight;
+the native decoder now reconstructs it. The native GDP/transformer path itself
+remains a stub, so generating a morph without the x86-produced saved stream
+is not yet supported. Oracle artifacts are in the ignored
 `G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
 
 Further x86 runtime inspection identified what the compact format omits.
@@ -359,10 +359,18 @@ FaceGen `Nose=0.5` stream has the same 1,083 runtime influences but different
 weights (for that influence A=0.53536272, B=0.337188423). A is the
 unclamped projection parameter of the vertex on the muscle's anchor segment:
 all 1,083 source-stream values match this calculation within 2.21e-7.
-B is a spatial falloff that still needs to be reproduced natively. Setting
-B=1 in the current saved-stream decoder explains why still-pose parity passes
-but animated parity does not. The reference CSVs are in the ignored oracle
-run's `evidence` directory.
+B is a spatial falloff: clamp A to `[0,1]`, measure distance from the vertex
+to that nearest point on the muscle's anchor segment, and evaluate the
+muscle's five-point nonuniform cubic Hermite curve at that distance. Clamp
+the result to `[0,1]`; beyond the last knot, B is zero. The x64 decoder
+recovers the five X knots and Y values from each saved muscle record and now
+matches all 1,083 runtime B values in both the saved static and the FaceGen
+`Nose=0.5` heads within 2.98e-7. The reference CSVs are in the ignored
+oracle run's `evidence` directory.
+`Test-FaceGDPParity.ps1 -SequenceFile <sequence-6008-0.bin>
+-NativeHeadDecode <NativeHeadDecode.exe>` includes a direct 1,083-row
+x86/native influence-weight gate in addition to the vertex comparisons;
+on the current FaceGen case its maximum coefficient delta is 2.24e-7.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For

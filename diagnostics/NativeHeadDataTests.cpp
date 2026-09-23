@@ -40,6 +40,10 @@ int main()
   F32(&good, 24 + 80, 4.0f);
   F32(&good, 24 + 84, 5.0f);
   F32(&good, 24 + 88, 6.0f);
+  for (int i = 0; i < 4; ++i)
+    F32(&good, 24 + 96 + i * 4, float(i + 1));
+  for (int i = 0; i < 5; ++i)
+    F32(&good, 24 + 132 + i * 4, 1.0f - i * 0.25f);
   U32(&good, vertexBase, 1); // explicit vertex id
   F32(&good, vertexBase + 12, 1.25f);
   F32(&good, vertexBase + 16, -2.5f);
@@ -135,11 +139,15 @@ int main()
   std::memcpy(saved.data() + 37, "a_Test", 6);
   F32(&saved, savedMusclePayload, 1.0f);
   F32(&saved, savedMusclePayload + 12, 2.0f);
+  for (int i = 0; i < 4; ++i)
+    F32(&saved, savedMusclePayload + 32 + i * 4, float(i + 1));
+  for (int i = 0; i < 5; ++i)
+    F32(&saved, savedMusclePayload + 68 + i * 4, 1.0f - i * 0.25f);
   U32(&saved, savedVertexSection, 5);
   U32(&saved, savedVertex, 1);
-  F32(&saved, savedVertex + 4, 3.0f);
-  F32(&saved, savedVertex + 8, 4.0f);
-  F32(&saved, savedVertex + 12, 5.0f);
+  F32(&saved, savedVertex + 4, 1.75f);
+  F32(&saved, savedVertex + 8, 1.0f);
+  F32(&saved, savedVertex + 12, 0.0f);
   U32(&saved, savedVertex + 16, 1);
   U32(&saved, savedVertex + 20, 0);
   F32(&saved, savedVertex + 24, 0.75f);
@@ -156,9 +164,9 @@ int main()
   assert(NativeLifeStudio::DecodeHeadVertices(saved.data(), saved.size(), &parsed));
   assert(parsed.muscleCount == 1 && parsed.boneCount == 1 && parsed.vertexCount == 2);
   assert(parsed.muscles[0].name == "a_Test" && parsed.muscles[0].pointB[0] == 2.0f);
-  assert(parsed.vertices[0].index == 1 && parsed.vertices[0].sourcePosition[1] == 4.0f);
+  assert(parsed.vertices[0].index == 1 && parsed.vertices[0].sourcePosition[1] == 1.0f);
   assert(parsed.vertices[0].influences[0].componentA == 0.75f &&
-         parsed.vertices[0].influences[0].componentB == 1.0f);
+         parsed.vertices[0].influences[0].componentB == 0.75f);
   assert(parsed.bones[0].name == "b_Test" && parsed.bones[0].matrixB[0] == 2.0f &&
          parsed.bones[0].muscleIndices[0] == 0);
   assert(parsed.implicitVertices[0].index == 0 &&
@@ -170,6 +178,12 @@ int main()
   assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
   bad = saved;
   U32(&bad, savedBonePayload, 2);
+  assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
+  bad = saved;
+  F32(&bad, savedMusclePayload + 36, 0.5f); // non-increasing falloff positions
+  assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
+  bad = saved;
+  U32(&bad, savedMusclePayload + 68, 0x7F800000u); // nonfinite falloff value
   assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
   return 0;
 }

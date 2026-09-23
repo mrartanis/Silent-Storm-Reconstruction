@@ -1,4 +1,6 @@
 #include "NativeHeadData.h"
+#include "NativeCurve.h"
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -37,6 +39,47 @@ public:
   }
 };
 
+bool ReadFalloff(const Reader &reader, std::size_t xOffset,
+                 std::size_t yOffset, MuscleRecord *muscle)
+{
+  muscle->falloffX[0] = 0.0f;
+  for (int i = 1; i < 5; ++i)
+    if (!reader.F32(xOffset + std::size_t(i - 1) * 4, &muscle->falloffX[i]))
+      return false;
+  for (int i = 0; i < 5; ++i)
+    if (!reader.F32(yOffset + std::size_t(i) * 4, &muscle->falloffY[i]))
+      return false;
+  for (int i = 1; i < 5; ++i)
+    if (!(muscle->falloffX[i] > muscle->falloffX[i - 1]))
+      return false;
+  return true;
+}
+
+bool ReconstructFalloff(const MuscleRecord &muscle, const VertexRecord &vertex,
+                        float projection, float *weight)
+{
+  const float clamped = std::max(0.0f, std::min(1.0f, projection));
+  float squared = 0.0f;
+  for (int axis = 0; axis < 3; ++axis)
+  {
+    const float nearest = muscle.pointA[axis] +
+                          clamped * (muscle.pointB[axis] - muscle.pointA[axis]);
+    const float difference = vertex.sourcePosition[axis] - nearest;
+    squared += difference * difference;
+  }
+  const float distance = std::sqrt(squared);
+  if (distance > muscle.falloffX.back())
+  {
+    *weight = 0.0f;
+    return true;
+  }
+  const std::vector<float> x(muscle.falloffX.begin(), muscle.falloffX.end());
+  const std::vector<float> y(muscle.falloffY.begin(), muscle.falloffY.end());
+  if (!EvaluateHermiteCurve(x, y, distance, weight)) return false;
+  *weight = std::max(0.0f, std::min(1.0f, *weight));
+  return true;
+}
+
 bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *result)
 {
   Reader reader(bytes, size);
@@ -66,6 +109,8 @@ bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *resu
       if (!reader.F32(payload + axis * 4, &muscle.pointA[axis]) ||
           !reader.F32(payload + 12 + axis * 4, &muscle.pointB[axis]))
         return false;
+    if (!ReadFalloff(reader, payload + 32, payload + 68, &muscle))
+      return false;
     parsed.muscles.push_back(std::move(muscle));
     cursor = payload + 108;
   }
@@ -98,10 +143,9 @@ bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *resu
           influence.muscleIndex >= parsed.muscleCount ||
           !reader.F32(cursor + 4, &influence.componentA))
         return false;
-      // Save omits componentB. The original DLL reconstructs it from the
-      // vertex/muscle geometry at Load time. This neutral placeholder is
-      // enough for still poses, but animated saved-stream parity remains red.
-      influence.componentB = 1.0f;
+      if (!ReconstructFalloff(parsed.muscles[influence.muscleIndex], vertex,
+                              influence.componentA, &influence.componentB))
+        return false;
       vertex.influences.push_back(influence);
     }
     parsed.vertices.push_back(std::move(vertex));
@@ -195,6 +239,8 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
       if (!reader.F32(offset + 68 + axis * 4, &muscle.pointA[axis]) ||
           !reader.F32(offset + 80 + axis * 4, &muscle.pointB[axis]))
         return false;
+    if (!ReadFalloff(reader, offset + 96, offset + 132, &muscle))
+      return false;
     parsed.muscles.push_back(std::move(muscle));
   }
   std::size_t cursor = 28 + std::size_t(parsed.muscleCount) * 172;

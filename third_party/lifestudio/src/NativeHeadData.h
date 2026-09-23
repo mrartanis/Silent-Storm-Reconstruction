@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <array>
 #include <string>
 #include <vector>
 
@@ -13,6 +14,8 @@ struct MuscleRecord
   std::string name;
   float pointA[3];
   float pointB[3];
+  std::array<float, 5> falloffX{};
+  std::array<float, 5> falloffY{};
 };
 
 struct BoneRecord
