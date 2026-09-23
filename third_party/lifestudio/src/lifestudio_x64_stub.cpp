@@ -190,6 +190,7 @@ public:
 class SequencerStub : public ISequencer
 {
   NativeLifeStudio::SequenceHeader header;
+  std::vector<NativeLifeStudio::SequenceTrack> tracks;
   IMMTree *tree = nullptr;
   bool loaded = false;
 public:
@@ -201,21 +202,25 @@ public:
   bool Load(const char *bytes, int size)
   {
     NativeLifeStudio::SequenceHeader parsed;
+    std::vector<NativeLifeStudio::SequenceTrack> parsedTracks;
     if (size < 0 || !NativeLifeStudio::DecodeSequenceHeader(bytes, static_cast<std::size_t>(size), &parsed) ||
+        !NativeLifeStudio::DecodeSequenceTracks(bytes, static_cast<std::size_t>(size), &parsedTracks) ||
         parsed.duration > static_cast<std::uint32_t>(std::numeric_limits<int>::max()) ||
         parsed.trackCount > static_cast<std::uint32_t>(std::numeric_limits<int>::max()))
     {
       header = {};
+      tracks.clear();
       loaded = false;
       return false;
     }
     header = parsed;
+    tracks = std::move(parsedTracks);
     loaded = true;
     return true;
   }
   IMMTree *RegisterMMTree(IMMTree *value) { IMMTree *previous = tree; tree = value; return previous; }
   int SequenceTime() const { return loaded ? static_cast<int>(header.duration) : 0; }
-  int TracksCount() const { return loaded ? static_cast<int>(header.trackCount) : 0; }
+  int TracksCount() const { return loaded ? static_cast<int>(tracks.size()) : 0; }
   int EnumerateMacroMuscles(MUSCLE_CB, void *) { return 0; }
   int EnumerateMacroMuscles(int, MUSCLE_EXPR_CB, void *) { return 0; }
   int EnumerateMacroMuscles(MUSCLE_NAME_CB, void *) { return 0; }

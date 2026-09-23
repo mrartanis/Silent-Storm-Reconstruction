@@ -83,17 +83,23 @@ other channels. The complete exported corpus and proprietary bytes stay in
 the ignored lab directory. Use the representative subset for a wider red/green
 x64 gate; additional named speech/expression cases still need classification.
 
-Native `MMSF` envelope progress: `NativeSequenceData` now reads the v1
+Native `MMSF` envelope progress: `NativeSequenceData` reads the v1
 32-byte header with checked payload length, duration and track count. The
 x86 `ISequencer::SequenceTime` and `TracksCount` values matched those header
-fields for five structurally different sampled files. The x64 decoder parsed
-all 6,780 exported sequences; `NativeSequenceDataTests` passes on both x86
-and x64. The fourth header field (offset 20) has unknown semantics and is
-preserved without interpretation. No track/keyframe or muscle-tree decoding
-is claimed, and the strict x64 vertex parity test remains red.
+fields for five structurally different sampled files. The field at offset 20
+is the size of the prelude after the 32-byte envelope: track records start at
+`32 + preludeSize`. Each track has a 32-byte header, its second word gives the
+following payload length, and the payload begins with a u32-length-prefixed
+name. The decoder checks every boundary, name and final cursor, preserving
+the eight header words and record offsets for later event parsing. It decoded
+all tracks in all 6,780 exported sequences, with prelude sizes 76 (6,658
+files), 84 (one file) and 100 (121 files). `NativeSequenceDataTests` passes on
+both x86 and x64. This is track-envelope decoding, **not** event/keyframe,
+muscle-tree or animation evaluation; the strict x64 vertex parity test remains
+red.
 
 The partial x64 API bridge now wires the native original-head and `MMSF`
-envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
+track-envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
 the v4 `MMLF` envelope for the game's `tree.mma` and processes static head
 positions through `IAnimator::Process`; the muscle tree, keyframe evaluation,
 bone physics and animated vertex deformation are **not** implemented. As a result,

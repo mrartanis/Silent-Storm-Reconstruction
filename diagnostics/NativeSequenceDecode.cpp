@@ -6,22 +6,35 @@
 
 int main(int argc, char **argv)
 {
-  if (argc != 2)
+  if (argc < 2)
   {
-    std::fprintf(stderr, "usage: NativeSequenceDecode sequence.bin\n");
+    std::fprintf(stderr, "usage: NativeSequenceDecode sequence.bin [more-sequences.bin ...]\n");
     return 2;
   }
-  std::ifstream file(argv[1], std::ios::binary);
-  if (!file)
-    return 2;
-  std::vector<char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-  NativeLifeStudio::SequenceHeader header;
-  if (!NativeLifeStudio::DecodeSequenceHeader(bytes.data(), bytes.size(), &header))
+  for (int arg = 1; arg < argc; ++arg)
   {
-    std::fprintf(stderr, "invalid MMSF v1 sequence envelope: %s\n", argv[1]);
-    return 3;
+    std::ifstream file(argv[arg], std::ios::binary);
+    if (!file)
+      return 2;
+    std::vector<char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    NativeLifeStudio::SequenceHeader header;
+    std::vector<NativeLifeStudio::SequenceTrack> tracks;
+    if (!NativeLifeStudio::DecodeSequenceHeader(bytes.data(), bytes.size(), &header) ||
+        !NativeLifeStudio::DecodeSequenceTracks(bytes.data(), bytes.size(), &tracks))
+    {
+      std::fprintf(stderr, "invalid MMSF v1 sequence or track records: %s\n", argv[arg]);
+      return 3;
+    }
+    if (argc == 2)
+    {
+      std::printf("payload=%u,duration=%u,tracks=%u,prelude=%u\n",
+                  header.payloadSize, header.duration, header.trackCount, header.preludeSize);
+      for (std::size_t i = 0; i < tracks.size(); ++i)
+        std::printf("track=%zu,offset=%zu,payload=%u,name=%s\n",
+                    i, tracks[i].offset, tracks[i].payloadSize, tracks[i].name.c_str());
+    }
   }
-  std::printf("payload=%u,duration=%u,tracks=%u,field20=%u\n",
-              header.payloadSize, header.duration, header.trackCount, header.headerField20);
+  if (argc > 2)
+    std::printf("decoded %d sequences and all track envelopes\n", argc - 1);
   return 0;
 }
