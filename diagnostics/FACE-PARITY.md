@@ -58,6 +58,22 @@ and `.mmt` morphs, texture-weight user items, and a live x64 portrait/head
 render compared to x86. The small corpus is an implementation guide, not a
 substitute for these cases.
 
+Corpus expansion: the x86 game's `facefixtures` harness command enumerates
+the `HeadSeqs` database table and exports each accessible original sequence
+stream into `S2_FACE_FIXTURE_DIR` (existing opt-in fixture directory). An
+isolated run at `G:\SS\lab\runs\stage2-x86-face-corpus-01` exported 6,780
+`MMSF` streams; the command is not part of normal gameplay. A representative
+test subset in that run's `evidence\representative-fixtures` contains one
+head and 20 sequences selected across file sizes, durations and header
+counts, including the original two idle sequences. The reference-only
+`Test-FaceParity.ps1` run passed repeatability for all 20; 13 changed vertices, and
+macro-muscle traces ranged from 0 to 13 calls at the sampled frames. These
+header counts are not yet a verified track taxonomy, and a zero-call trace
+does not mean an empty sequence: it may act at unsampled times or through
+other channels. The complete exported corpus and proprietary bytes stay in
+the ignored lab directory. Use the representative subset for a wider red/green
+x64 gate; additional named speech/expression cases still need classification.
+
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
 `head-56-0.bin`, the source stream is 31,612 bytes and the saved form is
