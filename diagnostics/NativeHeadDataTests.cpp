@@ -171,6 +171,68 @@ int main()
          parsed.bones[0].muscleIndices[0] == 0);
   assert(parsed.implicitVertices[0].index == 0 &&
          parsed.implicitVertices[0].sourcePosition[2] == 8.0f);
+  // The game's second neck segment has no muscles/explicit vertices and
+  // marks the all-implicit section with 1 rather than 5.
+  std::vector<unsigned char> implicitOnly(32 + 4 + 16, 0);
+  U32(&implicitOnly, 0, 0x37D30DC0u);
+  U32(&implicitOnly, 8, 1);
+  U32(&implicitOnly, 32, 1);
+  F32(&implicitOnly, 40, 2.0f);
+  assert(NativeLifeStudio::DecodeHeadVertices(implicitOnly.data(), implicitOnly.size(), &parsed));
+  assert(parsed.vertexCount == 1 && parsed.explicitVertexCount == 0 &&
+         parsed.implicitVertices[0].sourcePosition[0] == 2.0f &&
+         !parsed.hasNeckAppendix);
+  auto withNeckAppendix = saved;
+  const std::size_t neckOffset = withNeckAppendix.size();
+  withNeckAppendix.resize(neckOffset + 8 * 21 + 16 * 25, 0);
+  std::size_t neckCursor = neckOffset;
+  for (int zone = 0; zone < 8; ++zone)
+  {
+    const std::string name = "Neck_Zone_" + std::to_string(zone);
+    withNeckAppendix[neckCursor] = static_cast<unsigned char>(name.size());
+    std::memcpy(withNeckAppendix.data() + neckCursor + 1, name.data(), name.size());
+    U32(&withNeckAppendix, neckCursor + 12, 2);
+    U32(&withNeckAppendix, neckCursor + 16, 0xffffffffu);
+    withNeckAppendix[neckCursor + 20] = zone == 3 ? 2 : 0;
+    neckCursor += 21;
+  }
+  for (int section = 0; section < 2; ++section)
+    for (int zone = 0; zone < 8; ++zone)
+    {
+      const std::string name = std::string(section == 0 ? "Neck_Upper_" : "Neck_Lower_") +
+                               std::to_string(zone);
+      withNeckAppendix[neckCursor] = static_cast<unsigned char>(name.size());
+      std::memcpy(withNeckAppendix.data() + neckCursor + 1, name.data(), name.size());
+      U32(&withNeckAppendix, neckCursor + 13, 2);
+      U32(&withNeckAppendix, neckCursor + 17, 1);
+      U32(&withNeckAppendix, neckCursor + 21, section == 0 ? 1 : 0);
+      neckCursor += 25;
+    }
+  assert(neckCursor == withNeckAppendix.size());
+  assert(NativeLifeStudio::DecodeHeadVertices(withNeckAppendix.data(), withNeckAppendix.size(), &parsed));
+  assert(parsed.hasNeckAppendix);
+  assert(parsed.neckZones[3].vertexMask[0] == 2 &&
+         parsed.neckZones[3].upperVertex == 1 && parsed.neckZones[3].lowerVertex == 0);
+  std::vector<char> neckEncoding;
+  assert(!NativeLifeStudio::EncodeSavedHead(parsed, &neckEncoding));
+  U32(&withNeckAppendix, neckOffset + 12, 3);
+  assert(!NativeLifeStudio::DecodeHeadVertices(withNeckAppendix.data(), withNeckAppendix.size(), &parsed));
+  U32(&withNeckAppendix, neckOffset + 12, 2);
+  U32(&withNeckAppendix, neckOffset + 8 * 21 + 21, 2);
+  assert(!NativeLifeStudio::DecodeHeadVertices(withNeckAppendix.data(), withNeckAppendix.size(), &parsed));
+  U32(&withNeckAppendix, neckOffset + 8 * 21 + 21, 1);
+  withNeckAppendix[neckOffset + 1] = 'X';
+  assert(!NativeLifeStudio::DecodeHeadVertices(withNeckAppendix.data(), withNeckAppendix.size(), &parsed));
+  assert(NativeLifeStudio::DecodeHeadVertices(saved.data(), saved.size(), &parsed));
+  std::vector<char> encoded;
+  NativeLifeStudio::HeadData reloaded;
+  assert(NativeLifeStudio::EncodeSavedHead(parsed, &encoded));
+  assert(NativeLifeStudio::DecodeHeadVertices(encoded.data(), encoded.size(), &reloaded));
+  assert(reloaded.vertexCount == parsed.vertexCount &&
+         reloaded.vertices[0].sourcePosition[0] == parsed.vertices[0].sourcePosition[0] &&
+         reloaded.vertices[0].influences[0].componentA ==
+             parsed.vertices[0].influences[0].componentA &&
+         reloaded.bones[0].matrixB[0] == parsed.bones[0].matrixB[0]);
   for (std::size_t length = 0; length < saved.size(); ++length)
     assert(!NativeLifeStudio::DecodeHeadVertices(saved.data(), length, &parsed));
   bad = saved;

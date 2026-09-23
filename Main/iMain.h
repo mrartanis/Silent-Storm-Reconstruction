@@ -13,7 +13,10 @@ namespace NInput
 namespace NMainLoop
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+class IInterfaceBase;
 int GetInterfaceStackDepth();
+// Harness-only, borrowed pointer valid until the next interface command.
+IInterfaceBase* GetCurrentInterfaceForHarness();
 bool StepApp( bool bActive, bool bSetGamma, bool bInput = true ); // return false on exit state
 void DoneInterface();
 void ShowLogo();

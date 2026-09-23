@@ -144,7 +144,33 @@ bool EvaluateMacroEvent(const SequenceTrack::MacroEvent &event,
   const float position = float(time - start) / float(duration);
   float value = 0.0f;
   if (!EvaluateHermiteCurve(x, y, position, &value))
-    return false;
+  {
+    // Sixty-four authored speech-phoneme curves in the game's 6,780 MMSF
+    // files have a terminal knot at (or just below) the preceding knot:
+    // e.g. {0, 1, .9999, 1} or {0, 1.08, 1}. The x86 evaluator still uses
+    // the first segment throughout the active [0,1) event interval. Its
+    // right tangent uses knot 2 even though the full x array is unordered.
+    // Keep the shared curve evaluator strict for all other data.
+    if ((x.size() != 3 && x.size() != 4) || x.size() != y.size() ||
+        !std::isfinite(x[0]) || !std::isfinite(x[1]) || !std::isfinite(x[2]) ||
+        !std::isfinite(y[0]) || !std::isfinite(y[1]) || !std::isfinite(y[2]) ||
+        !(x[0] < x[1]) || x[1] < 1.0f || !(x[0] < x[2]) ||
+        x[2] > x[1] || position < x[0] || position > x[1] ||
+        (x.size() == 4 && (!std::isfinite(x[3]) || !std::isfinite(y[3]) ||
+                           x[3] < x[2])))
+      return false;
+    const float width = x[1] - x[0];
+    const float t = (position - x[0]) / width;
+    const float t2 = t * t;
+    const float t3 = t2 * t;
+    const float slopeA = (y[1] - y[0]) / width;
+    const float slopeB = (y[2] - y[0]) / (x[2] - x[0]);
+    value = (2 * t3 - 3 * t2 + 1) * y[0] +
+            (t3 - 2 * t2 + t) * width * slopeA +
+            (-2 * t3 + 3 * t2) * y[1] +
+            (t3 - t2) * width * slopeB;
+    if (!std::isfinite(value)) return false;
+  }
   *expression = value / 100.0f;
   return true;
 }

@@ -9,7 +9,8 @@ param(
     [double]$Tolerance = 0.0001,
     [double]$MuscleTolerance = 0.00001,
     [switch]$ReferenceOnly,
-    [switch]$CallsOnly
+    [switch]$CallsOnly,
+    [switch]$AllowStaticCorpus
 )
 $ErrorActionPreference = 'Stop'
 if ($CallsOnly -and $ReferenceOnly) { throw 'CallsOnly requires the native x64 probe' }
@@ -122,8 +123,13 @@ try {
                     if ($a.time -ne $b.time -or $namedIds[$a.muscle] -cne $b.name) {
                         throw "Different macro-muscle call at $name row $i"
                     }
-                    $delta = [Math]::Abs([double]::Parse($a.value, $culture) -
-                                         [double]::Parse($b.value, $culture))
+                    $leftValue = [double]::Parse($a.value, $culture)
+                    $rightValue = [double]::Parse($b.value, $culture)
+                    if ([double]::IsNaN($leftValue) -or [double]::IsInfinity($leftValue) -or
+                        [double]::IsNaN($rightValue) -or [double]::IsInfinity($rightValue)) {
+                        throw "Nonfinite macro-muscle value at $name row $i"
+                    }
+                    $delta = [Math]::Abs($leftValue - $rightValue)
                     $maximumMuscleDelta = [Math]::Max($maximumMuscleDelta, $delta)
                     if ($delta -gt $MuscleTolerance) {
                         throw "Macro-muscle value mismatch at $name row $i : $delta"
@@ -140,8 +146,13 @@ try {
                 $origin = $neutral[$row.vertex]
                 if (!$origin) { throw "Missing neutral vertex: $name $($row.vertex)" }
                 foreach ($axis in 'x','y','z') {
-                    if ([Math]::Abs([double]::Parse($origin.$axis, $culture) -
-                                    [double]::Parse($row.$axis, $culture)) -gt $Tolerance) {
+                    $baseValue = [double]::Parse($origin.$axis, $culture)
+                    $frameValue = [double]::Parse($row.$axis, $culture)
+                    if ([double]::IsNaN($baseValue) -or [double]::IsInfinity($baseValue) -or
+                        [double]::IsNaN($frameValue) -or [double]::IsInfinity($frameValue)) {
+                        throw "Nonfinite x86 movement coordinate: $name vertex $($row.vertex) axis $axis"
+                    }
+                    if ([Math]::Abs($baseValue - $frameValue) -gt $Tolerance) {
                         $moves = $true
                     }
                 }
@@ -197,8 +208,13 @@ try {
                         $namedIds[$a.muscle] -cne $nativeMap[$b.muscle]) {
                         throw "Different actual macro-muscle call at $name row $i"
                     }
-                    $delta = [Math]::Abs([double]::Parse($a.value, $culture) -
-                                         [double]::Parse($b.value, $culture))
+                    $leftValue = [double]::Parse($a.value, $culture)
+                    $rightValue = [double]::Parse($b.value, $culture)
+                    if ([double]::IsNaN($leftValue) -or [double]::IsInfinity($leftValue) -or
+                        [double]::IsNaN($rightValue) -or [double]::IsInfinity($rightValue)) {
+                        throw "Nonfinite actual macro-muscle value at $name row $i"
+                    }
+                    $delta = [Math]::Abs($leftValue - $rightValue)
                     $maximumNativeCallDelta = [Math]::Max($maximumNativeCallDelta, $delta)
                     if ($delta -gt $MuscleTolerance) {
                         throw "Actual macro-muscle value mismatch at $name row $i : $delta"
@@ -221,6 +237,9 @@ try {
                     foreach ($axis in 'x','y','z') {
                         $left = [double]::Parse($a.$axis, $culture)
                         $right = [double]::Parse($b.$axis, $culture)
+                        if ([double]::IsNaN($left) -or [double]::IsInfinity($left)) {
+                            throw "Nonfinite x86 coordinate: $name row $i axis $axis"
+                        }
                         if ([double]::IsNaN($right) -or [double]::IsInfinity($right)) {
                             throw "Nonfinite x64 coordinate: $name row $i axis $axis"
                         }
@@ -247,8 +266,10 @@ if ($CallsOnly) {
 } else {
     Write-Output (($results | Format-Table Case,Rows,MuscleCalls,MaximumMuscleDelta,MaximumNativeCallDelta,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
 }
-if (!$animatedCases) { throw 'Oracle corpus has no animated vertex; add a moving sequence' }
-if (!$totalMuscleCalls) { throw 'Oracle corpus has no macro-muscle calls; add a sequence exercising the sequencer' }
+if (!$AllowStaticCorpus) {
+    if (!$animatedCases) { throw 'Oracle corpus has no animated vertex; add a moving sequence' }
+    if (!$totalMuscleCalls) { throw 'Oracle corpus has no macro-muscle calls; add a sequence exercising the sequencer' }
+}
 if ($ReferenceOnly) {
     $eventNote = if ($nativeSequenceEvaluator) { ' Native macro-event values match the x86 call trace;' }
         elseif ($nativeSequenceDecoder) { ' native event names cover the observed x86 macro-muscles;' }

@@ -36,6 +36,25 @@ namespace NLSHead
 // Harness-only corpus expansion; writes original sequence resource streams to
 // S2_FACE_FIXTURE_DIR and leaves normal resource loading unchanged.
 int ExportAllFaceSequenceFixtures();
+int ExportAllFaceHeadFixtures();
+// Harness-only integration check: use the real DB head, morph and texture bake.
+// caseIndex selects fixed game-slider presets; the pixel hash is of the CPU
+// texture before upload, so it is comparable between x86 and x64.
+struct SFaceGenBakeProbeResult
+{
+  int headId = -1;
+  bool staticHead = false;
+  bool textured = false;
+  bool roundTripped = false;
+  unsigned long long textureHash = 0;
+  unsigned long long animatorHash = 0;
+  int nonzeroPixels = 0;
+  int animatorBytes = 0;
+};
+bool ProbeFaceGenBake(int caseIndex, SFaceGenBakeProbeResult *result);
+class CHeadInfo;
+// Inspect a committed head after an ordinary game slot reload.
+bool ProbeCommittedFaceGenHead(CHeadInfo *head, SFaceGenBakeProbeResult *result);
 class CHeadTransformInfo;   // the live head-morph tension source (defined below; CHeadAnimator weak-refs it)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <class T>
@@ -221,6 +240,8 @@ public:
 	const CDBPtr<NDb::CTRndModel>& GetHair() const { return pHair; }
 	const CDBPtr<NDb::CTRndModel>* GetMeshes() const { return pMeshes; }       // 4-elem face/glasses mesh array
 	const CDBPtr<NDb::CTRndModel>* GetIFMeshes() const { return pIFMeshes; }   // 4-elem interface-view mesh array
+	const CDBPtr<NDb::CRace>& GetBodyColor() const { return pBodyColor; }
+	void SetBodyColor( NDb::CRace *p ) { pBodyColor = p; }
 	// Static baked head (advanced FaceGen commit): the morph lives in pMesh (a CFaceGenMeshHolder) and
 	// bStaticHead gates the in-game render (CHeadsController::GetAnimator) to source the animator from it.
 	// CreateHeadInfo sets these; both round-trip via operator& (tags 7/8).

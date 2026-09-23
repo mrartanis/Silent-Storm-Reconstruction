@@ -147,6 +147,8 @@ int main(int argc, char **argv)
   if (ok)
   {
     transformer->OutputAnimator(animator);
+    if (std::getenv("S2_FACE_COLLECT_USER_ITEMS"))
+      transformer->CollectUserItems(true);
     transformer->RegisterMacroMuscle(tree->RootMacroMuscle());
     transformer->ClearAllMacroMuscles();
     for (int argument = 4; ok && argument < argc; argument += 2)
@@ -311,6 +313,39 @@ int main(int argc, char **argv)
       }
 #endif
       transformer->Generate();
+      if (const char *names = std::getenv("S2_FACE_USER_ITEM_NAMES"))
+      {
+        FILE *csv = std::fopen((std::string(argv[3]) + "-user-items.csv").c_str(), "wb");
+        if (!csv) ok = false;
+        else
+        {
+          std::fprintf(csv, "source,name,id,count,index,value\n");
+          std::string list(names);
+          std::size_t begin = 0;
+          while (begin < list.size())
+          {
+            const std::size_t end = list.find(',', begin);
+            const std::string name = list.substr(begin, end == std::string::npos ? end : end - begin);
+            for (int sourceIndex = 0; sourceIndex < 2; ++sourceIndex)
+            {
+              const UserID id = sourceIndex ? transformer->UserItem(name.c_str()) : animator->UserItem(name.c_str());
+              const int count = id >= 0 && id < 0x10000
+                  ? (sourceIndex ? transformer->UserValuesCount(id) : animator->UserValuesCount(id)) : 0;
+              if (count >= 0 && count <= 256)
+              {
+                if (!count) std::fprintf(csv, "%s,%s,%d,0,,\n", sourceIndex ? "transformer" : "animator", name.c_str(), id);
+                for (int i = 0; i < count; ++i)
+                  std::fprintf(csv, "%s,%s,%d,%d,%d,%.9g\n", sourceIndex ? "transformer" : "animator", name.c_str(), id, count, i,
+                               sourceIndex ? transformer->UserValue(id, i) : animator->UserValue(id, i));
+              }
+              else ok = false;
+            }
+            if (end == std::string::npos) break;
+            begin = end + 1;
+          }
+          if (std::fclose(csv) != 0) ok = false;
+        }
+      }
 #if defined(_M_IX86)
       if (std::getenv("S2_FACE_TRACE_TRANSFORMER"))
       {

@@ -30,6 +30,10 @@ static STime currentTime;
 static bool bAppIsActive = false;
 static list< CPtr<CInterfaceCommand> > cmds;
 static list< CObj<IInterfaceBase> > interfaces;
+IInterfaceBase* GetCurrentInterfaceForHarness()
+{
+	return interfaces.empty() ? 0 : (IInterfaceBase*)interfaces.back();
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void ShowLogo()
 {

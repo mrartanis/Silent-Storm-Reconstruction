@@ -210,6 +210,13 @@ bool EvaluateChildren(const void *bytes, std::size_t size,
   if (depth > 64) return false;
   for (const auto &operation : definition.children)
   {
+    if (operation.offset > size || size - operation.offset < 36) return false;
+    // The first payload word marks a nested operation as disabled when it is
+    // 1. The retail CRY macro skips its flagged Cry1 child (while a direct
+    // AddMacroMuscle(Cry1) still enters that definition's children). Value 2
+    // also occurs on live operations, so it must not be treated as disabled.
+    if (ReadU32(static_cast<const unsigned char *>(bytes) + operation.offset + 32) == 1)
+      continue;
     MMTreeCurve curve;
     float transformed = 0.0f;
     if (!DecodeMMTreeCurve(bytes, size, operation, &curve))

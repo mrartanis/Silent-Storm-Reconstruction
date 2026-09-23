@@ -3,6 +3,7 @@
 #undef NDEBUG
 #endif
 #include <cassert>
+#include <cmath>
 #include <cstdint>
 #include <vector>
 
@@ -136,5 +137,13 @@ int main()
   assert(!NativeLifeStudio::EvaluateMacroEvent(curve, 375, nullptr));
   curve.parameterA[2] = curve.parameterA[1];
   assert(!NativeLifeStudio::EvaluateMacroEvent(curve, 375, &expression));
+  // Game speech sequence 1 has a terminal knot slightly behind 1.0; x86
+  // evaluates its first segment at the 8100-ms frame rather than dropping it.
+  curve.headerWords[3] = 8070;
+  curve.headerWords[4] = 60;
+  curve.parameterA = {0.0f, 1.0f, 0.999899983f, 1.0f};
+  curve.parameterB = {-100.0f, 0.348430872f, 0.348430872f, -100.0f};
+  assert(NativeLifeStudio::EvaluateMacroEvent(curve, 8100, &expression));
+  assert(std::fabs(expression - (-0.498270363f)) < 1e-6f);
   return 0;
 }

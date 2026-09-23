@@ -14,6 +14,7 @@
 #include <cstring>
 #include <fstream>
 #include <iterator>
+#include <limits>
 #include <set>
 #include <string>
 #include <vector>
@@ -183,6 +184,79 @@ static void SnapshotVertexInfluences(IAnimator *anim)
   std::fclose(file);
 }
 
+// x86-only view of the private 52-byte neck-zone work records. The original
+// Process() fills their barycentric weights and updates each 32-byte control
+// node; this snapshot is diagnostic evidence, not a serialized fixture.
+static void SnapshotNeckState(IAnimator *anim, const char *stage)
+{
+  const char *prefix = std::getenv("S2_FACE_NECK_SNAPSHOT_PREFIX");
+  if (!prefix || !stage || !ReadableMemory(anim, 0x11F)) return;
+  const auto *header = reinterpret_cast<const unsigned char *>(anim);
+  std::uintptr_t begin = 0, end = 0;
+  std::memcpy(&begin, header + 0x117, sizeof(begin));
+  std::memcpy(&end, header + 0x11B, sizeof(end));
+  if (!begin || end < begin || (end - begin) % 52 || (end - begin) / 52 > 1000 ||
+      !ReadableMemory(reinterpret_cast<const void *>(begin), end - begin)) return;
+  char path[1200];
+  if (std::snprintf(path, sizeof(path), "%s-%s.csv", prefix, stage) >= static_cast<int>(sizeof(path))) return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fprintf(file, "entry,vertex,variant,node,node-pointer,node-index,node-x,node-y,node-z,node-dx,node-dy,node-dz,entry-t,entry-weight\n");
+  for (std::uintptr_t entry = begin; entry < end; entry += 52)
+  {
+    const auto *record = reinterpret_cast<const unsigned char *>(entry);
+    std::uint32_t vertex = 0;
+    std::memcpy(&vertex, record, sizeof(vertex));
+    for (int variant = 0; variant < 2; ++variant)
+    for (int nodeIndex = 0; nodeIndex < 3; ++nodeIndex)
+    {
+      std::uintptr_t pointer = 0;
+      std::memcpy(&pointer, record + 0x04 + variant * 12 + nodeIndex * 4, sizeof(pointer));
+      if (!ReadableMemory(reinterpret_cast<const void *>(pointer), 32)) continue;
+      const auto *node = reinterpret_cast<const unsigned char *>(pointer);
+      std::uint32_t sourceIndex = 0;
+      std::memcpy(&sourceIndex, node, sizeof(sourceIndex));
+      auto f32 = [](const unsigned char *p) { float value; std::memcpy(&value, p, sizeof(value)); return value; };
+      std::fprintf(file, "%zu,%u,%d,%d,%p,%u,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g,%.9g\n",
+                   static_cast<std::size_t>((entry - begin) / 52), vertex, variant, nodeIndex,
+                   reinterpret_cast<const void *>(pointer), sourceIndex,
+                   f32(node + 8), f32(node + 12), f32(node + 16),
+                   f32(node + 20), f32(node + 24), f32(node + 28),
+                   f32(record + 0x1C + nodeIndex * 4),
+                   f32(record + 0x28 + nodeIndex * 4));
+    }
+  }
+  std::fclose(file);
+}
+
+static void SnapshotNeckCenters(IAnimator *anim, const char *stage)
+{
+  const char *prefix = std::getenv("S2_FACE_NECK_SNAPSHOT_PREFIX");
+  if (!prefix || !stage) return;
+  char path[1200];
+  if (std::snprintf(path, sizeof(path), "%s-%s-centers.csv", prefix, stage) >= static_cast<int>(sizeof(path))) return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fprintf(file, "bone-type,bone-index,x,y,z\n");
+  for (unsigned long type = 3; type <= 4; ++type)
+  {
+    IBone *bone = anim->BoneByType(type);
+    if (!ReadableMemory(bone, sizeof(void *))) continue;
+    void **vtable = *reinterpret_cast<void ***>(bone);
+    if (!ReadableMemory(vtable, 6 * sizeof(void *))) continue;
+    using StateFn = const unsigned char *(__thiscall *)(IBone *);
+    const auto *state = reinterpret_cast<StateFn>(vtable[5])(bone);
+    if (!ReadableMemory(state, 0x3C)) continue;
+    float xyz[3];
+    std::memcpy(xyz, state + 0x30, sizeof(xyz));
+    int index = -1;
+    for (int i = 0; i < anim->BonesCount(); ++i)
+      if (anim->Bone(i) == bone) { index = i; break; }
+    std::fprintf(file, "%lu,%d,%.9g,%.9g,%.9g\n", type, index, xyz[0], xyz[1], xyz[2]);
+  }
+  std::fclose(file);
+}
+
 static void SnapshotAnimatedState(IAnimator *anim, const char *label, int time, const char *stage)
 {
   const char *selected = std::getenv("S2_FACE_STATE_SNAPSHOT_TIME");
@@ -194,6 +268,8 @@ static void SnapshotAnimatedState(IAnimator *anim, const char *label, int time, 
     return;
   SnapshotBones(anim, suffix);
   SnapshotMuscles(anim, suffix);
+  SnapshotNeckState(anim, suffix);
+  SnapshotNeckCenters(anim, suffix);
 }
 
 static void DumpMacroTreeNode(FILE *out, IMMTree *tree, IMacroMuscle *node,
@@ -393,17 +469,71 @@ static bool SampleTimes(int duration, std::vector<int> *result)
   return true;
 }
 
+static bool LoadOverlay(const char *pathVariable, const char *shiftVariable,
+                        IMMTree *tree, ISequencer **out, int *duration, int *shift)
+{
+  *out = nullptr;
+  *duration = 0;
+  *shift = 0;
+  const char *path = std::getenv(pathVariable);
+  if (!path || !*path) return true;
+  const std::vector<char> bytes = ReadAll(path);
+  ISequencer *loaded = ISequencer::Create();
+  if (bytes.empty() || !loaded || !loaded->Load(bytes.data(), static_cast<int>(bytes.size())))
+  {
+    std::fprintf(stderr, "cannot load overlay sequence: %s\n", path);
+    if (loaded) loaded->Destroy();
+    return false;
+  }
+  loaded->RegisterMMTree(tree);
+  const int length = loaded->SequenceTime();
+  if (length < 2)
+  {
+    loaded->Destroy();
+    return false;
+  }
+  int parsedShift = 0;
+  if (const char *value = std::getenv(shiftVariable))
+  {
+    errno = 0;
+    char *end = nullptr;
+    const long parsed = std::strtol(value, &end, 10);
+    if (errno || end == value || *end ||
+        parsed < (std::numeric_limits<int>::min)() ||
+        parsed > (std::numeric_limits<int>::max)())
+    {
+      std::fprintf(stderr, "invalid overlay time shift: %s\n", value);
+      loaded->Destroy();
+      return false;
+    }
+    parsedShift = static_cast<int>(parsed);
+  }
+  *out = loaded;
+  *duration = length;
+  *shift = parsedShift;
+  return true;
+}
+
 static bool WriteFrame(FILE *out, const std::vector<char> &animData,
-                       IMMTree *tree, ISequencer *sequence, FILE *traceOut,
+                       IMMTree *tree, ISequencer *sequence,
+                       ISequencer *overlay, int overlayShift, int overlayDuration,
+                       ISequencer *overlay2, int overlay2Shift, int overlay2Duration,
+                       bool overlay2HoldLast,
+                       FILE *traceOut,
                        const char *label, int time)
 {
   IAnimator *anim = IAnimator::Create();
   if (!anim)
     return false;
   bool ok = anim->Load(animData.data(), static_cast<int>(animData.size()));
+  if (ok && std::getenv("S2_FACE_DISABLE_NECK_PROCESSING"))
+    anim->NeckProcessing2(false);
+  if (ok && std::getenv("S2_FACE_ENABLE_NECK_PROCESSING"))
+    anim->NeckProcessing2(true);
   if (ok && !sequence && std::getenv("S2_FACE_TRACE_METADATA"))
-    std::fprintf(stderr, "animator-metadata,muscles=%d,bones=%d,vertices=%d\n",
-                 anim->MusclesCount(), anim->BonesCount(), anim->VerticesCount());
+    std::fprintf(stderr, "animator-metadata,muscles=%d,bones=%d,vertices=%d,has-neck=%d,neck-processing2=%d\n",
+                 anim->MusclesCount(), anim->BonesCount(), anim->VerticesCount(),
+                 anim->HasNeck() ? 1 : 0, anim->NeckProcessing2() ? 1 : 0);
 #if defined(_M_IX86)
   if (ok && !sequence)
     SnapshotBones(anim, "neutral-load");
@@ -434,15 +564,28 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
     }
     else if (sequence)
     {
+      const std::int64_t shifted = std::int64_t(time) + overlayShift;
+      const bool overlayActive = overlay && shifted >= 0 && shifted < overlayDuration;
+      const std::int64_t shifted2 = std::int64_t(time) + overlay2Shift;
+      const bool overlay2Active = overlay2 && shifted2 >= 0 &&
+          (shifted2 < overlay2Duration || overlay2HoldLast);
+      const int overlay2Time = shifted2 >= overlay2Duration
+          ? overlay2Duration - 2 : static_cast<int>(shifted2);
       if (traceOut || std::getenv("S2_FACE_TRACE_ANIMATOR") ||
           std::getenv("S2_FACE_MUSCLE_MAP_PATH"))
       {
         TraceAnimator trace(anim, time, traceOut ? traceOut :
                             (std::getenv("S2_FACE_TRACE_ANIMATOR") ? stderr : nullptr));
         sequence->RenderMacroMuscles(&trace, time);
+        if (overlayActive) overlay->RenderMacroMuscles(&trace, static_cast<int>(shifted));
+        if (overlay2Active) overlay2->RenderMacroMuscles(&trace, overlay2Time);
       }
       else
+      {
         sequence->RenderMacroMuscles(anim, time);
+        if (overlayActive) overlay->RenderMacroMuscles(anim, static_cast<int>(shifted));
+        if (overlay2Active) overlay2->RenderMacroMuscles(anim, overlay2Time);
+      }
     }
 #if defined(_M_IX86)
     SnapshotAnimatedState(anim, label, time, "post-render");
@@ -533,6 +676,13 @@ int main(int argc, char **argv)
   }
   IMMTree *tree = nullptr;
   ISequencer *sequence = nullptr;
+  ISequencer *overlay = nullptr;
+  ISequencer *overlay2 = nullptr;
+  int overlayShift = 0;
+  int overlayDuration = 0;
+  int overlay2Shift = 0;
+  int overlay2Duration = 0;
+  const bool overlay2HoldLast = std::getenv("S2_FACE_OVERLAY2_HOLD_LAST") != nullptr;
   int duration = 0;
   if (argc >= 5)
   {
@@ -592,11 +742,24 @@ int main(int argc, char **argv)
       tree->Destroy();
       return 3;
     }
+    if (!LoadOverlay("S2_FACE_OVERLAY_SEQUENCE_FILE", "S2_FACE_OVERLAY_TIME_SHIFT",
+                     tree, &overlay, &overlayDuration, &overlayShift) ||
+        !LoadOverlay("S2_FACE_OVERLAY2_SEQUENCE_FILE", "S2_FACE_OVERLAY2_TIME_SHIFT",
+                     tree, &overlay2, &overlay2Duration, &overlay2Shift))
+    {
+      if (overlay2) overlay2->Destroy();
+      if (overlay) overlay->Destroy();
+      sequence->Destroy();
+      tree->Destroy();
+      return 3;
+    }
   }
   std::vector<int> times;
   if (sequence && !SampleTimes(duration, &times))
   {
     std::fprintf(stderr, "invalid S2_FACE_SAMPLE_TIMES (expected comma-separated times in [0,%d))\n", duration);
+    if (overlay) overlay->Destroy();
+    if (overlay2) overlay2->Destroy();
     sequence->Destroy();
     tree->Destroy();
     return 2;
@@ -617,11 +780,16 @@ int main(int argc, char **argv)
     std::fprintf(traceOut, "kind,time,muscle,operation,value\n");
   }
   std::fprintf(out, "case,time,vertex,x,y,z\n");
-  bool ok = WriteFrame(out, animData, tree, nullptr, traceOut, "neutral", 0);
+  bool ok = WriteFrame(out, animData, tree, nullptr, nullptr, 0, 0,
+                       nullptr, 0, 0, false,
+                       traceOut, "neutral", 0);
   if (ok && sequence)
   {
     for (int time : times)
-      ok = WriteFrame(out, animData, tree, sequence, traceOut, "sequence", time) && ok;
+      ok = WriteFrame(out, animData, tree, sequence, overlay, overlayShift,
+                      overlayDuration, overlay2, overlay2Shift,
+                      overlay2Duration, overlay2HoldLast,
+                      traceOut, "sequence", time) && ok;
   }
   std::fclose(out);
   if (traceOut) std::fclose(traceOut);
@@ -635,6 +803,8 @@ int main(int argc, char **argv)
         std::fclose(map);
       }
     }
+  if (overlay) overlay->Destroy();
+  if (overlay2) overlay2->Destroy();
   if (sequence) sequence->Destroy();
   if (tree) tree->Destroy();
   if (!ok)

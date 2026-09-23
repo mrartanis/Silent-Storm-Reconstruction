@@ -14,6 +14,7 @@ namespace NRPG
 {
 	class CUnit;
 }
+namespace NLSHead { struct SFaceGenBakeProbeResult; }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGame
 {
@@ -39,6 +40,10 @@ public:
 
 	virtual void Exec();
 };
+// Harness-only access to the actual Advanced FaceGen UI's scrolls and
+// CreateLSHeadInfo path; no synthetic transformer bypass.
+bool SetAdvFaceGenSliderForHarness( const char *name, int value, int *observed );
+bool ProbeAdvFaceGenEditorForHarness( NLSHead::SFaceGenBakeProbeResult *result );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////////////////////////

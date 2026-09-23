@@ -1,20 +1,25 @@
 #include "NativeSequenceData.h"
 #include <cstdio>
+#include <cmath>
+#include <cstring>
 #include <fstream>
 #include <iterator>
 #include <vector>
 
 int main(int argc, char **argv)
 {
-  if (argc < 2)
+  const bool curveAudit = argc > 2 && std::strcmp(argv[1], "--curve-audit") == 0;
+  const int firstFile = curveAudit ? 2 : 1;
+  if (argc <= firstFile)
   {
-    std::fprintf(stderr, "usage: NativeSequenceDecode sequence.bin [more-sequences.bin ...]\n");
+    std::fprintf(stderr, "usage: NativeSequenceDecode [--curve-audit] sequence.bin [more-sequences.bin ...]\n");
     return 2;
   }
   std::size_t totalTracks = 0;
   std::size_t decodedEvents = 0;
   std::size_t opaqueTracks = 0;
-  for (int arg = 1; arg < argc; ++arg)
+  std::size_t nonIncreasingCurves = 0;
+  for (int arg = firstFile; arg < argc; ++arg)
   {
     std::ifstream file(argv[arg], std::ios::binary);
     if (!file)
@@ -28,7 +33,7 @@ int main(int argc, char **argv)
       std::fprintf(stderr, "invalid MMSF v1 sequence or track records: %s\n", argv[arg]);
       return 3;
     }
-    if (argc == 2)
+    if (argc == 2 && !curveAudit)
     {
       std::printf("payload=%u,duration=%u,tracks=%u,prelude=%u\n",
                   header.payloadSize, header.duration, header.trackCount, header.preludeSize);
@@ -47,11 +52,31 @@ int main(int argc, char **argv)
     totalTracks += tracks.size();
     for (const auto &track : tracks)
       if (track.macroEventsDecoded)
+      {
         decodedEvents += track.macroEvents.size();
+        if (curveAudit)
+          for (const auto &event : track.macroEvents)
+          {
+            const auto &x = event.parameterA;
+            for (std::size_t i = 1; i < x.size(); ++i)
+              if (!std::isfinite(x[i]) || x[i] <= x[i - 1])
+              {
+                ++nonIncreasingCurves;
+                std::printf("curve-anomaly,file=%s,track=%s,event=%s,start=%u,duration=%u,sequence=%u,index=%zu,prev=%.9g,current=%.9g\n",
+                            argv[arg], track.name.c_str(), event.name.c_str(),
+                            event.headerWords[3], event.headerWords[4],
+                            header.duration, i, x[i - 1], x[i]);
+                break;
+              }
+          }
+      }
       else if (track.headerWords[2])
         ++opaqueTracks;
   }
-  if (argc > 2)
+  if (curveAudit)
+    std::printf("curve-audit,%d sequences,%zu macro events,%zu nonincreasing curves\n",
+                argc - firstFile, decodedEvents, nonIncreasingCurves);
+  else if (argc > 2)
     std::printf("decoded %d sequences, %zu tracks, %zu macro events, %zu opaque event tracks\n",
                 argc - 1, totalTracks, decodedEvents, opaqueTracks);
   return 0;

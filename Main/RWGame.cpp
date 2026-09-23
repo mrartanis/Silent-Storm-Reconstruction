@@ -88,17 +88,22 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // ChooseBodyColor @0x2cb6b0 -- overwrite the body model's SKIN material slot (pMaterials[1] = the neck/hands skin)
 // with the chosen race's material, so the body skin tone tracks the FaceGen Nationality slider (in retail the head
-// FACE recolour ALSO recolours the neck/hands; the dev dropped this). Reads the race off the head's CComplexHead
-// (CHeadInfo->GetHead()->pBodyColor, set by SetMMTension "Nationality") -> CRace::pMaterial -> GetMaterial. A
+// FACE recolour ALSO recolours the neck/hands; the dev dropped this). The
+// committed head carries its own selected race; older/stock heads fall back
+// to CComplexHead::pBodyColor. Then CRace::pMaterial -> GetMaterial. A
 // pre-mutation of the (shared) body CModel that CreateSkin then renders; call it before each body-skin submit.
 void ChooseBodyColor( NDb::CModel *pModel, NLSHead::CHeadInfo *pHead )
 {
 	if ( !pModel || !IsValid( pHead ) )
 		return;
-	NDb::CComplexHead *ch = pHead->GetHead();
-	if ( !IsValid( ch ) || !IsValid( ch->pBodyColor ) )
+	NDb::CRace *race = pHead->GetBodyColor();
+	if ( !IsValid( race ) )
+	{
+		NDb::CComplexHead *ch = pHead->GetHead();
+		race = IsValid( ch ) ? (NDb::CRace*)ch->pBodyColor : 0;
+	}
+	if ( !IsValid( race ) )
 		return;
-	NDb::CRace *race = ch->pBodyColor;
 	if ( !IsValid( race->pMaterial ) )
 		return;
 	SRand rnd( SRandomSeed( race->GetRecordID() ) );   // deterministic seed -> stable skin variant across re-renders

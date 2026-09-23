@@ -133,6 +133,8 @@ public:
 	CAdvFaceGenUI( const SWindowInfo &sInfo, NRPG::CUnit *pMerc, NDb::CNationality *pNationality );
 
 	NLSHead::CHeadInfo *CreateLSHeadInfo();
+	bool SetSliderForHarness( const char *name, int value, int *observed );
+	bool ProbeForHarness( NLSHead::SFaceGenBakeProbeResult *result );
 
 	bool ProcessMessage( const SEvent &sEvent );
 };
@@ -140,6 +142,37 @@ public:
 CAdvFaceGenUI::CAdvFaceGenUI( const SWindowInfo &sInfo, NRPG::CUnit *_pMerc, NDb::CNationality *_pNationality ):
 	CDesktopWindow( sInfo ), nVoice( 0 ), pMerc( _pMerc ), pNationality( _pNationality ), bChanged( false )
 {
+}
+bool CAdvFaceGenUI::SetSliderForHarness( const char *name, int value, int *observed )
+{
+	if ( !name || value < 0 || value > 100 )
+		return false;
+	struct SSlider { const char *name; CScroll *scroll; };
+	const SSlider sliders[] = {
+		{ "Age", pAgeScroll }, { "Gender", pGenderScroll },
+		{ "Nationality", pNationalityScroll }, { "Lips", pLipsScroll },
+		{ "Chin", pChinScroll }, { "Nose", pNoseScroll },
+		{ "Brows", pBrowsScroll }, { "Cheeks", pCheersScroll },
+		{ "HairColor", pMenHairScroll }, { "WomanHair", pWomenHairScroll },
+		{ "EyesColor", pEyesColorScroll }, { "EyeGlasses", pEyeGlassesScroll },
+		{ "FaceDamage", pFaceDamageScroll }, { "FacialColor", pFacialColorsScroll }
+	};
+	for ( size_t i = 0; i < sizeof(sliders) / sizeof(sliders[0]); ++i )
+		if ( strcmp( name, sliders[i].name ) == 0 && IsValid( sliders[i].scroll ) )
+		{
+			sliders[i].scroll->SetValue( value );
+			if ( observed ) *observed = sliders[i].scroll->GetValue();
+			UpdateHead();
+			return true;
+		}
+	return false;
+}
+bool CAdvFaceGenUI::ProbeForHarness( NLSHead::SFaceGenBakeProbeResult *result )
+{
+	if ( !result ) return false;
+	CObj<NLSHead::CHeadInfo> pHead = CreateLSHeadInfo();
+	return NLSHead::ProbeCommittedFaceGenHead( pHead, result ) &&
+		result->staticHead && result->textured && result->animatorBytes > 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // One scroll's EVENT_TEMPLATELOADCOMPLETE seeding. The answer-key/decomp order is SetValue-then-SetMaxValue,
@@ -414,6 +447,8 @@ public:
 
 	void Step();
 	bool ProcessEvent( const NInput::SEvent &sEvent );
+	bool SetSliderForHarness( const char *name, int value, int *observed );
+	bool ProbeForHarness( NLSHead::SFaceGenBakeProbeResult *result );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CAdvFaceGenMenuInterface::CAdvFaceGenMenuInterface():
@@ -461,6 +496,14 @@ void CAdvFaceGenMenuInterface::Step()
 		GetCamera()->SetScreenRect( CTRect<float>( 0.0f, 0.0f, 1.0f, 1.0f ) );
 		RenderFrame( GetTime(), GetCamera() );
 	}
+}
+bool CAdvFaceGenMenuInterface::SetSliderForHarness( const char *name, int value, int *observed )
+{
+	return IsValid( pMenuUI ) && pMenuUI->SetSliderForHarness( name, value, observed );
+}
+bool CAdvFaceGenMenuInterface::ProbeForHarness( NLSHead::SFaceGenBakeProbeResult *result )
+{
+	return IsValid( pMenuUI ) && pMenuUI->ProbeForHarness( result );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CAdvFaceGenMenuInterface::ProcessEvent( const NInput::SEvent &sEvent )
@@ -520,6 +563,18 @@ void CICAdvFaceGen::Exec()
 	CAdvFaceGenMenuInterface *pRes = new CAdvFaceGenMenuInterface();
 	pRes->Initialize( pSide, pNationality, pDifficulty, pMerc );
 	PushInterface( pRes );
+}
+bool SetAdvFaceGenSliderForHarness( const char *name, int value, int *observed )
+{
+	CAdvFaceGenMenuInterface *editor = dynamic_cast<CAdvFaceGenMenuInterface*>(
+		NMainLoop::GetCurrentInterfaceForHarness() );
+	return editor && editor->SetSliderForHarness( name, value, observed );
+}
+bool ProbeAdvFaceGenEditorForHarness( NLSHead::SFaceGenBakeProbeResult *result )
+{
+	CAdvFaceGenMenuInterface *editor = dynamic_cast<CAdvFaceGenMenuInterface*>(
+		NMainLoop::GetCurrentInterfaceForHarness() );
+	return editor && editor->ProbeForHarness( result );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace NGame

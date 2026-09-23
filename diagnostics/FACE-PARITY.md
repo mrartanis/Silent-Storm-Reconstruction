@@ -2,9 +2,21 @@
 
 Status: the x86 reference is executable and deterministic. The native x64
 bridge passes strict animated vertex parity on the initial 3-head × 2-sequence
-set and on the 20-sequence representative set for head 56. This is bounded
-corpus parity, **not** a claim that all facial animation or the live portrait
-is complete.
+set, the 20-sequence representative set for head 56, all 136 exported game
+head streams with sequences 6008 and 6005, and the focused two-segment
+head-11 neck-motion test. A DB-backed custom head at three game-control
+presets also passes ordinary save-slot reload, a 554-sequence animated-vertex
+sample and a layered head/speech/expression gate on both architectures.
+The editor-default saved head additionally passes all 6,780 DB-exported
+game sequences at five sampled times each.
+Current x86 and x64 builds
+render that loaded custom head in the live portrait. This is bounded corpus
+and runtime evidence, **not** a claim of x86/x64 rendered-pixel parity or
+every possible FaceGen slider/sequence combination.
+The staged x64 `Game.exe` dependency table (`dumpbin /dependents`, checked
+2026-09-23) contains no `LifeStudioHeadAPI.dll` or `GDPFile.dll`; x64 links
+the native implementation through `lifestudio_init`. The original DLLs are
+used only by the x86 oracle, not as a runtime fallback for the x64 game.
 
 `FaceProbe` exercises the same `IAnimator`, `IMMTree` and `ISequencer` calls as
 `NLSHead::CHeadAnimator`: load a real animator stream, register `tree.mma`,
@@ -23,8 +35,9 @@ on first observation within one probe process, not an asset ID or stable
 muscle name; compare traces for the same input and call order. The wrapper
 forwards each call to the real x86 animator, so the vertex oracle remains
 unchanged. This intermediate oracle is intended to isolate native sequencer
-errors from native bone/vertex-processing errors. It does not yet compare a
-native x64 muscle trace.
+errors from native bone/vertex-processing errors. The current gate also
+compares the native x64 trace by muscle name, operation, time and value;
+both traces must contain finite values.
 An optional `S2_FACE_MUSCLE_MAP_PATH` writes a second CSV mapping each trace
 ordinal to the original x86 macro-muscle object's inline name. This uses an
 observed x86-only object layout (name at byte offset 8); it is diagnostic
@@ -64,12 +77,14 @@ command above to repeat that broader check.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
 
-Coverage still needed before declaring native facial animation complete:
-multiple sequence types (idle, speech, expression masks), overlapping tracks,
-all head segments/topologies, saved/reloaded heads, transformable FaceGen GDP
-and `.mmt` morphs, texture-weight user items, and a live x64 portrait/head
-render compared to x86. The small corpus is an implementation guide, not a
-substitute for these cases.
+Coverage limits: the probes compare deterministic LifeStudio calls, saved
+heads and CPU textures, not pixel-identical GPU frames. The paired live
+screenshots show a rendered custom portrait on x86 and x64 but are not
+time-synchronized. The eight game expression masks and speech overlaps have
+dense sampled coverage below; the game's scene-level event scheduler is not
+independently captured frame by frame. All 6,780 exported sequences have
+five-time coverage on one saved FaceGen head, not continuous-time or every
+slider combination.
 
 Corpus expansion: the x86 game's `facefixtures` harness command enumerates
 the `HeadSeqs` database table and exports each accessible original sequence
@@ -84,8 +99,26 @@ macro-muscle traces ranged from 0 to 13 calls at the sampled frames. These
 header counts are not yet a verified track taxonomy, and a zero-call trace
 does not mean an empty sequence: it may act at unsampled times or through
 other channels. The complete exported corpus and proprietary bytes stay in
-the ignored lab directory. Use the representative subset for a wider red/green
-x64 gate; additional named speech/expression cases still need classification.
+the ignored lab directory. `New-FaceSequenceStratifiedCorpus.ps1` selects a
+second, reproducible 31-sequence set spanning all three prelude sizes,
+three- and five-track files, long/large files and high track counts. The
+strict `Test-FaceParity.ps1` x86/x64 call-and-vertex gate passed all 31 cases
+on head 56 (2,514 vertex rows each, zero mismatches at 1e-4). The selection
+includes actual `Phonemes/A` and `Phonemes/B` speech tracks. Sampled frames
+are still just a subset of each sequence's duration.
+
+```powershell
+& .\diagnostics\New-FaceSequenceStratifiedCorpus.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures' `
+  -HeadFile 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\representative-fixtures\head-56-0.bin' `
+  -OutputDirectory 'G:\SS\lab\runs\face-stratified-corpus-01'
+& .\diagnostics\Test-FaceParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\face-stratified-corpus-01' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-stratified-parity-01'
+```
 
 Native `MMSF` envelope progress: `NativeSequenceData` reads the v1
 32-byte header with checked payload length, duration and track count. The
@@ -115,6 +148,176 @@ An additional nine-time boundary sample set passed on the six initial pairs;
 For sequence 6008 on head 56, a separate 100-ms sweep over all 30,000 ms
 matched 915 x86 calls to 915 native evaluations in the same order, with no
 name/value mismatch at 1e-5 tolerance and maximum delta 1.19e-7.
+Dense 100-ms x86/x64 sweeps also passed on two speech formats: sequence 371
+(100 frames, 68 macro calls, 42,319 vertex rows) and sequence 1 (84 frames,
+97 calls, 35,615 rows). At sampled frames, sequence 371 had up to four
+simultaneous calls, so the test covers overlapping phonemes. Both strict
+vertex gates had zero mismatches at 1e-4.
+
+The game also stacks several sequences on one animator before computing
+physics (for example speech, idle and expression masks). `FaceProbe` can
+exercise that path with `S2_FACE_OVERLAY_SEQUENCE_FILE` and a signed
+`S2_FACE_OVERLAY_TIME_SHIFT` in milliseconds: it renders the primary and
+overlay into the same animator, then computes physics once. The
+`Test-FaceOverlayParity.ps1` gate runs both a primary-only baseline and an
+overlaid case, compares x86/x64 call traces and every vertex, and requires
+that the overlay adds calls and changes vertices. On three real heads with
+speech sequence 371 and idle sequence 6008, 100 frames at 100-ms intervals
+and a -1500-ms overlay shift passed: each head had 68 primary calls versus
+288 overlaid calls, 42,319 vertex rows per run and zero x86/x64 mismatches at
+1e-4. This verifies a bounded game-like overlap, not every timing
+combination. The fixture directory has the three heads and the primary
+sequence; proprietary streams stay outside the repository.
+
+```powershell
+& .\diagnostics\Test-FaceOverlayParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\face-overlay-three-heads-corpus-01' `
+  -OverlaySequence 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures\sequence-6008-0.bin' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-overlay-parity'
+```
+
+The game's `FaceExpression2Sequences` table maps eight non-neutral emotion
+masks to sequence IDs: Smile 6010, Anger 7548, Worry 7550, Fear 7551, Sad
+7552, Happy 7553, Smirk 7554 and Disgust 7555. The `faceexpressions` harness
+command resolves these IDs through the game's own `GetSequenceByExpression`;
+Calm maps to 7547 but has no macro events, and the reserved Rage enum has no
+separate row. `Test-FaceExpressionMaskParity.ps1` overlays each real mask on
+speech sequence 371, sampling 0..900 ms in 100-ms steps on three real heads.
+All eight masks pass the strict x86/x64 call-and-vertex gate (4,609 vertex
+rows per head and mask, zero mismatches at 1e-4); the wrapper also requires
+each mask to add macro calls and visibly alter the computed vertices.
+
+```powershell
+& .\diagnostics\Test-FaceExpressionMaskParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\face-overlay-three-heads-corpus-01' `
+  -SequenceDirectory 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-expression-masks'
+```
+
+Denser 10-ms sweeps of Anger and Sad also passed on all three heads for
+0..1000 ms: 101 frames, 42,738 vertex rows and zero mismatches per head and
+mask. The Anger mask exposed one vertex at 500 ms crossing an influence's 1e-4
+activation boundary because x64 calculated its muscle endpoint as
+`A + (1-a)*(B-A)` while x86 uses `B - a*(B-A)`; the operation order is now
+matched. The Sad/CRY mask exposed a disabled nested `Cry1` branch: its first
+serialized payload word is 1, so x86 skips it within CRY, although a direct
+call to Cry1 still evaluates its children. The native MMT walker now makes
+that distinction. The other observed nonzero flag (2) also occurs on live
+bone-related operations and is not skipped. The 31-sequence stratified corpus
+still passes after both corrections.
+
+The game can keep an idle active underneath speech and its expression mask;
+after the short mask ends, `CHeadAnimator` renders its duration-minus-two
+tail frame while speech continues. `FaceProbe` now accepts a second overlay
+through `S2_FACE_OVERLAY2_SEQUENCE_FILE`, its signed
+`S2_FACE_OVERLAY2_TIME_SHIFT`, and optional `S2_FACE_OVERLAY2_HOLD_LAST`.
+`Test-FaceThreeWayParity.ps1` runs idle sequence 6008, speech sequence 371
+starting at 1500 ms, and a DB-backed emotion mask starting at the same time,
+all on one animator before one physics solve. It compares both idle+speech
+and idle+speech+mask against x86, and checks that the mask still contributes
+calls after its nominal end. Sad, Anger and Worry passed on three heads over
+100 frames at 100-ms intervals: 42,319 vertex rows per head and case, zero
+x86/x64 mismatches at 1e-4. For Sad and Anger, each head had 320 two-layer
+calls versus 405 three-layer calls; Worry had 490 three-layer calls. Run a
+representative case with:
+
+```powershell
+& .\diagnostics\Test-FaceThreeWayParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\face-threeway-idle-corpus-01' `
+  -SpeechSequence 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures\sequence-371-0.bin' `
+  -ExpressionSequence 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures\sequence-7552-0.bin' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-threeway-sad-parity'
+```
+
+These bounded tests do not cover every possible head, speech, idle and mask
+combination or a live rendered game session.
+
+The `headfixtures` game-harness command exports every `Heads` resource stream
+referenced by `NDb::CHead` into `S2_FACE_FIXTURE_DIR`. The baseline DB yielded
+136 streams: 134 first segments and two second segments. Of these, 113 use
+the original `0xAD5A018D` format and 23 use the compact `0x37D30DC0` saved
+format. Head 11 is the special two-segment case: its main saved stream has a
+976-byte `Neck_Zone/Upper/Lower` appendix, and its second stream has only
+implicit vertices (section marker 1). The native decoder now accepts both
+variants, validates all eight zone masks and upper/lower landmark pairs, and
+preserves the original bytes for `IAnimator::Save`. Its head
+bone is the parent transform for the 15 neck-influenced vertices in the main
+segment. The complete 136-stream corpus passed x86/x64 neutral+idle parity
+with sequence 6008: zero mismatches at 1e-4, including both head-11 segments.
+To repeat, export the streams with `headfixtures` in an x86 harness run, put
+the idle sequence beside them in a lab-only fixture directory, then run
+`Test-FaceParity.ps1` against that directory.
+
+Sequence 6005 has real `Head_LR` and `Head_shake` events, and overlapping
+`Distrust` facial motion. `Test-FaceNeckMotionParity.ps1` now passes both
+head-11 segments across 9,500..16,000 ms: 6,936 vertex rows, zero mismatches
+at `1e-4`. `Test-FaceNeckMacrosParity.ps1` also passes 32 forced values from
+-1 to +1 over all 416 main-segment vertices: `HeadPitch`, `HeadYaw`,
+`Head_nod`, `Head_LR`, `Head_shake`, `NECK_UD`, `NECK_LR` and `NECK_ROTATE`
+(maximum delta `2.86e-6`). The saved neck attachment counter-rotates the
+head's local-Y/Z channels, and the neck bone itself uses those opposite Y/Z
+signs; the runtime type-3 local-X effect follows the negative effect value.
+`Test-FaceNeckAnchorsParity.ps1` separately locks the
+eight lower control landmarks across 11 frames (88 rows, maximum delta
+`1.43e-6`). The original DLL's `IAnimator::Process` also applies a neck-zone
+pass: each masked vertex retains barycentric weights against two adjacent
+upper/lower control lines and a center line between head/neck bones. The x64
+bridge now performs the same pass using weights from the neutral pose, so
+facial movement is not double-applied. The passing full comparison is outside
+Git at `G:\SS\lab\runs\face-head11-neck-zone-pass-02`. Repeating sequence
+6005 over all 136 exported game head streams also passed with zero mismatches
+at `G:\SS\lab\runs\face-all-heads-motion-parity-01`.
+`Test-FaceNeckLayeredParity.ps1` adds speech and a held expression mask over
+the sequence's simultaneous head-shake/Distrust interval; both head-11
+segments passed (4,046 rows, 29 macro calls per segment, zero vertex
+mismatches at `1e-4`). This specifically guards against double-applying
+facial motion while deforming the neck zones.
+
+```powershell
+& .\diagnostics\Test-FaceNeckMotionParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\face-head11-neck-corpus-01' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-head11-neck-zone-pass-02'
+```
+
+The sequence-1 sweep first exposed one dropped `AA` phoneme at 8,100 ms:
+the x86 DLL produced 97 calls but the native evaluator only 96. A full
+`NativeSequenceDecode --curve-audit` of the 6,780 exported files found 64
+nonincreasing terminal knots among 124,841 macro events. They have authored
+shapes such as `{0,1,.9999,1}`, `{0,1,1}` and `{0,1.08,1}`; the x86 DLL
+evaluates the active first segment despite the final knot. The native
+sequence evaluator now does that specifically for these terminal forms,
+while the shared curve validator stays strict elsewhere. The sequence-1
+sweep now passes with all 97 calls. `Test-FaceTerminalCurveParity.ps1`
+audits the complete exported corpus, samples each anomalous event at its
+start, quarter, midpoint, three-quarter and final active tick, then compares
+x86 and x64 macro calls and vertex coordinates. All 64 anomalies across 63
+sequences pass; every target event is present in the sampled x86 trace.
+This covers the overshoot and exact-duplicate forms as well as the small
+terminal reversal, without claiming full-time parity for every sequence.
+
+```powershell
+& .\diagnostics\Test-FaceTerminalCurveParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures' `
+  -HeadFile 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\representative-fixtures\head-56-0.bin' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -NativeSequenceDecode 'G:\SS\lab\build-x64\RelWithDebInfo\NativeSequenceDecode.exe' `
+  -NativeSequenceEvaluate 'G:\SS\lab\build-x64\RelWithDebInfo\NativeSequenceEvaluate.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-terminal-curve-parity-strict-01'
+```
 This first established sampled sequencer-expression parity separately from
 tree resolution and vertex deformation. The x64 API bridge now also uses this
 evaluator in `ISequencer::RenderMacroMuscles`, as checked below. The later
@@ -139,12 +342,12 @@ first word classifies every operation: 1 maps to x86 macro operation type 4,
 header word 5 points backward to a named record of the same class. The native
 decoder resolves and validates these links. The test now also compares all
 1,675 operation classes and all 1,519 resolved macro-target names against
-the x86 runtime in order; the observed run passed with no mismatch. This
-does not yet distinguish x86 effect operation types 1, 2 and 3 natively.
-`NativeMMTreeDataTests` covers nested records, malformed sizes, truncation
-and pointer arguments on both architectures. This is **structural/name-
-resolution** parity only: effect payloads and their mapping to head muscles
-remain uninterpreted, so this does not establish deformation parity.
+the x86 runtime in order; the observed run passed with no mismatch. At this
+earlier structural stage, effect operation types 1, 2 and 3 were not yet
+distinguished; the later runtime/vertex gates below supersede that limit for
+game-used effects. `NativeMMTreeDataTests` covers nested records, malformed
+sizes, truncation and pointer arguments on both architectures. The structural
+check alone does not establish deformation parity.
 
 The x64 `IMMTree` bridge now owns native macro objects for all 222 named nodes;
 `RootMacroMuscle` and exact-name `FindMacroMuscle` return stable pointers.
@@ -304,14 +507,24 @@ that the portrait was present and facial animation looked correct. This is
 useful qualitative live validation, independent of the screenshot captures,
 but does not expand the automated x86/x64 parity corpus.
 
-The remaining x64 `ITransformer` bridge is still a stub. This does not affect
-the static head and portrait checked above, but transformable
-FaceGen heads use `Res\FaceGenHead.gdp` and `.mmt` to generate a morphed
-animator in `CHeadTransformInfo::Recalc`; its x86 oracle exists, but the native
-transformer implementation and live check are still needed. The serialized tree also contains
+After the head-11 neck-zone work, a second isolated x64 run at
+`G:\SS\lab\runs\face-live-final-01` loaded `AI_CTRL` to `LOAD-SLOT-DONE`
+with the latest native bridge. `LabInput.exe` selected hero 1 by DirectInput
+scan code `0x02`; `evidence\portrait-a.png` and `portrait-b.png` capture the
+visible portrait two seconds apart. In the fixed portrait ROI
+(`x=10..104`, `y=625..739`), 6,659 of 10,925 RGB pixels changed (absolute
+channel-difference sum 461,355). The harness `quit` command exited the
+process cleanly. This confirms visible live portrait motion on this build,
+but does not isolate which facial channel changed or compare rendered pixels
+against the x86 game.
+
+The x64 mesh `ITransformer` now generates and serializes transformable
+FaceGen heads from `Res\FaceGenHead.gdp` and `.mmt`, as checked by the direct
+parity gate below. The live in-game editor preview and separate
+texture-weight `UserItem` channels now pass x86/x64 gates below. The serialized tree also contains
 runtime type-3 bone effects (for example `Head_shake` and tongue rotation).
-The sampled static heads have no vertex influences attached to their head or
-neck bones, so the passing vertex corpus does not exercise these effects.
+The native bridge evaluates this as a local-X rotation; the head-11 motion
+gate above verifies the native neck-zone path together with this channel.
 
 `FaceGDPProbe` is an x86 oracle for the previously untested FaceGen path. Build
 it from the x86 CMake tree and run it with `FaceGenHead.gdp`,
@@ -342,9 +555,8 @@ cases pass at 1e-4 tolerance. Passing `-SequenceFile` adds an animated x86/x64
 comparison. With `sequence-6008-0.bin`, all 2,514 animated vertex rows now
 pass at 1e-4, with maximum component delta 2.38e-6. The earlier 690-row
 failure (maximum delta 0.1866033) exposed the omitted saved-stream weight;
-the native decoder now reconstructs it. The native transformer path itself
-remains a stub, so generating a morph without the x86-produced saved stream
-is not yet supported. Oracle artifacts are in the ignored
+the native decoder now reconstructs it. The direct native transformer now
+generates its own saved stream without an x86-produced animator. Oracle artifacts are in the ignored
 `G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
 
 The x64 `IGDPFile`/`IGDPObject` now read the original OLE compound GDP with
@@ -355,8 +567,9 @@ are native. `GDPStorageProbe` inventories the storage hierarchy.
 `NativeGDPApiCheck` compared all 50 data-list items byte-for-byte with the
 original x86 `IGDPObject::Get` dumps; the default animator bytes and
 subobject count (seven) also matched. The remaining material/UV/triangulation methods of
-`IGDPObject` are placeholders, and `ITransformer::Load/Generate` is still
-unimplemented. The x64 `Game.exe` links successfully with the new GDP reader.
+`IGDPObject` are placeholders; the game-used mesh `ITransformer::Load/Generate`
+and collected texture `UserItem` output are implemented. The
+x64 `Game.exe` links successfully with the GDP reader and transformer.
 
 FaceGen's `FaceGenHead.mmt` is a second MMLF v4 graph variant with a class-2
 root, rather than the main `tree.mma` class-1 root. The native decoder now
@@ -379,18 +592,32 @@ entries. On the real GDP,
 `NativeFaceGenApiCheck FaceGenHead.gdp` reports 24 `HEAD` rules, 24 `COMB`
 rules, 16 unique archetypes, 419 vertices, 36 animation muscles, 129 morph
 muscles, 43 output channels and zero nonzero matrix entries.
-`NativeFaceGenDataTests` exercises rule syntax and percentage
-handling under both x86 and x64 CTest. This loader is not yet connected to
-the runtime transformer: `ITransformer::Load/Generate` must remain a red gate
-until the generation passes are implemented.
-`Test-FaceGDPTransformParity.ps1` runs the same GDP and MMT through the x86
-and x64 `FaceGDPProbe` executables, comparing neutral, positive/negative
-`Nose`, `Age` and `Gender` generated vertices directly. The x86 reference
-shows `Age` and `Gender` each alter all 419 vertices at both extremes;
-`Nose=0.5` alters 48. The test currently fails at x64 `ITransformer::Load` even
-for neutral output; unlike `Test-FaceGDPParity.ps1`, it does not pass an
-x86-precomputed animator to the native side. This is the implementation gate
-for native generation. An optional x86 `S2_FACE_TRACE_TRANSFORMER=1` probe
+`NativeFaceGenDataTests` exercises rule syntax and percentage handling under
+both x86 and x64 CTest. The loader is now connected to the x64 mesh
+transformer. `Test-FaceGDPTransformParity.ps1` runs the same GDP and MMT
+through x86 and x64 `FaceGDPProbe`, comparing 11 direct native generation
+cases: neutral, both signs of Nose, Age, Gender and Nationality, plus two
+editor slider combinations including the default. All 419 generated vertices
+pass at 1e-4 tolerance, with maximum observed delta 8.1e-6. With both
+`FaceProbe` executables and `-SequenceFile`, it also reloads each native
+stream under x86 and x64 and compares 2,514 animated rows per case; all 11
+pass, with maximum observed delta 8.11e-6. Neither test uses x86-precomputed
+intermediate heads on the native side. The x86 reference shows `Age` and
+`Gender` each alter all 419 vertices at both extremes; `Nose=0.5` alters 48.
+Run the direct mesh and saved-animation gate with:
+
+```powershell
+& .\diagnostics\Test-FaceGDPTransformParity.ps1 `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X64GDPProbe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X86FaceProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64FaceProbe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -SequenceFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\sequence-6008-0.bin' `
+  -OutputDirectory 'G:\SS\lab\runs\face-direct-native-gate'
+```
+
+An optional x86 `S2_FACE_TRACE_TRANSFORMER=1` probe
 prints the original transformer's vtable and post-`Load` worker dispatch
 addresses. In the examined DLL, public `Generate` (RVA `0x13580`) forwards to
 an internal worker dispatch at RVA `0x12300`. In this GDP, its runtime counts
@@ -460,13 +687,12 @@ checks cover vertices, muscle anchors and curves, influence projections,
 bone transforms and topology. The optional output-transfer check composes a
 final head from freshly captured x86 intermediates and compares its decoded
 fields with x86 `Generate`. These staged checks do not prove native end-to-end
-`ITransformer::Generate` yet.
-Neither proves full `ITransformer` generation. For example, neutral x86
+`ITransformer::Generate` by themselves; the direct gate above does for the
+tested mesh cases. For example, neutral x86
 weights begin `0.05, 0.05, 0.025, 0`
 for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
 does not change them; `Age` and `Gender` do. The game-used weight selection
-is now reproduced as described below; animation-generation passes are still
-required before the direct x64 transform parity gate can turn green.
+is reproduced as described below.
 
 Scope of the native port is the **game's calls**, not every LifeStudio
 FaceGen feature. `Main/iAdvFaceGen.cpp::UpdateHead` sets 14 named sliders,
@@ -486,9 +712,9 @@ the transformer's five selector inputs for diagnostics; the default is five
 zeros, while `Nationality=1` sets the three ethnicity inputs to approximately
 `100,-58.44155,-55.84415`. The original selector's general-purpose
 interpolation is supplied by the x86-only `TriangLib.dll`; the native port
-implements only the game's discrete slider path. The game-used transformation,
-including texture outputs and committed-head save/reload, is the remaining
-target rather than a general-purpose FaceGen API clone.
+implements only the game's discrete slider path. The target is the game's
+editor and committed-head behavior, not a general-purpose FaceGen API clone;
+the bounded commit/save/animation checks are documented below.
 The native MMT evaluator now accepts the game's class-5 user-item leaves,
 allowing it to evaluate Age/Gender/Nationality macros without rejecting their
 texture effects. `EvaluateGameFaceGenParameters` maps the resulting effects
@@ -541,9 +767,12 @@ matches the editor-default reference within 9.54e-7. The native
 runtime falloff component. The 11-case `--animation-fields` gate now checks
 the complete decoded base head, with maximum observed curve, projection,
 falloff and bone deltas of 1.53e-5, 5.07e-7, 8.35e-7 and 9.54e-7 on the
-editor default. Full animator serialization and the post-blend `Generate`
-worker remain to be implemented and compared before native generation can
-be considered complete.
+editor default. The compact `IAnimator::Save` stream can now also be encoded
+natively: encoding an x86 saved stream round-trips all 21,970 bytes exactly,
+and encoding an original `EuroM_A.mld` stream reloads through the original
+x86 DLL with zero neutral-vertex delta. The x64 mesh transformer uses this
+encoder for its generated output. A bounded committed-head slot and motion
+gate is documented below; the live editor preview has a separate gate below.
 
 The native `BlendFaceGenMorphHead` now builds the complete decoded 129-muscle
 morph rig by the same rule, and its 11-case field gate passes at 1e-4. The
@@ -559,8 +788,287 @@ coefficients are recomputed against the unchanged animation muscles.
 fresh x86 output; the tested vertex deltas are zero, and the editor-default
 influence deltas are at most 3.43e-7. This check uses x86-precomputed
 intermediate heads and morph `Process` positions to isolate the transfer.
-Native morph processing, output serialization, texture `UserItem` channels
-and the x64 `ITransformer` runtime are still required.
+The direct x64 `ITransformer` now performs native morph processing, output
+composition and serialization; the staged transfer check remains a diagnostic
+that isolates that operation. The texture channels and live editor preview
+have separate gates below.
+
+`UserItem` status: **game-used path implemented**, not an editor-only API.
+It is needed for a game-visible result, although it is not queried
+each render frame. On committing a customized hero, `CreateHeadInfo` reads
+the texture rig's named channels and bakes their face/eye/eyelash layer
+weights into `CHeadInfo::pTexture`; the world renderer then passes that
+persisted texture to the head material. Without these channels, a unique
+face would lose its selected texture layers after leaving the editor. The
+original x86 DLL stores those channels on the collecting `ITransformer`,
+not its output `IAnimator`; the x64 bridge implements this game-used path
+on the transformer. `AnimatorStub::UserItem/UserValuesCount/UserValue` remain
+unimplemented because no game call reads user items from a standalone mesh
+animator. Only class-5 MMT leaves reached by active game macros are
+collected, with one clamped value per leaf and multiple values when names
+repeat. Unknown names return `-1`. The uncollected mesh rig retains its
+21,970-byte mesh-only save stream. `Test-FaceGDPUserItemParity.ps1` compares
+x86 and x64 channel presence, counts and values (ignoring internal numeric
+IDs) for neutral, single-slider, editor-default and five positions of each
+of the eight game macro controls that emit user items. All 47 cases pass;
+the maximum tested value delta is `1.34e-7` at `1e-4` tolerance. The editor
+default has positive `Eyes_01`, `Hair_10` and `European.0` weights, so the
+channel path is not merely returning absent/zero values. The 47-case gate
+was rerun on 2026-09-23 and passed. Run with:
+
+```powershell
+& .\diagnostics\Test-FaceGDPUserItemParity.ps1 `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X64GDPProbe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceGDPProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-user-parity-01'
+```
+
+`Test-FaceGenEditorPreviewParity.ps1` exercises the real Advanced FaceGen
+interface in both game builds. It loads an isolated mission, opens the
+editor, sets actual `CScroll` controls through harness commands, runs
+`UpdateHead`, then bakes the editor's current preview through
+`CreateLSHeadInfo`. On 2026-09-23 the default CPU texture hash matched
+exactly (`d5a9b10a85e06e2e`), Nose=100 changed the mesh on both builds,
+and EyesColor=100 changed the texture to the same hash on both
+(`54dcd612902b3674`). Each preview contained a static mesh and nonempty
+texture. The mesh stream hashes differ between architectures; the separate
+committed-head pose gates compare rendered geometry. This editor gate does
+not establish GPU pixel parity or validate mouse input; the latter is
+unreliable in the game harness. Run with separate staged game copies:
+
+```powershell
+& .\diagnostics\Test-FaceGenEditorPreviewParity.ps1 `
+  -X86GameRoot 'G:\SS\lab\runs\facegen-bake-harness-01-x86\game' `
+  -X64GameRoot 'G:\SS\lab\runs\face-live-final-01\game'
+```
+
+The `facegenbake` game-harness command exercises more than the LifeStudio
+API: it chooses a transformable `CComplexHead` from `game.db`, applies three
+fixed slider presets, calls the same `CHeadTransformInfo::CreateHeadInfo`
+commit path as the editor, and hashes the resulting persisted 256×256 CPU
+texture. `Test-FaceGenBakeParity.ps1` launches separate staged x86/x64 game
+directories, sends the harness command atomically, requires a static mesh and
+a committed nonempty texture in every case, and compares the complete pixel
+hash exactly. Each case also serializes its `CHeadInfo` with the game's
+`CStructureSaver`, reloads it, and verifies the 21,970-byte animator stream
+and all 65,536 CPU pixels byte-for-byte. All three cases passed on head record 94: hashes
+`e61211fd62cc6efc`, `d3155898178747fc`, and `72eb80435311b3f3`.
+These distinct hashes show that slider changes reach the bake. The test
+proves the DB-backed texture/mesh commit and object-serialization path, not
+GPU display. A separate ordinary save-slot reload test is described below.
+Given separately staged game directories with the
+matching x86 and x64 executables, run:
+
+```powershell
+& .\diagnostics\Test-FaceGenBakeParity.ps1 `
+  -X86GameRoot 'G:\SS\lab\runs\facegen-bake-harness-01-x86\game' `
+  -X64GameRoot 'G:\SS\lab\runs\facegen-bake-harness-01-x64\game'
+```
+
+`Test-FaceGenSlotParity.ps1` goes through an ordinary game slot, not just a
+detached `CHeadInfo` round-trip. Its harness extension takes the first merc
+from a loaded `AI_CTRL` mission, commits a game-DB-backed transformable head
+using real slider controls, saves to a fresh named slot with `CICSave`, loads
+that slot with `CICLoad`, and inspects the merc's restored `CHeadInfo`.
+The script checks head identity, static-head flag, mesh animator-stream length
+and byte hash, texture presence, nonzero pixel count and exact CPU texture hash before and
+after reload, then compares x86 with x64. The paired run on 2026-09-23 passed:
+head 94, 21,970 animator bytes, 28,672 nonzero texture pixels and hash
+`e4e884b9a57e9b6c` on both architectures before and after slot reload.
+Each architecture's animator bytes also survived its own reload exactly:
+x86 hash `c0137ab666e743c2`, x64 hash `18b3f185a066e3b9`.
+The stream bytes are **not** cross-architecture identical, so raw byte
+equality is not a valid pose-parity gate. The paired pose test below uses
+each architecture's committed stream as its own input.
+The output slot was `FACEGEN_PARITY_01` in two isolated lab copies; no user
+save was overwritten. This proves the game-used persisted FaceGen data path,
+but not x86/x64 GPU pixel parity or actual animation of that custom head in
+the rendered mission. Repeat with freshly staged x86/x64 game directories
+containing the same `AI_CTRL` source slot and current `Game.exe` builds:
+
+```powershell
+& .\diagnostics\Test-FaceGenSlotParity.ps1 `
+  -X86GameRoot 'G:\SS\lab\runs\facegen-bake-harness-01-x86\game' `
+  -X64GameRoot 'G:\SS\lab\runs\face-live-final-01\game' `
+  -OutputSlot 'FACEGEN_PARITY_04'
+```
+
+The slot test also exports each reloaded animator to a lab-only `.bin` file.
+`Test-FaceGenCommittedMotionParity.ps1` runs the original x86 DLL on the x86
+stream and the native bridge on the x64 stream, with the same game sequence
+and muscle tree. It repeats the x86 reference for determinism, requires
+actual moving vertices, and compares each sampled vertex coordinate. On the
+head-94 output from slot `FACEGEN_PARITY_03`, sequence 6005 at seven active
+times passed: 3,352 vertex rows, 352 moving rows, maximum x86/x64 delta
+`7.15e-6` at `1e-4` tolerance. This is direct animation parity for one
+committed custom head and one game sequence, not every editor preset or
+sequence and not GPU pixel parity.
+
+```powershell
+& .\diagnostics\Test-FaceGenCommittedMotionParity.ps1 `
+  -X86Stream 'G:\SS\lab\runs\facegen-bake-harness-01-x86\game\_facegen_FACEGEN_PARITY_03.bin' `
+  -X64Stream 'G:\SS\lab\runs\face-live-final-01\game\_facegen_FACEGEN_PARITY_03.bin' `
+  -SequenceFile 'G:\SS\lab\runs\face-head11-neck-corpus-01\sequence-6005-0.bin' `
+  -TreeFile 'G:\SS\lab\baseline\tree.mma' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\facegen-committed-motion-gate-01'
+```
+
+The same pair of reloaded custom heads also passed the 31-sequence
+stratified game corpus with each sequence's default five sample times:
+77,934 paired vertex rows, 16,898 moving rows and maximum delta
+`6.68e-6`. The corpus includes speech phonemes and expression tracks, but
+these are sampled times, not an exhaustive all-sequence/all-frame proof.
+Run the corpus gate with `Test-FaceGenCommittedCorpusParity.ps1` and the
+same stream/probe/tree paths, plus
+`-SequenceDirectory 'G:\SS\lab\runs\face-stratified-corpus-01'` and a
+new lab-only `-OutputDirectory`.
+
+`Test-FaceGenCommittedLayeredParity.ps1` adds simultaneous head motion
+(sequence 6005), speech (371) and a held expression (7552) on this same
+reloaded custom head. The focused six-frame gate passed 2,933 vertex rows,
+1,688 moving rows, with maximum delta `7.15e-6` at `1e-4` tolerance.
+The gate now accepts `-SampleTimes` for denser timing checks without changing
+the sequence or overlay setup. On 2026-09-23, 167 sampled times per preset
+spanned 13,999..17,999 ms at 25-ms intervals plus start/end boundary probes
+around the speech/expression overlays. All three saved presets passed
+70,392 paired vertex rows each, with 47,061 / 46,479 / 46,893 moving rows;
+maximum deltas were `7.16e-6` / `7.40e-6` / `7.63e-6`. This crosses the
+expression's 15,102-ms end, including the held-last state, but does not
+prove continuous-time parity. For example, construct the sample list with:
+
+```powershell
+$times = @(13999,14000,14099,14100,14101,15099,15100,15101,17998,17999) +
+         @(14000..17999 | Where-Object { ($_ - 14000) % 25 -eq 0 })
+$sampleTimes = (@($times | Sort-Object -Unique) -join ',')
+# Pass -SampleTimes $sampleTimes to Test-FaceGenCommittedLayeredParity.ps1
+```
+
+`Test-FaceGenCommittedExpressionCorpus.ps1` applies that same 167-time
+head-motion/speech/held-expression grid to **all eight** game DB emotion
+masks on the separately saved x86/x64 editor-default head. All eight passed
+on 2026-09-23: 563,136 paired vertex rows, 357,198 moving rows, and a
+maximum delta of `7.63e-6` at `1e-4`. The grid includes times before each
+expression starts and after its duration, so the held-last transition is
+exercised. This tests the LifeStudio overlay path, not the game's UI event
+scheduler. Run with the same committed streams and sequence fixture paths
+used by the corpus gate, plus a fresh `-OutputDirectory`.
+
+The slot harness now accepts `facegencommit <case>` for three presets, each
+explicitly setting the same 14 named controls that `iAdvFaceGen::UpdateHead`
+passes to the live head. Case 0 is a mixed-control fixture, case 1 matches
+the editor's default slider positions, and case 2 combines Age/Gender,
+Nationality, five face-shape sliders and texture controls near their extremes.
+`Test-FaceGenSlotParity.ps1 -CaseIndex <0..2>` passed a separate ordinary
+slot for each case on x86 and x64. Every case preserved its own full animator
+byte hash and texture hash across reload; x86/x64 texture hashes match
+exactly and differ between cases:
+
+| Case | Texture hash (both) | 31-sequence max vertex delta |
+| --- | --- | ---: |
+| 0 | `88c9fb604ab89759` | `6.68e-6` |
+| 1 | `d5a9b10a85e06e2e` | `7.39e-6` |
+| 2 | `55b6d5c8ac661569` | `7.39e-6` |
+
+For each saved case, `Test-FaceGenCommittedCorpusParity.ps1` passed 31
+stratified game sequences (77,934 paired vertex rows per case); the layered
+head/speech/expression gate also passed all three (2,933 rows per case).
+For broader coverage, `New-FaceSequenceHashSample.ps1` selected every
+exported game sequence whose SHA-256 filename hash is 0 modulo 13, plus all
+31 stratified sequences: 554 of the 6,780 DB-exported streams. The full
+`Test-FaceGenCommittedCorpusParity.ps1` gate passed this 554-sequence sample
+on all three isolated saved presets: 1,392,756 paired vertex rows per head.
+The mixed, editor-default and extreme-shape cases had 357,095, 353,130 and
+357,542 moving rows, with maximum deltas `6.92e-6`, `7.39e-6` and
+`7.39e-6` respectively at `1e-4`. Results remain under
+`G:\SS\lab\runs\facegen-mixed-554-gate-01`,
+`facegen-editor-default-554-gate-01` and
+`facegen-extreme-554-gate-01`. This is a reproducible 8.2% sample at each
+sequence's default five frame times, not all 6,780 sequences or continuous
+time coverage.
+An additional complete-corpus run on the saved editor-default head (case 1)
+passed **all 6,780 exported game sequences** on 2026-09-23: 17,044,920
+paired vertex rows, 4,395,500 moving rows, maximum coordinate delta
+`7.39000000038459e-6` at `1e-4` tolerance. It used each architecture's
+separately saved animator stream and repeated every x86 reference run.
+The ignored result directory
+`G:\SS\lab\runs\facegen-editor-default-full-6780-gate-01` contains exactly
+6,780 sequence directories and 20,340 CSVs (three per sequence), with no
+incomplete directory or nonfinite coordinate token. This covers every
+DB-exported sequence at its default five times, **not** every millisecond
+or every slider combination. The other two saved presets retain the
+554-sequence sampled coverage described above.
+Use a fresh output directory for the selector; it refuses to overwrite an
+existing fixture set.
+
+```powershell
+& .\diagnostics\New-FaceSequenceHashSample.ps1 `
+  -SourceDirectory 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\face-fixtures' `
+  -AlwaysIncludeDirectory 'G:\SS\lab\runs\face-stratified-corpus-01' `
+  -OutputDirectory 'G:\SS\lab\runs\facegen-hash-sample-13-0' `
+  -Modulo 13 -Residue 0
+& .\diagnostics\Test-FaceGenCommittedCorpusParity.ps1 `
+  -X86Stream 'G:\SS\lab\runs\facegen-bake-harness-01-x86\game\_facegen_FACEGEN_ISOLATED_1.bin' `
+  -X64Stream 'G:\SS\lab\runs\face-live-final-01\game\_facegen_FACEGEN_ISOLATED_1.bin' `
+  -SequenceDirectory 'G:\SS\lab\runs\facegen-hash-sample-13-0' `
+  -TreeFile 'G:\SS\lab\baseline\tree.mma' -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\facegen-editor-default-554-gate-01'
+```
+These tests verify game-used mesh and texture effects of the UI control
+values. The slot gate additionally compares the per-unit race, hair and
+four world/interface mesh record IDs before/after reload and across x86/x64.
+It exposed a real persistence bug: `Nationality` changed only the shared
+`CComplexHead::pBodyColor`, leaving the serializable per-unit
+`CHeadInfo::pBodyColor` null. `CreateHeadInfo` now copies the chosen race into
+the committed head, and `ChooseBodyColor` reads that per-unit field with a
+fallback for older/stock heads. The three presets now persist race IDs
+`3`, `1`, `3` on both architectures. Case 2 also persists hair model `4190`
+and glasses model `4221` (the other two cases intentionally have neither).
+The corrected case-2 texture hash and its 31-sequence and layered animation
+gates all pass. An isolated x64 load of the `FACEGEN_HAIR_2` slot visibly
+shows the committed hair and glasses on the portrait at
+`G:\SS\lab\runs\face-live-final-01\evidence\facegen-hair-glasses-loaded.png`;
+the process exited by harness `quit`. This is a live-render sanity check,
+not synchronized x86/x64 pixel parity. The interactive editor's GPU preview
+remains unverified.
+
+The slot fixture now restores the shared `CComplexHead` race, hair and mesh
+pointers immediately after installing the per-unit head, so later save/load
+cannot succeed by accidentally reading those mutated DB-template pointers.
+All three `FACEGEN_ISOLATED_<case>` slots passed the same x86/x64
+model/texture/stream checks with template restoration. The case-2 x64
+portrait still shows the selected hair
+and glasses at
+`G:\SS\lab\runs\face-live-final-01\evidence\facegen-isolated-hair-glasses-loaded-b.png`.
+The current x86 build also loaded that isolated slot and showed the same
+hair/glasses selection in
+`G:\SS\lab\runs\facegen-bake-harness-01-x86\evidence\facegen-isolated-hair-glasses-loaded.png`.
+These are separate, unsynchronized frames; no pixel-equality claim follows.
+
+The five game-used face-shape controls were then tested individually with
+`Test-FaceGDPTransformParity.ps1 -MacroName <name> -Amplitude 0.5` and its
+optional `-X86FaceProbe/-X64FaceProbe/-SequenceFile` animated-output gate.
+All five 11-case runs passed direct x86/x64 generated-vertex parity and x86
+and x64 reload/animation parity at `1e-4`. None is a trivial no-op in the
+x86 reference: the maximum neutral-to-positive vertex displacement is
+`0.3454` for Lips, `0.4131` for Chin, `0.2645` for Nose, `0.3848` for Brows
+and `0.3629` for Cheeks. Outputs are under
+`G:\SS\lab\runs\facegen-shape-<name>-parity-01`.
+
+The `FACEGEN_PARITY_03` slots were also loaded visibly in separate x86 and
+x64 game windows (not through computer-use automation). `LabInput.exe`
+selected the first merc; both runs showed the custom male face in the live
+portrait, and each portrait changed between two captures. The x64 captures
+are `G:\SS\lab\runs\face-live-final-01\evidence\facegen-reloaded-portrait*.png`;
+the x86 captures are in the paired run's `evidence` directory. Both game
+processes exited via harness `quit`. The screenshots are qualitative runtime
+evidence only: frame timing and camera state differ, so they do not establish
+x86/x64 rendered-pixel equality.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
@@ -652,8 +1160,9 @@ with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This neutral
 check alone does not establish animated parity. Animated parity is now
 verified on the bounded six-case and 20-case corpora above. A later live x64
 portrait check, described above, confirmed visible motion in one scene and
-the user independently reported no visual issue. FaceGen and additional
-head/sequence variants remain unverified.
+the user independently reported no visual issue. FaceGen and unexercised
+head/sequence combinations have their separate checks above; all 136 game
+head streams are now covered with two sequences, including active neck motion.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
 known gap rather than accepting it as finished animation; the full

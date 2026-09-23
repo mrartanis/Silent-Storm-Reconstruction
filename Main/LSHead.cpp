@@ -70,6 +70,46 @@ int ExportAllFaceSequenceFixtures()
 	return count;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Harness-only export of every DB-backed head stream, including all segments
+// in a head resource. Unlike the ordinary loader this does not instantiate
+// an animator, and it never runs unless the opt-in fixture directory is set.
+int ExportAllFaceHeadFixtures()
+{
+	char directory[1024];
+	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
+	if ( length == 0 || length >= sizeof(directory) )
+		return 0;
+	CDBTable<NDb::CHead> *pTable = NDatabase::GetTable<NDb::CHead>();
+	if ( !pTable )
+		return 0;
+	int count = 0;
+	CDBIterator<NDb::CHead> it( *pTable );
+	while ( it.MoveNext() )
+	{
+		NDb::CHead *r = it.Get();
+		if ( !IsValid( r ) )
+			continue;
+		try
+		{
+			int id = r->GetRecordID();
+			NGScene::CResourceOpener file( "Heads", id );
+			vector<CMemoryStream> streams;
+			file->Add( 1, &streams );
+			for ( int part = 0; part < streams.size(); ++part )
+				if ( streams[part].GetSize() > 0 )
+				{
+					ExportFaceFixture( "head", id, part, streams[part] );
+					++count;
+				}
+		}
+		catch (...)
+		{
+			// Some DB head rows have no binary resource; keep scanning.
+		}
+	}
+	return count;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 static void EnsureLSInit()
 {
 	static bool bInited = false;
@@ -1112,6 +1152,11 @@ void CHeadTextureTransformer::Recalc()
 CHeadInfo* CHeadTransformInfo::CreateHeadInfo()
 {
 	CHeadInfo *pHeadInfo = new CHeadInfo( pComplexHead );   // base resolve (material/hair/face+IF meshes)
+	// Nationality picks a race on the preview template. Persist that choice on
+	// this unit's head (save tag 5), so later edits to the shared DB template
+	// cannot change the committed body's neck/hand skin tone.
+	if ( IsValid( pComplexHead ) && IsValid( pComplexHead->pBodyColor ) )
+		pHeadInfo->SetBodyColor( pComplexHead->pBodyColor );
 
 	if ( !bMorphBuilt )
 		BuildMorphRig();
@@ -1196,6 +1241,160 @@ CHeadInfo* CHeadTransformInfo::CreateHeadInfo()
 	}
 
 	return pHeadInfo;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Harness-only end-to-end FaceGen bake. This runs the same DB-backed
+// CreateHeadInfo path as the advanced editor commit, then hashes the persisted
+// CPU texture pixels (before GPU upload) for paired x86/x64 comparison.
+bool ProbeCommittedFaceGenHead(CHeadInfo *pHeadInfo, SFaceGenBakeProbeResult *result)
+{
+	if ( !result )
+		return false;
+	*result = SFaceGenBakeProbeResult();
+	if ( !IsValid( pHeadInfo ) )
+		return false;
+	result->headId = pHeadInfo->GetHead() ? pHeadInfo->GetHead()->GetRecordID() : -1;
+	result->staticHead = pHeadInfo->IsStaticHead();
+	CFaceGenMeshHolder *pMesh = dynamic_cast<CFaceGenMeshHolder*>( pHeadInfo->GetMesh() );
+	CFaceGenTextureHolder *pTexture = dynamic_cast<CFaceGenTextureHolder*>( pHeadInfo->GetFaceTexture() );
+	if ( pMesh && pMesh->GetInfo().animatorStreams.size() == 1 )
+	{
+		CMemoryStream &stream = pMesh->GetInfo().animatorStreams[0];
+		result->animatorBytes = stream.GetSize();
+		unsigned long long hash = 14695981039346656037ULL;
+		const unsigned char *bytes = (const unsigned char*)stream.GetBuffer();
+		for ( int i = 0; i < result->animatorBytes; ++i )
+		{
+			hash ^= bytes[i];
+			hash *= 1099511628211ULL;
+		}
+		result->animatorHash = hash;
+	}
+	if ( !pTexture )
+		return true;
+	CArray2D<NGfx::SPixel8888> &image = pTexture->Image();
+	if ( image.GetXSize() != 256 || image.GetYSize() != 256 )
+		return true;
+	unsigned long long hash = 14695981039346656037ULL;
+	for ( int y = 0; y < 256; ++y )
+		for ( int x = 0; x < 256; ++x )
+		{
+			unsigned int pixel = image[y][x].color;
+			if ( pixel ) ++result->nonzeroPixels;
+			for ( int byte = 0; byte < 4; ++byte )
+			{
+				hash ^= (pixel >> (byte * 8)) & 0xff;
+				hash *= 1099511628211ULL;
+			}
+		}
+	result->textured = true;
+	result->textureHash = hash;
+	return true;
+}
+
+bool ProbeFaceGenBake(int caseIndex, SFaceGenBakeProbeResult *result)
+{
+	if ( !result || caseIndex < 0 || caseIndex > 2 )
+		return false;
+	*result = SFaceGenBakeProbeResult();
+	CDBTable<NDb::CComplexHead> *pTable = NDatabase::GetTable<NDb::CComplexHead>();
+	if ( !pTable )
+		return false;
+	NDb::CComplexHead *pDbHead = 0;
+	CDBIterator<NDb::CComplexHead> it( *pTable );
+	while ( it.MoveNext() )
+	{
+		NDb::CComplexHead *p = it.Get();
+		if ( IsValid( p ) && IsValid( p->pHead ) && p->pHead->isTransformable &&
+		     IsValid( p->pHead->pTransformableTextures ) )
+		{
+			pDbHead = p;
+			break;
+		}
+	}
+	if ( !pDbHead )
+		return false;
+	result->headId = pDbHead->GetRecordID();
+	// Nationality changes the shared DB template's body-color pointer. A
+	// diagnostic bake must leave that template exactly as it found it.
+	struct CRestoreBodyColor
+	{
+		NDb::CComplexHead *pHead;
+		CPtr<NDb::CRace> saved;
+		~CRestoreBodyColor() { pHead->pBodyColor = saved; }
+	} restore = { pDbHead, pDbHead->pBodyColor };
+	try
+	{
+		CObj<CHeadTransformInfo> pTransform = new CHeadTransformInfo( pDbHead, 0 );
+		pTransform->SetMMTension( "Age", caseIndex == 2 ? 0.5f : 0.0f );
+		pTransform->SetMMTension( "Gender", 0.0f );
+		pTransform->SetMMTension( "Nationality", caseIndex == 2 ? 0.5f : -1.0f );
+		pTransform->SetMMTension( "EyesColor", caseIndex == 1 ? 1.0f : -1.0f );
+		pTransform->SetMMTension( "HairColor", caseIndex == 1 ? -1.0f : 1.0f );
+		pTransform->SetMMTension( "FacialColor", caseIndex == 2 ? 0.5f : -1.0f );
+		CObj<CHeadInfo> pHeadInfo = pTransform->CreateHeadInfo();
+		if ( !IsValid( pHeadInfo ) )
+			return false;
+		result->staticHead = pHeadInfo->IsStaticHead() && IsValid( pHeadInfo->GetMesh() );
+		CFaceGenMeshHolder *pMesh = dynamic_cast<CFaceGenMeshHolder *>(pHeadInfo->GetMesh());
+		CFaceGenTextureHolder *pTexture = dynamic_cast<CFaceGenTextureHolder *>(pHeadInfo->GetFaceTexture());
+		if ( !pTexture || !pMesh || pMesh->GetInfo().animatorStreams.size() != 1 )
+			return true; // Valid negative result: the texture bake did not commit.
+		CArray2D<NGfx::SPixel8888> &image = pTexture->Image();
+		if ( image.GetXSize() != 256 || image.GetYSize() != 256 )
+			return false;
+		unsigned long long hash = 14695981039346656037ULL;
+		int nonzero = 0;
+		for ( int y = 0; y < 256; ++y )
+			for ( int x = 0; x < 256; ++x )
+			{
+				unsigned int pixel = image[y][x].color;
+				if ( pixel ) ++nonzero;
+				for ( int byte = 0; byte < 4; ++byte )
+				{
+					hash ^= (pixel >> (byte * 8)) & 0xff;
+					hash *= 1099511628211ULL;
+				}
+			}
+		result->textured = true;
+		result->textureHash = hash;
+		result->nonzeroPixels = nonzero;
+		CMemoryStream &originalAnimator = pMesh->GetInfo().animatorStreams[0];
+		result->animatorBytes = originalAnimator.GetSize();
+		CMemoryStream saved;
+		{
+			CStructureSaver saver( saved, CStructureSaver::WRITE );
+			saver.Add( 2, &pHeadInfo );
+		}
+		saved.Seek( 0 );
+		CObj<CHeadInfo> pReloaded;
+		{
+			CSharedHolder hold;
+			CStructureSaver saver( saved, CStructureSaver::READ );
+			saver.Add( 2, &pReloaded );
+		}
+		if ( !IsValid( pReloaded ) || !pReloaded->IsStaticHead() )
+			return true;
+		CFaceGenMeshHolder *pReloadedMesh = dynamic_cast<CFaceGenMeshHolder *>(pReloaded->GetMesh());
+		CFaceGenTextureHolder *pReloadedTexture = dynamic_cast<CFaceGenTextureHolder *>(pReloaded->GetFaceTexture());
+		if ( !pReloadedMesh || !pReloadedTexture ||
+		     pReloadedMesh->GetInfo().animatorStreams.size() != 1 )
+			return true;
+		CMemoryStream &reloadedAnimator = pReloadedMesh->GetInfo().animatorStreams[0];
+		if ( reloadedAnimator.GetSize() != originalAnimator.GetSize() ||
+		     memcmp( reloadedAnimator.GetBuffer(), originalAnimator.GetBuffer(), originalAnimator.GetSize() ) != 0 )
+			return true;
+		CArray2D<NGfx::SPixel8888> &reloadedImage = pReloadedTexture->Image();
+		if ( reloadedImage.GetXSize() != 256 || reloadedImage.GetYSize() != 256 )
+			return true;
+		for ( int y = 0; y < 256; ++y )
+			for ( int x = 0; x < 256; ++x )
+				if ( reloadedImage[y][x].color != image[y][x].color )
+					return true;
+		result->roundTripped = true;
+		return true;
+	}
+	catch (...) { return false; }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

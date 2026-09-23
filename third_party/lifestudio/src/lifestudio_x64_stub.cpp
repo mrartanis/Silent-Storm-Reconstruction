@@ -1,8 +1,9 @@
 // Partial native x64 LifeStudio bridge. Original streams and macro-muscle
-// effects run without the x86 DLL; local-Y and local-Z bone channels are
-// decoded, but full vertex parity remains incomplete.
+// effects run without the x86 DLL; local-X/Y/Z bone channels are decoded,
+// but full vertex parity remains incomplete.
 #include "LifeStudioHeadAPIGDP.h"
 #include "LifeStudioHeadAPIMMTS.h"
+#include "NativeFaceGenData.h"
 #include "NativeHeadData.h"
 #include "NativeMMTreeData.h"
 #include "NativeMMTreeRuntime.h"
@@ -44,8 +45,18 @@ void TransformVector(const float *matrix, const float *source, float *result)
                    source[2] * matrix[6 + axis];
 }
 
-void RotateLocal(float *vector, const std::array<float, 2> &amplitudes)
+void RotateLocal(float *vector, const std::array<float, 3> &amplitudes)
 {
+  const float angleX = -amplitudes[2];
+  if (angleX != 0.0f)
+  {
+    const float cosine = std::cos(angleX);
+    const float sine = std::sin(angleX);
+    const float y = vector[1];
+    const float z = vector[2];
+    vector[1] = y * cosine - z * sine;
+    vector[2] = y * sine + z * cosine;
+  }
   const float angleY = -amplitudes[0];
   if (angleY != 0.0f)
   {
@@ -66,6 +77,13 @@ void RotateLocal(float *vector, const std::array<float, 2> &amplitudes)
     vector[0] = x * cosine - y * sine;
     vector[1] = x * sine + y * cosine;
   }
+}
+
+void RotateNeckParent(float *vector, const std::array<float, 3> &amplitudes)
+{
+  // The saved neck attachment counter-rotates against the head's local-Y/Z
+  // channels; its local-X channel follows the normal head rotation.
+  RotateLocal(vector, {-amplitudes[0], -amplitudes[1], amplitudes[2]});
 }
 }
 
@@ -91,13 +109,22 @@ class AnimatorStub : public IAnimator
   std::vector<float> muscleAmplitudes;
   std::vector<float> muscleSignedSquares;
   std::vector<float> muscleAbsoluteSums;
-  std::vector<std::array<float, 2>> boneAmplitudes;
-  std::vector<std::array<float, 2>> boneSignedSquares;
-  std::vector<std::array<float, 2>> boneAbsoluteSums;
+  std::vector<std::array<float, 3>> boneAmplitudes;
+  std::vector<std::array<float, 3>> boneSignedSquares;
+  std::vector<std::array<float, 3>> boneAbsoluteSums;
   std::vector<std::array<float, 3>> evaluatedPointB;
+  std::vector<float> neutralVertices;
+  bool applyNeckZones = true;
   bool loaded = false;
   bool fillUnused = false;
 public:
+  bool AssignHead(const NativeLifeStudio::HeadData &value)
+  {
+    std::vector<char> saved;
+    return NativeLifeStudio::EncodeSavedHead(value, &saved) &&
+        saved.size() <= static_cast<std::size_t>(std::numeric_limits<int>::max()) &&
+        Load(saved.data(), static_cast<int>(saved.size()));
+  }
   bool Load(const char *bytes, int size)
   {
     NativeLifeStudio::HeadData parsed;
@@ -112,6 +139,7 @@ public:
       boneSignedSquares.clear();
       boneAbsoluteSums.clear();
       evaluatedPointB.clear();
+      neutralVertices.clear();
       loaded = false;
       return false;
     }
@@ -120,14 +148,28 @@ public:
     muscleAmplitudes.assign(head.muscles.size(), 0.0f);
     muscleSignedSquares.assign(head.muscles.size(), 0.0f);
     muscleAbsoluteSums.assign(head.muscles.size(), 0.0f);
-    boneAmplitudes.assign(head.bones.size(), {0.0f, 0.0f});
-    boneSignedSquares.assign(head.bones.size(), {0.0f, 0.0f});
-    boneAbsoluteSums.assign(head.bones.size(), {0.0f, 0.0f});
+    boneAmplitudes.assign(head.bones.size(), {0.0f, 0.0f, 0.0f});
+    boneSignedSquares.assign(head.bones.size(), {0.0f, 0.0f, 0.0f});
+    boneAbsoluteSums.assign(head.bones.size(), {0.0f, 0.0f, 0.0f});
     evaluatedPointB.resize(head.muscles.size());
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
         evaluatedPointB[i][axis] = head.muscles[i].pointB[axis];
     loaded = true;
+    neutralVertices.clear();
+    if (head.hasNeckAppendix)
+    {
+      neutralVertices.resize(std::size_t(head.vertexCount) * 3);
+      applyNeckZones = false;
+      const bool neutralOk = Process(neutralVertices.data(), 3);
+      applyNeckZones = true;
+      if (!neutralOk)
+      {
+        loaded = false;
+        neutralVertices.clear();
+        return false;
+      }
+    }
     return true;
   }
   int SaveBufferSize() { return loaded ? static_cast<int>(rawBytes.size()) : 0; }
@@ -139,17 +181,25 @@ public:
   }
   IMuscle *MuscleByName(const char *) { return 0; }
   IMuscle *Muscle(int) { return 0; }
-  int MusclesCount() const { return 0; }
+  int MusclesCount() const { return loaded ? static_cast<int>(head.muscleCount) : 0; }
   IBone *BoneByName(const char *) { return 0; }
   IBone *Bone(int) { return 0; }
   IBone *BoneByType(unsigned long, IBone *) { return 0; }
-  int BonesCount() const { return 0; }
+  int BonesCount() const { return loaded ? static_cast<int>(head.boneCount) : 0; }
   void FillUnused(bool fill) { fillUnused = fill; }
   bool FillUnused() const { return fillUnused; }
   bool Process(float *output, int step)
   {
     if (!loaded || !output || step < 3 || step > 1024)
       return false;
+    int neckParent = -1;
+    if (head.hasNeckAppendix)
+      for (std::size_t i = 0; i < head.bones.size(); ++i)
+        if (head.bones[i].name == "a_Head_ROT")
+        {
+          neckParent = static_cast<int>(i);
+          break;
+        }
     for (const auto &vertex : head.vertices)
     {
       const std::size_t influenceCount = vertex.influences.size();
@@ -179,10 +229,22 @@ public:
           float intermediate[3];
           float transformed[3];
           TransformVector(bone.matrixB, shifts[i].data(), intermediate);
-          RotateLocal(intermediate, boneAmplitudes[boneIndex]);
+          if (bone.name == "a_Neck_ROT")
+            RotateNeckParent(intermediate, boneAmplitudes[boneIndex]);
+          else
+            RotateLocal(intermediate, boneAmplitudes[boneIndex]);
           TransformVector(bone.matrixA, intermediate, transformed);
           for (int axis = 0; axis < 3; ++axis)
             shifts[i][axis] = transformed[axis];
+          if (bone.name == "a_Neck_ROT" && neckParent >= 0)
+          {
+            const auto &parent = head.bones[neckParent];
+            TransformVector(parent.matrixB, shifts[i].data(), intermediate);
+            RotateNeckParent(intermediate, boneAmplitudes[neckParent]);
+            TransformVector(parent.matrixA, intermediate, transformed);
+            for (int axis = 0; axis < 3; ++axis)
+              shifts[i][axis] = transformed[axis];
+          }
           break;
         }
         lengths[i] = std::sqrt(shifts[i][0] * shifts[i][0] +
@@ -246,9 +308,20 @@ public:
             continue;
           TransformPoint(bone.matrixB, vertex.sourcePosition, intermediate);
           const std::size_t boneIndex = static_cast<std::size_t>(&bone - head.bones.data());
-          RotateLocal(intermediate, boneAmplitudes[boneIndex]);
+          if (bone.name == "a_Neck_ROT")
+            RotateNeckParent(intermediate, boneAmplitudes[boneIndex]);
+          else
+            RotateLocal(intermediate, boneAmplitudes[boneIndex]);
           TransformPoint(bone.matrixA, intermediate, transformed);
           candidate = transformed;
+          if (bone.name == "a_Neck_ROT" && neckParent >= 0)
+          {
+            const auto &parent = head.bones[neckParent];
+            TransformPoint(parent.matrixB, candidate, intermediate);
+            RotateNeckParent(intermediate, boneAmplitudes[neckParent]);
+            TransformPoint(parent.matrixA, intermediate, transformed);
+            candidate = transformed;
+          }
           break;
         }
         for (int axis = 0; axis < 3; ++axis)
@@ -267,6 +340,97 @@ public:
     for (const auto &vertex : head.implicitVertices)
       for (int axis = 0; axis < 3; ++axis)
         output[std::size_t(vertex.index) * step + axis] = vertex.sourcePosition[axis];
+    if (applyNeckZones && head.hasNeckAppendix && neckParent >= 0 &&
+        neutralVertices.size() == std::size_t(head.vertexCount) * 3)
+    {
+      struct ControlLine
+      {
+        std::array<float, 3> sourceLower{}, sourceUpper{};
+        std::array<float, 3> movedLower{}, movedUpper{};
+      };
+      std::array<ControlLine, 9> lines;
+      std::vector<float> base(std::size_t(head.vertexCount) * 3);
+      for (std::size_t vertex = 0; vertex < head.vertexCount; ++vertex)
+        for (int axis = 0; axis < 3; ++axis)
+          base[vertex * 3 + axis] = output[vertex * step + axis];
+      for (std::size_t zone = 0; zone < 8; ++zone)
+      {
+        const auto &record = head.neckZones[zone];
+        for (int axis = 0; axis < 3; ++axis)
+        {
+          lines[zone].sourceLower[axis] = neutralVertices[std::size_t(record.lowerVertex) * 3 + axis];
+          lines[zone].sourceUpper[axis] = neutralVertices[std::size_t(record.upperVertex) * 3 + axis];
+          lines[zone].movedLower[axis] = base[std::size_t(record.lowerVertex) * 3 + axis];
+          lines[zone].movedUpper[axis] = base[std::size_t(record.upperVertex) * 3 + axis];
+        }
+      }
+      const auto &parent = head.bones[neckParent];
+      const auto neckBone = std::find_if(head.bones.begin(), head.bones.end(),
+          [](const NativeLifeStudio::BoneRecord &bone) { return bone.name == "a_Neck_ROT"; });
+      if (neckBone == head.bones.end()) return false;
+      const float *neckPivot = neckBone->matrixA + 9;
+      float intermediate[3];
+      TransformPoint(parent.matrixB, neckPivot, intermediate);
+      float sourceCenter[3];
+      TransformPoint(parent.matrixA, intermediate, sourceCenter);
+      TransformPoint(parent.matrixB, neckPivot, intermediate);
+      RotateNeckParent(intermediate, boneAmplitudes[neckParent]);
+      float movedCenter[3];
+      TransformPoint(parent.matrixA, intermediate, movedCenter);
+      for (int axis = 0; axis < 3; ++axis)
+      {
+        lines[8].sourceLower[axis] = sourceCenter[axis];
+        lines[8].sourceUpper[axis] = parent.matrixA[9 + axis];
+        lines[8].movedLower[axis] = movedCenter[axis];
+        lines[8].movedUpper[axis] = parent.matrixA[9 + axis];
+      }
+      std::vector<std::array<double, 3>> accumulated(head.vertexCount, {0.0, 0.0, 0.0});
+      std::vector<int> counts(head.vertexCount, 0);
+      for (std::size_t zone = 0; zone < 8; ++zone)
+        for (std::size_t vertex = 0; vertex < head.vertexCount; ++vertex)
+        {
+          if (!(head.neckZones[zone].vertexMask[vertex / 8] & (1u << (vertex % 8)))) continue;
+          const std::array<std::size_t, 3> nodes = {zone, (zone + 1) % 8, 8};
+          // Retail caches these coordinates in the neutral pose unless
+          // NeckProcessing2 is explicitly enabled. Re-evaluating them from
+          // the morphed base vertex applies facial-muscle motion twice.
+          const float *point = neutralVertices.data() + vertex * 3;
+          std::array<double, 3> t{}, x{}, y{};
+          for (int j = 0; j < 3; ++j)
+          {
+            const auto &line = lines[nodes[j]];
+            const double dz = double(line.sourceUpper[2]) - line.sourceLower[2];
+            if (std::fabs(dz) < 1e-6) return false;
+            t[j] = (double(point[2]) - line.sourceLower[2]) / dz;
+            x[j] = line.sourceLower[0] + t[j] *
+                (double(line.sourceUpper[0]) - line.sourceLower[0]);
+            y[j] = line.sourceLower[1] + t[j] *
+                (double(line.sourceUpper[1]) - line.sourceLower[1]);
+          }
+          const double denominator = (x[1] - x[0]) * (y[2] - y[0]) -
+                                     (x[2] - x[0]) * (y[1] - y[0]);
+          if (std::fabs(denominator) < 1e-9) return false;
+          const double w1 = ((double(point[0]) - x[0]) * (y[2] - y[0]) -
+                             (x[2] - x[0]) * (double(point[1]) - y[0])) / denominator;
+          const double w2 = ((x[1] - x[0]) * (double(point[1]) - y[0]) -
+                             (double(point[0]) - x[0]) * (y[1] - y[0])) / denominator;
+          const std::array<double, 3> weights = {1.0 - w1 - w2, w1, w2};
+          for (int j = 0; j < 3; ++j)
+            for (int axis = 0; axis < 3; ++axis)
+            {
+              const auto &line = lines[nodes[j]];
+              accumulated[vertex][axis] += weights[j] *
+                  (line.movedLower[axis] + t[j] *
+                      (double(line.movedUpper[axis]) - line.movedLower[axis]));
+            }
+          ++counts[vertex];
+        }
+      for (std::size_t vertex = 0; vertex < head.vertexCount; ++vertex)
+        if (counts[vertex] > 0)
+          for (int axis = 0; axis < 3; ++axis)
+            output[vertex * step + axis] =
+                static_cast<float>(accumulated[vertex][axis] / counts[vertex]);
+    }
     return true;
   }
   int VerticesCount() const { return loaded ? static_cast<int>(head.vertexCount) : 0; }
@@ -282,11 +446,11 @@ public:
     std::fill(muscleSignedSquares.begin(), muscleSignedSquares.end(), 0.0f);
     std::fill(muscleAbsoluteSums.begin(), muscleAbsoluteSums.end(), 0.0f);
     std::fill(boneAmplitudes.begin(), boneAmplitudes.end(),
-              std::array<float, 2>{0.0f, 0.0f});
+              std::array<float, 3>{0.0f, 0.0f, 0.0f});
     std::fill(boneSignedSquares.begin(), boneSignedSquares.end(),
-              std::array<float, 2>{0.0f, 0.0f});
+              std::array<float, 3>{0.0f, 0.0f, 0.0f});
     std::fill(boneAbsoluteSums.begin(), boneAbsoluteSums.end(),
-              std::array<float, 2>{0.0f, 0.0f});
+              std::array<float, 3>{0.0f, 0.0f, 0.0f});
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
         evaluatedPointB[i][axis] = head.muscles[i].pointB[axis];
@@ -318,11 +482,12 @@ public:
           }
       // Bone axis comes from the referenced definition's runtime type.
       // Different definitions can share a name and serialized channel.
-      if (effect.kind == 4 && (effect.runtimeType == 1 || effect.runtimeType == 2))
+      if (effect.kind == 4 && effect.runtimeType >= 1 && effect.runtimeType <= 3)
         for (std::size_t i = 0; i < head.bones.size(); ++i)
           if (head.bones[i].name == effect.targetName)
           {
-            const int axis = effect.runtimeType == 2 ? 0 : 1;
+            const int axis = effect.runtimeType == 2 ? 0 :
+                             effect.runtimeType == 1 ? 1 : 2;
             boneSignedSquares[i][axis] += std::copysign(
                 effect.expression * effect.expression, effect.expression);
             boneAbsoluteSums[i][axis] += std::fabs(effect.expression);
@@ -335,7 +500,7 @@ public:
   {
     if (!loaded) return;
     for (std::size_t i = 0; i < head.bones.size(); ++i)
-      for (int axis = 0; axis < 2; ++axis)
+      for (int axis = 0; axis < 3; ++axis)
         boneAmplitudes[i][axis] = boneAbsoluteSums[i][axis] >= 0.0001f
             ? boneSignedSquares[i][axis] / boneAbsoluteSums[i][axis]
             : 0.0f;
@@ -346,8 +511,11 @@ public:
                       ? muscleSignedSquares[i] / muscleAbsoluteSums[i]
                       : 0.0f;
       for (int axis = 0; axis < 3; ++axis)
-        evaluatedPointB[i][axis] = head.muscles[i].pointA[axis] +
-                                    (1.0f - amplitude) *
+        // Match the original x86 evaluation order. The algebraically equal
+        // A + (1-a)*(B-A) can round one ULP higher; at a vertex influence's
+        // 1e-4 activation boundary that changes whether the muscle moves.
+        evaluatedPointB[i][axis] = head.muscles[i].pointB[axis] -
+                                    amplitude *
                                     (head.muscles[i].pointB[axis] - head.muscles[i].pointA[axis]);
     }
   }
@@ -356,12 +524,12 @@ public:
   void ClearAllRegistration() {}
   void CollectUserItems(bool) {}
   bool CollectUserItems() const { return false; }
-  UserID UserItem(const char *) { return 0; }
+  UserID UserItem(const char *) { return -1; }
   int UserValuesCount(UserID) { return 0; }
   float UserValue(UserID, int) { return 0.0f; }
   void ClearUserItems() {}
   void ComputeBonesHierarchy() {}
-  bool HasNeck() const { return false; }
+  bool HasNeck() const { return loaded && head.hasNeckAppendix; }
   void NeckProcessing2(bool) {}
   bool NeckProcessing2() const { return false; }
   IAnimator *Clone() { return new AnimatorStub(*this); }
@@ -380,6 +548,16 @@ int NativeAnimatorMuscleCount(IAnimator *animator)
 
 class TransformerStub : public ITransformer
 {
+  NativeLifeStudio::FaceGenData faceGen;
+  NativeMacroMuscle *rootMacro = nullptr;
+  std::vector<std::pair<NativeMacroMuscle *, float>> sliders;
+  AnimatorStub *output = nullptr;
+  bool loaded = false;
+  bool computed = false;
+  bool collectItems = false;
+  std::vector<std::string> userItemNames;
+  std::vector<std::vector<float>> userItemValues;
+  std::unordered_map<std::string, UserID> userItemIds;
 public:
   bool Load(const char *, int) { return false; }
   int SaveBufferSize() { return 0; }
@@ -395,29 +573,130 @@ public:
   bool FillUnused() const { return false; }
   bool Process(float *, int) { return false; }
   int VerticesCount() const { return 0; }
-  void ClearAllMacroMuscles() {}
-  void AddMacroMuscle(IMacroMuscle *, float) {}
+  void ClearAllMacroMuscles()
+  {
+    sliders.clear();
+    computed = false;
+    ClearUserItems();
+  }
+  void AddMacroMuscle(IMacroMuscle *muscle, float expression)
+  {
+    if (muscle && std::isfinite(expression))
+    {
+      sliders.emplace_back(reinterpret_cast<NativeMacroMuscle *>(muscle), expression);
+      computed = false;
+    }
+  }
   void MultMacroMuscle(IMacroMuscle *, float) {}
-  void ComputePhysics() {}
-  void RegisterMacroMuscle(IMacroMuscle *) {}
-  void UnregisterMacroMuscle(IMacroMuscle *) {}
-  void ClearAllRegistration() {}
-  void CollectUserItems(bool) {}
-  bool CollectUserItems() const { return false; }
-  UserID UserItem(const char *) { return 0; }
-  int UserValuesCount(UserID) { return 0; }
-  float UserValue(UserID, int) { return 0.0f; }
-  void ClearUserItems() {}
+  void ComputePhysics() { computed = true; }
+  void RegisterMacroMuscle(IMacroMuscle *muscle)
+  {
+    rootMacro = reinterpret_cast<NativeMacroMuscle *>(muscle);
+  }
+  void UnregisterMacroMuscle(IMacroMuscle *muscle)
+  {
+    if (reinterpret_cast<NativeMacroMuscle *>(muscle) == rootMacro) rootMacro = nullptr;
+  }
+  void ClearAllRegistration() { rootMacro = nullptr; }
+  void CollectUserItems(bool value) { collectItems = value; if (!value) ClearUserItems(); }
+  bool CollectUserItems() const { return collectItems; }
+  UserID UserItem(const char *name)
+  {
+    if (!name || !collectItems) return -1;
+    const auto found = userItemIds.find(name);
+    return found == userItemIds.end() ? -1 : found->second;
+  }
+  int UserValuesCount(UserID id)
+  {
+    return id >= 0 && static_cast<std::size_t>(id) < userItemValues.size()
+        ? static_cast<int>(userItemValues[id].size()) : 0;
+  }
+  float UserValue(UserID id, int number)
+  {
+    return id >= 0 && static_cast<std::size_t>(id) < userItemValues.size() &&
+                   number >= 0 && static_cast<std::size_t>(number) < userItemValues[id].size()
+        ? userItemValues[id][number] : 0.0f;
+  }
+  void ClearUserItems()
+  {
+    userItemNames.clear();
+    userItemValues.clear();
+    userItemIds.clear();
+  }
   void ComputeBonesHierarchy() {}
   bool HasNeck() const { return false; }
   void NeckProcessing2(bool) {}
   bool NeckProcessing2() const { return false; }
   IAnimator *Clone() { return new AnimatorStub; }
   void Destroy() { delete this; }
-  bool Load(ITransformerInput *) { return false; }
-  void OutputAnimator(IAnimator *) {}
-  IAnimator *OutputAnimator() const { return 0; }
-  void Generate() {}
+  bool Load(ITransformerInput *input)
+  {
+    NativeLifeStudio::FaceGenData parsed;
+    loaded = NativeLifeStudio::LoadFaceGenData(input, &parsed);
+    faceGen = loaded ? std::move(parsed) : NativeLifeStudio::FaceGenData{};
+    sliders.clear();
+    computed = false;
+    ClearUserItems();
+    return loaded;
+  }
+  void OutputAnimator(IAnimator *animator)
+  {
+    output = dynamic_cast<AnimatorStub *>(animator);
+  }
+  IAnimator *OutputAnimator() const { return output; }
+  void Generate()
+  {
+    if (!loaded || !computed || !output || !rootMacro ||
+        !rootMacro->root || !rootMacro->bytes || rootMacro->bytes->empty()) return;
+    ClearUserItems();
+    if (collectItems)
+      for (const auto &slider : sliders)
+      {
+        std::vector<NativeLifeStudio::MMTreeEffectSample> effects;
+        if (!NativeLifeStudio::EvaluateMMTreeMacro(slider.first->bytes->data(),
+                slider.first->bytes->size(), *slider.first->root, slider.first->name,
+                std::max(-1.0f, std::min(1.0f, slider.second)), &effects)) return;
+        for (const auto &effect : effects)
+          if (effect.kind == 5)
+          {
+            auto found = userItemIds.find(effect.targetName);
+            if (found == userItemIds.end())
+            {
+              const UserID id = static_cast<UserID>(userItemNames.size());
+              userItemNames.push_back(effect.targetName);
+              userItemValues.emplace_back();
+              found = userItemIds.emplace(effect.targetName, id).first;
+            }
+            userItemValues[found->second].push_back(
+                std::max(-1.0f, std::min(1.0f, effect.expression)));
+          }
+      }
+    std::vector<std::pair<std::string, float>> controls;
+    controls.reserve(sliders.size());
+    for (const auto &slider : sliders)
+      controls.emplace_back(slider.first->name, slider.second);
+    std::vector<float> weights;
+    if (!NativeLifeStudio::SelectGameFaceGenWeights(
+            rootMacro->bytes->data(), rootMacro->bytes->size(),
+            *rootMacro->root, controls, &weights)) return;
+    NativeLifeStudio::HeadData animationBase, morphBase, generated;
+    if (!NativeLifeStudio::BlendFaceGenAnimationHead(faceGen, weights, &animationBase) ||
+        !NativeLifeStudio::BlendFaceGenMorphHead(faceGen, weights, &morphBase)) return;
+    AnimatorStub morph;
+    if (!morph.AssignHead(morphBase)) return;
+    for (const auto &slider : sliders)
+      morph.AddMacroMuscle(reinterpret_cast<IMacroMuscle *>(slider.first), slider.second);
+    morph.ComputePhysics();
+    std::vector<float> positions(std::size_t(morphBase.vertexCount) * 3);
+    if (!morph.Process(positions.data(), 3)) return;
+    std::vector<std::array<float, 3>> processed(morphBase.vertexCount);
+    for (std::size_t vertex = 0; vertex < processed.size(); ++vertex)
+      for (int axis = 0; axis < 3; ++axis)
+        processed[vertex][axis] = positions[vertex * 3 + axis];
+    if (!NativeLifeStudio::ComposeFaceGenOutputHead(
+            animationBase, morphBase, processed, &generated)) return;
+    output->AssignHead(generated);
+  }
 };
 
 class MMTreeStub : public IMMTree

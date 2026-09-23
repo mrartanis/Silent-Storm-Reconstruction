@@ -6,6 +6,8 @@ param(
     [Parameter(Mandatory)][string]$X86Probe,
     [Parameter(Mandatory)][string]$X64Probe,
     [Parameter(Mandatory)][int]$Time,
+    [string]$OverlaySequence,
+    [int]$OverlayShiftMs = 0,
     [double]$Tolerance = 0.00001,
     [string]$OutputDirectory
 )
@@ -17,6 +19,7 @@ $tree = (Resolve-Path -LiteralPath $TreeFile).Path
 $game = (Resolve-Path -LiteralPath $GameRoot).Path
 $x86 = (Resolve-Path -LiteralPath $X86Probe).Path
 $x64 = (Resolve-Path -LiteralPath $X64Probe).Path
+if ($OverlaySequence) { $overlay = (Resolve-Path -LiteralPath $OverlaySequence).Path }
 if (!$OutputDirectory) { $OutputDirectory = Join-Path (Split-Path -Parent $head) 'muscle-state-comparison' }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output -Force | Out-Null
@@ -28,6 +31,8 @@ $prior = @{
     NativePrefix = $env:S2_FACE_NATIVE_MUSCLE_SNAPSHOT_PREFIX
     ForcedName = $env:S2_FACE_FORCE_MACRO_NAME
     ForcedValue = $env:S2_FACE_FORCE_MACRO_VALUE
+    Overlay = $env:S2_FACE_OVERLAY_SEQUENCE_FILE
+    OverlayShift = $env:S2_FACE_OVERLAY_TIME_SHIFT
 }
 try {
     $env:PATH = "$game;$($prior.Path)"
@@ -35,6 +40,8 @@ try {
     $env:S2_FACE_STATE_SNAPSHOT_TIME = [string]$Time
     $env:S2_FACE_FORCE_MACRO_NAME = $null
     $env:S2_FACE_FORCE_MACRO_VALUE = $null
+    $env:S2_FACE_OVERLAY_SEQUENCE_FILE = if ($OverlaySequence) { $overlay } else { $null }
+    $env:S2_FACE_OVERLAY_TIME_SHIFT = if ($OverlaySequence) { [string]$OverlayShiftMs } else { $null }
     foreach ($run in 'first','repeat') {
         $env:S2_FACE_MUSCLE_SNAPSHOT_PREFIX = Join-Path $output "$run-muscles"
         & $x86 $head (Join-Path $output "$run-face.csv") $sequence $tree
@@ -51,6 +58,8 @@ try {
     $env:S2_FACE_NATIVE_MUSCLE_SNAPSHOT_PREFIX = $prior.NativePrefix
     $env:S2_FACE_FORCE_MACRO_NAME = $prior.ForcedName
     $env:S2_FACE_FORCE_MACRO_VALUE = $prior.ForcedValue
+    $env:S2_FACE_OVERLAY_SEQUENCE_FILE = $prior.Overlay
+    $env:S2_FACE_OVERLAY_TIME_SHIFT = $prior.OverlayShift
 }
 $first = [IO.File]::ReadAllBytes((Join-Path $output "first-muscles-sequence-$Time-post-physics.bin"))
 $repeat = [IO.File]::ReadAllBytes((Join-Path $output "repeat-muscles-sequence-$Time-post-physics.bin"))

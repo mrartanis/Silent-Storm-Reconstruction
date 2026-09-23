@@ -8,9 +8,10 @@
 
 int main(int argc, char **argv)
 {
-  if (argc != 3)
+  const bool encode = argc == 4 && std::strcmp(argv[2], "--encode") == 0;
+  if (argc != 3 && !encode)
   {
-    std::fprintf(stderr, "usage: NativeHeadDecode original-head.bin output.csv|--muscles|--influences|--bones\n");
+    std::fprintf(stderr, "usage: NativeHeadDecode head.bin output.csv|--muscles|--influences|--bones|--neck|--encode output.bin\n");
     return 2;
   }
   std::ifstream input(argv[1], std::ios::binary);
@@ -22,6 +23,14 @@ int main(int argc, char **argv)
   {
     std::fprintf(stderr, "invalid or unsupported head stream\n");
     return 3;
+  }
+  if (encode)
+  {
+    std::vector<char> saved;
+    if (!NativeLifeStudio::EncodeSavedHead(head, &saved)) return 3;
+    std::ofstream output(argv[3], std::ios::binary);
+    output.write(saved.data(), static_cast<std::streamsize>(saved.size()));
+    return output ? 0 : 3;
   }
   if (std::strcmp(argv[2], "--muscles") == 0)
   {
@@ -53,6 +62,20 @@ int main(int argc, char **argv)
         std::printf("%zu,%s,B,%d,%.9g\n", i, head.bones[i].name.c_str(), n,
                     head.bones[i].matrixB[n]);
       }
+    return 0;
+  }
+  if (std::strcmp(argv[2], "--neck") == 0)
+  {
+    std::printf("zone,upper,lower,vertex\n");
+    if (!head.hasNeckAppendix) return 0;
+    for (std::size_t zone = 0; zone < head.neckZones.size(); ++zone)
+    {
+      const auto &record = head.neckZones[zone];
+      for (std::uint32_t vertex = 0; vertex < head.vertexCount; ++vertex)
+        if (record.vertexMask[vertex / 8] & (1u << (vertex % 8)))
+          std::printf("%zu,%u,%u,%u\n", zone, record.upperVertex,
+                      record.lowerVertex, vertex);
+    }
     return 0;
   }
   FILE *out = std::fopen(argv[2], "wb");

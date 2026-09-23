@@ -80,6 +80,45 @@ bool ReconstructFalloff(const MuscleRecord &muscle, const VertexRecord &vertex,
   return true;
 }
 
+bool DecodeNeckAppendix(const Reader &reader, const unsigned char *raw,
+                        std::size_t offset, std::size_t size, HeadData *head)
+{
+  const std::size_t maskBytes = (std::size_t(head->vertexCount) + 7) / 8;
+  if (maskBytes > 125000 || size - offset != 8 * (20 + maskBytes) + 16 * 25)
+    return false;
+  std::size_t cursor = offset;
+  for (int zone = 0; zone < 8; ++zone)
+  {
+    const std::string name = "Neck_Zone_" + std::to_string(zone);
+    std::uint32_t vertexCount, marker;
+    if (!reader.Has(cursor, 20 + maskBytes) || raw[cursor] != name.size() ||
+        std::memcmp(raw + cursor + 1, name.data(), name.size()) != 0 ||
+        !reader.U32(cursor + 12, &vertexCount) || vertexCount != head->vertexCount ||
+        !reader.U32(cursor + 16, &marker) || marker != 0xffffffffu)
+      return false;
+    head->neckZones[zone].vertexMask.assign(raw + cursor + 20,
+                                             raw + cursor + 20 + maskBytes);
+    cursor += 20 + maskBytes;
+  }
+  for (int section = 0; section < 2; ++section)
+    for (int zone = 0; zone < 8; ++zone)
+    {
+      const std::string name = std::string(section == 0 ? "Neck_Upper_" : "Neck_Lower_") +
+                               std::to_string(zone);
+      std::uint32_t vertexCount, marker, vertex;
+      if (!reader.Has(cursor, 25) || raw[cursor] != name.size() ||
+          std::memcmp(raw + cursor + 1, name.data(), name.size()) != 0 ||
+          !reader.U32(cursor + 13, &vertexCount) || vertexCount != head->vertexCount ||
+          !reader.U32(cursor + 17, &marker) || marker != 1 ||
+          !reader.U32(cursor + 21, &vertex) || vertex >= head->vertexCount)
+        return false;
+      if (section == 0) head->neckZones[zone].upperVertex = vertex;
+      else head->neckZones[zone].lowerVertex = vertex;
+      cursor += 25;
+    }
+  return cursor == size;
+}
+
 bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *result)
 {
   Reader reader(bytes, size);
@@ -115,9 +154,12 @@ bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *resu
     cursor = payload + 108;
   }
   // This field is 5 in the observed original DLL Save streams. The explicit
-  // vertex records follow it in vertex-index order.
+  // vertex records follow it in vertex-index order. A head with no explicit
+  // vertices uses section 1 instead and goes straight to its implicit list.
   std::uint32_t vertexSection;
-  if (!reader.U32(cursor, &vertexSection) || vertexSection != 5) return false;
+  if (!reader.U32(cursor, &vertexSection) ||
+      (vertexSection != 5 && !(vertexSection == 1 && parsed.explicitVertexCount == 0)))
+    return false;
   cursor += 4;
   std::vector<bool> seen(parsed.vertexCount, false);
   parsed.vertices.reserve(parsed.explicitVertexCount);
@@ -180,8 +222,14 @@ bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *resu
     parsed.bones.push_back(std::move(bone));
   }
   const std::size_t implicitCount = parsed.vertexCount - parsed.explicitVertexCount;
-  if (implicitCount > (size - cursor) / 16 ||
-      cursor + implicitCount * 16 != size) return false;
+  if (cursor > size || implicitCount > (size - cursor) / 16) return false;
+  const std::size_t trailingOffset = cursor + implicitCount * 16;
+  // The game's saved two-segment head 11 carries eight vertex-zone masks
+  // plus eight upper/lower landmark pairs after the standard vertex table.
+  if (trailingOffset != size &&
+      !DecodeNeckAppendix(reader, raw, trailingOffset, size, &parsed))
+    return false;
+  parsed.hasNeckAppendix = trailingOffset != size;
   parsed.implicitVertices.reserve(implicitCount);
   for (std::size_t n = 0; n < implicitCount; ++n, cursor += 16)
   {
@@ -338,6 +386,125 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
     if (!found)
       return false;
   *result = std::move(parsed);
+  return true;
+}
+
+namespace
+{
+void StoreU32(char *bytes, std::uint32_t value)
+{
+  for (int i = 0; i < 4; ++i)
+    bytes[i] = static_cast<char>(value >> (i * 8));
+}
+
+void StoreF32(char *bytes, float value)
+{
+  std::uint32_t bits;
+  std::memcpy(&bits, &value, sizeof(bits));
+  StoreU32(bytes, bits);
+}
+
+void AppendU32(std::vector<char> *bytes, std::uint32_t value)
+{
+  char word[4];
+  StoreU32(word, value);
+  bytes->insert(bytes->end(), word, word + 4);
+}
+
+void AppendF32(std::vector<char> *bytes, float value)
+{
+  char word[4];
+  StoreF32(word, value);
+  bytes->insert(bytes->end(), word, word + 4);
+}
+
+bool ValidName(const std::string &name)
+{
+  if (name.empty() || name.size() > 64) return false;
+  for (unsigned char ch : name)
+    if (ch < 32 || ch > 126) return false;
+  return true;
+}
+}
+
+bool EncodeSavedHead(const HeadData &head, std::vector<char> *result)
+{
+  if (!result || head.hasNeckAppendix || head.muscleCount != head.muscles.size() ||
+      head.boneCount != head.bones.size() ||
+      head.explicitVertexCount != head.vertices.size() ||
+      head.vertices.size() + head.implicitVertices.size() != head.vertexCount ||
+      head.muscleCount > 10000 || head.boneCount > 10000 ||
+      head.vertexCount > 1000000) return false;
+  std::vector<char> bytes;
+  AppendU32(&bytes, 0x37D30DC0u);
+  AppendU32(&bytes, head.muscleCount);
+  AppendU32(&bytes, head.vertexCount);
+  AppendU32(&bytes, head.explicitVertexCount);
+  AppendU32(&bytes, head.boneCount);
+  bytes.insert(bytes.end(), 12, 0);
+  for (const auto &muscle : head.muscles)
+  {
+    if (!ValidName(muscle.name)) return false;
+    AppendU32(&bytes, muscle.type);
+    bytes.push_back(static_cast<char>(muscle.name.size()));
+    bytes.insert(bytes.end(), muscle.name.begin(), muscle.name.end());
+    std::array<char, 108> payload{};
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      StoreF32(payload.data() + axis * 4, muscle.pointA[axis]);
+      StoreF32(payload.data() + 12 + axis * 4, muscle.pointB[axis]);
+    }
+    for (int knot = 1; knot < 5; ++knot)
+      StoreF32(payload.data() + 32 + (knot - 1) * 4, muscle.falloffX[knot]);
+    for (int knot = 0; knot < 5; ++knot)
+      StoreF32(payload.data() + 68 + knot * 4, muscle.falloffY[knot]);
+    bytes.insert(bytes.end(), payload.begin(), payload.end());
+  }
+  AppendU32(&bytes, 5);
+  for (const auto &vertex : head.vertices)
+  {
+    if (vertex.index >= head.vertexCount ||
+        vertex.influences.size() > head.muscleCount) return false;
+    AppendU32(&bytes, vertex.index);
+    for (float coordinate : vertex.sourcePosition) AppendF32(&bytes, coordinate);
+    AppendU32(&bytes, static_cast<std::uint32_t>(vertex.influences.size()));
+    for (const auto &influence : vertex.influences)
+    {
+      if (influence.muscleIndex >= head.muscleCount) return false;
+      AppendU32(&bytes, influence.muscleIndex);
+      AppendF32(&bytes, influence.componentA);
+    }
+  }
+  for (const auto &bone : head.bones)
+  {
+    if (!ValidName(bone.name) || bone.muscleIndices.size() > head.muscleCount)
+      return false;
+    bytes.push_back(static_cast<char>(bone.name.size()));
+    bytes.insert(bytes.end(), bone.name.begin(), bone.name.end());
+    std::array<char, 108> payload{};
+    StoreU32(payload.data(), static_cast<std::uint32_t>(bone.muscleIndices.size()));
+    StoreU32(payload.data() + 4, 0xFFFFFFFFu);
+    for (int element = 0; element < 12; ++element)
+    {
+      StoreF32(payload.data() + 8 + element * 4, bone.matrixA[element]);
+      StoreF32(payload.data() + 56 + element * 4, bone.matrixB[element]);
+    }
+    bytes.insert(bytes.end(), payload.begin(), payload.end());
+    for (std::uint32_t index : bone.muscleIndices)
+    {
+      if (index >= head.muscleCount) return false;
+      AppendU32(&bytes, index);
+    }
+  }
+  for (const auto &vertex : head.implicitVertices)
+  {
+    if (vertex.index >= head.vertexCount) return false;
+    AppendU32(&bytes, vertex.index);
+    for (float coordinate : vertex.sourcePosition) AppendF32(&bytes, coordinate);
+  }
+  HeadData decoded;
+  if (!DecodeHeadVertices(bytes.data(), bytes.size(), &decoded)) return false;
+  *result = std::move(bytes);
   return true;
 }
 }
