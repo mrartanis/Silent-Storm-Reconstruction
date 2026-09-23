@@ -400,6 +400,34 @@ distinct generation passes
 (`0x118e0`, `0x11a60`, `0x11bb0`, `0x120e0`, `0x12140`, `0x11a90`,
 `0x12260`). This narrows the remaining reverse-engineering target; the
 near-linear archetype fit below is not a substitute for these passes.
+The original transformer's `+0x10` and `+0x14` fields are respectively a
+36-muscle animation base and a 129-muscle morph head. `Generate` first calls
+`Process` on the morph head, then passes its 419 positions to the worker
+alongside the animation base and output animator. The x86-only
+`S2_FACE_DUMP_TRANSFORMER_INPUT_PREFIX` probe exports both canonical input
+streams and the morph head's live processed vertices before that transfer.
+For neutral and `Nose=0.5`, the two saved morph-head streams are byte-identical:
+the Nose change resides in live muscle state, not serialized source positions.
+`Test-FaceGDPMorphStageParity.ps1` extracts those x86 intermediate heads,
+replays `Nose=0.5` through x86 and native x64 `IAnimator`, and compares all
+2,514 neutral/animated rows against the original intermediate `Process`
+output. It passes with 48 moving vertices, zero x86 replay delta and maximum
+x64 delta 6.92e-6 at 1e-4 tolerance. The Nose-induced vertex change in the
+final generated animator matches the intermediate morph-head change within
+1.9e-6. Thus native morph deformation is boundedly verified after receiving
+an x86-generated morph head; producing that head and transferring it into a
+new animator remain separate unfinished native transformer work. Run with:
+
+```powershell
+& .\diagnostics\Test-FaceGDPMorphStageParity.ps1 `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X86FaceProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64FaceProbe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -SequenceFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\sequence-6008-0.bin' `
+  -OutputDirectory 'G:\SS\lab\runs\stage2-face-gdp-oracle-01\morph-stage-gate'
+```
+
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
 the reference GDP, `Nose=0.5` leaves all 36 muscle scalars and 79 output

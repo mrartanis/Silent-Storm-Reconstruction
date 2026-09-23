@@ -144,6 +144,59 @@ int main(int argc, char **argv)
     if (ok)
     {
       transformer->ComputePhysics();
+#if defined(_M_IX86)
+      // The original transformer owns a 36-muscle animation base at +0x10
+      // and a 129-muscle morph head at +0x14. Export their canonical streams
+      // and the morph head's live Process output before Generate transfers it
+      // into the final animation head. This diagnostic is x86-DLL-specific.
+      if (const char *prefix = std::getenv("S2_FACE_DUMP_TRANSFORMER_INPUT_PREFIX"))
+      {
+        const auto bytes = reinterpret_cast<const unsigned char *>(transformer);
+        const auto dumpAnimator = [prefix, bytes](int offset, const char *suffix) {
+          auto *value = *reinterpret_cast<IAnimator *const *>(bytes + offset);
+          const int size = value ? value->SaveBufferSize() : 0;
+          if (size <= 0 || size > 100000000) return false;
+          std::vector<char> data(static_cast<std::size_t>(size));
+          std::fprintf(stderr, "transformer-input[0x%x] bytes=%d vertices=%d muscles=%d bones=%d\n",
+                       offset, size, value->VerticesCount(), value->MusclesCount(),
+                       value->BonesCount());
+          return value->Save(data.data()) && WriteBytes(std::string(prefix) + suffix, data);
+        };
+        if (!dumpAnimator(0x10, "-base-animation.bin") ||
+            !dumpAnimator(0x14, "-morphed-head.bin"))
+        {
+          std::fprintf(stderr, "cannot dump transformer input animators\n");
+          ok = false;
+        }
+        auto *morph = *reinterpret_cast<IAnimator *const *>(bytes + 0x14);
+        const int count = morph ? morph->VerticesCount() : 0;
+        if (ok && count > 0 && count < 1000000)
+        {
+          std::vector<float> vertices(static_cast<std::size_t>(count) * 3);
+          if (morph->Process(vertices.data(), 3))
+          {
+            FILE *csv = std::fopen((std::string(prefix) + "-morph-processed.csv").c_str(), "wb");
+            if (csv)
+            {
+              std::fprintf(csv, "vertex,x,y,z\n");
+              for (int i = 0; i < count; ++i)
+                std::fprintf(csv, "%d,%.9g,%.9g,%.9g\n", i,
+                             vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+              ok = std::fclose(csv) == 0;
+            }
+            else ok = false;
+          }
+          else ok = false;
+        }
+      }
+      if (std::getenv("S2_FACE_TRACE_TRANSFORMER"))
+      {
+        const auto bytes = reinterpret_cast<const unsigned char *>(transformer);
+        for (int offset : {0x10, 0x14, 0x9c, 0xe0, 0xf4})
+          std::fprintf(stderr, "transformer-after-physics[0x%x]=0x%zx\n", offset,
+                       *reinterpret_cast<const std::uintptr_t *>(bytes + offset));
+      }
+#endif
       transformer->Generate();
 #if defined(_M_IX86)
       if (std::getenv("S2_FACE_TRACE_TRANSFORMER"))
