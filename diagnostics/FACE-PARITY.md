@@ -224,6 +224,12 @@ maximum delta 0.14–0.31. `Distrust` at expression -0.226 already diverges
 in muscle amplitude: four traversals reach the same effect leaf, and simply
 summing its independently curved outputs does not reproduce x86. Resolving
 shared-leaf accumulation is a next prerequisite for full parity.
+`NativeMMTreeMacroEvaluate` now reports each leaf's input before its curve;
+for `Distrust` the four native traversals of `_aEyelidUPP_L` sum to about
+-0.00105, while x86 reaches -0.001354. Applying the leaf curve once to the
+sum of those four inputs also gives about -0.00105, so leaf-level summation
+alone cannot explain the difference; accumulation may occur higher in the
+shared macro graph. This is a diagnostic hypothesis, not an implemented fix.
 
 `S2_FACE_VERTEX_STATE_PATH` and `S2_FACE_STATE_SNAPSHOT_TIME` make the x86
 probe export the original per-vertex interaction coefficients into a CSV in

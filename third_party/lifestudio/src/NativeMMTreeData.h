@@ -42,6 +42,7 @@ struct MMTreeEffectSample
   std::uint32_t channel = 0; // Leaf header word 1; distinguishes bone axes.
   std::string targetName;
   float expression = 0.0f;
+  float inputExpression = 0.0f; // Value received before the leaf's own curve.
 };
 
 // Decode the MMLF v4 envelope and nested length-delimited operation graph.

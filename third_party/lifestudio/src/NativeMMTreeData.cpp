@@ -220,7 +220,7 @@ bool EvaluateChildren(const void *bytes, std::size_t size,
     }
     else if (operation.headerWords[0] == 3 || operation.headerWords[0] == 4)
       samples->push_back({operation.offset, operation.headerWords[0], operation.headerWords[1],
-                          operation.resolvedName, transformed});
+                          operation.resolvedName, transformed, expression});
     else
       return false;
   }
