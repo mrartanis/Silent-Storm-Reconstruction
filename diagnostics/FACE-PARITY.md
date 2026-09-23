@@ -299,6 +299,19 @@ coverage of every portrait, dialogue and FaceGen path. The first screenshots
 were misleadingly cropped: `Capture-Window.ps1` was not DPI-aware and on the
 125% desktop lost the right and bottom 20% of the physical game window.
 The capture helper now uses physical-pixel window bounds.
+During that test run, the user also watched the game directly and reported
+that the portrait was present and facial animation looked correct. This is
+useful qualitative live validation, independent of the screenshot captures,
+but does not expand the automated x86/x64 parity corpus.
+
+The remaining x64 `ITransformer`/`IGDPFile` bridge is still a stub. This does
+not affect the static head and portrait checked above, but transformable
+FaceGen heads use `Res\FaceGenHead.gdp` and `.mmt` to generate a morphed
+animator in `CHeadTransformInfo::Recalc`; that path still needs an x86 oracle,
+native implementation and live check. The serialized tree also contains
+runtime type-3 bone effects (for example `Head_shake` and tongue rotation).
+The sampled static heads have no vertex influences attached to their head or
+neck bones, so the passing vertex corpus does not exercise these effects.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
