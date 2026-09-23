@@ -97,7 +97,7 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 // Verbs (extend freely -- this is the protocol foundation):
 //   console <text>   run a console command / var / "@lua" (the global ProcessCommand entry)
 //   load <slot>      queue a save-slot load (slot name = raw ANSI)
-//   rng <uint32>     reset game RNG immediately before a paired test action
+//   rng <uint32> [console <text>] reset RNG and optionally run an action in the same frame
 //   quit             request a clean shutdown
 // The driver (gen/_loadtest.py in s2_scratch) writes _harness_cmd.txt and reads the logs. Sweep the
 // whole harness by grepping "[HARNESS]".
@@ -129,11 +129,14 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		const char *pSeed = sCmd.c_str() + 4;
 		char *pEnd = 0;
 		unsigned long nSeed = strtoul( pSeed, &pEnd, 0 );
-		if ( pSeed != pEnd && *pEnd == 0 )
+		bool bConsole = strncmp( pEnd, " console ", 9 ) == 0;
+		if ( pSeed != pEnd && ( *pEnd == 0 || bConsole ) )
 		{
 			random.SeedForHarness( static_cast<unsigned int>( nSeed ) );
 			srand( static_cast<unsigned int>( nSeed ) );
 			SaveLoadDiag( "[harness] rng seeded: %lu\n", nSeed );
+			if ( bConsole )
+				ProcessCommand( NStr::ToUnicode( pEnd + 9 ) );
 		}
 		else
 			SaveLoadDiag( "[harness] invalid rng seed\n" );
