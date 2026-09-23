@@ -20,8 +20,10 @@ $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output -Force | Out-Null
 $tree = Join-Path $game 'tree.mma'
 if (!(Test-Path -LiteralPath $tree)) { throw "Missing muscle tree: $tree" }
-$heads = @(Get-ChildItem -LiteralPath $fixtures -Filter 'head-*.bin' -File | Sort-Object Name)
-$sequences = @(Get-ChildItem -LiteralPath $fixtures -Filter 'sequence-*.bin' -File | Sort-Object Name)
+$heads = @(Get-ChildItem -LiteralPath $fixtures -Filter 'head-*.bin' -File |
+    Where-Object Name -Match '^head-\d+-\d+\.bin$' | Sort-Object Name)
+$sequences = @(Get-ChildItem -LiteralPath $fixtures -Filter 'sequence-*.bin' -File |
+    Where-Object Name -Match '^sequence-\d+-\d+\.bin$' | Sort-Object Name)
 if (!$heads.Count -or !$sequences.Count) { throw 'Need at least one extracted head and sequence stream' }
 $culture = [Globalization.CultureInfo]::InvariantCulture
 $priorPath = $env:PATH
@@ -108,7 +110,7 @@ try {
 finally {
     $env:PATH = $priorPath
 }
-$results | Format-Table Case,Rows,MaximumDelta,Mismatches -AutoSize
+Write-Output (($results | Format-Table Case,Rows,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
 if (!$animatedCases) { throw 'Oracle corpus has no animated vertex; add a moving sequence' }
 if ($ReferenceOnly) {
     Write-Output "REFERENCE ONLY: $($results.Count) deterministic x86 cases, $animatedCases animated; no x64 parity claim."

@@ -10,6 +10,8 @@
 #include <iterator>
 #include <string>
 #include <vector>
+#include <Windows.h>
+#include <cstdint>
 
 using namespace LifeStudioHeadAPI;
 
@@ -39,8 +41,10 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
     anim->ClearAllMacroMuscles();
     if (sequence)
       sequence->RenderMacroMuscles(anim, time);
-    anim->ComputePhysics();
-    anim->FillUnused(true);
+    if (!std::getenv("S2_FACE_SKIP_PHYSICS"))
+      anim->ComputePhysics();
+    if (!std::getenv("S2_FACE_SKIP_FILL_UNUSED"))
+      anim->FillUnused(true);
     ok = anim->Process(vertices.data(), 3);
   }
   if (ok)
@@ -65,6 +69,20 @@ int main(int argc, char **argv)
     return 2;
   }
   Init();
+#if defined(_M_IX86)
+  if (std::getenv("S2_FACE_TRACE_VTABLE"))
+  {
+    IAnimator *inspect = IAnimator::Create();
+    if (!inspect)
+      return 3;
+    const std::uintptr_t base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+    void **vtable = *reinterpret_cast<void ***>(inspect);
+    for (int i = 0; i < 50; ++i)
+      std::fprintf(stderr, "animator-vtable[%d] RVA=0x%zx\n", i,
+                   reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+    inspect->Destroy();
+  }
+#endif
   const char *savedPath = argc == 4 ? argv[3] : argc == 6 ? argv[5] : nullptr;
   if (savedPath)
   {

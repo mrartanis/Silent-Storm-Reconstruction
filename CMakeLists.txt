@@ -158,6 +158,17 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
   add_dependencies(FaceProbe ls_implibs)
 endif()
 
+add_library(lifestudio_native_data STATIC
+  "${root}/third_party/lifestudio/src/NativeHeadData.cpp")
+target_include_directories(lifestudio_native_data PUBLIC
+  "${root}/third_party/lifestudio/src")
+add_executable(NativeHeadDecode "${root}/diagnostics/NativeHeadDecode.cpp")
+target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
+enable_testing()
+add_executable(NativeHeadDataTests "${root}/diagnostics/NativeHeadDataTests.cpp")
+target_link_libraries(NativeHeadDataTests PRIVATE lifestudio_native_data)
+add_test(NAME NativeHeadDataTests COMMAND NativeHeadDataTests)
+
 # ----------------------------------------------------------------------------
 #  engine modules  (each is a directory of *.cpp + a StdAfx.h PCH)
 # ----------------------------------------------------------------------------
