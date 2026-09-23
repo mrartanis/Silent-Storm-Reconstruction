@@ -1,5 +1,6 @@
 #include "LifeStudioHeadAPIGDP.h"
 #include "NativeFaceGenData.h"
+#include <algorithm>
 #include <cstdio>
 
 int main(int argc, char **argv)
@@ -20,9 +21,12 @@ int main(int argc, char **argv)
   NativeLifeStudio::FaceGenData face;
   const bool ok = object && NativeLifeStudio::LoadFaceGenData(object, &face);
   if (ok)
-    std::printf("heads=%zu combinations=%zu archetypes=%zu links=%zu vertices=%u animation-muscles=%u morph-muscles=%u\n",
+    std::printf("heads=%zu combinations=%zu archetypes=%zu link-morphs=%zu link-outputs=%zu link-nonzero=%zu vertices=%u animation-muscles=%u morph-muscles=%u\n",
                 face.heads.size(), face.combinations.size(), face.archetypes.size(),
-                face.links.size(), face.archetypes.front().animation.vertexCount,
+                face.links.morphNames.size(), face.links.outputNames.size(),
+                std::count_if(face.links.matrix.begin(), face.links.matrix.end(),
+                              [](std::uint8_t value) { return value != 0; }),
+                face.archetypes.front().animation.vertexCount,
                 face.archetypes.front().animation.muscleCount,
                 face.archetypes.front().morph.muscleCount);
   if (object) object->Destroy();

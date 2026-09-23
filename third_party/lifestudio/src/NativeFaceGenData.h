@@ -2,6 +2,7 @@
 
 #include "NativeHeadData.h"
 #include <array>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -28,15 +29,24 @@ struct FaceGenArchetype
   HeadData morph;
 };
 
+struct FaceGenLinks
+{
+  std::vector<std::string> morphNames;
+  std::vector<std::string> outputNames;
+  // Raw row-major bytes; the semantics of nonzero entries are not known yet.
+  std::vector<std::uint8_t> matrix;
+};
+
 struct FaceGenData
 {
   std::vector<FaceGenRule> heads;
   std::vector<FaceGenRule> combinations;
   std::vector<FaceGenArchetype> archetypes;
-  std::vector<char> links;
+  FaceGenLinks links;
 };
 
 bool ParseFaceGenRules(const std::string &text, FaceGenData *result);
+bool DecodeFaceGenLinks(const void *bytes, std::size_t size, FaceGenLinks *result);
 bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
                      FaceGenData *result);
 }

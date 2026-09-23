@@ -366,16 +366,20 @@ resolves 30 macro nodes. The GDP's `*_M.mld` streams use the already decoded
 0xAD5A018D head format; for example `EuroM_M.mld` has 129 morph muscles,
 419 explicit vertices and six bones, whereas its `*_A.mld` animation stream
 has 36 muscles, 419 vertices and seven bones. `Morph.txt` defines the
-archetype parameter combinations; `Links.dat` appears to carry channel links
-and still needs decoding.
+archetype parameter combinations. `Links.dat` consists of a 12-byte header,
+129 fixed 64-byte morph-channel names, 43 fixed 64-byte output-channel names,
+and a 129×43 byte matrix. The reference GDP's entire matrix is zero, so the
+semantics of nonzero entries remain unverified.
 `NativeFaceGenData` now parses the five `Morph.txt` coordinates and both
 `HEAD` and `COMB` rules, resolves each referenced archetype, and decodes its
 animation and morph streams through the native head decoder. It validates
-the `Links.dat` signature and its morph-muscle count, but does not yet
-interpret the link records. On the real GDP,
+the `Links.dat` signature, exact size, both name tables and channel counts,
+preserving the raw matrix bytes. It does not yet interpret nonzero matrix
+entries. On the real GDP,
 `NativeFaceGenApiCheck FaceGenHead.gdp` reports 24 `HEAD` rules, 24 `COMB`
-rules, 16 unique archetypes, 419 vertices, 36 animation muscles and 129
-morph muscles. `NativeFaceGenDataTests` exercises rule syntax and percentage
+rules, 16 unique archetypes, 419 vertices, 36 animation muscles, 129 morph
+muscles, 43 output channels and zero nonzero matrix entries.
+`NativeFaceGenDataTests` exercises rule syntax and percentage
 handling under both x86 and x64 CTest. This loader is not yet connected to
 the runtime transformer: `ITransformer::Load/Generate` must remain a red gate
 until the generation passes are implemented.

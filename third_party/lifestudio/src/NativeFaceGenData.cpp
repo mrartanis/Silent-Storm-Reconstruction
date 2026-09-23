@@ -59,12 +59,52 @@ bool ReadItem(LifeStudioHeadAPI::ITransformerInput *input,
   return input->Get(name.c_str(), bytes->data());
 }
 
+bool ReadName(const char *data, std::size_t offset, std::string *name)
+{
+  std::size_t length = 0;
+  while (length < 64 && data[offset + length])
+  {
+    const unsigned char ch = static_cast<unsigned char>(data[offset + length]);
+    if (ch < 32 || ch > 126) return false;
+    ++length;
+  }
+  if (length == 0 || length == 64) return false;
+  name->assign(data + offset, length);
+  return true;
+}
+
 std::uint32_t Word(const char *p)
 {
   const auto *b = reinterpret_cast<const unsigned char *>(p);
   return std::uint32_t(b[0]) | (std::uint32_t(b[1]) << 8) |
          (std::uint32_t(b[2]) << 16) | (std::uint32_t(b[3]) << 24);
 }
+}
+
+bool DecodeFaceGenLinks(const void *bytes, std::size_t size, FaceGenLinks *result)
+{
+  if (!bytes || !result || size < 12) return false;
+  const auto *data = static_cast<const char *>(bytes);
+  const std::uint32_t morphCount = Word(data + 4);
+  const std::uint32_t outputCount = Word(data + 8);
+  if (Word(data) != 0x22D7118E || morphCount == 0 || outputCount == 0 ||
+      morphCount > 10000 || outputCount > 10000) return false;
+  const std::size_t namesCount = std::size_t(morphCount) + outputCount;
+  const std::size_t expected = 12 + namesCount * 64 +
+                               std::size_t(morphCount) * outputCount;
+  if (size != expected) return false;
+  FaceGenLinks parsed;
+  for (std::size_t i = 0; i < namesCount; ++i)
+  {
+    std::string name;
+    if (!ReadName(data, 12 + i * 64, &name)) return false;
+    if (i < morphCount) parsed.morphNames.push_back(std::move(name));
+    else parsed.outputNames.push_back(std::move(name));
+  }
+  const auto *matrix = reinterpret_cast<const std::uint8_t *>(data + 12 + namesCount * 64);
+  parsed.matrix.assign(matrix, matrix + std::size_t(morphCount) * outputCount);
+  *result = std::move(parsed);
+  return true;
 }
 
 bool ParseFaceGenRules(const std::string &text, FaceGenData *result)
@@ -163,9 +203,12 @@ bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
       return false;
     parsed.archetypes.push_back(std::move(archetype));
   }
-  if (!ReadItem(input, "Links.dat", &parsed.links) ||
-      parsed.links.size() < 12 || Word(parsed.links.data()) != 0x22D7118E ||
-      Word(parsed.links.data() + 4) != parsed.archetypes.front().morph.muscleCount)
+  if (!ReadItem(input, "Links.dat", &bytes) ||
+      !DecodeFaceGenLinks(bytes.data(), bytes.size(), &parsed.links) ||
+      parsed.links.morphNames.size() != parsed.archetypes.front().morph.muscleCount ||
+      parsed.links.outputNames.size() !=
+          parsed.archetypes.front().animation.muscleCount +
+          parsed.archetypes.front().animation.boneCount)
     return false;
   *result = std::move(parsed);
   return true;
