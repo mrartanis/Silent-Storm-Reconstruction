@@ -358,6 +358,23 @@ subobject count (seven) also matched. The remaining material/UV/triangulation me
 `IGDPObject` are placeholders, and `ITransformer::Load/Generate` is still
 unimplemented. The x64 `Game.exe` links successfully with the new GDP reader.
 
+FaceGen's `FaceGenHead.mmt` is a second MMLF v4 graph variant with a class-2
+root, rather than the main `tree.mma` class-1 root. The native decoder now
+accepts both while retaining the stricter effect-type validation for the
+ordinary facial tree. It decodes 158 FaceGen records and the native `IMMTree`
+resolves 30 macro nodes. The GDP's `*_M.mld` streams use the already decoded
+0xAD5A018D head format; for example `EuroM_M.mld` has 129 morph muscles,
+419 explicit vertices and six bones, whereas its `*_A.mld` animation stream
+has 36 muscles, 419 vertices and seven bones. `Morph.txt` defines the
+archetype parameter combinations; `Links.dat` appears to carry channel links
+and still needs decoding.
+`Test-FaceGDPTransformParity.ps1` runs the same GDP and MMT through the x86
+and x64 `FaceGDPProbe` executables, comparing neutral and one-macro generated
+vertices directly. The test currently fails at x64 `ITransformer::Load` even
+for neutral output; unlike `Test-FaceGDPParity.ps1`, it does not pass an
+x86-precomputed animator to the native side. This is the implementation gate
+for native generation.
+
 Further x86 runtime inspection identified what the compact format omits.
 With `S2_FACE_VERTEX_INFLUENCES_PATH` and
 `S2_FACE_STATE_SNAPSHOT_TIME=0`, `FaceProbe` exports each loaded vertex's

@@ -37,6 +37,10 @@ int main()
          decoded.operations[0].payloadSize == 8 &&
          decoded.operations[0].serializedType == 5 &&
          decoded.operations[0].resolvedName == "ROOT");
+  auto morphEnvelope = tree;
+  U32(&morphEnvelope, 32, 2); // FaceGen MMT uses root class 2.
+  U32(&morphEnvelope, 72, 2); // Referenced child must match the root class.
+  assert(NativeLifeStudio::DecodeMMTreeRoot(morphEnvelope.data(), morphEnvelope.size(), &decoded));
   auto nested = tree;
   nested.resize(152, 0);
   U32(&nested, 28, 120);

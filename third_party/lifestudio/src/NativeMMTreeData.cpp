@@ -36,7 +36,7 @@ bool Reject(std::size_t offset, const char *reason)
 bool ParseRecord(const unsigned char *bytes, std::size_t offset,
                  std::size_t limit, unsigned depth, std::size_t *recordCount,
                  std::unordered_map<std::size_t, std::pair<std::uint32_t, std::string>> *definitions,
-                 MMTreeOperationRecord *result)
+                 MMTreeOperationRecord *result, bool morphTree)
 {
   if (depth > 64 || *recordCount >= 100000 || offset > limit || limit - offset < 32)
     return Reject(offset, "header boundary/depth");
@@ -73,9 +73,10 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
     if ((record.headerWords[0] == 3 || record.headerWords[0] == 4) &&
         record.preludeSize >= 8)
       record.runtimeType = ReadU32(bytes + payload + record.preludeSize - 8);
-    if ((record.headerWords[0] == 3 && record.runtimeType != 0) ||
-        (record.headerWords[0] == 4 &&
-         (record.runtimeType < 1 || record.runtimeType > 3)))
+    if (!morphTree &&
+        ((record.headerWords[0] == 3 && record.runtimeType != 0) ||
+         (record.headerWords[0] == 4 &&
+          (record.runtimeType < 1 || record.runtimeType > 3))))
       return Reject(offset, "unsupported effect runtime type");
     definitions->emplace(offset, std::make_pair(record.headerWords[0], record.name));
   }
@@ -95,7 +96,7 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
   {
     MMTreeOperationRecord child;
     if (!ParseRecord(bytes, childOffset, end, depth + 1, recordCount,
-                     definitions, &child))
+                     definitions, &child, morphTree))
       return false;
     childOffset += 32 + child.payloadSize;
     record.children.push_back(std::move(child));
@@ -114,13 +115,15 @@ bool DecodeMMTreeRoot(const void *bytes, std::size_t size, MMTreeRoot *result)
     return false;
   const auto *p = static_cast<const unsigned char *>(bytes);
   if (ReadU32(p) != 0x464C4D4Du || ReadU32(p + 4) != 4 ||
-      ReadU32(p + 28) != size - 32 || ReadU32(p + 32) != 1 ||
+      ReadU32(p + 28) != size - 32 ||
+      (ReadU32(p + 32) != 1 && ReadU32(p + 32) != 2) ||
       ReadU32(p + 48) != size - 64)
     return false;
   MMTreeOperationRecord root;
   std::size_t recordCount = 0;
   std::unordered_map<std::size_t, std::pair<std::uint32_t, std::string>> definitions;
-  if (!ParseRecord(p, 32, size, 0, &recordCount, &definitions, &root) ||
+  if (!ParseRecord(p, 32, size, 0, &recordCount, &definitions, &root,
+                   ReadU32(p + 32) == 2) ||
       32 + 32 + root.payloadSize != size || root.children.empty())
     return false;
   MMTreeRoot parsed;
