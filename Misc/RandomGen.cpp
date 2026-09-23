@@ -3,7 +3,13 @@
 #include "..\FileIO\basicChunk1.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRandomSeed::SRandomSeed() : nSeed( GetTickCount() )
+// Disabled in every normal run.  The harness sets this only before paired
+// actions so lazily constructed SRand instances (including critical injury)
+// do not pick different wall-clock ticks in x86 and x64 processes.
+static bool g_bHarnessSeedActive = false;
+static unsigned int g_nHarnessSeed = 0;
+////////////////////////////////////////////////////////////////////////////////////////////////////
+SRandomSeed::SRandomSeed() : nSeed( g_bHarnessSeedActive ? g_nHarnessSeed : GetTickCount() )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +17,7 @@ SRandomSeed::SRandomSeed( int seed ) : nSeed( seed )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRand::SRand() : seed( GetTickCount() )
+SRand::SRand() : seed( g_bHarnessSeedActive ? g_nHarnessSeed : GetTickCount() )
 {
 	Get( 4 );
 }
@@ -114,6 +120,8 @@ void CRandomGenerator::SeedForHarness( unsigned int seed )
 {
 	// The normal initializer samples a random host file and clock.  Paired x86/x64
 	// tests instead need identical ISAAC input immediately before the tested action.
+	g_bHarnessSeedActive = true;
+	g_nHarnessSeed = seed;
 	for ( int i = 0; i < RANDSIZ; ++i )
 	{
 		seed = seed * 1664525u + 1013904223u;
