@@ -36,6 +36,124 @@ public:
     return offset <= size && length <= size - offset;
   }
 };
+
+bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *result)
+{
+  Reader reader(bytes, size);
+  HeadData parsed;
+  if (size < 36 || !reader.U32(4, &parsed.muscleCount) ||
+      !reader.U32(8, &parsed.vertexCount) ||
+      !reader.U32(12, &parsed.explicitVertexCount) ||
+      !reader.U32(16, &parsed.boneCount) ||
+      parsed.muscleCount > 10000 || parsed.boneCount > 10000 ||
+      parsed.vertexCount > 1000000 || parsed.explicitVertexCount > parsed.vertexCount)
+    return false;
+  const unsigned char *raw = static_cast<const unsigned char *>(bytes);
+  std::size_t cursor = 32;
+  parsed.muscles.reserve(parsed.muscleCount);
+  for (std::uint32_t i = 0; i < parsed.muscleCount; ++i)
+  {
+    std::uint32_t type;
+    if (!reader.Has(cursor, 5) || !reader.U32(cursor, &type)) return false;
+    const std::size_t length = raw[cursor + 4];
+    if (!length || length > 64 || !reader.Has(cursor + 5, length + 108)) return false;
+    MuscleRecord muscle;
+    muscle.type = type;
+    muscle.name.assign(reinterpret_cast<const char *>(raw + cursor + 5), length);
+    for (char c : muscle.name) if (c < 32 || c > 126) return false;
+    const std::size_t payload = cursor + 5 + length;
+    for (int axis = 0; axis < 3; ++axis)
+      if (!reader.F32(payload + axis * 4, &muscle.pointA[axis]) ||
+          !reader.F32(payload + 12 + axis * 4, &muscle.pointB[axis]))
+        return false;
+    parsed.muscles.push_back(std::move(muscle));
+    cursor = payload + 108;
+  }
+  // This field is 5 in the observed original DLL Save streams. The explicit
+  // vertex records follow it in vertex-index order.
+  std::uint32_t vertexSection;
+  if (!reader.U32(cursor, &vertexSection) || vertexSection != 5) return false;
+  cursor += 4;
+  std::vector<bool> seen(parsed.vertexCount, false);
+  parsed.vertices.reserve(parsed.explicitVertexCount);
+  for (std::uint32_t i = 0; i < parsed.explicitVertexCount; ++i)
+  {
+    VertexRecord vertex;
+    std::uint32_t influenceCount;
+    if (!reader.Has(cursor, 20) || !reader.U32(cursor, &vertex.index) ||
+        vertex.index >= parsed.vertexCount || seen[vertex.index] ||
+        !reader.F32(cursor + 4, &vertex.sourcePosition[0]) ||
+        !reader.F32(cursor + 8, &vertex.sourcePosition[1]) ||
+        !reader.F32(cursor + 12, &vertex.sourcePosition[2]) ||
+        !reader.U32(cursor + 16, &influenceCount) ||
+        influenceCount > (size - cursor - 20) / 8)
+      return false;
+    seen[vertex.index] = true;
+    cursor += 20;
+    vertex.influences.reserve(influenceCount);
+    for (std::uint32_t n = 0; n < influenceCount; ++n, cursor += 8)
+    {
+      InfluenceRecord influence;
+      if (!reader.U32(cursor, &influence.muscleIndex) ||
+          influence.muscleIndex >= parsed.muscleCount ||
+          !reader.F32(cursor + 4, &influence.componentA))
+        return false;
+      // Save collapses the source stream's two influence coefficients into
+      // one runtime coefficient; keep the second factor neutral.
+      influence.componentB = 1.0f;
+      vertex.influences.push_back(influence);
+    }
+    parsed.vertices.push_back(std::move(vertex));
+  }
+  parsed.bones.reserve(parsed.boneCount);
+  for (std::uint32_t i = 0; i < parsed.boneCount; ++i)
+  {
+    if (!reader.Has(cursor, 1)) return false;
+    const std::size_t length = raw[cursor];
+    if (!length || length > 64 || !reader.Has(cursor + 1, length + 108)) return false;
+    BoneRecord bone;
+    bone.name.assign(reinterpret_cast<const char *>(raw + cursor + 1), length);
+    for (char c : bone.name) if (c < 32 || c > 126) return false;
+    const std::size_t payload = cursor + 1 + length;
+    std::uint32_t attachedCount;
+    if (!reader.U32(payload, &attachedCount) ||
+        attachedCount > parsed.muscleCount ||
+        !reader.Has(payload + 108, std::size_t(attachedCount) * 4))
+      return false;
+    for (int n = 0; n < 12; ++n)
+      if (!reader.F32(payload + 8 + n * 4, &bone.matrixA[n]) ||
+          !reader.F32(payload + 56 + n * 4, &bone.matrixB[n]))
+        return false;
+    for (std::uint32_t n = 0; n < attachedCount; ++n)
+    {
+      std::uint32_t index;
+      if (!reader.U32(payload + 108 + std::size_t(n) * 4, &index) ||
+          index >= parsed.muscleCount) return false;
+      bone.muscleIndices.push_back(index);
+    }
+    cursor = payload + 108 + std::size_t(attachedCount) * 4;
+    parsed.bones.push_back(std::move(bone));
+  }
+  const std::size_t implicitCount = parsed.vertexCount - parsed.explicitVertexCount;
+  if (implicitCount > (size - cursor) / 16 ||
+      cursor + implicitCount * 16 != size) return false;
+  parsed.implicitVertices.reserve(implicitCount);
+  for (std::size_t n = 0; n < implicitCount; ++n, cursor += 16)
+  {
+    ImplicitVertexRecord vertex;
+    if (!reader.U32(cursor, &vertex.index) || vertex.index >= parsed.vertexCount ||
+        seen[vertex.index] ||
+        !reader.F32(cursor + 4, &vertex.sourcePosition[0]) ||
+        !reader.F32(cursor + 8, &vertex.sourcePosition[1]) ||
+        !reader.F32(cursor + 12, &vertex.sourcePosition[2]))
+      return false;
+    seen[vertex.index] = true;
+    parsed.implicitVertices.push_back(vertex);
+  }
+  for (bool found : seen) if (!found) return false;
+  *result = std::move(parsed);
+  return true;
+}
 }
 
 bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
@@ -45,6 +163,8 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
   Reader reader(bytes, size);
   HeadData parsed;
   std::uint32_t magic;
+  if (reader.U32(0, &magic) && magic == 0x37D30DC0u)
+    return DecodeSavedHeadVertices(bytes, size, result);
   if (size < 28 || !reader.U32(0, &magic) || magic != 0xAD5A018Du ||
       !reader.U32(4, &parsed.muscleCount) ||
       !reader.U32(8, &parsed.vertexCount) ||

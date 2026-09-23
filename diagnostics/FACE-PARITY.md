@@ -333,11 +333,18 @@ animators are 21,970 bytes each. The Nose case changes 48 vertices, with
 maximum component delta 0.26445627 from neutral. Reloading both generated
 animators through the original x86 `FaceProbe` reproduced all 419 vertices
 exactly, confirming the oracle output is usable. The x64 `FaceProbe` matches
-the GDP's *default* animator within 1.91e-6, but currently rejects the
-generated animator: it uses the original DLL's 0x37D30DC0 `Save` format,
-whereas `NativeHeadData` presently decodes only the 0xAD5A018D source format.
-Supporting this serialized generated form and the native GDP/transformer path
-is the next parity/implementation task. Oracle artifacts are in the ignored
+the GDP's *default* animator within 1.91e-6. The x64 decoder now also loads
+the original DLL's 0x37D30DC0 `Save` format, including variable-length
+muscle and bone records and compact vertex tables. `Test-FaceGDPParity.ps1`
+recreates neutral and `Nose=0.5` x86 generated streams, checks that x86 can
+reload them unchanged, and compares their 419 processed vertices to x64. Both
+cases pass at 1e-4 tolerance with maximum component delta 1.91e-6.
+Passing `-SequenceFile` adds an animated x86/x64 comparison. This currently
+fails for `sequence-6008-0.bin`: 690 coordinate mismatches across 2,514 rows,
+maximum delta 0.1866033. The compact saved stream has one influence
+coefficient where the source stream has two; x64's neutral-factor
+interpretation is sufficient for the still pose but not verified for motion.
+The native GDP/transformer path itself remains a stub. Oracle artifacts are in the ignored
 `G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the

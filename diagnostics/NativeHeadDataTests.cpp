@@ -115,5 +115,61 @@ int main()
   bad = good;
   U32(&bad, vertexBase + 28, 1); // out-of-range muscle index
   assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
+
+  // Synthetic 0x37D30DC0 IAnimator::Save stream: variable-length names,
+  // one coefficient per influence, compact bones and implicit positions.
+  constexpr std::size_t savedMusclePayload = 32 + 4 + 1 + 6;
+  constexpr std::size_t savedVertexSection = savedMusclePayload + 108;
+  constexpr std::size_t savedVertex = savedVertexSection + 4;
+  constexpr std::size_t savedBone = savedVertex + 20 + 8;
+  constexpr std::size_t savedBonePayload = savedBone + 1 + 6;
+  constexpr std::size_t savedImplicit = savedBonePayload + 108 + 4;
+  std::vector<unsigned char> saved(savedImplicit + 16, 0);
+  U32(&saved, 0, 0x37D30DC0u);
+  U32(&saved, 4, 1); // one muscle
+  U32(&saved, 8, 2); // total vertices
+  U32(&saved, 12, 1); // explicit vertices
+  U32(&saved, 16, 1); // bones
+  U32(&saved, 32, 5);
+  saved[36] = 6;
+  std::memcpy(saved.data() + 37, "a_Test", 6);
+  F32(&saved, savedMusclePayload, 1.0f);
+  F32(&saved, savedMusclePayload + 12, 2.0f);
+  U32(&saved, savedVertexSection, 5);
+  U32(&saved, savedVertex, 1);
+  F32(&saved, savedVertex + 4, 3.0f);
+  F32(&saved, savedVertex + 8, 4.0f);
+  F32(&saved, savedVertex + 12, 5.0f);
+  U32(&saved, savedVertex + 16, 1);
+  U32(&saved, savedVertex + 20, 0);
+  F32(&saved, savedVertex + 24, 0.75f);
+  saved[savedBone] = 6;
+  std::memcpy(saved.data() + savedBone + 1, "b_Test", 6);
+  U32(&saved, savedBonePayload, 1);
+  F32(&saved, savedBonePayload + 8, 1.0f);
+  F32(&saved, savedBonePayload + 56, 2.0f);
+  U32(&saved, savedBonePayload + 108, 0);
+  U32(&saved, savedImplicit, 0);
+  F32(&saved, savedImplicit + 4, 6.0f);
+  F32(&saved, savedImplicit + 8, 7.0f);
+  F32(&saved, savedImplicit + 12, 8.0f);
+  assert(NativeLifeStudio::DecodeHeadVertices(saved.data(), saved.size(), &parsed));
+  assert(parsed.muscleCount == 1 && parsed.boneCount == 1 && parsed.vertexCount == 2);
+  assert(parsed.muscles[0].name == "a_Test" && parsed.muscles[0].pointB[0] == 2.0f);
+  assert(parsed.vertices[0].index == 1 && parsed.vertices[0].sourcePosition[1] == 4.0f);
+  assert(parsed.vertices[0].influences[0].componentA == 0.75f &&
+         parsed.vertices[0].influences[0].componentB == 1.0f);
+  assert(parsed.bones[0].name == "b_Test" && parsed.bones[0].matrixB[0] == 2.0f &&
+         parsed.bones[0].muscleIndices[0] == 0);
+  assert(parsed.implicitVertices[0].index == 0 &&
+         parsed.implicitVertices[0].sourcePosition[2] == 8.0f);
+  for (std::size_t length = 0; length < saved.size(); ++length)
+    assert(!NativeLifeStudio::DecodeHeadVertices(saved.data(), length, &parsed));
+  bad = saved;
+  U32(&bad, savedVertex + 16, 0xFFFFFFFFu);
+  assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
+  bad = saved;
+  U32(&bad, savedBonePayload, 2);
+  assert(!NativeLifeStudio::DecodeHeadVertices(bad.data(), bad.size(), &parsed));
   return 0;
 }
