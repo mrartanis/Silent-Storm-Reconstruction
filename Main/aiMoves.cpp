@@ -124,7 +124,14 @@ ETransitionType GetTransitionType( const IPathNetwork *_pNet, const SPathPlace &
 		return TT_NO_WAY;
 	}
 	CDynamicCast<CPathNetwork> pNet( _pNet );
+	if ( !pNet )
+		return TT_NO_WAY;
 	const vector<CObj<CNodesLayer> > &layers = pNet->GetLayers();
+	// A default-constructed SPathPlace is not final, but has layer 0xff. Reject
+	// it before indexing the network (observed in a saved retreat reaction).
+	if ( src.GetLayer() >= layers.size() || dst.GetLayer() >= layers.size() ||
+		 !IsValid( layers[src.GetLayer()] ) || !IsValid( layers[dst.GetLayer()] ) )
+		return TT_NO_WAY;
 	IAIMap *pMap = pNet->GetAIMap();
 	CNodesLayer *pLayer = layers[src.GetLayer()];
 	pLayer->pGroup->RefreshSpot( src, pMap, 2 );

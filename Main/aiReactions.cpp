@@ -309,6 +309,14 @@ void CAIRetreatReaction::Update()
 	IPathNetwork *pNet = pUS->GetWorld()->GetPathNetwork();
 	if ( pNet == 0 )
 		return;
+	// The default SPathPlace has layer 0xff without the final flag. A retreat
+	// target with no real grid layer cannot be reached; leave this reaction
+	// instead of repeatedly feeding it to pathfinding (crash.dmp, 2026-09-23).
+	if ( pos.IsFinal() || pos.GetLayer() >= pNet->GetNumLayers() )
+	{
+		u->SetReaction( CreateAIGuardReaction( u, 0, 8 ) );
+		return;
+	}
 	// distance from the unit to the fall-back place
 	CVec3 cpTarget = GetUnitPos( pos, pNet ).GetCP();
 	CVec3 cpUnit = u->GetUnitPosition().GetCP();
