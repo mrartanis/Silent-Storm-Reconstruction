@@ -18,6 +18,7 @@
 #include "..\FileIO\BasicChunk1.h"  // [HARNESS] g_bSaveLoadDiag / SaveLoadDiag
 #include "..\MiscDll\LogStream.h"   // [HARNESS] g_bHarnessLog (console-log tee)
 #include "..\Main\A5Script.h"       // [HARNESS] ProcessCommand (console/lua entry for the command channel)
+#include "..\Main\LSHead.h"         // [HARNESS] export the complete facial-sequence test corpus
 #include <dbghelp.h>                 // [HARNESS] post-load crash backtrace (SymFromAddr / StackWalk64)
 #pragma comment(lib, "dbghelp.lib")
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,6 +100,7 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 //   load <slot>      queue a save-slot load (slot name = raw ANSI)
 //   rng <uint32> [console <text>] reset RNG and optionally run an action in the same frame
 //   turnsave <slot> hand the turn to AI and queue an ordinary save in the same frame
+//   facefixtures    export DB-backed facial-sequence streams into S2_FACE_FIXTURE_DIR
 //   quit             request a clean shutdown
 // The driver (gen/_loadtest.py in s2_scratch) writes _harness_cmd.txt and reads the logs. Sweep the
 // whole harness by grepping "[HARNESS]".
@@ -132,6 +134,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		ProcessCommand( NStr::ToUnicode( "@PlayerGiveTurn(1)" ) );
 		NMainLoop::Command( new NMainLoop::CICSave( sCmd.substr( 9 ) ) );
 	}
+	else if ( sCmd == "facefixtures" )
+		SaveLoadDiag( "[harness] face fixtures: %d sequence streams\n", NLSHead::ExportAllFaceSequenceFixtures() );
 	else if ( sCmd.compare( 0, 4, "rng " ) == 0 )
 	{
 		const char *pSeed = sCmd.c_str() + 4;

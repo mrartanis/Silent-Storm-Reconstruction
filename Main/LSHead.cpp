@@ -34,6 +34,42 @@ static void ExportFaceFixture( const char *kind, int id, int part, CMemoryStream
 	fclose( out );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+int ExportAllFaceSequenceFixtures()
+{
+	char directory[1024];
+	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
+	if ( length == 0 || length >= sizeof(directory) )
+		return 0;
+	CDBTable<NDb::CSequence> *pTable = NDatabase::GetTable<NDb::CSequence>();
+	if ( !pTable )
+		return 0;
+	int count = 0;
+	CDBIterator<NDb::CSequence> it( *pTable );
+	while ( it.MoveNext() )
+	{
+		NDb::CSequence *r = it.Get();
+		if ( !IsValid( r ) )
+			continue;
+		try
+		{
+			int id = r->GetRecordID();
+			NGScene::CResourceOpener file( "Sequences", id );
+			CMemoryStream stream;
+			file->Add( 1, &stream );
+			if ( stream.GetSize() > 0 )
+			{
+				ExportFaceFixture( "sequence", id, 0, stream );
+				++count;
+			}
+		}
+		catch (...)
+		{
+			// A DB row without a binary sequence is not an animation fixture.
+		}
+	}
+	return count;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 static void EnsureLSInit()
 {
 	static bool bInited = false;

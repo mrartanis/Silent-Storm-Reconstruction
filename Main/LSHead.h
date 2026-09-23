@@ -33,6 +33,9 @@ namespace NGScene
 }
 namespace NLSHead
 {
+// Harness-only corpus expansion; writes original sequence resource streams to
+// S2_FACE_FIXTURE_DIR and leaves normal resource loading unchanged.
+int ExportAllFaceSequenceFixtures();
 class CHeadTransformInfo;   // the live head-morph tension source (defined below; CHeadAnimator weak-refs it)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <class T>
