@@ -35,6 +35,37 @@ void TransformPoint(const float *matrix, const float *source, float *result)
     result[axis] = source[0] * matrix[axis] + source[1] * matrix[3 + axis] +
                    source[2] * matrix[6 + axis] + matrix[9 + axis];
 }
+
+void TransformVector(const float *matrix, const float *source, float *result)
+{
+  for (int axis = 0; axis < 3; ++axis)
+    result[axis] = source[0] * matrix[axis] + source[1] * matrix[3 + axis] +
+                   source[2] * matrix[6 + axis];
+}
+
+void RotateLocal(float *vector, const std::array<float, 2> &amplitudes)
+{
+  const float angleY = -amplitudes[0];
+  if (angleY != 0.0f)
+  {
+    const float cosine = std::cos(angleY);
+    const float sine = std::sin(angleY);
+    const float x = vector[0];
+    const float z = vector[2];
+    vector[0] = x * cosine - z * sine;
+    vector[2] = x * sine + z * cosine;
+  }
+  const float angleZ = amplitudes[1];
+  if (angleZ != 0.0f)
+  {
+    const float cosine = std::cos(angleZ);
+    const float sine = std::sin(angleZ);
+    const float x = vector[0];
+    const float y = vector[1];
+    vector[0] = x * cosine - y * sine;
+    vector[1] = x * sine + y * cosine;
+  }
+}
 }
 
 namespace LifeStudioHeadAPI
@@ -100,20 +131,76 @@ public:
       return false;
     for (const auto &vertex : head.vertices)
     {
-      float changed[3] = {vertex.sourcePosition[0], vertex.sourcePosition[1],
-                          vertex.sourcePosition[2]};
-      for (const auto &influence : vertex.influences)
+      const std::size_t influenceCount = vertex.influences.size();
+      std::vector<std::array<float, 3>> shifts(influenceCount, {0.0f, 0.0f, 0.0f});
+      std::vector<float> lengths(influenceCount, 0.0f);
+      for (std::size_t i = 0; i < influenceCount; ++i)
       {
+        const auto &influence = vertex.influences[i];
         if (influence.muscleIndex >= head.muscles.size() ||
             influence.componentA <= 0.0f || influence.componentB <= 0.0f)
           continue;
         const std::size_t index = influence.muscleIndex;
         const float weight = influence.componentA * influence.componentB;
         for (int axis = 0; axis < 3; ++axis)
-          changed[axis] += weight *
+          shifts[i][axis] = weight *
               (evaluatedPointB[index][axis] - head.muscles[index].pointB[axis]);
+        // A muscle attached to a bone emits a vector in that bone's rotated
+        // frame. The original DLL transforms this vector separately from the
+        // vertex position, without the bone's translation.
+        for (std::size_t boneIndex = 0; boneIndex < head.bones.size(); ++boneIndex)
+        {
+          const auto &bone = head.bones[boneIndex];
+          bool attached = false;
+          for (std::uint32_t member : bone.muscleIndices)
+            if (member == index) { attached = true; break; }
+          if (!attached) continue;
+          float intermediate[3];
+          float transformed[3];
+          TransformVector(bone.matrixB, shifts[i].data(), intermediate);
+          RotateLocal(intermediate, boneAmplitudes[boneIndex]);
+          TransformVector(bone.matrixA, intermediate, transformed);
+          for (int axis = 0; axis < 3; ++axis)
+            shifts[i][axis] = transformed[axis];
+          break;
+        }
+        lengths[i] = std::sqrt(shifts[i][0] * shifts[i][0] +
+                               shifts[i][1] * shifts[i][1] +
+                               shifts[i][2] * shifts[i][2]);
       }
-      float position[3] = {changed[0], changed[1], changed[2]};
+      float position[3] = {};
+      // The original x86 multi-influence path damps mutually aligned
+      // displacements. Its per-vertex coefficient is -ln(n)/(2*(n-1)).
+      const double interactionCoefficient = influenceCount > 1
+          ? -std::log(static_cast<double>(influenceCount)) /
+                (2.0 * static_cast<double>(influenceCount - 1))
+          : 0.0;
+      for (std::size_t i = 0; i < influenceCount; ++i)
+      {
+        const auto &influence = vertex.influences[i];
+        const float length = lengths[i];
+        if (length <= 0.0f) continue;
+        double factor = 1.0;
+        if (influenceCount > 1)
+        {
+          const float denominator = influence.componentB * length;
+          if (denominator < 0.0001f) continue;
+          double overlap = 0.0;
+          if (length >= 0.0001f)
+            for (std::size_t j = 0; j < influenceCount; ++j)
+            {
+              if (j == i) continue;
+              const auto &other = shifts[j];
+              const double dot = (static_cast<double>(shifts[i][0]) * other[0] +
+                                  static_cast<double>(shifts[i][1]) * other[1] +
+                                  static_cast<double>(shifts[i][2]) * other[2]) / length;
+              overlap += std::fabs(dot * vertex.influences[j].componentB);
+            }
+          factor = std::exp(interactionCoefficient * overlap / denominator);
+        }
+        for (int axis = 0; axis < 3; ++axis)
+          position[axis] += static_cast<float>(factor * shifts[i][axis]);
+      }
       float weighted[3] = {};
       float totalWeight = 0.0f;
       float specifiedWeight = 0.0f;
@@ -128,7 +215,7 @@ public:
         if (weight <= 0.0f) continue;
         float transformed[3];
         float intermediate[3];
-        const float *candidate = changed;
+        const float *candidate = vertex.sourcePosition;
         for (const auto &bone : head.bones)
         {
           bool attached = false;
@@ -136,28 +223,9 @@ public:
             if (index == influence.muscleIndex) { attached = true; break; }
           if (!attached)
             continue;
-          TransformPoint(bone.matrixB, changed, intermediate);
+          TransformPoint(bone.matrixB, vertex.sourcePosition, intermediate);
           const std::size_t boneIndex = static_cast<std::size_t>(&bone - head.bones.data());
-          const float angleY = -boneAmplitudes[boneIndex][0];
-          if (angleY != 0.0f)
-          {
-            const float cosine = std::cos(angleY);
-            const float sine = std::sin(angleY);
-            const float x = intermediate[0];
-            const float z = intermediate[2];
-            intermediate[0] = x * cosine - z * sine;
-            intermediate[2] = x * sine + z * cosine;
-          }
-          const float angleZ = boneAmplitudes[boneIndex][1];
-          if (angleZ != 0.0f)
-          {
-            const float cosine = std::cos(angleZ);
-            const float sine = std::sin(angleZ);
-            const float x = intermediate[0];
-            const float y = intermediate[1];
-            intermediate[0] = x * cosine - y * sine;
-            intermediate[1] = x * sine + y * cosine;
-          }
+          RotateLocal(intermediate, boneAmplitudes[boneIndex]);
           TransformPoint(bone.matrixA, intermediate, transformed);
           candidate = transformed;
           break;
@@ -168,7 +236,10 @@ public:
       }
       if (totalWeight > 0.0f)
         for (int axis = 0; axis < 3; ++axis)
-          position[axis] = weighted[axis] / totalWeight;
+          position[axis] += weighted[axis] / totalWeight;
+      else
+        for (int axis = 0; axis < 3; ++axis)
+          position[axis] += vertex.sourcePosition[axis];
       for (int axis = 0; axis < 3; ++axis)
         output[std::size_t(vertex.index) * step + axis] = position[axis];
     }

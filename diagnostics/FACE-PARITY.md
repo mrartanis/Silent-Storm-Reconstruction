@@ -201,19 +201,36 @@ time 15000 also passes `Test-FaceMuscleStateParity.ps1` on all three heads,
 with ten active muscles and maximum delta 3.54e-8; time 22500 passed on head
 56 with two active muscles.
 
-For class-3 muscle effects, x64 `Process` now moves an explicitly weighted
-vertex by `max(componentA, 0) × componentB × (newB - originalB)` per influence.
+For class-3 muscle effects, x64 `Process` first builds a displacement vector
+`Dᵢ = max(componentAᵢ, 0) × componentBᵢ × (newBᵢ - originalBᵢ)` per influence.
 This rule matched all 20 vertices influenced by an isolated nostril muscle;
 negative `componentA` was confirmed to contribute no motion in the isolated
-lip case. Both direct macros pass a strict 419-vertex comparison on head 56,
-with no component over 1e-4 and maximum delta 1.91e-6. That is a scoped
-geometric result, **not** complete facial animation: the forced `##BLINK`
-case has 94 mismatched components (maximum 0.00179) after the bone transforms.
-Simultaneous muscle influences and bone/muscle composition remain incomplete.
-With both verified rotation channels enabled, the full six-case strict gate
-is still red: 293–614 components per case exceed 1e-4, with maximum delta
-0.15–0.36. A previous experiment that interpreted every class-4 effect as
-local-Y rotation was discarded because the x86 bone snapshots contradicted it.
+lip case. Multiple moving muscles are **not** added independently. For `n>1`
+influences the original x86 `Process` stores the coefficient
+`cₙ = -ln(n)/(2(n-1))` (confirmed on all 287 explicit vertices of each of
+three heads, maximum delta 2.8e-17). It scales each `Dᵢ` by
+`exp(cₙ × Σⱼ≠ᵢ |dot(Dᵢ/|Dᵢ|, Dⱼ) × componentBⱼ| /
+(componentBᵢ × |Dᵢ|))`, skipping contributions whose denominator is below
+1e-4. Attached bones rotate
+the displacement vector separately from the vertex position; only the latter
+receives bone translation. This formula predicts x86 vertex 239 of the
+overlapping cheek/eyelid macro to about 2e-7, and the native bridge passes
+strict 419-vertex comparisons for `(base)_lEYELID_DOWN_R` and `##BLINK`
+on all three sampled heads at expression 0.5 (maximum delta 1.91e-6).
+`##BLINK` also passes on head 56 at -0.5, 0.25 and 0.8. These are scoped
+geometric results, **not** complete facial animation. The full six-case
+sequence gate remains red: 194–572 components per case exceed 1e-4, with
+maximum delta 0.14–0.31. `Distrust` at expression -0.226 already diverges
+in muscle amplitude: four traversals reach the same effect leaf, and simply
+summing its independently curved outputs does not reproduce x86. Resolving
+shared-leaf accumulation is a next prerequisite for full parity.
+
+`S2_FACE_VERTEX_STATE_PATH` and `S2_FACE_STATE_SNAPSHOT_TIME` make the x86
+probe export the original per-vertex interaction coefficients into a CSV in
+the ignored lab directory. `NativeMMTreeFilterEffects` writes a derived tree
+there with all but one leaf target of a selected macro zeroed; it never
+changes the original `tree.mma`. This gave independent x86 references for
+`a_EyelidLOW_UW_R` and `a_Cheek_FW_R` before validating their combination.
 
 The x86 `ComputePhysics` bone snapshot identifies leaf channels 16/20 as
 local-Y rotation (amplitude at byte 528) and 17/21 as local-Z rotation
@@ -242,6 +259,10 @@ The combined sequence gate remains red and requires more work.
   -NativeMacroEvaluate 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeMacroEvaluate.exe' `
   -MacroName '(base)_NOSE_L' -Expression 0.5 -RequireVertexParity
 ```
+
+Replace `-MacroName` with `##BLINK` and keep `-RequireVertexParity` to run the
+passing combined muscle-and-bone regression. The genuine sequence gate above
+must remain separate until all macro accumulation semantics match x86.
 
 `Test-FaceMuscleStateParity.ps1` takes the same head, sequence, tree, game
 root and probe paths plus `-Time 15000`; unlike the forced-macro test, it

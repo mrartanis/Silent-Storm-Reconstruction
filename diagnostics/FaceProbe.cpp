@@ -103,6 +103,51 @@ static void SnapshotMuscles(IAnimator *anim, const char *stage)
   std::fclose(file);
 }
 
+static bool ReadableMemory(const void *pointer, std::size_t bytes)
+{
+  MEMORY_BASIC_INFORMATION region{};
+  if (!pointer || !VirtualQuery(pointer, &region, sizeof(region)) ||
+      region.State != MEM_COMMIT || (region.Protect & (PAGE_NOACCESS | PAGE_GUARD)))
+    return false;
+  const auto address = reinterpret_cast<std::uintptr_t>(pointer);
+  const auto end = reinterpret_cast<std::uintptr_t>(region.BaseAddress) + region.RegionSize;
+  return address <= end && bytes <= end - address;
+}
+
+// x86-only diagnostic of the original animator's vertex objects. Process()
+// iterates its 8-byte vertex entries at animator+0x20 and calls each object.
+static void SnapshotVertexState(IAnimator *anim)
+{
+  const char *path = std::getenv("S2_FACE_VERTEX_STATE_PATH");
+  if (!path || !ReadableMemory(anim, 0x28)) return;
+  const auto *header = reinterpret_cast<const unsigned char *>(anim);
+  const auto begin = *reinterpret_cast<const std::uintptr_t *>(header + 0x20);
+  const auto end = *reinterpret_cast<const std::uintptr_t *>(header + 0x24);
+  if (end < begin || (end - begin) % 8 || (end - begin) / 8 > 1000000)
+    return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fprintf(file, "vertex,influences,interaction-coefficient\n");
+  for (std::uintptr_t entry = begin; entry < end; entry += 8)
+  {
+    if (!ReadableMemory(reinterpret_cast<const void *>(entry), 8)) break;
+    const auto *pair = reinterpret_cast<const std::uintptr_t *>(entry);
+    const auto *vertex = reinterpret_cast<const unsigned char *>(pair[1]);
+    if (!ReadableMemory(vertex, 0x28)) break;
+    const auto index = *reinterpret_cast<const std::uint32_t *>(vertex + 8);
+    const auto count = *reinterpret_cast<const std::int32_t *>(vertex + 0x1C);
+    const double coefficient = *reinterpret_cast<const double *>(vertex + 0x20);
+    if (index >= 1000000 || count < 0 || count > 1000)
+    {
+      std::fprintf(stderr, "vertex-state-invalid index=%u count=%d entry=%zu\n",
+                   index, count, static_cast<std::size_t>((entry - begin) / 8));
+      break;
+    }
+    std::fprintf(file, "%u,%d,%.17g\n", index, count, coefficient);
+  }
+  std::fclose(file);
+}
+
 static void SnapshotAnimatedState(IAnimator *anim, const char *label, int time, const char *stage)
 {
   const char *selected = std::getenv("S2_FACE_STATE_SNAPSHOT_TIME");
@@ -376,6 +421,12 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
 #endif
     if (!std::getenv("S2_FACE_SKIP_FILL_UNUSED"))
       anim->FillUnused(true);
+#if defined(_M_IX86)
+    if (sequence && std::getenv("S2_FACE_VERTEX_STATE_PATH") &&
+        std::getenv("S2_FACE_STATE_SNAPSHOT_TIME") &&
+        std::atoi(std::getenv("S2_FACE_STATE_SNAPSHOT_TIME")) == time)
+      SnapshotVertexState(anim);
+#endif
     ok = anim->Process(vertices.data(), 3);
 #if defined(_M_IX86)
     SnapshotAnimatedState(anim, label, time, "post-process");
