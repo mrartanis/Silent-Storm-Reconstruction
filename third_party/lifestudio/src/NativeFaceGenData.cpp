@@ -312,17 +312,63 @@ bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
   return BlendGeometry(data, weights, true, result);
 }
 
-bool BlendFaceGenAnimationHead(const FaceGenData &data,
-                               const std::vector<float> &weights,
-                               HeadData *result)
+namespace
+{
+bool RecomputeFaceGenInfluences(HeadData *head)
+{
+  for (auto &vertex : head->vertices)
+    for (auto &influence : vertex.influences)
+    {
+      if (influence.muscleIndex >= head->muscles.size()) return false;
+      const auto &muscle = head->muscles[influence.muscleIndex];
+      double numerator = 0.0, denominator = 0.0;
+      for (int axis = 0; axis < 3; ++axis)
+      {
+        const double segment = muscle.pointB[axis] - muscle.pointA[axis];
+        numerator += (vertex.sourcePosition[axis] - muscle.pointA[axis]) * segment;
+        denominator += segment * segment;
+      }
+      if (!(denominator > 0.0)) return false;
+      influence.componentA = static_cast<float>(numerator / denominator);
+      const float position = std::max(0.0f, std::min(1.0f, influence.componentA));
+      double distanceSquared = 0.0;
+      for (int axis = 0; axis < 3; ++axis)
+      {
+        const double nearest = muscle.pointA[axis] + position *
+            (muscle.pointB[axis] - muscle.pointA[axis]);
+        const double difference = vertex.sourcePosition[axis] - nearest;
+        distanceSquared += difference * difference;
+      }
+      const float distance = static_cast<float>(std::sqrt(distanceSquared));
+      influence.componentB = 0.0f;
+      if (distance <= muscle.falloffX.back())
+      {
+        const std::vector<float> x(muscle.falloffX.begin(), muscle.falloffX.end());
+        const std::vector<float> y(muscle.falloffY.begin(), muscle.falloffY.end());
+        if (!EvaluateHermiteCurve(x, y, distance, &influence.componentB)) return false;
+        influence.componentB = std::max(0.0f, std::min(1.0f, influence.componentB));
+      }
+    }
+  return true;
+}
+}
+
+namespace
+{
+bool BlendFaceGenHead(const FaceGenData &data,
+                      const std::vector<float> &weights,
+                      bool animation, HeadData *result)
 {
   if (!result || data.archetypes.empty()) return false;
   FaceGenGeometry geometry;
-  if (!BlendFaceGenAnimationGeometry(data, weights, &geometry)) return false;
-  const HeadData &first = data.archetypes.front().animation;
+  if (!BlendGeometry(data, weights, animation, &geometry)) return false;
+  const auto headOf = [animation](const FaceGenArchetype &archetype) -> const HeadData & {
+    return animation ? archetype.animation : archetype.morph;
+  };
+  const HeadData &first = headOf(data.archetypes.front());
   for (const auto &archetype : data.archetypes)
   {
-    const HeadData &source = archetype.animation;
+    const HeadData &source = headOf(archetype);
     if (source.vertexCount != first.vertexCount ||
         source.muscles.size() != first.muscles.size() ||
         source.vertices.size() != first.vertices.size() ||
@@ -363,7 +409,7 @@ bool BlendFaceGenAnimationHead(const FaceGenData &data,
       double x = 0.0, y = 0.0;
       for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
       {
-        const auto &source = data.archetypes[archetype].animation.muscles[muscle];
+        const auto &source = headOf(data.archetypes[archetype]).muscles[muscle];
         x += weights[archetype] * source.falloffX[knot];
         y += weights[archetype] * source.falloffY[knot];
       }
@@ -376,39 +422,8 @@ bool BlendFaceGenAnimationHead(const FaceGenData &data,
     if (vertex.index >= geometry.vertices.size()) return false;
     for (int axis = 0; axis < 3; ++axis)
       vertex.sourcePosition[axis] = geometry.vertices[vertex.index][axis];
-    for (auto &influence : vertex.influences)
-    {
-      if (influence.muscleIndex >= blended.muscles.size()) return false;
-      const auto &muscle = blended.muscles[influence.muscleIndex];
-      double numerator = 0.0, denominator = 0.0;
-      for (int axis = 0; axis < 3; ++axis)
-      {
-        const double segment = muscle.pointB[axis] - muscle.pointA[axis];
-        numerator += (vertex.sourcePosition[axis] - muscle.pointA[axis]) * segment;
-        denominator += segment * segment;
-      }
-      if (!(denominator > 0.0)) return false;
-      influence.componentA = static_cast<float>(numerator / denominator);
-      const float position = std::max(0.0f, std::min(1.0f, influence.componentA));
-      double distanceSquared = 0.0;
-      for (int axis = 0; axis < 3; ++axis)
-      {
-        const double nearest = muscle.pointA[axis] + position *
-            (muscle.pointB[axis] - muscle.pointA[axis]);
-        const double difference = vertex.sourcePosition[axis] - nearest;
-        distanceSquared += difference * difference;
-      }
-      const float distance = static_cast<float>(std::sqrt(distanceSquared));
-      influence.componentB = 0.0f;
-      if (distance <= muscle.falloffX.back())
-      {
-        const std::vector<float> x(muscle.falloffX.begin(), muscle.falloffX.end());
-        const std::vector<float> y(muscle.falloffY.begin(), muscle.falloffY.end());
-        if (!EvaluateHermiteCurve(x, y, distance, &influence.componentB)) return false;
-        influence.componentB = std::max(0.0f, std::min(1.0f, influence.componentB));
-      }
-    }
   }
+  if (!RecomputeFaceGenInfluences(&blended)) return false;
   for (auto &vertex : blended.implicitVertices)
   {
     if (vertex.index >= geometry.vertices.size()) return false;
@@ -423,7 +438,7 @@ bool BlendFaceGenAnimationHead(const FaceGenData &data,
       double translation = 0.0;
       for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
         translation += weights[archetype] *
-            data.archetypes[archetype].animation.bones[bone].matrixA[9 + axis];
+            headOf(data.archetypes[archetype]).bones[bone].matrixA[9 + axis];
       target.matrixA[9 + axis] = static_cast<float>(translation / total);
     }
     for (int row = 0; row < 3; ++row)
@@ -438,6 +453,75 @@ bool BlendFaceGenAnimationHead(const FaceGenData &data,
     }
   }
   *result = std::move(blended);
+  return true;
+}
+}
+
+bool BlendFaceGenAnimationHead(const FaceGenData &data,
+                               const std::vector<float> &weights,
+                               HeadData *result)
+{
+  return BlendFaceGenHead(data, weights, true, result);
+}
+
+bool BlendFaceGenMorphHead(const FaceGenData &data,
+                           const std::vector<float> &weights,
+                           HeadData *result)
+{
+  return BlendFaceGenHead(data, weights, false, result);
+}
+
+bool ComposeFaceGenOutputHead(
+    const HeadData &animationBase, const HeadData &morphBase,
+    const std::vector<std::array<float, 3>> &morphProcessed,
+    HeadData *result)
+{
+  if (!result || animationBase.vertexCount != morphBase.vertexCount ||
+      morphProcessed.size() != animationBase.vertexCount ||
+      animationBase.vertices.size() + animationBase.implicitVertices.size() !=
+          animationBase.vertexCount ||
+      morphBase.vertices.size() + morphBase.implicitVertices.size() !=
+          morphBase.vertexCount) return false;
+  std::vector<std::array<float, 3>> morphSource(morphBase.vertexCount);
+  std::vector<bool> seen(morphBase.vertexCount, false);
+  for (const auto &vertex : morphBase.vertices)
+  {
+    if (vertex.index >= morphBase.vertexCount || seen[vertex.index]) return false;
+    seen[vertex.index] = true;
+    for (int axis = 0; axis < 3; ++axis)
+      morphSource[vertex.index][axis] = vertex.sourcePosition[axis];
+  }
+  for (const auto &vertex : morphBase.implicitVertices)
+  {
+    if (vertex.index >= morphBase.vertexCount || seen[vertex.index]) return false;
+    seen[vertex.index] = true;
+    for (int axis = 0; axis < 3; ++axis)
+      morphSource[vertex.index][axis] = vertex.sourcePosition[axis];
+  }
+  for (bool found : seen) if (!found) return false;
+  HeadData output = animationBase;
+  for (auto &vertex : output.vertices)
+  {
+    if (vertex.index >= output.vertexCount) return false;
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      const float processed = morphProcessed[vertex.index][axis];
+      if (!std::isfinite(processed)) return false;
+      vertex.sourcePosition[axis] += processed - morphSource[vertex.index][axis];
+    }
+  }
+  for (auto &vertex : output.implicitVertices)
+  {
+    if (vertex.index >= output.vertexCount) return false;
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      const float processed = morphProcessed[vertex.index][axis];
+      if (!std::isfinite(processed)) return false;
+      vertex.sourcePosition[axis] += processed - morphSource[vertex.index][axis];
+    }
+  }
+  if (!RecomputeFaceGenInfluences(&output)) return false;
+  *result = std::move(output);
   return true;
 }
 

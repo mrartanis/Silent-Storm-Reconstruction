@@ -54,6 +54,8 @@ int main()
   invalidBlend.archetypes[0].morph.vertices[0].index = 1;
   NativeLifeStudio::FaceGenGeometry geometry;
   NativeLifeStudio::HeadData animationHead;
+  NativeLifeStudio::HeadData morphHead;
+  NativeLifeStudio::HeadData outputHead;
   std::vector<float> gameWeights;
   const bool ok = NativeLifeStudio::ParseFaceGenRules(valid, &data) &&
       data.heads.size() == 3 && data.combinations.size() == 2 &&
@@ -79,6 +81,9 @@ int main()
       NativeLifeStudio::BlendFaceGenGeometry(blendData, {1.0f, 3.0f}, &geometry) &&
       geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
       geometry.musclePointB[0][0] == 10.0f &&
+      NativeLifeStudio::BlendFaceGenMorphHead(blendData, {1.0f, 3.0f}, &morphHead) &&
+      morphHead.vertices[0].sourcePosition[0] == 5.0f &&
+      morphHead.muscles[0].pointB[0] == 10.0f &&
       NativeLifeStudio::BlendFaceGenAnimationGeometry(blendData, {1.0f, 3.0f}, &geometry) &&
       geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
       geometry.musclePointB[0][0] == 35.0f &&
@@ -86,6 +91,10 @@ int main()
       animationHead.vertices[0].sourcePosition[0] == 5.0f &&
       animationHead.muscles[0].pointB[0] == 35.0f &&
       animationHead.muscles[0].falloffY[0] == 2.5f &&
+      NativeLifeStudio::ComposeFaceGenOutputHead(
+          animationHead, blendData.archetypes[0].morph,
+          {{{3.0f, 0.0f, 0.0f}}}, &outputHead) &&
+      outputHead.vertices[0].sourcePosition[0] == 6.0f &&
       !NativeLifeStudio::BlendFaceGenGeometry(invalidBlend, {1.0f, 3.0f}, &geometry) &&
       !NativeLifeStudio::BlendFaceGenGeometry(blendData, {0.0f, 0.0f}, &geometry) &&
       NativeLifeStudio::ComposeGameFaceGenWeights({0, 0, 0, 0, 0},

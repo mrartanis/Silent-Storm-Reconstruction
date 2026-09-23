@@ -13,12 +13,15 @@ int main(int argc, char **argv)
 {
   if (argc != 4 && argc != 5)
   {
-    std::fprintf(stderr, "usage: NativeFaceGenBlendCheck face.gdp weights.csv x86-head.bin [--animation|--animation-fields]\n");
+    std::fprintf(stderr, "usage: NativeFaceGenBlendCheck face.gdp weights.csv x86-head.bin [--animation|--animation-fields|--morph-fields]\n");
     return 2;
   }
-  const bool fields = argc == 5 && std::strcmp(argv[4], "--animation-fields") == 0;
-  const bool animation = fields || (argc == 5 && std::strcmp(argv[4], "--animation") == 0);
-  if (argc == 5 && !animation) return 2;
+  const bool animationFields = argc == 5 && std::strcmp(argv[4], "--animation-fields") == 0;
+  const bool morphFields = argc == 5 && std::strcmp(argv[4], "--morph-fields") == 0;
+  const bool fields = animationFields || morphFields;
+  const bool animation = animationFields ||
+      (argc == 5 && std::strcmp(argv[4], "--animation") == 0);
+  if (argc == 5 && !animation && !morphFields) return 2;
   auto *gdp = LifeStudioHeadAPI::IGDPFile::Create(argv[1]);
   if (!gdp) return 3;
   if (gdp->ObjectsCount() < 1)
@@ -96,6 +99,10 @@ int main(int argc, char **argv)
               maximumVertex, maximumAnchor);
   if (fields)
   {
+    const auto headOf = [animation](const NativeLifeStudio::FaceGenArchetype &archetype)
+        -> const NativeLifeStudio::HeadData & {
+      return animation ? archetype.animation : archetype.morph;
+    };
     double totalWeight = 0.0, maximumCurve = 0.0;
     double maximumInfluence = 0.0, maximumBoneMatrixA = 0.0;
     double maximumBoneMatrixB = 0.0, maximumBoneFixedOrientation = 0.0;
@@ -105,15 +112,15 @@ int main(int argc, char **argv)
     for (float weight : weights) totalWeight += weight;
     for (std::size_t muscle = 0; muscle < reference.muscles.size(); ++muscle)
     {
-      if (reference.muscles[muscle].type != data.archetypes.front().animation.muscles[muscle].type ||
-          reference.muscles[muscle].name != data.archetypes.front().animation.muscles[muscle].name)
+      if (reference.muscles[muscle].type != headOf(data.archetypes.front()).muscles[muscle].type ||
+          reference.muscles[muscle].name != headOf(data.archetypes.front()).muscles[muscle].name)
         ++muscleTypeMismatch;
       for (int knot = 0; knot < 5; ++knot)
       {
         double x = 0.0, y = 0.0;
         for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
         {
-          const auto &source = data.archetypes[archetype].animation.muscles[muscle];
+          const auto &source = headOf(data.archetypes[archetype]).muscles[muscle];
           x += weights[archetype] * source.falloffX[knot];
           y += weights[archetype] * source.falloffY[knot];
         }
@@ -123,7 +130,7 @@ int main(int argc, char **argv)
             std::fabs(reference.muscles[muscle].falloffY[knot] - y / totalWeight));
       }
     }
-    const auto &first = data.archetypes.front().animation;
+    const auto &first = headOf(data.archetypes.front());
     if (reference.vertices.size() != first.vertices.size()) return 3;
     for (std::size_t slot = 0; slot < reference.vertices.size(); ++slot)
     {
@@ -168,7 +175,7 @@ int main(int argc, char **argv)
         double meanA = 0.0, meanB = 0.0;
         for (std::size_t archetype = 0; archetype < weights.size(); ++archetype)
         {
-          const auto &candidate = data.archetypes[archetype].animation.bones[bone];
+          const auto &candidate = headOf(data.archetypes[archetype]).bones[bone];
           meanA += weights[archetype] * candidate.matrixA[element];
           meanB += weights[archetype] * candidate.matrixB[element];
         }
@@ -198,12 +205,14 @@ int main(int argc, char **argv)
             std::fabs(actual.matrixB[9 + axis] - inverseTranslation));
       }
     }
-    std::printf("animation-fields muscle-topology=%zu curve-max=%.9g influence-topology=%zu projection-max=%.9g bone-topology=%zu bone-A-mean-max=%.9g bone-B-mean-max=%.9g bone-fixed-orientation-max=%.9g bone-translation-mean-max=%.9g bone-inverse-max=%.9g\n",
+    std::printf("%s-fields muscle-topology=%zu curve-max=%.9g influence-topology=%zu projection-max=%.9g bone-topology=%zu bone-A-mean-max=%.9g bone-B-mean-max=%.9g bone-fixed-orientation-max=%.9g bone-translation-mean-max=%.9g bone-inverse-max=%.9g\n",
+        animation ? "animation" : "morph",
         muscleTypeMismatch, maximumCurve, influenceTopologyMismatch,
         maximumInfluence, boneTopologyMismatch, maximumBoneMatrixA, maximumBoneMatrixB,
         maximumBoneFixedOrientation, maximumBoneTranslationMean, maximumBoneInverse);
     NativeLifeStudio::HeadData nativeHead;
-    if (!NativeLifeStudio::BlendFaceGenAnimationHead(data, weights, &nativeHead) ||
+    if (!(animation ? NativeLifeStudio::BlendFaceGenAnimationHead(data, weights, &nativeHead)
+                    : NativeLifeStudio::BlendFaceGenMorphHead(data, weights, &nativeHead)) ||
         nativeHead.vertices.size() != reference.vertices.size() ||
         nativeHead.implicitVertices.size() != reference.implicitVertices.size() ||
         nativeHead.muscles.size() != reference.muscles.size() ||
@@ -266,8 +275,9 @@ int main(int argc, char **argv)
             reference.bones[bone].matrixB[element]));
       }
     }
-    std::printf("native-animation-head topology=%zu curve-max=%.9g projection-max=%.9g falloff-max=%.9g bone-max=%.9g\n",
-        nativeTopology, nativeCurve, nativeProjection, nativeFalloff, nativeBone);
+    std::printf("native-%s-head topology=%zu curve-max=%.9g projection-max=%.9g falloff-max=%.9g bone-max=%.9g\n",
+        animation ? "animation" : "morph", nativeTopology,
+        nativeCurve, nativeProjection, nativeFalloff, nativeBone);
     if (nativeTopology || nativeCurve > 0.0001 || nativeProjection > 0.0001 ||
         nativeFalloff > 0.0001 || nativeBone > 0.0001) return 1;
   }

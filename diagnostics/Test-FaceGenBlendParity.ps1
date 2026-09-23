@@ -4,6 +4,7 @@ param(
     [Parameter(Mandatory)][string]$X64BlendCheck,
     [string]$X64SelectorParamCheck,
     [string]$X64GameWeightCheck,
+    [string]$X64OutputTransferCheck,
     [Parameter(Mandatory)][string]$OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
@@ -15,6 +16,9 @@ $nativeParameters = if ($X64SelectorParamCheck) {
 } else { $null }
 $nativeWeights = if ($X64GameWeightCheck) {
     (Resolve-Path -LiteralPath $X64GameWeightCheck).Path
+} else { $null }
+$nativeTransfer = if ($X64OutputTransferCheck) {
+    (Resolve-Path -LiteralPath $X64OutputTransferCheck).Path
 } else { $null }
 $gdp = Join-Path $game 'Res\FaceGenHead.gdp'
 $tree = Join-Path $game 'Res\FaceGenHead.mmt'
@@ -41,6 +45,9 @@ if ($nativeParameters -and (Get-PEMachine $nativeParameters) -ne 0x8664) {
 }
 if ($nativeWeights -and (Get-PEMachine $nativeWeights) -ne 0x8664) {
     throw 'Game-weight parity requires a native x64 check'
+}
+if ($nativeTransfer -and (Get-PEMachine $nativeTransfer) -ne 0x8664) {
+    throw 'Output-transfer parity requires a native x64 check'
 }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Force -Path $output | Out-Null
@@ -90,10 +97,15 @@ try {
         if ($LASTEXITCODE -ne 0) { throw "x86 GDP probe failed: $($case.Name)" }
         $rows = @(Import-Csv -LiteralPath $weights)
         if ($rows.Count -ne 16) { throw "Expected 16 selector weights: $($case.Name)" }
-        & $x64 $gdp $weights $head
-        if ($LASTEXITCODE -ne 0) { throw "Native blend parity failed: $($case.Name)" }
+        & $x64 $gdp $weights $head --morph-fields
+        if ($LASTEXITCODE -ne 0) { throw "Native morph-head parity failed: $($case.Name)" }
         & $x64 $gdp $weights "$prefix-base-animation.bin" --animation-fields
         if ($LASTEXITCODE -ne 0) { throw "Native animation-head parity failed: $($case.Name)" }
+        if ($nativeTransfer) {
+            & $nativeTransfer "$prefix-base-animation.bin" $head `
+                "$prefix-morph-processed.csv" "$prefix-generated.bin"
+            if ($LASTEXITCODE -ne 0) { throw "Native output transfer parity failed: $($case.Name)" }
+        }
         if ($nativeParameters) {
             & $nativeParameters $tree $parameters @macroArgs
             if ($LASTEXITCODE -ne 0) { throw "Native selector-parameter parity failed: $($case.Name)" }
@@ -107,8 +119,11 @@ try {
         (Get-FileHash -LiteralPath (Join-Path $output 'nose-morphed-head.bin')).Hash) {
         throw 'Nose unexpectedly changed the serialized morph-head base'
     }
-    Write-Output 'FACEGEN BLEND PARITY PASS: 11 x86 cases, 419 vertices and 129 muscle anchors each, tolerance=0.0001'
+    Write-Output 'FACEGEN MORPH-HEAD PARITY PASS: 11 x86 cases, vertices, 129 muscles, influences and 6 bones, tolerance=0.0001'
     Write-Output 'FACEGEN ANIMATION-HEAD PARITY PASS: 11 x86 cases, vertices, 36 muscles, influences and 7 bones, tolerance=0.0001'
+    if ($nativeTransfer) {
+        Write-Output 'FACEGEN OUTPUT-TRANSFER PARITY PASS: 11 x86 cases, final head fields, tolerance=0.0001'
+    }
     if ($nativeParameters) {
         Write-Output 'FACEGEN SELECTOR-PARAMETER PARITY PASS: 11 x86 cases, 5 inputs each, tolerance=0.0001'
     }

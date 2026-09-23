@@ -74,6 +74,16 @@ bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
 bool BlendFaceGenAnimationHead(const FaceGenData &data,
                                const std::vector<float> &weights,
                                HeadData *result);
+// Build the matching 129-muscle morph rig that the game drives with sliders.
+bool BlendFaceGenMorphHead(const FaceGenData &data,
+                           const std::vector<float> &weights,
+                           HeadData *result);
+// Transfer the morph rig's processed vertex displacement to the blended
+// animation base, then recompute its influence coefficients for the output.
+bool ComposeFaceGenOutputHead(
+    const HeadData &animationBase, const HeadData &morphBase,
+    const std::vector<std::array<float, 3>> &morphProcessed,
+    HeadData *result);
 // Evaluate the five GDP selector inputs for the named game sliders. This does
 // not perform TriangLib's archetype interpolation or generate an animator.
 bool EvaluateGameFaceGenParameters(

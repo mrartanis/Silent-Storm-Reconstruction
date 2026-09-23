@@ -448,17 +448,19 @@ observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
   -X64BlendCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenBlendCheck.exe' `
   -X64SelectorParamCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenSelectorParamCheck.exe' `
   -X64GameWeightCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenGameWeightCheck.exe' `
+  -X64OutputTransferCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenOutputTransferCheck.exe' `
   -OutputDirectory 'G:\SS\lab\runs\face-blend-gate'
 ```
 
 The blend subtests deliberately feed x86-selected weights to the native
 blender; the optional game-weight subtest separately checks native selection.
-The same gate also compares the complete decoded 36-muscle animation base on
-all eleven cases, including the editor default. Vertex and anchor deltas are
-at most 2.86e-6 and 1.91e-6; it also checks curves, influence projections,
-bone transforms and their topology. Both intermediate heads are now matched
-at the decoded-field level, but this still does not construct the final
-output animator.
+The same gate also compares the complete decoded 36-muscle animation base and
+129-muscle morph rig on all eleven cases, including the editor default. The
+checks cover vertices, muscle anchors and curves, influence projections,
+bone transforms and topology. The optional output-transfer check composes a
+final head from freshly captured x86 intermediates and compares its decoded
+fields with x86 `Generate`. These staged checks do not prove native end-to-end
+`ITransformer::Generate` yet.
 Neither proves full `ITransformer` generation. For example, neutral x86
 weights begin `0.05, 0.05, 0.025, 0`
 for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
@@ -542,6 +544,23 @@ falloff and bone deltas of 1.53e-5, 5.07e-7, 8.35e-7 and 9.54e-7 on the
 editor default. Full animator serialization and the post-blend `Generate`
 worker remain to be implemented and compared before native generation can
 be considered complete.
+
+The native `BlendFaceGenMorphHead` now builds the complete decoded 129-muscle
+morph rig by the same rule, and its 11-case field gate passes at 1e-4. The
+output worker's head transfer is bounded too. For the reference cases, x86
+`Generate` leaves the saved 36-muscle and seven-bone sections byte-identical
+to its animation base; only explicit and implicit vertex records change. Its
+final source position is `animation-base position + (morph Process position -
+morph-base source position)` at the nine-digit probe precision, including
+Age, Gender, Nose and the editor default. Explicit vertex influence
+coefficients are recomputed against the unchanged animation muscles.
+`ComposeFaceGenOutputHead` implements this transfer. The 11-case
+`NativeFaceGenOutputTransferCheck` compares all decoded final fields against
+fresh x86 output; the tested vertex deltas are zero, and the editor-default
+influence deltas are at most 3.43e-7. This check uses x86-precomputed
+intermediate heads and morph `Process` positions to isolate the transfer.
+Native morph processing, output serialization, texture `UserItem` channels
+and the x64 `ITransformer` runtime are still required.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
