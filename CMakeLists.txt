@@ -150,6 +150,14 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
     "${_implib_dir}/LifeStudioHeadAPI.lib" "${_implib_dir}/GDPFile.lib")
 endif()
 
+# A headless x86-oracle / x64-native comparison tool. Inputs are original
+# LifeStudio streams exported into an ignored lab directory, never committed.
+add_executable(FaceProbe "${root}/diagnostics/FaceProbe.cpp")
+target_link_libraries(FaceProbe PRIVATE lifestudio_shim)
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+  add_dependencies(FaceProbe ls_implibs)
+endif()
+
 # ----------------------------------------------------------------------------
 #  engine modules  (each is a directory of *.cpp + a StdAfx.h PCH)
 # ----------------------------------------------------------------------------

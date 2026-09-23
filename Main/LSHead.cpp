@@ -17,6 +17,22 @@ namespace NLSHead
 CBasicShare<int, CHeadMeshLoader> shareHeads(135);
 static CBasicShare<int, CHeadSequenceLoader> shareSequences(137);
 static CLSPtr<LifeStudioHeadAPI::IMMTree> pLSTree;
+// Opt-in fixture export for the x86 LifeStudio oracle. The original resource
+// bytes stay outside Git; normal game runs have no extra I/O or changed logic.
+static void ExportFaceFixture( const char *kind, int id, int part, CMemoryStream &stream )
+{
+	char directory[1024];
+	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
+	if ( length == 0 || length >= sizeof(directory) || stream.GetSize() <= 0 )
+		return;
+	char path[1200];
+	_snprintf_s( path, sizeof(path), _TRUNCATE, "%s\\%s-%d-%d.bin", directory, kind, id, part );
+	FILE *out = fopen( path, "wb" );
+	if ( !out )
+		return;
+	fwrite( stream.GetBuffer(), 1, stream.GetSize(), out );
+	fclose( out );
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void EnsureLSInit()
 {
@@ -64,6 +80,7 @@ void CHeadMeshLoader::Recalc()
 		pValue->pLSAnimators.resize( streams.size() );
 		for ( int i = 0; i < streams.size(); ++i )
 		{
+			ExportFaceFixture( "head", GetKey(), i, streams[i] );
 			pValue->pLSAnimators[i] = LifeStudioHeadAPI::IAnimator::Create();
 			pValue->pLSAnimators[i]->Load( (const char *)streams[i].GetBuffer(), streams[i].GetSize() );
 			LoadLSTree();
@@ -89,6 +106,7 @@ void CHeadSequenceLoader::Recalc()
 		pValue = new CHeadSequenceInfo;
 		CMemoryStream stream;
 		file->Add( 1, &stream );
+		ExportFaceFixture( "sequence", GetKey(), 0, stream );
 		pValue->pLSSequence = LifeStudioHeadAPI::ISequencer::Create();
 		pValue->pLSSequence->Load( (const char *)stream.GetBuffer(), stream.GetSize() );
 		LoadLSTree();
