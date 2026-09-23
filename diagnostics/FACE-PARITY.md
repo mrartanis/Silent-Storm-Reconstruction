@@ -378,11 +378,20 @@ x86-precomputed animator to the native side. This is the implementation gate
 for native generation. An optional x86 `S2_FACE_TRACE_TRANSFORMER=1` probe
 prints the original transformer's vtable and post-`Load` worker dispatch
 addresses. In the examined DLL, public `Generate` (RVA `0x13580`) forwards to
-an internal worker dispatch at RVA `0x12300`. That worker checks the
-source/output vertex counts and invokes several distinct generation passes
+an internal worker dispatch at RVA `0x12300`. In this GDP, its runtime counts
+are 36 animation muscles, 7 bones and 129 morph muscles. The worker checks
+its 129-record link table against the morph-muscle count and invokes several
+distinct generation passes
 (`0x118e0`, `0x11a60`, `0x11bb0`, `0x120e0`, `0x12140`, `0x11a90`,
 `0x12260`). This narrows the remaining reverse-engineering target; the
 near-linear archetype fit below is not a substitute for these passes.
+With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
+worker's post-`Generate` scalar, item and vector arrays for comparison. On
+the reference GDP, `Nose=0.5` leaves all 36 muscle scalars and 79 output
+vectors byte-identical to neutral, while `Age=1` and `Gender=1` change both
+arrays. Thus a Nose morph can alter vertices without changing the animation
+muscle anchors; Age and Gender also reshape those anchors. These snapshots
+are exploratory internal evidence, not native parity results.
 
 The x64 `IAnimator::Save` now round-trips a loaded original-format or
 saved-format stream byte-for-byte. `Test-FaceGDPParity.ps1` checks that

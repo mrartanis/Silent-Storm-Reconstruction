@@ -145,6 +145,40 @@ int main(int argc, char **argv)
     {
       transformer->ComputePhysics();
       transformer->Generate();
+#if defined(_M_IX86)
+      if (std::getenv("S2_FACE_TRACE_TRANSFORMER"))
+      {
+        const auto worker = reinterpret_cast<const unsigned char *>(transformer) + 0xa0;
+        for (int offset : {0x04, 0x08, 0x10, 0x14, 0x18, 0x1c,
+                           0x20, 0x24, 0x28, 0x2c})
+          std::fprintf(stderr, "transformer-worker[0x%x]=0x%zx\n", offset,
+                       *reinterpret_cast<const std::uintptr_t *>(worker + offset));
+      }
+      if (const char *prefix = std::getenv("S2_FACE_DUMP_WORKER_PREFIX"))
+      {
+        const auto worker = reinterpret_cast<const unsigned char *>(transformer) + 0xa0;
+        const auto word = [worker](int offset) {
+          return *reinterpret_cast<const std::uintptr_t *>(worker + offset);
+        };
+        const std::size_t muscles = word(0x04);
+        const std::size_t bones = word(0x08);
+        const std::size_t morphMuscles = word(0x10);
+        const auto dump = [prefix, &word](int offset, std::size_t bytes, const char *suffix) {
+          const auto *data = reinterpret_cast<const char *>(word(offset));
+          return data && WriteBytes(std::string(prefix) + suffix,
+              std::vector<char>(data, data + bytes));
+        };
+        if (muscles > 10000 || bones > 10000 || morphMuscles > 10000 ||
+            !dump(0x20, muscles * sizeof(float), "-muscle-scalars.bin") ||
+            !dump(0x24, (muscles * 2 + bones) * 40, "-worker-items.bin") ||
+            !dump(0x28, morphMuscles * 3 * sizeof(float), "-morph-workspace.bin") ||
+            !dump(0x2c, (muscles * 2 + bones) * 3 * sizeof(float), "-output-vectors.bin"))
+        {
+          std::fprintf(stderr, "cannot dump transformer worker\n");
+          ok = false;
+        }
+      }
+#endif
       const int size = animator->SaveBufferSize();
       const int count = animator->VerticesCount();
       std::fprintf(stderr, "generated animator bytes=%d vertices=%d muscles=%d bones=%d\n",
