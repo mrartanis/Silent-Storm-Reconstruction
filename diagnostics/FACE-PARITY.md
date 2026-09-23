@@ -22,6 +22,15 @@ forwards each call to the real x86 animator, so the vertex oracle remains
 unchanged. This intermediate oracle is intended to isolate native sequencer
 errors from native bone/vertex-processing errors. It does not yet compare a
 native x64 muscle trace.
+An optional `S2_FACE_MUSCLE_MAP_PATH` writes a second CSV mapping each trace
+ordinal to the original x86 macro-muscle object's inline name. This uses an
+observed x86-only object layout (name at byte offset 8); it is diagnostic
+evidence, not a native ABI contract. `Test-FaceParity.ps1` repeats and hashes
+both CSVs and rejects any trace ordinal without a name. All six initial
+head/sequence pairs and 20 representative sequences passed this named-oracle
+check. The latter exercised 19 distinct names, including eye channels,
+expressions and speech phonemes. The names make it possible to compare a
+future native sequencer's semantic output independently of pointer identity.
 
 Build `FaceProbe` in both `G:\SS\lab\build-x86` and `build-x64` with CMake.
 Build x86 `Game` with this source tree. Prepare a fresh isolated LabRun, copy
@@ -45,9 +54,9 @@ Remove `-ReferenceOnly` and add
 `-X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe'` for the
 required parity check. The initial corpus from `AI_CTRL` contains three heads
 and two sequences (six pairs, 2514 rows each); all six x86 pairs are
-deterministic and deform vertices. The current x64 stub fails before comparison
-because it cannot load the muscle tree or sequence. This is the expected red
-test, not a passing result.
+deterministic and deform vertices. The current x64 bridge loads the tree and
+sequence envelopes but lacks animation evaluation, so the strict parity gate
+remains red.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
 

@@ -61,6 +61,34 @@ class TraceAnimator : public IAnimator
   }
 public:
   TraceAnimator(IAnimator *animator, int frameTime, FILE *output): real(animator), time(frameTime), traceOut(output) {}
+  static void WriteNameMap(FILE *out)
+  {
+    std::fprintf(out, "id,name\n");
+#if defined(_M_IX86)
+    // Original x86 DLL object layout (observed for the macro-muscle objects
+    // passed to AddMacroMuscle): two vtable pointers, then an inline name.
+    // This is diagnostic-only and must not become part of the native x64 ABI.
+    for (std::size_t id = 0; id < known.size(); ++id)
+    {
+      const auto address = reinterpret_cast<std::uintptr_t>(known[id]);
+      MEMORY_BASIC_INFORMATION region{};
+      if (!address || !VirtualQuery(known[id], &region, sizeof(region)) ||
+          region.State != MEM_COMMIT || (region.Protect & (PAGE_NOACCESS | PAGE_GUARD)))
+        continue;
+      const auto end = reinterpret_cast<std::uintptr_t>(region.BaseAddress) + region.RegionSize;
+      if (address + 8 >= end)
+        continue;
+      const char *name = reinterpret_cast<const char *>(known[id]) + 8;
+      std::size_t length = 0;
+      while (length < 64 && address + 8 + length < end && name[length] &&
+             static_cast<unsigned char>(name[length]) >= 32 &&
+             static_cast<unsigned char>(name[length]) <= 126 && name[length] != ',')
+        ++length;
+      if (length && length < 64 && address + 8 + length < end && name[length] == 0)
+        std::fprintf(out, "%zu,%.*s\n", id, static_cast<int>(length), name);
+    }
+#endif
+  }
   bool Load(const char *data, int size) override { return real->Load(data, size); }
   int SaveBufferSize() override { return real->SaveBufferSize(); }
   bool Save(char *data) override { return real->Save(data); }
@@ -78,12 +106,14 @@ public:
   void ClearAllMacroMuscles() override { real->ClearAllMacroMuscles(); }
   void AddMacroMuscle(IMacroMuscle *muscle, float value) override
   {
-    std::fprintf(traceOut, "muscle,%d,%zu,add,%.9g\n", time, Id(muscle), value);
+    const std::size_t id = Id(muscle);
+    if (traceOut) std::fprintf(traceOut, "muscle,%d,%zu,add,%.9g\n", time, id, value);
     real->AddMacroMuscle(muscle, value);
   }
   void MultMacroMuscle(IMacroMuscle *muscle, float value) override
   {
-    std::fprintf(traceOut, "muscle,%d,%zu,mult,%.9g\n", time, Id(muscle), value);
+    const std::size_t id = Id(muscle);
+    if (traceOut) std::fprintf(traceOut, "muscle,%d,%zu,mult,%.9g\n", time, id, value);
     real->MultMacroMuscle(muscle, value);
   }
   void ComputePhysics() override { real->ComputePhysics(); }
@@ -140,9 +170,11 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
     anim->ClearAllMacroMuscles();
     if (sequence)
     {
-      if (traceOut || std::getenv("S2_FACE_TRACE_ANIMATOR"))
+      if (traceOut || std::getenv("S2_FACE_TRACE_ANIMATOR") ||
+          std::getenv("S2_FACE_MUSCLE_MAP_PATH"))
       {
-        TraceAnimator trace(anim, time, traceOut ? traceOut : stderr);
+        TraceAnimator trace(anim, time, traceOut ? traceOut :
+                            (std::getenv("S2_FACE_TRACE_ANIMATOR") ? stderr : nullptr));
         sequence->RenderMacroMuscles(&trace, time);
       }
       else
@@ -279,6 +311,16 @@ int main(int argc, char **argv)
   }
   std::fclose(out);
   if (traceOut) std::fclose(traceOut);
+  if (sequence)
+    if (const char *mapPath = std::getenv("S2_FACE_MUSCLE_MAP_PATH"))
+    {
+      FILE *map = std::fopen(mapPath, "wb");
+      if (map)
+      {
+        TraceAnimator::WriteNameMap(map);
+        std::fclose(map);
+      }
+    }
   if (sequence) sequence->Destroy();
   if (tree) tree->Destroy();
   if (!ok)

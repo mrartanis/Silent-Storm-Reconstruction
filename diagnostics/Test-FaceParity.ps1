@@ -28,6 +28,7 @@ if (!$heads.Count -or !$sequences.Count) { throw 'Need at least one extracted he
 $culture = [Globalization.CultureInfo]::InvariantCulture
 $priorPath = $env:PATH
 $priorTracePath = $env:S2_FACE_MUSCLE_TRACE_PATH
+$priorMapPath = $env:S2_FACE_MUSCLE_MAP_PATH
 $results = @()
 $animatedCases = 0
 $totalMuscleCalls = 0
@@ -40,22 +41,43 @@ try {
             $name = "$($head.BaseName)--$($sequence.BaseName)"
             $reference = Join-Path $output "$name-x86.csv"
             $trace = Join-Path $output "$name-x86-muscles.csv"
+            $map = Join-Path $output "$name-x86-muscle-names.csv"
             $env:S2_FACE_MUSCLE_TRACE_PATH = $trace
+            $env:S2_FACE_MUSCLE_MAP_PATH = $map
             & $x86 $head.FullName $reference $sequence.FullName $tree
             if ($LASTEXITCODE -ne 0) { throw "x86 oracle failed ($LASTEXITCODE): $name" }
             $repeat = Join-Path $output "$name-x86-repeat.csv"
             $traceRepeat = Join-Path $output "$name-x86-muscles-repeat.csv"
+            $mapRepeat = Join-Path $output "$name-x86-muscle-names-repeat.csv"
             $env:S2_FACE_MUSCLE_TRACE_PATH = $traceRepeat
+            $env:S2_FACE_MUSCLE_MAP_PATH = $mapRepeat
             & $x86 $head.FullName $repeat $sequence.FullName $tree
             if ($LASTEXITCODE -ne 0) { throw "x86 oracle repeat failed ($LASTEXITCODE): $name" }
             $env:S2_FACE_MUSCLE_TRACE_PATH = $null
+            $env:S2_FACE_MUSCLE_MAP_PATH = $null
             if ((Get-FileHash -LiteralPath $reference).Hash -ne (Get-FileHash -LiteralPath $repeat).Hash) {
                 throw "x86 oracle is nondeterministic: $name"
             }
             if ((Get-FileHash -LiteralPath $trace).Hash -ne (Get-FileHash -LiteralPath $traceRepeat).Hash) {
                 throw "x86 muscle trace is nondeterministic: $name"
             }
+            if ((Get-FileHash -LiteralPath $map).Hash -ne (Get-FileHash -LiteralPath $mapRepeat).Hash) {
+                throw "x86 muscle-name map is nondeterministic: $name"
+            }
             $muscleRows = @(Import-Csv -LiteralPath $trace)
+            $mapRows = @(Import-Csv -LiteralPath $map)
+            $namedIds = @{}
+            foreach ($row in $mapRows) {
+                if ($namedIds.ContainsKey($row.id) -or !$row.name) {
+                    throw "Invalid x86 muscle-name map: $name"
+                }
+                $namedIds[$row.id] = $row.name
+            }
+            foreach ($row in $muscleRows) {
+                if (!$namedIds.ContainsKey($row.muscle)) {
+                    throw "Unmapped x86 macro-muscle $($row.muscle): $name"
+                }
+            }
             $totalMuscleCalls += $muscleRows.Count
             $referenceRows = @(Import-Csv -LiteralPath $reference)
             if (!$referenceRows.Count) { throw "x86 oracle returned no vertices: $name" }
@@ -82,7 +104,9 @@ try {
                 SequenceSha256 = (Get-FileHash -LiteralPath $sequence.FullName).Hash
                 ReferenceSha256 = (Get-FileHash -LiteralPath $reference).Hash
                 MuscleTraceSha256 = (Get-FileHash -LiteralPath $trace).Hash
+                MuscleNamesSha256 = (Get-FileHash -LiteralPath $map).Hash
                 MuscleCalls = $muscleRows.Count
+                MuscleNames = $mapRows.Count
                 Rows = $referenceRows.Count
                 MaximumDelta = $null
                 Mismatches = $null
@@ -124,8 +148,9 @@ try {
 finally {
     $env:PATH = $priorPath
     $env:S2_FACE_MUSCLE_TRACE_PATH = $priorTracePath
+    $env:S2_FACE_MUSCLE_MAP_PATH = $priorMapPath
 }
-Write-Output (($results | Format-Table Case,Rows,MuscleCalls,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
+Write-Output (($results | Format-Table Case,Rows,MuscleCalls,MuscleNames,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
 if (!$animatedCases) { throw 'Oracle corpus has no animated vertex; add a moving sequence' }
 if (!$totalMuscleCalls) { throw 'Oracle corpus has no macro-muscle calls; add a sequence exercising the sequencer' }
 if ($ReferenceOnly) {
