@@ -7,9 +7,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cctype>
+#include <cstdint>
 #include <fstream>
 #include <string>
 #include <vector>
+#if defined(_M_IX86)
+#include <Windows.h>
+#endif
 
 using namespace LifeStudioHeadAPI;
 
@@ -87,8 +91,40 @@ int main(int argc, char **argv)
   IMMTree *tree = IMMTree::Create();
   ITransformer *transformer = ITransformer::Create();
   IAnimator *animator = IAnimator::Create();
+#if defined(_M_IX86)
+  if (transformer && std::getenv("S2_FACE_TRACE_TRANSFORMER"))
+  {
+    const auto base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+    void **vtable = *reinterpret_cast<void ***>(transformer);
+    for (int i = 0; i < 43; ++i)
+      std::fprintf(stderr, "transformer-vtable[%d] RVA=0x%zx\n", i,
+                   reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+  }
+#endif
   bool ok = defaultsOk && object->IsTransformable() && tree && transformer && animator &&
             tree->Load(argv[2]) && transformer->Load(object);
+#if defined(_M_IX86)
+  if (ok && std::getenv("S2_FACE_TRACE_TRANSFORMER"))
+  {
+    const auto base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+    const auto bytes = reinterpret_cast<const unsigned char *>(transformer);
+    for (int offset : {0x10, 0x14, 0x9c, 0xa0, 0xe0, 0xf4})
+    {
+      const auto value = *reinterpret_cast<const std::uintptr_t *>(bytes + offset);
+      std::fprintf(stderr, "transformer[0x%x]=0x%zx\n", offset, value);
+    }
+    const auto worker = *reinterpret_cast<void *const *>(bytes + 0xa0);
+    MEMORY_BASIC_INFORMATION region{};
+    if (worker && VirtualQuery(worker, &region, sizeof(region)) == sizeof(region) &&
+        region.State == MEM_COMMIT && !(region.Protect & (PAGE_NOACCESS | PAGE_GUARD)))
+    {
+      void **vtable = reinterpret_cast<void **>(worker);
+      for (int i = 0; i < 8; ++i)
+        std::fprintf(stderr, "transformer-worker-vtable[%d] RVA=0x%zx\n", i,
+                     reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+    }
+  }
+#endif
   if (ok)
   {
     transformer->OutputAnimator(animator);

@@ -375,7 +375,14 @@ shows `Age` and `Gender` each alter all 419 vertices at both extremes;
 `Nose=0.5` alters 48. The test currently fails at x64 `ITransformer::Load` even
 for neutral output; unlike `Test-FaceGDPParity.ps1`, it does not pass an
 x86-precomputed animator to the native side. This is the implementation gate
-for native generation.
+for native generation. An optional x86 `S2_FACE_TRACE_TRANSFORMER=1` probe
+prints the original transformer's vtable and post-`Load` worker dispatch
+addresses. In the examined DLL, public `Generate` (RVA `0x13580`) forwards to
+an internal worker dispatch at RVA `0x12300`. That worker checks the
+source/output vertex counts and invokes several distinct generation passes
+(`0x118e0`, `0x11a60`, `0x11bb0`, `0x120e0`, `0x12140`, `0x11a90`,
+`0x12260`). This narrows the remaining reverse-engineering target; the
+near-linear archetype fit below is not a substitute for these passes.
 
 The x64 `IAnimator::Save` now round-trips a loaded original-format or
 saved-format stream byte-for-byte. `Test-FaceGDPParity.ps1` checks that
@@ -457,8 +464,10 @@ bone; it does not hard-code eye indices or fitted coefficients. The separate
 of the three heads against a repeated x86 oracle. It passes at 1e-4 tolerance,
 with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This neutral
 check alone does not establish animated parity. Animated parity is now
-verified on the bounded six-case and 20-case corpora above; FaceGen,
-additional head/sequence variants and the live portrait remain unverified.
+verified on the bounded six-case and 20-case corpora above. A later live x64
+portrait check, described above, confirmed visible motion in one scene and
+the user independently reported no visual issue. FaceGen and additional
+head/sequence variants remain unverified.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
 known gap rather than accepting it as finished animation; the full
