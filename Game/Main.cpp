@@ -98,6 +98,7 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 //   console <text>   run a console command / var / "@lua" (the global ProcessCommand entry)
 //   load <slot>      queue a save-slot load (slot name = raw ANSI)
 //   rng <uint32> [console <text>] reset RNG and optionally run an action in the same frame
+//   turnsave <slot> hand the turn to AI and queue an ordinary save in the same frame
 //   quit             request a clean shutdown
 // The driver (gen/_loadtest.py in s2_scratch) writes _harness_cmd.txt and reads the logs. Sweep the
 // whole harness by grepping "[HARNESS]".
@@ -124,6 +125,13 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		ProcessCommand( NStr::ToUnicode( sCmd.substr( 8 ) ) );
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
+	else if ( sCmd.compare( 0, 9, "turnsave " ) == 0 )
+	{
+		// Catches the same CICSave path as F5 before a fast AI turn can finish
+		// between two external harness commands.
+		ProcessCommand( NStr::ToUnicode( "@PlayerGiveTurn(1)" ) );
+		NMainLoop::Command( new NMainLoop::CICSave( sCmd.substr( 9 ) ) );
+	}
 	else if ( sCmd.compare( 0, 4, "rng " ) == 0 )
 	{
 		const char *pSeed = sCmd.c_str() + 4;
