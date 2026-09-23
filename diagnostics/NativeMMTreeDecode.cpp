@@ -28,12 +28,26 @@ static void PrintGraph(const NativeLifeStudio::MMTreeOperationRecord &record,
     PrintGraph(child, path, depth + 1);
 }
 
+static void PrintRecords(const NativeLifeStudio::MMTreeOperationRecord &record,
+                         std::size_t depth, std::size_t *index)
+{
+  std::printf("%zu,%zu,%zu,%u,%u,%u,%u,%u,%zu,%u,%zu,%s,%s\n",
+              (*index)++, depth, record.offset,
+              record.headerWords[0], record.headerWords[1], record.headerWords[2],
+              record.preludeSize, record.payloadSize, record.referenceOffset,
+              record.serializedType,
+              record.children.size(), record.name.c_str(), record.resolvedName.c_str());
+  for (const auto &child : record.children)
+    PrintRecords(child, depth + 1, index);
+}
+
 int main(int argc, char **argv)
 {
   if (argc < 2 || argc > 3 ||
-      (argc == 3 && std::strcmp(argv[2], "--graph") != 0))
+      (argc == 3 && std::strcmp(argv[2], "--graph") != 0 &&
+       std::strcmp(argv[2], "--records") != 0))
   {
-    std::fprintf(stderr, "usage: NativeMMTreeDecode tree.mma [--graph]\n");
+    std::fprintf(stderr, "usage: NativeMMTreeDecode tree.mma [--graph|--records]\n");
     return 2;
   }
   std::ifstream file(argv[1], std::ios::binary);
@@ -46,12 +60,20 @@ int main(int argc, char **argv)
     std::fprintf(stderr, "invalid MMLF v4 root operations: %s\n", argv[1]);
     return 3;
   }
-  if (argc == 3)
+  if (argc == 3 && std::strcmp(argv[2], "--graph") == 0)
   {
     std::printf("depth,children,path\n0,%zu,%s\n",
                 root.operations.size(), root.name.c_str());
     for (const auto &operation : root.operations)
       PrintGraph(operation, root.name, 1);
+    return 0;
+  }
+  if (argc == 3)
+  {
+    std::printf("index,depth,offset,h0,h1,name-offset,prelude,payload,link,type,children,name,resolved-name\n");
+    std::size_t index = 0;
+    for (const auto &operation : root.operations)
+      PrintRecords(operation, 1, &index);
     return 0;
   }
   std::printf("root=%s,prelude=%u,operations=%zu\n",

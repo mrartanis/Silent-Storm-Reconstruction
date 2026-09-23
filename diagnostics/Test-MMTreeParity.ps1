@@ -42,6 +42,8 @@ if ((Get-FileHash -LiteralPath $originalPath).Hash -ne
 $x86Lines = @(Get-Content -LiteralPath $originalPath)
 $x86Nodes = @($x86Lines | Where-Object { $_ -match '^(depth,|[0-9]+,)' })
 $x86Operations = @($x86Lines | Where-Object { $_ -match '^operation,' })
+$x86Targets = @($x86Lines | Where-Object { $_ -match '^operation-target,' } |
+    ForEach-Object { ($_ -split ',', 4)[3] })
 $nativeNodes = @(& $native $tree --graph)
 if ($LASTEXITCODE -ne 0) { throw 'Native MMLF graph decode failed' }
 $nativeSummary = @(& $native $tree)
@@ -51,8 +53,31 @@ if ($recordLine.Count -ne 1 -or $recordLine[0] -notmatch '^records=(\d+),') {
     throw 'Native MMLF record count is missing'
 }
 $nativeRecords = [int]$Matches[1]
+$nativeRows = @(& $native $tree --records | ConvertFrom-Csv)
+if ($LASTEXITCODE -ne 0) { throw 'Native MMLF records decode failed' }
 if ($x86Operations.Count -ne $nativeRecords) {
     throw "MMLF operation count differs: x86=$($x86Operations.Count) native=$nativeRecords"
+}
+if ($nativeRows.Count -ne $nativeRecords) {
+    throw "Native MMLF records list differs from summary: $($nativeRows.Count) vs $nativeRecords"
+}
+for ($i = 0; $i -lt $nativeRecords; ++$i) {
+    if ($x86Operations[$i] -notmatch 'type=(\d+)') { throw "Missing x86 operation type at row $i" }
+    $runtimeType = [int]$Matches[1]
+    $expectedKind = if ($runtimeType -eq 4) { 1 } elseif ($runtimeType -eq 0) { 3 } else { 4 }
+    if ($runtimeType -gt 4 -or [int]$nativeRows[$i].h0 -ne $expectedKind) {
+        throw "MMLF operation kind mismatch at row $i`: x86=$runtimeType native=$($nativeRows[$i].h0)"
+    }
+}
+$nativeTargets = @($nativeRows | Where-Object { $_.h0 -eq '1' } |
+    ForEach-Object { $_.'resolved-name' })
+if ($x86Targets.Count -ne $nativeTargets.Count) {
+    throw "MMLF macro-target count differs: x86=$($x86Targets.Count) native=$($nativeTargets.Count)"
+}
+for ($i = 0; $i -lt $x86Targets.Count; ++$i) {
+    if ($x86Targets[$i] -cne $nativeTargets[$i]) {
+        throw "MMLF macro target mismatch at row $i`: x86='$($x86Targets[$i])' native='$($nativeTargets[$i])'"
+    }
 }
 if ($x86Nodes.Count -ne $nativeNodes.Count) {
     throw "MMLF macro count differs: x86=$($x86Nodes.Count) native=$($nativeNodes.Count)"
@@ -62,4 +87,4 @@ for ($i = 0; $i -lt $x86Nodes.Count; ++$i) {
         throw "MMLF graph mismatch at row $i`: x86='$($x86Nodes[$i])' native='$($nativeNodes[$i])'"
     }
 }
-Write-Output "MMTREE PARITY PASS: $($x86Nodes.Count - 1) macro nodes, $nativeRecords operations; x86 repeat byte-identical."
+Write-Output "MMTREE PARITY PASS: $($x86Nodes.Count - 1) macro nodes, $nativeRecords operation kinds, $($x86Targets.Count) macro targets; x86 repeat byte-identical."

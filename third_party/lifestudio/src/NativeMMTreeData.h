@@ -14,7 +14,9 @@ struct MMTreeOperationRecord
   std::uint32_t payloadSize = 0;
   std::uint32_t preludeSize = 0;
   std::uint32_t serializedType = 0;
+  std::size_t referenceOffset = 0;
   std::string name;
+  std::string resolvedName;
   std::vector<MMTreeOperationRecord> children;
 };
 

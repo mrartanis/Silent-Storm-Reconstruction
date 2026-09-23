@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <limits>
+#include <unordered_map>
 #include <utility>
 
 namespace NativeLifeStudio
@@ -23,6 +24,7 @@ bool Reject(std::size_t offset, const char *reason)
 
 bool ParseRecord(const unsigned char *bytes, std::size_t offset,
                  std::size_t limit, unsigned depth, std::size_t *recordCount,
+                 std::unordered_map<std::size_t, std::pair<std::uint32_t, std::string>> *definitions,
                  MMTreeOperationRecord *result)
 {
   if (depth > 64 || *recordCount >= 100000 || offset > limit || limit - offset < 32)
@@ -33,6 +35,7 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
     record.headerWords[i] = ReadU32(bytes + offset + i * 4);
   record.payloadSize = record.headerWords[4];
   record.preludeSize = record.headerWords[3];
+  record.referenceOffset = record.headerWords[5];
   const std::uint32_t nameOffset = record.headerWords[2];
   if (record.payloadSize > limit - offset - 32 ||
       record.preludeSize > record.payloadSize ||
@@ -51,6 +54,20 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
         return Reject(offset, "name control byte");
     record.name.assign(name, nameLength);
   }
+  if (!record.name.empty())
+  {
+    if (record.referenceOffset != 0)
+      return Reject(offset, "named record has reference");
+    record.resolvedName = record.name;
+    definitions->emplace(offset, std::make_pair(record.headerWords[0], record.name));
+  }
+  else
+  {
+    const auto target = definitions->find(record.referenceOffset);
+    if (target == definitions->end() || target->second.first != record.headerWords[0])
+      return Reject(offset, "unresolved reference");
+    record.resolvedName = target->second.second;
+  }
   if (depth && record.payloadSize >= 8)
     record.serializedType = ReadU32(bytes + payload + 4);
   const std::size_t end = payload + record.payloadSize;
@@ -59,7 +76,8 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
   while (childOffset < end)
   {
     MMTreeOperationRecord child;
-    if (!ParseRecord(bytes, childOffset, end, depth + 1, recordCount, &child))
+    if (!ParseRecord(bytes, childOffset, end, depth + 1, recordCount,
+                     definitions, &child))
       return false;
     childOffset += 32 + child.payloadSize;
     record.children.push_back(std::move(child));
@@ -83,7 +101,8 @@ bool DecodeMMTreeRoot(const void *bytes, std::size_t size, MMTreeRoot *result)
     return false;
   MMTreeOperationRecord root;
   std::size_t recordCount = 0;
-  if (!ParseRecord(p, 32, size, 0, &recordCount, &root) ||
+  std::unordered_map<std::size_t, std::pair<std::uint32_t, std::string>> definitions;
+  if (!ParseRecord(p, 32, size, 0, &recordCount, &definitions, &root) ||
       32 + 32 + root.payloadSize != size || root.children.empty())
     return false;
   MMTreeRoot parsed;

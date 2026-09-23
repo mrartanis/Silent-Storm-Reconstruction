@@ -81,8 +81,14 @@ static void DumpMacroTreeNode(FILE *out, IMacroMuscle *node,
         std::fprintf(out, "operation-pointer,%d,%d,%d,vtable-rva=%zx,%s\n", depth, i, field,
                      vtableRva, current.c_str());
         if (vtableRva == 0x37208)
+        {
+          const char *targetName = reinterpret_cast<NameFn>(candidateVtable[0])(
+              reinterpret_cast<IMacroMuscle *>(candidate));
+          std::fprintf(out, "operation-target,%d,%d,%s\n", depth, i,
+                       targetName ? targetName : "");
           DumpMacroTreeNode(out, reinterpret_cast<IMacroMuscle *>(candidate),
                             current, depth + 1, visited);
+        }
       }
     }
   }

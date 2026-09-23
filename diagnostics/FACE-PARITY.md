@@ -129,12 +129,19 @@ length-delimited operation records. The serialized file contains exactly
 221 descendant macro nodes. The native `--graph` output (root plus those
 nodes, with paths and direct child counts) matches the x86 graph line for
 line. `Test-MMTreeParity.ps1` repeats the x86 dump byte-for-byte and checks
-the native graph and total operation count automatically; the observed run
-passed with 222 macro nodes and 1,675 operations. `NativeMMTreeDataTests`
-covers nested records, malformed sizes, truncation and pointer arguments on
-both architectures. This is **structural** parity only: effect payloads,
-reference links and their mapping to head muscles remain uninterpreted, so
-the x64 bridge still returns no usable macro-muscle tree.
+the native graph and total operation count automatically. The record header's
+first word classifies every operation: 1 maps to x86 macro operation type 4,
+3 to type 0, and 4 to types 1–3. All 1,396 unnamed records are references:
+header word 5 points backward to a named record of the same class. The native
+decoder resolves and validates these links. The test now also compares all
+1,675 operation classes and all 1,519 resolved macro-target names against
+the x86 runtime in order; the observed run passed with no mismatch. This
+does not yet distinguish x86 effect operation types 1, 2 and 3 natively.
+`NativeMMTreeDataTests` covers nested records, malformed sizes, truncation
+and pointer arguments on both architectures. This is **structural/name-
+resolution** parity only: effect payloads and their mapping to head muscles
+remain uninterpreted, so the x64 bridge still returns no usable macro-muscle
+tree.
 
 ```powershell
 & .\diagnostics\Test-MMTreeParity.ps1 `
