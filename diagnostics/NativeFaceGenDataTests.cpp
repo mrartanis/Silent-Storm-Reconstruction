@@ -22,6 +22,23 @@ int main()
   std::memcpy(links.data() + 140, "Output", 6);
   links[links.size() - 2] = 7;
   NativeLifeStudio::FaceGenLinks decoded;
+  NativeLifeStudio::FaceGenData blendData;
+  blendData.archetypes.resize(2);
+  for (auto &archetype : blendData.archetypes)
+  {
+    archetype.morph.vertexCount = 1;
+    archetype.morph.muscleCount = 1;
+    archetype.morph.vertices.resize(1);
+    archetype.morph.muscles.resize(1);
+    archetype.morph.muscles[0].name = "Test";
+  }
+  blendData.archetypes[0].morph.vertices[0].sourcePosition[0] = 2.0f;
+  blendData.archetypes[1].morph.vertices[0].sourcePosition[0] = 6.0f;
+  blendData.archetypes[0].morph.muscles[0].pointB[0] = 4.0f;
+  blendData.archetypes[1].morph.muscles[0].pointB[0] = 12.0f;
+  auto invalidBlend = blendData;
+  invalidBlend.archetypes[0].morph.vertices[0].index = 1;
+  NativeLifeStudio::FaceGenGeometry geometry;
   const bool ok = NativeLifeStudio::ParseFaceGenRules(valid, &data) &&
       data.heads.size() == 3 && data.combinations.size() == 2 &&
       data.combinations[0].parts.size() == 2 &&
@@ -42,7 +59,12 @@ int main()
       decoded.morphNames.size() == 2 && decoded.outputNames.size() == 1 &&
       decoded.morphNames[0] == "MorphA" && decoded.outputNames[0] == "Output" &&
       decoded.matrix.size() == 2 && decoded.matrix[0] == 7 &&
-      !NativeLifeStudio::DecodeFaceGenLinks(links.data(), links.size() - 1, &decoded);
+      !NativeLifeStudio::DecodeFaceGenLinks(links.data(), links.size() - 1, &decoded) &&
+      NativeLifeStudio::BlendFaceGenGeometry(blendData, {1.0f, 3.0f}, &geometry) &&
+      geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
+      geometry.musclePointB[0][0] == 10.0f &&
+      !NativeLifeStudio::BlendFaceGenGeometry(invalidBlend, {1.0f, 3.0f}, &geometry) &&
+      !NativeLifeStudio::BlendFaceGenGeometry(blendData, {0.0f, 0.0f}, &geometry);
   if (!ok) std::fprintf(stderr, "FaceGen rule parser regression\n");
   return ok ? 0 : 1;
 }

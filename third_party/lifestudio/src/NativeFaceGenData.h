@@ -45,8 +45,20 @@ struct FaceGenData
   FaceGenLinks links;
 };
 
+struct FaceGenGeometry
+{
+  std::vector<std::array<float, 3>> vertices;
+  std::vector<std::array<float, 3>> musclePointA;
+  std::vector<std::array<float, 3>> musclePointB;
+};
+
 bool ParseFaceGenRules(const std::string &text, FaceGenData *result);
 bool DecodeFaceGenLinks(const void *bytes, std::size_t size, FaceGenLinks *result);
 bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
                      FaceGenData *result);
+// Blend only the confirmed geometric fields. This does not synthesize a full
+// IAnimator stream or infer the transformer's archetype-selection weights.
+bool BlendFaceGenGeometry(const FaceGenData &data,
+                          const std::vector<float> &weights,
+                          FaceGenGeometry *result);
 }

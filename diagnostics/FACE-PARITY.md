@@ -428,6 +428,34 @@ new animator remain separate unfinished native transformer work. Run with:
   -OutputDirectory 'G:\SS\lab\runs\stage2-face-gdp-oracle-01\morph-stage-gate'
 ```
 
+The selector embedded in the original x86 transformer holds 16 floating-point
+archetype weights after `ComputePhysics`. With
+`S2_FACE_SELECTOR_WEIGHTS_PATH=<weights.csv>`, `FaceGDPProbe` exports them in
+GDP archetype order. Normalizing those weights and blending each archetype's
+`*_M.mld` source vertex coordinates and both muscle anchor points reproduces
+the transformer's saved 129-muscle morph head. `BlendFaceGenGeometry` performs
+this blend natively; `Test-FaceGenBlendParity.ps1` obtains fresh x86 weights
+and intermediate heads, then checks native x64 geometry for neutral, both
+signs of Age and Gender, and both signs of Nose. All seven cases pass at
+1e-4: 419 vertices and 129 pairs of muscle anchors per case, with maximum
+observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
+
+```powershell
+& .\diagnostics\Test-FaceGenBlendParity.ps1 `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X64BlendCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenBlendCheck.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-blend-gate'
+```
+
+This test deliberately feeds x86-selected weights to the native blender;
+it does **not** prove native weight selection or full `ITransformer`
+generation. For example, neutral x86 weights begin `0.05, 0.05, 0.025, 0`
+for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
+does not change them; `Age` and `Gender` do. Reconstructing that selection
+rule and the remaining animation-generation passes is still required before
+the direct x64 transform parity gate can turn green.
+
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
 the reference GDP, `Nose=0.5` leaves all 36 muscle scalars and 79 output

@@ -99,6 +99,11 @@ int main(int argc, char **argv)
     for (int i = 0; i < 43; ++i)
       std::fprintf(stderr, "transformer-vtable[%d] RVA=0x%zx\n", i,
                    reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+    void **selectorVtable = *reinterpret_cast<void ***>(
+        reinterpret_cast<unsigned char *>(transformer) + 0x0c);
+    for (int i = 0; i < 5; ++i)
+      std::fprintf(stderr, "transformer-selector-vtable[%d] RVA=0x%zx\n", i,
+                   reinterpret_cast<std::uintptr_t>(selectorVtable[i]) - base);
   }
 #endif
   bool ok = defaultsOk && object->IsTransformable() && tree && transformer && animator &&
@@ -145,6 +150,27 @@ int main(int argc, char **argv)
     {
       transformer->ComputePhysics();
 #if defined(_M_IX86)
+      if (const char *path = std::getenv("S2_FACE_SELECTOR_WEIGHTS_PATH"))
+      {
+        const auto selector = reinterpret_cast<const unsigned char *>(transformer) + 0x0c;
+        const auto begin = *reinterpret_cast<const float *const *>(selector + 0x70);
+        const auto end = *reinterpret_cast<const float *const *>(selector + 0x74);
+        if (!begin || !end || end < begin || end - begin > 10000)
+          ok = false;
+        else
+        {
+          FILE *csv = std::fopen(path, "wb");
+          if (!csv) ok = false;
+          else
+          {
+            std::fprintf(csv, "index,weight\n");
+            for (const float *weight = begin; weight != end; ++weight)
+              std::fprintf(csv, "%zu,%.9g\n",
+                           static_cast<std::size_t>(weight - begin), *weight);
+            ok = std::fclose(csv) == 0;
+          }
+        }
+      }
       // The original transformer owns a 36-muscle animation base at +0x10
       // and a 129-muscle morph head at +0x14. Export their canonical streams
       // and the morph head's live Process output before Generate transfers it
@@ -195,6 +221,17 @@ int main(int argc, char **argv)
         for (int offset : {0x10, 0x14, 0x9c, 0xe0, 0xf4})
           std::fprintf(stderr, "transformer-after-physics[0x%x]=0x%zx\n", offset,
                        *reinterpret_cast<const std::uintptr_t *>(bytes + offset));
+        const auto selector = bytes + 0x0c;
+        for (int offset : {0x04, 0x10, 0x2c, 0x30, 0x34, 0x40, 0x44,
+                           0x50, 0x6c, 0x70, 0x74, 0x8c})
+          std::fprintf(stderr, "transformer-selector[0x%x]=0x%zx\n", offset,
+                       *reinterpret_cast<const std::uintptr_t *>(selector + offset));
+        const auto begin = *reinterpret_cast<const float *const *>(selector + 0x70);
+        const auto end = *reinterpret_cast<const float *const *>(selector + 0x74);
+        if (begin && end >= begin && end - begin <= 1000)
+          for (const float *value = begin; value != end; ++value)
+            std::fprintf(stderr, "transformer-selector-weight[%zu]=%.9g\n",
+                         static_cast<std::size_t>(value - begin), *value);
       }
 #endif
       transformer->Generate();

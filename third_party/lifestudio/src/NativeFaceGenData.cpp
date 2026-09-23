@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 #include <sstream>
 #include <unordered_set>
 #include <utility>
@@ -211,6 +212,62 @@ bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
           parsed.archetypes.front().animation.boneCount)
     return false;
   *result = std::move(parsed);
+  return true;
+}
+
+bool BlendFaceGenGeometry(const FaceGenData &data,
+                          const std::vector<float> &weights,
+                          FaceGenGeometry *result)
+{
+  if (!result || data.archetypes.empty() || weights.size() != data.archetypes.size())
+    return false;
+  double total = 0.0;
+  for (float weight : weights)
+  {
+    if (!std::isfinite(weight) || weight < 0.0f) return false;
+    total += weight;
+  }
+  if (!(total > 0.0) || !std::isfinite(total)) return false;
+  const auto &base = data.archetypes.front().morph;
+  if (base.vertices.size() != base.vertexCount ||
+      base.muscles.size() != base.muscleCount) return false;
+  for (const auto &archetype : data.archetypes)
+  {
+    const auto &head = archetype.morph;
+    if (head.vertexCount != base.vertexCount || head.muscleCount != base.muscleCount ||
+        head.vertices.size() != base.vertices.size() ||
+        head.muscles.size() != base.muscles.size()) return false;
+    for (std::size_t i = 0; i < base.vertices.size(); ++i)
+      if (base.vertices[i].index >= base.vertexCount ||
+          head.vertices[i].index != base.vertices[i].index) return false;
+    for (std::size_t i = 0; i < base.muscles.size(); ++i)
+      if (head.muscles[i].name != base.muscles[i].name) return false;
+  }
+  FaceGenGeometry blended;
+  blended.vertices.resize(base.vertexCount);
+  blended.musclePointA.resize(base.muscleCount);
+  blended.musclePointB.resize(base.muscleCount);
+  for (std::size_t i = 0; i < base.vertices.size(); ++i)
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      double sum = 0.0;
+      for (std::size_t n = 0; n < weights.size(); ++n)
+        sum += double(weights[n]) * data.archetypes[n].morph.vertices[i].sourcePosition[axis];
+      blended.vertices[base.vertices[i].index][axis] = static_cast<float>(sum / total);
+    }
+  for (std::size_t i = 0; i < base.muscles.size(); ++i)
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      double sumA = 0.0, sumB = 0.0;
+      for (std::size_t n = 0; n < weights.size(); ++n)
+      {
+        sumA += double(weights[n]) * data.archetypes[n].morph.muscles[i].pointA[axis];
+        sumB += double(weights[n]) * data.archetypes[n].morph.muscles[i].pointB[axis];
+      }
+      blended.musclePointA[i][axis] = static_cast<float>(sumA / total);
+      blended.musclePointB[i][axis] = static_cast<float>(sumB / total);
+    }
+  *result = std::move(blended);
   return true;
 }
 }
