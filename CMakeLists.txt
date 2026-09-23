@@ -158,6 +158,9 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif()
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
   add_dependencies(FaceProbe ls_implibs)
+  add_executable(FaceGDPProbe "${root}/diagnostics/FaceGDPProbe.cpp")
+  target_link_libraries(FaceGDPProbe PRIVATE lifestudio_shim)
+  add_dependencies(FaceGDPProbe ls_implibs)
 endif()
 
   add_library(lifestudio_native_data STATIC

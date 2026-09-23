@@ -313,6 +313,33 @@ runtime type-3 bone effects (for example `Head_shake` and tongue rotation).
 The sampled static heads have no vertex influences attached to their head or
 neck bones, so the passing vertex corpus does not exercise these effects.
 
+`FaceGDPProbe` is an x86 oracle for the previously untested FaceGen path. Build
+it from the x86 CMake tree and run it with `FaceGenHead.gdp`,
+`FaceGenHead.mmt`, an output prefix, and optionally a macro name/amplitude.
+It extracts the GDP's default animator and saves both the transformer's
+generated animator and its processed vertex CSV. For example, with the
+original DLLs first on `PATH`:
+
+```powershell
+& 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  'G:\SS\lab\baseline\Res\FaceGenHead.gdp' `
+  'G:\SS\lab\baseline\Res\FaceGenHead.mmt' `
+  'G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence\nose' Nose 0.5
+```
+
+The original GDP has one transformable object (`800`) and 419 vertices. Its
+default animator is 31,612 bytes; the neutral and `Nose=0.5` generated
+animators are 21,970 bytes each. The Nose case changes 48 vertices, with
+maximum component delta 0.26445627 from neutral. Reloading both generated
+animators through the original x86 `FaceProbe` reproduced all 419 vertices
+exactly, confirming the oracle output is usable. The x64 `FaceProbe` matches
+the GDP's *default* animator within 1.91e-6, but currently rejects the
+generated animator: it uses the original DLL's 0x37D30DC0 `Save` format,
+whereas `NativeHeadData` presently decodes only the 0xAD5A018D source format.
+Supporting this serialized generated form and the native GDP/transformer path
+is the next parity/implementation task. Oracle artifacts are in the ignored
+`G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
+
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
 `head-56-0.bin`, the source stream is 31,612 bytes and the saved form is
