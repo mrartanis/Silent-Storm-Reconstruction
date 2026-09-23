@@ -3,8 +3,11 @@ param(
     [Parameter(Mandatory)][string]$GameRoot,
     [Parameter(Mandatory)][string]$X86Probe,
     [string]$X64Probe,
+    [string]$NativeSequenceDecode,
+    [string]$NativeSequenceEvaluate,
     [string]$OutputDirectory,
     [double]$Tolerance = 0.0001,
+    [double]$MuscleTolerance = 0.00001,
     [switch]$ReferenceOnly
 )
 $ErrorActionPreference = 'Stop'
@@ -15,6 +18,8 @@ if (!$ReferenceOnly) {
     if (!$X64Probe) { throw 'X64Probe is required unless ReferenceOnly is set' }
     $x64 = (Resolve-Path -LiteralPath $X64Probe).Path
 }
+if ($NativeSequenceDecode) { $nativeSequenceDecoder = (Resolve-Path -LiteralPath $NativeSequenceDecode).Path }
+if ($NativeSequenceEvaluate) { $nativeSequenceEvaluator = (Resolve-Path -LiteralPath $NativeSequenceEvaluate).Path }
 if (!$OutputDirectory) { $OutputDirectory = Join-Path $fixtures 'comparison' }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output -Force | Out-Null
@@ -78,9 +83,51 @@ try {
                     throw "Unmapped x86 macro-muscle $($row.muscle): $name"
                 }
             }
+            $nativeEventNameCount = $null
+            if ($nativeSequenceDecoder) {
+                $nativeLines = @(& $nativeSequenceDecoder $sequence.FullName)
+                if ($LASTEXITCODE -ne 0) { throw "Native sequence decode failed ($LASTEXITCODE): $name" }
+                $eventNames = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+                foreach ($line in $nativeLines) {
+                    if ($line -match '^  event=(.*),start=\d+,duration=\d+,samples=\d+$') {
+                        [void]$eventNames.Add($Matches[1])
+                    }
+                }
+                foreach ($row in $mapRows) {
+                    if (!$eventNames.Contains($row.name)) {
+                        throw "x86 macro-muscle not found in native event decode: $name / $($row.name)"
+                    }
+                }
+                $nativeEventNameCount = $eventNames.Count
+            }
             $totalMuscleCalls += $muscleRows.Count
             $referenceRows = @(Import-Csv -LiteralPath $reference)
             if (!$referenceRows.Count) { throw "x86 oracle returned no vertices: $name" }
+            $maximumMuscleDelta = $null
+            if ($nativeSequenceEvaluator) {
+                $times = @($referenceRows | Where-Object case -eq 'sequence' |
+                    Select-Object -ExpandProperty time -Unique)
+                $nativeLines = @(& $nativeSequenceEvaluator $sequence.FullName @times)
+                if ($LASTEXITCODE -ne 0) { throw "Native sequence evaluation failed ($LASTEXITCODE): $name" }
+                $nativeMuscles = @($nativeLines | ConvertFrom-Csv)
+                if ($nativeMuscles.Count -ne $muscleRows.Count) {
+                    throw "Different macro-muscle call count: $name x86=$($muscleRows.Count) native=$($nativeMuscles.Count)"
+                }
+                $maximumMuscleDelta = 0.0
+                for ($i = 0; $i -lt $muscleRows.Count; ++$i) {
+                    $a = $muscleRows[$i]
+                    $b = $nativeMuscles[$i]
+                    if ($a.time -ne $b.time -or $namedIds[$a.muscle] -cne $b.name) {
+                        throw "Different macro-muscle call at $name row $i"
+                    }
+                    $delta = [Math]::Abs([double]::Parse($a.value, $culture) -
+                                         [double]::Parse($b.value, $culture))
+                    $maximumMuscleDelta = [Math]::Max($maximumMuscleDelta, $delta)
+                    if ($delta -gt $MuscleTolerance) {
+                        throw "Macro-muscle value mismatch at $name row $i : $delta"
+                    }
+                }
+            }
             $neutral = @{}
             foreach ($row in $referenceRows) {
                 if ($row.case -eq 'neutral') { $neutral[$row.vertex] = $row }
@@ -98,6 +145,10 @@ try {
                 }
             }
             if ($moves) { ++$animatedCases }
+            $muscleDeltaText = $null
+            if ($null -ne $maximumMuscleDelta) {
+                $muscleDeltaText = $maximumMuscleDelta.ToString('G9', $culture)
+            }
             $record = [ordered]@{
                 Case = $name
                 HeadSha256 = (Get-FileHash -LiteralPath $head.FullName).Hash
@@ -107,6 +158,8 @@ try {
                 MuscleNamesSha256 = (Get-FileHash -LiteralPath $map).Hash
                 MuscleCalls = $muscleRows.Count
                 MuscleNames = $mapRows.Count
+                NativeEventNames = $nativeEventNameCount
+                MaximumMuscleDelta = $muscleDeltaText
                 Rows = $referenceRows.Count
                 MaximumDelta = $null
                 Mismatches = $null
@@ -150,11 +203,14 @@ finally {
     $env:S2_FACE_MUSCLE_TRACE_PATH = $priorTracePath
     $env:S2_FACE_MUSCLE_MAP_PATH = $priorMapPath
 }
-Write-Output (($results | Format-Table Case,Rows,MuscleCalls,MuscleNames,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
+Write-Output (($results | Format-Table Case,Rows,MuscleCalls,MuscleNames,NativeEventNames,MaximumMuscleDelta,MaximumDelta,Mismatches -AutoSize | Out-String).TrimEnd())
 if (!$animatedCases) { throw 'Oracle corpus has no animated vertex; add a moving sequence' }
 if (!$totalMuscleCalls) { throw 'Oracle corpus has no macro-muscle calls; add a sequence exercising the sequencer' }
 if ($ReferenceOnly) {
-    Write-Output "REFERENCE ONLY: $($results.Count) deterministic x86 cases, $animatedCases animated; no x64 parity claim."
+    $eventNote = if ($nativeSequenceEvaluator) { ' Native macro-event values match the x86 call trace;' }
+        elseif ($nativeSequenceDecoder) { ' native event names cover the observed x86 macro-muscles;' }
+        else { '' }
+    Write-Output "REFERENCE ONLY: $($results.Count) deterministic x86 cases, $animatedCases animated;$eventNote no x64 vertex-parity claim."
 } elseif (($results | Where-Object Mismatches -GT 0).Count) {
     throw "Face parity failed: tolerance $Tolerance"
 } else {

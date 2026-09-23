@@ -4,6 +4,7 @@
 #include <LifeStudioHeadAPI.h>
 #include <LifeStudioHeadAPIMMTS.h>
 #include <algorithm>
+#include <cerrno>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -142,6 +143,33 @@ static std::vector<char> ReadAll(const char *path)
   if (!file)
     return {};
   return std::vector<char>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+}
+
+static bool SampleTimes(int duration, std::vector<int> *result)
+{
+  if (!result || duration <= 0) return false;
+  *result = {0, duration / 4, duration / 2, 3 * duration / 4, duration - 1};
+  if (const char *spec = std::getenv("S2_FACE_SAMPLE_TIMES"))
+  {
+    result->clear();
+    const char *cursor = spec;
+    while (*cursor)
+    {
+      errno = 0;
+      char *end = nullptr;
+      const long value = std::strtol(cursor, &end, 10);
+      if (errno || end == cursor || value < 0 || value >= duration ||
+          (*end && *end != ','))
+        return false;
+      result->push_back(static_cast<int>(value));
+      cursor = *end ? end + 1 : end;
+      if (!*cursor && end[0] == ',') return false;
+    }
+    if (result->empty()) return false;
+  }
+  std::sort(result->begin(), result->end());
+  result->erase(std::unique(result->begin(), result->end()), result->end());
+  return true;
 }
 
 static bool WriteFrame(FILE *out, const std::vector<char> &animData,
@@ -284,6 +312,14 @@ int main(int argc, char **argv)
       return 3;
     }
   }
+  std::vector<int> times;
+  if (sequence && !SampleTimes(duration, &times))
+  {
+    std::fprintf(stderr, "invalid S2_FACE_SAMPLE_TIMES (expected comma-separated times in [0,%d))\n", duration);
+    sequence->Destroy();
+    tree->Destroy();
+    return 2;
+  }
   FILE *out = std::fopen(argv[2], "wb");
   if (!out)
     return 2;
@@ -303,9 +339,6 @@ int main(int argc, char **argv)
   bool ok = WriteFrame(out, animData, tree, nullptr, traceOut, "neutral", 0);
   if (ok && sequence)
   {
-    std::vector<int> times = {0, duration / 4, duration / 2, 3 * duration / 4, duration - 1};
-    std::sort(times.begin(), times.end());
-    times.erase(std::unique(times.begin(), times.end()), times.end());
     for (int time : times)
       ok = WriteFrame(out, animData, tree, sequence, traceOut, "sequence", time) && ok;
   }

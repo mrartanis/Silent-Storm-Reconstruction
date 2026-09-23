@@ -94,14 +94,32 @@ name. The decoder checks every boundary, name and final cursor, preserving
 the eight header words and record offsets for later event parsing. It decoded
 all tracks in all 6,780 exported sequences, with prelude sizes 76 (6,658
 files), 84 (one file) and 100 (121 files). `NativeSequenceDataTests` passes on
-both x86 and x64. This is track-envelope decoding, **not** event/keyframe,
-muscle-tree or animation evaluation; the strict x64 vertex parity test remains
-red.
+both x86 and x64. Within a track, header word 2 is its event count and word 3
+is the serialized name length. The native decoder now recognizes macro-event
+records with a 32-byte header, length-prefixed name, sample count and two
+equal-sized float arrays. It recognized 124,841 such events across the corpus;
+10,856 other event-bearing tracks remain opaque (including sound formats).
+The two arrays are evaluated as a nonuniform cubic-Hermite curve with endpoint
+secants and centered interior slopes; the resulting expression is divided by
+100. `NativeSequenceEvaluate` emits the active named events at requested times.
+`Test-FaceParity.ps1 -NativeSequenceDecode ... -NativeSequenceEvaluate ...
+-ReferenceOnly` compares the x86 DLL's call order, names and values against
+this native sequencer evaluator. All 20 representative sequences passed at
+five samples each (51 calls, maximum observed expression delta 1.2e-7).
+An additional nine-time boundary sample set passed on the six initial pairs;
+`S2_FACE_SAMPLE_TIMES` overrides the probe's default times for such checks.
+For sequence 6008 on head 56, a separate 100-ms sweep over all 30,000 ms
+matched 915 x86 calls to 915 native evaluations in the same order, with no
+name/value mismatch at 1e-5 tolerance and maximum delta 1.19e-7.
+This establishes sampled sequencer-expression parity, **not** tree resolution,
+macro-muscle operation parity, vertex deformation or live animation; the
+strict x64 vertex parity test remains red.
 
 The partial x64 API bridge now wires the native original-head and `MMSF`
 track-envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
 the v4 `MMLF` envelope for the game's `tree.mma` and processes static head
-positions through `IAnimator::Process`; the muscle tree, keyframe evaluation,
+positions through `IAnimator::Process`; the muscle tree, sequencer-to-animator
+connection, macro-muscle deformation,
 bone physics and animated vertex deformation are **not** implemented. As a result,
 `FaceProbe` now proceeds through load/process on x64, rather than failing at
 load. The strict six-case gate still fails numerically: 642–734 coordinate

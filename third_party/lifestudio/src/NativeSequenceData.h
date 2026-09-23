@@ -21,13 +21,30 @@ struct SequenceTrack
   std::uint32_t payloadSize = 0; // Length after the track header.
   std::uint32_t headerWords[8] = {};
   std::string name;
+  struct MacroEvent
+  {
+    std::size_t offset = 0;
+    std::uint32_t headerWords[8] = {};
+    std::string name;
+    std::vector<float> parameterA; // Meaning/interpolation not yet established.
+    std::vector<float> parameterB;
+  };
+  bool macroEventsDecoded = false; // False for other event formats, e.g. sound.
+  std::vector<MacroEvent> macroEvents;
 };
 
 // Decode the verified 32-byte MMSF v1 envelope.
 bool DecodeSequenceHeader(const void *bytes, std::size_t size, SequenceHeader *result);
 
-// Walk the original length-delimited track records. Event/keyframe payloads
-// are retained as offsets but are not evaluated by this decoder yet.
+// Walk the original length-delimited track records. Decode macro-muscle
+// events where the complete record grammar matches; leave other event formats
+// opaque. This does not evaluate curves or animate vertices yet.
 bool DecodeSequenceTracks(const void *bytes, std::size_t size,
                           std::vector<SequenceTrack> *result);
+
+// Evaluate one active macro-muscle event using the original sequence's
+// nonuniform cubic-Hermite curve. Returns false outside its active interval
+// or for invalid/nonfinite control points. The result is expression units.
+bool EvaluateMacroEvent(const SequenceTrack::MacroEvent &event,
+                        std::uint32_t time, float *expression);
 }
