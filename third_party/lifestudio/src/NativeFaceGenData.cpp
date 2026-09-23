@@ -231,38 +231,43 @@ bool BlendGeometry(const FaceGenData &data, const std::vector<float> &weights,
     total += weight;
   }
   if (!(total > 0.0) || !std::isfinite(total)) return false;
-  const auto headOf = [animation](const FaceGenArchetype &archetype) -> const HeadData & {
+  // The x86 selector's coordinate arrays are prepared from *_M.mld for both
+  // generated heads. Only the animation head's muscles come from *_A.mld.
+  const auto muscleHeadOf = [animation](const FaceGenArchetype &archetype) -> const HeadData & {
     return animation ? archetype.animation : archetype.morph;
   };
-  const auto &base = headOf(data.archetypes.front());
+  const auto &base = data.archetypes.front().morph;
+  const auto &baseMuscles = muscleHeadOf(data.archetypes.front());
   if (base.vertices.size() + base.implicitVertices.size() != base.vertexCount ||
-      base.muscles.size() != base.muscleCount) return false;
+      baseMuscles.muscles.size() != baseMuscles.muscleCount) return false;
   for (const auto &archetype : data.archetypes)
   {
-    const auto &head = headOf(archetype);
-    if (head.vertexCount != base.vertexCount || head.muscleCount != base.muscleCount ||
+    const auto &head = archetype.morph;
+    const auto &muscleHead = muscleHeadOf(archetype);
+    if (head.vertexCount != base.vertexCount ||
         head.vertices.size() != base.vertices.size() ||
         head.implicitVertices.size() != base.implicitVertices.size() ||
-        head.muscles.size() != base.muscles.size()) return false;
+        muscleHead.muscleCount != baseMuscles.muscleCount ||
+        muscleHead.muscles.size() != baseMuscles.muscles.size()) return false;
     for (std::size_t i = 0; i < base.vertices.size(); ++i)
       if (base.vertices[i].index >= base.vertexCount ||
           head.vertices[i].index != base.vertices[i].index) return false;
-    for (std::size_t i = 0; i < base.muscles.size(); ++i)
-      if (head.muscles[i].name != base.muscles[i].name) return false;
+    for (std::size_t i = 0; i < baseMuscles.muscles.size(); ++i)
+      if (muscleHead.muscles[i].name != baseMuscles.muscles[i].name) return false;
     for (std::size_t i = 0; i < base.implicitVertices.size(); ++i)
       if (base.implicitVertices[i].index >= base.vertexCount ||
           head.implicitVertices[i].index != base.implicitVertices[i].index) return false;
   }
   FaceGenGeometry blended;
   blended.vertices.resize(base.vertexCount);
-  blended.musclePointA.resize(base.muscleCount);
-  blended.musclePointB.resize(base.muscleCount);
+  blended.musclePointA.resize(baseMuscles.muscleCount);
+  blended.musclePointB.resize(baseMuscles.muscleCount);
   for (std::size_t i = 0; i < base.vertices.size(); ++i)
     for (int axis = 0; axis < 3; ++axis)
     {
       double sum = 0.0;
       for (std::size_t n = 0; n < weights.size(); ++n)
-        sum += double(weights[n]) * headOf(data.archetypes[n]).vertices[i].sourcePosition[axis];
+        sum += double(weights[n]) * data.archetypes[n].morph.vertices[i].sourcePosition[axis];
       blended.vertices[base.vertices[i].index][axis] = static_cast<float>(sum / total);
     }
   for (std::size_t i = 0; i < base.implicitVertices.size(); ++i)
@@ -271,18 +276,18 @@ bool BlendGeometry(const FaceGenData &data, const std::vector<float> &weights,
       double sum = 0.0;
       for (std::size_t n = 0; n < weights.size(); ++n)
         sum += double(weights[n]) *
-            headOf(data.archetypes[n]).implicitVertices[i].sourcePosition[axis];
+            data.archetypes[n].morph.implicitVertices[i].sourcePosition[axis];
       blended.vertices[base.implicitVertices[i].index][axis] =
           static_cast<float>(sum / total);
     }
-  for (std::size_t i = 0; i < base.muscles.size(); ++i)
+  for (std::size_t i = 0; i < baseMuscles.muscles.size(); ++i)
     for (int axis = 0; axis < 3; ++axis)
     {
       double sumA = 0.0, sumB = 0.0;
       for (std::size_t n = 0; n < weights.size(); ++n)
       {
-        sumA += double(weights[n]) * headOf(data.archetypes[n]).muscles[i].pointA[axis];
-        sumB += double(weights[n]) * headOf(data.archetypes[n]).muscles[i].pointB[axis];
+        sumA += double(weights[n]) * muscleHeadOf(data.archetypes[n]).muscles[i].pointA[axis];
+        sumB += double(weights[n]) * muscleHeadOf(data.archetypes[n]).muscles[i].pointB[axis];
       }
       blended.musclePointA[i][axis] = static_cast<float>(sumA / total);
       blended.musclePointB[i][axis] = static_cast<float>(sumB / total);

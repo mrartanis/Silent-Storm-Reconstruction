@@ -59,10 +59,12 @@ bool DecodeFaceGenLinks(const void *bytes, std::size_t size, FaceGenLinks *resul
 bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
                      FaceGenData *result);
 // Blend only the confirmed geometric fields. This does not synthesize a full
-// IAnimator stream or infer the transformer's archetype-selection weights.
+// IAnimator stream or select the transformer's archetype weights.
 bool BlendFaceGenGeometry(const FaceGenData &data,
                           const std::vector<float> &weights,
                           FaceGenGeometry *result);
+// For the 36-muscle animation base, x86 blends *_M.mld vertex coordinates
+// with *_A.mld muscle anchors. This does not build its complete animator.
 bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
                                    const std::vector<float> &weights,
                                    FaceGenGeometry *result);

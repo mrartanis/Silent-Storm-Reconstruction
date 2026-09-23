@@ -92,6 +92,8 @@ try {
         if ($rows.Count -ne 16) { throw "Expected 16 selector weights: $($case.Name)" }
         & $x64 $gdp $weights $head
         if ($LASTEXITCODE -ne 0) { throw "Native blend parity failed: $($case.Name)" }
+        & $x64 $gdp $weights "$prefix-base-animation.bin" --animation
+        if ($LASTEXITCODE -ne 0) { throw "Native animation-base parity failed: $($case.Name)" }
         if ($nativeParameters) {
             & $nativeParameters $tree $parameters @macroArgs
             if ($LASTEXITCODE -ne 0) { throw "Native selector-parameter parity failed: $($case.Name)" }
@@ -106,6 +108,7 @@ try {
         throw 'Nose unexpectedly changed the serialized morph-head base'
     }
     Write-Output 'FACEGEN BLEND PARITY PASS: 11 x86 cases, 419 vertices and 129 muscle anchors each, tolerance=0.0001'
+    Write-Output 'FACEGEN ANIMATION-BASE PARITY PASS: 11 x86 cases, 419 vertices and 36 muscle anchors each, tolerance=0.0001'
     if ($nativeParameters) {
         Write-Output 'FACEGEN SELECTOR-PARAMETER PARITY PASS: 11 x86 cases, 5 inputs each, tolerance=0.0001'
     }

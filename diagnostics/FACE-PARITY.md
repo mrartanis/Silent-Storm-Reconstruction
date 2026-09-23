@@ -451,8 +451,12 @@ observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
   -OutputDirectory 'G:\SS\lab\runs\face-blend-gate'
 ```
 
-The blend subtest deliberately feeds x86-selected weights to the native
+The blend subtests deliberately feed x86-selected weights to the native
 blender; the optional game-weight subtest separately checks native selection.
+The same gate also compares the 36-muscle animation-base geometry on all
+eleven cases, including the editor default; its maximum vertex and anchor
+deltas were 2.86e-6 and 1.91e-6. Both intermediate heads are now geometrically
+matched, but this still does not construct the final output animator.
 Neither proves full `ITransformer` generation. For example, neutral x86
 weights begin `0.05, 0.05, 0.025, 0`
 for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
@@ -515,18 +519,18 @@ raw-weight delta 1.91e-6 at 1e-4 tolerance. Run the full weight sweep with:
   -NativeEthnicity
 ```
 
-The next transformer stage is still red: the x86 transformer's saved
-36-muscle animation base is not always a plain weighted average of the
-archetype `*_A.mld` source vertices. `NativeFaceGenBlendCheck --animation`
-matches its 36 muscle anchors within 1.91e-6 but differs on 52 of 419
-neutral vertices (maximum 6.79e-4) and on 64 vertices of the editor-default
-case (maximum 2.09e-2). A one-hot EuroM archetype round-trips through the
-x86 `IAnimator::Save` with zero source-position difference, so the gap arises
-in mixed-head generation. The discrepant vertices include eye attachments
-and bilateral face features; this is not just a serializer rounding error.
-The native morph-head blend remains green; do not
-reuse it unchanged for the animation base or claim the output animator is
-implemented.
+The animation-base geometry discrepancy is resolved. Disassembly of the x86
+selector's blend loop (RVA `0x10830`) showed that both generated heads use
+the selector's per-archetype coordinate arrays, while their muscle sources
+differ. `S2_FACE_SELECTOR_COORDS_PATH=<csv>` dumps those arrays. On EuroM,
+their 419 positions match the `*_M.mld` source positions; 64 positions differ
+from `*_A.mld`, by as much as 0.6854. The correct 36-muscle animation base
+therefore blends `*_M.mld` vertex coordinates with `*_A.mld` muscle anchors.
+`BlendFaceGenAnimationGeometry` now does this, and the new animation-base
+subtest passes all eleven cases at 1e-4. This only proves those geometric
+fields. Muscle curves, influences, bones, full animator serialization and
+the post-blend worker remain to be implemented and compared before native
+generation can be considered complete.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On

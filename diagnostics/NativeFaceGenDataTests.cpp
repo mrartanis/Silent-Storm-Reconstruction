@@ -31,11 +31,20 @@ int main()
     archetype.morph.vertices.resize(1);
     archetype.morph.muscles.resize(1);
     archetype.morph.muscles[0].name = "Test";
+    archetype.animation.vertexCount = 1;
+    archetype.animation.muscleCount = 1;
+    archetype.animation.vertices.resize(1);
+    archetype.animation.muscles.resize(1);
+    archetype.animation.muscles[0].name = "Animation";
   }
   blendData.archetypes[0].morph.vertices[0].sourcePosition[0] = 2.0f;
   blendData.archetypes[1].morph.vertices[0].sourcePosition[0] = 6.0f;
   blendData.archetypes[0].morph.muscles[0].pointB[0] = 4.0f;
   blendData.archetypes[1].morph.muscles[0].pointB[0] = 12.0f;
+  blendData.archetypes[0].animation.vertices[0].sourcePosition[0] = 100.0f;
+  blendData.archetypes[1].animation.vertices[0].sourcePosition[0] = 200.0f;
+  blendData.archetypes[0].animation.muscles[0].pointB[0] = 20.0f;
+  blendData.archetypes[1].animation.muscles[0].pointB[0] = 40.0f;
   auto invalidBlend = blendData;
   invalidBlend.archetypes[0].morph.vertices[0].index = 1;
   NativeLifeStudio::FaceGenGeometry geometry;
@@ -64,6 +73,9 @@ int main()
       NativeLifeStudio::BlendFaceGenGeometry(blendData, {1.0f, 3.0f}, &geometry) &&
       geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
       geometry.musclePointB[0][0] == 10.0f &&
+      NativeLifeStudio::BlendFaceGenAnimationGeometry(blendData, {1.0f, 3.0f}, &geometry) &&
+      geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
+      geometry.musclePointB[0][0] == 35.0f &&
       !NativeLifeStudio::BlendFaceGenGeometry(invalidBlend, {1.0f, 3.0f}, &geometry) &&
       !NativeLifeStudio::BlendFaceGenGeometry(blendData, {0.0f, 0.0f}, &geometry) &&
       NativeLifeStudio::ComposeGameFaceGenWeights({0, 0, 0, 0, 0},

@@ -208,6 +208,45 @@ int main(int argc, char **argv)
           }
         }
       }
+      // The GDP selector blends its own prepared per-archetype coordinate
+      // arrays, not necessarily the raw *_A.mld vertex positions. Expose
+      // those x86-only arrays so the native blender can be checked at the
+      // exact input boundary of the original blend loop (RVA 0x10830).
+      if (const char *path = std::getenv("S2_FACE_SELECTOR_COORDS_PATH"))
+      {
+        const auto selector = reinterpret_cast<const unsigned char *>(transformer) + 0x0c;
+        const int vertexCount = *reinterpret_cast<const int *>(selector + 0x10);
+        const auto archetypeBegin = *reinterpret_cast<const void *const *const *>(selector + 0x30);
+        const auto archetypeEnd = *reinterpret_cast<const void *const *const *>(selector + 0x34);
+        const auto coordinates = *reinterpret_cast<const float *const *const *>(selector + 0x50);
+        const auto weightBegin = *reinterpret_cast<const float *const *>(selector + 0x70);
+        const auto weightEnd = *reinterpret_cast<const float *const *>(selector + 0x74);
+        const auto archetypeCount = archetypeBegin && archetypeEnd && archetypeEnd >= archetypeBegin
+            ? archetypeEnd - archetypeBegin : 0;
+        if (vertexCount <= 0 || vertexCount > 1000000 || archetypeCount <= 0 ||
+            archetypeCount > 10000 || !coordinates || !weightBegin || !weightEnd ||
+            weightEnd - weightBegin != archetypeCount)
+          ok = false;
+        else
+        {
+          FILE *csv = std::fopen(path, "wb");
+          if (!csv) ok = false;
+          else
+          {
+            std::fprintf(csv, "archetype,vertex,x,y,z\n");
+            for (int archetype = 0; archetype < archetypeCount; ++archetype)
+            {
+              const float *source = coordinates[archetype];
+              if (!source) { ok = false; break; }
+              for (int vertex = 0; vertex < vertexCount; ++vertex)
+                std::fprintf(csv, "%d,%d,%.9g,%.9g,%.9g\n", archetype, vertex,
+                             source[vertex * 3], source[vertex * 3 + 1],
+                             source[vertex * 3 + 2]);
+            }
+            if (std::fclose(csv) != 0) ok = false;
+          }
+        }
+      }
       // The original transformer owns a 36-muscle animation base at +0x10
       // and a 129-muscle morph head at +0x14. Export their canonical streams
       // and the morph head's live Process output before Generate transfers it
