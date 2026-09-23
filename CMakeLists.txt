@@ -161,6 +161,7 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
   add_library(lifestudio_native_data STATIC
+    "${root}/third_party/lifestudio/src/NativeCurve.cpp"
     "${root}/third_party/lifestudio/src/NativeHeadData.cpp"
     "${root}/third_party/lifestudio/src/NativeMMTreeData.cpp"
     "${root}/third_party/lifestudio/src/NativeSequenceData.cpp")
@@ -175,6 +176,10 @@ endif()
   target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
   add_executable(NativeMMTreeDecode "${root}/diagnostics/NativeMMTreeDecode.cpp")
   target_link_libraries(NativeMMTreeDecode PRIVATE lifestudio_native_data)
+  add_executable(NativeMMTreeCurveEvaluate "${root}/diagnostics/NativeMMTreeCurveEvaluate.cpp")
+  target_link_libraries(NativeMMTreeCurveEvaluate PRIVATE lifestudio_native_data)
+  add_executable(NativeMMTreeMacroEvaluate "${root}/diagnostics/NativeMMTreeMacroEvaluate.cpp")
+  target_link_libraries(NativeMMTreeMacroEvaluate PRIVATE lifestudio_native_data)
   add_executable(NativeSequenceDecode "${root}/diagnostics/NativeSequenceDecode.cpp")
   target_link_libraries(NativeSequenceDecode PRIVATE lifestudio_native_data)
   add_executable(NativeSequenceEvaluate "${root}/diagnostics/NativeSequenceEvaluate.cpp")

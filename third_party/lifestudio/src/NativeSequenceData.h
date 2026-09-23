@@ -26,8 +26,8 @@ struct SequenceTrack
     std::size_t offset = 0;
     std::uint32_t headerWords[8] = {};
     std::string name;
-    std::vector<float> parameterA; // Meaning/interpolation not yet established.
-    std::vector<float> parameterB;
+    std::vector<float> parameterA; // Nonuniform Hermite curve positions.
+    std::vector<float> parameterB; // Corresponding expression values.
   };
   bool macroEventsDecoded = false; // False for other event formats, e.g. sound.
   std::vector<MacroEvent> macroEvents;

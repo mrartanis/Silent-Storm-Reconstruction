@@ -6,10 +6,12 @@
 #if defined(_M_X64)
 #include <NativeMMTreeRuntime.h>
 #endif
+
 #include <algorithm>
 #include <cerrno>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iterator>
 #include <set>
@@ -19,6 +21,28 @@
 #include <cstdint>
 
 using namespace LifeStudioHeadAPI;
+
+#if defined(_M_X64)
+static void SnapshotNativeMuscles(IAnimator *anim, const char *label, int time)
+{
+  const char *prefix = std::getenv("S2_FACE_NATIVE_MUSCLE_SNAPSHOT_PREFIX");
+  const char *selected = std::getenv("S2_FACE_STATE_SNAPSHOT_TIME");
+  if (!prefix || !selected || !label || std::strcmp(label, "sequence") != 0 ||
+      std::atoi(selected) != time)
+    return;
+  char path[1200];
+  if (std::snprintf(path, sizeof(path), "%s-sequence-%d-post-physics.csv", prefix, time) >=
+      static_cast<int>(sizeof(path)))
+    return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fprintf(file, "muscle,amplitude\n");
+  const int count = NativeAnimatorMuscleCount(anim);
+  for (int i = 0; i < count; ++i)
+    std::fprintf(file, "%d,%.9g\n", i, NativeAnimatorMuscleAmplitude(anim, i));
+  std::fclose(file);
+}
+#endif
 
 #if defined(_M_IX86)
 // Diagnostic snapshot of the original DLL's opaque bone objects. These bytes
@@ -45,6 +69,51 @@ static void SnapshotBones(IAnimator *anim, const char *stage)
       break;
   }
   std::fclose(file);
+}
+
+static void SnapshotMuscles(IAnimator *anim, const char *stage)
+{
+  const char *prefix = std::getenv("S2_FACE_MUSCLE_SNAPSHOT_PREFIX");
+  if (!prefix || !stage) return;
+  const int count = anim->MusclesCount();
+  if (count <= 0 || count > 1000) return;
+  constexpr std::size_t bytesPerMuscle = 256;
+  std::vector<IMuscle *> muscles;
+  muscles.reserve(count);
+  for (int i = 0; i < count; ++i)
+  {
+    IMuscle *muscle = anim->Muscle(i);
+    MEMORY_BASIC_INFORMATION region{};
+    if (!muscle || !VirtualQuery(muscle, &region, sizeof(region)) ||
+        region.State != MEM_COMMIT || (region.Protect & (PAGE_NOACCESS | PAGE_GUARD)))
+      return;
+    const auto address = reinterpret_cast<std::uintptr_t>(muscle);
+    const auto end = reinterpret_cast<std::uintptr_t>(region.BaseAddress) + region.RegionSize;
+    if (address > end || end - address < bytesPerMuscle) return;
+    muscles.push_back(muscle);
+  }
+  char path[1200];
+  if (std::snprintf(path, sizeof(path), "%s-%s.bin", prefix, stage) >= static_cast<int>(sizeof(path)))
+    return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fwrite(&count, sizeof(count), 1, file);
+  for (IMuscle *muscle : muscles)
+    std::fwrite(muscle, 1, bytesPerMuscle, file);
+  std::fclose(file);
+}
+
+static void SnapshotAnimatedState(IAnimator *anim, const char *label, int time, const char *stage)
+{
+  const char *selected = std::getenv("S2_FACE_STATE_SNAPSHOT_TIME");
+  if (!selected || !label || std::strcmp(label, "sequence") != 0 ||
+      std::atoi(selected) != time)
+    return;
+  char suffix[128];
+  if (std::snprintf(suffix, sizeof(suffix), "sequence-%d-%s", time, stage) >= static_cast<int>(sizeof(suffix)))
+    return;
+  SnapshotBones(anim, suffix);
+  SnapshotMuscles(anim, suffix);
 }
 
 static void DumpMacroTreeNode(FILE *out, IMMTree *tree, IMacroMuscle *node,
@@ -268,7 +337,22 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
   if (ok)
   {
     anim->ClearAllMacroMuscles();
-    if (sequence)
+#if defined(_M_IX86)
+    SnapshotAnimatedState(anim, label, time, "pre");
+#endif
+    const char *forcedMacro = std::getenv("S2_FACE_FORCE_MACRO_NAME");
+    if (sequence && forcedMacro && *forcedMacro)
+    {
+      IMacroMuscle *macro = tree ? tree->FindMacroMuscle(forcedMacro) : nullptr;
+      const char *valueText = std::getenv("S2_FACE_FORCE_MACRO_VALUE");
+      char *end = nullptr;
+      const float value = valueText ? std::strtof(valueText, &end) : 1.0f;
+      if (!macro || (valueText && (!end || end == valueText || *end)))
+        ok = false;
+      else
+        anim->AddMacroMuscle(macro, value);
+    }
+    else if (sequence)
     {
       if (traceOut || std::getenv("S2_FACE_TRACE_ANIMATOR") ||
           std::getenv("S2_FACE_MUSCLE_MAP_PATH"))
@@ -280,12 +364,21 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
       else
         sequence->RenderMacroMuscles(anim, time);
     }
+#if defined(_M_IX86)
+    SnapshotAnimatedState(anim, label, time, "post-render");
+#endif
     if (!std::getenv("S2_FACE_SKIP_PHYSICS"))
       anim->ComputePhysics();
+#if defined(_M_IX86)
+    SnapshotAnimatedState(anim, label, time, "post-physics");
+#elif defined(_M_X64)
+    SnapshotNativeMuscles(anim, label, time);
+#endif
     if (!std::getenv("S2_FACE_SKIP_FILL_UNUSED"))
       anim->FillUnused(true);
     ok = anim->Process(vertices.data(), 3);
 #if defined(_M_IX86)
+    SnapshotAnimatedState(anim, label, time, "post-process");
     if (ok && !sequence)
       SnapshotBones(anim, "neutral-process");
 #endif

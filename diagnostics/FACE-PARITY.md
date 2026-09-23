@@ -55,9 +55,9 @@ Remove `-ReferenceOnly` and add
 `-X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe'` for the
 required parity check. The initial corpus from `AI_CTRL` contains three heads
 and two sequences (six pairs, 2514 rows each); all six x86 pairs are
-deterministic and deform vertices. The current x64 bridge decodes the tree and
-evaluates macro events but does not yet deform animated vertices, so the strict
-parity gate remains red.
+deterministic and deform vertices. The current x64 bridge decodes the tree,
+evaluates macro events and applies sampled muscle effects to vertices, but
+animated bone effects and full parity remain incomplete; the strict gate is red.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
 
@@ -154,7 +154,7 @@ not treating static x64 vertices as a success. It passed all six initial
 head/sequence cases and all 20 representative sequence cases, with maximum
 observed value difference 1.2e-7 at 1e-5 tolerance. This only covers the
 sampled event types and times; other operation modes still need coverage.
-Animated muscle/bone evaluation and vertex deformation remain unimplemented.
+This call-level gate does not establish effect or vertex parity.
 
 ```powershell
 & .\diagnostics\Test-FaceParity.ps1 `
@@ -176,22 +176,65 @@ Animated muscle/bone evaluation and vertex deformation remain unimplemented.
   -NativeApiCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeApiCheck.exe'
 ```
 
-The partial x64 API bridge now wires the native original-head, full `MMLF`
-graph and decoded `MMSF` macro events into `IAnimator::Load`, `IMMTree::Load`
-and `ISequencer::Load`. `ISequencer::RenderMacroMuscles` resolves named events
-against the native tree and calls `IAnimator::AddMacroMuscle`, but the animator
-does not yet apply those calls. It processes static head positions through
-`IAnimator::Process`; macro-muscle deformation, bone physics and animated
-vertex deformation are **not** implemented. As a result,
-`FaceProbe` now proceeds through load/process on x64, rather than failing at
-load. The strict six-case gate still fails numerically: 642–734 coordinate
-components per case exceed 1e-4, with maximum delta 0.34–0.58. This is an
-intermediate native processing milestone, not working facial animation.
+`MMLF` operation records encode a sampled curve: serialized type `n` is the
+sample count (3–10 observed), and the curve occupies `16 + 8n` bytes before
+the optional name. The same nonuniform cubic-Hermite evaluator used by `MMSF`
+matches isolated x86 effects. A direct `AddMacroMuscle` call enters a macro's
+children with the original expression; it does **not** apply the macro
+definition's stored curve first. Traversed child operation curves are applied
+before following references or emitting a leaf effect. `NativeMMTreeMacroEvaluate`
+implements this traversal. For the direct `(base)_NOSE_L` and nonlinear
+`(base)_LIP_up_midle` cases, isolated x86 muscle amplitudes match the native
+leaf outputs over several positive and negative expressions to about 1e-7.
+The x86 raw muscle snapshot includes address-dependent bytes, so these tests
+repeat and compare only its observed semantic float fields.
+
+The x64 `IAnimator::AddMacroMuscle` now accumulates class-3 muscle effects;
+`ComputePhysics` applies the observed `abs(amplitude) < 1e-4` deadband and
+computes each muscle's new endpoint as `A + (1 - amplitude) × (B - A)`.
+`Test-MMTreeMacroEffects.ps1` compares all 36 resulting amplitudes with the
+original x86 runtime. For `##BLINK`, 11 leaf effects target the available
+head muscles and ten muscles move at expression 0.5; all three sampled heads
+pass with maximum amplitude delta 9.7e-8. The genuine sequence-6008 frame at
+time 15000 also passes `Test-FaceMuscleStateParity.ps1` on all three heads,
+with ten active muscles and maximum delta 3.54e-8; time 22500 passed on head
+56 with two active muscles.
+
+For class-3 muscle effects, x64 `Process` now moves an explicitly weighted
+vertex by `max(componentA, 0) × componentB × (newB - originalB)` per influence.
+This rule matched all 20 vertices influenced by an isolated nostril muscle;
+negative `componentA` was confirmed to contribute no motion in the isolated
+lip case. Both direct macros pass a strict 419-vertex comparison on head 56,
+with no component over 1e-4 and maximum delta 1.91e-6. That is a scoped
+geometric result, **not** complete facial animation: the forced `##BLINK`
+case still has 94 mismatched components (maximum 0.358), and serialized
+class-4 bone effects are not yet applied. The full six-case strict gate is
+still red: 293–719 components per case exceed 1e-4, with maximum delta
+0.26–0.58. This improved the sequence-6008 cases but did not solve them.
+
+```powershell
+& .\diagnostics\Test-MMTreeMacroEffects.ps1 `
+  -HeadFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\head-56-0.bin' `
+  -SequenceFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\sequence-6008-0.bin' `
+  -TreeFile 'G:\SS\lab\baseline\tree.mma' -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -NativeHeadDecode 'G:\SS\lab\build-x64\RelWithDebInfo\NativeHeadDecode.exe' `
+  -NativeMacroEvaluate 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeMacroEvaluate.exe' `
+  -MacroName '(base)_NOSE_L' -Expression 0.5 -RequireVertexParity
+```
+
+`Test-FaceMuscleStateParity.ps1` takes the same head, sequence, tree, game
+root and probe paths plus `-Time 15000`; unlike the forced-macro test, it
+compares muscle state after the real sequence has rendered that frame.
+
 An isolated x64 game run at `G:\SS\lab\runs\stage2-x64-face-native-load-01`
 loaded the existing `AI_CTRL` save to `LOAD-SLOT-DONE` and exited through the
 harness `quit` command without a recorded crash. Its screenshot
 `evidence\loaded-game.png` proves only that the scene rendered; it does not
-establish that the minimap portrait or live facial motion is correct.
+establish that the minimap portrait or live facial motion is correct. This
+run preceded the native effect work and has not been repeated with the current
+bridge.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
@@ -236,9 +279,9 @@ that data-driven composition to vertices with one influence attached to a
 bone; it does not hard-code eye indices or fitted coefficients. The separate
 `Test-FaceNeutralParity.ps1` gate compares all 419 neutral vertices on each
 of the three heads against a repeated x86 oracle. It passes at 1e-4 tolerance,
-with maximum observed differences 9.6e-7, 9.6e-7 and 1.43e-6. This **does not**
-establish animated parity: multiple-influence blending, muscle state, sequence
-evaluation and FaceGen remain to be implemented natively, and the strict
+with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This **does not**
+establish animated parity: class-4 bone effects, full multi-influence/bone
+interaction and FaceGen remain to be implemented natively, and the strict
 `Test-FaceParity.ps1` gate remains red.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the

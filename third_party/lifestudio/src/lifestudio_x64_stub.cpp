@@ -1,11 +1,14 @@
-// Partial native x64 LifeStudio bridge. Original head and sequence streams
-// load without the x86 DLL; bone/muscle deformation is not implemented yet.
+// Partial native x64 LifeStudio bridge. Original streams and macro-muscle
+// effects run without the x86 DLL; bone effects and full vertex parity remain.
 #include "LifeStudioHeadAPIGDP.h"
 #include "LifeStudioHeadAPIMMTS.h"
 #include "NativeHeadData.h"
 #include "NativeMMTreeData.h"
 #include "NativeMMTreeRuntime.h"
 #include "NativeSequenceData.h"
+#include <algorithm>
+#include <array>
+#include <cmath>
 #include <fstream>
 #include <iterator>
 #include <limits>
@@ -39,6 +42,8 @@ struct NativeMacroMuscle
 {
   std::string name;
   const NativeLifeStudio::MMTreeOperationRecord *record = nullptr;
+  const NativeLifeStudio::MMTreeRoot *root = nullptr;
+  const std::vector<char> *bytes = nullptr;
 };
 
 const char *NativeMacroMuscleName(IMacroMuscle *muscle)
@@ -49,6 +54,8 @@ const char *NativeMacroMuscleName(IMacroMuscle *muscle)
 class AnimatorStub : public IAnimator
 {
   NativeLifeStudio::HeadData head;
+  std::vector<float> muscleAmplitudes;
+  std::vector<std::array<float, 3>> evaluatedPointB;
   bool loaded = false;
   bool fillUnused = false;
 public:
@@ -58,10 +65,17 @@ public:
     if (size < 0 || !NativeLifeStudio::DecodeHeadVertices(bytes, static_cast<std::size_t>(size), &parsed))
     {
       head = {};
+      muscleAmplitudes.clear();
+      evaluatedPointB.clear();
       loaded = false;
       return false;
     }
     head = std::move(parsed);
+    muscleAmplitudes.assign(head.muscles.size(), 0.0f);
+    evaluatedPointB.resize(head.muscles.size());
+    for (std::size_t i = 0; i < head.muscles.size(); ++i)
+      for (int axis = 0; axis < 3; ++axis)
+        evaluatedPointB[i][axis] = head.muscles[i].pointB[axis];
     loaded = true;
     return true;
   }
@@ -82,7 +96,20 @@ public:
       return false;
     for (const auto &vertex : head.vertices)
     {
-      const float *position = vertex.sourcePosition;
+      float changed[3] = {vertex.sourcePosition[0], vertex.sourcePosition[1],
+                          vertex.sourcePosition[2]};
+      for (const auto &influence : vertex.influences)
+      {
+        if (influence.muscleIndex >= head.muscles.size() ||
+            influence.componentA <= 0.0f || influence.componentB <= 0.0f)
+          continue;
+        const std::size_t index = influence.muscleIndex;
+        const float weight = influence.componentA * influence.componentB;
+        for (int axis = 0; axis < 3; ++axis)
+          changed[axis] += weight *
+              (evaluatedPointB[index][axis] - head.muscles[index].pointB[axis]);
+      }
+      const float *position = changed;
       float transformed[3];
       float intermediate[3];
       // The original head stream maps muscles to bones. A vertex controlled
@@ -113,10 +140,54 @@ public:
     return true;
   }
   int VerticesCount() const { return loaded ? static_cast<int>(head.vertexCount) : 0; }
-  void ClearAllMacroMuscles() {}
-  void AddMacroMuscle(IMacroMuscle *, float) {}
+  float Amplitude(int index) const
+  {
+    return index >= 0 && static_cast<std::size_t>(index) < muscleAmplitudes.size()
+             ? muscleAmplitudes[index] : 0.0f;
+  }
+  int NativeMuscleCount() const { return static_cast<int>(muscleAmplitudes.size()); }
+  void ClearAllMacroMuscles()
+  {
+    std::fill(muscleAmplitudes.begin(), muscleAmplitudes.end(), 0.0f);
+    for (std::size_t i = 0; i < head.muscles.size(); ++i)
+      for (int axis = 0; axis < 3; ++axis)
+        evaluatedPointB[i][axis] = head.muscles[i].pointB[axis];
+  }
+  void AddMacroMuscle(IMacroMuscle *muscle, float expression)
+  {
+    if (!loaded || !muscle || !std::isfinite(expression)) return;
+    const auto *macro = reinterpret_cast<NativeMacroMuscle *>(muscle);
+    if (!macro->root || !macro->bytes || macro->bytes->empty()) return;
+    std::vector<NativeLifeStudio::MMTreeEffectSample> effects;
+    if (!NativeLifeStudio::EvaluateMMTreeMacro(macro->bytes->data(), macro->bytes->size(),
+                                               *macro->root, macro->name,
+                                               expression, &effects))
+      return;
+    for (const auto &effect : effects)
+    {
+      if (effect.kind != 3) continue;
+      for (std::size_t i = 0; i < head.muscles.size(); ++i)
+        if (head.muscles[i].name == effect.targetName)
+        {
+          muscleAmplitudes[i] += effect.expression;
+          break;
+        }
+    }
+  }
   void MultMacroMuscle(IMacroMuscle *, float) {}
-  void ComputePhysics() {}
+  void ComputePhysics()
+  {
+    if (!loaded) return;
+    for (std::size_t i = 0; i < head.muscles.size(); ++i)
+    {
+      float &amplitude = muscleAmplitudes[i];
+      if (std::fabs(amplitude) < 0.0001f) amplitude = 0.0f;
+      for (int axis = 0; axis < 3; ++axis)
+        evaluatedPointB[i][axis] = head.muscles[i].pointA[axis] +
+                                    (1.0f - amplitude) *
+                                    (head.muscles[i].pointB[axis] - head.muscles[i].pointA[axis]);
+    }
+  }
   void RegisterMacroMuscle(IMacroMuscle *) {}
   void UnregisterMacroMuscle(IMacroMuscle *) {}
   void ClearAllRegistration() {}
@@ -133,6 +204,16 @@ public:
   IAnimator *Clone() { return new AnimatorStub(*this); }
   void Destroy() { delete this; }
 };
+
+float NativeAnimatorMuscleAmplitude(IAnimator *animator, int index)
+{
+  return animator ? static_cast<AnimatorStub *>(animator)->Amplitude(index) : 0.0f;
+}
+
+int NativeAnimatorMuscleCount(IAnimator *animator)
+{
+  return animator ? static_cast<AnimatorStub *>(animator)->NativeMuscleCount() : 0;
+}
 
 class TransformerStub : public ITransformer
 {
@@ -179,6 +260,7 @@ public:
 class MMTreeStub : public IMMTree
 {
   NativeLifeStudio::MMTreeRoot root;
+  std::vector<char> rawBytes;
   std::vector<std::unique_ptr<NativeMacroMuscle>> macroObjects;
   std::unordered_map<std::string, NativeMacroMuscle *> byName;
   NativeMacroMuscle *rootMacro = nullptr;
@@ -190,6 +272,8 @@ class MMTreeStub : public IMMTree
     auto object = std::make_unique<NativeMacroMuscle>();
     object->name = name;
     object->record = record;
+    object->root = &root;
+    object->bytes = &rawBytes;
     NativeMacroMuscle *pointer = object.get();
     macroObjects.push_back(std::move(object));
     byName.emplace(name, pointer);
@@ -215,8 +299,10 @@ public:
   bool Load(const char *bytes, int size)
   {
     NativeLifeStudio::MMTreeRoot parsed;
-    loaded = size >= 0 && NativeLifeStudio::DecodeMMTreeRoot(bytes, static_cast<std::size_t>(size), &parsed);
+    loaded = size >= 0 && NativeLifeStudio::DecodeMMTreeRoot(bytes, static_cast<std::size_t>(size), &parsed) &&
+             NativeLifeStudio::ValidateMMTreeCurves(bytes, static_cast<std::size_t>(size), parsed);
     root = loaded ? std::move(parsed) : NativeLifeStudio::MMTreeRoot{};
+    rawBytes = loaded ? std::vector<char>(bytes, bytes + size) : std::vector<char>{};
     macroObjects.clear();
     byName.clear();
     rootMacro = nullptr;
@@ -229,6 +315,7 @@ public:
     if (!loaded)
     {
       root = {};
+      rawBytes.clear();
       macroObjects.clear();
       byName.clear();
       rootMacro = nullptr;

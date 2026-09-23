@@ -60,6 +60,11 @@ int main(int argc, char **argv)
     std::fprintf(stderr, "invalid MMLF v4 root operations: %s\n", argv[1]);
     return 3;
   }
+  if (!NativeLifeStudio::ValidateMMTreeCurves(bytes.data(), bytes.size(), root))
+  {
+    std::fprintf(stderr, "invalid MMLF operation curves: %s\n", argv[1]);
+    return 3;
+  }
   if (argc == 3 && std::strcmp(argv[2], "--graph") == 0)
   {
     std::printf("depth,children,path\n0,%zu,%s\n",

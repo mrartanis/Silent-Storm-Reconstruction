@@ -1,7 +1,9 @@
+#include "NativeCurve.h"
 #include "NativeMMTreeData.h"
 #ifdef NDEBUG
 #undef NDEBUG
 #endif
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <vector>
@@ -79,5 +81,58 @@ int main()
   assert(!NativeLifeStudio::DecodeMMTreeRoot(tree.data(),
          static_cast<std::size_t>(UINT32_MAX) + 1, &decoded));
 #endif
+  std::vector<unsigned char> curveBytes(88, 0);
+  U32(&curveBytes, 32 + 4, 5);
+  for (int i = 0; i < 5; ++i)
+  {
+    static const std::uint32_t values[] =
+      {0xBF800000u, 0xBF000000u, 0u, 0x3F000000u, 0x3F800000u};
+    U32(&curveBytes, 32 + 8 + i * 4, values[i]);
+    U32(&curveBytes, 32 + 28 + i * 4, values[i]);
+  }
+  U32(&curveBytes, 32 + 48, 0x3F800000u);
+  U32(&curveBytes, 32 + 52, 0xBF800000u);
+  NativeLifeStudio::MMTreeOperationRecord curveRecord;
+  curveRecord.payloadSize = 56;
+  curveRecord.serializedType = 5;
+  curveRecord.headerWords[2] = 56;
+  NativeLifeStudio::MMTreeCurve decodedCurve;
+  assert(NativeLifeStudio::DecodeMMTreeCurve(curveBytes.data(), curveBytes.size(),
+                                            curveRecord, &decodedCurve));
+  float value = 0.0f;
+  assert(NativeLifeStudio::EvaluateHermiteCurve(decodedCurve.x, decodedCurve.y,
+                                                0.5f, &value) && value == 0.5f);
+  curveRecord.headerWords[2] = 52;
+  assert(!NativeLifeStudio::DecodeMMTreeCurve(curveBytes.data(), curveBytes.size(),
+                                             curveRecord, &decodedCurve));
+  curveRecord.headerWords[2] = 56;
+  U32(&curveBytes, 32 + 8 + 4 * 3, 0);
+  assert(!NativeLifeStudio::DecodeMMTreeCurve(curveBytes.data(), curveBytes.size(),
+                                             curveRecord, &decodedCurve));
+  U32(&curveBytes, 32 + 8 + 4 * 3, 0x3F000000u);
+  std::vector<unsigned char> macroBytes(176, 0);
+  std::copy(curveBytes.begin() + 32, curveBytes.end(), macroBytes.begin() + 120);
+  NativeLifeStudio::MMTreeOperationRecord effect;
+  effect.offset = 88;
+  effect.headerWords[0] = 3;
+  effect.headerWords[2] = 56;
+  effect.payloadSize = 56;
+  effect.serializedType = 5;
+  effect.name = "M";
+  effect.resolvedName = "M";
+  NativeLifeStudio::MMTreeOperationRecord macro;
+  macro.headerWords[0] = 1;
+  macro.name = "TEST";
+  macro.resolvedName = "TEST";
+  macro.children.push_back(effect);
+  NativeLifeStudio::MMTreeRoot root;
+  root.operations.push_back(macro);
+  std::vector<NativeLifeStudio::MMTreeEffectSample> samples;
+  assert(NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
+                                               root, "TEST", 0.5f, &samples));
+  assert(samples.size() == 1 && samples[0].kind == 3 &&
+         samples[0].targetName == "M" && samples[0].expression == 0.5f);
+  assert(!NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
+                                                root, "MISSING", 0.5f, &samples));
   return 0;
 }
