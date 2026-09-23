@@ -56,6 +56,7 @@ private:
 	unsigned int randc;
 public:
 	CRandomGenerator() { Init(); }
+	void SeedForHarness( unsigned int seed ); // explicit deterministic state for paired architecture tests only
 	unsigned int Get();
 	unsigned int Get( unsigned int nMax ) { ASSERT( nMax != 0 ); return Get() % nMax; }
 	unsigned int Get( unsigned int nMin, unsigned int nMax )	{ return Get( nMax-nMin ) + nMin; }
@@ -64,6 +65,7 @@ public:
 	bool NegCheck( int nCheck, int nRange = 100 ) { return (int)Get(nRange) >= nCheck; }
 private:
 	void Init();  // very slow operation
+	void InitState();
 	void Isaac();
 	void FillRandRsl();
 	BOOL RecFindFile( std::string &szFoundName, const char *pszBaseDir, int nToFind, int* pnTotFinded );

@@ -11,6 +11,7 @@
 #include "..\Main\iInterMission.h" // CRAP, to start from mission
 #include "..\Main\iLoading.h"      // NGame::InitLoadingScreen / TermLoadingScreen -- loading-screen UI built once at boot
 #include "..\Misc\HPTimer.h"       // NHPTimer::UpdateHPTimerFrequency -- the per-frame TSC recalibration
+#include "..\Misc\RandomGen.h"     // [HARNESS] deterministic ISAAC seed for paired architecture tests
 #include "..\Main\iSaveManager.h" // CRAP, to start from mission
 #include "..\Main\Sound.h"
 #include "..\Main\WinInputConv.h" // Win32->NInput bridge: replays WM_KEYDOWN/WM_CHAR (OS auto-repeat)
@@ -96,6 +97,7 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 // Verbs (extend freely -- this is the protocol foundation):
 //   console <text>   run a console command / var / "@lua" (the global ProcessCommand entry)
 //   load <slot>      queue a save-slot load (slot name = raw ANSI)
+//   rng <uint32>     reset game RNG immediately before a paired test action
 //   quit             request a clean shutdown
 // The driver (gen/_loadtest.py in s2_scratch) writes _harness_cmd.txt and reads the logs. Sweep the
 // whole harness by grepping "[HARNESS]".
@@ -122,6 +124,20 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		ProcessCommand( NStr::ToUnicode( sCmd.substr( 8 ) ) );
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
+	else if ( sCmd.compare( 0, 4, "rng " ) == 0 )
+	{
+		const char *pSeed = sCmd.c_str() + 4;
+		char *pEnd = 0;
+		unsigned long nSeed = strtoul( pSeed, &pEnd, 0 );
+		if ( pSeed != pEnd && *pEnd == 0 )
+		{
+			random.SeedForHarness( static_cast<unsigned int>( nSeed ) );
+			srand( static_cast<unsigned int>( nSeed ) );
+			SaveLoadDiag( "[harness] rng seeded: %lu\n", nSeed );
+		}
+		else
+			SaveLoadDiag( "[harness] invalid rng seed\n" );
+	}
 	else
 		SaveLoadDiag( "[harness] unknown cmd\n" );
 	return true;

@@ -106,11 +106,28 @@ void CRandomGenerator::Isaac()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRandomGenerator::Init()
 {
+	FillRandRsl();
+	InitState();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CRandomGenerator::SeedForHarness( unsigned int seed )
+{
+	// The normal initializer samples a random host file and clock.  Paired x86/x64
+	// tests instead need identical ISAAC input immediately before the tested action.
+	for ( int i = 0; i < RANDSIZ; ++i )
+	{
+		seed = seed * 1664525u + 1013904223u;
+		randrsl[i] = seed;
+	}
+	InitState();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CRandomGenerator::InitState()
+{
 	int i;
 	unsigned int a, b, c, d, e, f, g, h;
 	unsigned int *m, *r;
 
-	FillRandRsl();
 	randa = randb = randc = 0;
 	m = randmem;
 	r = randrsl;
