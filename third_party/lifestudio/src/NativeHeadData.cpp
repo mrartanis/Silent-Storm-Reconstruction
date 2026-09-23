@@ -113,6 +113,44 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
   const std::size_t implicitStart = size - implicitCount * 24;
   if (implicitStart < cursor)
     return false;
+  parsed.bones.reserve(parsed.boneCount);
+  for (std::uint32_t i = 0; i < parsed.boneCount; ++i)
+  {
+    if (!reader.Has(cursor, 164))
+      return false;
+    BoneRecord bone;
+    const unsigned char *name = raw + cursor;
+    const unsigned char *end = static_cast<const unsigned char *>(std::memchr(name, 0, 64));
+    if (!end || end == name)
+      return false;
+    for (const unsigned char *p = name; p != end; ++p)
+      if (*p < 32 || *p > 126)
+        return false;
+    bone.name.assign(reinterpret_cast<const char *>(name), end - name);
+    std::uint32_t attachedCount;
+    if (!reader.U32(cursor + 64, &attachedCount) || attachedCount > parsed.muscleCount ||
+        !reader.Has(cursor + 164, std::size_t(attachedCount) * 4))
+      return false;
+    for (int n = 0; n < 12; ++n)
+      if (!reader.F32(cursor + 68 + n * 4, &bone.matrixA[n]) ||
+          !reader.F32(cursor + 116 + n * 4, &bone.matrixB[n]))
+        return false;
+    bone.muscleIndices.reserve(attachedCount);
+    for (std::uint32_t n = 0; n < attachedCount; ++n)
+    {
+      std::uint32_t index;
+      if (!reader.U32(cursor + 164 + std::size_t(n) * 4, &index) ||
+          index >= parsed.muscleCount)
+        return false;
+      bone.muscleIndices.push_back(index);
+    }
+    cursor += 164 + std::size_t(attachedCount) * 4;
+    if (cursor > implicitStart)
+      return false;
+    parsed.bones.push_back(std::move(bone));
+  }
+  if (cursor != implicitStart)
+    return false;
   parsed.implicitVertices.reserve(implicitCount);
   for (std::size_t n = 0; n < implicitCount; ++n)
   {

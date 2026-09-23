@@ -1,5 +1,6 @@
 #include "NativeHeadData.h"
 #include <cstdio>
+#include <cstdlib>
 #include <fstream>
 #include <iterator>
 #include <vector>
@@ -37,5 +38,13 @@ int main(int argc, char **argv)
   std::fprintf(stderr, "muscles=%u bones=%u vertices=%u explicit=%u implicit=%zu\n",
                head.muscleCount, head.boneCount, head.vertexCount, head.explicitVertexCount,
                head.implicitVertices.size());
+  if (std::getenv("S2_FACE_PRINT_BONES"))
+    for (std::size_t i = 0; i < head.bones.size(); ++i)
+    {
+      std::fprintf(stderr, "bone[%zu]=%s muscles=", i, head.bones[i].name.c_str());
+      for (std::size_t n = 0; n < head.bones[i].muscleIndices.size(); ++n)
+        std::fprintf(stderr, "%s%u", n ? ";" : "", head.bones[i].muscleIndices[n]);
+      std::fprintf(stderr, "\n");
+    }
   return 0;
 }

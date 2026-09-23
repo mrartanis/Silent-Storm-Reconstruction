@@ -85,11 +85,11 @@ is claimed, and the strict x64 vertex parity test remains red.
 
 The partial x64 API bridge now wires the native original-head and `MMSF`
 envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
-the v4 `MMLF` envelope for the game's `tree.mma` and emits raw head positions
-through `IAnimator::Process`; the muscle tree, keyframe evaluation, bone
-physics and exact final vertex transform are **not** implemented. As a result,
+the v4 `MMLF` envelope for the game's `tree.mma` and processes static head
+positions through `IAnimator::Process`; the muscle tree, keyframe evaluation,
+bone physics and animated vertex deformation are **not** implemented. As a result,
 `FaceProbe` now proceeds through load/process on x64, rather than failing at
-load. The strict six-case gate still fails numerically: 778–952 coordinate
+load. The strict six-case gate still fails numerically: 642–734 coordinate
 components per case exceed 1e-4, with maximum delta 0.34–0.58. This is an
 intermediate native processing milestone, not working facial animation.
 An isolated x64 game run at `G:\SS\lab\runs\stage2-x64-face-native-load-01`
@@ -124,24 +124,27 @@ count/index cases under CTest. The decoder now also extracts each original
 172-byte **muscle** record's type, null-terminated name, and two
 three-dimensional anchor points, and rejects nonfinite anchors or influences
 outside the muscle table. All three real heads have the same 36 named muscles,
-7 separate bones, and 1,083 valid muscle influences. The 22 neutral-pose
+7 separate bones, and 1,083 valid muscle influences. The 22 formerly divergent neutral-pose
 discrepancies belong to vertices influenced by the two `_aEye_*` muscles.
 This classification was verified against the original x86 API:
 `MusclesCount()=36`, `BonesCount()=7`, `VerticesCount()=419`. An optional
 `S2_FACE_BONE_SNAPSHOT_PREFIX` probe snapshot confirmed seven opaque runtime
 bone objects; the source stream's trailing 1,192-byte region contains seven
-separate bone records, still awaiting a checked native decoder. The earlier
+separate bone records. The native decoder now parses their fixed-length names,
+two 4×3 matrices and bounded lists of attached muscle indices; e.g., the jaw
+bone references muscles `4,5,16,18,19,20,17`. The earlier
 description of the 36 fixed-size records as bones was incorrect and has been
 corrected throughout the native data model.
-For each eye, the x86 output is consistent
-with one near-identity affine YZ transform (fit residual below 4e-7 on all
-three heads); that is diagnostic evidence, **not** a hard-coded correction or
-a proven general animation formula. `IAnimator::Process` in the x86 DLL calls
-per-vertex influence evaluation before filling unused vertices, so the next native
-step is reproducing those muscle/bone calculations from source data. Neither this
-decoder nor the test currently satisfies the full x64 parity gate. Muscle
-behavior, the trailing bone section, sequence evaluation and FaceGen remain
-to be implemented natively.
+For each eye, the x86 neutral result matches the row-vector composition
+`matrixB × matrixA` stored in its bone record. The native bridge now applies
+that data-driven composition to vertices with one influence attached to a
+bone; it does not hard-code eye indices or fitted coefficients. The separate
+`Test-FaceNeutralParity.ps1` gate compares all 419 neutral vertices on each
+of the three heads against a repeated x86 oracle. It passes at 1e-4 tolerance,
+with maximum observed differences 9.6e-7, 9.6e-7 and 1.43e-6. This **does not**
+establish animated parity: multiple-influence blending, muscle state, sequence
+evaluation and FaceGen remain to be implemented natively, and the strict
+`Test-FaceParity.ps1` gate remains red.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
 known gap rather than accepting it as finished animation; the full

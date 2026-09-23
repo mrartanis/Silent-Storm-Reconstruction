@@ -25,6 +25,13 @@ std::uint32_t U32(const unsigned char *p)
   return std::uint32_t(p[0]) | (std::uint32_t(p[1]) << 8) |
          (std::uint32_t(p[2]) << 16) | (std::uint32_t(p[3]) << 24);
 }
+
+void TransformPoint(const float *matrix, const float *source, float *result)
+{
+  for (int axis = 0; axis < 3; ++axis)
+    result[axis] = source[0] * matrix[axis] + source[1] * matrix[3 + axis] +
+                   source[2] * matrix[6 + axis] + matrix[9 + axis];
+}
 }
 
 namespace LifeStudioHeadAPI
@@ -64,8 +71,32 @@ public:
     if (!loaded || !output || step < 3 || step > 1024)
       return false;
     for (const auto &vertex : head.vertices)
+    {
+      const float *position = vertex.sourcePosition;
+      float transformed[3];
+      float intermediate[3];
+      // The original head stream maps muscles to bones. A vertex controlled
+      // by one attached muscle receives the bone's stored B-then-A transform.
+      // Multi-influence blending and animated muscle state are still pending.
+      if (vertex.influences.size() == 1)
+      {
+        const std::uint32_t muscle = vertex.influences[0].muscleIndex;
+        for (const auto &bone : head.bones)
+        {
+          bool attached = false;
+          for (std::uint32_t index : bone.muscleIndices)
+            if (index == muscle) { attached = true; break; }
+          if (!attached)
+            continue;
+          TransformPoint(bone.matrixB, position, intermediate);
+          TransformPoint(bone.matrixA, intermediate, transformed);
+          position = transformed;
+          break;
+        }
+      }
       for (int axis = 0; axis < 3; ++axis)
-        output[std::size_t(vertex.index) * step + axis] = vertex.sourcePosition[axis];
+        output[std::size_t(vertex.index) * step + axis] = position[axis];
+    }
     for (const auto &vertex : head.implicitVertices)
       for (int axis = 0; axis < 3; ++axis)
         output[std::size_t(vertex.index) * step + axis] = vertex.sourcePosition[axis];

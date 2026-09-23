@@ -65,6 +65,33 @@ int main()
   assert(parsed.muscles.size() == 1 && parsed.muscles[0].name == "a_Test" &&
          parsed.muscles[0].type == 5 && parsed.muscles[0].pointA[1] == 2.0f &&
          parsed.muscles[0].pointB[2] == 6.0f);
+  std::vector<unsigned char> withBone(good.size() + 168, 0);
+  std::memcpy(withBone.data(), good.data(), implicitBase);
+  std::memcpy(withBone.data() + implicitBase + 168, good.data() + implicitBase, 24);
+  U32(&withBone, 16, 1);
+  std::memcpy(withBone.data() + implicitBase, "b_Test", 6);
+  U32(&withBone, implicitBase + 64, 1);
+  F32(&withBone, implicitBase + 68, 1.0f);
+  F32(&withBone, implicitBase + 116, 2.0f);
+  U32(&withBone, implicitBase + 164, 0);
+  assert(NativeLifeStudio::DecodeHeadVertices(withBone.data(), withBone.size(), &parsed));
+  assert(parsed.boneCount == 1 && parsed.bones.size() == 1 &&
+         parsed.bones[0].name == "b_Test" && parsed.bones[0].matrixA[0] == 1.0f &&
+         parsed.bones[0].matrixB[0] == 2.0f &&
+         parsed.bones[0].muscleIndices.size() == 1 &&
+         parsed.bones[0].muscleIndices[0] == 0);
+  auto badBoneSection = withBone;
+  std::memset(badBoneSection.data() + implicitBase, 'A', 64);
+  assert(!NativeLifeStudio::DecodeHeadVertices(badBoneSection.data(), badBoneSection.size(), &parsed));
+  badBoneSection = withBone;
+  U32(&badBoneSection, implicitBase + 64, 2); // more attachments than muscles
+  assert(!NativeLifeStudio::DecodeHeadVertices(badBoneSection.data(), badBoneSection.size(), &parsed));
+  badBoneSection = withBone;
+  U32(&badBoneSection, implicitBase + 164, 1); // out-of-range muscle index
+  assert(!NativeLifeStudio::DecodeHeadVertices(badBoneSection.data(), badBoneSection.size(), &parsed));
+  badBoneSection = withBone;
+  U32(&badBoneSection, implicitBase + 68, 0x7F800000u); // nonfinite matrix
+  assert(!NativeLifeStudio::DecodeHeadVertices(badBoneSection.data(), badBoneSection.size(), &parsed));
   auto badBone = good;
   std::memset(badBone.data() + 28, 'A', 64); // missing name terminator
   assert(!NativeLifeStudio::DecodeHeadVertices(badBone.data(), badBone.size(), &parsed));

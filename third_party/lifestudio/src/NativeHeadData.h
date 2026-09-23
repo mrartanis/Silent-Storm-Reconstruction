@@ -15,6 +15,14 @@ struct MuscleRecord
   float pointB[3];
 };
 
+struct BoneRecord
+{
+  std::string name;
+  float matrixA[12];
+  float matrixB[12];
+  std::vector<std::uint32_t> muscleIndices;
+};
+
 struct InfluenceRecord
 {
   std::uint32_t muscleIndex;
@@ -45,10 +53,11 @@ struct HeadData
   std::uint32_t explicitVertexCount = 0;
   std::vector<MuscleRecord> muscles;
   std::vector<VertexRecord> vertices;
+  std::vector<BoneRecord> bones;
   std::vector<ImplicitVertexRecord> implicitVertices;
 };
 
-// Decode named muscle anchors and both vertex tables of the original
-// 0xAD5A018D stream. The separate bone section is not yet decoded.
+// Decode named muscles, weighted vertices, bones and implicit vertices of the
+// original 0xAD5A018D stream. Animation evaluation is not yet implemented.
 bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result);
 }
