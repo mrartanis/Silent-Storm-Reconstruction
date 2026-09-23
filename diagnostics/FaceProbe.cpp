@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iterator>
+#include <set>
 #include <string>
 #include <vector>
 #include <Windows.h>
@@ -41,6 +42,62 @@ static void SnapshotBones(IAnimator *anim, const char *stage)
       break;
   }
   std::fclose(file);
+}
+
+static void DumpMacroTreeNode(FILE *out, IMacroMuscle *node,
+                              const std::string &path, int depth,
+                              std::set<IMacroMuscle *> *visited)
+{
+  if (!node || depth > 64 || visited->size() > 10000 || !visited->insert(node).second)
+    return;
+  void **vtable = *reinterpret_cast<void ***>(node);
+  using NameFn = const char *(__thiscall *)(IMacroMuscle *);
+  using CountFn = int (__thiscall *)(IMacroMuscle *);
+  using ChildFn = IMacroMuscle *(__thiscall *)(IMacroMuscle *, int);
+  const char *name = reinterpret_cast<NameFn>(vtable[0])(node);
+  const int count = reinterpret_cast<CountFn>(vtable[10])(node);
+  if (!name || count < 0 || count > 10000)
+    return;
+  const std::string current = path.empty() ? name : path + "/" + name;
+  std::fprintf(out, "%d,%d,%s\n", depth, count, current.c_str());
+  for (int i = 0; i < count; ++i)
+  {
+    IMacroMuscle *child = reinterpret_cast<ChildFn>(vtable[9])(node, i);
+    if (child)
+    {
+      const auto *words = reinterpret_cast<const std::uint32_t *>(child);
+      std::fprintf(out, "operation,%d,%d,type=%u,%s\n", depth, i, words[5], current.c_str());
+      const std::uintptr_t base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+      const int field = words[5] == 0 ? 1 : words[5] < 4 ? 2 : words[5] == 4 ? 4 : 0;
+      if (field)
+      {
+        void *candidate = reinterpret_cast<void *>(words[field]);
+        MEMORY_BASIC_INFORMATION region{};
+        if (!candidate || !VirtualQuery(candidate, &region, sizeof(region)) ||
+            region.State != MEM_COMMIT || (region.Protect & (PAGE_NOACCESS | PAGE_GUARD)))
+          continue;
+        void **candidateVtable = *reinterpret_cast<void ***>(candidate);
+        const std::uintptr_t vtableRva = reinterpret_cast<std::uintptr_t>(candidateVtable) - base;
+        std::fprintf(out, "operation-pointer,%d,%d,%d,vtable-rva=%zx,%s\n", depth, i, field,
+                     vtableRva, current.c_str());
+        if (vtableRva == 0x37208)
+          DumpMacroTreeNode(out, reinterpret_cast<IMacroMuscle *>(candidate),
+                            current, depth + 1, visited);
+      }
+    }
+  }
+}
+
+static void DumpMacroTree(IMMTree *tree)
+{
+  const char *path = std::getenv("S2_FACE_TREE_DUMP_PATH");
+  if (!path) return;
+  FILE *out = std::fopen(path, "wb");
+  if (!out) return;
+  std::fprintf(out, "depth,children,path\n");
+  std::set<IMacroMuscle *> visited;
+  DumpMacroTreeNode(out, tree->RootMacroMuscle(), "", 0, &visited);
+  std::fclose(out);
 }
 #endif
 
@@ -298,6 +355,27 @@ int main(int argc, char **argv)
         std::fprintf(stderr, "sequence-vtable[%d] RVA=0x%zx\n", i,
                      reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
     }
+    if (std::getenv("S2_FACE_TRACE_TREE"))
+    {
+      const std::uintptr_t base = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("LifeStudioHeadAPI.dll"));
+      void **treeVtable = *reinterpret_cast<void ***>(tree);
+      for (int i = 0; i < 8; ++i)
+        std::fprintf(stderr, "tree-vtable[%d] RVA=0x%zx\n", i,
+                     reinterpret_cast<std::uintptr_t>(treeVtable[i]) - base);
+      IMacroMuscle *root = tree->RootMacroMuscle();
+      std::fprintf(stderr, "tree-root=%p\n", root);
+      if (root)
+      {
+        void **macroVtable = *reinterpret_cast<void ***>(root);
+        for (int i = 0; i < 32; ++i)
+          std::fprintf(stderr, "macro-vtable[%d] RVA=0x%zx\n", i,
+                       reinterpret_cast<std::uintptr_t>(macroVtable[i]) - base);
+        const auto *words = reinterpret_cast<const std::uint32_t *>(root);
+        for (int i = 0; i < 20; ++i)
+          std::fprintf(stderr, "macro-root-word[%d]=%08x\n", i, words[i]);
+      }
+    }
+    DumpMacroTree(tree);
 #endif
     sequence->RegisterMMTree(tree);
     duration = sequence->SequenceTime();

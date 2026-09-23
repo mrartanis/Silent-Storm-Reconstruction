@@ -159,6 +159,7 @@ endif()
 
   add_library(lifestudio_native_data STATIC
     "${root}/third_party/lifestudio/src/NativeHeadData.cpp"
+    "${root}/third_party/lifestudio/src/NativeMMTreeData.cpp"
     "${root}/third_party/lifestudio/src/NativeSequenceData.cpp")
   target_include_directories(lifestudio_native_data PUBLIC
     "${root}/third_party/lifestudio/src")
@@ -167,6 +168,8 @@ endif()
   endif()
   add_executable(NativeHeadDecode "${root}/diagnostics/NativeHeadDecode.cpp")
   target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
+  add_executable(NativeMMTreeDecode "${root}/diagnostics/NativeMMTreeDecode.cpp")
+  target_link_libraries(NativeMMTreeDecode PRIVATE lifestudio_native_data)
   add_executable(NativeSequenceDecode "${root}/diagnostics/NativeSequenceDecode.cpp")
   target_link_libraries(NativeSequenceDecode PRIVATE lifestudio_native_data)
   add_executable(NativeSequenceEvaluate "${root}/diagnostics/NativeSequenceEvaluate.cpp")
@@ -175,6 +178,9 @@ enable_testing()
 add_executable(NativeHeadDataTests "${root}/diagnostics/NativeHeadDataTests.cpp")
 target_link_libraries(NativeHeadDataTests PRIVATE lifestudio_native_data)
   add_test(NAME NativeHeadDataTests COMMAND NativeHeadDataTests)
+  add_executable(NativeMMTreeDataTests "${root}/diagnostics/NativeMMTreeDataTests.cpp")
+  target_link_libraries(NativeMMTreeDataTests PRIVATE lifestudio_native_data)
+  add_test(NAME NativeMMTreeDataTests COMMAND NativeMMTreeDataTests)
   add_executable(NativeSequenceDataTests "${root}/diagnostics/NativeSequenceDataTests.cpp")
   target_link_libraries(NativeSequenceDataTests PRIVATE lifestudio_native_data)
   add_test(NAME NativeSequenceDataTests COMMAND NativeSequenceDataTests)

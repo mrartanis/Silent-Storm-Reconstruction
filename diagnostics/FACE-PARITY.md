@@ -1,7 +1,8 @@
 # LifeStudio x86 → native x64 parity
 
-Status: the x86 reference is executable and deterministic; the current x64
-`lifestudio_x64_stub.cpp` fails the same probe. **No native parity claim yet.**
+Status: the x86 reference is executable and deterministic; the x64 bridge
+loads and processes neutral heads but fails animated vertex parity.
+**No native animation parity claim yet.**
 
 `FaceProbe` exercises the same `IAnimator`, `IMMTree` and `ISequencer` calls as
 `NLSHead::CHeadAnimator`: load a real animator stream, register `tree.mma`,
@@ -115,9 +116,39 @@ This establishes sampled sequencer-expression parity, **not** tree resolution,
 macro-muscle operation parity, vertex deformation or live animation; the
 strict x64 vertex parity test remains red.
 
+The x86-only `S2_FACE_TREE_DUMP_PATH` probe option exports a deterministic
+macro-operation graph after loading the original `tree.mma`. Two fresh dumps
+were byte-identical. Its root is `AnimationLibrary` with eight direct
+operations; the observed graph contains 222 unique macro nodes and 1,675
+operations (1,519 nested-macro links and 156 effect links). The dump uses
+private x86 vtable/object layouts and is diagnostic evidence, not a portable
+API or a native implementation. The original v4 `MMLF` file is 146,740 bytes.
+`NativeMMTreeData` now checks its envelope and recursively decodes all
+length-delimited operation records. The serialized file contains exactly
+1,675 operations; 221 records have children, corresponding to the x86 root's
+221 descendant macro nodes. The native `--graph` output (root plus those
+nodes, with paths and direct child counts) matches the x86 graph line for
+line. `Test-MMTreeParity.ps1` repeats the x86 dump byte-for-byte and checks
+the native graph and total operation count automatically; the observed run
+passed with 222 macro nodes and 1,675 operations. `NativeMMTreeDataTests`
+covers nested records, malformed sizes, truncation and pointer arguments on
+both architectures. This is **structural** parity only: effect payloads,
+reference links and their mapping to head muscles remain uninterpreted, so
+the x64 bridge still returns no usable macro-muscle tree.
+
+```powershell
+& .\diagnostics\Test-MMTreeParity.ps1 `
+  -TreeFile 'G:\SS\lab\baseline\tree.mma' `
+  -HeadFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\head-56-0.bin' `
+  -SequenceFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\sequence-6008-0.bin' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -NativeDecoder 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeDecode.exe'
+```
+
 The partial x64 API bridge now wires the native original-head and `MMSF`
 track-envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
-the v4 `MMLF` envelope for the game's `tree.mma` and processes static head
+the checked v4 `MMLF` root for the game's `tree.mma` and processes static head
 positions through `IAnimator::Process`; the muscle tree, sequencer-to-animator
 connection, macro-muscle deformation,
 bone physics and animated vertex deformation are **not** implemented. As a result,

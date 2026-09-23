@@ -3,6 +3,7 @@
 #include "LifeStudioHeadAPIGDP.h"
 #include "LifeStudioHeadAPIMMTS.h"
 #include "NativeHeadData.h"
+#include "NativeMMTreeData.h"
 #include "NativeSequenceData.h"
 #include <fstream>
 #include <iterator>
@@ -18,12 +19,6 @@ std::vector<char> ReadFile(const char *path)
   std::ifstream file(path, std::ios::binary);
   if (!file) return {};
   return std::vector<char>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-}
-
-std::uint32_t U32(const unsigned char *p)
-{
-  return std::uint32_t(p[0]) | (std::uint32_t(p[1]) << 8) |
-         (std::uint32_t(p[2]) << 16) | (std::uint32_t(p[3]) << 24);
 }
 
 void TransformPoint(const float *matrix, const float *source, float *result)
@@ -168,6 +163,7 @@ public:
 
 class MMTreeStub : public IMMTree
 {
+  NativeLifeStudio::MMTreeRoot root;
   bool loaded = false;
 public:
   bool Load(const char *path)
@@ -177,9 +173,9 @@ public:
   }
   bool Load(const char *bytes, int size)
   {
-    loaded = size >= 32 && bytes && U32(reinterpret_cast<const unsigned char *>(bytes)) == 0x464C4D4Du &&
-             U32(reinterpret_cast<const unsigned char *>(bytes) + 4) == 4 &&
-             U32(reinterpret_cast<const unsigned char *>(bytes) + 28) == static_cast<std::uint32_t>(size - 32);
+    NativeLifeStudio::MMTreeRoot parsed;
+    loaded = size >= 0 && NativeLifeStudio::DecodeMMTreeRoot(bytes, static_cast<std::size_t>(size), &parsed);
+    root = loaded ? std::move(parsed) : NativeLifeStudio::MMTreeRoot{};
     return loaded;
   }
   IMacroMuscle *RootMacroMuscle() const { return 0; }
