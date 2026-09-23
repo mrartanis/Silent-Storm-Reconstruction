@@ -125,9 +125,8 @@ add_custom_target(ls_implibs DEPENDS ${_ls_implibs})
 add_library(lifestudio_init STATIC "${root}/third_party/lifestudio/src/lsglue.cpp")
 target_include_directories(lifestudio_init PRIVATE "${root}/third_party/lifestudio/include")
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  # The retained LifeStudio import libraries encode x86 C++ symbol names.  Keep
-  # face-animation calls linkable on x64 through explicit no-op factories until
-  # the media replacement stage supplies a real backend.
+    # The retained LifeStudio import libraries encode x86 C++ symbol names.
+    # Use the partial native x64 bridge while bone/muscle evaluation is ported.
   target_sources(lifestudio_init PRIVATE "${root}/third_party/lifestudio/src/lifestudio_x64_stub.cpp")
   target_compile_definitions(lifestudio_init PUBLIC LIFESTUDIOHEADAPI_EXPORTS_LIB)
 endif()
@@ -161,8 +160,11 @@ endif()
   add_library(lifestudio_native_data STATIC
     "${root}/third_party/lifestudio/src/NativeHeadData.cpp"
     "${root}/third_party/lifestudio/src/NativeSequenceData.cpp")
-target_include_directories(lifestudio_native_data PUBLIC
-  "${root}/third_party/lifestudio/src")
+  target_include_directories(lifestudio_native_data PUBLIC
+    "${root}/third_party/lifestudio/src")
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    target_link_libraries(lifestudio_init PUBLIC lifestudio_native_data)
+  endif()
   add_executable(NativeHeadDecode "${root}/diagnostics/NativeHeadDecode.cpp")
   target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
   add_executable(NativeSequenceDecode "${root}/diagnostics/NativeSequenceDecode.cpp")

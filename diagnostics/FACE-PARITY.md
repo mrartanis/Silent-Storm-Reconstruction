@@ -83,6 +83,16 @@ and x64. The fourth header field (offset 20) has unknown semantics and is
 preserved without interpretation. No track/keyframe or muscle-tree decoding
 is claimed, and the strict x64 vertex parity test remains red.
 
+The partial x64 API bridge now wires the native original-head and `MMSF`
+envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
+the v4 `MMLF` envelope for the game's `tree.mma` and emits raw head positions
+through `IAnimator::Process`; the muscle tree, keyframe evaluation, bone
+physics and exact final vertex transform are **not** implemented. As a result,
+`FaceProbe` now proceeds through load/process on x64, rather than failing at
+load. The strict six-case gate still fails numerically: 778–952 coordinate
+components per case exceed 1e-4, with maximum delta 0.34–0.58. This is an
+intermediate native processing milestone, not working facial animation.
+
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
 `head-56-0.bin`, the source stream is 31,612 bytes and the saved form is

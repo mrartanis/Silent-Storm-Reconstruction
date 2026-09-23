@@ -1,15 +1,53 @@
-// x64 bridge for the proprietary 32-bit LifeStudio runtime.  These no-op
-// objects keep optional face-animation data from blocking the game core while
-// preserving the API's ownership and failure contracts.
+// Partial native x64 LifeStudio bridge. Original head and sequence streams
+// load without the x86 DLL; bone/muscle deformation is not implemented yet.
 #include "LifeStudioHeadAPIGDP.h"
 #include "LifeStudioHeadAPIMMTS.h"
+#include "NativeHeadData.h"
+#include "NativeSequenceData.h"
+#include <fstream>
+#include <iterator>
+#include <limits>
+#include <utility>
+#include <vector>
+
+namespace
+{
+std::vector<char> ReadFile(const char *path)
+{
+  if (!path) return {};
+  std::ifstream file(path, std::ios::binary);
+  if (!file) return {};
+  return std::vector<char>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+}
+
+std::uint32_t U32(const unsigned char *p)
+{
+  return std::uint32_t(p[0]) | (std::uint32_t(p[1]) << 8) |
+         (std::uint32_t(p[2]) << 16) | (std::uint32_t(p[3]) << 24);
+}
+}
 
 namespace LifeStudioHeadAPI
 {
 class AnimatorStub : public IAnimator
 {
+  NativeLifeStudio::HeadData head;
+  bool loaded = false;
+  bool fillUnused = false;
 public:
-  bool Load(const char *, int) { return false; }
+  bool Load(const char *bytes, int size)
+  {
+    NativeLifeStudio::HeadData parsed;
+    if (size < 0 || !NativeLifeStudio::DecodeHeadVertices(bytes, static_cast<std::size_t>(size), &parsed))
+    {
+      head = {};
+      loaded = false;
+      return false;
+    }
+    head = std::move(parsed);
+    loaded = true;
+    return true;
+  }
   int SaveBufferSize() { return 0; }
   bool Save(char *) { return false; }
   IMuscle *MuscleByName(const char *) { return 0; }
@@ -19,10 +57,21 @@ public:
   IBone *Bone(int) { return 0; }
   IBone *BoneByType(unsigned long, IBone *) { return 0; }
   int BonesCount() const { return 0; }
-  void FillUnused(bool) {}
-  bool FillUnused() const { return false; }
-  bool Process(float *, int) { return false; }
-  int VerticesCount() const { return 0; }
+  void FillUnused(bool fill) { fillUnused = fill; }
+  bool FillUnused() const { return fillUnused; }
+  bool Process(float *output, int step)
+  {
+    if (!loaded || !output || step < 3 || step > 1024)
+      return false;
+    for (const auto &vertex : head.vertices)
+      for (int axis = 0; axis < 3; ++axis)
+        output[std::size_t(vertex.index) * step + axis] = vertex.sourcePosition[axis];
+    for (const auto &vertex : head.implicitVertices)
+      for (int axis = 0; axis < 3; ++axis)
+        output[std::size_t(vertex.index) * step + axis] = vertex.sourcePosition[axis];
+    return true;
+  }
+  int VerticesCount() const { return loaded ? static_cast<int>(head.vertexCount) : 0; }
   void ClearAllMacroMuscles() {}
   void AddMacroMuscle(IMacroMuscle *, float) {}
   void MultMacroMuscle(IMacroMuscle *, float) {}
@@ -40,7 +89,7 @@ public:
   bool HasNeck() const { return false; }
   void NeckProcessing2(bool) {}
   bool NeckProcessing2() const { return false; }
-  IAnimator *Clone() { return new AnimatorStub; }
+  IAnimator *Clone() { return new AnimatorStub(*this); }
   void Destroy() { delete this; }
 };
 
@@ -88,9 +137,20 @@ public:
 
 class MMTreeStub : public IMMTree
 {
+  bool loaded = false;
 public:
-  bool Load(const char *) { return false; }
-  bool Load(const char *, int) { return false; }
+  bool Load(const char *path)
+  {
+    const auto bytes = ReadFile(path);
+    return !bytes.empty() && Load(bytes.data(), static_cast<int>(bytes.size()));
+  }
+  bool Load(const char *bytes, int size)
+  {
+    loaded = size >= 32 && bytes && U32(reinterpret_cast<const unsigned char *>(bytes)) == 0x464C4D4Du &&
+             U32(reinterpret_cast<const unsigned char *>(bytes) + 4) == 4 &&
+             U32(reinterpret_cast<const unsigned char *>(bytes) + 28) == static_cast<std::uint32_t>(size - 32);
+    return loaded;
+  }
   IMacroMuscle *RootMacroMuscle() const { return 0; }
   IMacroMuscle *FindMacroMuscle(const char *) { return 0; }
   void Destroy() { delete this; }
@@ -98,12 +158,33 @@ public:
 
 class SequencerStub : public ISequencer
 {
+  NativeLifeStudio::SequenceHeader header;
+  IMMTree *tree = nullptr;
+  bool loaded = false;
 public:
-  bool Load(const char *) { return false; }
-  bool Load(const char *, int) { return false; }
-  IMMTree *RegisterMMTree(IMMTree *) { return 0; }
-  int SequenceTime() const { return 0; }
-  int TracksCount() const { return 0; }
+  bool Load(const char *path)
+  {
+    const auto bytes = ReadFile(path);
+    return !bytes.empty() && Load(bytes.data(), static_cast<int>(bytes.size()));
+  }
+  bool Load(const char *bytes, int size)
+  {
+    NativeLifeStudio::SequenceHeader parsed;
+    if (size < 0 || !NativeLifeStudio::DecodeSequenceHeader(bytes, static_cast<std::size_t>(size), &parsed) ||
+        parsed.duration > static_cast<std::uint32_t>(std::numeric_limits<int>::max()) ||
+        parsed.trackCount > static_cast<std::uint32_t>(std::numeric_limits<int>::max()))
+    {
+      header = {};
+      loaded = false;
+      return false;
+    }
+    header = parsed;
+    loaded = true;
+    return true;
+  }
+  IMMTree *RegisterMMTree(IMMTree *value) { IMMTree *previous = tree; tree = value; return previous; }
+  int SequenceTime() const { return loaded ? static_cast<int>(header.duration) : 0; }
+  int TracksCount() const { return loaded ? static_cast<int>(header.trackCount) : 0; }
   int EnumerateMacroMuscles(MUSCLE_CB, void *) { return 0; }
   int EnumerateMacroMuscles(int, MUSCLE_EXPR_CB, void *) { return 0; }
   int EnumerateMacroMuscles(MUSCLE_NAME_CB, void *) { return 0; }
