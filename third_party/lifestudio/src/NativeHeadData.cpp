@@ -53,6 +53,28 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
       parsed.explicitVertexCount > parsed.vertexCount ||
       parsed.boneCount > (size - 28) / 172)
     return false;
+  parsed.bones.reserve(parsed.boneCount);
+  const unsigned char *raw = static_cast<const unsigned char *>(bytes);
+  for (std::uint32_t i = 0; i < parsed.boneCount; ++i)
+  {
+    const std::size_t offset = 24 + std::size_t(i) * 172;
+    BoneRecord bone;
+    if (!reader.U32(offset, &bone.type))
+      return false;
+    const unsigned char *name = raw + offset + 4;
+    const unsigned char *end = static_cast<const unsigned char *>(std::memchr(name, 0, 64));
+    if (!end || end == name)
+      return false;
+    for (const unsigned char *p = name; p != end; ++p)
+      if (*p < 32 || *p > 126)
+        return false;
+    bone.name.assign(reinterpret_cast<const char *>(name), end - name);
+    for (int axis = 0; axis < 3; ++axis)
+      if (!reader.F32(offset + 68 + axis * 4, &bone.pointA[axis]) ||
+          !reader.F32(offset + 80 + axis * 4, &bone.pointB[axis]))
+        return false;
+    parsed.bones.push_back(std::move(bone));
+  }
   std::size_t cursor = 28 + std::size_t(parsed.boneCount) * 172;
   parsed.vertices.reserve(parsed.explicitVertexCount);
   std::vector<bool> seen(parsed.vertexCount, false);
@@ -76,7 +98,7 @@ bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result)
     for (std::uint32_t i = 0; i < influenceCount; ++i, cursor += 12)
     {
       InfluenceRecord influence;
-      if (!reader.U32(cursor, &influence.index) ||
+      if (!reader.U32(cursor, &influence.index) || influence.index >= parsed.boneCount ||
           !reader.F32(cursor + 4, &influence.componentA) ||
           !reader.F32(cursor + 8, &influence.componentB))
         return false;

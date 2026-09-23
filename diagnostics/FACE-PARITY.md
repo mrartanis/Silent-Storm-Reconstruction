@@ -120,8 +120,18 @@ Skipping `ComputePhysics` and `FillUnused` in the x86 probe did not remove
 those differences, so the remaining correction is in `Process` or its inputs.
 Copying positions is still not a parity implementation.
 `NativeHeadDataTests` covers a synthetic valid stream and truncation/invalid
-count/index cases under CTest. Neither this decoder nor the test currently
-claims to animate a head or satisfy the full x64 parity gate. Bone/muscle
+count/index cases under CTest. The decoder now also extracts each original
+172-byte bone record's type, null-terminated name, and two three-dimensional
+anchor points, and rejects nonfinite anchors or influences outside the bone
+table. All three real heads still parse with the same 36 named bones and 1,083
+valid bone influences. The 22 neutral-pose discrepancies belong to vertices
+influenced by the two eye bones. For each eye, the x86 output is consistent
+with one near-identity affine YZ transform (fit residual below 4e-7 on all
+three heads); that is diagnostic evidence, **not** a hard-coded correction or
+a proven general animation formula. `IAnimator::Process` in the x86 DLL calls
+per-vertex bone evaluation before filling unused vertices, so the next native
+step is reproducing those bone calculations from source data. Neither this
+decoder nor the test currently satisfies the full x64 parity gate. Muscle
 structures, sequence evaluation and FaceGen remain to be implemented natively.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
