@@ -55,9 +55,9 @@ Remove `-ReferenceOnly` and add
 `-X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe'` for the
 required parity check. The initial corpus from `AI_CTRL` contains three heads
 and two sequences (six pairs, 2514 rows each); all six x86 pairs are
-deterministic and deform vertices. The current x64 bridge loads the tree and
-sequence envelopes but lacks animation evaluation, so the strict parity gate
-remains red.
+deterministic and deform vertices. The current x64 bridge decodes the tree and
+evaluates macro events but does not yet deform animated vertices, so the strict
+parity gate remains red.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
 
@@ -112,9 +112,10 @@ An additional nine-time boundary sample set passed on the six initial pairs;
 For sequence 6008 on head 56, a separate 100-ms sweep over all 30,000 ms
 matched 915 x86 calls to 915 native evaluations in the same order, with no
 name/value mismatch at 1e-5 tolerance and maximum delta 1.19e-7.
-This establishes sampled sequencer-expression parity, **not** tree resolution,
-macro-muscle operation parity, vertex deformation or live animation; the
-strict x64 vertex parity test remains red.
+This first established sampled sequencer-expression parity separately from
+tree resolution and vertex deformation. The x64 API bridge now also uses this
+evaluator in `ISequencer::RenderMacroMuscles`, as checked below. The strict
+x64 vertex parity test remains red.
 
 The x86-only `S2_FACE_TREE_DUMP_PATH` probe option exports a deterministic
 macro-operation graph after loading the original `tree.mma`. Two fresh dumps
@@ -140,8 +141,29 @@ does not yet distinguish x86 effect operation types 1, 2 and 3 natively.
 `NativeMMTreeDataTests` covers nested records, malformed sizes, truncation
 and pointer arguments on both architectures. This is **structural/name-
 resolution** parity only: effect payloads and their mapping to head muscles
-remain uninterpreted, so the x64 bridge still returns no usable macro-muscle
-tree.
+remain uninterpreted, so this does not establish deformation parity.
+
+The x64 `IMMTree` bridge now owns native macro objects for all 222 named nodes;
+`RootMacroMuscle` and exact-name `FindMacroMuscle` return stable pointers.
+The x86 probe confirmed that the original lookup returns each of the 222
+visited nodes for its name. The x64 sequencer now evaluates decoded macro
+events and calls the animator's `AddMacroMuscle` with the resolved tree object.
+`Test-FaceParity.ps1 -CallsOnly` compares these **actual x64 API calls** with
+the x86 calls by time, operation, name, order and value, while deliberately
+not treating static x64 vertices as a success. It passed all six initial
+head/sequence cases and all 20 representative sequence cases, with maximum
+observed value difference 1.2e-7 at 1e-5 tolerance. This only covers the
+sampled event types and times; other operation modes still need coverage.
+Animated muscle/bone evaluation and vertex deformation remain unimplemented.
+
+```powershell
+& .\diagnostics\Test-FaceParity.ps1 `
+  -FixtureDirectory 'G:\SS\lab\runs\stage2-x86-face-corpus-01\evidence\representative-fixtures' `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
+  -X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe' `
+  -CallsOnly
+```
 
 ```powershell
 & .\diagnostics\Test-MMTreeParity.ps1 `
@@ -150,15 +172,17 @@ tree.
   -SequenceFile 'G:\SS\lab\runs\stage2-x86-face-fixtures-01\evidence\face-fixtures\sequence-6008-0.bin' `
   -GameRoot 'G:\SS\lab\baseline' `
   -X86Probe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceProbe.exe' `
-  -NativeDecoder 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeDecode.exe'
+  -NativeDecoder 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeDecode.exe' `
+  -NativeApiCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeMMTreeApiCheck.exe'
 ```
 
-The partial x64 API bridge now wires the native original-head and `MMSF`
-track-envelope decoders into `IAnimator::Load` and `ISequencer::Load`. It accepts
-the checked v4 `MMLF` root for the game's `tree.mma` and processes static head
-positions through `IAnimator::Process`; the muscle tree, sequencer-to-animator
-connection, macro-muscle deformation,
-bone physics and animated vertex deformation are **not** implemented. As a result,
+The partial x64 API bridge now wires the native original-head, full `MMLF`
+graph and decoded `MMSF` macro events into `IAnimator::Load`, `IMMTree::Load`
+and `ISequencer::Load`. `ISequencer::RenderMacroMuscles` resolves named events
+against the native tree and calls `IAnimator::AddMacroMuscle`, but the animator
+does not yet apply those calls. It processes static head positions through
+`IAnimator::Process`; macro-muscle deformation, bone physics and animated
+vertex deformation are **not** implemented. As a result,
 `FaceProbe` now proceeds through load/process on x64, rather than failing at
 load. The strict six-case gate still fails numerically: 642–734 coordinate
 components per case exceed 1e-4, with maximum delta 0.34–0.58. This is an

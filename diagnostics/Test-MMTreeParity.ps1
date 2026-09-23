@@ -5,6 +5,7 @@ param(
     [Parameter(Mandatory)][string]$GameRoot,
     [Parameter(Mandatory)][string]$X86Probe,
     [Parameter(Mandatory)][string]$NativeDecoder,
+    [string]$NativeApiCheck,
     [string]$OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
@@ -14,6 +15,7 @@ $sequence = (Resolve-Path -LiteralPath $SequenceFile).Path
 $game = (Resolve-Path -LiteralPath $GameRoot).Path
 $x86 = (Resolve-Path -LiteralPath $X86Probe).Path
 $native = (Resolve-Path -LiteralPath $NativeDecoder).Path
+if ($NativeApiCheck) { $nativeApi = (Resolve-Path -LiteralPath $NativeApiCheck).Path }
 if (!$OutputDirectory) { $OutputDirectory = Join-Path (Split-Path -Parent $head) 'tree-comparison' }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output -Force | Out-Null
@@ -44,6 +46,11 @@ $x86Nodes = @($x86Lines | Where-Object { $_ -match '^(depth,|[0-9]+,)' })
 $x86Operations = @($x86Lines | Where-Object { $_ -match '^operation,' })
 $x86Targets = @($x86Lines | Where-Object { $_ -match '^operation-target,' } |
     ForEach-Object { ($_ -split ',', 4)[3] })
+$x86Lookups = @($x86Lines | Where-Object { $_ -match '^lookup,' })
+if ($x86Lookups.Count -ne ($x86Nodes.Count - 1) -or
+    @($x86Lookups | Where-Object { $_ -notmatch ',1$' }).Count) {
+    throw 'Original x86 FindMacroMuscle lookup differs from visited macro graph'
+}
 $nativeNodes = @(& $native $tree --graph)
 if ($LASTEXITCODE -ne 0) { throw 'Native MMLF graph decode failed' }
 $nativeSummary = @(& $native $tree)
@@ -77,6 +84,17 @@ if ($x86Targets.Count -ne $nativeTargets.Count) {
 for ($i = 0; $i -lt $x86Targets.Count; ++$i) {
     if ($x86Targets[$i] -cne $nativeTargets[$i]) {
         throw "MMLF macro target mismatch at row $i`: x86='$($x86Targets[$i])' native='$($nativeTargets[$i])'"
+    }
+}
+if ($nativeApi) {
+    $apiResult = @(& $nativeApi $tree)
+    if ($LASTEXITCODE -ne 0 -or $apiResult.Count -ne 1 -or
+        $apiResult[0] -notmatch '^macro-nodes=(\d+),macro-targets=(\d+)$') {
+        throw 'Native MMLF API lookup check failed'
+    }
+    if ([int]$Matches[1] -ne ($x86Nodes.Count - 1) -or
+        [int]$Matches[2] -ne $x86Targets.Count) {
+        throw "Native MMLF API lookup counts differ: $($apiResult[0])"
     }
 }
 if ($x86Nodes.Count -ne $nativeNodes.Count) {

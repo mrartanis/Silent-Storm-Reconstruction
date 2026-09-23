@@ -4,10 +4,14 @@
 #include "LifeStudioHeadAPIMMTS.h"
 #include "NativeHeadData.h"
 #include "NativeMMTreeData.h"
+#include "NativeMMTreeRuntime.h"
 #include "NativeSequenceData.h"
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <memory>
+#include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -31,6 +35,17 @@ void TransformPoint(const float *matrix, const float *source, float *result)
 
 namespace LifeStudioHeadAPI
 {
+struct NativeMacroMuscle
+{
+  std::string name;
+  const NativeLifeStudio::MMTreeOperationRecord *record = nullptr;
+};
+
+const char *NativeMacroMuscleName(IMacroMuscle *muscle)
+{
+  return muscle ? reinterpret_cast<NativeMacroMuscle *>(muscle)->name.c_str() : nullptr;
+}
+
 class AnimatorStub : public IAnimator
 {
   NativeLifeStudio::HeadData head;
@@ -164,7 +179,33 @@ public:
 class MMTreeStub : public IMMTree
 {
   NativeLifeStudio::MMTreeRoot root;
+  std::vector<std::unique_ptr<NativeMacroMuscle>> macroObjects;
+  std::unordered_map<std::string, NativeMacroMuscle *> byName;
+  NativeMacroMuscle *rootMacro = nullptr;
   bool loaded = false;
+  bool AddMacro(const std::string &name, const NativeLifeStudio::MMTreeOperationRecord *record)
+  {
+    if (name.empty() || byName.find(name) != byName.end())
+      return false;
+    auto object = std::make_unique<NativeMacroMuscle>();
+    object->name = name;
+    object->record = record;
+    NativeMacroMuscle *pointer = object.get();
+    macroObjects.push_back(std::move(object));
+    byName.emplace(name, pointer);
+    if (!record) rootMacro = pointer;
+    return true;
+  }
+  bool AddDescendants(const NativeLifeStudio::MMTreeOperationRecord &record)
+  {
+    if (record.headerWords[0] == 1 && !record.name.empty() &&
+        !AddMacro(record.name, &record))
+      return false;
+    for (const auto &child : record.children)
+      if (!AddDescendants(child))
+        return false;
+    return true;
+  }
 public:
   bool Load(const char *path)
   {
@@ -176,10 +217,31 @@ public:
     NativeLifeStudio::MMTreeRoot parsed;
     loaded = size >= 0 && NativeLifeStudio::DecodeMMTreeRoot(bytes, static_cast<std::size_t>(size), &parsed);
     root = loaded ? std::move(parsed) : NativeLifeStudio::MMTreeRoot{};
+    macroObjects.clear();
+    byName.clear();
+    rootMacro = nullptr;
+    if (loaded)
+    {
+      loaded = AddMacro(root.name, nullptr);
+      for (const auto &operation : root.operations)
+        if (loaded && !AddDescendants(operation)) loaded = false;
+    }
+    if (!loaded)
+    {
+      root = {};
+      macroObjects.clear();
+      byName.clear();
+      rootMacro = nullptr;
+    }
     return loaded;
   }
-  IMacroMuscle *RootMacroMuscle() const { return 0; }
-  IMacroMuscle *FindMacroMuscle(const char *) { return 0; }
+  IMacroMuscle *RootMacroMuscle() const { return reinterpret_cast<IMacroMuscle *>(rootMacro); }
+  IMacroMuscle *FindMacroMuscle(const char *name)
+  {
+    if (!name) return nullptr;
+    const auto found = byName.find(name);
+    return found == byName.end() ? nullptr : reinterpret_cast<IMacroMuscle *>(found->second);
+  }
   void Destroy() { delete this; }
 };
 
@@ -223,7 +285,25 @@ public:
   int EnumerateMacroMuscles(int, MUSCLE_NAME_EXPR_CB, void *) { return 0; }
   int EnumerateSounds(SOUND_CB, void *) { return 0; }
   int EnumerateSounds(int, SOUND_TIME_CB, void *) { return 0; }
-  void RenderMacroMuscles(IAnimator *, int) {}
+  void RenderMacroMuscles(IAnimator *animator, int time)
+  {
+    if (!loaded || !tree || !animator || time < 0 ||
+        static_cast<std::uint32_t>(time) >= header.duration)
+      return;
+    for (const auto &track : tracks)
+    {
+      if (!track.macroEventsDecoded) continue;
+      for (const auto &event : track.macroEvents)
+      {
+        float expression = 0.0f;
+        if (!NativeLifeStudio::EvaluateMacroEvent(event,
+              static_cast<std::uint32_t>(time), &expression))
+          continue;
+        IMacroMuscle *muscle = tree->FindMacroMuscle(event.name.c_str());
+        if (muscle) animator->AddMacroMuscle(muscle, expression);
+      }
+    }
+  }
   void Destroy() { delete this; }
 };
 

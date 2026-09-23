@@ -3,6 +3,9 @@
 #include <LifeStudioHeadAPIInit.h>
 #include <LifeStudioHeadAPI.h>
 #include <LifeStudioHeadAPIMMTS.h>
+#if defined(_M_X64)
+#include <NativeMMTreeRuntime.h>
+#endif
 #include <algorithm>
 #include <cerrno>
 #include <cstdio>
@@ -44,7 +47,7 @@ static void SnapshotBones(IAnimator *anim, const char *stage)
   std::fclose(file);
 }
 
-static void DumpMacroTreeNode(FILE *out, IMacroMuscle *node,
+static void DumpMacroTreeNode(FILE *out, IMMTree *tree, IMacroMuscle *node,
                               const std::string &path, int depth,
                               std::set<IMacroMuscle *> *visited)
 {
@@ -60,6 +63,8 @@ static void DumpMacroTreeNode(FILE *out, IMacroMuscle *node,
     return;
   const std::string current = path.empty() ? name : path + "/" + name;
   std::fprintf(out, "%d,%d,%s\n", depth, count, current.c_str());
+  IMacroMuscle *found = tree->FindMacroMuscle(name);
+  std::fprintf(out, "lookup,%d,%s,%d\n", depth, name, found == node ? 1 : found ? 2 : 0);
   for (int i = 0; i < count; ++i)
   {
     IMacroMuscle *child = reinterpret_cast<ChildFn>(vtable[9])(node, i);
@@ -86,7 +91,7 @@ static void DumpMacroTreeNode(FILE *out, IMacroMuscle *node,
               reinterpret_cast<IMacroMuscle *>(candidate));
           std::fprintf(out, "operation-target,%d,%d,%s\n", depth, i,
                        targetName ? targetName : "");
-          DumpMacroTreeNode(out, reinterpret_cast<IMacroMuscle *>(candidate),
+          DumpMacroTreeNode(out, tree, reinterpret_cast<IMacroMuscle *>(candidate),
                             current, depth + 1, visited);
         }
       }
@@ -102,7 +107,7 @@ static void DumpMacroTree(IMMTree *tree)
   if (!out) return;
   std::fprintf(out, "depth,children,path\n");
   std::set<IMacroMuscle *> visited;
-  DumpMacroTreeNode(out, tree->RootMacroMuscle(), "", 0, &visited);
+  DumpMacroTreeNode(out, tree, tree->RootMacroMuscle(), "", 0, &visited);
   std::fclose(out);
 }
 #endif
@@ -151,6 +156,10 @@ public:
       if (length && length < 64 && address + 8 + length < end && name[length] == 0)
         std::fprintf(out, "%zu,%.*s\n", id, static_cast<int>(length), name);
     }
+#elif defined(_M_X64)
+    for (std::size_t id = 0; id < known.size(); ++id)
+      if (const char *name = NativeMacroMuscleName(known[id]))
+        std::fprintf(out, "%zu,%s\n", id, name);
 #endif
   }
   bool Load(const char *data, int size) override { return real->Load(data, size); }
