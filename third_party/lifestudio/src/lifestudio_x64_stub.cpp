@@ -87,7 +87,11 @@ class AnimatorStub : public IAnimator
 {
   NativeLifeStudio::HeadData head;
   std::vector<float> muscleAmplitudes;
+  std::vector<float> muscleSignedSquares;
+  std::vector<float> muscleAbsoluteSums;
   std::vector<std::array<float, 2>> boneAmplitudes;
+  std::vector<std::array<float, 2>> boneSignedSquares;
+  std::vector<std::array<float, 2>> boneAbsoluteSums;
   std::vector<std::array<float, 3>> evaluatedPointB;
   bool loaded = false;
   bool fillUnused = false;
@@ -99,14 +103,22 @@ public:
     {
       head = {};
       muscleAmplitudes.clear();
+      muscleSignedSquares.clear();
+      muscleAbsoluteSums.clear();
       boneAmplitudes.clear();
+      boneSignedSquares.clear();
+      boneAbsoluteSums.clear();
       evaluatedPointB.clear();
       loaded = false;
       return false;
     }
     head = std::move(parsed);
     muscleAmplitudes.assign(head.muscles.size(), 0.0f);
+    muscleSignedSquares.assign(head.muscles.size(), 0.0f);
+    muscleAbsoluteSums.assign(head.muscles.size(), 0.0f);
     boneAmplitudes.assign(head.bones.size(), {0.0f, 0.0f});
+    boneSignedSquares.assign(head.bones.size(), {0.0f, 0.0f});
+    boneAbsoluteSums.assign(head.bones.size(), {0.0f, 0.0f});
     evaluatedPointB.resize(head.muscles.size());
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
@@ -258,7 +270,13 @@ public:
   void ClearAllMacroMuscles()
   {
     std::fill(muscleAmplitudes.begin(), muscleAmplitudes.end(), 0.0f);
+    std::fill(muscleSignedSquares.begin(), muscleSignedSquares.end(), 0.0f);
+    std::fill(muscleAbsoluteSums.begin(), muscleAbsoluteSums.end(), 0.0f);
     std::fill(boneAmplitudes.begin(), boneAmplitudes.end(),
+              std::array<float, 2>{0.0f, 0.0f});
+    std::fill(boneSignedSquares.begin(), boneSignedSquares.end(),
+              std::array<float, 2>{0.0f, 0.0f});
+    std::fill(boneAbsoluteSums.begin(), boneAbsoluteSums.end(),
               std::array<float, 2>{0.0f, 0.0f});
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
@@ -267,6 +285,7 @@ public:
   void AddMacroMuscle(IMacroMuscle *muscle, float expression)
   {
     if (!loaded || !muscle || !std::isfinite(expression)) return;
+    expression = std::max(-1.0f, std::min(1.0f, expression));
     const auto *macro = reinterpret_cast<NativeMacroMuscle *>(muscle);
     if (!macro->root || !macro->bytes || macro->bytes->empty()) return;
     std::vector<NativeLifeStudio::MMTreeEffectSample> effects;
@@ -280,19 +299,24 @@ public:
         for (std::size_t i = 0; i < head.muscles.size(); ++i)
           if (head.muscles[i].name == effect.targetName)
           {
-            muscleAmplitudes[i] += effect.expression;
+            // The x86 effect callback accumulates signed squares and absolute
+            // values separately; ComputePhysics divides the former by the
+            // latter. Summing leaf values breaks shared expression graphs.
+            muscleSignedSquares[i] += std::copysign(
+                effect.expression * effect.expression, effect.expression);
+            muscleAbsoluteSums[i] += std::fabs(effect.expression);
             break;
           }
-      // x86 bone snapshots identify the 16/20 group as local Y (slot 132)
-      // and the 17/21 group as local Z (slot 131).
-      if (effect.kind == 4 &&
-          (effect.channel == 16 || effect.channel == 20 ||
-           effect.channel == 17 || effect.channel == 21))
+      // Bone axis comes from the referenced definition's runtime type.
+      // Different definitions can share a name and serialized channel.
+      if (effect.kind == 4 && (effect.runtimeType == 1 || effect.runtimeType == 2))
         for (std::size_t i = 0; i < head.bones.size(); ++i)
           if (head.bones[i].name == effect.targetName)
           {
-            boneAmplitudes[i][effect.channel == 16 || effect.channel == 20 ? 0 : 1] +=
-                effect.expression;
+            const int axis = effect.runtimeType == 2 ? 0 : 1;
+            boneSignedSquares[i][axis] += std::copysign(
+                effect.expression * effect.expression, effect.expression);
+            boneAbsoluteSums[i][axis] += std::fabs(effect.expression);
             break;
           }
     }
@@ -301,10 +325,17 @@ public:
   void ComputePhysics()
   {
     if (!loaded) return;
+    for (std::size_t i = 0; i < head.bones.size(); ++i)
+      for (int axis = 0; axis < 2; ++axis)
+        boneAmplitudes[i][axis] = boneAbsoluteSums[i][axis] >= 0.0001f
+            ? boneSignedSquares[i][axis] / boneAbsoluteSums[i][axis]
+            : 0.0f;
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
     {
       float &amplitude = muscleAmplitudes[i];
-      if (std::fabs(amplitude) < 0.0001f) amplitude = 0.0f;
+      amplitude = muscleAbsoluteSums[i] >= 0.0001f
+                      ? muscleSignedSquares[i] / muscleAbsoluteSums[i]
+                      : 0.0f;
       for (int axis = 0; axis < 3; ++axis)
         evaluatedPointB[i][axis] = head.muscles[i].pointA[axis] +
                                     (1.0f - amplitude) *

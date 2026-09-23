@@ -70,6 +70,13 @@ bool ParseRecord(const unsigned char *bytes, std::size_t offset,
     if (record.referenceOffset != 0)
       return Reject(offset, "named record has reference");
     record.resolvedName = record.name;
+    if ((record.headerWords[0] == 3 || record.headerWords[0] == 4) &&
+        record.preludeSize >= 8)
+      record.runtimeType = ReadU32(bytes + payload + record.preludeSize - 8);
+    if ((record.headerWords[0] == 3 && record.runtimeType != 0) ||
+        (record.headerWords[0] == 4 &&
+         (record.runtimeType < 1 || record.runtimeType > 3)))
+      return Reject(offset, "unsupported effect runtime type");
     definitions->emplace(offset, std::make_pair(record.headerWords[0], record.name));
   }
   else
@@ -219,8 +226,17 @@ bool EvaluateChildren(const void *bytes, std::size_t size,
         return false;
     }
     else if (operation.headerWords[0] == 3 || operation.headerWords[0] == 4)
+    {
+      const MMTreeOperationRecord *target = &operation;
+      if (operation.referenceOffset)
+      {
+        const auto found = offsets.find(operation.referenceOffset);
+        if (found == offsets.end()) return false;
+        target = found->second;
+      }
       samples->push_back({operation.offset, operation.headerWords[0], operation.headerWords[1],
-                          operation.resolvedName, transformed, expression});
+                          operation.resolvedName, transformed, expression, target->runtimeType});
+    }
     else
       return false;
   }

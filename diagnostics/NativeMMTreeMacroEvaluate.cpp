@@ -27,10 +27,10 @@ int main(int argc, char **argv)
       !NativeLifeStudio::EvaluateMMTreeMacro(bytes.data(), bytes.size(), root,
                                               argv[2], expression, &effects))
     return 3;
-  std::printf("kind,target,value,operation-offset,channel,input\n");
+  std::printf("kind,target,value,operation-offset,channel,input,runtime-type\n");
   for (const auto &effect : effects)
-    std::printf("%u,%s,%.9g,%zu,%u,%.9g\n", effect.kind, effect.targetName.c_str(),
+    std::printf("%u,%s,%.9g,%zu,%u,%.9g,%u\n", effect.kind, effect.targetName.c_str(),
                 effect.expression, effect.operationOffset, effect.channel,
-                effect.inputExpression);
+                effect.inputExpression, effect.runtimeType);
   return 0;
 }

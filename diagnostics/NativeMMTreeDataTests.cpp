@@ -133,6 +133,27 @@ int main()
                                                root, "TEST", 0.5f, &samples));
   assert(samples.size() == 1 && samples[0].kind == 3 && samples[0].channel == 20 &&
          samples[0].targetName == "M" && samples[0].expression == 0.5f);
+  NativeLifeStudio::MMTreeOperationRecord boneDefinition;
+  boneDefinition.offset = 88;
+  boneDefinition.headerWords[0] = 4;
+  boneDefinition.runtimeType = 2;
+  boneDefinition.name = "Bone";
+  boneDefinition.resolvedName = "Bone";
+  NativeLifeStudio::MMTreeOperationRecord boneReference = effect;
+  boneReference.headerWords[0] = 4;
+  boneReference.headerWords[1] = 17; // Header channel is not the axis.
+  boneReference.referenceOffset = boneDefinition.offset;
+  boneReference.name.clear();
+  boneReference.resolvedName = "Bone";
+  macro.children.clear();
+  macro.children.push_back(boneReference);
+  root.operations.clear();
+  root.operations.push_back(boneDefinition);
+  root.operations.push_back(macro);
+  assert(NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
+                                               root, "TEST", 0.5f, &samples));
+  assert(samples.size() == 1 && samples[0].kind == 4 &&
+         samples[0].channel == 17 && samples[0].runtimeType == 2);
   assert(!NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
                                                 root, "MISSING", 0.5f, &samples));
   return 0;

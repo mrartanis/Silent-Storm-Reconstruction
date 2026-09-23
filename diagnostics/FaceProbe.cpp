@@ -467,6 +467,11 @@ int main(int argc, char **argv)
     for (int i = 0; i < 50; ++i)
       std::fprintf(stderr, "animator-vtable[%d] RVA=0x%zx\n", i,
                    reinterpret_cast<std::uintptr_t>(vtable[i]) - base);
+    void **effectVtable = *reinterpret_cast<void ***>(
+        reinterpret_cast<unsigned char *>(inspect) + 8);
+    for (int i = 0; i < 4; ++i)
+      std::fprintf(stderr, "effect-vtable[%d] RVA=0x%zx\n", i,
+                   reinterpret_cast<std::uintptr_t>(effectVtable[i]) - base);
     inspect->Destroy();
   }
 #endif

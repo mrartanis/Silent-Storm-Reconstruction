@@ -88,13 +88,17 @@ foreach ($row in $names) {
 }
 $effects = @(& $macroEvaluator $tree $MacroName $expressionText | ConvertFrom-Csv)
 if ($LASTEXITCODE -ne 0) { throw 'Native macro-effect evaluation failed' }
+$signedSquares = [double[]]::new($count)
+$absoluteSums = [double[]]::new($count)
 $expected = [double[]]::new($count)
 $matchedEffects = 0
 foreach ($effect in $effects) {
     if ([int]$effect.kind -ne 3) { continue }
     $index = 0
     if (!$byName.TryGetValue($effect.target, [ref]$index)) { continue }
-    $expected[$index] += [double]::Parse($effect.value, $culture)
+    $value = [double]::Parse($effect.value, $culture)
+    $signedSquares[$index] += [Math]::Sign($value) * $value * $value
+    $absoluteSums[$index] += [Math]::Abs($value)
     ++$matchedEffects
 }
 if (!$matchedEffects) { throw 'Macro produced no effects targeting this head' }
@@ -105,7 +109,9 @@ $maximumNative = 0.0
 $affected = 0
 for ($i = 0; $i -lt $count; ++$i) {
     $actual = [BitConverter]::ToSingle($first, 4 + 256 * $i + 124)
-    if ([Math]::Abs($expected[$i]) -lt $AmplitudeDeadband) { $expected[$i] = 0.0 }
+    if ($absoluteSums[$i] -ge $AmplitudeDeadband) {
+        $expected[$i] = $signedSquares[$i] / $absoluteSums[$i]
+    }
     $delta = [Math]::Abs([double]$actual - $expected[$i])
     $maximum = [Math]::Max($maximum, $delta)
     if ($delta -gt $Tolerance) {

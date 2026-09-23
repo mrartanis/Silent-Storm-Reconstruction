@@ -66,17 +66,27 @@ if (@($effects | Where-Object kind -eq '3').Count) {
 }
 $expectedY = [double[]]::new($bones.Count)
 $expectedZ = [double[]]::new($bones.Count)
+$signedY = [double[]]::new($bones.Count)
+$signedZ = [double[]]::new($bones.Count)
+$absoluteY = [double[]]::new($bones.Count)
+$absoluteZ = [double[]]::new($bones.Count)
 $matched = 0
 foreach ($effect in $effects) {
     if ([int]$effect.kind -ne 4) { continue }
-    $channel = [int]$effect.channel
-    if ($channel -notin 16,17,20,21) { throw "Unsupported bone channel: $channel" }
+    $runtimeType = [int]$effect.'runtime-type'
+    if ($runtimeType -notin 1,2 -and [Math]::Abs([double]::Parse($effect.value, $culture)) -gt 0.000001) {
+        throw "Unsupported active bone runtime type: $runtimeType"
+    }
     foreach ($bone in $bones) {
         if ($effect.target -eq $bone.name) {
-            if ($channel -in 16,20) {
-                $expectedY[[int]$bone.index] += [double]::Parse($effect.value, $culture)
-            } else {
-                $expectedZ[[int]$bone.index] += [double]::Parse($effect.value, $culture)
+            $index = [int]$bone.index
+            $value = [double]::Parse($effect.value, $culture)
+            if ($runtimeType -eq 2) {
+                $signedY[$index] += [Math]::Sign($value) * $value * $value
+                $absoluteY[$index] += [Math]::Abs($value)
+            } elseif ($runtimeType -eq 1) {
+                $signedZ[$index] += [Math]::Sign($value) * $value * $value
+                $absoluteZ[$index] += [Math]::Abs($value)
             }
             ++$matched
             break
@@ -84,6 +94,10 @@ foreach ($effect in $effects) {
     }
 }
 if (!$matched) { throw 'Macro produced no bone effect for this head' }
+for ($i = 0; $i -lt $bones.Count; ++$i) {
+    if ($absoluteY[$i] -ge 0.0001) { $expectedY[$i] = $signedY[$i] / $absoluteY[$i] }
+    if ($absoluteZ[$i] -ge 0.0001) { $expectedZ[$i] = $signedZ[$i] / $absoluteZ[$i] }
+}
 $first = [IO.File]::ReadAllBytes((Join-Path $output 'first-bones-sequence-0-post-physics.bin'))
 $repeat = [IO.File]::ReadAllBytes((Join-Path $output 'repeat-bones-sequence-0-post-physics.bin'))
 if ($first.Length -ne 4 + 556 * $bones.Count -or $repeat.Length -ne $first.Length -or

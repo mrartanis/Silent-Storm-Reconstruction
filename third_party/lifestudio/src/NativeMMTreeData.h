@@ -14,6 +14,7 @@ struct MMTreeOperationRecord
   std::uint32_t payloadSize = 0;
   std::uint32_t preludeSize = 0;
   std::uint32_t serializedType = 0;
+  std::uint32_t runtimeType = 0;
   std::size_t referenceOffset = 0;
   std::string name;
   std::string resolvedName;
@@ -43,6 +44,7 @@ struct MMTreeEffectSample
   std::string targetName;
   float expression = 0.0f;
   float inputExpression = 0.0f; // Value received before the leaf's own curve.
+  std::uint32_t runtimeType = 0; // Resolved target operation type, not header word 1.
 };
 
 // Decode the MMLF v4 envelope and nested length-delimited operation graph.

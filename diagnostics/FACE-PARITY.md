@@ -1,8 +1,10 @@
 # LifeStudio x86 → native x64 parity
 
-Status: the x86 reference is executable and deterministic; the x64 bridge
-loads and processes neutral heads but fails animated vertex parity.
-**No native animation parity claim yet.**
+Status: the x86 reference is executable and deterministic. The native x64
+bridge passes strict animated vertex parity on the initial 3-head × 2-sequence
+set and on the 20-sequence representative set for head 56. This is bounded
+corpus parity, **not** a claim that all facial animation or the live portrait
+is complete.
 
 `FaceProbe` exercises the same `IAnimator`, `IMMTree` and `ISequencer` calls as
 `NLSHead::CHeadAnimator`: load a real animator stream, register `tree.mma`,
@@ -41,7 +43,7 @@ the process. Loading a mission save exports `head-<record>-<part>.bin` and
 `sequence-<record>-0.bin` from the real resource loaders. These files, the
 original `tree.mma` and the proprietary DLL stay in `G:\SS\lab`, never Git.
 
-Reference-only check (does **not** claim x64 success):
+Reference-only check:
 
 ```powershell
 & .\diagnostics\Test-FaceParity.ps1 `
@@ -55,10 +57,10 @@ Remove `-ReferenceOnly` and add
 `-X64Probe 'G:\SS\lab\build-x64\RelWithDebInfo\FaceProbe.exe'` for the
 required parity check. The initial corpus from `AI_CTRL` contains three heads
 and two sequences (six pairs, 2514 rows each); all six x86 pairs are
-deterministic and deform vertices. The current x64 bridge decodes the tree,
-evaluates macro events and applies sampled muscle effects to vertices, but
-the verified local-Y and local-Z bone channels are animated, and full parity
-remains incomplete; the strict gate is red.
+deterministic and deform vertices. The strict x64 gate passes all six cases at
+1e-4 tolerance (2,514 rows per case). The representative 20-sequence subset
+for head 56 also passes with the same gate; use its fixture directory in the
+command above to repeat that broader check.
 For the current two sequences, the reference trace contains 1 and 13
 macro-muscle calls respectively per probe run (for each of the three heads).
 
@@ -115,8 +117,8 @@ matched 915 x86 calls to 915 native evaluations in the same order, with no
 name/value mismatch at 1e-5 tolerance and maximum delta 1.19e-7.
 This first established sampled sequencer-expression parity separately from
 tree resolution and vertex deformation. The x64 API bridge now also uses this
-evaluator in `ISequencer::RenderMacroMuscles`, as checked below. The strict
-x64 vertex parity test remains red.
+evaluator in `ISequencer::RenderMacroMuscles`, as checked below. The later
+strict vertex checks now pass on the bounded corpora described above.
 
 The x86-only `S2_FACE_TREE_DUMP_PATH` probe option exports a deterministic
 macro-operation graph after loading the original `tree.mma`. Two fresh dumps
@@ -191,8 +193,9 @@ The x86 raw muscle snapshot includes address-dependent bytes, so these tests
 repeat and compare only its observed semantic float fields.
 
 The x64 `IAnimator::AddMacroMuscle` now accumulates class-3 muscle effects;
-`ComputePhysics` applies the observed `abs(amplitude) < 1e-4` deadband and
-computes each muscle's new endpoint as `A + (1 - amplitude) × (B - A)`.
+`ComputePhysics` ignores an accumulator only when its absolute-value
+denominator is below 1e-4, then computes each muscle's new endpoint as
+`A + (1 - amplitude) × (B - A)`.
 `Test-MMTreeMacroEffects.ps1` compares all 36 resulting amplitudes with the
 original x86 runtime. For `##BLINK`, 11 leaf effects target the available
 head muscles and ten muscles move at expression 0.5; all three sampled heads
@@ -217,19 +220,16 @@ receives bone translation. This formula predicts x86 vertex 239 of the
 overlapping cheek/eyelid macro to about 2e-7, and the native bridge passes
 strict 419-vertex comparisons for `(base)_lEYELID_DOWN_R` and `##BLINK`
 on all three sampled heads at expression 0.5 (maximum delta 1.91e-6).
-`##BLINK` also passes on head 56 at -0.5, 0.25 and 0.8. These are scoped
-geometric results, **not** complete facial animation. The full six-case
-sequence gate remains red: 194–572 components per case exceed 1e-4, with
-maximum delta 0.14–0.31. `Distrust` at expression -0.226 already diverges
-in muscle amplitude: four traversals reach the same effect leaf, and simply
-summing its independently curved outputs does not reproduce x86. Resolving
-shared-leaf accumulation is a next prerequisite for full parity.
-`NativeMMTreeMacroEvaluate` now reports each leaf's input before its curve;
-for `Distrust` the four native traversals of `_aEyelidUPP_L` sum to about
--0.00105, while x86 reaches -0.001354. Applying the leaf curve once to the
-sum of those four inputs also gives about -0.00105, so leaf-level summation
-alone cannot explain the difference; accumulation may occur higher in the
-shared macro graph. This is a diagnostic hypothesis, not an implemented fix.
+`##BLINK` also passes on head 56 at -0.5, 0.25 and 0.8. The former
+`Distrust` mismatch is resolved: the x86 effect callback accumulates
+`Σ sign(vᵢ) vᵢ²` and `Σ |vᵢ|` separately, and `ComputePhysics` divides the
+first by the second when the denominator reaches 1e-4. Directly summing
+effect values was incorrect for shared graphs. The x64 bridge now uses this
+rule for muscle and bone effects. At expression -0.226, `Distrust` matches
+all 36 muscle amplitudes and all 419 vertices on each of the three heads;
+the maximum vertex delta on head 56 is 2.86e-6. The original six-case
+sequence gate and the 20-sequence representative gate both pass. They do
+not establish complete animation across all assets and runtime paths.
 
 `S2_FACE_VERTEX_STATE_PATH` and `S2_FACE_STATE_SNAPSHOT_TIME` make the x86
 probe export the original per-vertex interaction coefficients into a CSV in
@@ -238,9 +238,12 @@ there with all but one leaf target of a selected macro zeroed; it never
 changes the original `tree.mma`. This gave independent x86 references for
 `a_EyelidLOW_UW_R` and `a_Cheek_FW_R` before validating their combination.
 
-The x86 `ComputePhysics` bone snapshot identifies leaf channels 16/20 as
-local-Y rotation (amplitude at byte 528) and 17/21 as local-Z rotation
-(amplitude at byte 524). The rotations run between the serialized B and A
+The x86 `ComputePhysics` bone snapshot identifies runtime operation type 2
+as local-Y rotation (amplitude at byte 528) and type 1 as local-Z rotation
+(amplitude at byte 524). The type is stored in the referenced definition's
+payload, not reliably in the reference's header word: two definitions of
+`a_Eye_ROT_L` share a name but select different axes. The rotations run
+between the serialized B and A
 matrices. Local-Y uses minus the effect value as angle; local-Z uses the value.
 For multiple influences, each bone-transformed or unchanged vertex position
 is blended by its `componentB`, normalized by the sum of positive weights.
@@ -252,7 +255,7 @@ also passes as a two-bone effect. `Test-FaceBoneEffectParity.ps1` repeats the
 x86 run, checks the two opaque amplitude fields, requires actual vertex
 motion, and enforces x64 vertex parity. `HeadPitch` changes bone state but
 no head vertices in this probe, so it is not counted as geometric parity.
-The combined sequence gate remains red and requires more work.
+The combined sequence gate now passes on the bounded corpora above.
 
 ```powershell
 & .\diagnostics\Test-MMTreeMacroEffects.ps1 `
@@ -329,11 +332,10 @@ that data-driven composition to vertices with one influence attached to a
 bone; it does not hard-code eye indices or fitted coefficients. The separate
 `Test-FaceNeutralParity.ps1` gate compares all 419 neutral vertices on each
 of the three heads against a repeated x86 oracle. It passes at 1e-4 tolerance,
-with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This **does not**
-establish animated parity: isolated local-Y and local-Z channels pass, but
-combined bone/muscle interaction and FaceGen remain to be
-implemented natively, and the strict
-`Test-FaceParity.ps1` gate remains red.
+with maximum observed differences 1.91e-6, 9.6e-7 and 1.43e-6. This neutral
+check alone does not establish animated parity. Animated parity is now
+verified on the bounded six-case and 20-case corpora above; FaceGen,
+additional head/sequence variants and the live portrait remain unverified.
 `Test-NativeHeadDecode.ps1` automates the three-head raw-coordinate comparison
 with the x86 neutral oracle. Its loose explicit-vertex tolerance measures the
 known gap rather than accepting it as finished animation; the full
