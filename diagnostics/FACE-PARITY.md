@@ -92,6 +92,11 @@ physics and exact final vertex transform are **not** implemented. As a result,
 load. The strict six-case gate still fails numerically: 778–952 coordinate
 components per case exceed 1e-4, with maximum delta 0.34–0.58. This is an
 intermediate native processing milestone, not working facial animation.
+An isolated x64 game run at `G:\SS\lab\runs\stage2-x64-face-native-load-01`
+loaded the existing `AI_CTRL` save to `LOAD-SLOT-DONE` and exited through the
+harness `quit` command without a recorded crash. Its screenshot
+`evidence\loaded-game.png` proves only that the scene rendered; it does not
+establish that the minimap portrait or live facial motion is correct.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
