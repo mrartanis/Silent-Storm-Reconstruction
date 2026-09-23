@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
   if (argc != 3)
   {
-    std::fprintf(stderr, "usage: NativeHeadDecode original-head.bin output.csv|--muscles|--influences\n");
+    std::fprintf(stderr, "usage: NativeHeadDecode original-head.bin output.csv|--muscles|--influences|--bones\n");
     return 2;
   }
   std::ifstream input(argv[1], std::ios::binary);
@@ -40,6 +40,19 @@ int main(int argc, char **argv)
                     influence.componentA, influence.componentB,
                     vertex.sourcePosition[0], vertex.sourcePosition[1],
                     vertex.sourcePosition[2]);
+    return 0;
+  }
+  if (std::strcmp(argv[2], "--bones") == 0)
+  {
+    std::printf("index,name,matrix,element,value\n");
+    for (std::size_t i = 0; i < head.bones.size(); ++i)
+      for (int n = 0; n < 12; ++n)
+      {
+        std::printf("%zu,%s,A,%d,%.9g\n", i, head.bones[i].name.c_str(), n,
+                    head.bones[i].matrixA[n]);
+        std::printf("%zu,%s,B,%d,%.9g\n", i, head.bones[i].name.c_str(), n,
+                    head.bones[i].matrixB[n]);
+      }
     return 0;
   }
   FILE *out = std::fopen(argv[2], "wb");

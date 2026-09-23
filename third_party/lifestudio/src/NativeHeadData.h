@@ -58,6 +58,7 @@ struct HeadData
 };
 
 // Decode named muscles, weighted vertices, bones and implicit vertices of the
-// original 0xAD5A018D stream. Animation evaluation is not yet implemented.
+// original 0xAD5A018D stream. Animation evaluation is performed by the
+// partial x64 bridge, not by this decoder.
 bool DecodeHeadVertices(const void *bytes, std::size_t size, HeadData *result);
 }

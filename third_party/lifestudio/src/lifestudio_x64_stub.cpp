@@ -1,5 +1,6 @@
 // Partial native x64 LifeStudio bridge. Original streams and macro-muscle
-// effects run without the x86 DLL; bone effects and full vertex parity remain.
+// effects run without the x86 DLL; only upper-eyelid bone rotation is decoded,
+// and full vertex parity remains incomplete.
 #include "LifeStudioHeadAPIGDP.h"
 #include "LifeStudioHeadAPIMMTS.h"
 #include "NativeHeadData.h"
@@ -55,6 +56,7 @@ class AnimatorStub : public IAnimator
 {
   NativeLifeStudio::HeadData head;
   std::vector<float> muscleAmplitudes;
+  std::vector<float> boneAmplitudes;
   std::vector<std::array<float, 3>> evaluatedPointB;
   bool loaded = false;
   bool fillUnused = false;
@@ -66,12 +68,14 @@ public:
     {
       head = {};
       muscleAmplitudes.clear();
+      boneAmplitudes.clear();
       evaluatedPointB.clear();
       loaded = false;
       return false;
     }
     head = std::move(parsed);
     muscleAmplitudes.assign(head.muscles.size(), 0.0f);
+    boneAmplitudes.assign(head.bones.size(), 0.0f);
     evaluatedPointB.resize(head.muscles.size());
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
@@ -109,28 +113,47 @@ public:
           changed[axis] += weight *
               (evaluatedPointB[index][axis] - head.muscles[index].pointB[axis]);
       }
-      const float *position = changed;
-      float transformed[3];
-      float intermediate[3];
-      // The original head stream maps muscles to bones. A vertex controlled
-      // by one attached muscle receives the bone's stored B-then-A transform.
-      // Multi-influence blending and animated muscle state are still pending.
-      if (vertex.influences.size() == 1)
+      float position[3] = {changed[0], changed[1], changed[2]};
+      float weighted[3] = {};
+      float totalWeight = 0.0f;
+      // Each influence's componentB is its bone-blend weight. A non-bone
+      // influence contributes the untransformed position to the same blend.
+      for (const auto &influence : vertex.influences)
       {
-        const std::uint32_t muscle = vertex.influences[0].muscleIndex;
+        if (influence.componentB <= 0.0f) continue;
+        float transformed[3];
+        float intermediate[3];
+        const float *candidate = changed;
         for (const auto &bone : head.bones)
         {
           bool attached = false;
           for (std::uint32_t index : bone.muscleIndices)
-            if (index == muscle) { attached = true; break; }
+            if (index == influence.muscleIndex) { attached = true; break; }
           if (!attached)
             continue;
-          TransformPoint(bone.matrixB, position, intermediate);
+          TransformPoint(bone.matrixB, changed, intermediate);
+          const std::size_t boneIndex = static_cast<std::size_t>(&bone - head.bones.data());
+          const float angle = -boneAmplitudes[boneIndex];
+          if (angle != 0.0f)
+          {
+            const float cosine = std::cos(angle);
+            const float sine = std::sin(angle);
+            const float x = intermediate[0];
+            const float z = intermediate[2];
+            intermediate[0] = x * cosine - z * sine;
+            intermediate[2] = x * sine + z * cosine;
+          }
           TransformPoint(bone.matrixA, intermediate, transformed);
-          position = transformed;
+          candidate = transformed;
           break;
         }
+        for (int axis = 0; axis < 3; ++axis)
+          weighted[axis] += influence.componentB * candidate[axis];
+        totalWeight += influence.componentB;
       }
+      if (totalWeight > 0.0f)
+        for (int axis = 0; axis < 3; ++axis)
+          position[axis] = weighted[axis] / totalWeight;
       for (int axis = 0; axis < 3; ++axis)
         output[std::size_t(vertex.index) * step + axis] = position[axis];
     }
@@ -149,6 +172,7 @@ public:
   void ClearAllMacroMuscles()
   {
     std::fill(muscleAmplitudes.begin(), muscleAmplitudes.end(), 0.0f);
+    std::fill(boneAmplitudes.begin(), boneAmplitudes.end(), 0.0f);
     for (std::size_t i = 0; i < head.muscles.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
         evaluatedPointB[i][axis] = head.muscles[i].pointB[axis];
@@ -165,13 +189,24 @@ public:
       return;
     for (const auto &effect : effects)
     {
-      if (effect.kind != 3) continue;
-      for (std::size_t i = 0; i < head.muscles.size(); ++i)
-        if (head.muscles[i].name == effect.targetName)
-        {
-          muscleAmplitudes[i] += effect.expression;
-          break;
-        }
+      if (effect.kind == 3)
+        for (std::size_t i = 0; i < head.muscles.size(); ++i)
+          if (head.muscles[i].name == effect.targetName)
+          {
+            muscleAmplitudes[i] += effect.expression;
+            break;
+          }
+      // Class-4 effects address several distinct rotation channels. Only the
+      // upper-eyelid local-Y channel has an x86-verified transform so far.
+      if (effect.kind == 4 &&
+          (effect.targetName == "a_EyelidUPP_Open_L" ||
+           effect.targetName == "a_EyelidUPP_Open_R"))
+        for (std::size_t i = 0; i < head.bones.size(); ++i)
+          if (head.bones[i].name == effect.targetName)
+          {
+            boneAmplitudes[i] += effect.expression;
+            break;
+          }
     }
   }
   void MultMacroMuscle(IMacroMuscle *, float) {}
