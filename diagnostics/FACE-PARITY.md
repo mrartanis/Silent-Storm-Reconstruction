@@ -368,6 +368,17 @@ resolves 30 macro nodes. The GDP's `*_M.mld` streams use the already decoded
 has 36 muscles, 419 vertices and seven bones. `Morph.txt` defines the
 archetype parameter combinations; `Links.dat` appears to carry channel links
 and still needs decoding.
+`NativeFaceGenData` now parses the five `Morph.txt` coordinates and both
+`HEAD` and `COMB` rules, resolves each referenced archetype, and decodes its
+animation and morph streams through the native head decoder. It validates
+the `Links.dat` signature and its morph-muscle count, but does not yet
+interpret the link records. On the real GDP,
+`NativeFaceGenApiCheck FaceGenHead.gdp` reports 24 `HEAD` rules, 24 `COMB`
+rules, 16 unique archetypes, 419 vertices, 36 animation muscles and 129
+morph muscles. `NativeFaceGenDataTests` exercises rule syntax and percentage
+handling under both x86 and x64 CTest. This loader is not yet connected to
+the runtime transformer: `ITransformer::Load/Generate` must remain a red gate
+until the generation passes are implemented.
 `Test-FaceGDPTransformParity.ps1` runs the same GDP and MMT through the x86
 and x64 `FaceGDPProbe` executables, comparing neutral, positive/negative
 `Nose`, `Age` and `Gender` generated vertices directly. The x86 reference

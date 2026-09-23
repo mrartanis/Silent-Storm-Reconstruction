@@ -168,17 +168,22 @@ endif()
 
   add_library(lifestudio_native_data STATIC
     "${root}/third_party/lifestudio/src/NativeCurve.cpp"
+    "${root}/third_party/lifestudio/src/NativeFaceGenData.cpp"
     "${root}/third_party/lifestudio/src/NativeHeadData.cpp"
     "${root}/third_party/lifestudio/src/NativeMMTreeData.cpp"
     "${root}/third_party/lifestudio/src/NativeSequenceData.cpp")
   target_include_directories(lifestudio_native_data PUBLIC
     "${root}/third_party/lifestudio/src")
+  target_include_directories(lifestudio_native_data PRIVATE
+    "${root}/third_party/lifestudio/include")
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     target_link_libraries(lifestudio_init PUBLIC lifestudio_native_data)
     add_executable(NativeMMTreeApiCheck "${root}/diagnostics/NativeMMTreeApiCheck.cpp")
     target_link_libraries(NativeMMTreeApiCheck PRIVATE lifestudio_shim lifestudio_native_data)
     add_executable(NativeGDPApiCheck "${root}/diagnostics/NativeGDPApiCheck.cpp")
     target_link_libraries(NativeGDPApiCheck PRIVATE lifestudio_shim)
+    add_executable(NativeFaceGenApiCheck "${root}/diagnostics/NativeFaceGenApiCheck.cpp")
+    target_link_libraries(NativeFaceGenApiCheck PRIVATE lifestudio_shim lifestudio_native_data)
   endif()
   add_executable(NativeHeadDecode "${root}/diagnostics/NativeHeadDecode.cpp")
   target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
@@ -202,6 +207,9 @@ enable_testing()
 add_executable(NativeHeadDataTests "${root}/diagnostics/NativeHeadDataTests.cpp")
 target_link_libraries(NativeHeadDataTests PRIVATE lifestudio_native_data)
   add_test(NAME NativeHeadDataTests COMMAND NativeHeadDataTests)
+  add_executable(NativeFaceGenDataTests "${root}/diagnostics/NativeFaceGenDataTests.cpp")
+  target_link_libraries(NativeFaceGenDataTests PRIVATE lifestudio_native_data)
+  add_test(NAME NativeFaceGenDataTests COMMAND NativeFaceGenDataTests)
   add_executable(NativeMMTreeDataTests "${root}/diagnostics/NativeMMTreeDataTests.cpp")
   target_link_libraries(NativeMMTreeDataTests PRIVATE lifestudio_native_data)
   add_test(NAME NativeMMTreeDataTests COMMAND NativeMMTreeDataTests)
