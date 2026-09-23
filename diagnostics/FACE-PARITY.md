@@ -45,3 +45,12 @@ all head segments/topologies, saved/reloaded heads, transformable FaceGen GDP
 and `.mmt` morphs, texture-weight user items, and a live x64 portrait/head
 render compared to x86. The small corpus is an implementation guide, not a
 substitute for these cases.
+
+Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
+original x86 `IAnimator::Save` for its canonical serialized form. For
+`head-56-0.bin`, the source stream is 31,612 bytes and the saved form is
+21,970 bytes. Reloading that saved form through the original DLL produced
+**byte-identical neutral and animated CSV** for sequence 6005. This gives the
+native parser a second representation to validate against, but the shipping
+x64 engine must load the original resource stream without invoking the x86 DLL
+or requiring preconverted copyrighted assets.

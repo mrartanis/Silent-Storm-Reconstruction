@@ -53,9 +53,9 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
 
 int main(int argc, char **argv)
 {
-  if (argc != 3 && argc != 5)
+  if (argc != 3 && argc != 4 && argc != 5 && argc != 6)
   {
-    std::fprintf(stderr, "usage: FaceProbe animator.bin output.csv [sequence.bin tree.mma]\n");
+    std::fprintf(stderr, "usage: FaceProbe animator.bin output.csv [sequence.bin tree.mma] [saved-animator.bin]\n");
     return 2;
   }
   const std::vector<char> animData = ReadAll(argv[1]);
@@ -65,10 +65,27 @@ int main(int argc, char **argv)
     return 2;
   }
   Init();
+  const char *savedPath = argc == 4 ? argv[3] : argc == 6 ? argv[5] : nullptr;
+  if (savedPath)
+  {
+    IAnimator *copy = IAnimator::Create();
+    if (!copy || !copy->Load(animData.data(), static_cast<int>(animData.size())))
+      return 3;
+    const int size = copy->SaveBufferSize();
+    std::vector<char> saved(size > 0 && size < 100000000 ? size : 0);
+    const bool savedOk = !saved.empty() && copy->Save(saved.data());
+    copy->Destroy();
+    if (!savedOk)
+      return 3;
+    std::ofstream file(savedPath, std::ios::binary);
+    file.write(saved.data(), saved.size());
+    if (!file)
+      return 2;
+  }
   IMMTree *tree = nullptr;
   ISequencer *sequence = nullptr;
   int duration = 0;
-  if (argc == 5)
+  if (argc >= 5)
   {
     const std::vector<char> seqData = ReadAll(argv[3]);
     if (seqData.empty())
