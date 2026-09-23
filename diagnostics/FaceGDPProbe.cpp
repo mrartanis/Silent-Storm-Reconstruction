@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cctype>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -48,6 +49,38 @@ int main(int argc, char **argv)
   const int defaultSize = object->DefaultAnimatorDataSize();
   std::fprintf(stderr, "GDP vertices=%d transformable=%d default-animator=%d\n",
                object->VerticesCount(), object->IsTransformable(), defaultSize);
+  const int dataItems = object->DataListSize();
+  std::fprintf(stderr, "GDP data-items=%d subobjects=%d\n", dataItems,
+               object->SubObjectsCount());
+  if (dataItems >= 0 && dataItems <= 10000)
+    for (int i = 0; i < dataItems; ++i)
+    {
+      const char *name = object->DataListItem(i);
+      if (name)
+      {
+        if (std::getenv("S2_FACE_GDP_TRACE_ITEMS"))
+          std::fprintf(stderr, "GDP data[%d]=%s bytes=%d\n", i, name, object->Size(name));
+        const char *dump = std::getenv("S2_FACE_GDP_DUMP_DIR");
+        const int itemSize = object->Size(name);
+        bool safeName = *name && std::string(name) != "." && std::string(name) != "..";
+        for (const unsigned char *p = reinterpret_cast<const unsigned char *>(name); *p; ++p)
+          if (!std::isalnum(*p) && *p != '_' && *p != '-' && *p != '.') safeName = false;
+        if (dump && safeName && itemSize > 0 && itemSize < 100000000)
+        {
+          std::vector<char> data(itemSize);
+          char numbered[32];
+          std::snprintf(numbered, sizeof(numbered), "%02d-", i);
+          if (!object->Get(name, data.data()) ||
+              !WriteBytes(std::string(dump) + numbered + name, data))
+          {
+            std::fprintf(stderr, "cannot dump GDP data item %d\n", i);
+            object->Destroy();
+            gdp->Destroy();
+            return 3;
+          }
+        }
+      }
+    }
   std::vector<char> defaults(defaultSize > 0 && defaultSize < 100000000 ? defaultSize : 0);
   const bool defaultsOk = !defaults.empty() && object->DefaultAnimatorData(defaults.data()) &&
                           WriteBytes(std::string(argv[3]) + "-default.bin", defaults);

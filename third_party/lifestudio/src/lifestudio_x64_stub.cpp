@@ -548,18 +548,8 @@ public:
   void Destroy() { delete this; }
 };
 
-class GDPFileStub : public IGDPFile
-{
-public:
-  int ObjectsCount() const { return 0; }
-  const char *ObjectName(int) const { return 0; }
-  IGDPObject *Object(int) { return 0; }
-  void Destroy() { delete this; }
-};
-
 IAnimator *__stdcall IAnimator::Create() { return new AnimatorStub; }
 IMMTree *__stdcall IMMTree::Create() { return new MMTreeStub; }
 ISequencer *__stdcall ISequencer::Create() { return new SequencerStub; }
 ITransformer *__stdcall ITransformer::Create() { return new TransformerStub; }
-IGDPFile *__stdcall IGDPFile::Create(const char *) { return new GDPFileStub; }
 }

@@ -127,8 +127,11 @@ target_include_directories(lifestudio_init PRIVATE "${root}/third_party/lifestud
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     # The retained LifeStudio import libraries encode x86 C++ symbol names.
     # Use the partial native x64 bridge while bone/muscle evaluation is ported.
-  target_sources(lifestudio_init PRIVATE "${root}/third_party/lifestudio/src/lifestudio_x64_stub.cpp")
+  target_sources(lifestudio_init PRIVATE
+    "${root}/third_party/lifestudio/src/lifestudio_x64_stub.cpp"
+    "${root}/third_party/lifestudio/src/NativeGDP.cpp")
   target_compile_definitions(lifestudio_init PUBLIC LIFESTUDIOHEADAPI_EXPORTS_LIB)
+  target_link_libraries(lifestudio_init PUBLIC ole32)
 endif()
 
 # The three interop shims: clean-room include dir + the generated import libs.
@@ -174,9 +177,14 @@ endif()
     target_link_libraries(lifestudio_init PUBLIC lifestudio_native_data)
     add_executable(NativeMMTreeApiCheck "${root}/diagnostics/NativeMMTreeApiCheck.cpp")
     target_link_libraries(NativeMMTreeApiCheck PRIVATE lifestudio_shim lifestudio_native_data)
+    add_executable(NativeGDPApiCheck "${root}/diagnostics/NativeGDPApiCheck.cpp")
+    target_link_libraries(NativeGDPApiCheck PRIVATE lifestudio_shim)
   endif()
   add_executable(NativeHeadDecode "${root}/diagnostics/NativeHeadDecode.cpp")
   target_link_libraries(NativeHeadDecode PRIVATE lifestudio_native_data)
+  add_executable(GDPStorageProbe "${root}/diagnostics/GDPStorageProbe.cpp")
+  target_link_libraries(GDPStorageProbe PRIVATE ole32)
+  target_link_options(GDPStorageProbe PRIVATE /SUBSYSTEM:CONSOLE /ENTRY:wmainCRTStartup)
   add_executable(NativeMMTreeDecode "${root}/diagnostics/NativeMMTreeDecode.cpp")
   target_link_libraries(NativeMMTreeDecode PRIVATE lifestudio_native_data)
   add_executable(NativeMMTreeCurveEvaluate "${root}/diagnostics/NativeMMTreeCurveEvaluate.cpp")

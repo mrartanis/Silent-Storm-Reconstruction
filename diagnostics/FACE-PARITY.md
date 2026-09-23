@@ -304,11 +304,11 @@ that the portrait was present and facial animation looked correct. This is
 useful qualitative live validation, independent of the screenshot captures,
 but does not expand the automated x86/x64 parity corpus.
 
-The remaining x64 `ITransformer`/`IGDPFile` bridge is still a stub. This does
-not affect the static head and portrait checked above, but transformable
+The remaining x64 `ITransformer` bridge is still a stub. This does not affect
+the static head and portrait checked above, but transformable
 FaceGen heads use `Res\FaceGenHead.gdp` and `.mmt` to generate a morphed
-animator in `CHeadTransformInfo::Recalc`; that path still needs an x86 oracle,
-native implementation and live check. The serialized tree also contains
+animator in `CHeadTransformInfo::Recalc`; its x86 oracle exists, but the native
+transformer implementation and live check are still needed. The serialized tree also contains
 runtime type-3 bone effects (for example `Head_shake` and tongue rotation).
 The sampled static heads have no vertex influences attached to their head or
 neck bones, so the passing vertex corpus does not exercise these effects.
@@ -342,10 +342,21 @@ cases pass at 1e-4 tolerance. Passing `-SequenceFile` adds an animated x86/x64
 comparison. With `sequence-6008-0.bin`, all 2,514 animated vertex rows now
 pass at 1e-4, with maximum component delta 2.38e-6. The earlier 690-row
 failure (maximum delta 0.1866033) exposed the omitted saved-stream weight;
-the native decoder now reconstructs it. The native GDP/transformer path itself
+the native decoder now reconstructs it. The native transformer path itself
 remains a stub, so generating a morph without the x86-produced saved stream
 is not yet supported. Oracle artifacts are in the ignored
 `G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
+
+The x64 `IGDPFile`/`IGDPObject` now read the original OLE compound GDP with
+Windows structured storage, without pre-extracting assets. The transformer's
+read surface (`ITransformerInput::Size/Get`), default animator, object and
+subobject names, transformable flag, vertex count, and Morph-derived data list
+are native. `GDPStorageProbe` inventories the storage hierarchy.
+`NativeGDPApiCheck` compared all 50 data-list items byte-for-byte with the
+original x86 `IGDPObject::Get` dumps; the default animator bytes and
+subobject count (seven) also matched. The remaining material/UV/triangulation methods of
+`IGDPObject` are placeholders, and `ITransformer::Load/Generate` is still
+unimplemented. The x64 `Game.exe` links successfully with the new GDP reader.
 
 Further x86 runtime inspection identified what the compact format omits.
 With `S2_FACE_VERTEX_INFLUENCES_PATH` and
