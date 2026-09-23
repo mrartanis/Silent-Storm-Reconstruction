@@ -3,6 +3,7 @@ param(
     [Parameter(Mandatory)][string]$X86GDPProbe,
     [Parameter(Mandatory)][string]$X64BlendCheck,
     [string]$X64SelectorParamCheck,
+    [string]$X64GameWeightCheck,
     [Parameter(Mandatory)][string]$OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
@@ -11,6 +12,9 @@ $x86 = (Resolve-Path -LiteralPath $X86GDPProbe).Path
 $x64 = (Resolve-Path -LiteralPath $X64BlendCheck).Path
 $nativeParameters = if ($X64SelectorParamCheck) {
     (Resolve-Path -LiteralPath $X64SelectorParamCheck).Path
+} else { $null }
+$nativeWeights = if ($X64GameWeightCheck) {
+    (Resolve-Path -LiteralPath $X64GameWeightCheck).Path
 } else { $null }
 $gdp = Join-Path $game 'Res\FaceGenHead.gdp'
 $tree = Join-Path $game 'Res\FaceGenHead.mmt'
@@ -34,6 +38,9 @@ if ((Get-PEMachine $x86) -ne 0x14c -or (Get-PEMachine $x64) -ne 0x8664) {
 }
 if ($nativeParameters -and (Get-PEMachine $nativeParameters) -ne 0x8664) {
     throw 'Selector-parameter parity requires a native x64 check'
+}
+if ($nativeWeights -and (Get-PEMachine $nativeWeights) -ne 0x8664) {
+    throw 'Game-weight parity requires a native x64 check'
 }
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Force -Path $output | Out-Null
@@ -89,6 +96,10 @@ try {
             & $nativeParameters $tree $parameters @macroArgs
             if ($LASTEXITCODE -ne 0) { throw "Native selector-parameter parity failed: $($case.Name)" }
         }
+        if ($nativeWeights) {
+            & $nativeWeights $tree --native $weights @macroArgs
+            if ($LASTEXITCODE -ne 0) { throw "Native game-weight parity failed: $($case.Name)" }
+        }
     }
     if ((Get-FileHash -LiteralPath (Join-Path $output 'neutral-morphed-head.bin')).Hash -ne
         (Get-FileHash -LiteralPath (Join-Path $output 'nose-morphed-head.bin')).Hash) {
@@ -97,6 +108,9 @@ try {
     Write-Output 'FACEGEN BLEND PARITY PASS: 11 x86 cases, 419 vertices and 129 muscle anchors each, tolerance=0.0001'
     if ($nativeParameters) {
         Write-Output 'FACEGEN SELECTOR-PARAMETER PARITY PASS: 11 x86 cases, 5 inputs each, tolerance=0.0001'
+    }
+    if ($nativeWeights) {
+        Write-Output 'FACEGEN NATIVE GAME WEIGHT PARITY PASS: 11 x86 cases, 16 weights each, tolerance=0.0001'
     }
 }
 finally {

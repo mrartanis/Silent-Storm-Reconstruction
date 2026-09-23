@@ -212,8 +212,13 @@ bool EvaluateChildren(const void *bytes, std::size_t size,
   {
     MMTreeCurve curve;
     float transformed = 0.0f;
-    if (!DecodeMMTreeCurve(bytes, size, operation, &curve) ||
-        !EvaluateHermiteCurve(curve.x, curve.y, expression, &transformed))
+    if (!DecodeMMTreeCurve(bytes, size, operation, &curve))
+      return false;
+    // A child may receive an expression beyond its own knot span. The x86
+    // macro tree holds the endpoint value there (not an evaluation failure).
+    const float bounded = std::max(curve.x.front(),
+                                   std::min(curve.x.back(), expression));
+    if (!EvaluateHermiteCurve(curve.x, curve.y, bounded, &transformed))
       return false;
     if (operation.headerWords[0] == 1)
     {

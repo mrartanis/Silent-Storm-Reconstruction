@@ -143,6 +143,9 @@ int main()
                                                root, "TEST", 0.5f, &samples));
   assert(samples.size() == 1 && samples[0].kind == 5 &&
          samples[0].targetName == "M" && samples[0].expression == 0.5f);
+  assert(NativeLifeStudio::EvaluateMMTreeMacro(macroBytes.data(), macroBytes.size(),
+                                               root, "TEST", 1.5f, &samples));
+  assert(samples.size() == 1 && samples[0].expression == 1.0f);
   NativeLifeStudio::MMTreeOperationRecord boneDefinition;
   boneDefinition.offset = 88;
   boneDefinition.headerWords[0] = 4;

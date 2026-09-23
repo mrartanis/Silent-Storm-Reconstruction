@@ -63,10 +63,27 @@ bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
 bool BlendFaceGenGeometry(const FaceGenData &data,
                           const std::vector<float> &weights,
                           FaceGenGeometry *result);
+bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
+                                   const std::vector<float> &weights,
+                                   FaceGenGeometry *result);
 // Evaluate the five GDP selector inputs for the named game sliders. This does
 // not perform TriangLib's archetype interpolation or generate an animator.
 bool EvaluateGameFaceGenParameters(
     const void *treeBytes, std::size_t treeSize, const MMTreeRoot &tree,
     const std::vector<std::pair<std::string, float>> &sliders,
     std::array<float, 5> *result);
+// The shipping game's Age macro stays in the adult/older range. Its 16
+// archetypes are ordered as four ethnicities times M/W/O/C; children get zero
+// weight on that game-used range. ethnicityTotals are the four nationality
+// group weights, either passed by a diagnostic or selected below.
+bool ComposeGameFaceGenWeights(const std::array<float, 5> &parameters,
+                               const std::array<float, 4> &ethnicityTotals,
+                               std::vector<float> *result);
+// The game's nationality slider has 101 discrete UI positions. At those
+// positions this uses x86-oracle-derived group coefficients, while Age and
+// Gender are evaluated natively from the MMT and composed analytically.
+bool SelectGameFaceGenWeights(
+    const void *treeBytes, std::size_t treeSize, const MMTreeRoot &tree,
+    const std::vector<std::pair<std::string, float>> &sliders,
+    std::vector<float> *result);
 }

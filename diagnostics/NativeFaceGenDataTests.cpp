@@ -39,6 +39,7 @@ int main()
   auto invalidBlend = blendData;
   invalidBlend.archetypes[0].morph.vertices[0].index = 1;
   NativeLifeStudio::FaceGenGeometry geometry;
+  std::vector<float> gameWeights;
   const bool ok = NativeLifeStudio::ParseFaceGenRules(valid, &data) &&
       data.heads.size() == 3 && data.combinations.size() == 2 &&
       data.combinations[0].parts.size() == 2 &&
@@ -64,7 +65,13 @@ int main()
       geometry.vertices.size() == 1 && geometry.vertices[0][0] == 5.0f &&
       geometry.musclePointB[0][0] == 10.0f &&
       !NativeLifeStudio::BlendFaceGenGeometry(invalidBlend, {1.0f, 3.0f}, &geometry) &&
-      !NativeLifeStudio::BlendFaceGenGeometry(blendData, {0.0f, 0.0f}, &geometry);
+      !NativeLifeStudio::BlendFaceGenGeometry(blendData, {0.0f, 0.0f}, &geometry) &&
+      NativeLifeStudio::ComposeGameFaceGenWeights({0, 0, 0, 0, 0},
+                                                   {0, 50, 0, 0}, &gameWeights) &&
+      gameWeights.size() == 16 && gameWeights[4] == 20.0f &&
+      gameWeights[5] == 20.0f && gameWeights[6] == 10.0f &&
+      !NativeLifeStudio::ComposeGameFaceGenWeights({-100, 0, 0, 0, 0},
+                                                    {0, 50, 0, 0}, &gameWeights);
   if (!ok) std::fprintf(stderr, "FaceGen rule parser regression\n");
   return ok ? 0 : 1;
 }

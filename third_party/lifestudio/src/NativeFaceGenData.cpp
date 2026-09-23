@@ -14,6 +14,8 @@ namespace NativeLifeStudio
 {
 namespace
 {
+#include "NativeFaceGenGameEthnicity.inc"
+
 constexpr std::array<const char *, 5> kParameters =
     {"Age", "Gender", "African", "Asian", "Arab"};
 
@@ -215,9 +217,10 @@ bool LoadFaceGenData(LifeStudioHeadAPI::ITransformerInput *input,
   return true;
 }
 
-bool BlendFaceGenGeometry(const FaceGenData &data,
-                          const std::vector<float> &weights,
-                          FaceGenGeometry *result)
+namespace
+{
+bool BlendGeometry(const FaceGenData &data, const std::vector<float> &weights,
+                   bool animation, FaceGenGeometry *result)
 {
   if (!result || data.archetypes.empty() || weights.size() != data.archetypes.size())
     return false;
@@ -228,20 +231,27 @@ bool BlendFaceGenGeometry(const FaceGenData &data,
     total += weight;
   }
   if (!(total > 0.0) || !std::isfinite(total)) return false;
-  const auto &base = data.archetypes.front().morph;
-  if (base.vertices.size() != base.vertexCount ||
+  const auto headOf = [animation](const FaceGenArchetype &archetype) -> const HeadData & {
+    return animation ? archetype.animation : archetype.morph;
+  };
+  const auto &base = headOf(data.archetypes.front());
+  if (base.vertices.size() + base.implicitVertices.size() != base.vertexCount ||
       base.muscles.size() != base.muscleCount) return false;
   for (const auto &archetype : data.archetypes)
   {
-    const auto &head = archetype.morph;
+    const auto &head = headOf(archetype);
     if (head.vertexCount != base.vertexCount || head.muscleCount != base.muscleCount ||
         head.vertices.size() != base.vertices.size() ||
+        head.implicitVertices.size() != base.implicitVertices.size() ||
         head.muscles.size() != base.muscles.size()) return false;
     for (std::size_t i = 0; i < base.vertices.size(); ++i)
       if (base.vertices[i].index >= base.vertexCount ||
           head.vertices[i].index != base.vertices[i].index) return false;
     for (std::size_t i = 0; i < base.muscles.size(); ++i)
       if (head.muscles[i].name != base.muscles[i].name) return false;
+    for (std::size_t i = 0; i < base.implicitVertices.size(); ++i)
+      if (base.implicitVertices[i].index >= base.vertexCount ||
+          head.implicitVertices[i].index != base.implicitVertices[i].index) return false;
   }
   FaceGenGeometry blended;
   blended.vertices.resize(base.vertexCount);
@@ -252,8 +262,18 @@ bool BlendFaceGenGeometry(const FaceGenData &data,
     {
       double sum = 0.0;
       for (std::size_t n = 0; n < weights.size(); ++n)
-        sum += double(weights[n]) * data.archetypes[n].morph.vertices[i].sourcePosition[axis];
+        sum += double(weights[n]) * headOf(data.archetypes[n]).vertices[i].sourcePosition[axis];
       blended.vertices[base.vertices[i].index][axis] = static_cast<float>(sum / total);
+    }
+  for (std::size_t i = 0; i < base.implicitVertices.size(); ++i)
+    for (int axis = 0; axis < 3; ++axis)
+    {
+      double sum = 0.0;
+      for (std::size_t n = 0; n < weights.size(); ++n)
+        sum += double(weights[n]) *
+            headOf(data.archetypes[n]).implicitVertices[i].sourcePosition[axis];
+      blended.vertices[base.implicitVertices[i].index][axis] =
+          static_cast<float>(sum / total);
     }
   for (std::size_t i = 0; i < base.muscles.size(); ++i)
     for (int axis = 0; axis < 3; ++axis)
@@ -261,14 +281,29 @@ bool BlendFaceGenGeometry(const FaceGenData &data,
       double sumA = 0.0, sumB = 0.0;
       for (std::size_t n = 0; n < weights.size(); ++n)
       {
-        sumA += double(weights[n]) * data.archetypes[n].morph.muscles[i].pointA[axis];
-        sumB += double(weights[n]) * data.archetypes[n].morph.muscles[i].pointB[axis];
+        sumA += double(weights[n]) * headOf(data.archetypes[n]).muscles[i].pointA[axis];
+        sumB += double(weights[n]) * headOf(data.archetypes[n]).muscles[i].pointB[axis];
       }
       blended.musclePointA[i][axis] = static_cast<float>(sumA / total);
       blended.musclePointB[i][axis] = static_cast<float>(sumB / total);
     }
   *result = std::move(blended);
   return true;
+}
+}
+
+bool BlendFaceGenGeometry(const FaceGenData &data,
+                          const std::vector<float> &weights,
+                          FaceGenGeometry *result)
+{
+  return BlendGeometry(data, weights, false, result);
+}
+
+bool BlendFaceGenAnimationGeometry(const FaceGenData &data,
+                                   const std::vector<float> &weights,
+                                   FaceGenGeometry *result)
+{
+  return BlendGeometry(data, weights, true, result);
 }
 
 bool EvaluateGameFaceGenParameters(
@@ -302,5 +337,58 @@ bool EvaluateGameFaceGenParameters(
       parameters[index] = static_cast<float>(100.0 * sums[index] / counts[index]);
   *result = parameters;
   return true;
+}
+
+bool ComposeGameFaceGenWeights(const std::array<float, 5> &parameters,
+                               const std::array<float, 4> &ethnicityTotals,
+                               std::vector<float> *result)
+{
+  if (!result || !std::isfinite(parameters[0]) || !std::isfinite(parameters[1]) ||
+      parameters[0] < -25.0f || parameters[0] > 100.0f ||
+      parameters[1] < -100.0f || parameters[1] > 100.0f)
+    return false;
+  for (float weight : ethnicityTotals)
+    if (!std::isfinite(weight) || weight < 0.0f) return false;
+  const double adult = (100.0 - parameters[0]) / 125.0;
+  const double male = (100.0 + parameters[1]) / 200.0;
+  std::vector<float> weights(16, 0.0f);
+  for (std::size_t ethnicity = 0; ethnicity < ethnicityTotals.size(); ++ethnicity)
+  {
+    const double group = ethnicityTotals[ethnicity];
+    weights[ethnicity * 4] = static_cast<float>(group * adult * male);
+    weights[ethnicity * 4 + 1] = static_cast<float>(group * adult * (1.0 - male));
+    weights[ethnicity * 4 + 2] = static_cast<float>(group * (1.0 - adult));
+  }
+  *result = std::move(weights);
+  return true;
+}
+
+bool SelectGameFaceGenWeights(
+    const void *treeBytes, std::size_t treeSize, const MMTreeRoot &tree,
+    const std::vector<std::pair<std::string, float>> &sliders,
+    std::vector<float> *result)
+{
+  std::array<float, 5> parameters{};
+  if (!EvaluateGameFaceGenParameters(treeBytes, treeSize, tree,
+                                     sliders, &parameters)) return false;
+  std::array<float, 4> ethnicities = {0.125f, 16.875f, 16.75f, 16.75f};
+  for (const auto &slider : sliders)
+    if (slider.first == "Nationality")
+    {
+      if (!std::isfinite(slider.second) || slider.second < -1.0f ||
+          slider.second > 1.0f) return false;
+      const double position = (double(slider.second) + 1.0) * 50.0;
+      const auto nearest = static_cast<int>(std::round(position));
+      const int first = std::max(0, std::min(100,
+          std::fabs(position - nearest) < 0.0001 ? nearest :
+          static_cast<int>(std::floor(position))));
+      const int second = std::min(100, first + 1);
+      const double fraction = std::fabs(position - nearest) < 0.0001 ? 0.0 : position - first;
+      for (int ethnicity = 0; ethnicity < 4; ++ethnicity)
+        ethnicities[ethnicity] = static_cast<float>(
+            (1.0 - fraction) * kGameEthnicityTotals[first][ethnicity] +
+            fraction * kGameEthnicityTotals[second][ethnicity]);
+    }
+  return ComposeGameFaceGenWeights(parameters, ethnicities, result);
 }
 }

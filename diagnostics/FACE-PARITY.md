@@ -447,16 +447,18 @@ observed vertex delta 1.91e-6 and anchor delta 3.82e-6. Run with:
   -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
   -X64BlendCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenBlendCheck.exe' `
   -X64SelectorParamCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenSelectorParamCheck.exe' `
+  -X64GameWeightCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenGameWeightCheck.exe' `
   -OutputDirectory 'G:\SS\lab\runs\face-blend-gate'
 ```
 
-This test deliberately feeds x86-selected weights to the native blender;
-it does **not** prove native weight selection or full `ITransformer`
-generation. For example, neutral x86 weights begin `0.05, 0.05, 0.025, 0`
+The blend subtest deliberately feeds x86-selected weights to the native
+blender; the optional game-weight subtest separately checks native selection.
+Neither proves full `ITransformer` generation. For example, neutral x86
+weights begin `0.05, 0.05, 0.025, 0`
 for Euro M/W/O/C and `6.75, 6.75, 3.375, 0` for African M/W/O/C. `Nose=0.5`
-does not change them; `Age` and `Gender` do. Reconstructing that selection
-rule and the remaining animation-generation passes is still required before
-the direct x64 transform parity gate can turn green.
+does not change them; `Age` and `Gender` do. The game-used weight selection
+is now reproduced as described below; animation-generation passes are still
+required before the direct x64 transform parity gate can turn green.
 
 Scope of the native port is the **game's calls**, not every LifeStudio
 FaceGen feature. `Main/iAdvFaceGen.cpp::UpdateHead` sets 14 named sliders,
@@ -474,8 +476,9 @@ texture channels. A no-macro probe is **not** equivalent to the editor's
 explicit `Nationality=0` state. `S2_FACE_SELECTOR_PARAMS_PATH=<path>` exports
 the transformer's five selector inputs for diagnostics; the default is five
 zeros, while `Nationality=1` sets the three ethnicity inputs to approximately
-`100,-58.44155,-55.84415`. The selector's interpolation is supplied by the
-x86-only `TriangLib.dll`; it is not yet native. The game-used transformation,
+`100,-58.44155,-55.84415`. The original selector's general-purpose
+interpolation is supplied by the x86-only `TriangLib.dll`; the native port
+implements only the game's discrete slider path. The game-used transformation,
 including texture outputs and committed-head save/reload, is the remaining
 target rather than a general-purpose FaceGen API clone.
 The native MMT evaluator now accepts the game's class-5 user-item leaves,
@@ -484,8 +487,46 @@ texture effects. `EvaluateGameFaceGenParameters` maps the resulting effects
 to the five Morph.txt selector inputs. The optional selector-parameter check
 in the command above compares those five x64 inputs directly with freshly
 exported x86 values on all eleven cases; its maximum observed delta is
-3.82e-6. This verifies the game-used parameter calculation, **not** the
-TriangLib interpolation from parameters to archetype weights.
+3.82e-6.
+
+The 16 game archetype weights factor into four nationality-group totals and
+the same Age/Gender proportions within each group. On the observed game
+range, `adult=(100-Age)/125`, `older=1-adult`, and
+`male=(100+Gender)/200`, where Age and Gender are the evaluated selector
+parameters, not raw slider amplitudes. The native MMT evaluator clamps a
+child expression to its knot endpoints as the x86 macro tree does; this was
+needed for intermediate Nationality positions. The four nationality totals
+for the editor's 101 integer positions (0..100) are captured as a small
+oracle-derived coefficient table in `NativeFaceGenGameEthnicity.inc`.
+`SelectGameFaceGenWeights` uses that table and the native Age/Gender
+calculation, with no x86 DLL at runtime. This is deliberately not a general
+5D TriangLib replacement. Off-grid nationality amplitudes are linearly
+interpolated but have not been parity-qualified. Direct x86/x64 weight gates
+pass all 101 Nationality, 101 Age and 101 Gender positions, 27 combinations,
+and the 11-case blend corpus (including the editor default), with maximum
+raw-weight delta 1.91e-6 at 1e-4 tolerance. Run the full weight sweep with:
+
+```powershell
+& .\diagnostics\Test-FaceGenGameWeightFactorization.ps1 `
+  -GameRoot 'G:\SS\lab\baseline' `
+  -X86GDPProbe 'G:\SS\lab\build-x86\RelWithDebInfo\FaceGDPProbe.exe' `
+  -X64WeightCheck 'G:\SS\lab\build-x64\RelWithDebInfo\NativeFaceGenGameWeightCheck.exe' `
+  -OutputDirectory 'G:\SS\lab\runs\face-native-weights-gate' `
+  -NativeEthnicity
+```
+
+The next transformer stage is still red: the x86 transformer's saved
+36-muscle animation base is not always a plain weighted average of the
+archetype `*_A.mld` source vertices. `NativeFaceGenBlendCheck --animation`
+matches its 36 muscle anchors within 1.91e-6 but differs on 52 of 419
+neutral vertices (maximum 6.79e-4) and on 64 vertices of the editor-default
+case (maximum 2.09e-2). A one-hot EuroM archetype round-trips through the
+x86 `IAnimator::Save` with zero source-position difference, so the gap arises
+in mixed-head generation. The discrepant vertices include eye attachments
+and bilateral face features; this is not just a serializer rounding error.
+The native morph-head blend remains green; do not
+reuse it unchanged for the animation base or claim the output animator is
+implemented.
 
 With `S2_FACE_DUMP_WORKER_PREFIX=<path>`, the x86 probe also exports the
 worker's post-`Generate` scalar, item and vector arrays for comparison. On
