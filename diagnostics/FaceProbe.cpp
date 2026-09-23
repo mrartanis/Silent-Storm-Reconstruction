@@ -148,6 +148,41 @@ static void SnapshotVertexState(IAnimator *anim)
   std::fclose(file);
 }
 
+static void SnapshotVertexInfluences(IAnimator *anim)
+{
+  const char *path = std::getenv("S2_FACE_VERTEX_INFLUENCES_PATH");
+  if (!path || !ReadableMemory(anim, 0x28)) return;
+  const auto *header = reinterpret_cast<const unsigned char *>(anim);
+  const auto begin = *reinterpret_cast<const std::uintptr_t *>(header + 0x20);
+  const auto end = *reinterpret_cast<const std::uintptr_t *>(header + 0x24);
+  if (end < begin || (end - begin) % 8 || (end - begin) / 8 > 1000000) return;
+  FILE *file = std::fopen(path, "wb");
+  if (!file) return;
+  std::fprintf(file, "vertex,muscle,componentA,componentB\n");
+  for (std::uintptr_t address = begin; address < end; address += 8)
+  {
+    if (!ReadableMemory(reinterpret_cast<const void *>(address), 8)) break;
+    const auto *entry = reinterpret_cast<const std::uintptr_t *>(address);
+    const auto *vertex = reinterpret_cast<const unsigned char *>(entry[1]);
+    if (!ReadableMemory(vertex, 0x20)) break;
+    const std::uint32_t index = *reinterpret_cast<const std::uint32_t *>(vertex + 8);
+    const std::int32_t count = *reinterpret_cast<const std::int32_t *>(vertex + 0x1C);
+    const auto influences = *reinterpret_cast<const std::uintptr_t *>(vertex + 0x0C);
+    if (index >= 1000000 || count < 0 || count > 1000 ||
+        !ReadableMemory(reinterpret_cast<const void *>(influences), std::size_t(count) * 12))
+      break;
+    const auto *data = reinterpret_cast<const unsigned char *>(influences);
+    for (int i = 0; i < count; ++i)
+    {
+      const auto muscle = *reinterpret_cast<const std::uint32_t *>(data + i * 12);
+      const auto componentA = *reinterpret_cast<const float *>(data + i * 12 + 4);
+      const auto componentB = *reinterpret_cast<const float *>(data + i * 12 + 8);
+      std::fprintf(file, "%u,%u,%.9g,%.9g\n", index, muscle, componentA, componentB);
+    }
+  }
+  std::fclose(file);
+}
+
 static void SnapshotAnimatedState(IAnimator *anim, const char *label, int time, const char *stage)
 {
   const char *selected = std::getenv("S2_FACE_STATE_SNAPSHOT_TIME");
@@ -426,6 +461,10 @@ static bool WriteFrame(FILE *out, const std::vector<char> &animData,
         std::getenv("S2_FACE_STATE_SNAPSHOT_TIME") &&
         std::atoi(std::getenv("S2_FACE_STATE_SNAPSHOT_TIME")) == time)
       SnapshotVertexState(anim);
+    if (sequence && std::getenv("S2_FACE_VERTEX_INFLUENCES_PATH") &&
+        std::getenv("S2_FACE_STATE_SNAPSHOT_TIME") &&
+        std::atoi(std::getenv("S2_FACE_STATE_SNAPSHOT_TIME")) == time)
+      SnapshotVertexInfluences(anim);
 #endif
     ok = anim->Process(vertices.data(), 3);
 #if defined(_M_IX86)

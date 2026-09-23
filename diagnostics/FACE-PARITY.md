@@ -347,6 +347,23 @@ interpretation is sufficient for the still pose but not verified for motion.
 The native GDP/transformer path itself remains a stub. Oracle artifacts are in the ignored
 `G:\SS\lab\runs\stage2-face-gdp-oracle-01\evidence` directory.
 
+Further x86 runtime inspection identified what the compact format omits.
+With `S2_FACE_VERTEX_INFLUENCES_PATH` and
+`S2_FACE_STATE_SNAPSHOT_TIME=0`, `FaceProbe` exports each loaded vertex's
+runtime `(muscle, componentA, componentB)` after physics. The original
+`head-56-0.bin` and its x86-saved/reloaded copy produced byte-identical CSVs
+for all 1,083 influences. The saved file contains only `componentA`; the
+original DLL reconstructs `componentB` at load time. For example, vertex 0's
+first influence has A=0.53200537 and restored B=0.363512456. The saved
+FaceGen `Nose=0.5` stream has the same 1,083 runtime influences but different
+weights (for that influence A=0.53536272, B=0.337188423). A is the
+unclamped projection parameter of the vertex on the muscle's anchor segment:
+all 1,083 source-stream values match this calculation within 2.21e-7.
+B is a spatial falloff that still needs to be reproduced natively. Setting
+B=1 in the current saved-stream decoder explains why still-pose parity passes
+but animated parity does not. The reference CSVs are in the ignored oracle
+run's `evidence` directory.
+
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
 `head-56-0.bin`, the source stream is 31,612 bytes and the saved form is

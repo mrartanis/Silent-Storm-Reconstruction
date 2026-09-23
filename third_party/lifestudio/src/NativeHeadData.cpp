@@ -98,8 +98,9 @@ bool DecodeSavedHeadVertices(const void *bytes, std::size_t size, HeadData *resu
           influence.muscleIndex >= parsed.muscleCount ||
           !reader.F32(cursor + 4, &influence.componentA))
         return false;
-      // Save collapses the source stream's two influence coefficients into
-      // one runtime coefficient; keep the second factor neutral.
+      // Save omits componentB. The original DLL reconstructs it from the
+      // vertex/muscle geometry at Load time. This neutral placeholder is
+      // enough for still poses, but animated saved-stream parity remains red.
       influence.componentB = 1.0f;
       vertex.influences.push_back(influence);
     }
