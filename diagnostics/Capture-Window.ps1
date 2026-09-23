@@ -11,6 +11,8 @@ Add-Type @'
 using System;
 using System.Runtime.InteropServices;
 public static class LabWindowCapture {
+    [DllImport("user32.dll")]
+    public static extern bool SetProcessDPIAware();
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT { public int Left, Top, Right, Bottom; }
     [DllImport("user32.dll")]
@@ -19,6 +21,13 @@ public static class LabWindowCapture {
     public static extern bool MoveWindow(IntPtr hwnd, int x, int y, int width, int height, bool repaint);
 }
 '@
+
+# GetWindowRect and CopyFromScreen must use the same physical-pixel space.
+# On a 125% desktop, an unaware PowerShell process otherwise crops the right
+# and bottom of a game window, hiding the portrait panel in its evidence.
+if (-not [LabWindowCapture]::SetProcessDPIAware()) {
+    throw 'Cannot enable DPI-aware window capture'
+}
 
 $process = Get-Process -Id $ProcessId
 $hwnd = $process.MainWindowHandle

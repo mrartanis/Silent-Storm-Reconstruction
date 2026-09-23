@@ -285,8 +285,20 @@ loaded the existing `AI_CTRL` save to `LOAD-SLOT-DONE` and exited through the
 harness `quit` command without a recorded crash. Its screenshot
 `evidence\loaded-game.png` proves only that the scene rendered; it does not
 establish that the minimap portrait or live facial motion is correct. This
-run preceded the native effect work and has not been repeated with the current
-bridge.
+run preceded the native effect work; the later check is described below.
+
+A fresh x64 archive from commit `feb52c8` and isolated run
+`G:\SS\lab\runs\stage2-face-live-feb52c8-01` loaded the same `AI_CTRL` save
+to `LOAD-SLOT-DONE`. After selecting hero 1 through DirectInput scan code
+`0x02`, `evidence\portrait-visible.png` shows her rendered face in the lower
+left portrait; `evidence\inventory-full-physical.png` also shows the head on
+the full-body model. Two captures two seconds apart (`portrait-frame-a.png`
+and `portrait-frame-b.png`) show a changed portrait pose. This establishes
+visible live output for one selected hero, not x86/x64 pixel parity or
+coverage of every portrait, dialogue and FaceGen path. The first screenshots
+were misleadingly cropped: `Capture-Window.ps1` was not DPI-aware and on the
+125% desktop lost the right and bottom 20% of the physical game window.
+The capture helper now uses physical-pixel window bounds.
 
 Format investigation: `FaceProbe animator.bin neutral.csv saved.bin` asks the
 original x86 `IAnimator::Save` for its canonical serialized form. For
