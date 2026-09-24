@@ -103,8 +103,9 @@ const wstring &SaveRootW()
 
 wstring ProfileDirW( const string &profile )
 {
-	const wstring name = NStr::ToUnicode( profile );
-	if ( !S2FileIO::IsSafeSaveComponent( name ) || SaveRootW().empty() ) return wstring();
+	wstring name;
+	if ( !S2FileIO::DecodeWindowsSaveName( profile, &name ) ||
+		!S2FileIO::IsSafeSaveComponent( name ) || SaveRootW().empty() ) return wstring();
 	const wstring path = SaveRootW() + name + L"\\";
 	return IsReparsePointW( path ) ? wstring() : path;
 }
@@ -196,8 +197,8 @@ void CSaveManager::GetProfilesList( list<string> *pList ) const
 		if ( !( entry.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ||
 			( entry.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT ) ||
 			!S2FileIO::IsSafeSaveComponent( name ) ) continue;
-		const string encoded = NStr::ToAscii( name );
-		if ( NStr::ToUnicode( encoded ) == name ) pList->push_back( encoded );
+		const string encoded = S2FileIO::EncodeWindowsSaveName( name );
+		if ( !encoded.empty() ) pList->push_back( encoded );
 	} while ( FindNextFileW( handle, &entry ) );
 	FindClose( handle );
 }
@@ -429,13 +430,13 @@ void MakeDefaultProfile()
 	if ( profilesList.empty() )
 	{
 		NGlobal::ResetVar( "game_profile" );
-		CreateProfile( NStr::ToAscii( NGlobal::GetVar( "game_profile" ).GetString() ) );
+		CreateProfile( S2FileIO::EncodeWindowsSaveName( NGlobal::GetVar( "game_profile" ).GetString() ) );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 string GetActiveProfile()
 {
-	string szActive = NStr::ToAscii( NGlobal::GetVar( "game_profile" ).GetString() );
+	string szActive = S2FileIO::EncodeWindowsSaveName( NGlobal::GetVar( "game_profile" ).GetString() );
 
 	list<string> profilesList;
 	GetProfilesList( &profilesList );
@@ -450,15 +451,22 @@ string GetActiveProfile()
 		if ( profilesList.empty() )
 			MakeDefaultProfile();
 		else
-			NGlobal::SetVar( "game_profile", NGlobal::CValue( NStr::ToUnicode( profilesList.front() ) ) );
+		{
+			wstring name;
+			if ( S2FileIO::DecodeWindowsSaveName( profilesList.front(), &name ) )
+				NGlobal::SetVar( "game_profile", NGlobal::CValue( name ) );
+		}
 	}
 
-	return NStr::ToAscii( NGlobal::GetVar( "game_profile" ).GetString() );
+	return S2FileIO::EncodeWindowsSaveName( NGlobal::GetVar( "game_profile" ).GetString() );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void SetActiveProfile( const string &szProfile )
 {
-	NGlobal::SetVar( "game_profile", NGlobal::CValue( NStr::ToUnicode( szProfile ) ) );
+	wstring name;
+	if ( S2FileIO::DecodeWindowsSaveName( szProfile, &name ) &&
+		S2FileIO::IsSafeSaveComponent( name ) )
+		NGlobal::SetVar( "game_profile", NGlobal::CValue( name ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail NMainLoop::IsValidCustomName @0x235d00 (iSaveManager.obj): a typed save-slot name is valid

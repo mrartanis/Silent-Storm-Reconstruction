@@ -14,5 +14,14 @@ int main() {
   std::wstring restored;
   if (S2FileIO::DecodeWindowsSaveName(std::string("\x1f\xff"), &restored) ||
       S2FileIO::DecodeWindowsSaveName("anything", nullptr)) return 3;
+  const std::wstring profile = L"Профиль 漢字";
+  const std::string config = S2FileIO::EncodeWindowsProfileConfig(profile);
+  if (config.compare(0, 5, "S2U8:") != 0 ||
+      config.find(' ') != std::string::npos ||
+      !S2FileIO::DecodeWindowsProfileConfig(config, &restored) || restored != profile ||
+      !S2FileIO::DecodeWindowsProfileConfig("default", &restored) || restored != L"default" ||
+      S2FileIO::DecodeWindowsProfileConfig("S2U8:FF", &restored) ||
+      S2FileIO::DecodeWindowsProfileConfig("S2U8:A", &restored) ||
+      S2FileIO::DecodeWindowsProfileConfig("S2U8:XX", &restored)) return 4;
   return 0;
 }

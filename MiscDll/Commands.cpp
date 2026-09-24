@@ -4,6 +4,7 @@
 #include "LogStream.h"
 #include "..\FileIO\BasicChunk1.h"
 #include "..\FileIO\WindowsUserData.h"
+#include "..\FileIO\WindowsSaveNames.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGlobal
 {
@@ -298,7 +299,10 @@ void SaveConfig( const string &szFileName )
 		if ( !iTemp->second.bSave )
 			continue;
 
-		saveRecords.push_back( pair<string, string>( iTemp->first, NStr::ToAscii( iTemp->second.sValue.GetString() ) ) );
+		const string value = iTemp->first == "game_profile" ?
+			S2FileIO::EncodeWindowsProfileConfig( iTemp->second.sValue.GetString() ) :
+			NStr::ToAscii( iTemp->second.sValue.GetString() );
+		saveRecords.push_back( pair<string, string>( iTemp->first, value ) );
 	}
 	sort( saveRecords.begin(), saveRecords.end() );
 	for ( vector< pair<string, string> >::const_iterator iTemp = saveRecords.begin(); iTemp != saveRecords.end(); ++iTemp )
@@ -443,7 +447,18 @@ static void CmdSetVar( const string &szID, const vector<wstring> &paramsSet, voi
 	if ( paramsSet[1].compare( L"=" ) != 0 )
 		return;
 
-	NGlobal::SetVar( NStr::ToAscii( paramsSet[0] ), NGlobal::CValue( paramsSet[2] ) );
+	wstring value = paramsSet[2];
+	if ( paramsSet[0] == L"game_profile" )
+	{
+		if ( value.compare( 0, 5, L"S2U8:" ) == 0 )
+		{
+			const string encoded = NStr::ToAscii( value );
+			if ( !S2FileIO::DecodeWindowsProfileConfig( encoded, &value ) ) return;
+		}
+		else for ( size_t i = 3; i < paramsSet.size(); ++i )
+			value += L" " + paramsSet[i];
+	}
+	NGlobal::SetVar( NStr::ToAscii( paramsSet[0] ), NGlobal::CValue( value ) );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

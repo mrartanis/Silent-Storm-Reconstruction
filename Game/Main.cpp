@@ -324,6 +324,22 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 			find( slots.begin(), slots.end(), wanted ) != slots.end() ? 1 : 0,
 			static_cast<unsigned>( slots.size() ) );
 	}
+	else if ( sCmd == "profileunicode" )
+	{
+		const string profile = S2FileIO::EncodeWindowsSaveName( L"\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u6f22\u5b57" );
+		NMainLoop::CreateProfile( profile );
+		NMainLoop::SetActiveProfile( profile );
+	}
+	else if ( sCmd == "profilecheck" )
+	{
+		const string wanted = S2FileIO::EncodeWindowsSaveName( L"\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u6f22\u5b57" );
+		list<string> profiles;
+		NMainLoop::GetProfilesList( &profiles );
+		SaveLoadDiag( "[harness] unicode profile active=%d listed=%d count=%u\n",
+			NMainLoop::GetActiveProfile() == wanted ? 1 : 0,
+			find( profiles.begin(), profiles.end(), wanted ) != profiles.end() ? 1 : 0,
+			static_cast<unsigned>( profiles.size() ) );
+	}
 	else if ( sCmd == "screenshot" )
 		SaveLoadDiag( "[harness] screenshot ok=%d\n", NMainLoop::MakeScreenShot() ? 1 : 0 );
 	else if ( sCmd.compare( 0, 9, "turnsave " ) == 0 )

@@ -12,6 +12,8 @@
 #include "Interface.h"
 #include "iCommonUI.h"
 #include "iSaveManager.h"
+#include "..\FileIO\PortableUserPaths.h"
+#include "..\FileIO\WindowsSaveNames.h"
 #include "iOptionsMenu.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NUI
@@ -991,7 +993,7 @@ bool CProfileDeleteDlg::ProcessMessage( const SEvent &sEvent )
 		{
 			if ( sEvent.szID == "ok" )
 			{
-				NMainLoop::DeleteProfile( NStr::ToAscii( wsProfile ) );
+				NMainLoop::DeleteProfile( S2FileIO::EncodeWindowsSaveName( wsProfile ) );
 				SendMessage( pNotify, SEvent( EVENT_NOTIFY, GetWindowID() ) );
 			}
 			SetStyle( STYLE_VISIBLE, false );   // both OK and Cancel close the dialog
@@ -1067,7 +1069,9 @@ void CProfileOptionsUI::UpdateFromConfig()
 		if ( iNext == profilesList.end() )
 			nTemplate = 173;
 
-		pProfiles->AddItem( nIndex, CComplexComboBox::SInfo( NStr::ToUnicode( *iProfile ) ), nTemplate );
+		wstring displayName;
+		S2FileIO::DecodeWindowsSaveName( *iProfile, &displayName );
+		pProfiles->AddItem( nIndex, CComplexComboBox::SInfo( displayName ), nTemplate );
 		if ( *iProfile == szActive )
 			pProfiles->SetSelectedItem( nIndex );
 	}
@@ -1158,9 +1162,10 @@ bool CProfileOptionsUI::ProcessMessage( const SEvent &sEvent )
 			{
 				list<string> profilesList;
 				NMainLoop::GetProfilesList( &profilesList );
-				if ( int( profilesList.size() ) < 20 && IsValid( pEdit ) && !pEdit->GetText().empty() )
+				if ( int( profilesList.size() ) < 20 && IsValid( pEdit ) &&
+					S2FileIO::IsSafeSaveComponent( pEdit->GetText() ) )
 				{
-					string szNew = NStr::ToAscii( pEdit->GetText() );
+					string szNew = S2FileIO::EncodeWindowsSaveName( pEdit->GetText() );
 					NMainLoop::CreateProfile( szNew );
 					NMainLoop::SetActiveProfile( szNew );
 					pEdit->SetText( L"" );
@@ -1182,7 +1187,7 @@ bool CProfileOptionsUI::ProcessMessage( const SEvent &sEvent )
 				// Selecting a profile in the combo makes it the active one.
 				wstring wsSel = GetSelectedProfile();
 				if ( !wsSel.empty() )
-					NMainLoop::SetActiveProfile( NStr::ToAscii( wsSel ) );
+					NMainLoop::SetActiveProfile( S2FileIO::EncodeWindowsSaveName( wsSel ) );
 			}
 			else if ( sEvent.szID == "deletedlg" )
 			{
