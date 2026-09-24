@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Render.h"
 #include "..\Misc\2DArray.h"
+#include "..\FileIO\PortableStructureChunks.h"
 //
 namespace NDb
 {
@@ -253,6 +254,26 @@ public:
 	friend class CTParent;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::SExplVoxel, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 2;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SExplVoxel* value) {
+    if (!value) return false;
+    std::uint16_t object = 0;
+    if (!DecodeStructureScalar(source, length, &object)) return false;
+    value->nObject = object;
+    return true;
+  }
+  static bool Encode(const NAI::SExplVoxel& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeStructureScalar(static_cast<std::uint16_t>(value.nObject),
+                                 destination, length);
+  }
+};
 }
 //
 #endif __AIVOXELRENDER_H_

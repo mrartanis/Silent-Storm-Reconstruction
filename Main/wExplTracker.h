@@ -51,8 +51,9 @@ const float F_IGNITION_OBJECT_DAMAGE_MULT = 10.0f;   // Game.exe VA 0x8c9fc4: a 
 void ResetBreakExplCalcs();
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // SExplVoxelCoords (retail PDB: NAMESPACE-scope, 6 bytes {ushort nX,nY,nZ}) -- one GLOBAL voxel-grid
-// coordinate of the retail wavefront (0x400 x 0x400 x 0x80 world voxel space). Written RAW on the
-// wire (DoDataVector<NWorld::SExplVoxelCoords> @0x359c00) -- deliberately NO member operator&.
+// coordinate of the retail wavefront (0x400 x 0x400 x 0x80 world voxel space). Stored as the
+// original raw-vector blob (DoDataVector<NWorld::SExplVoxelCoords> @0x359c00),
+// with explicit field encoding below; deliberately NO member operator&.
 // W5 serialization-convergence: replaces the dev CExplCube::SExplVoxelCoords 3-byte nested struct.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SExplVoxelCoords
@@ -63,6 +64,33 @@ struct SExplVoxelCoords
 	SExplVoxelCoords( unsigned short _nX, unsigned short _nY, unsigned short _nZ ):
 		nX( _nX ), nY( _nY ), nZ( _nZ ) {}
 };
+} // NWorld
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NWorld::SExplVoxelCoords, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 6;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NWorld::SExplVoxelCoords* value) {
+    if (!value) return false;
+    StructureVoxelCoords coords;
+    if (!DecodeStructureVoxelCoords(source, length, &coords)) return false;
+    value->nX = coords.x;
+    value->nY = coords.y;
+    value->nZ = coords.z;
+    return true;
+  }
+  static bool Encode(const NWorld::SExplVoxelCoords& value,
+                     std::uint8_t* destination, std::size_t length) {
+    StructureVoxelCoords coords;
+    coords.x = value.nX;
+    coords.y = value.nY;
+    coords.z = value.nZ;
+    return EncodeStructureVoxelCoords(coords, destination, length);
+  }
+};
+} // S2FileIO
+namespace NWorld {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CVoxelExpl (retail id 0x51682140, 140 bytes) -- ONE wavefront ring of a blast, flood-filled over
 // the GLOBAL voxel space (C3DLookupTable resolve over the shared CExplosionSpace grid below).
@@ -186,6 +214,7 @@ public:
 		CWorld *_pWorld, NDb::CRPGEngGrenade *_pEngGrenade = 0, int _nEngSkill = 0 );
 	//
 	bool IsFinished() const { return bIsFinished; }
+	bool HasWavefrontForHarness() const { return IsValid( pExpl ); }
 	bool MakeSingleStep();   // retail @0x3565c0: (re)spawn the current ring + one iteration; false == ring settled
 	void MakeDamage();       // retail @0x3566d0: apply the settled ring's damage, advance nWave, finish the blast
 };

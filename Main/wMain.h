@@ -624,6 +624,7 @@ public:
 	virtual void AddGrenadeExplosion( const CVec3 &vStartPosition,
 		NDb::CRPGEngGrenade *pRPGEngGrenade, int nEngSkill, CUnitServer *pUnitServer = 0,
 		CObjectBase *pIgnitionObject = 0, const SPerkMineModifiers *pMods = 0 );
+	IExplosionMaster *GetExplosionMasterForHarness() const { return pExplosionMaster.GetPtr(); }
 	void KillObject( CObjectServerBase *pOS );
 	// Retail has NO CWorld pocket methods -- it inlines these two bodies into luaObjectPlaceInPocket
 	// (@0x2e9000) / luaObjectRestoreFromPocket (@0x2e9130), reaching the world through GetPocket()

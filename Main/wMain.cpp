@@ -2692,6 +2692,10 @@ void CWorld::Segment()
 	// flush (IExplosionMaster vtbl+0x18 == Segment). W5 serialization-convergence: AddGrenadeExplosion
 	// now enqueues blasts into it (vtbl+0x14 STD / +0x10 ENG) and its Segment is the literal retail
 	// pacing loop @0x3571d0 -- it resets the per-segment nBreakCalcs budget at its own top.
+	// Older reconstruction saves predate tag 50 and restore this field as null.
+	// Rebuild the scheduler on the first world tick so their explosions still do damage.
+	if ( !IsValid( pExplosionMaster ) )
+		pExplosionMaster = CreateExplosionMaster( this );
 	if ( IsValid( pExplosionMaster ) )
 		pExplosionMaster->Segment();
 

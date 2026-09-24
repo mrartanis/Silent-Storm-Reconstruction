@@ -34,6 +34,11 @@ int main() {
       0x34, 0x12, 0, 0, 1, 2, 0, 3, 0x78, 0x56, 0x34, 0x12};
   S2FileIO::StructureActionInfoFields action;
   std::uint8_t actionEncoded[sizeof(actionWire)] = {};
+  const std::uint8_t voxelWire[] = {0x34, 0x12, 0x78, 0x56, 0xbc, 0x9a};
+  S2FileIO::StructureVoxelCoords voxel;
+  std::uint8_t voxelEncoded[sizeof(voxelWire)] = {};
+  std::uint16_t voxelObject = 0;
+  std::uint8_t voxelObjectEncoded[2] = {};
   if (!S2FileIO::DecodeStructureScalar(scalar32, sizeof(scalar32), &unsignedValue) ||
       unsignedValue != 0x12345678 ||
       !S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, sizeof(encoded32)) ||
@@ -73,6 +78,16 @@ int main() {
       std::memcmp(actionEncoded + 16, actionWire + 16, 4) != 0 ||
       S2FileIO::DecodeStructureActionInfo(actionWire, 19, &action) ||
       S2FileIO::EncodeStructureActionInfo(action, actionEncoded, 19) ||
+      !S2FileIO::DecodeStructureVoxelCoords(voxelWire, sizeof(voxelWire), &voxel) ||
+      voxel.x != 0x1234 || voxel.y != 0x5678 || voxel.z != 0x9abc ||
+      !S2FileIO::EncodeStructureVoxelCoords(voxel, voxelEncoded, sizeof(voxelEncoded)) ||
+      std::memcmp(voxelWire, voxelEncoded, sizeof(voxelWire)) != 0 ||
+      !S2FileIO::DecodeStructureScalar(voxelWire, 2, &voxelObject) ||
+      voxelObject != 0x1234 ||
+      !S2FileIO::EncodeStructureScalar(voxelObject, voxelObjectEncoded, 2) ||
+      std::memcmp(voxelWire, voxelObjectEncoded, 2) != 0 ||
+      S2FileIO::DecodeStructureVoxelCoords(voxelWire, 5, &voxel) ||
+      S2FileIO::EncodeStructureVoxelCoords(voxel, voxelEncoded, 5) ||
       S2FileIO::DecodeStructureScalar(scalar32, 3, &unsignedValue) ||
       S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, 3) ||
       S2FileIO::DecodeStructureScalar(nullptr, 4, &unsignedValue)) return 1;

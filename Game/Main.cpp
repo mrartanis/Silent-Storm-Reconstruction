@@ -23,11 +23,14 @@
 #include "..\Main\A5Script.h"       // [HARNESS] ProcessCommand (console/lua entry for the command channel)
 #include "..\Main\LSHead.h"         // [HARNESS] export the complete facial-sequence test corpus
 #include "..\Main\iMission.h"       // [HARNESS] loaded mission and active player
+#include "..\Main\wMain.h"          // [HARNESS] direct, DB-backed grenade blast in a loaded world
+#include "..\Main\wExplTracker.h"   // [HARNESS] explosion scheduler state for save/load probes
 #include "..\Main\iAdvFaceGen.h"    // [HARNESS] real advanced editor interface command
 #include "..\Main\RPGGlobal.h"      // [HARNESS] saved merc list
 #include "..\Main\RPGUnit.h"        // [HARNESS] per-merc committed head
 #include "..\DBFormat\DataRPG.h"    // [HARNESS] nationality preview template
 #include <dbghelp.h>                 // [HARNESS] post-load crash backtrace (SymFromAddr / StackWalk64)
+#include <cmath>
 #pragma comment(lib, "dbghelp.lib")
 namespace NMainLoop { bool MakeScreenShot(); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,6 +264,168 @@ static void HarnessFaceGenStatus( const char *phase )
 		ifMeshes[0], ifMeshes[1], ifMeshes[2], ifMeshes[3] );
 }
 
+// Fire the real world explosion path without relying on inventory, throw animations, or UI input.
+// Coordinates are world-space, not voxel indices. This command is only available in harness runs.
+static bool HarnessExplode( const string &command )
+{
+	int grenadeId = 0;
+	float x = 0, y = 0, z = 0;
+	char trailing = 0;
+	if ( sscanf( command.c_str(), "explode %d %f %f %f %c", &grenadeId, &x, &y, &z, &trailing ) != 4 ||
+	     grenadeId <= 0 || !std::isfinite( x ) || !std::isfinite( y ) || !std::isfinite( z ) )
+	{
+		SaveLoadDiag( "[harness] explode rejected: expected explode <grenade-id> <x> <y> <z>\n" );
+		return false;
+	}
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	NWorld::CWorld *pWorld = pMission ? dynamic_cast<NWorld::CWorld*>( pMission->GetWorld() ) : 0;
+	NDb::CRPGGrenade *pGrenade = NDb::GetRPGGrenade( grenadeId );
+	if ( !pWorld || !IsValid( pGrenade ) || pGrenade->nWaveNumber <= 0 )
+	{
+		SaveLoadDiag( "[harness] explode rejected: world=%d grenade=%d waves=%d\n",
+			pWorld ? 1 : 0, IsValid( pGrenade ) ? 1 : 0,
+			IsValid( pGrenade ) ? pGrenade->nWaveNumber : 0 );
+		return false;
+	}
+	if ( !pWorld->GetExplosionMasterForHarness() )
+	{
+		SaveLoadDiag( "[harness] explode rejected: no explosion scheduler\n" );
+		return false;
+	}
+	const CTRect<float> &safe = pWorld->GetMapSafeZone();
+	if ( x < safe.x1 || x > safe.x2 || y < safe.y1 || y > safe.y2 || z < 0 || z > 256 )
+	{
+		SaveLoadDiag( "[harness] explode rejected: point=(%.2f,%.2f,%.2f) safe_xy=(%.2f,%.2f)-(%.2f,%.2f)\n",
+			x, y, z, safe.x1, safe.y1, safe.x2, safe.y2 );
+		return false;
+	}
+	pWorld->AddGrenadeExplosion( CVec3( x, y, z ), pGrenade );
+	NWorld::CExplosionMaster *pMaster = dynamic_cast<NWorld::CExplosionMaster*>( pWorld->GetExplosionMasterForHarness() );
+	SaveLoadDiag( "[harness] explode queued: grenade=%d waves=%d radius=%.2f point=(%.2f,%.2f,%.2f) pending=%u\n",
+		grenadeId, pGrenade->nWaveNumber, pGrenade->fWaveRadius, x, y, z,
+		pMaster ? static_cast<unsigned>( pMaster->toBeStarted.size() ) : 0 );
+	return true;
+}
+
+static void HarnessUnitPositions()
+{
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	NWorld::IWorld *pWorld = pMission ? pMission->GetWorld() : 0;
+	if ( !pWorld )
+	{
+		SaveLoadDiag( "[harness] unitpos rejected: no loaded mission\n" );
+		return;
+	}
+	vector< CPtr<NWorld::CUnit> > units;
+	pWorld->GetAllUnits( &units );
+	SaveLoadDiag( "[harness] unitpos count=%u\n", static_cast<unsigned>( units.size() ) );
+	for ( size_t i = 0; i < units.size() && i < 32; ++i )
+	{
+		if ( !IsValid( units[i] ) ) continue;
+		CVec3 position;
+		units[i]->GetRealPosition( &position );
+		SaveLoadDiag( "[harness] unitpos index=%u point=(%.2f,%.2f,%.2f) player=%d\n",
+			static_cast<unsigned>( i ), position.x, position.y, position.z,
+			units[i]->GetPlayer() ? 1 : 0 );
+	}
+}
+
+static void HarnessExplosionStatus()
+{
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	NWorld::CWorld *pWorld = pMission ? dynamic_cast<NWorld::CWorld*>( pMission->GetWorld() ) : 0;
+	NWorld::CExplosionMaster *pMaster = pWorld ? dynamic_cast<NWorld::CExplosionMaster*>( pWorld->GetExplosionMasterForHarness() ) : 0;
+	if ( !pMaster )
+	{
+		SaveLoadDiag( "[harness] explstatus rejected: no explosion scheduler\n" );
+		return;
+	}
+	unsigned activeWavefronts = 0;
+	for ( size_t i = 0; i < pMaster->explosions.size(); ++i )
+		if ( IsValid( pMaster->explosions[i] ) && pMaster->explosions[i]->HasWavefrontForHarness() ) ++activeWavefronts;
+	SaveLoadDiag( "[harness] explstatus state=%d lag=%d pending=%u trackers=%u wavefronts=%u\n",
+		static_cast<int>( pMaster->state ), pMaster->nLag,
+		static_cast<unsigned>( pMaster->toBeStarted.size() ),
+		static_cast<unsigned>( pMaster->explosions.size() ), activeWavefronts );
+}
+
+static string g_harnessWavefrontSaveSlot;
+static int g_harnessWavefrontSaveFrames = 0;
+
+static void HarnessSaveOnWavefront()
+{
+	if ( g_harnessWavefrontSaveSlot.empty() ) return;
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	NWorld::CWorld *pWorld = pMission ? dynamic_cast<NWorld::CWorld*>( pMission->GetWorld() ) : 0;
+	NWorld::CExplosionMaster *pMaster = pWorld ? dynamic_cast<NWorld::CExplosionMaster*>( pWorld->GetExplosionMasterForHarness() ) : 0;
+	unsigned wavefronts = 0;
+	if ( pMaster )
+		for ( size_t i = 0; i < pMaster->explosions.size(); ++i )
+			if ( IsValid( pMaster->explosions[i] ) && pMaster->explosions[i]->HasWavefrontForHarness() ) ++wavefronts;
+	if ( wavefronts )
+	{
+		SaveLoadDiag( "[harness] explodesave wavefronts=%u trackers=%u slot=%s frames=%d\n",
+			wavefronts, static_cast<unsigned>( pMaster->explosions.size() ),
+			g_harnessWavefrontSaveSlot.c_str(), g_harnessWavefrontSaveFrames );
+		NMainLoop::Command( new NMainLoop::CICSave( g_harnessWavefrontSaveSlot, true ) );
+		g_harnessWavefrontSaveSlot.clear();
+	}
+	else if ( ++g_harnessWavefrontSaveFrames >= 600 )
+	{
+		SaveLoadDiag( "[harness] explodesave timed out: no active wavefront\n" );
+		g_harnessWavefrontSaveSlot.clear();
+	}
+}
+
+static void HarnessExplodeSave( const string &command )
+{
+	char slot[128] = {}, trailing = 0;
+	int count = 0, grenadeId = 0;
+	float x = 0, y = 0, z = 0;
+	if ( sscanf( command.c_str(), "explodesave %127s %d %d %f %f %f %c",
+			slot, &count, &grenadeId, &x, &y, &z, &trailing ) != 6 ||
+		count < 1 || count > 8 || g_harnessWavefrontSaveSlot.size() )
+	{
+		SaveLoadDiag( "[harness] explodesave rejected: expected explodesave <slot> <1..8 count> <grenade-id> <x> <y> <z>\n" );
+		return;
+	}
+	for ( const char *p = slot; *p; ++p )
+		if ( !( (*p >= 'A' && *p <= 'Z') || (*p >= 'a' && *p <= 'z') ||
+		        (*p >= '0' && *p <= '9') || *p == '_' || *p == '-' ) )
+		{
+			SaveLoadDiag( "[harness] explodesave rejected: slot must be ASCII alphanumeric, underscore or hyphen\n" );
+			return;
+		}
+	list<string> existingSlots;
+	NMainLoop::GetSaveManager()->GetSlotsList( &existingSlots );
+	if ( find( existingSlots.begin(), existingSlots.end(), string( slot ) ) != existingSlots.end() )
+	{
+		SaveLoadDiag( "[harness] explodesave rejected: slot already exists: %s\n", slot );
+		return;
+	}
+	char blast[256];
+	sprintf_s( blast, "explode %d %.9g %.9g %.9g", grenadeId, x, y, z );
+	if ( !HarnessExplode( blast ) ) return;
+	for ( int i = 1; i < count; ++i ) HarnessExplode( blast );
+	g_harnessWavefrontSaveSlot = slot;
+	g_harnessWavefrontSaveFrames = 0;
+	SaveLoadDiag( "[harness] explodesave armed: slot=%s count=%d grenade=%d\n", slot, count, grenadeId );
+}
+
+static void HarnessGrenades()
+{
+	CDBTable<NDb::CRPGGrenade> *pTable = NDatabase::GetTable<NDb::CRPGGrenade>();
+	if ( !pTable ) return;
+	CDBIterator<NDb::CRPGGrenade> it( *pTable );
+	while ( it.MoveNext() )
+	{
+		NDb::CRPGGrenade *p = it.Get();
+		if ( IsValid( p ) && p->nWaveNumber > 1 )
+			SaveLoadDiag( "[harness] grenade id=%d waves=%d radius=%.2f\n",
+				p->GetRecordID(), p->nWaveNumber, p->fWaveRadius );
+	}
+}
+
 // ============================================================================================
 // [HARNESS] Frame-polled command channel -- a minimal RTC protocol between an external driver and
 // the running game. Once per frame (when g_bHarnessLog is on) the main loop reads ONE command line
@@ -272,6 +437,11 @@ static void HarnessFaceGenStatus( const char *phase )
 //   save <slot>      queue an ordinary game save slot
 //   rng <uint32> [console <text>] reset RNG and optionally run an action in the same frame
 //   turnsave <slot> hand the turn to AI and queue an ordinary save in the same frame
+//   explode <grenade-id> <x> <y> <z> enqueue a DB-backed grenade blast at a world-space point
+//   unitpos         log world-space positions of the first 32 live units for choosing a point
+//   grenades        log grenade DB records with multiple explosion waves
+//   explstatus      log queued and in-flight explosion tracker counts
+//   explodesave <slot> <count> <id> <x> <y> <z> save on first active wavefront (up to 600 frames)
 //   facefixtures    export DB-backed facial-sequence streams into S2_FACE_FIXTURE_DIR
 //   headfixtures    export all DB-backed head animator segments into S2_FACE_FIXTURE_DIR
 //   faceexpressions log the DB's game-used expression -> sequence mapping
@@ -287,6 +457,7 @@ static void HarnessFaceGenStatus( const char *phase )
 // ============================================================================================
 static bool HarnessPoll()   // returns false to request main-loop exit
 {
+	HarnessSaveOnWavefront();
 	FILE *pF = fopen( "_harness_cmd.txt", "rb" );
 	if ( !pF )
 		return true;
@@ -306,9 +477,22 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	else if ( sCmd.compare( 0, 8, "console " ) == 0 )
 		ProcessCommand( NStr::ToUnicode( sCmd.substr( 8 ) ) );
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
+	{
+		g_harnessWavefrontSaveSlot.clear();
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
+	}
 	else if ( sCmd.compare( 0, 5, "save " ) == 0 )
 		NMainLoop::Command( new NMainLoop::CICSave( sCmd.substr( 5 ), true ) );
+	else if ( sCmd.compare( 0, 8, "explode " ) == 0 )
+		HarnessExplode( sCmd );
+	else if ( sCmd.compare( 0, 12, "explodesave " ) == 0 )
+		HarnessExplodeSave( sCmd );
+	else if ( sCmd == "unitpos" )
+		HarnessUnitPositions();
+	else if ( sCmd == "grenades" )
+		HarnessGrenades();
+	else if ( sCmd == "explstatus" )
+		HarnessExplosionStatus();
 	else if ( sCmd == "saveunicode" )
 		NMainLoop::Command( new NMainLoop::CICSave(
 			S2FileIO::EncodeWindowsSaveName( L"\u0422\u0435\u0441\u0442 \u6f22\u5b57" ), true ) );

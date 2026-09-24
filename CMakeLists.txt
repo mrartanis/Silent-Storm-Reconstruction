@@ -334,6 +334,10 @@ s2_module(Script    lib LINK FileIO Input MiscDll Misc)
 s2_module(DBFormat  lib LINK ADOImport FileIO Misc)
 s2_module(Main      lib LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
                             lifestudio_shim bink_shim d3d9 dxguid s2_portable_user_paths)
+add_executable(NativeVoxelWireTests "${root}/diagnostics/NativeVoxelWireTests.cpp")
+target_include_directories(NativeVoxelWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeVoxelWireTests PRIVATE "${root}/Main/StdAfx.h")
+add_test(NAME NativeVoxelWireTests COMMAND NativeVoxelWireTests)
 # the game
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script

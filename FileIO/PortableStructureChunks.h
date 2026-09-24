@@ -182,6 +182,35 @@ inline bool EncodeStructureActionInfo(const StructureActionInfoFields& value,
          EncodeStructureScalar(value.result, destination + 16, 4);
 }
 
+// An explosion wavefront cell is three little-endian 16-bit coordinates,
+// independent of any padding in the game's host struct.
+struct StructureVoxelCoords {
+  std::uint16_t x = 0;
+  std::uint16_t y = 0;
+  std::uint16_t z = 0;
+};
+
+inline bool DecodeStructureVoxelCoords(const std::uint8_t* source,
+                                       std::size_t length,
+                                       StructureVoxelCoords* value) {
+  if (!source || !value || length != 6) return false;
+  StructureVoxelCoords decoded;
+  if (!DecodeStructureScalar(source, 2, &decoded.x) ||
+      !DecodeStructureScalar(source + 2, 2, &decoded.y) ||
+      !DecodeStructureScalar(source + 4, 2, &decoded.z)) return false;
+  *value = decoded;
+  return true;
+}
+
+inline bool EncodeStructureVoxelCoords(const StructureVoxelCoords& value,
+                                       std::uint8_t* destination,
+                                       std::size_t length) {
+  if (!destination || length != 6) return false;
+  return EncodeStructureScalar(value.x, destination, 2) &&
+         EncodeStructureScalar(value.y, destination + 2, 2) &&
+         EncodeStructureScalar(value.z, destination + 4, 2);
+}
+
 // Specialize this for game PODs whose historical wire format must not depend
 // on host padding or alignment. Unspecialized PODs retain the legacy raw path.
 template<class T, class Enable = void>
