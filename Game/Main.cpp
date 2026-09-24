@@ -266,7 +266,7 @@ static void HarnessFaceGenStatus( const char *phase )
 
 // Fire the real world explosion path without relying on inventory, throw animations, or UI input.
 // Coordinates are world-space, not voxel indices. This command is only available in harness runs.
-static bool HarnessExplode( const string &command )
+static bool HarnessExplode( const string &command, const NWorld::SPerkMineModifiers *pMods = 0 )
 {
 	int grenadeId = 0;
 	float x = 0, y = 0, z = 0;
@@ -299,7 +299,7 @@ static bool HarnessExplode( const string &command )
 			x, y, z, safe.x1, safe.y1, safe.x2, safe.y2 );
 		return false;
 	}
-	pWorld->AddGrenadeExplosion( CVec3( x, y, z ), pGrenade );
+	pWorld->AddGrenadeExplosion( CVec3( x, y, z ), pGrenade, 0, 0, pMods );
 	NWorld::CExplosionMaster *pMaster = dynamic_cast<NWorld::CExplosionMaster*>( pWorld->GetExplosionMasterForHarness() );
 	SaveLoadDiag( "[harness] explode queued: grenade=%d waves=%d radius=%.2f point=(%.2f,%.2f,%.2f) pending=%u\n",
 		grenadeId, pGrenade->nWaveNumber, pGrenade->fWaveRadius, x, y, z,
@@ -377,16 +377,27 @@ static void HarnessSaveOnWavefront()
 	}
 }
 
-static void HarnessExplodeSave( const string &command )
+static void HarnessExplodeSave( const string &command, bool bPerk = false )
 {
 	char slot[128] = {}, trailing = 0;
-	int count = 0, grenadeId = 0;
-	float x = 0, y = 0, z = 0;
-	if ( sscanf( command.c_str(), "explodesave %127s %d %d %f %f %f %c",
-			slot, &count, &grenadeId, &x, &y, &z, &trailing ) != 6 ||
+	int count = 0, grenadeId = 0, critical = 0;
+	float x = 0, y = 0, z = 0, structure = 1, area = 1;
+	const int parsed = bPerk ?
+		sscanf( command.c_str(), "explodesaveperk %127s %d %d %f %f %f %f %f %d %c",
+			slot, &count, &grenadeId, &x, &y, &z, &structure, &area, &critical, &trailing ) :
+		sscanf( command.c_str(), "explodesave %127s %d %d %f %f %f %c",
+			slot, &count, &grenadeId, &x, &y, &z, &trailing );
+	if ( parsed != ( bPerk ? 9 : 6 ) ||
 		count < 1 || count > 8 || g_harnessWavefrontSaveSlot.size() )
 	{
-		SaveLoadDiag( "[harness] explodesave rejected: expected explodesave <slot> <1..8 count> <grenade-id> <x> <y> <z>\n" );
+		SaveLoadDiag( "[harness] explodesave rejected: expected explodesave[perk] <slot> <1..8 count> <grenade-id> <x> <y> <z> [<structure> <area> <critical:0|1>]\n" );
+		return;
+	}
+	if ( bPerk && ( !std::isfinite( structure ) || !std::isfinite( area ) ||
+		structure < 0 || structure > 10 || area < 0 || area > 10 ||
+		( critical != 0 && critical != 1 ) ) )
+	{
+		SaveLoadDiag( "[harness] explodesaveperk rejected: modifiers must be finite 0..10 and critical 0|1\n" );
 		return;
 	}
 	for ( const char *p = slot; *p; ++p )
@@ -405,11 +416,17 @@ static void HarnessExplodeSave( const string &command )
 	}
 	char blast[256];
 	sprintf_s( blast, "explode %d %.9g %.9g %.9g", grenadeId, x, y, z );
-	if ( !HarnessExplode( blast ) ) return;
-	for ( int i = 1; i < count; ++i ) HarnessExplode( blast );
+	NWorld::SPerkMineModifiers mods;
+	mods.fStructureDmgModifier = structure;
+	mods.fAEDmgModifier = area;
+	mods.bAlwaysHumanCritical = critical != 0;
+	const NWorld::SPerkMineModifiers *pMods = bPerk ? &mods : 0;
+	if ( !HarnessExplode( blast, pMods ) ) return;
+	for ( int i = 1; i < count; ++i ) HarnessExplode( blast, pMods );
 	g_harnessWavefrontSaveSlot = slot;
 	g_harnessWavefrontSaveFrames = 0;
-	SaveLoadDiag( "[harness] explodesave armed: slot=%s count=%d grenade=%d\n", slot, count, grenadeId );
+	SaveLoadDiag( "[harness] explodesave armed: slot=%s count=%d grenade=%d structure=%.3f area=%.3f critical=%d\n",
+		slot, count, grenadeId, structure, area, critical );
 }
 
 static void HarnessGrenades()
@@ -442,6 +459,7 @@ static void HarnessGrenades()
 //   grenades        log grenade DB records with multiple explosion waves
 //   explstatus      log queued and in-flight explosion tracker counts
 //   explodesave <slot> <count> <id> <x> <y> <z> save on first active wavefront (up to 600 frames)
+//   explodesaveperk <slot> <count> <id> <x> <y> <z> <structure> <area> <0|1> test perk-bearing wavefront
 //   facefixtures    export DB-backed facial-sequence streams into S2_FACE_FIXTURE_DIR
 //   headfixtures    export all DB-backed head animator segments into S2_FACE_FIXTURE_DIR
 //   faceexpressions log the DB's game-used expression -> sequence mapping
@@ -487,6 +505,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		HarnessExplode( sCmd );
 	else if ( sCmd.compare( 0, 12, "explodesave " ) == 0 )
 		HarnessExplodeSave( sCmd );
+	else if ( sCmd.compare( 0, 16, "explodesaveperk " ) == 0 )
+		HarnessExplodeSave( sCmd, true );
 	else if ( sCmd == "unitpos" )
 		HarnessUnitPositions();
 	else if ( sCmd == "grenades" )
