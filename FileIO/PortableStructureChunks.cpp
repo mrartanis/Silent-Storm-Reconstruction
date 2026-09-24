@@ -61,4 +61,22 @@ bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
   return true;
 }
 
+bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
+    const std::uint8_t* bytes, std::size_t length,
+    std::vector<StructureObjectRecord>* records) {
+  if (!records) return false;
+  records->clear();
+  if (length % 9 != 0 || (length && !bytes)) return false;
+  records->reserve(length / 9);
+  for (std::size_t offset = 0; offset < length; offset += 9) {
+    std::uint32_t typeId = 0, wireId = 0;
+    for (unsigned i = 0; i != 4; ++i) {
+      typeId |= std::uint32_t(bytes[offset + i]) << (i * 8);
+      wireId |= std::uint32_t(bytes[offset + 4 + i]) << (i * 8);
+    }
+    records->push_back({typeId, wireId, bytes[offset + 8] != 0});
+  }
+  return true;
+}
+
 } // namespace S2FileIO

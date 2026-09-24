@@ -28,6 +28,16 @@ Linux-сборка GCC 11.4 использовала `-std=c++17 -O1 -g -Wall -W
 по 8/8 CTest проходят. Изолированный Linux-каталог с копией `game.db`
 после проверки удалён.
 
+Следующий слой — верхняя объектная таблица (чанк 0). Каждая запись занимает
+ровно 9 байт: little-endian `typeId`, little-endian `wireId`, однобайтовый
+флаг действительности. `CStructureSaver::Start` использует общий переносимый
+декодер `DecodeStructureObjectTable` вместо чтения трёх полей в host-типы.
+Опция `PortableStructureProbe game.db --objects` на той же базе дала
+`objects 155 valid 155 unique-ids 155` на Windows x86/x64 и Linux x86-64;
+Linux GCC 11.4 под ASan/UBSan не сообщил ошибок. Объектная фабрика и
+десериализация полей объектов остаются в Windows-игре, поэтому это ещё не
+Linux-загрузчик таблиц.
+
 Коммит `101edc8` собран в чистые архивы
 `G:\SS\lab\builds\stage2-db-chunks-20260924-01` (x64) и
 `G:\SS\lab\builds\stage2-db-chunks-x86-20260924-01` (x86). Из каждого
@@ -60,6 +70,7 @@ g++ -std=c++17 -O1 -g -Wall -Wextra -Werror \
   -o PortableStructureProbe
 sha256sum data/game.db
 ./PortableStructureProbe data/game.db
+./PortableStructureProbe data/game.db --objects
 ```
 
 Границы: это верхний слой чтения `game.db`, не перенос таблиц и ссылок

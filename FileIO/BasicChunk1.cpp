@@ -3,6 +3,7 @@
 #include "Cruncher.h"   // CNetCompressor -- the packed (retail v1) save-chunk codec
 #include "PortableStructureChunks.h"
 #include <cstdarg>
+#include <stdexcept>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // save-load load-trace diagnostic (dev harness) -- see BasicChunk1.h
 bool g_bSaveLoadDiag = false;
@@ -594,15 +595,18 @@ void CStructureSaver::Start( bool bRead )
 		GetShortChunkSave( res, 0, obj, nBaseSeek, bPacked );
 		GetShortChunkSave( res, 2, data, nBaseSeek, bPacked );
 		chunks.back().nLength = data.GetSize();
+		// Chunk 0 is a disk-format table of nine-byte descriptors, not host pointers.
+		std::vector<S2FileIO::StructureObjectRecord> objectRecords;
+		if ( !S2FileIO::DecodeStructureObjectTable(
+			static_cast<const std::uint8_t*>(obj.GetBuffer()),
+			static_cast<std::size_t>(obj.GetSize()), &objectRecords ) )
+			throw std::runtime_error( "invalid structure object table" );
 		// create all objects from obj
-		while ( obj.GetPosition() < obj.GetSize() )
+		for ( const auto &record : objectRecords )
 		{
-			int nTypeID = 0;
-			std::uint32_t wireID = 0;
-			bool bValid;
-			obj.Read( &nTypeID, 4 );
-			obj.Read( &wireID, 4 );
-			obj.Read( &bValid,1 );
+			const int nTypeID = static_cast<int>(record.typeId);
+			const std::uint32_t wireID = record.wireId;
+			const bool bValid = record.valid;
 			CObjectBase *pObject = pSSClasses->CreateObject( nTypeID );
 			ASSERT( pObject );
 			// [REGDIAG] a class id dev's registry can't build (CreateObject == null) must NOT enter the

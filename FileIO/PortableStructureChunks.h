@@ -19,6 +19,12 @@ struct StructureChunk {
   std::uint32_t length = 0;
 };
 
+struct StructureObjectRecord {
+  std::uint32_t typeId = 0;
+  std::uint32_t wireId = 0;
+  bool valid = false;
+};
+
 // CStructureSaver stores a byte tag followed by a 1- or 4-byte LE value:
 // encoded = (payload length << 1) | (extended ? 1 : 0).
 // `remaining` is the number of file bytes after the encoded length field.
@@ -29,6 +35,10 @@ bool S2_STRUCTURE_CALL DecodeStructureLength(const std::uint8_t* encoded,
 bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
                                          std::vector<StructureChunk>* chunks,
                                          std::string* error = nullptr);
+// Chunk 0 contains fixed nine-byte descriptors, independent of host pointer size.
+bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
+    const std::uint8_t* bytes, std::size_t length,
+    std::vector<StructureObjectRecord>* records);
 
 
 } // namespace S2FileIO
