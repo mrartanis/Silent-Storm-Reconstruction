@@ -420,21 +420,31 @@ void CStructureSaver::DataChunkBLOB( CMemoryStream &file )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CStructureSaver::StoreObject( CObjectBase *pObject )
 {
-	if ( pObject != 0 && storedObjects.find( pObject ) == storedObjects.end() )
+	std::uint32_t wireID = 0;
+	if ( pObject != 0 )
 	{
-		toStore.push_back( pObject );
-		storedObjects[pObject] = true; // it is important to assign something
+		CPObjectsHash::iterator it = storedObjects.find( pObject );
+		if ( it == storedObjects.end() )
+		{
+			if ( nextWireID == 0 )
+				throw SFileIOError( "too many serialized objects" );
+			wireID = nextWireID++;
+			toStore.push_back( pObject );
+			storedObjects[pObject] = wireID;
+		}
+		else
+			wireID = it->second;
 	}
-	RawData( &pObject, 4 );
+	RawData( &wireID, 4 );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CObjectBase* CStructureSaver::LoadObject()
 {
-	void *pServerPtr = 0;
-	RawData( &pServerPtr, 4 );
-	if ( pServerPtr != 0 )
+	std::uint32_t wireID = 0;
+	RawData( &wireID, 4 );
+	if ( wireID != 0 )
 	{
-		CObjectsHash::iterator pFound = objects.find( pServerPtr );
+		CObjectsHash::iterator pFound = objects.find( wireID );
 		if ( pFound != objects.end() )
 			return pFound->second;
 		ASSERT(0);
@@ -549,6 +559,7 @@ void CStructureSaver::Start( bool bRead )
 	}
 	if ( !bRead )
 	{
+		nextWireID = 1;
 		// Retail Start (v1.2 0x8129bc): use the current object layout when writing.
 		// Version is independent of compression (marker chunk 3). In particular, CSlot's
 		// version-1 base includes its decorator hover state; v0 silently drops that state.
@@ -581,10 +592,10 @@ void CStructureSaver::Start( bool bRead )
 		while ( obj.GetPosition() < obj.GetSize() )
 		{
 			int nTypeID = 0;
-			void *pServer = 0;
+			std::uint32_t wireID = 0;
 			bool bValid;
 			obj.Read( &nTypeID, 4 );
-			obj.Read( &pServer, 4 );
+			obj.Read( &wireID, 4 );
 			obj.Read( &bValid,1 );
 			CObjectBase *pObject = pSSClasses->CreateObject( nTypeID );
 			ASSERT( pObject );
@@ -607,7 +618,7 @@ void CStructureSaver::Start( bool bRead )
 				pTemp.Extract();
 			}
 			toStore.push_back( pObject );
-			objects[pServer] = pObject;
+			objects[wireID] = pObject;
 		}
 		// read information about every created object
 		int nCount = CountChunks( (chunk_id) 1 );
@@ -616,11 +627,11 @@ void CStructureSaver::Start( bool bRead )
 		{
 			for ( int i = 0; i < nCount; i++ )
 			{
-				void *pServer = 0;
+				std::uint32_t wireID = 0;
 				CObjectBase *pObject;
 				StartChunk( (chunk_id) 1, i + 1 );
-				DataChunk( 0, &pServer, 4, 1 );
-				pObject = objects[pServer];
+				DataChunk( 0, &wireID, 4, 1 );
+				pObject = objects[wireID];
 				ASSERT( pObject );
 				if ( pObject )
 				{
@@ -673,13 +684,17 @@ void CStructureSaver::Finish()
 			// save object type and its server pointer
 			int nTypeID = pSSClasses->GetObjectTypeID( pObject );
 			bool bValid = IsValid( pObject );
+			CPObjectsHash::iterator it = storedObjects.find( pObject );
+			if ( it == storedObjects.end() )
+				throw SFileIOError( "serialized object has no wire ID" );
+			std::uint32_t wireID = it->second;
 			ASSERT( nTypeID != -1 );
 			obj.Write( &nTypeID, 4 );
-			obj.Write( &pObject, 4 );
+			obj.Write( &wireID, 4 );
 			obj.Write( &bValid, 1 );
 			// save object data
 			StartChunk( (chunk_id) 1, nObject );
-			DataChunk( 0, &pObject, 4, 1 );
+			DataChunk( 0, &wireID, 4, 1 );
 			//
 			if ( StartChunk( 1, 1 ) )
 			{

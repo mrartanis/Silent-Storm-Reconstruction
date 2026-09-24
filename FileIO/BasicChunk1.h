@@ -7,6 +7,7 @@
 #include "Streams.h"
 #include "..\Misc\Basic2.h"
 #include "..\Misc\BasicFactory.h"
+#include <cstdint>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 externA5 CClassFactory<CObjectBase> *pSSClasses;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,12 +101,14 @@ private:
 	// files => v0. The release stamps v1 and packs the payload chunks 0/2/1 with CNetCompressor
 	// behind an "A3\0" marker chunk (id 3); the content layout is otherwise identical to v0.
 	int nVersion;
-	// maps objects addresses during save(first) to addresses during load(second) - during loading
-	// or serves as a sign that some object has been already stored - during storing
-	typedef std::unordered_map<void*,CPtr<CObjectBase>,SDefaultPtrHash> CObjectsHash;
+	// On disk, object references are 32-bit IDs. Legacy files used the writer's
+	// pointer bits as IDs; the reader must treat those bits as opaque values.
+	typedef std::unordered_map<std::uint32_t,CPtr<CObjectBase> > CObjectsHash;
 	CObjectsHash objects;
-	typedef std::unordered_map<void*,bool,SDefaultPtrHash> CPObjectsHash;
+	// New writes allocate stable wire IDs instead of truncating host pointers.
+	typedef std::unordered_map<CObjectBase*,std::uint32_t> CPObjectsHash;
 	CPObjectsHash storedObjects;
+	std::uint32_t nextWireID;
 	std::list<CObjectBase*> toStore;
 
 	bool ReadShortChunk( CChunkLevel &src, int &nPos, CChunkLevel &res );
