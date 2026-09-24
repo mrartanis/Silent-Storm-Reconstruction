@@ -40,6 +40,8 @@ add_executable(PortableCameraWireTests "${root}/diagnostics/PortableCameraWireTe
 add_test(NAME PortableCameraWireTests COMMAND PortableCameraWireTests)
 add_executable(PortableVertexWireTests "${root}/diagnostics/PortableVertexWireTests.cpp")
 add_test(NAME PortableVertexWireTests COMMAND PortableVertexWireTests)
+add_executable(ProbeSavedDecalVertices "${root}/diagnostics/ProbeSavedDecalVertices.cpp")
+target_link_libraries(ProbeSavedDecalVertices PRIVATE s2_portable_structure)
 add_library(s2_portable_database STATIC "${root}/FileIO/PortableGameDatabase.cpp")
 target_include_directories(s2_portable_database PUBLIC "${root}/FileIO")
 target_link_libraries(s2_portable_database PUBLIC s2_portable_structure)

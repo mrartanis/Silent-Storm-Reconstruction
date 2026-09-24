@@ -280,7 +280,33 @@ Packed-векторы кодируются по компонентам `z,y,x,w`
 но их элементы теперь проходят явный полевой кодек. Контрактный тест
 `PortableVertexWireTests` проверил точные байты и неверные длины на Linux
 x86-64 и ARM64/QEMU под ASan/UBSan без LeakSanitizer. На Windows x64 собраны
-`Game.exe`, переносимый и нативный тест, прошли 15/15 CTest. Чистый архив и
-игровой save/load ещё проверяются; реальный
-сейв без сохранённых декалей может не покрывать этот путь, что необходимо
-отличать от простого успешного загрузочного прогона.
+`Game.exe`, переносимый и нативный тест, прошли 15/15 CTest. Коммит
+`b820a31` собран в чистый x64-архив `stage2-vertex-wire-20260924-01`
+с 16 заданиями и нативным медиа без FMOD.
+
+Запуск `stage2-vertex-wire-clean-01` загрузил старый `DB_OLD`, записал
+контрольный `VERTEX_BASE/game.sav` (4 002 796 байт), затем выполнил
+`explodesave VERTEX_BLAST 4 23 18 26 9`. Лог подтвердил четыре ожидающих
+взрыва и перед сохранением `wavefronts=1 trackers=4 frames=48`.
+`VERTEX_BLAST/game.sav` (4 733 182 байта) повторно загружен до
+`LOAD-SLOT-DONE` без дампа. Размер сам по себе не доказывает наличие декали.
+Для проверки именно этого пути `ProbeSavedDecalVertices` прочитал таблицу
+объектов сейва и вложенные raw-векторы `CPerPolyDecalGeometry`: в
+`VERTEX_BASE` — `decal_objects=0 vertices=0 weights=0`, в `VERTEX_BLAST` —
+`decal_objects=1 vertices=5 weights=5`, с длинами 5×32 и 5×20 байт.
+Воспроизведение пробника из корня реконструкции:
+
+```powershell
+$env:UCRTContentRoot='C:\Program Files (x86)\Windows Kits\10\'
+$cmake='G:\SS\lab\tools\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe'
+& $cmake --build G:\SS\lab\build-x64 --config RelWithDebInfo --target ProbeSavedDecalVertices --parallel 16
+& G:\SS\lab\build-x64\RelWithDebInfo\ProbeSavedDecalVertices.exe G:\SS\lab\runs\stage2-vertex-wire-clean-01\user-data\save\default\VERTEX_BLAST\game.sav
+```
+
+Тот же `VERTEX_BLAST/game.sav` (SHA-256
+`F87BBE0D3E7777473C0E58BF7953DFAB66E98EEF2A77DE121738831BE59B043F`)
+без изменения скопирован в `stage2-vertex-wire-x86-oracle-01` из чистого
+x86-архива `stage2-db-chunks-x86-20260924-01`: загрузка достигла
+`LOAD-SLOT-DONE`, штатный выход, дампа нет. Это совместимость формата и
+один маршрут ненулевой геометрии, не доказательство численного совпадения
+декали и повреждений с историческим x86-релизом.
