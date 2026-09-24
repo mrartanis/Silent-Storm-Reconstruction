@@ -6,18 +6,120 @@
 #include "..\FileIO\Streams.h"
 #include "Interface.h"     // NUI umbrella -- GetDBString (IsValidCustomName's reserved-name lookups)
 #include "iSaveManager.h"
+#include "..\FileIO\PortableUserPaths.h"
 #include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <cstdint>
+#include <vector>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NMainLoop
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const char S_SAVE_TEMPLATE[] = "save\\";
-const char S_SAVE_SLOTTEMPLATE[] = "save\\%s\\%s\\";
-const char S_SAVE_PROFILETEMPLATE[] = "save\\%s\\";
+namespace {
+string EnvironmentValue( const char *name )
+{
+	const DWORD length = GetEnvironmentVariableA( name, 0, 0 );
+	if ( !length ) return string();
+	vector<char> value( length );
+	if ( GetEnvironmentVariableA( name, &value[0], length ) >= length ) return string();
+	return string( &value[0] );
+}
+
+bool IsDirectory( const string &path )
+{
+	const DWORD attr = GetFileAttributesA( path.c_str() );
+	return attr != INVALID_FILE_ATTRIBUTES && ( attr & FILE_ATTRIBUTE_DIRECTORY ) != 0 &&
+		( attr & FILE_ATTRIBUTE_REPARSE_POINT ) == 0;
+}
+
+bool IsReparsePoint( const string &path )
+{
+	const DWORD attr = GetFileAttributesA( path.c_str() );
+	return attr != INVALID_FILE_ATTRIBUTES && ( attr & FILE_ATTRIBUTE_REPARSE_POINT ) != 0;
+}
+
+bool LegacyCopyTree( const string &source, const string &target, int depth )
+{
+	if ( depth > 3 || !IsDirectory( source ) ) return false;
+	CreateDir( target );
+	if ( !IsDirectory( target ) ) return false;
+	_finddata_t entry;
+	const std::intptr_t handle = _findfirst( ( source + "*.*" ).c_str(), &entry );
+	if ( handle == -1 ) return true;
+	bool ok = true;
+	for ( int found = 0; found != -1; found = _findnext( handle, &entry ) )
+	{
+		const string name( entry.name );
+		if ( name == "." || name == ".." ) continue;
+		if ( !S2FileIO::IsSafeSaveComponent( name ) ) { ok = false; continue; }
+		const string from = source + name;
+		const string to = target + name;
+		const DWORD attr = GetFileAttributesA( from.c_str() );
+		if ( attr == INVALID_FILE_ATTRIBUTES || ( attr & FILE_ATTRIBUTE_REPARSE_POINT ) ) { ok = false; continue; }
+		if ( attr & FILE_ATTRIBUTE_DIRECTORY )
+		{
+			if ( !LegacyCopyTree( from + "\\", to + "\\", depth + 1 ) ) ok = false;
+		}
+		else if ( !CopyFileA( from.c_str(), to.c_str(), TRUE ) && GetLastError() != ERROR_FILE_EXISTS )
+			ok = false;
+	}
+	_findclose( handle );
+	return ok;
+}
+
+// The resource cwd remains untouched. Old saves are copied once, never moved or
+// overwritten; a marker prevents deleted slots from returning on later runs.
+const string &SaveRoot()
+{
+	static const string root = []() -> string {
+		S2FileIO::UserPathEnvironment env;
+		env.overrideRoot = EnvironmentValue( "S2_USER_DATA_DIR" );
+		env.localAppData = EnvironmentValue( "LOCALAPPDATA" );
+		string base, error;
+		if ( !S2FileIO::ResolveUserDataRoot( S2FileIO::HostPlatform::Windows, env, &base, &error ) )
+		{
+			OutputDebugStringA( ( "Save path error: " + error + "\n" ).c_str() );
+			return string();
+		}
+		const string target = base + "\\save\\";
+		CreateDir( target );
+		if ( !IsDirectory( target ) ) return string();
+		const string marker = base + "\\.legacy-save-imported";
+		if ( GetFileAttributesA( marker.c_str() ) == INVALID_FILE_ATTRIBUTES )
+		{
+			const bool imported = GetFileAttributesA( S_SAVE_TEMPLATE ) == INVALID_FILE_ATTRIBUTES ||
+				LegacyCopyTree( S_SAVE_TEMPLATE, target, 0 );
+			if ( imported )
+			{
+				HANDLE file = CreateFileA( marker.c_str(), GENERIC_WRITE, 0, 0,
+					CREATE_NEW, FILE_ATTRIBUTE_NORMAL, 0 );
+				if ( file != INVALID_HANDLE_VALUE ) CloseHandle( file );
+			}
+			else OutputDebugStringA( "Legacy save import incomplete; will retry next launch\n" );
+		}
+		return target;
+	}();
+	return root;
+}
+
+string ProfileDir( const string &profile )
+{
+	if ( !S2FileIO::IsSafeSaveComponent( profile ) || SaveRoot().empty() ) return string();
+	const string path = SaveRoot() + profile + "\\";
+	return IsReparsePoint( path ) ? string() : path;
+}
+
+string SlotDir( const string &profile, const string &slot )
+{
+	const string parent = ProfileDir( profile );
+	if ( parent.empty() || !S2FileIO::IsSafeSaveComponent( slot ) ) return string();
+	const string path = parent + slot + "\\";
+	return IsReparsePoint( path ) ? string() : path;
+}
+} // namespace
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CSaveManager* GetSaveManager()
 {
@@ -32,25 +134,29 @@ CSaveManager::CSaveManager():
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSaveManager::CreateProfile( const string &szProfile ) const
 {
-	CreateDir( NStr::Format( S_SAVE_PROFILETEMPLATE, szProfile.c_str() ) );
+	const string path = ProfileDir( szProfile );
+	if ( !path.empty() ) CreateDir( path );
 	return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSaveManager::DeleteProfile( const string &szProfile ) const
 {
-	RemoveDir( NStr::Format( S_SAVE_PROFILETEMPLATE, szProfile.c_str() ) );
+	const string path = ProfileDir( szProfile );
+	if ( !path.empty() ) RemoveDir( path );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSaveManager::GetProfilesList( list<string> *pList ) const
 {
-	string szProfilesDir( string( S_SAVE_TEMPLATE ) + "*.*" );
+	if ( SaveRoot().empty() ) return;
+	string szProfilesDir( SaveRoot() + "*.*" );
 
 	_finddata_t sFindData;
 	std::intptr_t nHandle = _findfirst( szProfilesDir.c_str(), &sFindData );
 	int nRet = nHandle == -1 ? -1 : 0;
 	while ( nRet != -1 )
 	{
-		if ( sFindData.attrib & _A_SUBDIR )
+		if ( ( sFindData.attrib & _A_SUBDIR ) && S2FileIO::IsSafeSaveComponent( sFindData.name ) &&
+			!IsReparsePoint( SaveRoot() + sFindData.name ) )
 			pList->push_back( sFindData.name );
 
 		nRet = _findnext( nHandle, &sFindData );
@@ -72,8 +178,9 @@ void CSaveManager::SetActiveProfile( const string &szProfile )
 void CSaveManager::SaveSlot( const string &szName )
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), S_SLOT_ACTIVE ) );
-	string szTarget( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) );
+	string szSource( SlotDir( szActiveProfile, S_SLOT_ACTIVE ) );
+	string szTarget( SlotDir( szActiveProfile, szName ) );
+	if ( szSource.empty() || szTarget.empty() ) return;
 
 	if ( szSource == szTarget )
 	{
@@ -92,8 +199,9 @@ void CSaveManager::SaveSlot( const string &szName )
 void CSaveManager::LoadSlot( const string &szName )
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) );
-	string szTarget( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), S_SLOT_ACTIVE ) );
+	string szSource( SlotDir( szActiveProfile, szName ) );
+	string szTarget( SlotDir( szActiveProfile, S_SLOT_ACTIVE ) );
+	if ( szSource.empty() || szTarget.empty() ) return;
 
 	if ( szSource == szTarget )
 	{
@@ -112,7 +220,8 @@ void CSaveManager::LoadSlot( const string &szName )
 void CSaveManager::ClearSlot( const string &szName )
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) );
+	string szSource( SlotDir( szActiveProfile, szName ) );
+	if ( szSource.empty() ) return;
 	RemoveDir( szSource );
 	CreateDir( szSource );
 }
@@ -120,21 +229,24 @@ void CSaveManager::ClearSlot( const string &szName )
 void CSaveManager::DeleteSlot( const string &szName )
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) );
+	string szSource( SlotDir( szActiveProfile, szName ) );
+	if ( szSource.empty() ) return;
 	RemoveDir( szSource );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSaveManager::PrepareSlot( const string &szName )
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) );
+	string szSource( SlotDir( szActiveProfile, szName ) );
+	if ( szSource.empty() ) return;
 	CreateDir( szSource );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSaveManager::GetSlotsList( list<string> *pList ) const
 {
 	const string szActiveProfile = GetActiveProfile();
-	string szSource( NStr::Format( S_SAVE_PROFILETEMPLATE, szActiveProfile.c_str() ) );
+	string szSource( ProfileDir( szActiveProfile ) );
+	if ( szSource.empty() ) return;
 	string szSourceMask( szSource + "*.*" );
 
 	_finddata_t sFindData;
@@ -143,7 +255,8 @@ void CSaveManager::GetSlotsList( list<string> *pList ) const
 	while ( nRet != -1 )
 	{
 		string szName( sFindData.name );
-		if ( ( sFindData.attrib & _A_SUBDIR ) && ( szName.compare( "." ) != 0 ) && ( szName.compare( ".." ) != 0 ) && ( szName.compare( "temp" ) != 0 ) )
+		if ( ( sFindData.attrib & _A_SUBDIR ) && S2FileIO::IsSafeSaveComponent( szName ) &&
+			!IsReparsePoint( szSource + szName ) && ( szName.compare( "temp" ) != 0 ) )
 			pList->push_back( sFindData.name );
 
 		nRet = _findnext( nHandle, &sFindData );
@@ -229,7 +342,8 @@ string CSaveManager::GetSlotFilePath( const string &szName, const string &szFile
 {
 	// Retail resolves game_profile for each operation, including the first one after startup.
 	const string szActiveProfile = GetActiveProfile();
-	return string( NStr::Format( S_SAVE_SLOTTEMPLATE, szActiveProfile.c_str(), szName.c_str() ) + szFileName );
+	const string path = SlotDir( szActiveProfile, szName );
+	return !path.empty() && S2FileIO::IsSafeSaveComponent( szFileName ) ? path + szFileName : string();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Helpers
@@ -259,8 +373,15 @@ void RemoveDir( const string &szDir )
 		string szName( sFindData.name );
 		if ( ( szName.compare( "." ) != 0 ) && ( szName.compare( ".." ) != 0 ) )
 		{
+			const DWORD attr = GetFileAttributesA( ( szDir + szName ).c_str() );
+			if ( attr == INVALID_FILE_ATTRIBUTES || ( attr & FILE_ATTRIBUTE_REPARSE_POINT ) )
+			{
+				csSystem << "Can't remove unsafe save entry " << szName << endl;
+				nRet = _findnext( nHandle, &sFindData );
+				continue;
+			}
 			if ( sFindData.attrib & _A_SUBDIR )
-				RemoveDir( szDir + sFindData.name );
+				RemoveDir( szDir + sFindData.name + "\\" );
 			else
 			{
 				if ( !DeleteFile( string( szDir + sFindData.name ).c_str() ) )
@@ -273,7 +394,9 @@ void RemoveDir( const string &szDir )
 
 	if ( nHandle != -1 ) _findclose( nHandle );
 
-	if ( !RemoveDirectory( szDir.c_str() ) )
+	const string directory = !szDir.empty() && szDir[szDir.size() - 1] == '\\' ?
+		szDir.substr( 0, szDir.size() - 1 ) : szDir;
+	if ( !RemoveDirectory( directory.c_str() ) )
 		csSystem << "Can't delete directory " << szDir << endl;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

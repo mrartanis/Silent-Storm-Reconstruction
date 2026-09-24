@@ -84,6 +84,13 @@ bool IsSafeSaveComponent(const std::string& component) {
     if (ch < 32 || ch == '/' || ch == '\\' || ch == ':' || ch == '<' || ch == '>' ||
         ch == '|' || ch == '"' || ch == '*' || ch == '?')
       return false;
+  // Win32 treats these device names as special even with a file extension.
+  std::string stem = component.substr(0, component.find('.'));
+  for (char& ch : stem)
+    ch = static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+  if (stem == "CON" || stem == "PRN" || stem == "AUX" || stem == "NUL") return false;
+  if (stem.size() == 4 && (stem.substr(0, 3) == "COM" || stem.substr(0, 3) == "LPT") &&
+      stem[3] >= '1' && stem[3] <= '9') return false;
   return true;
 }
 

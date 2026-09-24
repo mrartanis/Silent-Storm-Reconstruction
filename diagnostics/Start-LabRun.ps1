@@ -27,7 +27,15 @@ g
 "@
 $commands=$commands.Replace('\"','"')
 $commands | Set-Content "$run\evidence\debugger.txt" -Encoding ascii
-$p=Start-Process $Debugger -ArgumentList "-G -o -logo `"$run\evidence\debugger.log`" -cf `"$run\evidence\debugger.txt`" `"$run\game\Game.exe`" $GameArguments" -WorkingDirectory "$run\game" -WindowStyle Hidden -PassThru
+$previousUserDataDir=$env:S2_USER_DATA_DIR
+try {
+    # The restored game writes user data outside its resource cwd. Keep each
+    # lab run isolated, including runs started from the same clean archive.
+    $env:S2_USER_DATA_DIR=Join-Path $run 'user-data'
+    $p=Start-Process $Debugger -ArgumentList "-G -o -logo `"$run\evidence\debugger.log`" -cf `"$run\evidence\debugger.txt`" `"$run\game\Game.exe`" $GameArguments" -WorkingDirectory "$run\game" -WindowStyle Hidden -PassThru
+} finally {
+    $env:S2_USER_DATA_DIR=$previousUserDataDir
+}
 $p.Id | Set-Content "$run\evidence\debugger.pid"
 Write-Output "Debugger PID $($p.Id); run $run"
 

@@ -36,6 +36,6 @@ int main() {
 
   CHECK(IsSafeSaveComponent("stational weapons"));
   CHECK(IsSafeSaveComponent("Сохранение"));
-  for (const char* bad : {"", ".", "..", "../outside", "a\\b", "C:", "name.", "name ", "a?b"})
+  for (const char* bad : {"", ".", "..", "../outside", "a\\b", "C:", "name.", "name ", "a?b", "NUL", "con.txt", "COM1"})
     CHECK(!IsSafeSaveComponent(bad));
 }

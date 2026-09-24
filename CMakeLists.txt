@@ -329,7 +329,7 @@ s2_module(Input     lib LINK FileIO MiscDll Misc dxguid dinput8)
 s2_module(Script    lib LINK FileIO Input MiscDll Misc)
 s2_module(DBFormat  lib LINK ADOImport FileIO Misc)
 s2_module(Main      lib LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
-                            lifestudio_shim bink_shim d3d9 dxguid)
+                            lifestudio_shim bink_shim d3d9 dxguid s2_portable_user_paths)
 # the game
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
