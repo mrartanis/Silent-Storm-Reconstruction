@@ -97,7 +97,12 @@ miniaudio 0.11.25 (пути передаются через `S2_FFMPEG_ROOT` и
 Изолированная сборка создаётся через
 `diagnostics/Build-Lab.ps1 -Architecture x64 -NativeMedia -FFmpegRoot ...
 -MiniaudioIncludeDir ...` после фиксации чистого коммита; скрипт переносит
-runtime DLL в архив. Сам этот вариант архивации пока не проверен целиком.
+runtime DLL в архив. Чистый прогон скрипта на коммите `d0cd6ac` проверен: архив
+`G:\SS\lab\builds\stage1-native-media-20260924-01` содержит `Game.exe`,
+`binkw32.dll`, `fmod.dll`, FFmpeg runtime DLL и `build.json` с указанием
+коммита, архитектуры x64 и `NativeMedia=true`. Отдельный игровой запуск
+именно из этого архива ещё не выполнялся; ручная проверка выше относится к
+предыдущему изолированному LabRun с тем же экспериментальным медиа-путём.
 
 ## Проба SDL3 + bgfx
 
