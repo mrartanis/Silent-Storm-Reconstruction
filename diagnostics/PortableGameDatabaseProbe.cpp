@@ -2,6 +2,7 @@
 #include "../FileIO/PortableGameLinks.h"
 #include "../FileIO/PortableStructureChunks.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -93,12 +94,30 @@ int main(int argc, char** argv) {
       static_cast<unsigned long long>(relationsHash));
   if (showLinks) {
     std::vector<S2FileIO::GameDatabaseLink> links;
+    std::vector<std::vector<std::int32_t>> groups;
     std::size_t unresolved = 0;
     if (!S2FileIO::CollectAnimationSkeletonLinks(database, &links, &unresolved)) return 8;
     std::printf("animation-skeleton-links %zu unresolved %zu hash %016llx order-hash %016llx\n",
         links.size(), unresolved,
         static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(links)),
         static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(links)));
+    if (!S2FileIO::CollectAnimationSkeletonGroups(database, links, &groups)) return 9;
+    std::printf("animation-row-groups %zu hash %016llx\n", groups.size(),
+        static_cast<unsigned long long>(S2FileIO::HashAnimationGroupIds(groups)));
+    const auto animations = std::find_if(database.tables.begin(), database.tables.end(),
+        [](const S2FileIO::GameDatabaseTable& table) { return table.tableId == 2; });
+    if (animations == database.tables.end()) return 10;
+    if (links.size() == animations->intRows.size()) {
+      const auto legacyOrder = S2FileIO::OrderGameDatabaseLinksLikeStlport(links);
+      if (!S2FileIO::CollectAnimationSkeletonGroups(database, legacyOrder, &groups)) return 10;
+      std::printf("animation-stlport-links %zu order-hash %016llx groups %zu group-hash %016llx\n",
+          legacyOrder.size(),
+          static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(legacyOrder)),
+          groups.size(), static_cast<unsigned long long>(S2FileIO::HashAnimationGroupIds(groups)));
+    } else {
+      std::printf("animation-stlport-links unavailable: %zu linked of %zu records\n",
+          links.size(), animations->intRows.size());
+    }
   }
   for (std::size_t i = 0; i < database.tables.size() && (showAll || i < 5); ++i) {
     const auto& table = database.tables[i];

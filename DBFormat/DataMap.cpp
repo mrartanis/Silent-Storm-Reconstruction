@@ -832,6 +832,7 @@ void BuildMapLinks( bool bTranslate )
 			sizeof(parityFlag) ) == 1 && parityFlag[0] == '1';
 		std::vector<S2FileIO::GameDatabaseLink> animationLinks;
 		std::map<std::pair<int, int>, int> lastAnimationInGroup;
+		std::map<std::pair<int, int>, std::vector<std::int32_t>> animationGroups;
 		unsigned groupOrderInversions = 0;
 		int firstInversionSkeleton = 0, firstInversionType = 0;
 		while ( it.MoveNext() )
@@ -854,6 +855,7 @@ void BuildMapLinks( bool bTranslate )
 						++groupOrderInversions;
 					}
 					lastAnimationInGroup[group] = pA->GetRecordID();
+					animationGroups[group].push_back(pA->GetRecordID());
 				}
 				pA->pSkeleton->pAnimations[ pA->nType ].anims.push_back( pA );
 			}
@@ -863,8 +865,12 @@ void BuildMapLinks( bool bTranslate )
                 static_cast<unsigned>(animationLinks.size()),
                 static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)),
 				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(animationLinks)) );
-			DebugTrace( "DB-PARITY animation-groups=%u order-inversions=%u first-skeleton=%d first-type=%d\n",
-				static_cast<unsigned>(lastAnimationInGroup.size()), groupOrderInversions,
+			std::vector<std::vector<std::int32_t>> groupIds;
+			for (const auto& group : animationGroups)
+				groupIds.push_back(group.second);
+			DebugTrace( "DB-PARITY animation-groups=%u group-hash=%016llx order-inversions=%u first-skeleton=%d first-type=%d\n",
+				static_cast<unsigned>(groupIds.size()),
+				static_cast<unsigned long long>(S2FileIO::HashAnimationGroupIds(groupIds)), groupOrderInversions,
 				firstInversionSkeleton, firstInversionType );
 	}
 	// debris materials database
