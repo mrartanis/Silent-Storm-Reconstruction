@@ -9,6 +9,7 @@
 #include "..\Misc\Basic2.h"
 #include "..\Misc\BasicFactory.h"
 #include <cstdint>
+#include <limits>
 #include <stdexcept>
 #include <type_traits>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +126,35 @@ private:
 	int CountChunks( const chunk_id idChunk );
 	//
 	void DataChunk( const chunk_id idChunk, void *pData, int nSize, int nChunkNumber );
+	template<class T>
+	void DataArrayChunk( const chunk_id idChunk, T *p, std::size_t count,
+		int nChunkNumber, std::true_type )
+	{
+		if ( count > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
+			throw std::runtime_error( "structure array too large" );
+		const int nBytes = static_cast<int>(count * sizeof(T));
+		std::vector<std::uint8_t> bytes(static_cast<std::size_t>(nBytes));
+		if ( IsReading() )
+		{
+			DataChunk( idChunk, bytes.data(), nBytes, nChunkNumber );
+			if ( !S2FileIO::DecodeStructureScalarArray( bytes.data(), bytes.size(), p, count ) )
+				throw std::runtime_error( "unsupported structure scalar array" );
+		}
+		else
+		{
+			if ( !S2FileIO::EncodeStructureScalarArray( p, count, bytes.data(), bytes.size() ) )
+				throw std::runtime_error( "unsupported structure scalar array" );
+			DataChunk( idChunk, bytes.data(), nBytes, nChunkNumber );
+		}
+	}
+	template<class T>
+	void DataArrayChunk( const chunk_id idChunk, T *p, std::size_t count,
+		int nChunkNumber, std::false_type )
+	{
+		if ( count > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
+			throw std::runtime_error( "structure array too large" );
+		DataChunk( idChunk, p, static_cast<int>(count * sizeof(T)), nChunkNumber );
+	}
 	template<class T>
 	void DataScalarChunk( const chunk_id idChunk, T *p, int nChunkNumber, std::true_type )
 	{
@@ -315,13 +345,17 @@ private:
 	{
 		int nSize = data.size();
 		Add( 1, &nSize );
+		if ( nSize < 0 ||
+			static_cast<std::size_t>(nSize) > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
+			throw std::runtime_error( "structure vector too large" );
 		if ( IsReading() )
 		{
 			data.clear();
 			data.resize( nSize );
 		}
 		if ( nSize > 0 )
-			DataChunk( 2, &data[0], sizeof(T) * nSize, 1 );
+			DataArrayChunk( 2, &data[0], static_cast<std::size_t>(nSize), 1,
+				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
 	}
 	// unordered_map
 	template <class T1,class T2,class T3,class T4> 
@@ -364,10 +398,16 @@ private:
 		int nXSize = a.GetXSize(), nYSize = a.GetYSize();
 		Add( 1, &nXSize );
 		Add( 2, &nYSize );
+		if ( nXSize < 0 || nYSize < 0 ||
+			(static_cast<std::size_t>(nXSize) * static_cast<std::size_t>(nYSize) >
+			 static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T)) )
+			throw std::runtime_error( "structure 2D array too large" );
 		if ( IsReading() )
 			a.SetSizes( nXSize, nYSize );
-		if ( nXSize * nYSize > 0 )
-			DataChunk( 3, &a[0][0], sizeof(T) * nXSize * nYSize, 1 );
+		const std::size_t count = static_cast<std::size_t>(nXSize) * static_cast<std::size_t>(nYSize);
+		if ( count > 0 )
+			DataArrayChunk( 3, &a[0][0], count, 1,
+				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
 	}
 public:
 	enum EMode

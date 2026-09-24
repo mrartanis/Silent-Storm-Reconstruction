@@ -109,5 +109,33 @@ EncodeStructureScalar(const T& value, std::uint8_t* destination, std::size_t len
   return true;
 }
 
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value || std::is_enum<T>::value, bool>::type
+DecodeStructureScalarArray(const std::uint8_t* source, std::size_t length,
+                           T* values, std::size_t count) {
+  if (count > static_cast<std::size_t>(-1) / sizeof(T) ||
+      length != count * sizeof(T)) return false;
+  if (count == 0) return true;
+  if (!source || !values) return false;
+  for (std::size_t i = 0; i < count; ++i)
+    if (!DecodeStructureScalar(source + i * sizeof(T), sizeof(T), values + i))
+      return false;
+  return true;
+}
+
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value || std::is_enum<T>::value, bool>::type
+EncodeStructureScalarArray(const T* values, std::size_t count,
+                           std::uint8_t* destination, std::size_t length) {
+  if (count > static_cast<std::size_t>(-1) / sizeof(T) ||
+      length != count * sizeof(T)) return false;
+  if (count == 0) return true;
+  if (!values || !destination) return false;
+  for (std::size_t i = 0; i < count; ++i)
+    if (!EncodeStructureScalar(values[i], destination + i * sizeof(T), sizeof(T)))
+      return false;
+  return true;
+}
+
 
 } // namespace S2FileIO

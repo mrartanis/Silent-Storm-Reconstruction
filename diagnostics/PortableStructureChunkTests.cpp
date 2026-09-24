@@ -17,6 +17,13 @@ int main() {
   bool boolValue = false;
   const std::uint8_t legacyTrue[] = {2};
   std::uint8_t boolWire = 0;
+  const std::uint8_t arrayWire[] = {0x78, 0x56, 0x34, 0x12,
+                                    0xfe, 0xff, 0xff, 0xff};
+  std::int32_t arrayValues[2] = {};
+  std::uint8_t arrayEncoded[sizeof(arrayWire)] = {};
+  const std::uint8_t boolArrayWire[] = {0, 2};
+  bool boolArray[2] = {};
+  std::uint8_t boolArrayEncoded[2] = {};
   if (!S2FileIO::DecodeStructureScalar(scalar32, sizeof(scalar32), &unsignedValue) ||
       unsignedValue != 0x12345678 ||
       !S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, sizeof(encoded32)) ||
@@ -33,6 +40,18 @@ int main() {
       floatValue != 1.0f ||
       !S2FileIO::DecodeStructureScalar(legacyTrue, 1, &boolValue) || !boolValue ||
       !S2FileIO::EncodeStructureScalar(boolValue, &boolWire, 1) || boolWire != 1 ||
+      !S2FileIO::DecodeStructureScalarArray(arrayWire, sizeof(arrayWire), arrayValues, 2) ||
+      arrayValues[0] != 0x12345678 || arrayValues[1] != -2 ||
+      !S2FileIO::EncodeStructureScalarArray(arrayValues, 2, arrayEncoded, sizeof(arrayEncoded)) ||
+      std::memcmp(arrayEncoded, arrayWire, sizeof(arrayWire)) != 0 ||
+      !S2FileIO::DecodeStructureScalarArray(boolArrayWire, 2, boolArray, 2) ||
+      boolArray[0] || !boolArray[1] ||
+      !S2FileIO::EncodeStructureScalarArray(boolArray, 2, boolArrayEncoded, 2) ||
+      boolArrayEncoded[0] != 0 || boolArrayEncoded[1] != 1 ||
+      S2FileIO::DecodeStructureScalarArray(arrayWire, 7, arrayValues, 2) ||
+      S2FileIO::EncodeStructureScalarArray(arrayValues, 2, arrayEncoded, 7) ||
+      S2FileIO::DecodeStructureScalarArray(nullptr, 8, arrayValues, 2) ||
+      !S2FileIO::DecodeStructureScalarArray<std::int32_t>(nullptr, 0, nullptr, 0) ||
       S2FileIO::DecodeStructureScalar(scalar32, 3, &unsignedValue) ||
       S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, 3) ||
       S2FileIO::DecodeStructureScalar(nullptr, 4, &unsignedValue)) return 1;
