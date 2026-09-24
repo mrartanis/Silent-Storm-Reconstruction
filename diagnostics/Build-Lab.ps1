@@ -1,7 +1,7 @@
 param(
  [string]$LabRoot='G:\SS\lab',
  [string]$ToolRoot='G:\SS\lab\tools\VS2022',
- [ValidateSet('Win32','x64')][string]$Architecture='Win32',
+ [ValidateSet('Win32','x64')][string]$Architecture='x64',
  [string]$BuildId=(Get-Date -Format 'yyyyMMdd-HHmmss'),
  [switch]$NativeMedia,
  [string]$FFmpegRoot,

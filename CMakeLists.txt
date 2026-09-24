@@ -1,7 +1,7 @@
 # ============================================================================
 #  Silent Storm engine -- CMake build
 #
-#  Windows x86 and x64 game; portable data-core tests on Linux/macOS
+#  Windows x64 game; optional legacy x86 oracle; portable core on Linux/macOS
 #  Configure with:            cmake -S . -B build -A x64
 #  Build with:                cmake --build build --config Release
 #
