@@ -65,7 +65,6 @@ private:
 	void Init();  // very slow operation
 	void InitState();
 	void FillRandRsl();
-	BOOL RecFindFile( std::string &szFoundName, const char *pszBaseDir, int nToFind, int* pnTotFinded );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline unsigned int CRandomGenerator::Get()
