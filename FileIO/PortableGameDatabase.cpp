@@ -251,9 +251,6 @@ bool Relations(View view, std::vector<GameDatabaseRelation>* relations) {
 
 bool LoadPortableGameDatabase(const std::string& path, PortableGameDatabase* database,
                               std::string* error) {
-  if (!database) return Fail(error, "missing database output");
-  database->tables.clear();
-  database->relations.clear();
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   if (!file) return Fail(error, "cannot open game.db");
   const auto end = file.tellg();
@@ -263,7 +260,17 @@ bool LoadPortableGameDatabase(const std::string& path, PortableGameDatabase* dat
   file.seekg(0);
   if (!file.read(reinterpret_cast<char*>(bytes.data()), bytes.size()))
     return Fail(error, "cannot read game.db");
-  const View whole{bytes.data(), bytes.size()};
+  return LoadPortableGameDatabaseBytes(bytes.data(), bytes.size(), database, error);
+}
+
+bool LoadPortableGameDatabaseBytes(const std::uint8_t* bytes, std::size_t length,
+                                   PortableGameDatabase* database,
+                                   std::string* error) {
+  if (!database) return Fail(error, "missing database output");
+  database->tables.clear();
+  database->relations.clear();
+  if (length && !bytes) return Fail(error, "missing game.db bytes");
+  const View whole{bytes, length};
   View version, main, objectTable, objectData;
   if (!One(whole, 4, &version) || !One(whole, 1, &main) ||
       !One(whole, 0, &objectTable) || !One(whole, 2, &objectData))

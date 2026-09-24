@@ -76,10 +76,11 @@ class CDBTableBase
 	typedef std::unordered_map<int, CObj<CDBRecord> > CRecordHash;
 	CRecordHash records;
 	//
-	void PreCreate( int nTypeID );
 	void Refresh( int nTypeID );
-	void Import();
 public:
+	// Internal two-phase game.db materialization (legacy and portable v1 readers).
+	void PreCreate( int nTypeID );
+	void Import();
 	CDBRecord* GetDBRecord( int nID );
 	int operator&( CStructureSaver &f ) 
 	{

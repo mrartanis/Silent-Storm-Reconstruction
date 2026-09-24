@@ -1004,6 +1004,75 @@ void NDatabase::ImportField( const char *pszFieldName, CDBRecord **pRef, CDBTabl
 // it here, gated on v1, so we don't double-push on a v0 db. (Resolved at Game.exe link time.)
 namespace NDb { void BuildMapLinks( bool bTranslate ); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+typedef std::unordered_map< int, CObj<CDBTableDataStorage> > CStorageHash;
+
+static void ImportReleaseStorage( CStorageHash &storageTables,
+	list<NDatabase::SRelation> &relations, const char *source )
+{
+	for ( NDatabase::SRelation &relation : relations )
+	{
+		relation.pLeft = NDatabase::GetTable( relation.nTableLeft );
+		relation.pRight = NDatabase::GetTable( relation.nTableRight );
+		if ( !relation.pLeft || !relation.pRight )
+			DebugTrace( "DB-SCHEMA ERROR relation=%s unresolved tables left=0x%08X right=0x%08X\n",
+				relation.szTable.c_str(), relation.nTableLeft, relation.nTableRight );
+	}
+	char parityFlag[2] = {};
+	if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
+		parityFlag[0] == '1' )
+	{
+		std::vector<S2FileIO::GameDatabaseRelation> relationSnapshot;
+		for ( const NDatabase::SRelation &relation : relations )
+		{
+			S2FileIO::GameDatabaseRelation item;
+			item.name = relation.szTable;
+			item.leftTableId = relation.nTableLeft;
+			item.rightTableId = relation.nTableRight;
+			for ( const NDatabase::SRelation::SElement &link : relation.data )
+				item.links.emplace_back( link.nLeft, link.nRight );
+			relationSnapshot.push_back( item );
+		}
+		std::uint64_t hash = 0;
+		if ( S2FileIO::HashGameDatabaseRelations( relationSnapshot, &hash ) )
+			DebugTrace( "DB-PARITY relations=%d hash=%016llx\n",
+				(int)relationSnapshot.size(), static_cast<unsigned long long>(hash) );
+	}
+	int nTables = 0;
+	for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
+	{
+		CDBTableDataStorage *pStorage = it->second;
+		ReportStorageShape( it->first, pStorage );
+		if ( !NDatabase::GetTable( it->first ) )
+			DebugTrace( "DB-SCHEMA ERROR unknown table type=0x%08X rows=%d\n", it->first,
+				pStorage ? (int)pStorage->records_int.size() : 0 );
+	}
+	// Create all shells before importing any fields so cross-table references resolve.
+	for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
+	{
+		CDBTableBase *pTable = NDatabase::GetTable( it->first );
+		CDBTableDataStorage *pStorage = it->second;
+		if ( !pTable || !pStorage ) continue;
+		pStorageSource = pStorage;
+		pTable->PreCreate( it->first );
+		pStorageSource = 0;
+	}
+	for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
+	{
+		CDBTableBase *pTable = NDatabase::GetTable( it->first );
+		CDBTableDataStorage *pStorage = it->second;
+		if ( !pTable || !pStorage ) continue;
+		pStorageSource = pStorage;
+		SStorageDiagnostics diagnostics;
+		BeginStorageDiagnostics( it->first, pStorage, &diagnostics );
+		pTable->Import();
+		pStorageDiagnostics = 0;
+		ReportUnusedStorageFields( pStorage, diagnostics );
+		pStorageSource = 0;
+		++nTables;
+	}
+	DebugTrace( "DB-STORAGE: loaded %d columnar tables via %s\n", nTables, source );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 {
 	CTablesHash &tables = GetTables();
@@ -1011,91 +1080,73 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 	unresolvedReferences.clear();
 	missingStorageFields.clear();
 	bool bDidColumnarLoad = false;
+	// The release v1 database is decoded without CStructureSaver or Windows
+	// object-table layout. Historical v0/dev data and writes keep their path.
+	bool bPortableRelease = false;
+	const int nBaseSeek = file.GetPosition();
+	const int nRemaining = file.GetSize() - nBaseSeek;
+	if ( mode == CStructureSaver::READ && nRemaining >= 6 )
 	{
-		CStructureSaver f( file, mode );
-		if ( mode == CStructureSaver::READ && f.GetVersion() >= 1 )
+		std::uint8_t header[6] = {};
+		file.Read( header, sizeof(header) );
+		file.Seek( nBaseSeek );
+		bPortableRelease = header[0] == 4 && header[1] == 8 && header[2] == 1 &&
+			header[3] == 0 && header[4] == 0 && header[5] == 0;
+	}
+	{
+		if ( bPortableRelease )
 		{
+			std::vector<std::uint8_t> bytes( static_cast<std::size_t>(nRemaining) );
+			file.Read( bytes.data(), static_cast<unsigned int>(bytes.size()) );
+			file.Seek( nBaseSeek );
+			S2FileIO::PortableGameDatabase decoded;
+			std::string error;
+			if ( !S2FileIO::LoadPortableGameDatabaseBytes(
+				bytes.data(), bytes.size(), &decoded, &error ) )
+				throw SFileIOError( std::string("portable game.db decode: ") + error );
 			bDidColumnarLoad = true;
-			// release/Steam game.db (v1): records are stored as per-table columnar
-			// CDBTableDataStorage dumps, not as typed objects. Read those, then rebuild the
-			// live typed records by running each record's Import() against the storage.
-			typedef std::unordered_map< int, CObj<CDBTableDataStorage> > CStorageHash;
 			CStorageHash storageTables;
-			f.Add( 1, &storageTables ); // CObj ptrs resolve to the storage objects read in Start()
-			// read the M:N relations (chunk 2) and resolve each side's table pointer from its id,
-			// so ImportRelation() (called from record Import()s in phase 2) finds them.
+			for ( const S2FileIO::GameDatabaseTable &table : decoded.tables )
+			{
+				CDBTableDataStorage *storage = new CDBTableDataStorage;
+				for ( const S2FileIO::GameDatabaseColumn &column : table.columns )
+					storage->fields.push_back( { column.name, column.type } );
+				storage->records_int = table.intRows;
+				storage->records_float = table.floatRows;
+				storage->records_wstring = table.stringRows;
+				storage->intFileds = table.intNames;
+				storage->floatFileds = table.floatNames;
+				storage->stringFileds = table.stringNames;
+				storageTables[table.tableId] = storage;
+			}
 			list<SRelation> &relations = GetRelations();
-			f.Add( 2, &relations );
-			for ( list<SRelation>::iterator r = relations.begin(); r != relations.end(); ++r )
+			relations.clear();
+			for ( const S2FileIO::GameDatabaseRelation &item : decoded.relations )
 			{
-				r->pLeft = GetTable( r->nTableLeft );
-				r->pRight = GetTable( r->nTableRight );
-				if ( !r->pLeft || !r->pRight )
-					DebugTrace( "DB-SCHEMA ERROR relation=%s unresolved tables left=0x%08X right=0x%08X\n",
-						r->szTable.c_str(), r->nTableLeft, r->nTableRight );
+				relations.push_back( SRelation() );
+				SRelation &relation = relations.back();
+				relation.szTable = item.name;
+				relation.nTableLeft = item.leftTableId;
+				relation.nTableRight = item.rightTableId;
+				for ( const auto &link : item.links )
+					relation.data.push_back( { link.first, link.second } );
 			}
-			char parityFlag[2] = {};
-			if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
-				parityFlag[0] == '1' )
-			{
-				std::vector<S2FileIO::GameDatabaseRelation> relationSnapshot;
-				for ( const SRelation &relation : relations )
-				{
-					S2FileIO::GameDatabaseRelation item;
-					item.name = relation.szTable;
-					item.leftTableId = relation.nTableLeft;
-					item.rightTableId = relation.nTableRight;
-					for ( const SRelation::SElement &link : relation.data )
-						item.links.emplace_back( link.nLeft, link.nRight );
-					relationSnapshot.push_back( item );
-				}
-				std::uint64_t hash = 0;
-				if ( S2FileIO::HashGameDatabaseRelations( relationSnapshot, &hash ) )
-					DebugTrace( "DB-PARITY relations=%d hash=%016llx\n",
-						(int)relationSnapshot.size(), static_cast<unsigned long long>(hash) );
-			}
-			int nTables = 0;
-			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
-			{
-				CDBTableDataStorage *pStorage = it->second;
-				ReportStorageShape( it->first, pStorage );
-				if ( !GetTable( it->first ) )
-					DebugTrace( "DB-SCHEMA ERROR unknown table type=0x%08X rows=%d\n", it->first,
-						pStorage ? (int)pStorage->records_int.size() : 0 );
-			}
-			// phase 1: create every record shell first, so cross-table refs resolve in phase 2
-			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
-			{
-				CDBTableBase *pTable = GetTable( it->first );
-				CDBTableDataStorage *pStorage = it->second;
-				if ( !pTable || !pStorage )
-					continue;
-				pStorageSource = pStorage;
-				pTable->PreCreate( it->first );
-				pStorageSource = 0;
-			}
-			// phase 2: import (fill) every record
-			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
-			{
-				CDBTableBase *pTable = GetTable( it->first );
-				CDBTableDataStorage *pStorage = it->second;
-				if ( !pTable || !pStorage )
-					continue;
-				pStorageSource = pStorage;
-				SStorageDiagnostics diagnostics;
-				BeginStorageDiagnostics( it->first, pStorage, &diagnostics );
-				pTable->Import();
-				pStorageDiagnostics = 0;
-				ReportUnusedStorageFields( pStorage, diagnostics );
-				pStorageSource = 0;
-				++nTables;
-			}
-			printf( "DB-STORAGE: loaded %d columnar tables from release/Steam game.db (v%d)\n",
-							nTables, f.GetVersion() );
+			ImportReleaseStorage( storageTables, relations, "portable v1" );
 		}
 		else
 		{
-			f.Add( 1, &tables );
+			CStructureSaver f( file, mode );
+			if ( mode == CStructureSaver::READ && f.GetVersion() >= 1 )
+			{
+				bDidColumnarLoad = true;
+				CStorageHash storageTables;
+				f.Add( 1, &storageTables );
+				list<SRelation> &relations = GetRelations();
+				f.Add( 2, &relations );
+				ImportReleaseStorage( storageTables, relations, "legacy v1" );
+			}
+			else
+				f.Add( 1, &tables );
 		}
 	}
 	NDatabase::bIsDatabaseLoading = false;

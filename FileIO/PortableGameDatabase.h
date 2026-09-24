@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -37,6 +38,9 @@ struct PortableGameDatabase {
 // or implement the editor's ADO import path.
 bool LoadPortableGameDatabase(const std::string& path, PortableGameDatabase* database,
                               std::string* error = nullptr);
+bool LoadPortableGameDatabaseBytes(const std::uint8_t* bytes, std::size_t length,
+                                   PortableGameDatabase* database,
+                                   std::string* error = nullptr);
 // Canonical value digest for comparing this decoder with the game's runtime
 // CDBTableDataStorage. Excludes transient wire IDs and host representations.
 bool HashGameDatabaseTable(const GameDatabaseTable& table, std::uint64_t* hash);
