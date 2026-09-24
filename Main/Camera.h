@@ -5,6 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Time.h"
+#include "..\FileIO\PortableStructureChunks.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CTransformStack;
 class CObjectBase;
@@ -205,5 +206,53 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ICamera* CreateCamera( ECameraType eType = CAMERA_PC, float fCameraSpeed = 1.0f );
+////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<ICamera::SCameraPos, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length, ICamera::SCameraPos* value) {
+    if (!value) return false;
+    float fields[8];
+    if (!DecodeStructureCameraPos(source, length, fields)) return false;
+    value->fRod = fields[0]; value->fPitch = fields[1]; value->fYaw = fields[2];
+    value->fRoll = fields[3]; value->fFOV = fields[4];
+    value->ptAnchor.x = fields[5]; value->ptAnchor.y = fields[6]; value->ptAnchor.z = fields[7];
+    return true;
+  }
+  static bool Encode(const ICamera::SCameraPos& value, std::uint8_t* destination, std::size_t length) {
+    const float fields[8] = {value.fRod, value.fPitch, value.fYaw, value.fRoll,
+                             value.fFOV, value.ptAnchor.x, value.ptAnchor.y, value.ptAnchor.z};
+    return EncodeStructureCameraPos(fields, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<ICamera::SCameraLimits, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 56;
+  static bool Decode(const std::uint8_t* source, std::size_t length, ICamera::SCameraLimits* value) {
+    if (!value) return false;
+    float fields[13]; bool movie;
+    if (!DecodeStructureCameraLimits(source, length, fields, &movie)) return false;
+    value->fMinRod = fields[0]; value->fMaxRod = fields[1];
+    value->fMinPitch = fields[2]; value->fMaxPitch = fields[3]; value->bMovie = movie;
+    value->fAttenuation = fields[4]; value->fMinHeight = fields[5];
+    value->fScrollZoomAcceleration = fields[6]; value->fScrollSpeed = fields[7];
+    value->fZoomAcceleration = fields[8]; value->fZoomSpeed = fields[9];
+    value->fYawSpeed = fields[10]; value->fYawZoomAcceleration = fields[11];
+    value->fPitchSpeed = fields[12];
+    return true;
+  }
+  static bool Encode(const ICamera::SCameraLimits& value, std::uint8_t* destination, std::size_t length) {
+    const float fields[13] = {value.fMinRod, value.fMaxRod, value.fMinPitch, value.fMaxPitch,
+                              value.fAttenuation, value.fMinHeight, value.fScrollZoomAcceleration,
+                              value.fScrollSpeed, value.fZoomAcceleration, value.fZoomSpeed,
+                              value.fYawSpeed, value.fYawZoomAcceleration, value.fPitchSpeed};
+    return EncodeStructureCameraLimits(fields, value.bMovie, destination, length);
+  }
+};
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

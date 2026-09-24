@@ -211,6 +211,54 @@ inline bool EncodeStructureVoxelCoords(const StructureVoxelCoords& value,
          EncodeStructureScalar(value.z, destination + 4, 2);
 }
 
+// Camera records are flat float fields on the v1.2 wire. The limits record
+// has a one-byte bool and three historical padding bytes between float groups.
+inline bool DecodeStructureCameraPos(const std::uint8_t* source,
+                                     std::size_t length, float (&fields)[8]) {
+  if (!source || length != 32) return false;
+  float decoded[8];
+  for (std::size_t i = 0; i < 8; ++i)
+    if (!DecodeStructureScalar(source + 4 * i, 4, &decoded[i])) return false;
+  for (std::size_t i = 0; i < 8; ++i) fields[i] = decoded[i];
+  return true;
+}
+
+inline bool EncodeStructureCameraPos(const float (&fields)[8],
+                                     std::uint8_t* destination,
+                                     std::size_t length) {
+  if (!destination || length != 32) return false;
+  for (std::size_t i = 0; i < 8; ++i)
+    if (!EncodeStructureScalar(fields[i], destination + 4 * i, 4)) return false;
+  return true;
+}
+
+inline bool DecodeStructureCameraLimits(const std::uint8_t* source,
+                                        std::size_t length, float (&fields)[13],
+                                        bool* movie) {
+  if (!source || !movie || length != 56) return false;
+  float decoded[13];
+  for (std::size_t i = 0; i < 13; ++i) {
+    const std::size_t offset = i < 4 ? 4 * i : 4 * i + 4;
+    if (!DecodeStructureScalar(source + offset, 4, &decoded[i])) return false;
+  }
+  for (std::size_t i = 0; i < 13; ++i) fields[i] = decoded[i];
+  *movie = source[16] != 0;
+  return true;
+}
+
+inline bool EncodeStructureCameraLimits(const float (&fields)[13], bool movie,
+                                        std::uint8_t* destination,
+                                        std::size_t length) {
+  if (!destination || length != 56) return false;
+  for (std::size_t i = 0; i < 13; ++i) {
+    const std::size_t offset = i < 4 ? 4 * i : 4 * i + 4;
+    if (!EncodeStructureScalar(fields[i], destination + offset, 4)) return false;
+  }
+  destination[16] = movie ? 1 : 0;
+  destination[17] = destination[18] = destination[19] = 0;
+  return true;
+}
+
 // Specialize this for game PODs whose historical wire format must not depend
 // on host padding or alignment. Unspecialized PODs retain the legacy raw path.
 template<class T, class Enable = void>
