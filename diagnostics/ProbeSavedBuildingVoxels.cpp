@@ -14,6 +14,7 @@ struct Grid {
   std::uint32_t x = 0, y = 0, z = 0;
   float min[3] = {}, max[3] = {};
   std::array<std::uint8_t, 96> planeBox = {};
+  std::uint32_t roomCount = 0;
   std::vector<std::uint8_t> hp;
 };
 
@@ -87,13 +88,14 @@ bool ReadGrids(const char* path, std::vector<Grid>* grids) {
     }
     if (type == types.end() || type->second != 0x02741121) continue; // CBuildingGrid
     S2FileIO::StructureChunk objectChunk{1, object.bodyOffset, object.bodyLength};
-    S2FileIO::StructureChunk array, vector, blob, min, max, box;
+    S2FileIO::StructureChunk array, vector, blob, min, max, box, rooms, roomBlob;
     Grid grid;
     grid.wireId = object.wireId;
     std::uint32_t count = 0;
     if (!FindChild(payload, bodies.length, objectChunk, 2, &array) ||
         !FindChild(payload, bodies.length, objectChunk, 4, &min) ||
         !FindChild(payload, bodies.length, objectChunk, 5, &max) ||
+        !FindChild(payload, bodies.length, objectChunk, 6, &rooms) ||
         !FindChild(payload, bodies.length, objectChunk, 10, &box) || box.length != 96 ||
         !S2FileIO::DecodeStructureFloatFields(payload + min.payloadOffset, min.length, grid.min, 3) ||
         !S2FileIO::DecodeStructureFloatFields(payload + max.payloadOffset, max.length, grid.max, 3) ||
@@ -103,6 +105,9 @@ bool ReadGrids(const char* path, std::vector<Grid>* grids) {
         !ReadU32Child(payload, bodies.length, array, 5, &grid.z) ||
         !ReadU32Child(payload, bodies.length, vector, 1, &count) ||
         !FindChild(payload, bodies.length, vector, 2, &blob) ||
+        !ReadU32Child(payload, bodies.length, rooms, 1, &grid.roomCount) ||
+        (grid.roomCount && (!FindChild(payload, bodies.length, rooms, 2, &roomBlob) ||
+                            roomBlob.length != static_cast<std::uint64_t>(grid.roomCount) * 12)) ||
         blob.length != count ||
         static_cast<std::uint64_t>(grid.x) * grid.y * grid.z != count)
       return false;
@@ -151,7 +156,8 @@ void Print(const std::vector<Grid>& grids) {
               << " box=(" << grids[i].min[0] << "," << grids[i].min[1] << "," << grids[i].min[2]
               << ")-(" << grids[i].max[0] << "," << grids[i].max[1] << "," << grids[i].max[2] << ")"
               << " positive=" << positive << " hp_sum=" << sum
-              << " hash=" << std::hex << hash << " plane_hash=" << boxHash << std::dec << "\n";
+              << " hash=" << std::hex << hash << " plane_hash=" << boxHash << std::dec
+              << " rooms=" << grids[i].roomCount << "\n";
     if (positive) std::cout << "occupied_index_box=(" << minX << "," << minY << "," << minZ
                             << ")-(" << maxX << "," << maxY << "," << maxZ
                             << ") center_sample=(" << best % grids[i].x << ","
