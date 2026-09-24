@@ -53,6 +53,12 @@ bool S2_STRUCTURE_CALL DecodeStructureUtf16(const std::uint8_t* bytes,
                                             std::wstring* value);
 bool S2_STRUCTURE_CALL EncodeStructureUtf16(const std::wstring& value,
                                             std::vector<std::uint8_t>* bytes);
+// A scalar/blob field may only be copied when its disk size matches the
+// destination's declared size; never read into the next sibling chunk.
+bool S2_STRUCTURE_CALL CopyStructureField(const std::uint8_t* source,
+                                          std::size_t sourceSize,
+                                          void* destination,
+                                          std::size_t destinationSize);
 
 
 } // namespace S2FileIO

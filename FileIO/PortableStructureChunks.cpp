@@ -1,6 +1,7 @@
 #include "PortableStructureChunks.h"
 
 #include <fstream>
+#include <cstring>
 
 namespace S2FileIO {
 namespace {
@@ -142,6 +143,16 @@ bool S2_STRUCTURE_CALL EncodeStructureUtf16(const std::wstring& value,
     }
   }
   bytes->swap(encoded);
+  return true;
+}
+
+bool S2_STRUCTURE_CALL CopyStructureField(const std::uint8_t* source,
+                                          std::size_t sourceSize,
+                                          void* destination,
+                                          std::size_t destinationSize) {
+  if (sourceSize != destinationSize ||
+      (sourceSize && (!source || !destination))) return false;
+  if (sourceSize) std::memcpy(destination, source, sourceSize);
   return true;
 }
 

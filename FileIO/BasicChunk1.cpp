@@ -308,6 +308,8 @@ int CStructureSaver::CountShortChunks( CChunkLevel &src, chunk_id dwID )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CStructureSaver::DataChunk( const chunk_id idChunk, void *pData, int nSize, int nChunkNumber )
 {
+	if ( nSize < 0 )
+		throw std::runtime_error( "negative structure field size" );
 #if defined(_DEBUG) && !defined(FAST_DEBUG)
 	{
 		bool bOk = true;
@@ -332,7 +334,10 @@ void CStructureSaver::DataChunk( const chunk_id idChunk, void *pData, int nSize,
 			ASSERT( res.nLength == nSize );
 			if ( g_bWireAudit && res.nLength != nSize )
 				NWireAudit::Finding( "SIZE", idChunk, res.nLength, nSize );
-			memcpy( pData, data.GetBuffer() + res.nStart, nSize );
+			if ( nSize < 0 || !S2FileIO::CopyStructureField(
+				data.GetBuffer() + res.nStart, static_cast<std::size_t>(res.nLength),
+				pData, static_cast<std::size_t>(nSize) ) )
+				throw std::runtime_error( "structure field size mismatch" );
 		}
 		else
 		{
@@ -350,6 +355,8 @@ void CStructureSaver::DataChunk( const chunk_id idChunk, void *pData, int nSize,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CStructureSaver::WriteRawData( const void *pData, int nSize )
 {
+	if ( nSize < 0 )
+		throw std::runtime_error( "negative raw structure field size" );
 	CChunkLevel &res = chunks.back();
 	data.SetSize( res.nStart + nSize );
 	unsigned char *pDst = data.GetBufferForWrite() + res.nStart;
@@ -358,6 +365,8 @@ void CStructureSaver::WriteRawData( const void *pData, int nSize )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CStructureSaver::RawData( void *pData, int nSize )
 {
+	if ( nSize < 0 )
+		throw std::runtime_error( "negative raw structure field size" );
 	if ( IsReading() )
 	{
 		CChunkLevel &res = chunks.back();
@@ -368,7 +377,10 @@ void CStructureSaver::RawData( void *pData, int nSize )
 			if ( res.nLength != nSize )
 				NWireAudit::Finding( "RAWSZ", NWireAudit::frames.back().idChunk, res.nLength, nSize );
 		}
-		memcpy( pData, data.GetBuffer() + res.nStart, nSize );
+		if ( nSize < 0 || !S2FileIO::CopyStructureField(
+			data.GetBuffer() + res.nStart, static_cast<std::size_t>(res.nLength),
+			pData, static_cast<std::size_t>(nSize) ) )
+			throw std::runtime_error( "raw structure field size mismatch" );
 	}
 	else
 	{

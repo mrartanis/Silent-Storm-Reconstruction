@@ -31,6 +31,15 @@ int main() {
     wide.push_back(static_cast<wchar_t>(0x110000));
     if (S2FileIO::EncodeStructureUtf16(wide, &encoded)) return 1;
   }
+  const std::uint8_t field[] = {0x12, 0x34, 0x56, 0x78};
+  std::uint8_t copied[] = {0, 0, 0, 0};
+  if (!S2FileIO::CopyStructureField(field, sizeof(field), copied, sizeof(copied)) ||
+      copied[0] != 0x12 || copied[3] != 0x78 ||
+      S2FileIO::CopyStructureField(field, 3, copied, sizeof(copied)) ||
+      S2FileIO::CopyStructureField(field, sizeof(field), copied, 3) ||
+      S2FileIO::CopyStructureField(nullptr, sizeof(field), copied, sizeof(copied)) ||
+      !S2FileIO::CopyStructureField(nullptr, 0, nullptr, 0))
+    return 1;
   return S2FileIO::DecodeStructureLength(shortLength, 1, 4, &length) && length == 4 &&
          S2FileIO::DecodeStructureLength(longLength, 4, 1916, &length) && length == 1916 &&
          !S2FileIO::DecodeStructureLength(shortLength, 1, 3, &length) &&
