@@ -1,12 +1,14 @@
 param(
     [Parameter(Mandatory)][string]$RunDirectory,
     [string]$Debugger,
-    [string]$GameArguments='-windowed -800 -harness'
+    [string]$GameArguments
 )
 $ErrorActionPreference='Stop'
 $run=(Resolve-Path $RunDirectory).Path
 if(!(Test-Path "$run\evidence\run.json")){throw 'Not a prepared lab run'}
 $runMetadata = Get-Content "$run\evidence\run.json" -Raw | ConvertFrom-Json
+if(!$GameArguments){$GameArguments=$runMetadata.Arguments}
+if(!$GameArguments){$GameArguments='-windowed -800 -harness'}
 if(!$Debugger){
     $buildMetadata = Get-Content "$run\evidence\build.json" -Raw | ConvertFrom-Json
     $debugArch = if($buildMetadata.Architecture -eq 'x64'){'x64'}else{'x86'}

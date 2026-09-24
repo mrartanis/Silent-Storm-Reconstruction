@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "FilesPackage.h"
 #include "BasicChunk1.h"
+#include "PortablePackageIndex.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const DWORD DW_PACKAGE_SIGNATURE = 0x95938921;
 // The release/Steam .res packages bump the signature by +0x01010101 (a per-byte format-version
@@ -73,6 +74,19 @@ protected:
 		CStructureSaver ss( info, CStructureSaver::READ );
 		ss.Add( 1, &files );
 	}
+	bool LoadPortableHeaderInfo( const char *pszFileName )
+	{
+		S2FileIO::PortablePackageIndex index;
+		if ( !index.Open( pszFileName ) )
+			return false;
+		files.clear();
+		for ( const auto &item : index.Entries() )
+		{
+			SFileInfo info = { item.second.offset, item.second.length };
+			files[item.first] = info;
+		}
+		return true;
+	}
 public:
 	virtual void Read( unsigned int nPos, void *pDest, unsigned int nSize ) { f.Seek( nPos ); f.Read( pDest, nSize ); }
 	virtual void Write( unsigned int nPos, const void *pSrc, unsigned int nSize ) { f.Seek( nPos ); f.Write( pSrc, nSize ); }
@@ -92,7 +106,8 @@ bool CFilesPackage::Open( const char *pszFileName )
 	try
 	{
 		f.OpenRead( pszFileName );
-		LoadHeaderInfo();
+		if ( !LoadPortableHeaderInfo( pszFileName ) )
+			return false;
 	}
 	catch(...)
 	{
@@ -291,7 +306,8 @@ bool CCachedFilesPackage::Open( const char *pszFileName )
 		fs.OpenRead( pszFileName );
 		f.WriteFrom( fs );
 		f.Seek(0);
-		LoadHeaderInfo();
+		if ( !LoadPortableHeaderInfo( pszFileName ) )
+			return false;
 	}
 	catch(...)
 	{

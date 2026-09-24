@@ -1,4 +1,4 @@
-param([string]$LabRoot='G:\SS\lab',[Parameter(Mandatory)][string]$BuildId,[Parameter(Mandatory)][ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$RunId)
+param([string]$LabRoot='G:\SS\lab',[Parameter(Mandatory)][string]$BuildId,[Parameter(Mandatory)][ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$RunId,[switch]$SkipIntro)
 $ErrorActionPreference='Stop'
 $archive=Join-Path $LabRoot "builds\$BuildId"
 $run=Join-Path $LabRoot "runs\$RunId"
@@ -22,6 +22,13 @@ if($buildMetadata.Architecture -eq 'x64'){
 Copy-Item "$archive\build.json" "$run\evidence"
 Copy-Item "$LabRoot\evidence\baseline-files.csv" "$run\evidence"
 Get-ChildItem "$run\game" -File | Get-FileHash | Export-Csv "$run\evidence\runtime-hashes.csv" -NoTypeInformation
-@{RunId=$RunId;BuildId=$BuildId;WorkingDirectory="$run\game";Arguments='-windowed -800 -harness';CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$run\evidence\run.json"
+$arguments='-windowed -800 -harness'
+if($SkipIntro){
+ # Only the boot sequence is bypassed; game_skipvideo would also skip mission cinematics.
+ $fastStart='cfg\lab-no-intro.cfg'
+ Set-Content -LiteralPath (Join-Path "$run\game" $fastStart) -Value 'mainmenu' -Encoding ascii
+ $arguments+=' -cfg .\cfg\lab-no-intro.cfg'
+}
+@{RunId=$RunId;BuildId=$BuildId;WorkingDirectory="$run\game";Arguments=$arguments;SkipIntro=[bool]$SkipIntro;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$run\evidence\run.json"
 Write-Output $run
 
