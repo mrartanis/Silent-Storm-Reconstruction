@@ -342,6 +342,37 @@ inline bool EncodeStructureFloatFields(const float* fields, std::size_t count,
   return true;
 }
 
+// Retail explosive-perk modifier: two float32 values, one bool byte and
+// three ignored alignment bytes. The blob stays 12 bytes on every host.
+struct StructureExplosionPerkFields {
+  float structureDamage = 1.0f;
+  float areaDamage = 1.0f;
+  bool alwaysHumanCritical = false;
+};
+
+inline bool DecodeStructureExplosionPerks(const std::uint8_t* source,
+                                          std::size_t length,
+                                          StructureExplosionPerkFields* value) {
+  if (!source || !value || length != 12) return false;
+  StructureExplosionPerkFields decoded;
+  if (!DecodeStructureScalar(source, 4, &decoded.structureDamage) ||
+      !DecodeStructureScalar(source + 4, 4, &decoded.areaDamage)) return false;
+  decoded.alwaysHumanCritical = source[8] != 0;
+  *value = decoded;
+  return true;
+}
+
+inline bool EncodeStructureExplosionPerks(const StructureExplosionPerkFields& value,
+                                          std::uint8_t* destination,
+                                          std::size_t length) {
+  if (!destination || length != 12 ||
+      !EncodeStructureScalar(value.structureDamage, destination, 4) ||
+      !EncodeStructureScalar(value.areaDamage, destination + 4, 4)) return false;
+  destination[8] = value.alwaysHumanCritical ? 1 : 0;
+  destination[9] = destination[10] = destination[11] = 0;
+  return true;
+}
+
 // Specialize this for game PODs whose historical wire format must not depend
 // on host padding or alignment. Unspecialized PODs retain the legacy raw path.
 template<class T, class Enable = void>

@@ -1,5 +1,6 @@
 #pragma once
 #include "RPGUnit.h"
+#include "../FileIO/PortableStructureChunks.h"
 
 namespace NWorld
 {
@@ -25,3 +26,29 @@ struct SPerkMineModifiers
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }  // namespace NWorld
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NWorld::SPerkMineModifiers, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 12;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NWorld::SPerkMineModifiers* value) {
+    if (!value) return false;
+    StructureExplosionPerkFields fields;
+    if (!DecodeStructureExplosionPerks(source, length, &fields)) return false;
+    value->fStructureDmgModifier = fields.structureDamage;
+    value->fAEDmgModifier = fields.areaDamage;
+    value->bAlwaysHumanCritical = fields.alwaysHumanCritical;
+    return true;
+  }
+  static bool Encode(const NWorld::SPerkMineModifiers& value,
+                     std::uint8_t* destination, std::size_t length) {
+    StructureExplosionPerkFields fields;
+    fields.structureDamage = value.fStructureDmgModifier;
+    fields.areaDamage = value.fAEDmgModifier;
+    fields.alwaysHumanCritical = value.bAlwaysHumanCritical;
+    return EncodeStructureExplosionPerks(fields, destination, length);
+  }
+};
+}  // namespace S2FileIO

@@ -42,6 +42,8 @@ add_executable(PortableVertexWireTests "${root}/diagnostics/PortableVertexWireTe
 add_test(NAME PortableVertexWireTests COMMAND PortableVertexWireTests)
 add_executable(PortableGeometryWireTests "${root}/diagnostics/PortableGeometryWireTests.cpp")
 add_test(NAME PortableGeometryWireTests COMMAND PortableGeometryWireTests)
+add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
+add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)
 add_executable(ProbeSavedDecalVertices "${root}/diagnostics/ProbeSavedDecalVertices.cpp")
 target_link_libraries(ProbeSavedDecalVertices PRIVATE s2_portable_structure)
 add_library(s2_portable_database STATIC "${root}/FileIO/PortableGameDatabase.cpp")
@@ -358,6 +360,10 @@ add_executable(NativeGeometryWireTests "${root}/diagnostics/NativeGeometryWireTe
 target_include_directories(NativeGeometryWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeGeometryWireTests PRIVATE "${root}/Main/StdAfx.h")
 add_test(NAME NativeGeometryWireTests COMMAND NativeGeometryWireTests)
+add_executable(NativeExplosionPerkWireTests "${root}/diagnostics/NativeExplosionPerkWireTests.cpp")
+target_include_directories(NativeExplosionPerkWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeExplosionPerkWireTests PRIVATE "${root}/Main/StdAfx.h")
+add_test(NAME NativeExplosionPerkWireTests COMMAND NativeExplosionPerkWireTests)
 # the game
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
