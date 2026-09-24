@@ -7,26 +7,17 @@
 #include "Interface.h"     // NUI umbrella -- GetDBString (IsValidCustomName's reserved-name lookups)
 #include "iSaveManager.h"
 #include "..\FileIO\PortableUserPaths.h"
+#include "..\FileIO\WindowsUserData.h"
 #include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <cstdint>
-#include <vector>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NMainLoop
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace {
-wstring WideEnvironmentValue( const wchar_t *name )
-{
-	const DWORD length = GetEnvironmentVariableW( name, 0, 0 );
-	if ( !length ) return wstring();
-	vector<wchar_t> value( length );
-	if ( GetEnvironmentVariableW( name, &value[0], length ) >= length ) return wstring();
-	return wstring( &value[0] );
-}
-
 bool IsReparsePointW( const wstring &path )
 {
 	const DWORD attr = GetFileAttributesW( path.c_str() );
@@ -86,16 +77,8 @@ bool LegacyCopyTreeW( const wstring &source, const wstring &target, int depth )
 const wstring &SaveRootW()
 {
 	static const wstring root = []() -> wstring {
-		S2FileIO::WideUserPathEnvironment env;
-		env.overrideRoot = WideEnvironmentValue( L"S2_USER_DATA_DIR" );
-		env.localAppData = WideEnvironmentValue( L"LOCALAPPDATA" );
-		wstring base;
-		string error;
-		if ( !S2FileIO::ResolveUserDataRoot( S2FileIO::HostPlatform::Windows, env, &base, &error ) )
-		{
-			OutputDebugStringA( ( "Save path error: " + error + "\n" ).c_str() );
-			return wstring();
-		}
+		const wstring &base = S2FileIO::WindowsUserDataRoot();
+		if ( base.empty() ) return wstring();
 		const wstring target = base + L"\\save\\";
 		CreateDirW( target );
 		if ( !IsDirectoryW( target ) ) return wstring();

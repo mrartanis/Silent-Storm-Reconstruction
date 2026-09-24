@@ -3,6 +3,7 @@
 #include "..\Misc\StrProc.h"
 #include "LogStream.h"
 #include "..\FileIO\BasicChunk1.h"
+#include "..\FileIO\WindowsUserData.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGlobal
 {
@@ -235,7 +236,13 @@ void LoadConfig( const string &szFileName )
 	try
 	{
 		CFileStream sFile;
-		sFile.OpenRead( szFileName.c_str() );
+		if ( szFileName == ".\\cfg\\config.cfg" )
+		{
+			const wstring path = S2FileIO::WindowsConfigPath();
+			if ( path.empty() ) throw SFileIOError( "user config path unavailable" );
+			sFile.OpenRead( path.c_str() );
+		}
+		else sFile.OpenRead( szFileName.c_str() );
 		sStream.WriteFrom( sFile );
 		sStream << '\0';
 		csSystem << "Executing " << szFileName << endl;
@@ -268,7 +275,13 @@ void SaveConfig( const string &szFileName )
 	CPtr<CRecordsMap> pHold( GetRecordsMap() );
 	TRecordsMap &recordsMap = pHold->recordsMap;
 
-	FILE *pFile = fopen( szFileName.c_str(), "w+" );
+	FILE *pFile = 0;
+	if ( szFileName == ".\\cfg\\config.cfg" )
+	{
+		const wstring path = S2FileIO::WindowsConfigPath();
+		if ( !path.empty() ) pFile = _wfopen( path.c_str(), L"w+" );
+	}
+	else pFile = fopen( szFileName.c_str(), "w+" );
 	if ( pFile == 0 )
 	{
 		csSystem << "Can't open " << szFileName << endl;

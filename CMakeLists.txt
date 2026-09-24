@@ -309,7 +309,7 @@ endfunction()
 s2_module(Misc        lib)
 # (Scintilla + OpenDynamix are only used by MapEdit, which isn't built -- omitted.)
 # core
-s2_module(FileIO    lib LINK Misc s2_portable_package s2_portable_structure)
+s2_module(FileIO    lib LINK Misc s2_portable_package s2_portable_structure s2_portable_user_paths)
 add_executable(PackageOracleProbe "${root}/diagnostics/PackageOracleProbe.cpp")
 target_link_libraries(PackageOracleProbe PRIVATE FileIO Misc)
 add_executable(StructureWireProbe "${root}/diagnostics/StructureWireProbe.cpp")

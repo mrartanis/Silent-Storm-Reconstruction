@@ -14,6 +14,7 @@
 #include "..\Input\Bind.h"
 #include "..\DBFormat\DataFormat.h"
 #include "iSaveManager.h"
+#include "..\FileIO\WindowsUserData.h"
 #include "iExitMenu.h"
 #include "Interface.h"
 #include "iInterMission.h"
@@ -76,12 +77,13 @@ void ShowSplash( NDb::CUIContainer *pUI, const CArray2D<NGfx::SPixel8888> &sScre
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool MakeScreenShot()
 {
-	CreateDir( "screenshots" );
+	const wstring directory = S2FileIO::WindowsScreenshotDirectory();
+	if ( directory.empty() ) return false;
 
-	char szName[1024];
+	wchar_t szName[1024];
 	SYSTEMTIME sTime;
 	GetLocalTime( &sTime );
-	sprintf( szName, "screenshots\\ScrnShot_%2.2d%2.2d%2.2d_%2.2d%2.2d%2.2d.bmp", sTime.wDay, sTime.wMonth, sTime.wYear % 100, sTime.wHour, sTime.wMinute, sTime.wSecond );
+	swprintf_s( szName, L"%ls\\ScrnShot_%2.2d%2.2d%2.2d_%2.2d%2.2d%2.2d.bmp", directory.c_str(), sTime.wDay, sTime.wMonth, sTime.wYear % 100, sTime.wHour, sTime.wMinute, sTime.wSecond );
 
 	CFileStream f;
 	try

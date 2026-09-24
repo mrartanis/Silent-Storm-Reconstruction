@@ -28,6 +28,7 @@
 #include "..\DBFormat\DataRPG.h"    // [HARNESS] nationality preview template
 #include <dbghelp.h>                 // [HARNESS] post-load crash backtrace (SymFromAddr / StackWalk64)
 #pragma comment(lib, "dbghelp.lib")
+namespace NMainLoop { bool MakeScreenShot(); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // [HARNESS] Unhandled-exception filter: on a post-load AV (the "silent close"), log a symbolic
 // backtrace to _saveload.log so the driver can map the fault to a function. Installed only in harness
@@ -307,6 +308,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
 	else if ( sCmd.compare( 0, 5, "save " ) == 0 )
 		NMainLoop::Command( new NMainLoop::CICSave( sCmd.substr( 5 ), true ) );
+	else if ( sCmd == "screenshot" )
+		SaveLoadDiag( "[harness] screenshot ok=%d\n", NMainLoop::MakeScreenShot() ? 1 : 0 );
 	else if ( sCmd.compare( 0, 9, "turnsave " ) == 0 )
 	{
 		// Catches the same CICSave path as F5 before a fast AI turn can finish

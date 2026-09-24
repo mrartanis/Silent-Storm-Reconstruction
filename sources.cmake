@@ -19,6 +19,7 @@ set(FileIO_SRC
   "Cruncher.cpp"
   "StdAfx.cpp"
   "Streams.cpp"
+  "WindowsUserData.cpp"
 )
 
 set(MiscDll_SRC
