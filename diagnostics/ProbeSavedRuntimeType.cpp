@@ -43,6 +43,21 @@ bool PrintParticleVectors(const std::uint8_t* bytes, std::size_t size) {
     }
     std::cout << " v" << id << "=" << count << ":" << std::hex << hash << std::dec;
   }
+  S2FileIO::StructureChunk softs, countChunk, blob;
+  if (!FindChild(bytes, size, 4, &softs)) return false;
+  const auto* vectorBytes = bytes + softs.payloadOffset;
+  std::uint32_t count = 0;
+  if (!FindChild(vectorBytes, softs.length, 1, &countChunk) || countChunk.length != 4 ||
+      !S2FileIO::DecodeStructureScalar(vectorBytes + countChunk.payloadOffset, 4, &count))
+    return false;
+  std::uint64_t hash = UINT64_C(14695981039346656037);
+  if (count) {
+    if (!FindChild(vectorBytes, softs.length, 2, &blob) ||
+        blob.length != static_cast<std::uint64_t>(count) * 20) return false;
+    for (std::size_t i = 0; i < blob.length; ++i)
+      hash = (hash ^ vectorBytes[blob.payloadOffset + i]) * UINT64_C(1099511628211);
+  }
+  std::cout << " softs=" << count << ":" << std::hex << hash << std::dec;
   return true;
 }
 
