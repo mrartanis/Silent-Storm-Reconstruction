@@ -47,6 +47,14 @@ Linux-загрузчик таблиц.
 36 310 988 байт чанка 2 как 155 вложенных чанков на Windows x86/x64 и
 Linux x86-64; Linux GCC 11.4 с ASan/UBSan ошибок не сообщил.
 
+Коммит `4b762dc` собран из чистого дерева в архивы
+`stage2-nested-20260924-01` (x64, нативное медиа без FMOD) и
+`stage2-nested-x86-20260924-01` (x86). В запусках
+`stage2-nested-clean-x64-01` и `stage2-nested-clean-x86-01` команда
+`load DB_OLD` дала `LOAD-DESERIALIZE-COMPLETE (1 interfaces)` и
+`LOAD-SLOT-DONE`, затем `quit` завершил обе игры и оба отладчика;
+`crash.dmp` отсутствует. Проверен один старый сейв, не вся кампания.
+
 Коммит `dbedba8` архивирован как `stage2-db-objects-20260924-01` (x64,
 нативное медиа без FMOD) и `stage2-db-objects-x86-20260924-01` (x86).
 Чистые запуски `stage2-db-objects-clean-x64-01` и
