@@ -46,6 +46,10 @@ if(NOT MSVC)
   include("${root}/cmake/PortableCore.cmake")
   return()
 endif()
+add_executable(WindowsSaveNameTests
+  "${root}/diagnostics/WindowsSaveNameTests.cpp"
+  "${root}/FileIO/WindowsSaveNames.cpp")
+add_test(NAME WindowsSaveNameTests COMMAND WindowsSaveNameTests)
 enable_language(RC)
 
 if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4 AND NOT CMAKE_SIZEOF_VOID_P EQUAL 8)

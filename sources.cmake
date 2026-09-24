@@ -19,6 +19,7 @@ set(FileIO_SRC
   "Cruncher.cpp"
   "StdAfx.cpp"
   "Streams.cpp"
+  "WindowsSaveNames.cpp"
   "WindowsUserData.cpp"
 )
 

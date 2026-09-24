@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "..\FileIO\WindowsSaveNames.h"
 #include "Gfx.h"
 #include "SWTexture.h"
 #include "ScreenShot.h"
@@ -56,9 +57,11 @@ CSaveLoadItem::CSaveLoadItem( const SWindowInfo &sInfo, const string &_szName ):
 	wstring wsTemp;
 	pSaveManager->GetSlotTime( szName, &wsTemp );
 
-	AddTextState( STATE_NORMAL, GetDBString( 7557 ) + L"<wrapright>" + wsTemp + L"<br><left>" + NStr::ToUnicode( szName ), NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0x0 ) );
-	AddTextState( STATE_HOVER, GetDBString( 7558 ) + L"<wrapright>" + wsTemp + L"<br><left>" + NStr::ToUnicode( szName ), NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0x66 ) );
-	AddTextState( STATE_SELECTED, GetDBString( 7558 ) + L"<wrapright>" + wsTemp + L"<br><left>" + NStr::ToUnicode( szName ), NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0xFF ) );
+	wstring displayName;
+	S2FileIO::DecodeWindowsSaveName( szName, &displayName );
+	AddTextState( STATE_NORMAL, GetDBString( 7557 ) + L"<wrapright>" + wsTemp + L"<br><left>" + displayName, NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0x0 ) );
+	AddTextState( STATE_HOVER, GetDBString( 7558 ) + L"<wrapright>" + wsTemp + L"<br><left>" + displayName, NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0x66 ) );
+	AddTextState( STATE_SELECTED, GetDBString( 7558 ) + L"<wrapright>" + wsTemp + L"<br><left>" + displayName, NGfx::SPixel8888( 0x87, 0x7D, 0x4D, 0xFF ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const string& CSaveLoadItem::Get() const
@@ -675,7 +678,9 @@ void CSaveView::SetSelected( CSaveLoadItem *pItem )
 	if ( !IsValid( pItem ) )
 		return;
 
-	pEdit->SetText( NStr::ToUnicode( pItem->Get() ) );
+	wstring displayName;
+	S2FileIO::DecodeWindowsSaveName( pItem->Get(), &displayName );
+	pEdit->SetText( displayName );
 
 	CBaseView::SetSelected( pItem );
 }
@@ -686,7 +691,7 @@ void CSaveView::SetSelected( CSaveLoadItem *pItem )
 void CSaveView::SaveSlot()
 {
 	wstring wsTemp( pEdit->GetText() );
-	string szName( NStr::ToAscii( wsTemp ) );
+	string szName( S2FileIO::EncodeWindowsSaveName( wsTemp ) );
 	if ( szName.empty() )
 		return;
 	if ( !NMainLoop::IsValidCustomName( szName ) )
@@ -754,7 +759,7 @@ bool CSaveView::ProcessMessage( const SEvent &sEvent )
 // confirmation dialog).
 void CSaveView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
-	string szName( NStr::ToAscii( pEdit->GetText() ) );
+	string szName( S2FileIO::EncodeWindowsSaveName( pEdit->GetText() ) );
 	if ( szName != szLastEditString )
 	{
 		szLastEditString = szName;

@@ -18,6 +18,7 @@
 #include "..\Main\Sound.h"
 #include "..\Main\WinInputConv.h" // Win32->NInput bridge: replays WM_KEYDOWN/WM_CHAR (OS auto-repeat)
 #include "..\FileIO\BasicChunk1.h"  // [HARNESS] g_bSaveLoadDiag / SaveLoadDiag
+#include "..\FileIO\WindowsSaveNames.h"
 #include "..\MiscDll\LogStream.h"   // [HARNESS] g_bHarnessLog (console-log tee)
 #include "..\Main\A5Script.h"       // [HARNESS] ProcessCommand (console/lua entry for the command channel)
 #include "..\Main\LSHead.h"         // [HARNESS] export the complete facial-sequence test corpus
@@ -308,6 +309,21 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
 	else if ( sCmd.compare( 0, 5, "save " ) == 0 )
 		NMainLoop::Command( new NMainLoop::CICSave( sCmd.substr( 5 ), true ) );
+	else if ( sCmd == "saveunicode" )
+		NMainLoop::Command( new NMainLoop::CICSave(
+			S2FileIO::EncodeWindowsSaveName( L"\u0422\u0435\u0441\u0442 \u6f22\u5b57" ), true ) );
+	else if ( sCmd == "loadunicode" )
+		NMainLoop::Command( new NMainLoop::CICLoad(
+			S2FileIO::EncodeWindowsSaveName( L"\u0422\u0435\u0441\u0442 \u6f22\u5b57" ) ) );
+	else if ( sCmd == "listunicode" )
+	{
+		list<string> slots;
+		NMainLoop::GetSaveManager()->GetSlotsList( &slots );
+		const string wanted = S2FileIO::EncodeWindowsSaveName( L"\u0422\u0435\u0441\u0442 \u6f22\u5b57" );
+		SaveLoadDiag( "[harness] unicode slot listed=%d count=%u\n",
+			find( slots.begin(), slots.end(), wanted ) != slots.end() ? 1 : 0,
+			static_cast<unsigned>( slots.size() ) );
+	}
 	else if ( sCmd == "screenshot" )
 		SaveLoadDiag( "[harness] screenshot ok=%d\n", NMainLoop::MakeScreenShot() ? 1 : 0 );
 	else if ( sCmd.compare( 0, 9, "turnsave " ) == 0 )

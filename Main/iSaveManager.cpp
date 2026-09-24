@@ -8,6 +8,7 @@
 #include "iSaveManager.h"
 #include "..\FileIO\PortableUserPaths.h"
 #include "..\FileIO\WindowsUserData.h"
+#include "..\FileIO\WindowsSaveNames.h"
 #include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -111,8 +112,9 @@ wstring ProfileDirW( const string &profile )
 wstring SlotDirW( const string &profile, const string &slot )
 {
 	const wstring parent = ProfileDirW( profile );
-	const wstring name = NStr::ToUnicode( slot );
-	if ( parent.empty() || !S2FileIO::IsSafeSaveComponent( name ) ) return wstring();
+	wstring name;
+	if ( parent.empty() || !S2FileIO::DecodeWindowsSaveName( slot, &name ) ||
+		!S2FileIO::IsSafeSaveComponent( name ) ) return wstring();
 	const wstring path = parent + name + L"\\";
 	return IsReparsePointW( path ) ? wstring() : path;
 }
@@ -291,8 +293,8 @@ void CSaveManager::GetSlotsList( list<string> *pList ) const
 		if ( !( entry.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ||
 			( entry.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT ) ||
 			!S2FileIO::IsSafeSaveComponent( name ) || name == L"temp" ) continue;
-		const string encoded = NStr::ToAscii( name );
-		if ( NStr::ToUnicode( encoded ) == name ) pList->push_back( encoded );
+		const string encoded = S2FileIO::EncodeWindowsSaveName( name );
+		if ( !encoded.empty() ) pList->push_back( encoded );
 	} while ( FindNextFileW( handle, &entry ) );
 	FindClose( handle );
 }
@@ -466,13 +468,16 @@ void SetActiveProfile( const string &szProfile )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool IsValidCustomName( const string &szName )
 {
-	if ( szName == NStr::ToAscii( NUI::GetDBString( 20241 ) ) )
+	wstring name;
+	if ( !S2FileIO::DecodeWindowsSaveName( szName, &name ) ||
+		!S2FileIO::IsSafeSaveComponent( name ) ) return false;
+	if ( name == NUI::GetDBString( 20241 ) )
 		return false;
-	if ( szName == NStr::ToAscii( NUI::GetDBString( 20242 ) ) )
+	if ( name == NUI::GetDBString( 20242 ) )
 		return false;
-	if ( szName == NStr::ToAscii( NUI::GetDBString( 20243 ) ) )
+	if ( name == NUI::GetDBString( 20243 ) )
 		return false;
-	if ( szName == NStr::ToAscii( NUI::GetDBString( 20244 ) ) )
+	if ( name == NUI::GetDBString( 20244 ) )
 		return false;
 	return true;
 }
