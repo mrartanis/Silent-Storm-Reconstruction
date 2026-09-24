@@ -28,6 +28,19 @@ Linux-сборка GCC 11.4 использовала `-std=c++17 -O1 -g -Wall -W
 по 8/8 CTest проходят. Изолированный Linux-каталог с копией `game.db`
 после проверки удалён.
 
+Коммит `101edc8` собран в чистые архивы
+`G:\SS\lab\builds\stage2-db-chunks-20260924-01` (x64) и
+`G:\SS\lab\builds\stage2-db-chunks-x86-20260924-01` (x86). Из каждого
+создан отдельный запуск с отключённой стартовой заставкой:
+`G:\SS\lab\runs\stage2-db-chunks-clean-x64-01` и
+`G:\SS\lab\runs\stage2-db-chunks-clean-x86-01`. Оба загрузили одинаковую
+копию старого `game.sav`/`restart.sav` из пользовательского сохранения
+`user-quicksave-20260922-211453/Быстрая запись (2)` через `load DB_OLD`.
+В обоих `_saveload.log` есть `LOAD-DESERIALIZE-COMPLETE (1 interfaces)` и
+`LOAD-SLOT-DONE`; команда `facegenstatus` отработала, затем `quit`
+завершил процессы игры и отладчика. Дампов падения не создано. Это smoke-тест
+загрузки одного сохранения, а не полный регрессионный сценарий игры.
+
 Повторение на данном стенде:
 
 ```powershell
