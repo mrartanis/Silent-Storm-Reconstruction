@@ -31,8 +31,12 @@ tables 155 relations 1 int-cells 2822643 float-cells 1624746 string-cells 487562
 
 Отношения имеют отдельный хеш `35228b258fdbcf32`: Windows и Linux
 переносимые пробники дали одинаковый результат под ASan/UBSan. Сверка
-отношений с игровым загрузчиком добавлена в `S2_DB_PARITY=1` и требует
-нового чистого запуска после этой правки.
+с игровым загрузчиком выполнена на чистом архиве
+`stage2-game-db-rel-20260924-01` (коммит `679ded9`) в запуске
+`stage2-game-db-rel-parity-x64-01`: `DB-PARITY relations=1
+hash=35228b258fdbcf32`; все 155 табличных хешей снова совпали, различий 0.
+Тот же старый `DB_OLD` дошёл до `LOAD-SLOT-DONE`, после `quit` игра и
+отладчик завершились без дампа.
 
 Повторение локально:
 
@@ -40,7 +44,29 @@ tables 155 relations 1 int-cells 2822643 float-cells 1624746 string-cells 487562
 & 'G:\SS\lab\build-x64\RelWithDebInfo\PortableGameDatabaseProbe.exe' 'G:\SS\lab\baseline\game.db' --all
 ```
 
+На Linux после копирования только четырёх исходников
+`Portable{StructureChunks,GameDatabase}.{h,cpp}`, пробника и оригинальной
+базы в изолированный каталог:
+
+```sh
+g++ -std=c++17 -O1 -g -Wall -Wextra -Werror \
+  -fsanitize=address,undefined -fno-omit-frame-pointer \
+  FileIO/PortableStructureChunks.cpp FileIO/PortableGameDatabase.cpp \
+  diagnostics/PortableGameDatabaseProbe.cpp -o PortableGameDatabaseProbe
+sha256sum data/game.db
+./PortableGameDatabaseProbe data/game.db --all
+```
+
+Для игрового оракула создать чистый x64-архив через `Build-Lab.ps1`, затем
+`New-LabRun.ps1 -SkipIntro`; перед `Start-LabRun.ps1` выставить
+`$env:S2_DB_PARITY='1'`. В `evidence/debugger.log` появятся 155 строк
+`DB-PARITY type=... hash=...` и одна `DB-PARITY relations=... hash=...`.
+Сопоставлять хеши по ID таблицы с выводом `PortableGameDatabaseProbe --all`,
+а не по порядку строк: игровой hash-map обходит таблицы в другом порядке.
+
 Границы: проверена одна выбранная оригинальная база v1, не все региональные
-издания и повреждённые файлы; переносимый декодер ещё не подключён вместо
-игрового `NDatabase::Serialize`. ARM64 и macOS не проверены. Репозиторий не
+издания и повреждённые файлы; сверка значений была с восстановленным x64
+загрузчиком, не напрямую с историческим x86-релизом. Переносимый декодер
+ещё не подключён вместо игрового `NDatabase::Serialize`. ARM64 и macOS не
+проверены. Репозиторий не
 содержит лицензированные `game.db` и сохранения.
