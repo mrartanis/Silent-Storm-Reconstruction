@@ -1,18 +1,23 @@
 # ============================================================================
 #  Silent Storm engine -- CMake build
 #
-#  Windows x86 and x64
+#  Windows x86 and x64 game; portable data-core tests on Linux/macOS
 #  Configure with:            cmake -S . -B build -A x64
 #  Build with:                cmake --build build --config Release
 #
 #  Replaces the old A5new.sln. Third-party code lives under third_party/.
 # ============================================================================
 cmake_minimum_required(VERSION 3.21)
-project(A5 CXX C RC)
+project(A5 LANGUAGES C CXX)
 
+set(root "${CMAKE_CURRENT_SOURCE_DIR}")
+include("${root}/cmake/MediaProbe.cmake")
 if(NOT MSVC)
-  message(FATAL_ERROR "MSVC toolset required.")
+  include("${root}/cmake/PortableCore.cmake")
+  return()
 endif()
+enable_language(RC)
+
 if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4 AND NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
   message(FATAL_ERROR "Unsupported pointer size: ${CMAKE_SIZEOF_VOID_P}")
 endif()
@@ -24,7 +29,6 @@ else()
 endif()
 
 set(CMAKE_CXX_STANDARD 14)
-set(root "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Dynamic CRT (/MD, /MDd) -- matches the original projects and the committed import libs.
 cmake_policy(SET CMP0091 NEW)
@@ -292,6 +296,37 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   # the old media APIs, run the core with sound explicitly disabled.
   target_compile_definitions(Game PRIVATE S2_X64_MEDIA_STUBS)
   target_compile_definitions(Main PRIVATE S2_X64_MEDIA_STUBS)
+endif()
+option(S2_ENABLE_NATIVE_MUSIC "Use FFmpeg/miniaudio for x64 game music" OFF)
+if(S2_ENABLE_NATIVE_MUSIC)
+  if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8 OR NOT S2_BUILD_MINIAUDIO_MUSIC_PROBE)
+    message(FATAL_ERROR "S2_ENABLE_NATIVE_MUSIC requires x64 and the FFmpeg/miniaudio targets")
+  endif()
+  target_link_libraries(FModSound PUBLIC s2_native_music)
+  foreach(target IN ITEMS FModSound Main Game)
+    target_compile_definitions(${target} PRIVATE S2_NATIVE_MUSIC)
+  endforeach()
+endif()
+option(S2_ENABLE_NATIVE_VIDEO "Use FFmpeg/miniaudio for x64 Bink movies" OFF)
+if(S2_ENABLE_NATIVE_VIDEO)
+  if(NOT S2_ENABLE_NATIVE_MUSIC)
+    message(FATAL_ERROR "S2_ENABLE_NATIVE_VIDEO requires S2_ENABLE_NATIVE_MUSIC")
+  endif()
+  add_library(s2_bink_compat SHARED "${root}/Media/BinkCompat.cpp")
+  target_include_directories(s2_bink_compat PRIVATE
+    "${root}/third_party/bink/include")
+  target_compile_features(s2_bink_compat PRIVATE cxx_std_17)
+  target_compile_definitions(s2_bink_compat PRIVATE S2_BINK_COMPAT_EXPORTS)
+  target_link_libraries(s2_bink_compat PRIVATE s2_native_music)
+  set_target_properties(s2_bink_compat PROPERTIES OUTPUT_NAME binkw32
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/_media"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/_media"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/_media")
+  target_compile_definitions(Main PRIVATE S2_NATIVE_VIDEO)
+  add_executable(BinkCompatProbe "${root}/diagnostics/BinkCompatProbe.cpp")
+  target_include_directories(BinkCompatProbe PRIVATE
+    "${root}/third_party/bink/include")
+  target_link_libraries(BinkCompatProbe PRIVATE s2_bink_compat)
 endif()
 add_dependencies(Game ls_implibs)   # the lib/def import libs must exist before Game links
 # tools

@@ -440,7 +440,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		MessageBox( 0, "Failed to initialize Direct3D8", "Error", MB_OK );
 		return 0;
 	}
-	#if !defined(S2_X64_MEDIA_STUBS)
+	#if !defined(S2_X64_MEDIA_STUBS) || defined(S2_NATIVE_MUSIC)
 	if ( !NSound::InitSound( NWinFrame::GetWnd() ) )
 	{
 		ASSERT(0); // FMod not found
@@ -560,7 +560,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		}
 	}
 	//
-	#if defined(S2_X64_MEDIA_STUBS)
+	#if defined(S2_X64_MEDIA_STUBS) && !defined(S2_NATIVE_MUSIC)
 	NGlobal::SetVar( "sound_mode", 0 );
 	NGlobal::SetVar( "sound_init", 0 );
 	#endif

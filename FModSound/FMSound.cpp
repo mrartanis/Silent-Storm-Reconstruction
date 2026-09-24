@@ -7,6 +7,10 @@
 #pragma comment( lib, "dsound.lib" )  // self-contained -- no vcxproj edit (DirectSound device-config query)
 #include "FMSound.h"
 #include "..\Misc\HPTimer.h"
+#if defined(S2_NATIVE_MUSIC)
+#include "..\Media\NativeMusicPlayer.h"
+#include <memory>
+#endif
 
 namespace NFMSound 
 {
@@ -222,6 +226,9 @@ public:
 	FSOUND_STREAM *pStream;
 	int nChannel;
 	bool bReset;
+#if defined(S2_NATIVE_MUSIC)
+	std::unique_ptr<S2Media::NativeMusicPlayer> music;
+#endif
 
 	CStream( string szFile = "", bool _bLoop = false ): pStream(0), bFadeOut(false), bFadeIn(false), fFadeInTime(0), fFadeVolume(0), fFadeSpeed(0), bReset(false), bLoop(_bLoop), szFileName(szFile), bSwitch(false), bClose(false), nChannel(-1) {}
 	~CStream() { if ( pStream ) FSOUND_Stream_Close( pStream ); }
@@ -236,6 +243,16 @@ public:
 		bLoop = _bLoop;
 		int nFlags = FSOUND_2D;
 		nFlags = bLoop ? nFlags | FSOUND_LOOP_NORMAL : nFlags;
+#if defined(S2_NATIVE_MUSIC)
+		music.reset( new S2Media::NativeMusicPlayer );
+		if ( !music->Init() || !music->Play( pszFileName, bLoop, nStartMs ) )
+		{
+			DebugTrace( "NATIVE-MUSIC open failed: %s\n", pszFileName );
+			music.reset();
+			return;
+		}
+		DebugTrace( "NATIVE-MUSIC playing: %s\n", pszFileName );
+#else
 		pStream = FSOUND_Stream_Open( pszFileName, nFlags, 0, 0 );
 		ASSERT( pStream );
 		if ( pStream )
@@ -251,6 +268,7 @@ public:
 				FSOUND_Stream_SetTime( pStream, nStartMs );
 			FSOUND_SetPan( nChannel, FSOUND_STEREOPAN );
 		}
+#endif
 		// retail volume/fade priming: an explicit fade-in starts silent and ramps in Update; a
 		// pending SetSwitchStream fade-in (bFadeIn already set) also starts at its ramp volume
 		int nVolume;
@@ -272,7 +290,12 @@ public:
 		if ( bFadeOut )
 			return;
 		bFadeOut = true;
-		fFadeVolume = FSOUND_GetVolume( nChannel );
+		fFadeVolume =
+#if defined(S2_NATIVE_MUSIC)
+			bFadeIn ? fFadeVolume : nMusicVolume;
+#else
+			FSOUND_GetVolume( nChannel );
+#endif
 		fFadeSpeed = fFadeVolume / dSec;
 	}
 	void CancelFadeOut()
@@ -293,8 +316,12 @@ public:
 				fFadeSpeed = (float)nMusicVolume / fFadeInTime;
 			if ( fFadeVolume < FP_EPSILON )
 			{
+#if defined(S2_NATIVE_MUSIC)
+				if ( music ) music->Stop();
+#else
 				FSOUND_Stream_Stop( pStream );
 				FSOUND_StopSound( nChannel );
+#endif
 			}
 		}
 		else if ( bFadeIn )
@@ -311,18 +338,31 @@ public:
 		}
 		if ( bReset )
 		{
+#if defined(S2_NATIVE_MUSIC)
+			if ( music ) music->Seek( 104 );
+#else
 			FSOUND_Stream_SetTime( pStream, 104 );
+#endif
 			bReset = false;
 		}
 	}
 	unsigned long GetTime()
 	{
+#if defined(S2_NATIVE_MUSIC)
+		return music && music->TimeMs() >= 0 ? (unsigned long)music->TimeMs() : 0xFFFFFFFF;
+#else
 		if ( !pStream )
 			return 0xFFFFFFFF;
 		return FSOUND_Stream_GetTime( pStream );
+#endif
 	}
 	bool Reset()
 	{
+#if defined(S2_NATIVE_MUSIC)
+		if ( !music ) return false;
+		music->SetPaused( false );
+		return music->Seek( 1040 );
+#else
 		//if ( pStream ) FSOUND_Stream_Close( pStream );
 		FSOUND_Stream_Stop( pStream );
 		FSOUND_StopSound( nChannel );
@@ -340,10 +380,15 @@ public:
 		//bRet = FSOUND_Stream_SetPosition( pStream, 0 );
 		//FSOUND_SetPan( nChannel, FSOUND_STEREOPAN );
 		//return bRet && nChannel != -1;
+#endif
 	}
 	bool IsPlaying()
 	{
+#if defined(S2_NATIVE_MUSIC)
+		return (( music && music->IsPlaying() ) || bSwitch) && !bClose;
+#else
 		return (FSOUND_IsPlaying( nChannel ) || bSwitch) && !bClose;
+#endif
 	}
 	// retail CStream::SetSwitchStream @0x3dd190: queue the replacement; a positive switch time
 	// primes the NEW stream's fade-in ramp (the retail "crossfade" -- the old side is closed hard)
@@ -374,7 +419,13 @@ public:
 		bClose = true;
 		bSwitch = false;
 	}
-	void SetVolume( int n ) { FSOUND_SetVolumeAbsolute( nChannel, n ); }
+	void SetVolume( int n ) {
+#if defined(S2_NATIVE_MUSIC)
+		if ( music ) music->SetVolume( n / 255.0f );
+#else
+		FSOUND_SetVolumeAbsolute( nChannel, n );
+#endif
+	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 signed char __stdcall SynchCallback( FSOUND_STREAM *stream, void *buff, int len, intptr_t param )
@@ -409,6 +460,18 @@ CChannels hashChannel;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SearchDevices()
 {
+#if defined(S2_NATIVE_MUSIC)
+	drivers.clear();
+	SDriverInfo driver;
+	driver.sName = "miniaudio default output";
+	driver.isHardware3DAccelerated = false;
+	driver.supportEAXReverb = false;
+	driver.supportA3DOcclusions = false;
+	driver.supportA3DReflections = false;
+	driver.supportReverb = false;
+	drivers.push_back( driver );
+	return true;
+#endif
 	if ( FSOUND_GetVersion() < FMOD_VERSION )
 	{
 		OutputDebugString( "Error : You are using the wrong DLL version!\n" );
@@ -434,6 +497,11 @@ bool SearchDevices()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Init( const SStartInfo &info )
 {
+#if defined(S2_NATIVE_MUSIC)
+	NHPTimer::GetTime( &timeUpdate );
+	bIsFMODInitialized = true;
+	return true;
+#endif
 	ASSERT( info.nDriver < drivers.size() );
 	FSOUND_SetDriver( info.nDriver );
 	ASSERT( !( info.eOutputType == SOUND_A3D && !drivers[info.nDriver].supportA3DOcclusions ) );
@@ -507,6 +575,9 @@ bool IsInitialized()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void* GetSoundAPI()
 {
+#if defined(S2_NATIVE_MUSIC)
+	return 0; // miniaudio owns its device; there is no DirectSound handoff.
+#endif
 	if ( !bIsFMODInitialized )
 		return 0;
 	return FSOUND_GetOutputHandle();

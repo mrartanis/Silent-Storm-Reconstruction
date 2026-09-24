@@ -11,6 +11,8 @@ if($LASTEXITCODE -ge 8){throw 'Copy failed'}
 foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){Copy-Item "$archive\$file" "$run\game"}
 if($buildMetadata.Architecture -eq 'x64'){
  foreach($file in 'fmod.dll','binkw32.dll'){Copy-Item "$archive\$file" "$run\game"}
+ Get-ChildItem -LiteralPath $archive -File | Where-Object Name -Match '^(avcodec|avformat|avutil|swscale|swresample)-[0-9]+\.dll$' |
+  Copy-Item -Destination "$run\game"
 }
 Copy-Item "$archive\build.json" "$run\evidence"
 Copy-Item "$LabRoot\evidence\baseline-files.csv" "$run\evidence"

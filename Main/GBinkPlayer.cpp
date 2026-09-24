@@ -48,6 +48,11 @@ CBinkVideoPlayer::~CBinkVideoPlayer()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CBinkVideoPlayer::OpenBink( const char *pszName )
 {
+#if defined(S2_NATIVE_VIDEO)
+	// The FFmpeg bridge opens the same original file directly; the legacy
+	// BINKFROMMEMORY flag cannot convey its buffer length to that decoder.
+	hBink = BinkOpen( szFileName.c_str(), BOF_FROMFILE );
+#else
 	if ( ( dwPlayFlags & BPF_LOADTOMEMORY ) == 0 )
 	{
 		hBink = BinkOpen( pszName, BOF_FROMFILE );
@@ -63,6 +68,7 @@ bool CBinkVideoPlayer::OpenBink( const char *pszName )
 			sFile.Read( &buffer[0], nLen );
 		hBink = BinkOpen( buffer.empty() ? 0 : (const char*)&buffer[0], BOF_FROMMEMORY );
 	}
+#endif
 
 	if ( hBink != 0 )
 	{

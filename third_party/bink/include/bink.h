@@ -31,17 +31,23 @@ typedef struct BINK *HBINK;
 // Sound-system installer signature -- the engine passes BinkOpenDirectSound here.
 typedef S32 (__stdcall *BINKSNDSYSOPEN)( U32 param );
 
-HBINK __stdcall BinkOpen( const char *name, U32 flags );
-void  __stdcall BinkClose( HBINK bnk );
-S32   __stdcall BinkWait( HBINK bnk );
-S32   __stdcall BinkDoFrame( HBINK bnk );
-void  __stdcall BinkNextFrame( HBINK bnk );
-void  __stdcall BinkGoto( HBINK bnk, U32 framenum, S32 flags );
-S32   __stdcall BinkPause( HBINK bnk, S32 pause );
-void  __stdcall BinkSetVolume( HBINK bnk, U32 trackid, S32 volume );
-S32   __stdcall BinkCopyToBuffer( HBINK bnk, void *dest, S32 destpitch, U32 destheight, U32 destx, U32 desty, U32 flags );
-S32   __stdcall BinkOpenDirectSound( U32 param );
-S32   __stdcall BinkSetSoundSystem( BINKSNDSYSOPEN open, U32 param );
+#if defined(S2_BINK_COMPAT_EXPORTS)
+#define S2_BINK_API __declspec(dllexport)
+#else
+#define S2_BINK_API
+#endif
+
+S2_BINK_API HBINK __stdcall BinkOpen( const char *name, U32 flags );
+S2_BINK_API void  __stdcall BinkClose( HBINK bnk );
+S2_BINK_API S32   __stdcall BinkWait( HBINK bnk );
+S2_BINK_API S32   __stdcall BinkDoFrame( HBINK bnk );
+S2_BINK_API void  __stdcall BinkNextFrame( HBINK bnk );
+S2_BINK_API void  __stdcall BinkGoto( HBINK bnk, U32 framenum, S32 flags );
+S2_BINK_API S32   __stdcall BinkPause( HBINK bnk, S32 pause );
+S2_BINK_API void  __stdcall BinkSetVolume( HBINK bnk, U32 trackid, S32 volume );
+S2_BINK_API S32   __stdcall BinkCopyToBuffer( HBINK bnk, void *dest, S32 destpitch, U32 destheight, U32 destx, U32 desty, U32 flags );
+S2_BINK_API S32   __stdcall BinkOpenDirectSound( U32 param );
+S2_BINK_API S32   __stdcall BinkSetSoundSystem( BINKSNDSYSOPEN open, U32 param );
 
 #ifdef __cplusplus
 }
