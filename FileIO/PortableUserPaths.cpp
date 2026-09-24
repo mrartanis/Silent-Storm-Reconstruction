@@ -1,0 +1,90 @@
+#include "PortableUserPaths.h"
+
+#include <cctype>
+
+namespace S2FileIO {
+namespace {
+bool Fail(std::string* error, const char* why) {
+  if (error) *error = why;
+  return false;
+}
+
+bool IsAbsolute(HostPlatform platform, const std::string& path) {
+  if (platform == HostPlatform::Windows)
+    return path.size() >= 3 && std::isalpha(static_cast<unsigned char>(path[0])) &&
+           path[1] == ':' && (path[2] == '\\' || path[2] == '/');
+  return !path.empty() && path[0] == '/';
+}
+
+std::string Normalize(HostPlatform platform, std::string path) {
+  const char separator = platform == HostPlatform::Windows ? '\\' : '/';
+  const char other = separator == '\\' ? '/' : '\\';
+  for (char& ch : path)
+    if (ch == other) ch = separator;
+  while (path.size() > (platform == HostPlatform::Windows ? 3u : 1u) &&
+         path.back() == separator)
+    path.pop_back();
+  return path;
+}
+
+std::string Append(HostPlatform platform, const std::string& base,
+                   const char* child) {
+  std::string path = Normalize(platform, base);
+  if (path.empty()) return child;
+  const char separator = platform == HostPlatform::Windows ? '\\' : '/';
+  if (path.back() != separator) path += separator;
+  return path + child;
+}
+
+bool HasDotComponent(const std::string& path, char separator) {
+  std::size_t begin = 0;
+  while (begin < path.size()) {
+    const std::size_t end = path.find(separator, begin);
+    const std::string part = path.substr(begin, end == std::string::npos ? end : end - begin);
+    if (part == "." || part == "..") return true;
+    if (end == std::string::npos) break;
+    begin = end + 1;
+  }
+  return false;
+}
+} // namespace
+
+bool ResolveUserDataRoot(HostPlatform platform, const UserPathEnvironment& env,
+                         std::string* result, std::string* error) {
+  if (!result) return Fail(error, "missing result");
+  result->clear();
+  const char separator = platform == HostPlatform::Windows ? '\\' : '/';
+  std::string root;
+  if (!env.overrideRoot.empty()) {
+    root = env.overrideRoot;
+  } else if (platform == HostPlatform::Windows) {
+    if (env.localAppData.empty()) return Fail(error, "LOCALAPPDATA is unset");
+    root = Append(platform, env.localAppData, "Silent Storm Reconstruction");
+  } else if (platform == HostPlatform::MacOS) {
+    if (env.home.empty()) return Fail(error, "HOME is unset");
+    root = Append(platform, env.home, "Library/Application Support/Silent Storm Reconstruction");
+  } else {
+    if (!env.xdgDataHome.empty()) root = Append(platform, env.xdgDataHome, "silent-storm-reconstruction");
+    else {
+      if (env.home.empty()) return Fail(error, "HOME is unset");
+      root = Append(platform, env.home, ".local/share/silent-storm-reconstruction");
+    }
+  }
+  root = Normalize(platform, root);
+  if (!IsAbsolute(platform, root) || HasDotComponent(root, separator))
+    return Fail(error, "user data root must be absolute and contain no dot components");
+  *result = root;
+  return true;
+}
+
+bool IsSafeSaveComponent(const std::string& component) {
+  if (component.empty() || component == "." || component == "..") return false;
+  if (component.back() == '.' || component.back() == ' ') return false;
+  for (unsigned char ch : component)
+    if (ch < 32 || ch == '/' || ch == '\\' || ch == ':' || ch == '<' || ch == '>' ||
+        ch == '|' || ch == '"' || ch == '*' || ch == '?')
+      return false;
+  return true;
+}
+
+} // namespace S2FileIO
