@@ -10,6 +10,10 @@ extern "C" {
 }
 
 #include <cerrno>
+#include <algorithm>
+#include <climits>
+#include <cstdio>
+#include <cstring>
 #include <utility>
 
 namespace S2Media {
@@ -30,6 +34,9 @@ struct FFmpegDecoder::Impl {
   AVFrame* frame = nullptr;
   SwsContext* scaler = nullptr;
   SwrContext* resampler = nullptr;
+  AVIOContext* input = nullptr;
+  std::vector<std::uint8_t> memory;
+  std::size_t memoryPosition = 0;
   int streamIndex = -1;
   StreamType type = StreamType::Video;
   bool draining = false;
@@ -42,6 +49,33 @@ struct FFmpegDecoder::Impl {
     av_packet_free(&packet);
     avcodec_free_context(&codec);
     avformat_close_input(&format);
+    if (input) avio_context_free(&input);
+  }
+
+  static int ReadMemory(void* opaque, std::uint8_t* buffer, int size)
+  {
+    auto* self = static_cast<Impl*>(opaque);
+    const std::size_t remaining = self->memory.size() - self->memoryPosition;
+    const std::size_t count = std::min<std::size_t>(remaining, size);
+    if (!count) return AVERROR_EOF;
+    std::memcpy(buffer, self->memory.data() + self->memoryPosition, count);
+    self->memoryPosition += count;
+    return static_cast<int>(count);
+  }
+
+  static std::int64_t SeekMemory(void* opaque, std::int64_t offset, int whence)
+  {
+    auto* self = static_cast<Impl*>(opaque);
+    if (whence == AVSEEK_SIZE) return static_cast<std::int64_t>(self->memory.size());
+    const int origin = whence & ~AVSEEK_FORCE;
+    const std::int64_t base = origin == SEEK_SET ? 0 :
+      origin == SEEK_CUR ? static_cast<std::int64_t>(self->memoryPosition) :
+      origin == SEEK_END ? static_cast<std::int64_t>(self->memory.size()) : -1;
+    if (base < 0 || offset < -base ||
+        offset > static_cast<std::int64_t>(self->memory.size()) - base)
+      return AVERROR(EINVAL);
+    self->memoryPosition = static_cast<std::size_t>(base + offset);
+    return static_cast<std::int64_t>(self->memoryPosition);
   }
 
   bool ReadFrame()
@@ -89,9 +123,47 @@ bool FFmpegDecoder::Open(const std::string& path, StreamType type,
   Close();
   std::unique_ptr<Impl> candidate(new Impl);
   int result = avformat_open_input(&candidate->format, path.c_str(), nullptr, nullptr);
-  if (result >= 0) result = avformat_find_stream_info(candidate->format, nullptr);
   if (result < 0) {
     if (error) *error = ErrorText(result);
+    return false;
+  }
+  impl = std::move(candidate);
+  return FinishOpen(type, error);
+}
+
+bool FFmpegDecoder::OpenMemory(const void* data, std::size_t size,
+                               StreamType type, std::string* error)
+{
+  Close();
+  if (!data || !size || size > static_cast<std::size_t>(INT_MAX)) return false;
+  std::unique_ptr<Impl> candidate(new Impl);
+  const auto* bytes = static_cast<const std::uint8_t*>(data);
+  candidate->memory.assign(bytes, bytes + size);
+  auto* buffer = static_cast<std::uint8_t*>(av_malloc(32768));
+  if (!buffer) return false;
+  candidate->input = avio_alloc_context(buffer, 32768, 0, candidate.get(),
+      &Impl::ReadMemory, nullptr, &Impl::SeekMemory);
+  if (!candidate->input) { av_free(buffer); return false; }
+  candidate->format = avformat_alloc_context();
+  if (!candidate->format) return false;
+  candidate->format->pb = candidate->input;
+  candidate->format->flags |= AVFMT_FLAG_CUSTOM_IO;
+  const int result = avformat_open_input(&candidate->format, nullptr, nullptr, nullptr);
+  if (result < 0) {
+    if (error) *error = ErrorText(result);
+    return false;
+  }
+  impl = std::move(candidate);
+  return FinishOpen(type, error);
+}
+
+bool FFmpegDecoder::FinishOpen(StreamType type, std::string* error)
+{
+  Impl* candidate = impl.get();
+  const int result = avformat_find_stream_info(candidate->format, nullptr);
+  if (result < 0) {
+    if (error) *error = ErrorText(result);
+    Close();
     return false;
   }
   const AVMediaType mediaType = type == StreamType::Video ? AVMEDIA_TYPE_VIDEO : AVMEDIA_TYPE_AUDIO;
@@ -100,6 +172,7 @@ bool FFmpegDecoder::Open(const std::string& path, StreamType type,
                                                -1, -1, &decoder, 0);
   if (candidate->streamIndex < 0 || !decoder) {
     if (error) *error = "requested media stream not found";
+    Close();
     return false;
   }
   candidate->codec = avcodec_alloc_context3(decoder);
@@ -107,17 +180,18 @@ bool FFmpegDecoder::Open(const std::string& path, StreamType type,
   candidate->frame = av_frame_alloc();
   if (!candidate->codec || !candidate->packet || !candidate->frame) {
     if (error) *error = "FFmpeg allocation failed";
+    Close();
     return false;
   }
-  result = avcodec_parameters_to_context(candidate->codec,
+  int codecResult = avcodec_parameters_to_context(candidate->codec,
            candidate->format->streams[candidate->streamIndex]->codecpar);
-  if (result >= 0) result = avcodec_open2(candidate->codec, decoder, nullptr);
-  if (result < 0) {
-    if (error) *error = ErrorText(result);
+  if (codecResult >= 0) codecResult = avcodec_open2(candidate->codec, decoder, nullptr);
+  if (codecResult < 0) {
+    if (error) *error = ErrorText(codecResult);
+    Close();
     return false;
   }
   candidate->type = type;
-  impl = std::move(candidate);
   return true;
 }
 

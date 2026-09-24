@@ -141,7 +141,10 @@ endif()
 # The three interop shims: clean-room include dir + the generated import libs.
 add_library(fmod_shim INTERFACE)
 target_include_directories(fmod_shim INTERFACE "${root}/third_party/fmod/include")
-target_link_libraries(fmod_shim INTERFACE fmod_stub)
+option(S2_ENABLE_NATIVE_SFX "Use FFmpeg/miniaudio for x64 effects and voices" OFF)
+if(NOT S2_ENABLE_NATIVE_SFX)
+  target_link_libraries(fmod_shim INTERFACE fmod_stub)
+endif()
 
 add_library(bink_shim INTERFACE)
 target_include_directories(bink_shim INTERFACE "${root}/third_party/bink/include")
@@ -292,8 +295,8 @@ s2_module(Game win32 WHOLE Main
                           fmod_shim lifestudio_shim bink_shim
                           dxguid dinput8 odbc32 odbccp32 d3d9 user32 Gdi32)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  # The x64 import DLLs are link-only stubs. Until miniaudio/FFmpeg replace
-  # the old media APIs, run the core with sound explicitly disabled.
+  # The default x64 configuration still uses link-only media stubs. Native
+  # FFmpeg/miniaudio targets below enable game audio/video when requested.
   target_compile_definitions(Game PRIVATE S2_X64_MEDIA_STUBS)
   target_compile_definitions(Main PRIVATE S2_X64_MEDIA_STUBS)
 endif()
@@ -306,6 +309,20 @@ if(S2_ENABLE_NATIVE_MUSIC)
   foreach(target IN ITEMS FModSound Main Game)
     target_compile_definitions(${target} PRIVATE S2_NATIVE_MUSIC)
   endforeach()
+endif()
+if(S2_ENABLE_NATIVE_SFX)
+  if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8 OR NOT S2_ENABLE_NATIVE_MUSIC)
+    message(FATAL_ERROR "S2_ENABLE_NATIVE_SFX requires x64 native music/media")
+  endif()
+  add_library(s2_native_fmod STATIC "${root}/Media/NativeFmodCompat.cpp")
+  target_include_directories(s2_native_fmod PRIVATE
+    "${root}/third_party/fmod/include" "${S2_MINIAUDIO_INCLUDE_DIR}")
+  target_compile_features(s2_native_fmod PRIVATE cxx_std_17)
+  target_link_libraries(s2_native_fmod PUBLIC s2_native_music)
+  target_link_libraries(fmod_shim INTERFACE s2_native_fmod)
+  target_compile_definitions(FModSound PRIVATE S2_NATIVE_SFX)
+  add_executable(NativeFmodProbe "${root}/diagnostics/NativeFmodProbe.cpp")
+  target_link_libraries(NativeFmodProbe PRIVATE fmod_shim)
 endif()
 option(S2_ENABLE_NATIVE_VIDEO "Use FFmpeg/miniaudio for x64 Bink movies" OFF)
 if(S2_ENABLE_NATIVE_VIDEO)

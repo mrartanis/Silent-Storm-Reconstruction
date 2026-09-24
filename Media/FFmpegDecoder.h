@@ -33,6 +33,8 @@ public:
   FFmpegDecoder& operator=(const FFmpegDecoder&) = delete;
 
   bool Open(const std::string& path, StreamType type, std::string* error = nullptr);
+  bool OpenMemory(const void* data, std::size_t size, StreamType type,
+                  std::string* error = nullptr);
   void Close();
   bool NextVideo(VideoFrame* output);
   bool NextAudio(AudioFrame* output);
@@ -45,6 +47,7 @@ public:
   std::int64_t VideoFrameCount() const;
 
 private:
+  bool FinishOpen(StreamType type, std::string* error);
   struct Impl;
   std::unique_ptr<Impl> impl;
 };

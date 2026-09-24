@@ -30,7 +30,7 @@ Set-Content -LiteralPath "$archive\source.patch" -Value '' -NoNewline
 $build=Join-Path $LabRoot $(if($Architecture -eq 'x64'){'build-x64'}else{'build-x86'})
 $configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline")
 if($NativeMedia){
- $configureArgs+=@('-DS2_BUILD_MEDIA_PROBE=ON','-DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON','-DS2_ENABLE_NATIVE_MUSIC=ON','-DS2_ENABLE_NATIVE_VIDEO=ON',"-DS2_FFMPEG_ROOT=$FFmpegRoot","-DS2_MINIAUDIO_INCLUDE_DIR=$MiniaudioIncludeDir")
+ $configureArgs+=@('-DS2_BUILD_MEDIA_PROBE=ON','-DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON','-DS2_ENABLE_NATIVE_MUSIC=ON','-DS2_ENABLE_NATIVE_SFX=ON','-DS2_ENABLE_NATIVE_VIDEO=ON',"-DS2_FFMPEG_ROOT=$FFmpegRoot","-DS2_MINIAUDIO_INCLUDE_DIR=$MiniaudioIncludeDir")
 }
 & $cmake @configureArgs 2>&1 | Tee-Object "$archive\configure.log"
 if($LASTEXITCODE){throw 'Configure failed'}
@@ -43,7 +43,7 @@ foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){
  Copy-Item -LiteralPath "$build\RelWithDebInfo\$file" -Destination $archive
 }
 if($Architecture -eq 'x64'){
- Copy-Item -LiteralPath "$build\_implibs\fmod.dll" -Destination $archive
+ if(!$NativeMedia){Copy-Item -LiteralPath "$build\_implibs\fmod.dll" -Destination $archive}
  $binkPath=if($NativeMedia){"$build\_media\RelWithDebInfo\binkw32.dll"}else{"$build\_implibs\binkw32.dll"}
  Copy-Item -LiteralPath $binkPath -Destination $archive
  if($NativeMedia){
@@ -54,7 +54,7 @@ if($Architecture -eq 'x64'){
 }
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
-[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});NativeMedia=[bool]$NativeMedia;ToolRoot=$ToolRoot;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
+[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
 Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 Write-Output "Archived build: $archive"
 

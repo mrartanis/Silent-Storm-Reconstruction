@@ -73,6 +73,7 @@ public:
 class CChannel: public CObjectBase
 {
 public:
+	CChannel(): nChannel(-1) {}
 	virtual ~CChannel()
 	{
 		FSOUND_StopSound( nChannel );
@@ -110,10 +111,11 @@ class CSound3D : public CChannel, public ISound3D
 	int nTotalLength;
 public:
 	CSound3D() {}
-	CSound3D( CSample3D *_pSample, const CVec3 &pos, const CVec3 &_vLastFPos, int _nVolume = 255, int _nLoops = -1 )
+	CSound3D( CSample3D *_pSample, const CVec3 &pos, const CVec3 &_vLastFPos, int _nVolume = 255, int _nLoops = -1, int _nChannel = -1 )
 		: pSample(_pSample), nCurrentLoop(0), nLoops(_nLoops), nVolume(_nVolume), bFadeIn(false), 
 		bFadeOut(false), bFadeOut_InProgress(false), position(pos), vLastFPos(_vLastFPos), vLastVelocity(0,0,0)
 	{ 
+		nChannel = _nChannel;
 		fFadeVolume = nVolume;
 		nLastPos = FSOUND_GetCurrentPosition( nChannel );
 		nTotalLength = FSOUND_Sample_GetLength( *pSample );
@@ -498,6 +500,10 @@ bool SearchDevices()
 bool Init( const SStartInfo &info )
 {
 #if defined(S2_NATIVE_MUSIC)
+	#if defined(S2_NATIVE_SFX)
+	if ( !FSOUND_Init( info.nMixrate, info.nMaxChannels, 0 ) )
+		return false;
+	#endif
 	NHPTimer::GetTime( &timeUpdate );
 	bIsFMODInitialized = true;
 	return true;
@@ -614,6 +620,8 @@ CSample3D *LoadSample3D( const void *pData, int nLength, float fMinDistance, flo
 		return 0;
 	FSOUND_SAMPLE *hSample;
 	hSample = FSOUND_Sample_Load( FSOUND_UNMANAGED, (const char*)pData, FSOUND_HW3D | FSOUND_LOADMEMORY, 0, nLength );
+	if ( !hSample )
+		return 0;
 	FSOUND_Sample_SetDefaults( hSample, -1, -1, -1, nPriority );
 	if ( nEndingSamples > nStartSamples )
 		FSOUND_Sample_SetLoopPoints( hSample, nStartSamples, nEndingSamples );
@@ -756,7 +764,7 @@ CSound3D *Play3DSound( const SPlayParams &params )
 		if ( nChannel != -1 )
 			FSOUND_SetPaused( nChannel, false );
 	}
-	CSound3D *pSound = new CSound3D( params.pSample, params.position, vFPos, params.nVolume, params.nLoops );
+	CSound3D *pSound = new CSound3D( params.pSample, params.position, vFPos, params.nVolume, params.nLoops, nChannel );
 	pSound->SetFadeOut( params.bFadeIn, params.bFadeOut, params.nFadeSamples );
 	pSound->nChannel = nChannel;
 	hashChannel[nChannel] = pSound;
