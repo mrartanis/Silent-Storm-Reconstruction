@@ -61,14 +61,21 @@ foreach ($entry in $roots) {
     $exe = Join-Path $root 'Game.exe'
     $db = Join-Path $root 'game.db'
     $source = Join-Path $root "save\default\$SourceSlot\game.sav"
+    $userDataRoot = "$root-user-data"
     $log = Join-Path $root '_saveload.log'
     if (!(Test-Path -LiteralPath $exe) -or !(Test-Path -LiteralPath $db) -or !(Test-Path -LiteralPath $source)) {
         throw "Missing staged executable, DB or source slot in $root"
     }
     if (Test-Path -LiteralPath (Join-Path $root '_harness_cmd.txt')) { throw "Pending command in $root" }
     $launchUtc = [DateTime]::UtcNow
-    $process = Start-Process -FilePath $exe -ArgumentList '-windowed -800 -harness -harness-active' `
-        -WorkingDirectory $root -WindowStyle Hidden -PassThru
+    $priorUserDataDir = $env:S2_USER_DATA_DIR
+    try {
+        $env:S2_USER_DATA_DIR = $userDataRoot
+        $process = Start-Process -FilePath $exe -ArgumentList '-windowed -800 -harness -harness-active' `
+            -WorkingDirectory $root -WindowStyle Hidden -PassThru
+    } finally {
+        $env:S2_USER_DATA_DIR = $priorUserDataDir
+    }
     try {
         Wait-For $process { (Test-Path -LiteralPath $log) -and
             (Get-Item -LiteralPath $log).LastWriteTimeUtc -ge $launchUtc -and

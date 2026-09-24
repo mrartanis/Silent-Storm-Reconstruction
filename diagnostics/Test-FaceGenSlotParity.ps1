@@ -75,23 +75,30 @@ foreach ($entry in $roots) {
     $exe = Join-Path $root 'Game.exe'
     $db = Join-Path $root 'game.db'
     $source = Join-Path $root "save\default\$SourceSlot\game.sav"
-    $saved = Join-Path $root "save\default\$OutputSlot\game.sav"
+    $userDataRoot = "$root-user-data"
+    $savedLegacy = Join-Path $root "save\default\$OutputSlot\game.sav"
+    $savedSeparated = Join-Path $userDataRoot "save\default\$OutputSlot\game.sav"
     $stream = Join-Path $root "_facegen_$OutputSlot.bin"
     $log = Join-Path $root '_saveload.log'
     if (!(Test-Path -LiteralPath $exe) -or !(Test-Path -LiteralPath $db) -or !(Test-Path -LiteralPath $source)) {
         throw "Missing staged game executable, DB or source slot in $root"
     }
-    if (Test-Path -LiteralPath $saved) { throw "Refusing to overwrite existing save: $saved" }
+    foreach ($candidate in @($savedLegacy,$savedSeparated)) {
+        if (Test-Path -LiteralPath $candidate) { throw "Refusing to overwrite existing save: $candidate" }
+    }
     if (Test-Path -LiteralPath $stream) { throw "Refusing to overwrite existing stream: $stream" }
     if (Test-Path -LiteralPath (Join-Path $root '_harness_cmd.txt')) { throw "Pending command in $root" }
     $launchUtc = [DateTime]::UtcNow
     $priorStreamPath = $env:S2_FACE_SLOT_ANIMATOR_PATH
+    $priorUserDataDir = $env:S2_USER_DATA_DIR
     try {
         $env:S2_FACE_SLOT_ANIMATOR_PATH = $stream
+        $env:S2_USER_DATA_DIR = $userDataRoot
         $process = Start-Process -FilePath $exe -ArgumentList '-windowed -800 -harness -harness-active' `
             -WorkingDirectory $root -WindowStyle Hidden -PassThru
     } finally {
         $env:S2_FACE_SLOT_ANIMATOR_PATH = $priorStreamPath
+        $env:S2_USER_DATA_DIR = $priorUserDataDir
     }
     try {
         Wait-For $process { (Test-Path -LiteralPath $log) -and
@@ -117,7 +124,11 @@ foreach ($entry in $roots) {
             throw "$($entry.Name) custom head did not commit: $($before | ConvertTo-Json -Compress)"
         }
         Send-Command $root "save $OutputSlot"
-        Wait-For $process { (Test-Path -LiteralPath $saved) -and (Get-Item -LiteralPath $saved).Length -gt 0 } 'game slot save' $TimeoutSeconds
+        Wait-For $process {
+            ((Test-Path -LiteralPath $savedSeparated) -and (Get-Item -LiteralPath $savedSeparated).Length -gt 0) -or
+            ((Test-Path -LiteralPath $savedLegacy) -and (Get-Item -LiteralPath $savedLegacy).Length -gt 0)
+        } 'game slot save' $TimeoutSeconds
+        $saved = if (Test-Path -LiteralPath $savedSeparated) { $savedSeparated } else { $savedLegacy }
         # Wait for the save writer to close before asking the main loop to load it.
         $lastLength = -1
         $stable = 0
