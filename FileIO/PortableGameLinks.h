@@ -22,6 +22,8 @@ std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links);
 std::uint64_t HashGameDatabaseLinksInOrder(const std::vector<GameDatabaseLink>& links);
 // Emulates the original STLport hash_map<int,...> iteration after row-order
 // insertion. The input must contain every record, including unlinked ones.
+std::vector<std::int32_t> OrderGameDatabaseRecordIdsLikeStlport(
+    const std::vector<std::int32_t>& rowIds);
 std::vector<GameDatabaseLink> OrderGameDatabaseLinksLikeStlport(
     const std::vector<GameDatabaseLink>& rowOrder);
 // Grouping by the game's (SkeletonID, Type) columns; each inner vector keeps

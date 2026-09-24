@@ -557,7 +557,8 @@ CRndTerrainSpot* GetRndTerrainSpot( int nID );
 CRectangle* GetRectangle( int nID );
 CUnit* GetUnit( int nID );
 CDBDiplomacy* GetDBDiplomacy( int nID );
-void BuildMapLinks( bool bTranslate = false );
+void BuildMapLinks( bool bTranslate = false,
+	const std::vector<std::int32_t>* animationRowOrder = 0 );
 void UnpackFloorTiles( const string &src, vector<CVec2> *pRes );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

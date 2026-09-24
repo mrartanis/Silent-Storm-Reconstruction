@@ -69,8 +69,8 @@ std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links) {
   return HashGameDatabaseLinksInOrder(links);
 }
 
-std::vector<GameDatabaseLink> OrderGameDatabaseLinksLikeStlport(
-    const std::vector<GameDatabaseLink>& rowOrder) {
+std::vector<std::int32_t> OrderGameDatabaseRecordIdsLikeStlport(
+    const std::vector<std::int32_t>& rowIds) {
   // Jan03 STLport: hash_map() requests 100 buckets, rounded up to prime 193;
   // operator[] prepends, and resize() moves old chains front-to-back while
   // prepending each node into the new bucket.
@@ -81,26 +81,42 @@ std::vector<GameDatabaseLink> OrderGameDatabaseLinksLikeStlport(
       201326611, 402653189, 805306457, 1610612741,
       3221225473ULL, 4294967291ULL};
   std::size_t primeIndex = 0;
-  std::vector<std::vector<GameDatabaseLink>> buckets(primes[primeIndex]);
+  std::vector<std::vector<std::int32_t>> buckets(primes[primeIndex]);
   std::size_t count = 0;
-  for (const auto& link : rowOrder) {
+  for (std::int32_t id : rowIds) {
     if (count + 1 > buckets.size() && primeIndex + 1 < sizeof(primes) / sizeof(primes[0])) {
-      std::vector<std::vector<GameDatabaseLink>> next(primes[++primeIndex]);
+      std::vector<std::vector<std::int32_t>> next(primes[++primeIndex]);
       for (const auto& chain : buckets)
-        for (const auto& previous : chain) {
-          auto& target = next[static_cast<std::uint32_t>(previous.first) % next.size()];
+        for (std::int32_t previous : chain) {
+          auto& target = next[static_cast<std::uint32_t>(previous) % next.size()];
           target.insert(target.begin(), previous);
         }
       buckets.swap(next);
     }
-    auto& chain = buckets[static_cast<std::uint32_t>(link.first) % buckets.size()];
-    chain.insert(chain.begin(), link);
+    auto& chain = buckets[static_cast<std::uint32_t>(id) % buckets.size()];
+    chain.insert(chain.begin(), id);
     ++count;
+  }
+  std::vector<std::int32_t> result;
+  result.reserve(rowIds.size());
+  for (const auto& chain : buckets)
+    result.insert(result.end(), chain.begin(), chain.end());
+  return result;
+}
+
+std::vector<GameDatabaseLink> OrderGameDatabaseLinksLikeStlport(
+    const std::vector<GameDatabaseLink>& rowOrder) {
+  std::vector<std::int32_t> ids;
+  ids.reserve(rowOrder.size());
+  std::map<std::int32_t, GameDatabaseLink> byId;
+  for (const auto& link : rowOrder) {
+    ids.push_back(link.first);
+    byId.emplace(link.first, link);
   }
   std::vector<GameDatabaseLink> result;
   result.reserve(rowOrder.size());
-  for (const auto& chain : buckets)
-    result.insert(result.end(), chain.begin(), chain.end());
+  for (std::int32_t id : OrderGameDatabaseRecordIdsLikeStlport(ids))
+    result.push_back(byId.at(id));
   return result;
 }
 

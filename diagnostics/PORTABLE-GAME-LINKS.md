@@ -94,6 +94,55 @@ ARM64/QEMU под ASan/UBSan (`detect_leaks=0`), по 15/15. Пробник на
 `order-hash` модели STLport, что на Windows x64. Временная копия
 `game.db` на Linux-хосте удалена, локальный оригинал не изменён.
 
+Прямая x86-сверка (2026-09-25) сняла прежнее ограничение: Steam
+`game.exe` сборки 122676 (SHA-256
+`4f417593a9f73e2bfde12d83cdbd694ae47eecb92812140d67b8b343e4a95705`)
+работает на изолированной копии тех же данных. Совпадение 242 из первых
+256 байт `BuildMapLinks` с `RussianGold` указало на RVA `0x405980` в
+Steam EXE. Отладчик остановился после получения таблицы `Animations`
+на RVA `0x4059e9`: её хеш-таблица имела 3079 бакетов и 2045 записей.
+Скрипт [retail-animation-order.cdb](retail-animation-order.cdb) выгрузил
+все 2045 ID в порядке реального обхода цепочек. Пробник с опцией
+`--oracle-order` проверяет полноту/уникальность ID и собирает группы
+по исходному `game.db`: `order-hash 36e5e15fd45de252`, 455 групп,
+`group-hash 63aff1ef63fac020`. Оба хеша точно совпали с переносимой
+моделью STLport. Повторный запуск скрипта также вывел 2045 ID (лог
+`G:\SS\lab\runs\retail-steam-oracle-01\evidence\dump-animation-order-repro.log`,
+SHA-256 `bf5b44921c43c63a11eacf9436793852109f4cfe474c0f79f2a0e59a11cb04b1`).
+Это наблюдение оригинального Steam x86, а не только исходниковый контракт.
+
+`RussianGold Game.exe` с private PDB на данном изолированном комплекте
+не дошёл до импорта: системное окно сообщило об отсутствующем экспорте
+`_FSOUND_Stream_AddSynchPoint@12` в комплектной `fmod.dll`. Этот запуск
+завершён; ошибка не относится к восстановленному x64 или рабочему Steam
+EXE. Копия данных и DLL оставалась в `lab/runs`, оригинальная установка
+не изменялась.
+
+Игровой v1-загрузчик теперь передаёт в `BuildMapLinks` полный порядок
+ID строк `Animations`; переносимая функция воспроизводит обход
+исторического `hash_map`, а текущая Windows-таблица находит готовые
+объекты по ID. Путь редактора/старого v0 без колонночного порядка не
+менялся. В dev-запуске `stage2-animation-order-dev-01` x64 Game вывел
+те же 2045 ссылок и оба хеша, что прямой Steam x86-эталон; старый слот
+`DB_OLD` загрузился до `LOAD-SLOT-DONE`, затем `quit` завершил оба
+процесса без crash dump. Windows x64 CTest — 26/26. После правки
+Linux x86-64 и ARM64/QEMU под ASan/UBSan прошли по 15/15 тестов;
+на исходном `game.db` оба пробника повторили прямой x86-эталон:
+2045 ссылок, `order-hash 36e5e15fd45de252`, 455 групп и
+`group-hash 63aff1ef63fac020`. Временные копии базы и лога эталона
+на Linux-хосте удалены. Для полного закрытия этого игрового пути
+ещё нужен чистый архив.
+
+Воспроизведение сравнения на стенде (только изолированная копия Steam
+EXE указанного SHA-256, не исходная установка):
+
+```powershell
+$run='G:\SS\lab\runs\retail-steam-oracle-01'
+$cdb='C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\cdb.exe'
+& $cdb -G -o -logo "$run\evidence\dump-animation-order-repro.log" -cf .\diagnostics\retail-animation-order.cdb "$run\game\Game.exe" -windowed -800
+& G:\SS\lab\build-x64\RelWithDebInfo\PortableGameDatabaseProbe.exe G:\SS\lab\baseline\game.db --oracle-order "$run\evidence\dump-animation-order-repro.log"
+```
+
 Воспроизведение чтения данных на этом стенде:
 
 ```powershell

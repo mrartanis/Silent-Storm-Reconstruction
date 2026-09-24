@@ -43,6 +43,8 @@ int main() {
   const std::vector<S2FileIO::GameDatabaseLink> collisionRows =
       {{1, 7}, {194, 7}, {387, 7}, {580, 7}};
   const auto legacyOrder = S2FileIO::OrderGameDatabaseLinksLikeStlport(collisionRows);
+  if (S2FileIO::OrderGameDatabaseRecordIdsLikeStlport({1, 194, 387, 580}) !=
+      std::vector<std::int32_t>({580, 387, 194, 1})) return 1;
   if (legacyOrder != std::vector<S2FileIO::GameDatabaseLink>(
           {{580, 7}, {387, 7}, {194, 7}, {1, 7}})) return 1;
   animations.intRows.push_back({12, 7});

@@ -3,6 +3,7 @@
 #include "..\Misc\BasicFactory.h"
 #include "..\FileIO\BasicChunk1.h"
 #include "..\FileIO\PortableGameDatabase.h"
+#include <set>
 #include <strstream>
 
 #import "C:\Program Files (x86)\Common Files\System\ADO\msado15.dll" no_namespace rename("EOF", "EndOfFile")
@@ -1002,13 +1003,34 @@ void NDatabase::ImportField( const char *pszFieldName, CDBRecord **pRef, CDBTabl
 // NOT populate the cross-record links (CSkeleton::pAnimations, CRPGItem::looks, debris, per-pers
 // inventory) - the release does that by calling BuildMapLinks from WinMain after every load. We call
 // it here, gated on v1, so we don't double-push on a v0 db. (Resolved at Game.exe link time.)
-namespace NDb { void BuildMapLinks( bool bTranslate ); }
+namespace NDb { void BuildMapLinks( bool bTranslate, const std::vector<std::int32_t>* animationRowOrder ); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef std::unordered_map< int, CObj<CDBTableDataStorage> > CStorageHash;
 
 static void ImportReleaseStorage( CStorageHash &storageTables,
-	list<NDatabase::SRelation> &relations, const char *source )
+	list<NDatabase::SRelation> &relations, const char *source,
+	std::vector<std::int32_t>* animationRowOrder )
 {
+	if ( animationRowOrder )
+	{
+		animationRowOrder->clear();
+		const CStorageHash::const_iterator animationTable = storageTables.find( 2 );
+		if ( animationTable == storageTables.end() || !IsValid( animationTable->second ) )
+			throw SFileIOError( "columnar game.db missing Animations table" );
+		const CDBTableDataStorage *storage = animationTable->second;
+		const int idColumn = CDBTableDataStorage::FindIndex( storage->intFileds, "ID" );
+		if ( idColumn < 0 )
+			throw SFileIOError( "columnar Animations table missing ID field" );
+		std::set<int> seenIds;
+		for ( const std::vector<int>& row : storage->records_int )
+		{
+			if ( idColumn >= (int)row.size() )
+				throw SFileIOError( "columnar Animations row missing ID" );
+			if ( !seenIds.insert( row[idColumn] ).second )
+				throw SFileIOError( "columnar Animations table has duplicate ID" );
+			animationRowOrder->push_back( row[idColumn] );
+		}
+	}
 	for ( NDatabase::SRelation &relation : relations )
 	{
 		relation.pLeft = NDatabase::GetTable( relation.nTableLeft );
@@ -1080,6 +1102,7 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 	unresolvedReferences.clear();
 	missingStorageFields.clear();
 	bool bDidColumnarLoad = false;
+	std::vector<std::int32_t> animationRowOrder;
 	// The release v1 database is decoded without CStructureSaver or Windows
 	// object-table layout. Historical v0/dev data and writes keep their path.
 	bool bPortableRelease = false;
@@ -1131,7 +1154,7 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 				for ( const auto &link : item.links )
 					relation.data.push_back( { link.first, link.second } );
 			}
-			ImportReleaseStorage( storageTables, relations, "portable v1" );
+			ImportReleaseStorage( storageTables, relations, "portable v1", &animationRowOrder );
 		}
 		else
 		{
@@ -1143,7 +1166,7 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 				f.Add( 1, &storageTables );
 				list<SRelation> &relations = GetRelations();
 				f.Add( 2, &relations );
-				ImportReleaseStorage( storageTables, relations, "legacy v1" );
+				ImportReleaseStorage( storageTables, relations, "legacy v1", &animationRowOrder );
 			}
 			else
 				f.Add( 1, &tables );
@@ -1155,7 +1178,7 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 	// v1 columnar load rebuilt the records but not the cross-record links - build them now (the v0
 	// path loads them already-built, so skip it there to avoid double-pushing into pAnimations etc.)
 	if ( bDidColumnarLoad )
-		NDb::BuildMapLinks( false );
+		NDb::BuildMapLinks( false, &animationRowOrder );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CDBTableBase

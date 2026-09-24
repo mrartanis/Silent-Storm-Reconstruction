@@ -1,0 +1,10 @@
+$$ Steam app 254960 build 122676, game.exe SHA-256
+$$ 4f417593a9f73e2bfde12d83cdbd694ae47eecb92812140d67b8b343e4a95705.
+$$ Game+4059e9 is after the CAnimation table lookup inside BuildMapLinks.
+bp Game+4059e9
+g
+.echo STEAM_ANIMATION_ORDER_BEGIN
+r @$t0=@eax
+.for (r @$t1=0; @$t1<((poi(@$t0+8)-poi(@$t0+4))/4); r @$t1=@$t1+1) { r @$t2=poi(poi(@$t0+4)+@$t1*4); .while (@$t2!=0) { .printf "ANIM_ID %d\n", poi(@$t2+4); r @$t2=poi(@$t2); } }
+.echo STEAM_ANIMATION_ORDER_END
+q

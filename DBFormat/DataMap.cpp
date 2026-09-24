@@ -819,14 +819,13 @@ void GiveItems()
 	AssignItems<CRPGEngGrenade4Pers>();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void BuildMapLinks( bool bTranslate )
+void BuildMapLinks( bool bTranslate, const std::vector<std::int32_t>* animationRowOrder )
 {
 	// animation database: group every animation under its skeleton, keyed by type. (Retail builds this
 	// here at db-load; this dev had defined BuildMapLinks but never called it -- it is now invoked from
 	// Game/Main.cpp right after the game.db load.)
 	{
 		CDBTable<CAnimation> *pATable = NDatabase::GetTable<CAnimation>();
-		CDBIterator<CAnimation> it( *pATable );
 		char parityFlag[2] = {};
 		const bool checkParity = GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag,
 			sizeof(parityFlag) ) == 1 && parityFlag[0] == '1';
@@ -835,10 +834,9 @@ void BuildMapLinks( bool bTranslate )
 		std::map<std::pair<int, int>, std::vector<std::int32_t>> animationGroups;
 		unsigned groupOrderInversions = 0;
 		int firstInversionSkeleton = 0, firstInversionType = 0;
-		while ( it.MoveNext() )
+		const auto addAnimation = [&]( CAnimation *pA )
 		{
-			CAnimation *pA = it.Get();
-			if ( IsValid( pA->pSkeleton ) )
+			if ( pA && IsValid( pA->pSkeleton ) )
 			{
 				if (checkParity)
 				{
@@ -859,11 +857,30 @@ void BuildMapLinks( bool bTranslate )
 				}
 				pA->pSkeleton->pAnimations[ pA->nType ].anims.push_back( pA );
 			}
+		};
+		if ( animationRowOrder )
+		{
+			// Reproduce the release STLport hash_map traversal from original
+			// record insertion order, independent of host STL or pointer width.
+			for ( std::int32_t id : S2FileIO::OrderGameDatabaseRecordIdsLikeStlport(
+				*animationRowOrder) )
+			{
+				CAnimation *pA = pATable->GetRecord( id );
+				if ( !pA ) DebugTrace( "DB-SCHEMA ERROR missing Animation ID=%d\n", id );
+				addAnimation( pA );
+			}
+		}
+		else
+		{
+			// Editor/dev callers without columnar row order keep their old path.
+			CDBIterator<CAnimation> it( *pATable );
+			while ( it.MoveNext() ) addAnimation( it.Get() );
 		}
 		if ( checkParity )
+		{
 			DebugTrace( "DB-PARITY animation-skeleton-links=%u hash=%016llx order-hash=%016llx\n",
-                static_cast<unsigned>(animationLinks.size()),
-                static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)),
+				static_cast<unsigned>(animationLinks.size()),
+				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)),
 				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(animationLinks)) );
 			std::vector<std::vector<std::int32_t>> groupIds;
 			for (const auto& group : animationGroups)
@@ -872,6 +889,7 @@ void BuildMapLinks( bool bTranslate )
 				static_cast<unsigned>(groupIds.size()),
 				static_cast<unsigned long long>(S2FileIO::HashAnimationGroupIds(groupIds)), groupOrderInversions,
 				firstInversionSkeleton, firstInversionType );
+		}
 	}
 	// debris materials database
 	{

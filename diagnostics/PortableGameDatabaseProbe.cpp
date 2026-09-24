@@ -6,6 +6,9 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <fstream>
+#include <map>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -24,10 +27,12 @@ struct Hash {
 }
 
 int main(int argc, char** argv) {
+  const bool showOracle = argc == 4 && std::string(argv[2]) == "--oracle-order";
   if (argc != 2 && !(argc == 3 &&
-      (std::string(argv[2]) == "--all" || std::string(argv[2]) == "--links"))) return 2;
+      (std::string(argv[2]) == "--all" || std::string(argv[2]) == "--links")) &&
+      !showOracle) return 2;
   const bool showAll = argc == 3 && std::string(argv[2]) == "--all";
-  const bool showLinks = argc == 3 && std::string(argv[2]) == "--links";
+  const bool showLinks = showOracle || (argc == 3 && std::string(argv[2]) == "--links");
   S2FileIO::PortableGameDatabase database;
   std::string error;
   if (!S2FileIO::LoadPortableGameDatabase(argv[1], &database, &error)) {
@@ -117,6 +122,31 @@ int main(int argc, char** argv) {
     } else {
       std::printf("animation-stlport-links unavailable: %zu linked of %zu records\n",
           links.size(), animations->intRows.size());
+    }
+    if (showOracle) {
+      std::ifstream log(argv[3]);
+      if (!log) return 11;
+      std::map<std::int32_t, S2FileIO::GameDatabaseLink> byId;
+      for (const auto& link : links) byId.emplace(link.first, link);
+      std::set<std::int32_t> seen;
+      std::vector<S2FileIO::GameDatabaseLink> oracleLinks;
+      std::string line;
+      while (std::getline(log, line)) {
+        if (line.compare(0, 8, "ANIM_ID ") != 0) continue;
+        long long id = 0;
+        char extra = 0;
+        if (std::sscanf(line.c_str(), "ANIM_ID %lld %c", &id, &extra) != 1 ||
+            id < INT32_MIN || id > INT32_MAX) return 12;
+        const auto found = byId.find(static_cast<std::int32_t>(id));
+        if (found == byId.end() || !seen.insert(found->first).second) return 13;
+        oracleLinks.push_back(found->second);
+      }
+      if (oracleLinks.size() != links.size() || !log.eof()) return 14;
+      if (!S2FileIO::CollectAnimationSkeletonGroups(database, oracleLinks, &groups)) return 15;
+      std::printf("animation-oracle-links %zu order-hash %016llx groups %zu group-hash %016llx\n",
+          oracleLinks.size(),
+          static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(oracleLinks)),
+          groups.size(), static_cast<unsigned long long>(S2FileIO::HashAnimationGroupIds(groups)));
     }
   }
   for (std::size_t i = 0; i < database.tables.size() && (showAll || i < 5); ++i) {
