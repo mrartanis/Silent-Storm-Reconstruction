@@ -38,6 +38,15 @@ Linux GCC 11.4 под ASan/UBSan не сообщил ошибок. Объект�
 десериализация полей объектов остаются в Windows-игре, поэтому это ещё не
 Linux-загрузчик таблиц.
 
+Коммит `dbedba8` архивирован как `stage2-db-objects-20260924-01` (x64,
+нативное медиа без FMOD) и `stage2-db-objects-x86-20260924-01` (x86).
+Чистые запуски `stage2-db-objects-clean-x64-01` и
+`stage2-db-objects-clean-x86-01` загрузили тот же `DB_OLD`:
+`LOAD-DESERIALIZE-COMPLETE (1 interfaces)` и `LOAD-SLOT-DONE` в каждом
+`_saveload.log`. После `quit` обе игры и оба отладчика завершились,
+`crash.dmp` нет. Это проверяет фактическое применение нового декодера в
+игре на одном сохранении, но не весь набор таблиц и сценариев.
+
 Коммит `101edc8` собран в чистые архивы
 `G:\SS\lab\builds\stage2-db-chunks-20260924-01` (x64) и
 `G:\SS\lab\builds\stage2-db-chunks-x86-20260924-01` (x86). Из каждого
