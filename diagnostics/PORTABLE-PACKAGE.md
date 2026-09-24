@@ -61,6 +61,17 @@ Linux-хосте удалён; оригинал остался только в �
 запуска с текущим изменённым EXE, не чистая архивная сборка и не
 прохождение миссии.
 
+После коммита `bdd2a2b` скрипт `Build-Lab.ps1 -Architecture x64
+-NativeMedia` создал чистый архив
+`G:\SS\lab\builds\stage2-package-20260924-01` (`Game.exe` SHA-256
+`591E5CC9B9FE877245F062B4BF3BA30DD6F39B1642B29B3A9BD851FF597E26ED`).
+В нём нет `fmod.dll`, а `Game.exe` не импортирует FMOD. Из архива создан
+`G:\SS\lab\runs\stage2-package-clean-smoke-01` с `-SkipIntro`;
+`Start-LabRun.ps1` под CDB дошёл до отвечающего окна `Silent Storm`,
+консоль записала `Executing .\cfg\lab-no-intro.cfg`, процесс штатно
+закрылся, дампа нет. Проверка миссии и ручное прослушивание эффектов и
+реплик остаются отдельными открытыми пунктами.
+
 Повторение на данном стенде в PowerShell:
 
 ```powershell
