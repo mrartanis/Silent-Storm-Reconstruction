@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Streams.h"
 #include "PortableStructureChunks.h"
+#include "GeometryWire.h"
 #include "..\Misc\Basic2.h"
 #include "..\Misc\BasicFactory.h"
 #include <cstdint>

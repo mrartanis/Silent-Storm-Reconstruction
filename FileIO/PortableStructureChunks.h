@@ -320,6 +320,28 @@ inline bool EncodeStructureVertexWeight(const StructureVertexWeightFields& value
   return true;
 }
 
+// Common geometry wire shapes are consecutive IEEE-754 float32 values.
+// Callers map semantic fields explicitly; no host struct is copied raw.
+inline bool DecodeStructureFloatFields(const std::uint8_t* source,
+                                       std::size_t length, float* fields,
+                                       std::size_t count) {
+  if (!source || !fields || !count || count > 16 || length != count * 4) return false;
+  float decoded[16];
+  for (std::size_t i = 0; i < count; ++i)
+    if (!DecodeStructureScalar(source + i * 4, 4, &decoded[i])) return false;
+  for (std::size_t i = 0; i < count; ++i) fields[i] = decoded[i];
+  return true;
+}
+
+inline bool EncodeStructureFloatFields(const float* fields, std::size_t count,
+                                       std::uint8_t* destination,
+                                       std::size_t length) {
+  if (!fields || !destination || !count || count > 16 || length != count * 4) return false;
+  for (std::size_t i = 0; i < count; ++i)
+    if (!EncodeStructureScalar(fields[i], destination + i * 4, 4)) return false;
+  return true;
+}
+
 // Specialize this for game PODs whose historical wire format must not depend
 // on host padding or alignment. Unspecialized PODs retain the legacy raw path.
 template<class T, class Enable = void>
