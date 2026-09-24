@@ -95,9 +95,10 @@ int main(int argc, char** argv) {
     std::vector<S2FileIO::GameDatabaseLink> links;
     std::size_t unresolved = 0;
     if (!S2FileIO::CollectAnimationSkeletonLinks(database, &links, &unresolved)) return 8;
-    std::printf("animation-skeleton-links %zu unresolved %zu hash %016llx\n",
+    std::printf("animation-skeleton-links %zu unresolved %zu hash %016llx order-hash %016llx\n",
         links.size(), unresolved,
-        static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(links)));
+        static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(links)),
+        static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(links)));
   }
   for (std::size_t i = 0; i < database.tables.size() && (showAll || i < 5); ++i) {
     const auto& table = database.tables[i];

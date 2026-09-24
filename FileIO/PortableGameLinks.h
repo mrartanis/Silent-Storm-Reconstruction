@@ -18,5 +18,7 @@ bool CollectAnimationSkeletonLinks(const PortableGameDatabase& database,
                                    std::vector<GameDatabaseLink>* links,
                                    std::size_t* unresolved);
 std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links);
+// Diagnostic only: unlike HashGameDatabaseLinks, preserves traversal order.
+std::uint64_t HashGameDatabaseLinksInOrder(const std::vector<GameDatabaseLink>& links);
 
 } // namespace S2FileIO

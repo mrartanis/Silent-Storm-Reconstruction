@@ -49,8 +49,7 @@ bool CollectAnimationSkeletonLinks(const PortableGameDatabase& database,
   return true;
 }
 
-std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links) {
-  std::sort(links.begin(), links.end());
+std::uint64_t HashGameDatabaseLinksInOrder(const std::vector<GameDatabaseLink>& links) {
   std::uint64_t hash = UINT64_C(14695981039346656037);
   const auto u32 = [&hash](std::uint32_t value) {
     for (unsigned i = 0; i < 4; ++i)
@@ -62,6 +61,11 @@ std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links) {
     u32(static_cast<std::uint32_t>(link.second));
   }
   return hash;
+}
+
+std::uint64_t HashGameDatabaseLinks(std::vector<GameDatabaseLink> links) {
+  std::sort(links.begin(), links.end());
+  return HashGameDatabaseLinksInOrder(links);
 }
 
 } // namespace S2FileIO

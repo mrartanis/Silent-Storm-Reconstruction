@@ -8,6 +8,7 @@
 #include "..\Main\Grid.h"
 #include "..\Misc\StrProc.h"
 #include <limits>
+#include <map>
 #include "DataScenario.h"
 #include "DataSound.h"
 #include "DataText.h"
@@ -826,22 +827,45 @@ void BuildMapLinks( bool bTranslate )
 	{
 		CDBTable<CAnimation> *pATable = NDatabase::GetTable<CAnimation>();
 		CDBIterator<CAnimation> it( *pATable );
+		char parityFlag[2] = {};
+		const bool checkParity = GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag,
+			sizeof(parityFlag) ) == 1 && parityFlag[0] == '1';
 		std::vector<S2FileIO::GameDatabaseLink> animationLinks;
+		std::map<std::pair<int, int>, int> lastAnimationInGroup;
+		unsigned groupOrderInversions = 0;
+		int firstInversionSkeleton = 0, firstInversionType = 0;
 		while ( it.MoveNext() )
 		{
 			CAnimation *pA = it.Get();
 			if ( IsValid( pA->pSkeleton ) )
 			{
-				animationLinks.emplace_back( pA->GetRecordID(), pA->pSkeleton->GetRecordID() );
+				if (checkParity)
+				{
+					animationLinks.emplace_back( pA->GetRecordID(), pA->pSkeleton->GetRecordID() );
+					const std::pair<int, int> group(pA->pSkeleton->GetRecordID(), pA->nType);
+					const auto previous = lastAnimationInGroup.find(group);
+					if (previous != lastAnimationInGroup.end() && previous->second > pA->GetRecordID())
+					{
+						if (!groupOrderInversions)
+						{
+							firstInversionSkeleton = group.first;
+							firstInversionType = group.second;
+						}
+						++groupOrderInversions;
+					}
+					lastAnimationInGroup[group] = pA->GetRecordID();
+				}
 				pA->pSkeleton->pAnimations[ pA->nType ].anims.push_back( pA );
 			}
 		}
-		char parityFlag[2] = {};
-		if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
-			parityFlag[0] == '1' )
-			DebugTrace( "DB-PARITY animation-skeleton-links=%u hash=%016llx\n",
-				static_cast<unsigned>(animationLinks.size()),
-				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)) );
+		if ( checkParity )
+			DebugTrace( "DB-PARITY animation-skeleton-links=%u hash=%016llx order-hash=%016llx\n",
+                static_cast<unsigned>(animationLinks.size()),
+                static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)),
+				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinksInOrder(animationLinks)) );
+			DebugTrace( "DB-PARITY animation-groups=%u order-inversions=%u first-skeleton=%d first-type=%d\n",
+				static_cast<unsigned>(lastAnimationInGroup.size()), groupOrderInversions,
+				firstInversionSkeleton, firstInversionType );
 	}
 	// debris materials database
 	{

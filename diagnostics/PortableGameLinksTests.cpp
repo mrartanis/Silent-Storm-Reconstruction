@@ -26,6 +26,8 @@ int main() {
   reordered.erase(reordered.begin());
   if (S2FileIO::HashGameDatabaseLinks(links) !=
       S2FileIO::HashGameDatabaseLinks(reordered)) return 1;
+  if (S2FileIO::HashGameDatabaseLinksInOrder(links) ==
+      S2FileIO::HashGameDatabaseLinksInOrder(reordered)) return 1;
   animations.intRows.push_back({12, 7});
   if (S2FileIO::CollectAnimationSkeletonLinks(database, &links, &unresolved)) return 1;
   return 0;
