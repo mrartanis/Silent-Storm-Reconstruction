@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "RandomGen.h"
+#include "PortableRand.h"
 #include "..\FileIO\basicChunk1.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +25,8 @@ SRand::SRand() : seed( g_bHarnessSeedActive ? g_nHarnessSeed : GetTickCount() )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int SRand::Get( int nMax )
 {
-	return (((seed.nSeed = seed.nSeed * 214013L + 2531011L) >> 16) & 0x7fff) * nMax / 0x8000;
+	static_assert( sizeof(int) == sizeof(std::int32_t), "SRand seed is a 32-bit game value" );
+	return S2Random::Next( &seed.nSeed, nMax );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CRoulette

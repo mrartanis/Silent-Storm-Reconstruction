@@ -52,6 +52,8 @@ add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplo
 add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)
 add_executable(PortableParticleWireTests "${root}/diagnostics/PortableParticleWireTests.cpp")
 add_test(NAME PortableParticleWireTests COMMAND PortableParticleWireTests)
+add_executable(PortableRandTests "${root}/diagnostics/PortableRandTests.cpp")
+add_test(NAME PortableRandTests COMMAND PortableRandTests)
 add_executable(ProbeSavedDecalVertices "${root}/diagnostics/ProbeSavedDecalVertices.cpp")
 target_link_libraries(ProbeSavedDecalVertices PRIVATE s2_portable_structure)
 add_library(s2_portable_database STATIC "${root}/FileIO/PortableGameDatabase.cpp")
@@ -64,6 +66,8 @@ if(NOT MSVC)
   include("${root}/cmake/PortableCore.cmake")
   return()
 endif()
+add_executable(NativeRandParityTests "${root}/diagnostics/NativeRandParityTests.cpp")
+add_test(NAME NativeRandParityTests COMMAND NativeRandParityTests)
 add_executable(WindowsSaveNameTests
   "${root}/diagnostics/WindowsSaveNameTests.cpp"
   "${root}/FileIO/WindowsSaveNames.cpp")
