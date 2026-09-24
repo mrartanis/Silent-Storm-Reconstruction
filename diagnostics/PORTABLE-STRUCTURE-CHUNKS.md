@@ -375,6 +375,27 @@ trackers=0 wavefronts=0`. После `quit` игра и отладчик зав�
 `stage2-db-chunks-x86-20260924-01` (`stage2-explosion-perk-x86-01`) до
 `LOAD-SLOT-DONE` и штатно завершился без дампа. В том старом архиве нет
 команды `explstatus`, поэтому завершение волн на x86 этим прогоном не
-проверено. Следующий шаг — проверить реальные значения модификаторов в
-сохранённом объекте и численный паритет урона; совместимая загрузка этого
-не доказывает.
+проверено.
+
+`ProbeSavedExplosionPerks` читает таблицу объектов `game.sav`, находит
+реальные `CVoxelExplTracker` (type `0x52782130`) и декодирует их tag 11,
+проверяя длину 12 байт. В новом `PERK_WAVE` найдены четыре трекера: у
+каждого `structure=1 area=1 critical=0 padding=0,0,0`. В сохранении
+раннего чистого архива `stage2-voxel-wavefront-clean-01` (`WAVE_CLEAN`)
+тоже четыре трекера с теми же тремя игровыми значениями, но padding
+`d0,80,4`. Таким образом, сравниваются существенные поля старого и нового
+x64-сейва одного сценария; старый архив до введения кодека сохранил
+неинициализированное выравнивание. Оба файла проверены этим же пробником на
+Linux x86-64 и ARM64/QEMU под ASan/UBSan (`detect_leaks=0`). Из корня репы:
+
+```powershell
+$env:UCRTContentRoot='C:\Program Files (x86)\Windows Kits\10\'
+$cmake='G:\SS\lab\tools\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe'
+& $cmake --build G:\SS\lab\build-x64 --config RelWithDebInfo --target ProbeSavedExplosionPerks --parallel 16
+& G:\SS\lab\build-x64\RelWithDebInfo\ProbeSavedExplosionPerks.exe G:\SS\lab\runs\stage2-explosion-perk-clean-01\user-data\save\default\PERK_WAVE\game.sav
+& G:\SS\lab\build-x64\RelWithDebInfo\ProbeSavedExplosionPerks.exe G:\SS\lab\runs\stage2-voxel-wavefront-clean-01\user-data\save\default\WAVE_CLEAN\game.sav
+```
+
+Сравнение игровых модификаторов не охватывает ненейтральный перк (в этом
+сценарии thrower отсутствует) и не измеряет численный паритет урона с
+историческим x86-релизом; это отдельные незакрытые проверки.
