@@ -3,6 +3,7 @@
 #include "DataMap.h"
 #include "DataRPGTmp.h"
 #include "DataAnimation.h"
+#include "..\FileIO\PortableGameLinks.h"
 #include "DataTerrain.h"
 #include "..\Main\Grid.h"
 #include "..\Misc\StrProc.h"
@@ -825,12 +826,22 @@ void BuildMapLinks( bool bTranslate )
 	{
 		CDBTable<CAnimation> *pATable = NDatabase::GetTable<CAnimation>();
 		CDBIterator<CAnimation> it( *pATable );
+		std::vector<S2FileIO::GameDatabaseLink> animationLinks;
 		while ( it.MoveNext() )
 		{
 			CAnimation *pA = it.Get();
 			if ( IsValid( pA->pSkeleton ) )
+			{
+				animationLinks.emplace_back( pA->GetRecordID(), pA->pSkeleton->GetRecordID() );
 				pA->pSkeleton->pAnimations[ pA->nType ].anims.push_back( pA );
+			}
 		}
+		char parityFlag[2] = {};
+		if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
+			parityFlag[0] == '1' )
+			DebugTrace( "DB-PARITY animation-skeleton-links=%u hash=%016llx\n",
+				static_cast<unsigned>(animationLinks.size()),
+				static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(animationLinks)) );
 	}
 	// debris materials database
 	{

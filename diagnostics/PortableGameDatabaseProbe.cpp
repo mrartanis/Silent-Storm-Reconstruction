@@ -1,4 +1,5 @@
 #include "../FileIO/PortableGameDatabase.h"
+#include "../FileIO/PortableGameLinks.h"
 #include "../FileIO/PortableStructureChunks.h"
 
 #include <cstdint>
@@ -22,8 +23,10 @@ struct Hash {
 }
 
 int main(int argc, char** argv) {
-  if (argc != 2 && !(argc == 3 && std::string(argv[2]) == "--all")) return 2;
-  const bool showAll = argc == 3;
+  if (argc != 2 && !(argc == 3 &&
+      (std::string(argv[2]) == "--all" || std::string(argv[2]) == "--links"))) return 2;
+  const bool showAll = argc == 3 && std::string(argv[2]) == "--all";
+  const bool showLinks = argc == 3 && std::string(argv[2]) == "--links";
   S2FileIO::PortableGameDatabase database;
   std::string error;
   if (!S2FileIO::LoadPortableGameDatabase(argv[1], &database, &error)) {
@@ -88,6 +91,14 @@ int main(int argc, char** argv) {
       stringCells, relationLinks, shapeErrors, static_cast<unsigned long long>(hash.value));
   std::printf("relations-hash %016llx\n",
       static_cast<unsigned long long>(relationsHash));
+  if (showLinks) {
+    std::vector<S2FileIO::GameDatabaseLink> links;
+    std::size_t unresolved = 0;
+    if (!S2FileIO::CollectAnimationSkeletonLinks(database, &links, &unresolved)) return 8;
+    std::printf("animation-skeleton-links %zu unresolved %zu hash %016llx\n",
+        links.size(), unresolved,
+        static_cast<unsigned long long>(S2FileIO::HashGameDatabaseLinks(links)));
+  }
   for (std::size_t i = 0; i < database.tables.size() && (showAll || i < 5); ++i) {
     const auto& table = database.tables[i];
     std::uint64_t tableHash = 0;
