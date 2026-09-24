@@ -3,6 +3,7 @@ param(
  [string]$ToolRoot='G:\SS\lab\tools\VS2022',
  [ValidateSet('Win32','x64')][string]$Architecture='x64',
  [string]$BuildId=(Get-Date -Format 'yyyyMMdd-HHmmss'),
+ [ValidateRange(1,64)][int]$BuildJobs=[Math]::Min([Environment]::ProcessorCount,12),
  [switch]$NativeMedia,
  [string]$FFmpegRoot,
  [string]$MiniaudioIncludeDir
@@ -37,7 +38,7 @@ if($LASTEXITCODE){throw 'Configure failed'}
 if(!(Select-String -Path "$build\CMakeCache.txt" -Pattern '^CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=.*[/]Zi')){throw 'Debug compile flags missing'}
 $targets=@('Game','zlib')
 if($NativeMedia){$targets+='s2_bink_compat'}
-& $cmake --build $build --config RelWithDebInfo --target @targets --parallel 6 -- /v:minimal 2>&1 | Tee-Object "$archive\build.log"
+& $cmake --build $build --config RelWithDebInfo --target @targets --parallel $BuildJobs -- /v:minimal 2>&1 | Tee-Object "$archive\build.log"
 if($LASTEXITCODE){throw 'Build failed'}
 foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){
  Copy-Item -LiteralPath "$build\RelWithDebInfo\$file" -Destination $archive
@@ -54,7 +55,7 @@ if($Architecture -eq 'x64'){
 }
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
-[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
+[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
 Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 Write-Output "Archived build: $archive"
 

@@ -2,7 +2,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <cstring>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 namespace S2FileIO {
@@ -70,6 +72,42 @@ bool S2_STRUCTURE_CALL CopyStructureField(const std::uint8_t* source,
                                           std::size_t sourceSize,
                                           void* destination,
                                           std::size_t destinationSize);
+
+// Arithmetic and enum fields are little-endian on disk. Keep this conversion
+// separate from CopyStructureField, which is also used for opaque blobs.
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value || std::is_enum<T>::value, bool>::type
+DecodeStructureScalar(const std::uint8_t* source, std::size_t length, T* value) {
+  if (!source || !value || length != sizeof(T) || sizeof(T) > 8) return false;
+  if (std::is_same<T, bool>::value) {
+    *value = static_cast<T>(source[0] != 0);
+    return true;
+  }
+  const std::uint16_t one = 1;
+  const bool little = *reinterpret_cast<const std::uint8_t*>(&one) != 0;
+  std::uint8_t host[sizeof(T)];
+  for (std::size_t i = 0; i < sizeof(T); ++i)
+    host[i] = source[little ? i : sizeof(T) - 1 - i];
+  std::memcpy(value, host, sizeof(T));
+  return true;
+}
+
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value || std::is_enum<T>::value, bool>::type
+EncodeStructureScalar(const T& value, std::uint8_t* destination, std::size_t length) {
+  if (!destination || length != sizeof(T) || sizeof(T) > 8) return false;
+  if (std::is_same<T, bool>::value) {
+    destination[0] = static_cast<bool>(value) ? 1 : 0;
+    return true;
+  }
+  const std::uint16_t one = 1;
+  const bool little = *reinterpret_cast<const std::uint8_t*>(&one) != 0;
+  std::uint8_t host[sizeof(T)];
+  std::memcpy(host, &value, sizeof(T));
+  for (std::size_t i = 0; i < sizeof(T); ++i)
+    destination[i] = host[little ? i : sizeof(T) - 1 - i];
+  return true;
+}
 
 
 } // namespace S2FileIO

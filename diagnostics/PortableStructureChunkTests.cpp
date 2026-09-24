@@ -1,9 +1,41 @@
 #include "../FileIO/PortableStructureChunks.h"
 
 #include <cstdint>
+#include <cstring>
 #include <vector>
 
 int main() {
+  enum class TestMode : std::uint32_t { Active = 0x12345678 };
+  const std::uint8_t scalar32[] = {0x78, 0x56, 0x34, 0x12};
+  std::uint32_t unsignedValue = 0;
+  const std::uint8_t signedWire[] = {0xfe, 0xff, 0xff, 0xff};
+  std::int32_t signedValue = 0;
+  TestMode mode = static_cast<TestMode>(0);
+  std::uint8_t encoded32[4] = {};
+  const std::uint8_t floatWire[] = {0, 0, 0x80, 0x3f};
+  float floatValue = 0;
+  bool boolValue = false;
+  const std::uint8_t legacyTrue[] = {2};
+  std::uint8_t boolWire = 0;
+  if (!S2FileIO::DecodeStructureScalar(scalar32, sizeof(scalar32), &unsignedValue) ||
+      unsignedValue != 0x12345678 ||
+      !S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, sizeof(encoded32)) ||
+      std::memcmp(encoded32, scalar32, sizeof(scalar32)) != 0 ||
+      !S2FileIO::DecodeStructureScalar(signedWire, sizeof(signedWire), &signedValue) ||
+      signedValue != -2 ||
+      !S2FileIO::EncodeStructureScalar(signedValue, encoded32, sizeof(encoded32)) ||
+      std::memcmp(encoded32, signedWire, sizeof(signedWire)) != 0 ||
+      !S2FileIO::DecodeStructureScalar(scalar32, sizeof(scalar32), &mode) ||
+      mode != TestMode::Active ||
+      !S2FileIO::EncodeStructureScalar(mode, encoded32, sizeof(encoded32)) ||
+      std::memcmp(encoded32, scalar32, sizeof(scalar32)) != 0 ||
+      !S2FileIO::DecodeStructureScalar(floatWire, sizeof(floatWire), &floatValue) ||
+      floatValue != 1.0f ||
+      !S2FileIO::DecodeStructureScalar(legacyTrue, 1, &boolValue) || !boolValue ||
+      !S2FileIO::EncodeStructureScalar(boolValue, &boolWire, 1) || boolWire != 1 ||
+      S2FileIO::DecodeStructureScalar(scalar32, 3, &unsignedValue) ||
+      S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, 3) ||
+      S2FileIO::DecodeStructureScalar(nullptr, 4, &unsignedValue)) return 1;
   std::uint32_t length = 0;
   const std::uint8_t shortLength[] = {8};
   const std::uint8_t longLength[] = {0xf9, 0x0e, 0x00, 0x00};

@@ -5,9 +5,12 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Streams.h"
+#include "PortableStructureChunks.h"
 #include "..\Misc\Basic2.h"
 #include "..\Misc\BasicFactory.h"
 #include <cstdint>
+#include <stdexcept>
+#include <type_traits>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 externA5 CClassFactory<CObjectBase> *pSSClasses;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,6 +125,28 @@ private:
 	int CountChunks( const chunk_id idChunk );
 	//
 	void DataChunk( const chunk_id idChunk, void *pData, int nSize, int nChunkNumber );
+	template<class T>
+	void DataScalarChunk( const chunk_id idChunk, T *p, int nChunkNumber, std::true_type )
+	{
+		std::uint8_t bytes[sizeof(T)] = {};
+		if ( IsReading() )
+		{
+			DataChunk( idChunk, bytes, sizeof(T), nChunkNumber );
+			if ( !S2FileIO::DecodeStructureScalar( bytes, sizeof(T), p ) )
+				throw std::runtime_error( "unsupported structure scalar" );
+		}
+		else
+		{
+			if ( !S2FileIO::EncodeStructureScalar( *p, bytes, sizeof(T) ) )
+				throw std::runtime_error( "unsupported structure scalar" );
+			DataChunk( idChunk, bytes, sizeof(T), nChunkNumber );
+		}
+	}
+	template<class T>
+	void DataScalarChunk( const chunk_id idChunk, T *p, int nChunkNumber, std::false_type )
+	{
+		DataChunk( idChunk, p, sizeof(T), nChunkNumber );
+	}
 	void RawData( void *pData, int nSize );
 	void WriteRawData( const void *pData, int nSize );
 	void DataChunkBLOB( CMemoryStream &file );
@@ -158,7 +183,8 @@ private:
 	template<class T>
 		void __cdecl CallObjectSerialize( const chunk_id idChunk, int nChunkNumber, T *p, SGenericNumberTemplate<1> *pp )
 		{
-			DataChunk( idChunk, p, sizeof(T), nChunkNumber );
+			DataScalarChunk( idChunk, p, nChunkNumber,
+				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
 		}
 	template<class T>
 		void __cdecl AddInternal( const chunk_id idChunk, int nChunkNumber, T *p, ...) 

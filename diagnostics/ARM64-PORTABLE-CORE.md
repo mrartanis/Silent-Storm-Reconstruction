@@ -25,7 +25,7 @@ cmake -S /tmp/s2-arm64.8vX0vt/src -B /tmp/s2-arm64.8vX0vt/build -G Ninja \
   -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ \
   '-DCMAKE_CROSSCOMPILING_EMULATOR=/usr/bin/qemu-aarch64-static;-L;/usr/aarch64-linux-gnu' \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build /tmp/s2-arm64.8vX0vt/build -j 6
+cmake --build /tmp/s2-arm64.8vX0vt/build -j 16
 ctest --test-dir /tmp/s2-arm64.8vX0vt/build --output-on-failure
 ```
 
