@@ -6,6 +6,7 @@
 
 #include "GPixelFormat.h"
 #include "RectPacker.h"
+#include "..\FileIO\PortableStructureChunks.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
 {
@@ -144,5 +145,60 @@ public:
 void FilterTrinagles( vector<STriangle> *pRes, const vector<WORD> &filter );
 void MergePositions( vector<WORD> *pMatches, vector<CVec3> *pPositions );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::SVertex, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length, NGScene::SVertex* value) {
+    if (!value) return false;
+    StructureVertexFields fields;
+    if (!DecodeStructureVertex(source, length, &fields)) return false;
+    value->pos.x = fields.position[0]; value->pos.y = fields.position[1]; value->pos.z = fields.position[2];
+    value->normal.z = fields.basis[0]; value->normal.y = fields.basis[1];
+    value->normal.x = fields.basis[2]; value->normal.w = fields.basis[3];
+    value->texU.z = fields.basis[4]; value->texU.y = fields.basis[5];
+    value->texU.x = fields.basis[6]; value->texU.w = fields.basis[7];
+    value->texV.z = fields.basis[8]; value->texV.y = fields.basis[9];
+    value->texV.x = fields.basis[10]; value->texV.w = fields.basis[11];
+    value->tex.x = fields.texture[0]; value->tex.y = fields.texture[1];
+    return true;
+  }
+  static bool Encode(const NGScene::SVertex& value, std::uint8_t* destination, std::size_t length) {
+    StructureVertexFields fields;
+    fields.position[0] = value.pos.x; fields.position[1] = value.pos.y; fields.position[2] = value.pos.z;
+    const std::uint8_t basis[12] = {value.normal.z, value.normal.y, value.normal.x, value.normal.w,
+                                    value.texU.z, value.texU.y, value.texU.x, value.texU.w,
+                                    value.texV.z, value.texV.y, value.texV.x, value.texV.w};
+    for (std::size_t i = 0; i < 12; ++i) fields.basis[i] = basis[i];
+    fields.texture[0] = value.tex.x; fields.texture[1] = value.tex.y;
+    return EncodeStructureVertex(fields, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<NGScene::SVertexWeight, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 20;
+  static bool Decode(const std::uint8_t* source, std::size_t length, NGScene::SVertexWeight* value) {
+    if (!value) return false;
+    StructureVertexWeightFields fields;
+    if (!DecodeStructureVertexWeight(source, length, &fields)) return false;
+    for (std::size_t i = 0; i < 4; ++i) {
+      value->fWeights[i] = fields.weights[i];
+      value->cBoneIndices[i] = fields.boneIndices[i];
+    }
+    return true;
+  }
+  static bool Encode(const NGScene::SVertexWeight& value, std::uint8_t* destination, std::size_t length) {
+    StructureVertexWeightFields fields;
+    for (std::size_t i = 0; i < 4; ++i) {
+      fields.weights[i] = value.fWeights[i];
+      fields.boneIndices[i] = value.cBoneIndices[i];
+    }
+    return EncodeStructureVertexWeight(fields, destination, length);
+  }
+};
 }
 #endif

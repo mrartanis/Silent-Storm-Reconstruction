@@ -259,6 +259,67 @@ inline bool EncodeStructureCameraLimits(const float (&fields)[13], bool movie,
   return true;
 }
 
+// Geometry vertices stay a single raw-vector blob in saves. Packed basis
+// components are bytes in z,y,x,w order, not host-endian DWORDs.
+struct StructureVertexFields {
+  float position[3] = {};
+  std::uint8_t basis[12] = {};
+  float texture[2] = {};
+};
+
+inline bool DecodeStructureVertex(const std::uint8_t* source,
+                                  std::size_t length,
+                                  StructureVertexFields* value) {
+  if (!source || !value || length != 32) return false;
+  StructureVertexFields decoded;
+  for (std::size_t i = 0; i < 3; ++i)
+    if (!DecodeStructureScalar(source + 4 * i, 4, &decoded.position[i])) return false;
+  for (std::size_t i = 0; i < 12; ++i) decoded.basis[i] = source[12 + i];
+  for (std::size_t i = 0; i < 2; ++i)
+    if (!DecodeStructureScalar(source + 24 + 4 * i, 4, &decoded.texture[i])) return false;
+  *value = decoded;
+  return true;
+}
+
+inline bool EncodeStructureVertex(const StructureVertexFields& value,
+                                  std::uint8_t* destination,
+                                  std::size_t length) {
+  if (!destination || length != 32) return false;
+  for (std::size_t i = 0; i < 3; ++i)
+    if (!EncodeStructureScalar(value.position[i], destination + 4 * i, 4)) return false;
+  for (std::size_t i = 0; i < 12; ++i) destination[12 + i] = value.basis[i];
+  for (std::size_t i = 0; i < 2; ++i)
+    if (!EncodeStructureScalar(value.texture[i], destination + 24 + 4 * i, 4)) return false;
+  return true;
+}
+
+struct StructureVertexWeightFields {
+  float weights[4] = {};
+  std::uint8_t boneIndices[4] = {};
+};
+
+inline bool DecodeStructureVertexWeight(const std::uint8_t* source,
+                                        std::size_t length,
+                                        StructureVertexWeightFields* value) {
+  if (!source || !value || length != 20) return false;
+  StructureVertexWeightFields decoded;
+  for (std::size_t i = 0; i < 4; ++i)
+    if (!DecodeStructureScalar(source + 4 * i, 4, &decoded.weights[i])) return false;
+  for (std::size_t i = 0; i < 4; ++i) decoded.boneIndices[i] = source[16 + i];
+  *value = decoded;
+  return true;
+}
+
+inline bool EncodeStructureVertexWeight(const StructureVertexWeightFields& value,
+                                        std::uint8_t* destination,
+                                        std::size_t length) {
+  if (!destination || length != 20) return false;
+  for (std::size_t i = 0; i < 4; ++i)
+    if (!EncodeStructureScalar(value.weights[i], destination + 4 * i, 4)) return false;
+  for (std::size_t i = 0; i < 4; ++i) destination[16 + i] = value.boneIndices[i];
+  return true;
+}
+
 // Specialize this for game PODs whose historical wire format must not depend
 // on host padding or alignment. Unspecialized PODs retain the legacy raw path.
 template<class T, class Enable = void>

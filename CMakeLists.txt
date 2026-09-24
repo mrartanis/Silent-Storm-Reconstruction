@@ -38,6 +38,8 @@ target_link_libraries(PortableStructureChunkTests PRIVATE s2_portable_structure)
 add_test(NAME PortableStructureChunkTests COMMAND PortableStructureChunkTests)
 add_executable(PortableCameraWireTests "${root}/diagnostics/PortableCameraWireTests.cpp")
 add_test(NAME PortableCameraWireTests COMMAND PortableCameraWireTests)
+add_executable(PortableVertexWireTests "${root}/diagnostics/PortableVertexWireTests.cpp")
+add_test(NAME PortableVertexWireTests COMMAND PortableVertexWireTests)
 add_library(s2_portable_database STATIC "${root}/FileIO/PortableGameDatabase.cpp")
 target_include_directories(s2_portable_database PUBLIC "${root}/FileIO")
 target_link_libraries(s2_portable_database PUBLIC s2_portable_structure)
@@ -344,6 +346,10 @@ add_executable(NativeCameraWireTests "${root}/diagnostics/NativeCameraWireTests.
 target_include_directories(NativeCameraWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeCameraWireTests PRIVATE "${root}/Main/StdAfx.h")
 add_test(NAME NativeCameraWireTests COMMAND NativeCameraWireTests)
+add_executable(NativeVertexWireTests "${root}/diagnostics/NativeVertexWireTests.cpp")
+target_include_directories(NativeVertexWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeVertexWireTests PRIVATE "${root}/Main/StdAfx.h")
+add_test(NAME NativeVertexWireTests COMMAND NativeVertexWireTests)
 # the game
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
