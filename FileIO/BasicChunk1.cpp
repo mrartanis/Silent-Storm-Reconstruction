@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "BasicChunk1.h"
 #include "Cruncher.h"   // CNetCompressor -- the packed (retail v1) save-chunk codec
+#include "PortableStructureChunks.h"
 #include <cstdarg>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // save-load load-trace diagnostic (dev harness) -- see BasicChunk1.h
@@ -96,14 +97,19 @@ void CStructureSaver::CChunkLevel::Clear()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static bool ReadShortChunkSave( CDataStream &file, chunk_id &dwID, CMemoryStream &chunk )
 {
-	DWORD dwLeng = 0;
 	try
 	{
 		file.Read( &dwID, sizeof( dwID ) );
-		file.Read( &dwLeng, 1 );
-		if ( dwLeng & 1 )
-			file.Read( ((char*)&dwLeng)+1, 3 );
-		dwLeng >>= 1;
+		std::uint8_t encoded[4] = {};
+		file.Read( encoded, 1 );
+		const std::size_t prefix = encoded[0] & 1 ? 4 : 1;
+		if ( prefix == 4 )
+			file.Read( encoded + 1, 3 );
+		const int remaining = file.GetSize() - file.GetPosition();
+		std::uint32_t dwLeng = 0;
+		if ( remaining < 0 || !S2FileIO::DecodeStructureLength(
+			encoded, prefix, static_cast<std::uint64_t>(remaining), &dwLeng ) )
+			return false;
 		if ( dwLeng > 100000000 )
 			return false;
 		chunk.SetSizeDiscard( dwLeng );
