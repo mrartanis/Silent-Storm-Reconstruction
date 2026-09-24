@@ -25,6 +25,12 @@ struct StructureObjectRecord {
   bool valid = false;
 };
 
+struct StructureObjectBody {
+  std::uint32_t wireId = 0;
+  std::uint64_t bodyOffset = 0;
+  std::uint32_t bodyLength = 0;
+};
+
 // CStructureSaver stores a byte tag followed by a 1- or 4-byte LE value:
 // encoded = (payload length << 1) | (extended ? 1 : 0).
 // `remaining` is the number of file bytes after the encoded length field.
@@ -45,6 +51,11 @@ bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
 bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
     const std::uint8_t* bytes, std::size_t length,
     std::vector<StructureObjectRecord>* records);
+// Chunk 2 contains one id-1 record per object, with a disk id-0 wire ID and
+// an id-1 serialized body. Offsets refer to the chunk-2 payload.
+bool S2_STRUCTURE_CALL IndexStructureObjectBodies(
+    const std::uint8_t* bytes, std::size_t length,
+    std::vector<StructureObjectBody>* bodies);
 
 // Wide strings on disk are UTF-16LE code units, not host wchar_t arrays.
 // Unpaired surrogates are preserved as code units for legacy round trips.

@@ -96,6 +96,45 @@ bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
   return true;
 }
 
+bool S2_STRUCTURE_CALL IndexStructureObjectBodies(
+    const std::uint8_t* bytes, std::size_t length,
+    std::vector<StructureObjectBody>* bodies) {
+  if (!bodies) return false;
+  bodies->clear();
+  if (length && !bytes) return false;
+  std::size_t offset = 0;
+  while (offset < length) {
+    StructureChunk outer;
+    if (!DecodeStructureChunkAt(bytes, length, offset, &outer) || outer.id != 1)
+      return false;
+    const std::size_t outerEnd = static_cast<std::size_t>(outer.payloadOffset) + outer.length;
+    std::size_t childOffset = static_cast<std::size_t>(outer.payloadOffset);
+    std::uint32_t wireId = 0;
+    StructureChunk body;
+    bool foundId = false, foundBody = false;
+    while (childOffset < outerEnd) {
+      StructureChunk child;
+      if (!DecodeStructureChunkAt(bytes, outerEnd, childOffset, &child)) return false;
+      if (child.id == 0) {
+        if (foundId || child.length != 4) return false;
+        const std::size_t at = static_cast<std::size_t>(child.payloadOffset);
+        for (unsigned i = 0; i != 4; ++i)
+          wireId |= std::uint32_t(bytes[at + i]) << (8 * i);
+        foundId = true;
+      } else if (child.id == 1) {
+        if (foundBody) return false;
+        body = child;
+        foundBody = true;
+      }
+      childOffset = static_cast<std::size_t>(child.payloadOffset) + child.length;
+    }
+    if (!foundId || !foundBody) return false;
+    bodies->push_back({wireId, body.payloadOffset, body.length});
+    offset = outerEnd;
+  }
+  return true;
+}
+
 bool S2_STRUCTURE_CALL DecodeStructureUtf16(const std::uint8_t* bytes,
                                             std::size_t length,
                                             std::wstring* value) {

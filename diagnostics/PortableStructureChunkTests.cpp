@@ -40,6 +40,15 @@ int main() {
       S2FileIO::CopyStructureField(nullptr, sizeof(field), copied, sizeof(copied)) ||
       !S2FileIO::CopyStructureField(nullptr, 0, nullptr, 0))
     return 1;
+  const std::uint8_t objectBody[] = {
+      1, 20, 0, 8, 1, 0, 0, 0, 1, 4, 0xaa, 0xbb};
+  std::vector<S2FileIO::StructureObjectBody> bodies;
+  if (!S2FileIO::IndexStructureObjectBodies(objectBody, sizeof(objectBody), &bodies) ||
+      bodies.size() != 1 || bodies[0].wireId != 1 ||
+      bodies[0].bodyOffset != 10 || bodies[0].bodyLength != 2 ||
+      S2FileIO::IndexStructureObjectBodies(objectBody, sizeof(objectBody) - 1, &bodies) ||
+      !bodies.empty())
+    return 1;
   return S2FileIO::DecodeStructureLength(shortLength, 1, 4, &length) && length == 4 &&
          S2FileIO::DecodeStructureLength(longLength, 4, 1916, &length) && length == 1916 &&
          !S2FileIO::DecodeStructureLength(shortLength, 1, 3, &length) &&

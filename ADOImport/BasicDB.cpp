@@ -2,6 +2,7 @@
 #include "..\ADOImport\BasicDB.h"
 #include "..\Misc\BasicFactory.h"
 #include "..\FileIO\BasicChunk1.h"
+#include "..\FileIO\PortableGameDatabase.h"
 #include <strstream>
 
 #import "C:\Program Files (x86)\Common Files\System\ADO\msado15.dll" no_namespace rename("EOF", "EndOfFile")
@@ -292,6 +293,29 @@ static void ReportStorageShape( int nTableID, CDBTableDataStorage *pStorage )
 {
 	if ( !pStorage )
 		return;
+	char parityFlag[2] = {};
+	if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
+		parityFlag[0] == '1' )
+	{
+		// Diagnostic only: compare values decoded through the game's CStructureSaver
+		// against the independent portable game.db loader, table by table.
+		S2FileIO::GameDatabaseTable snapshot;
+		snapshot.tableId = nTableID;
+		for ( const SColumnInfo &column : pStorage->fields )
+			snapshot.columns.push_back( { column.szName, column.eType } );
+		snapshot.intNames = pStorage->intFileds;
+		snapshot.floatNames = pStorage->floatFileds;
+		snapshot.stringNames = pStorage->stringFileds;
+		snapshot.intRows = pStorage->records_int;
+		snapshot.floatRows = pStorage->records_float;
+		snapshot.stringRows = pStorage->records_wstring;
+		std::uint64_t hash = 0;
+		if ( S2FileIO::HashGameDatabaseTable( snapshot, &hash ) )
+			DebugTrace( "DB-PARITY type=0x%08X hash=%016llx\n", nTableID,
+				static_cast<unsigned long long>(hash) );
+		else
+			DebugTrace( "DB-PARITY ERROR type=0x%08X\n", nTableID );
+	}
 	const int nRows = (int)pStorage->records_int.size(); // every runtime table has the integer ID column
 	DebugTrace( "DB-SCHEMA TABLE type=0x%08X rows=%d int-fields=%d float-fields=%d string-fields=%d\n",
 		nTableID, nRows, (int)pStorage->intFileds.size(), (int)pStorage->floatFileds.size(),
