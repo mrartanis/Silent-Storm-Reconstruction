@@ -95,4 +95,54 @@ bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
   return true;
 }
 
+bool S2_STRUCTURE_CALL DecodeStructureUtf16(const std::uint8_t* bytes,
+                                            std::size_t length,
+                                            std::wstring* value) {
+  if (!value || length % 2 || (length && !bytes)) return false;
+  std::wstring decoded;
+  decoded.reserve(length / 2);
+  for (std::size_t offset = 0; offset < length; offset += 2) {
+    const std::uint32_t unit = std::uint32_t(bytes[offset]) |
+                               (std::uint32_t(bytes[offset + 1]) << 8);
+    if (sizeof(wchar_t) == 4 && unit >= 0xd800 && unit <= 0xdbff &&
+        offset + 3 < length) {
+      const std::uint32_t low = std::uint32_t(bytes[offset + 2]) |
+                                (std::uint32_t(bytes[offset + 3]) << 8);
+      if (low >= 0xdc00 && low <= 0xdfff) {
+        decoded.push_back(static_cast<wchar_t>(
+            0x10000 + ((unit - 0xd800) << 10) + (low - 0xdc00)));
+        offset += 2;
+        continue;
+      }
+    }
+    decoded.push_back(static_cast<wchar_t>(unit));
+  }
+  value->swap(decoded);
+  return true;
+}
+
+bool S2_STRUCTURE_CALL EncodeStructureUtf16(const std::wstring& value,
+                                            std::vector<std::uint8_t>* bytes) {
+  if (!bytes) return false;
+  std::vector<std::uint8_t> encoded;
+  encoded.reserve(value.size() * 2);
+  for (wchar_t character : value) {
+    const std::uint32_t codepoint = static_cast<std::uint32_t>(character);
+    if (codepoint > 0x10ffff) return false;
+    const auto append = [&encoded](std::uint32_t unit) {
+      encoded.push_back(static_cast<std::uint8_t>(unit));
+      encoded.push_back(static_cast<std::uint8_t>(unit >> 8));
+    };
+    if (codepoint <= 0xffff) {
+      append(codepoint);
+    } else {
+      const std::uint32_t supplementary = codepoint - 0x10000;
+      append(0xd800 + (supplementary >> 10));
+      append(0xdc00 + (supplementary & 0x3ff));
+    }
+  }
+  bytes->swap(encoded);
+  return true;
+}
+
 } // namespace S2FileIO

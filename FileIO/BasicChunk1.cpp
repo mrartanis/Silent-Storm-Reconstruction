@@ -3,6 +3,7 @@
 #include "Cruncher.h"   // CNetCompressor -- the packed (retail v1) save-chunk codec
 #include "PortableStructureChunks.h"
 #include <cstdarg>
+#include <climits>
 #include <stdexcept>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // save-load load-trace diagnostic (dev harness) -- see BasicChunk1.h
@@ -398,12 +399,18 @@ void CStructureSaver::DataChunkString( stdWString &str )
 		CChunkLevel &res = chunks.back();
 		if ( g_bWireAudit && !NWireAudit::frames.empty() )
 			NWireAudit::frames.back().bRaw = true;
-		const wchar_t *pStr = (wchar_t*) ( data.GetBuffer() + res.nStart );
-		str.assign( pStr, res.nLength / 2 );
+		if ( !S2FileIO::DecodeStructureUtf16(
+			data.GetBuffer() + res.nStart, static_cast<std::size_t>(res.nLength), &str ) )
+			throw std::runtime_error( "invalid UTF-16 structure string" );
 	}
 	else
 	{
-		WriteRawData( str.data(), str.size() * 2 );
+		std::vector<std::uint8_t> encoded;
+		if ( !S2FileIO::EncodeStructureUtf16( str, &encoded ) || encoded.size() > INT_MAX )
+			throw std::runtime_error( "structure string exceeds UTF-16 wire limit" );
+		const std::uint8_t empty = 0;
+		WriteRawData( encoded.empty() ? &empty : encoded.data(),
+			static_cast<int>(encoded.size()) );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

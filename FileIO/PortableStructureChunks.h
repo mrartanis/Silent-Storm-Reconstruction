@@ -46,5 +46,13 @@ bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
     const std::uint8_t* bytes, std::size_t length,
     std::vector<StructureObjectRecord>* records);
 
+// Wide strings on disk are UTF-16LE code units, not host wchar_t arrays.
+// Unpaired surrogates are preserved as code units for legacy round trips.
+bool S2_STRUCTURE_CALL DecodeStructureUtf16(const std::uint8_t* bytes,
+                                            std::size_t length,
+                                            std::wstring* value);
+bool S2_STRUCTURE_CALL EncodeStructureUtf16(const std::wstring& value,
+                                            std::vector<std::uint8_t>* bytes);
+
 
 } // namespace S2FileIO

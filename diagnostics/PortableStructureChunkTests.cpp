@@ -13,6 +13,24 @@ int main() {
   std::vector<S2FileIO::StructureObjectRecord> records;
   const std::uint8_t nested[] = {7, 8, 1, 2, 3, 4, 9, 0xf9, 0x0e, 0, 0};
   S2FileIO::StructureChunk chunk;
+  const std::uint8_t utf16[] = {
+      0x41, 0x00, 0x16, 0x04, 0x3d, 0xd8, 0x00, 0xde,
+      0x00, 0xd8, 0x00, 0x00};
+  std::wstring wide;
+  std::vector<std::uint8_t> encoded;
+  if (!S2FileIO::DecodeStructureUtf16(utf16, sizeof(utf16), &wide) ||
+      wide.size() != (sizeof(wchar_t) == 2 ? 6u : 5u) ||
+      wide[0] != L'A' || wide[1] != 0x416 ||
+      wide[2] != (sizeof(wchar_t) == 2 ? 0xd83d : 0x1f600) ||
+      !S2FileIO::EncodeStructureUtf16(wide, &encoded) ||
+      encoded != std::vector<std::uint8_t>(utf16, utf16 + sizeof(utf16)) ||
+      S2FileIO::DecodeStructureUtf16(utf16, sizeof(utf16) - 1, &wide) ||
+      !S2FileIO::DecodeStructureUtf16(nullptr, 0, &wide) || !wide.empty())
+    return 1;
+  if (sizeof(wchar_t) == 4) {
+    wide.push_back(static_cast<wchar_t>(0x110000));
+    if (S2FileIO::EncodeStructureUtf16(wide, &encoded)) return 1;
+  }
   return S2FileIO::DecodeStructureLength(shortLength, 1, 4, &length) && length == 4 &&
          S2FileIO::DecodeStructureLength(longLength, 4, 1916, &length) && length == 1916 &&
          !S2FileIO::DecodeStructureLength(shortLength, 1, 3, &length) &&
