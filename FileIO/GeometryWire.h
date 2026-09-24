@@ -57,6 +57,24 @@ struct StructureFieldCodec<CVec4, void> {
 };
 
 template<>
+struct StructureFieldCodec<CQuat, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length, CQuat* value) {
+    if (!value) return false;
+    float fields[4];
+    if (!DecodeStructureFloatFields(source, length, fields, 4)) return false;
+    *value = CQuat(fields[0], fields[1], fields[2], fields[3]);
+    return true;
+  }
+  static bool Encode(const CQuat& value, std::uint8_t* destination, std::size_t length) {
+    float fields[4];
+    value.GetComponentsForWire(fields);
+    return EncodeStructureFloatFields(fields, 4, destination, length);
+  }
+};
+
+template<>
 struct StructureFieldCodec<SHMatrix, void> {
   static constexpr bool kPortable = true;
   static constexpr std::size_t kWireSize = 64;

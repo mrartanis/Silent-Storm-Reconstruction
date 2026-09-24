@@ -2,15 +2,18 @@
 #include "../FileIO/GeometryWire.h"
 
 #include <cstdint>
+#include <cmath>
 
 int main() {
   using Vec2 = S2FileIO::StructureFieldCodec<CVec2>;
   using Vec3 = S2FileIO::StructureFieldCodec<CVec3>;
   using Vec4 = S2FileIO::StructureFieldCodec<CVec4>;
+  using Quat = S2FileIO::StructureFieldCodec<CQuat>;
   using Matrix = S2FileIO::StructureFieldCodec<SHMatrix>;
   if (!Vec2::kPortable || Vec2::kWireSize != 8 ||
       !Vec3::kPortable || Vec3::kWireSize != 12 ||
       !Vec4::kPortable || Vec4::kWireSize != 16 ||
+      !Quat::kPortable || Quat::kWireSize != 16 ||
       !Matrix::kPortable || Matrix::kWireSize != 64) return 1;
   CVec2 a(1.0f, -2.0f), decodedA;
   CVec3 b(3.0f, 4.0f, 5.0f), decodedB;
@@ -27,6 +30,17 @@ int main() {
       decodedB.x != b.x || decodedB.y != b.y || decodedB.z != b.z ||
       decodedC.x != c.x || decodedC.y != c.y || decodedC.z != c.z || decodedC.w != c.w)
     return 1;
+  CQuat quat(1.0f, -2.0f, 0.5f, -0.0f), decodedQuat;
+  std::uint8_t wireQuat[16] = {};
+  float quatFields[4] = {};
+  if (!Quat::Encode(quat, wireQuat, sizeof(wireQuat)) ||
+      wireQuat[3] != 0x3f || wireQuat[7] != 0xc0 ||
+      wireQuat[11] != 0x3f || wireQuat[15] != 0x80 ||
+      !Quat::Decode(wireQuat, sizeof(wireQuat), &decodedQuat) ||
+      Quat::Decode(wireQuat, 15, &decodedQuat)) return 1;
+  decodedQuat.GetComponentsForWire(quatFields);
+  if (quatFields[0] != 1.0f || quatFields[1] != -2.0f || quatFields[2] != 0.5f ||
+      !std::signbit(quatFields[3])) return 1;
   SHMatrix matrix;
   matrix._11 = 1; matrix._12 = 2; matrix._13 = 3; matrix._14 = 4;
   matrix._21 = 5; matrix._22 = 6; matrix._23 = 7; matrix._24 = 8;

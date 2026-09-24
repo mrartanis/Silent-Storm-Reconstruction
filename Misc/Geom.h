@@ -1,4 +1,4 @@
-#ifndef __GEOM_H__
+п»ї#ifndef __GEOM_H__
 #define __GEOM_H__
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
@@ -252,7 +252,7 @@ public:
 	bool IsPointOnPlane( const CVec3 &pt ) const { return n*pt == -d; }
 	bool IsPointOverPlane( const CVec3 &pt ) const { return n*pt > -d; }
 	bool IsPointUnderPlane( const CVec3 &pt ) const { return n*pt < -d; }
-  // протестировать, не лежит ли точка под плоскостью. вернуть 0x80000000 если это так или 0 в противном случае
+  // РїСЂРѕС‚РµСЃС‚РёСЂРѕРІР°С‚СЊ, РЅРµ Р»РµР¶РёС‚ Р»Рё С‚РѕС‡РєР° РїРѕРґ РїР»РѕСЃРєРѕСЃС‚СЊСЋ. РІРµСЂРЅСѓС‚СЊ 0x80000000 РµСЃР»Рё СЌС‚Рѕ С‚Р°Рє РёР»Рё 0 РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
   DWORD CheckPointUnderPlane( const CVec3 &pt ) const;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,7 +308,7 @@ public :
 	const CVec3 GetTranslation() const { return CVec3( _14, _24, _34 ); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// прямое и обратное преобразование вместе
+// РїСЂСЏРјРѕРµ Рё РѕР±СЂР°С‚РЅРѕРµ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІРјРµСЃС‚Рµ
 struct SFBTransform
 {
 	SHMatrix forward, backward;
@@ -340,6 +340,7 @@ private:
   };
 public:
   CQuat( float fX, float fY, float fZ, float fW ) : x( fX ), y( fY ), z( fZ ), w( fW ) {}
+  void GetComponentsForWire( float *pFields ) const { pFields[0] = x; pFields[1] = y; pFields[2] = z; pFields[3] = w; }
   CQuat( float fAngle, const CVec3 &ptAxis, const bool bNormalizeAxis = false );
   CQuat() {  }
   // composition
@@ -597,8 +598,8 @@ inline bool SPlane::Set( float x0, float y0, float z0, float x1, float y1, float
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// протестировать, не лежит ли точка под плоскостью. 
-// вернуть 0x80000000 если это так или 0 в противном случае
+// РїСЂРѕС‚РµСЃС‚РёСЂРѕРІР°С‚СЊ, РЅРµ Р»РµР¶РёС‚ Р»Рё С‚РѕС‡РєР° РїРѕРґ РїР»РѕСЃРєРѕСЃС‚СЊСЋ.
+// РІРµСЂРЅСѓС‚СЊ 0x80000000 РµСЃР»Рё СЌС‚Рѕ С‚Р°Рє РёР»Рё 0 РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
 inline DWORD SPlane::CheckPointUnderPlane( const CVec3 &pt ) const
 {
   float fDist = n*pt + d;
