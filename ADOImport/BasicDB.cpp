@@ -1034,6 +1034,26 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 					DebugTrace( "DB-SCHEMA ERROR relation=%s unresolved tables left=0x%08X right=0x%08X\n",
 						r->szTable.c_str(), r->nTableLeft, r->nTableRight );
 			}
+			char parityFlag[2] = {};
+			if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
+				parityFlag[0] == '1' )
+			{
+				std::vector<S2FileIO::GameDatabaseRelation> relationSnapshot;
+				for ( const SRelation &relation : relations )
+				{
+					S2FileIO::GameDatabaseRelation item;
+					item.name = relation.szTable;
+					item.leftTableId = relation.nTableLeft;
+					item.rightTableId = relation.nTableRight;
+					for ( const SRelation::SElement &link : relation.data )
+						item.links.emplace_back( link.nLeft, link.nRight );
+					relationSnapshot.push_back( item );
+				}
+				std::uint64_t hash = 0;
+				if ( S2FileIO::HashGameDatabaseRelations( relationSnapshot, &hash ) )
+					DebugTrace( "DB-PARITY relations=%d hash=%016llx\n",
+						(int)relationSnapshot.size(), static_cast<unsigned long long>(hash) );
+			}
 			int nTables = 0;
 			for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
 			{

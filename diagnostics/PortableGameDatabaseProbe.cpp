@@ -80,9 +80,14 @@ int main(int argc, char** argv) {
       ++relationLinks;
     }
   }
+  std::uint64_t relationsHash = 0;
+  if (!S2FileIO::HashGameDatabaseRelations(database.relations, &relationsHash))
+    return 7;
   std::printf("tables %zu relations %zu int-cells %zu float-cells %zu string-cells %zu relation-links %zu shape-errors %zu hash %016llx\n",
       database.tables.size(), database.relations.size(), intCells, floatCells,
       stringCells, relationLinks, shapeErrors, static_cast<unsigned long long>(hash.value));
+  std::printf("relations-hash %016llx\n",
+      static_cast<unsigned long long>(relationsHash));
   for (std::size_t i = 0; i < database.tables.size() && (showAll || i < 5); ++i) {
     const auto& table = database.tables[i];
     std::uint64_t tableHash = 0;

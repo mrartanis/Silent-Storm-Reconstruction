@@ -40,5 +40,7 @@ bool LoadPortableGameDatabase(const std::string& path, PortableGameDatabase* dat
 // Canonical value digest for comparing this decoder with the game's runtime
 // CDBTableDataStorage. Excludes transient wire IDs and host representations.
 bool HashGameDatabaseTable(const GameDatabaseTable& table, std::uint64_t* hash);
+bool HashGameDatabaseRelations(const std::vector<GameDatabaseRelation>& relations,
+                               std::uint64_t* hash);
 
 } // namespace S2FileIO

@@ -349,4 +349,31 @@ bool HashGameDatabaseTable(const GameDatabaseTable& table, std::uint64_t* hash) 
   return true;
 }
 
+bool HashGameDatabaseRelations(const std::vector<GameDatabaseRelation>& relations,
+                               std::uint64_t* hash) {
+  if (!hash) return false;
+  std::uint64_t result = UINT64_C(14695981039346656037);
+  const auto byte = [&result](std::uint8_t value) {
+    result = (result ^ value) * UINT64_C(1099511628211);
+  };
+  const auto u32 = [&byte](std::uint32_t value) {
+    for (unsigned i = 0; i != 4; ++i)
+      byte(static_cast<std::uint8_t>(value >> (8 * i)));
+  };
+  u32(static_cast<std::uint32_t>(relations.size()));
+  for (const auto& relation : relations) {
+    u32(static_cast<std::uint32_t>(relation.name.size()));
+    for (unsigned char c : relation.name) byte(c);
+    u32(static_cast<std::uint32_t>(relation.leftTableId));
+    u32(static_cast<std::uint32_t>(relation.rightTableId));
+    u32(static_cast<std::uint32_t>(relation.links.size()));
+    for (const auto& link : relation.links) {
+      u32(static_cast<std::uint32_t>(link.first));
+      u32(static_cast<std::uint32_t>(link.second));
+    }
+  }
+  *hash = result;
+  return true;
+}
+
 } // namespace S2FileIO
