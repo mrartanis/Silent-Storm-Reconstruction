@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "GAnimBase.h"
 #include "..\DBFormat\DataPhys.h"   // complete NDb::CDBPhysParams for CASphereSet::pPhys (CDBPtr needs full type)
+#include "..\FileIO\PortableParticleWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
 {
@@ -37,9 +38,8 @@ public:
 		float fSumInvMasses;
 		int nMax;
 	};
-protected:
-	vector<int> nParticleBones; // correspondence nParticle -> nSkeletonBone
-	vector<CVec3> particles; // current particle positions
+public:
+	// The wire codec below needs the value type; vector storage remains protected.
 	struct SRestoreBone
 	{
 		int nP1;
@@ -47,6 +47,9 @@ protected:
 		int nP3;
 		SRestoreBone( int a = -1, int b = -1, int c = -1 ) { nP1 = a; nP2 = b; nP3 = c; }
 	};
+protected:
+	vector<int> nParticleBones; // correspondence nParticle -> nSkeletonBone
+	vector<CVec3> particles; // current particle positions
 	vector<SRestoreBone> restore; // for restoring bones from particles
 	vector<SStick> sticks; // stick pairs
 
@@ -58,6 +61,49 @@ protected:
 public:
 	int operator&( CStructureSaver &f );
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+namespace S2FileIO
+{
+template<> struct StructureFieldCodec<NAnimation::CAParticle::SRestoreBone, void>
+{
+	static constexpr bool kPortable = true;
+	static constexpr std::size_t kWireSize = 12;
+	static bool Decode( const std::uint8_t *source, std::size_t length, NAnimation::CAParticle::SRestoreBone *value )
+	{
+		StructureRestoreBoneFields fields;
+		if ( !value || !DecodeStructureRestoreBone( source, length, &fields ) ) return false;
+		value->nP1 = fields.p1; value->nP2 = fields.p2; value->nP3 = fields.p3;
+		return true;
+	}
+	static bool Encode( const NAnimation::CAParticle::SRestoreBone &value, std::uint8_t *destination, std::size_t length )
+	{
+		const StructureRestoreBoneFields fields = { value.nP1, value.nP2, value.nP3 };
+		return EncodeStructureRestoreBone( fields, destination, length );
+	}
+};
+template<> struct StructureFieldCodec<NAnimation::CAParticle::SStick, void>
+{
+	static constexpr bool kPortable = true;
+	static constexpr std::size_t kWireSize = 20;
+	static bool Decode( const std::uint8_t *source, std::size_t length, NAnimation::CAParticle::SStick *value )
+	{
+		StructureStickFields fields;
+		if ( !value || !DecodeStructureStick( source, length, &fields ) ) return false;
+		value->nP1 = fields.p1; value->nP2 = fields.p2;
+		value->fRest = fields.rest; value->fSumInvMasses = fields.sumInvMasses;
+		value->nMax = fields.max;
+		return true;
+	}
+	static bool Encode( const NAnimation::CAParticle::SStick &value, std::uint8_t *destination, std::size_t length )
+	{
+		const StructureStickFields fields = { value.nP1, value.nP2, value.fRest, value.fSumInvMasses, value.nMax };
+		return EncodeStructureStick( fields, destination, length );
+	}
+};
+}
+namespace NAnimation
+{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CParticleSkeleton : public CAParticle
 {
