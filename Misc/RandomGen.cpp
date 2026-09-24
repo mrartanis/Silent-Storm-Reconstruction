@@ -65,53 +65,6 @@ CRandomGenerator random;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const LPCSTR PSZ_MASK_TO_FIND_FILES = "C:\\*.*";
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#define ind(mm,x)  (*(unsigned int *)(( unsigned _int8 *)(mm) + ((x) & ((RANDSIZ-1)<<2))))
-////////////////////////////////////////////////////////////////////////////////////////////////////
-#define rngstep(mix,a,b,mm,m,m2,r,x) \
-{ \
-  x = *m;  \
-  a = (a^(mix)) + *(m2++); \
-  *(m++) = y = ind(mm,x) + a + b; \
-  *(r++) = b = ind(mm,y>>RANDSIZL) + x; \
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-#define mix(a,b,c,d,e,f,g,h) \
-{ \
-   a^=b<<11; d+=a; b+=c; \
-   b^=c>>2;  e+=b; c+=d; \
-   c^=d<<8;  f+=c; d+=e; \
-   d^=e>>16; g+=d; e+=f; \
-   e^=f<<10; h+=e; f+=g; \
-   f^=g>>4;  a+=f; g+=h; \
-   g^=h<<8;  b+=g; h+=a; \
-   h^=a>>9;  c+=h; a+=b; \
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-void CRandomGenerator::Isaac()
-{
-	unsigned int a, b, x, y, *m, *mm, *m2, *r, *mend;
-	mm = randmem; 
-	r = randrsl;
-	a = randa; 
-	b = randb + ( ++randc );
-	for ( m = mm, mend = m2 = m+(RANDSIZ/2); m<mend; )
-	{
-		rngstep( a<<13, a, b, mm, m, m2, r, x );
-		rngstep( a>>6 , a, b, mm, m, m2, r, x );
-		rngstep( a<<2 , a, b, mm, m, m2, r, x );
-		rngstep( a>>16, a, b, mm, m, m2, r, x );
-	}
-	for ( m2 = mm; m2<mend; )
-	{
-		rngstep( a<<13, a, b, mm, m, m2, r, x );
-		rngstep( a>>6 , a, b, mm, m, m2, r, x );
-		rngstep( a<<2 , a, b, mm, m, m2, r, x );
-		rngstep( a>>16, a, b, mm, m, m2, r, x );
-	}
-	randb = b; 
-	randa = a;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRandomGenerator::Init()
 {
 	FillRandRsl();
@@ -124,48 +77,12 @@ void CRandomGenerator::SeedForHarness( unsigned int seed )
 	// tests instead need identical ISAAC input immediately before the tested action.
 	g_bHarnessSeedActive = true;
 	g_nHarnessSeed = seed;
-	for ( int i = 0; i < RANDSIZ; ++i )
-	{
-		seed = seed * 1664525u + 1013904223u;
-		randrsl[i] = seed;
-	}
-	InitState();
+	S2Random::IsaacSeedHarness( &state, seed );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRandomGenerator::InitState()
 {
-	int i;
-	unsigned int a, b, c, d, e, f, g, h;
-	unsigned int *m, *r;
-
-	randa = randb = randc = 0;
-	m = randmem;
-	r = randrsl;
-	a = b = c = d = e = f = g = h = 0x9e3779b9;  /* the golden ratio */
-
-	for ( i=0; i<4; ++i )          /* scramble it */
-		mix( a, b, c, d, e, f, g, h );
-
-	/* initialize using the contents of r[] as the seed */
-	for ( i=0; i<RANDSIZ; i+=8 )
-	{
-		a+=r[i  ]; b+=r[i+1]; c+=r[i+2]; d+=r[i+3];
-		e+=r[i+4]; f+=r[i+5]; g+=r[i+6]; h+=r[i+7];
-		mix( a, b, c, d, e, f, g, h );
-		m[i  ]=a; m[i+1]=b; m[i+2]=c; m[i+3]=d;
-		m[i+4]=e; m[i+5]=f; m[i+6]=g; m[i+7]=h;
-	}
-	/* do a second pass to make all of the seed affect all of m */
-	for (i=0; i<RANDSIZ; i+=8)
-	{
-		a+=m[i  ]; b+=m[i+1]; c+=m[i+2]; d+=m[i+3];
-		e+=m[i+4]; f+=m[i+5]; g+=m[i+6]; h+=m[i+7];
-		mix(a,b,c,d,e,f,g,h);
-		m[i  ]=a; m[i+1]=b; m[i+2]=c; m[i+3]=d;
-		m[i+4]=e; m[i+5]=f; m[i+6]=g; m[i+7]=h;
-	}
-	Isaac();				/* fill in the first set of results */
-	randcnt=RANDSIZ;		/* prepare to use the first set of results */
+	S2Random::IsaacInitialize( &state );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // --------------------------- FillRandRsl() ---------------------------------------------------------------
@@ -191,7 +108,7 @@ BOOL CRandomGenerator::RecFindFile( std::string &szFoundName, const char *pszBas
 			}
 			if ( *pnTotFinded >= nToFind )
 			{
-				if ( ff.nFileSizeLow >= N_FROM_START + sizeof( randrsl ) )
+				if ( ff.nFileSizeLow >= N_FROM_START + sizeof( state.results ) )
 				{
 					szFoundName = szPath + ff.cFileName;
 					return TRUE;
@@ -229,13 +146,13 @@ void CRandomGenerator::FillRandRsl()
 		{
 			SetFilePointer( hf, N_FROM_START - rand() % ( N_FROM_START - 512 ), 0, FILE_BEGIN );
 			DWORD dwRes;
-			if ( !ReadFile( hf, randrsl, sizeof(randrsl ), &dwRes, 0 ) )
+			if ( !ReadFile( hf, state.results, sizeof(state.results), &dwRes, 0 ) )
 				bSuccess = FALSE;
 			CloseHandle( hf );
 		}
 		BOOL bHaveNotZero = FALSE;
 		for ( int i = 0; i < RANDSIZ; i++ )
-			if ( randrsl[i] )
+			if ( state.results[i] )
 			{
 				bHaveNotZero = TRUE;
 				break;
@@ -246,7 +163,7 @@ void CRandomGenerator::FillRandRsl()
 			Sleep( 10 );
 		}
 		for ( int i = 0; i < RANDSIZ; i++ )
-			randrsl[i] ^= rand();
+			state.results[i] ^= rand();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

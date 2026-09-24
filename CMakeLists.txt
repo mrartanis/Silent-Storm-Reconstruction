@@ -54,6 +54,8 @@ add_executable(PortableParticleWireTests "${root}/diagnostics/PortableParticleWi
 add_test(NAME PortableParticleWireTests COMMAND PortableParticleWireTests)
 add_executable(PortableRandTests "${root}/diagnostics/PortableRandTests.cpp")
 add_test(NAME PortableRandTests COMMAND PortableRandTests)
+add_executable(PortableIsaacTests "${root}/diagnostics/PortableIsaacTests.cpp")
+add_test(NAME PortableIsaacTests COMMAND PortableIsaacTests)
 add_executable(ProbeSavedDecalVertices "${root}/diagnostics/ProbeSavedDecalVertices.cpp")
 target_link_libraries(ProbeSavedDecalVertices PRIVATE s2_portable_structure)
 add_library(s2_portable_database STATIC "${root}/FileIO/PortableGameDatabase.cpp")
@@ -68,6 +70,8 @@ if(NOT MSVC)
 endif()
 add_executable(NativeRandParityTests "${root}/diagnostics/NativeRandParityTests.cpp")
 add_test(NAME NativeRandParityTests COMMAND NativeRandParityTests)
+add_executable(NativeIsaacParityTests "${root}/diagnostics/NativeIsaacParityTests.cpp")
+add_test(NAME NativeIsaacParityTests COMMAND NativeIsaacParityTests)
 add_executable(WindowsSaveNameTests
   "${root}/diagnostics/WindowsSaveNameTests.cpp"
   "${root}/FileIO/WindowsSaveNames.cpp")

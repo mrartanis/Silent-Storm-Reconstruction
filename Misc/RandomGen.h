@@ -3,6 +3,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include "PortableIsaac.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SRandomSeed
@@ -47,13 +48,10 @@ const int RANDSIZ = 1 << RANDSIZL;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CRandomGenerator
 {
+static_assert( sizeof(unsigned int) == sizeof(std::uint32_t), "game ISAAC words must be 32-bit" );
+static_assert( RANDSIZ == S2Random::kIsaacSize, "game and portable ISAAC buffer sizes differ" );
 private:
-	unsigned int randcnt;
-	unsigned int randrsl[RANDSIZ];
-	unsigned int randmem[RANDSIZ];
-	unsigned int randa;
-	unsigned int randb;
-	unsigned int randc;
+	S2Random::IsaacState state;
 public:
 	CRandomGenerator() { Init(); }
 	void SeedForHarness( unsigned int seed ); // explicit deterministic state for paired architecture tests only
@@ -66,19 +64,13 @@ public:
 private:
 	void Init();  // very slow operation
 	void InitState();
-	void Isaac();
 	void FillRandRsl();
 	BOOL RecFindFile( std::string &szFoundName, const char *pszBaseDir, int nToFind, int* pnTotFinded );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline unsigned int CRandomGenerator::Get()
 {
-	if ( randcnt-- == 0 )
-	{
-		Isaac();
-		randcnt=RANDSIZ-1;
-	}
-	return randrsl[ randcnt ];
+	return S2Random::IsaacNext( &state );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline float CRandomGenerator::GetFloat( float fpMin, float fpMax )
