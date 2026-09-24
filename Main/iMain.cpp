@@ -221,7 +221,7 @@ void CICLoad::Exec()
 #endif
 	{
 		CFileStream sFile;
-		sFile.OpenRead( pSaveManager->GetSlotFilePath( szName, S_SAVE_FILENAME ).c_str() );
+		sFile.OpenRead( pSaveManager->GetSlotFilePathW( szName, S_SAVE_FILENAME ).c_str() );
 
 		SSaveFileHeader sHeader;
 		sFile.Read( &sHeader, sizeof(SSaveFileHeader) );
@@ -311,7 +311,7 @@ void CICSave::Exec()
 #endif
 	{
 		CFileStream sFile;
-		sFile.OpenWrite( pSaveManager->GetSlotFilePath( szName, S_SAVE_FILENAME ).c_str() );
+		sFile.OpenWrite( pSaveManager->GetSlotFilePathW( szName, S_SAVE_FILENAME ).c_str() );
 
 		SSaveFileHeader sHeader;
 		sHeader.nMagic = N_SAVE_MAGIC_NUMBER;
@@ -353,10 +353,10 @@ void CICSaveFile::Exec()
 	// name is a code constant like "restart.sav", whose '.' the slot rule would falsely reject)
 	CSaveManager *pSaveManager = GetSaveManager();
 	pSaveManager->PrepareSlot( S_SLOT_ACTIVE );
-	const string szPath = pSaveManager->GetSlotFilePath( S_SLOT_ACTIVE, szName );
+	const wstring szPath = pSaveManager->GetSlotFilePathW( S_SLOT_ACTIVE, szName );
 	// retail @0x1f6a80: clear + delete the stale snapshot before writing
-	::SetFileAttributesA( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
-	::DeleteFileA( szPath.c_str() );
+	::SetFileAttributesW( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
+	::DeleteFileW( szPath.c_str() );
 
 #ifndef _DEBUG
 	try
@@ -390,7 +390,7 @@ void CICLoadFile::Exec()
 #endif
 	{
 		CFileStream sFile;
-		sFile.OpenRead( pSaveManager->GetSlotFilePath( S_SLOT_ACTIVE, szName ).c_str() );
+		sFile.OpenRead( pSaveManager->GetSlotFilePathW( S_SLOT_ACTIVE, szName ).c_str() );
 
 		interfaces.clear();
 		CSharedHolder hold;

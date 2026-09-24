@@ -2673,11 +2673,11 @@ void CMission::SaveWorld( const string &szFile )
 	try
 //#endif
 	{
-		const string szPath = pSaveManager->GetSlotFilePath( NMainLoop::S_SLOT_ACTIVE, szFile );
+		const wstring szPath = pSaveManager->GetSlotFilePathW( NMainLoop::S_SLOT_ACTIVE, szFile );
 		// retail @0x1a4040: clear + delete any stale zone save before writing (a read-only or
 		// leftover file must not survive and be loaded as the zone's world on the next entry)
-		::SetFileAttributesA( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
-		::DeleteFileA( szPath.c_str() );
+		::SetFileAttributesW( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
+		::DeleteFileW( szPath.c_str() );
 
 		CFileStream sFile;
 		sFile.OpenWrite( szPath.c_str() );
@@ -2705,7 +2705,7 @@ void CMission::LoadWorld( const string &szFile )
 //#endif
 	{
 		CFileStream sFile;
-		sFile.OpenRead( pSaveManager->GetSlotFilePath( NMainLoop::S_SLOT_ACTIVE, szFile ).c_str() );
+		sFile.OpenRead( pSaveManager->GetSlotFilePathW( NMainLoop::S_SLOT_ACTIVE, szFile ).c_str() );
 
 		CSharedHolder hold;
 		CStructureSaver sSaver( sFile, CStructureSaver::READ );

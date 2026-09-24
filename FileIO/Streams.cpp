@@ -412,3 +412,18 @@ void CFileStream::Open( const char *pszFName, const char *pszMode, int _nFlags )
 		throw SFileIOError( std::string("error opening file ") + pszFName );//SetFailed();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CFileStream::Open( const wchar_t *pszFName, const wchar_t *pszMode, int _nFlags )
+{
+	CloseFile();
+	nFlags = _nFlags;
+	pFile = _wfopen( pszFName, pszMode );
+	if ( pFile )
+	{
+		fseek( pFile, 0, SEEK_END );
+		int nFileSize = ftell( pFile );
+		StartAccess( nFileSize, 1024 );
+	}
+	else
+		throw SFileIOError( "error opening wide-path file" );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////

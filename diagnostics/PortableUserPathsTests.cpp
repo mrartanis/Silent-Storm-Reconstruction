@@ -38,4 +38,15 @@ int main() {
   CHECK(IsSafeSaveComponent("Сохранение"));
   for (const char* bad : {"", ".", "..", "../outside", "a\\b", "C:", "name.", "name ", "a?b", "NUL", "con.txt", "COM1"})
     CHECK(!IsSafeSaveComponent(bad));
+
+  WideUserPathEnvironment wide;
+  wide.localAppData = L"C:/Users/Игрок/AppData/Local/";
+  std::wstring wideRoot;
+  CHECK(ResolveUserDataRoot(HostPlatform::Windows, wide, &wideRoot, &error));
+  CHECK(wideRoot == L"C:\\Users\\Игрок\\AppData\\Local\\Silent Storm Reconstruction");
+  wide.overrideRoot = L"G:/Тестовые данные/";
+  CHECK(ResolveUserDataRoot(HostPlatform::Windows, wide, &wideRoot, &error));
+  CHECK(wideRoot == L"G:\\Тестовые данные");
+  CHECK(IsSafeSaveComponent(std::wstring(L"Сохранение 1")));
+  CHECK(!IsSafeSaveComponent(std::wstring(L"..\\выход")));
 }

@@ -69,7 +69,7 @@ public:
 	void GetSlotTime( const string &szName, wstring *pTime );
 	void GetSlotScreenShot( const string &szName, CArray2D<NGfx::SPixel8888> *pScreenShot );
 
-	string GetSlotFilePath( const string &szName, const string &szFileName ) const;
+	wstring GetSlotFilePathW( const string &szName, const string &szFileName ) const;
 };
 ////
 CSaveManager* GetSaveManager();
@@ -88,8 +88,6 @@ void GetSlotTime( const string &szName, wstring *pTime, int *pDateKey, int *pTim
 string GetQuickSaveSlot( bool bLoad );
 ////
 void CreateDir( const string &szDir );
-void RemoveDir( const string &szDir );
-void CopyFiles( const string &szSource, const string &szTarget, const string &szMask );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }; // NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////////////////////////
