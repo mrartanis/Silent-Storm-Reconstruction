@@ -35,6 +35,8 @@ add_executable(PortableStructureProbe "${root}/diagnostics/PortableStructureProb
 target_link_libraries(PortableStructureProbe PRIVATE s2_portable_structure)
 add_executable(ProbeSavedExplosionPerks "${root}/diagnostics/ProbeSavedExplosionPerks.cpp")
 target_link_libraries(ProbeSavedExplosionPerks PRIVATE s2_portable_structure)
+add_executable(ProbeSavedBuildingVoxels "${root}/diagnostics/ProbeSavedBuildingVoxels.cpp")
+target_link_libraries(ProbeSavedBuildingVoxels PRIVATE s2_portable_structure)
 add_executable(PortableStructureChunkTests "${root}/diagnostics/PortableStructureChunkTests.cpp")
 target_link_libraries(PortableStructureChunkTests PRIVATE s2_portable_structure)
 add_test(NAME PortableStructureChunkTests COMMAND PortableStructureChunkTests)

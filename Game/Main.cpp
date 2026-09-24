@@ -23,6 +23,9 @@
 #include "..\Main\A5Script.h"       // [HARNESS] ProcessCommand (console/lua entry for the command channel)
 #include "..\Main\LSHead.h"         // [HARNESS] export the complete facial-sequence test corpus
 #include "..\Main\iMission.h"       // [HARNESS] loaded mission and active player
+#include "..\Main\Cursor.h"         // [HARNESS] center the software cursor on each loaded mission
+#include "..\Main\GView.h"          // [HARNESS] game-view dimensions for cursor positioning
+#include "..\Main\Camera.h"         // [HARNESS] verify the unattended camera remains stationary
 #include "..\Main\wMain.h"          // [HARNESS] direct, DB-backed grenade blast in a loaded world
 #include "..\Main\wExplTracker.h"   // [HARNESS] explosion scheduler state for save/load probes
 #include "..\Main\iAdvFaceGen.h"    // [HARNESS] real advanced editor interface command
@@ -443,6 +446,44 @@ static void HarnessGrenades()
 	}
 }
 
+// The game's edge scroll reads its software cursor, which starts at (0,0) in
+// unattended runs. Center only once per loaded cursor; do not steal or warp
+// the OS cursor from a remote user, and do not override later manual input.
+static NUI::ICursor *g_pHarnessCenteredCursor = 0;
+static void HarnessCenterCursor()
+{
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	NUI::ICursor *pCursor = pMission ? pMission->GetCursor() : 0;
+	NGScene::IGameView *pScene = pMission ? pMission->GetScene() : 0;
+	if ( !pCursor || !pScene )
+	{
+		g_pHarnessCenteredCursor = 0;
+		return;
+	}
+	if ( pCursor == g_pHarnessCenteredCursor ) return;
+	const CVec2 screen = pScene->GetScreenRect();
+	pCursor->SetPos( CVec2( screen.x * 0.5f, screen.y * 0.5f ) );
+	g_pHarnessCenteredCursor = pCursor;
+	SaveLoadDiag( "[harness] cursor centered: (%.1f,%.1f)\n", screen.x * 0.5f, screen.y * 0.5f );
+}
+
+static void HarnessCameraStatus()
+{
+	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
+	ICamera *pCamera = pMission ? pMission->GetCamera() : 0;
+	NUI::ICursor *pCursor = pMission ? pMission->GetCursor() : 0;
+	if ( !pCamera || !pCursor )
+	{
+		SaveLoadDiag( "[harness] camerastatus rejected: no loaded mission\n" );
+		return;
+	}
+	ICamera::SCameraPos pos;
+	pCamera->GetPlacement( &pos );
+	const CVec2 &cursor = pCursor->GetPos();
+	SaveLoadDiag( "[harness] camerastatus cursor=(%.3f,%.3f) anchor=(%.6f,%.6f,%.6f)\n",
+		cursor.x, cursor.y, pos.ptAnchor.x, pos.ptAnchor.y, pos.ptAnchor.z );
+}
+
 // ============================================================================================
 // [HARNESS] Frame-polled command channel -- a minimal RTC protocol between an external driver and
 // the running game. Once per frame (when g_bHarnessLog is on) the main loop reads ONE command line
@@ -457,6 +498,7 @@ static void HarnessGrenades()
 //   explode <grenade-id> <x> <y> <z> enqueue a DB-backed grenade blast at a world-space point
 //   unitpos         log world-space positions of the first 32 live units for choosing a point
 //   grenades        log grenade DB records with multiple explosion waves
+//   camerastatus    log software-cursor position and camera anchor
 //   explstatus      log queued and in-flight explosion tracker counts
 //   explodesave <slot> <count> <id> <x> <y> <z> save on first active wavefront (up to 600 frames)
 //   explodesaveperk <slot> <count> <id> <x> <y> <z> <structure> <area> <0|1> test perk-bearing wavefront
@@ -475,6 +517,7 @@ static void HarnessGrenades()
 // ============================================================================================
 static bool HarnessPoll()   // returns false to request main-loop exit
 {
+	HarnessCenterCursor();
 	HarnessSaveOnWavefront();
 	FILE *pF = fopen( "_harness_cmd.txt", "rb" );
 	if ( !pF )
@@ -497,6 +540,7 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
 	{
 		g_harnessWavefrontSaveSlot.clear();
+		g_pHarnessCenteredCursor = 0;
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
 	}
 	else if ( sCmd.compare( 0, 5, "save " ) == 0 )
@@ -511,6 +555,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		HarnessUnitPositions();
 	else if ( sCmd == "grenades" )
 		HarnessGrenades();
+	else if ( sCmd == "camerastatus" )
+		HarnessCameraStatus();
 	else if ( sCmd == "explstatus" )
 		HarnessExplosionStatus();
 	else if ( sCmd == "saveunicode" )
