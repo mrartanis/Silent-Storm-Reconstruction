@@ -177,11 +177,6 @@ static bool GetShortChunkSave( CDataStream &file, chunk_id dwID, CMemoryStream &
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // chunks operations with ChunkLevels
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void ReadPtrData( const unsigned char *pData, void *pDst, int &nPos, int nSize )
-{
-	memcpy( pDst, pData + nPos, nSize );
-	nPos += nSize;
-}
 // should copy data from start
 static void WritePtrData( unsigned char *pDst, const void *pSrc, int *nPos, int nSize )
 {
@@ -191,20 +186,20 @@ static void WritePtrData( unsigned char *pDst, const void *pSrc, int *nPos, int 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CStructureSaver::ReadShortChunk( CChunkLevel &src, int &nPos, CChunkLevel &res )
 {
-	const unsigned char *pSrc = data.GetBuffer() + src.nStart;
-	DWORD dwLeng = 0;
-	if ( nPos + 2 > src.nLength )
+	if ( !data.GetBuffer() || src.nStart < 0 || src.nLength < 0 || nPos < 0 ||
+		static_cast<std::size_t>(src.nStart) > static_cast<std::size_t>(data.GetSize()) ||
+		static_cast<std::size_t>(src.nLength) >
+			static_cast<std::size_t>(data.GetSize() - src.nStart) )
 		return false;
-	ReadPtrData( pSrc, &res.idChunk, nPos, sizeof( res.idChunk ) );
-	ReadPtrData( pSrc, &dwLeng, nPos, 1 );
-	if ( dwLeng & 1 )
-		ReadPtrData( pSrc, ((char*)&dwLeng)+1, nPos, 3 );
-	dwLeng >>= 1;
-	if ( nPos + dwLeng > src.nLength )
+	S2FileIO::StructureChunk chunk;
+	if ( !S2FileIO::DecodeStructureChunkAt(
+		data.GetBuffer() + src.nStart, static_cast<std::size_t>(src.nLength),
+		static_cast<std::size_t>(nPos), &chunk ) )
 		return false;
-	res.nStart = nPos + src.nStart;
-	res.nLength = dwLeng;
-	nPos += dwLeng;
+	res.idChunk = static_cast<chunk_id>(chunk.id);
+	res.nStart = src.nStart + static_cast<int>(chunk.payloadOffset);
+	res.nLength = static_cast<int>(chunk.length);
+	nPos = static_cast<int>(chunk.payloadOffset + chunk.length);
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

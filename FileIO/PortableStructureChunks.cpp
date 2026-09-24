@@ -29,6 +29,22 @@ bool S2_STRUCTURE_CALL DecodeStructureLength(const std::uint8_t* encoded,
   return true;
 }
 
+bool S2_STRUCTURE_CALL DecodeStructureChunkAt(const std::uint8_t* bytes,
+                                              std::size_t size,
+                                              std::size_t offset,
+                                              StructureChunk* chunk) {
+  if (!bytes || !chunk || offset > size || size - offset < 2) return false;
+  const std::uint8_t* encoded = bytes + offset + 1;
+  const std::size_t prefix = (encoded[0] & 1) ? 4 : 1;
+  if (size - offset < 1 + prefix) return false;
+  const std::size_t payloadOffset = offset + 1 + prefix;
+  std::uint32_t length = 0;
+  if (!DecodeStructureLength(encoded, prefix, size - payloadOffset, &length))
+    return false;
+  *chunk = {bytes[offset], payloadOffset, length};
+  return true;
+}
+
 bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
                                          std::vector<StructureChunk>* chunks,
                                          std::string* error) {

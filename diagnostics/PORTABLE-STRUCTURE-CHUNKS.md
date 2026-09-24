@@ -38,6 +38,15 @@ Linux GCC 11.4 под ASan/UBSan не сообщил ошибок. Объект�
 десериализация полей объектов остаются в Windows-игре, поэтому это ещё не
 Linux-загрузчик таблиц.
 
+Вложенные поля объектов теперь читаются через `DecodeStructureChunkAt`:
+проверяются границы тега, однобайтовой/четырёхбайтовой длины и полезной
+нагрузки до обращения к памяти. Этот же декодер используется в
+`CStructureSaver::ReadShortChunk`, но создание объектов и привязка полей
+ещё зависят от Windows-реализации. Опция
+`PortableStructureProbe game.db --objects --nested` полностью прошла
+36 310 988 байт чанка 2 как 155 вложенных чанков на Windows x86/x64 и
+Linux x86-64; Linux GCC 11.4 с ASan/UBSan ошибок не сообщил.
+
 Коммит `dbedba8` архивирован как `stage2-db-objects-20260924-01` (x64,
 нативное медиа без FMOD) и `stage2-db-objects-x86-20260924-01` (x86).
 Чистые запуски `stage2-db-objects-clean-x64-01` и
@@ -80,6 +89,7 @@ g++ -std=c++17 -O1 -g -Wall -Wextra -Werror \
 sha256sum data/game.db
 ./PortableStructureProbe data/game.db
 ./PortableStructureProbe data/game.db --objects
+./PortableStructureProbe data/game.db --objects --nested
 ```
 
 Границы: это верхний слой чтения `game.db`, не перенос таблиц и ссылок

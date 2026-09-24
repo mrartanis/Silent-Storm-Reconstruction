@@ -32,6 +32,12 @@ bool S2_STRUCTURE_CALL DecodeStructureLength(const std::uint8_t* encoded,
                                               std::size_t encodedSize,
                                               std::uint64_t remaining,
                                               std::uint32_t* length);
+// Decode one nested chunk in an already-loaded byte span. Returns false at
+// the end or for a truncated/out-of-range chunk; offset is relative to bytes.
+bool S2_STRUCTURE_CALL DecodeStructureChunkAt(const std::uint8_t* bytes,
+                                              std::size_t size,
+                                              std::size_t offset,
+                                              StructureChunk* chunk);
 bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
                                          std::vector<StructureChunk>* chunks,
                                          std::string* error = nullptr);

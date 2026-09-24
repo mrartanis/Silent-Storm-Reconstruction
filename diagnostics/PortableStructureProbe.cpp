@@ -8,7 +8,14 @@
 #include <vector>
 
 int main(int argc, char** argv) {
-  if (argc != 2 && !(argc == 3 && std::string(argv[2]) == "--objects")) return 2;
+  if (argc < 2 || argc > 4) return 2;
+  bool showObjects = false, showNested = false;
+  for (int i = 2; i < argc; ++i) {
+    const std::string option(argv[i]);
+    if (option == "--objects") showObjects = true;
+    else if (option == "--nested") showNested = true;
+    else return 2;
+  }
   std::vector<S2FileIO::StructureChunk> chunks;
   std::string error;
   if (!S2FileIO::ScanStructureFile(argv[1], &chunks, &error)) {
@@ -33,21 +40,33 @@ int main(int argc, char** argv) {
     std::printf("%u %llu %u %016llx\n", unsigned(chunk.id),
         static_cast<unsigned long long>(chunk.payloadOffset), chunk.length,
         static_cast<unsigned long long>(hash));
-    if (argc == 3 && chunk.id == 0) {
+    if ((showObjects && chunk.id == 0) || (showNested && chunk.id == 2)) {
       file.clear();
       file.seekg(static_cast<std::streamoff>(chunk.payloadOffset));
       std::vector<std::uint8_t> bytes(chunk.length);
       if (!file.read(reinterpret_cast<char*>(bytes.data()), bytes.size())) return 5;
-      std::vector<S2FileIO::StructureObjectRecord> records;
-      if (!S2FileIO::DecodeStructureObjectTable(bytes.data(), bytes.size(), &records)) return 6;
-      std::set<std::uint32_t> wireIds;
-      std::size_t valid = 0;
-      for (const auto& record : records) {
-        wireIds.insert(record.wireId);
-        if (record.valid) ++valid;
+      if (chunk.id == 0) {
+        std::vector<S2FileIO::StructureObjectRecord> records;
+        if (!S2FileIO::DecodeStructureObjectTable(bytes.data(), bytes.size(), &records)) return 6;
+        std::set<std::uint32_t> wireIds;
+        std::size_t valid = 0;
+        for (const auto& record : records) {
+          wireIds.insert(record.wireId);
+          if (record.valid) ++valid;
+        }
+        std::printf("objects %zu valid %zu unique-ids %zu\n",
+            records.size(), valid, wireIds.size());
+      } else {
+        std::size_t offset = 0, count = 0;
+        while (offset < bytes.size()) {
+          S2FileIO::StructureChunk inner;
+          if (!S2FileIO::DecodeStructureChunkAt(bytes.data(), bytes.size(), offset, &inner))
+            return 7;
+          offset = static_cast<std::size_t>(inner.payloadOffset) + inner.length;
+          ++count;
+        }
+        std::printf("nested-data %zu end %zu\n", count, offset);
       }
-      std::printf("objects %zu valid %zu unique-ids %zu\n",
-          records.size(), valid, wireIds.size());
     }
   }
   return 0;
