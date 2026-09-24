@@ -137,5 +137,71 @@ EncodeStructureScalarArray(const T* values, std::size_t count,
   return true;
 }
 
+// Mission action cache: historical tag payload is 20 bytes with three padding
+// bytes at offsets 1..3. This value model has no host-layout requirements.
+struct StructureActionInfoFields {
+  bool valid = false;
+  std::int32_t minAP = 0;
+  std::int32_t maxAP = 0;
+  bool ok = false;
+  bool enoughAP = false;
+  bool enoughAPToStart = false;
+  bool available = false;
+  std::int32_t result = 0;
+};
+
+inline bool DecodeStructureActionInfo(const std::uint8_t* source,
+                                      std::size_t length,
+                                      StructureActionInfoFields* value) {
+  if (!source || !value || length != 20) return false;
+  StructureActionInfoFields decoded;
+  if (!DecodeStructureScalar(source, 1, &decoded.valid) ||
+      !DecodeStructureScalar(source + 4, 4, &decoded.minAP) ||
+      !DecodeStructureScalar(source + 8, 4, &decoded.maxAP) ||
+      !DecodeStructureScalar(source + 12, 1, &decoded.ok) ||
+      !DecodeStructureScalar(source + 13, 1, &decoded.enoughAP) ||
+      !DecodeStructureScalar(source + 14, 1, &decoded.enoughAPToStart) ||
+      !DecodeStructureScalar(source + 15, 1, &decoded.available) ||
+      !DecodeStructureScalar(source + 16, 4, &decoded.result)) return false;
+  *value = decoded;
+  return true;
+}
+
+inline bool EncodeStructureActionInfo(const StructureActionInfoFields& value,
+                                      std::uint8_t* destination,
+                                      std::size_t length) {
+  if (!destination || length != 20) return false;
+  std::memset(destination, 0, length);
+  return EncodeStructureScalar(value.valid, destination, 1) &&
+         EncodeStructureScalar(value.minAP, destination + 4, 4) &&
+         EncodeStructureScalar(value.maxAP, destination + 8, 4) &&
+         EncodeStructureScalar(value.ok, destination + 12, 1) &&
+         EncodeStructureScalar(value.enoughAP, destination + 13, 1) &&
+         EncodeStructureScalar(value.enoughAPToStart, destination + 14, 1) &&
+         EncodeStructureScalar(value.available, destination + 15, 1) &&
+         EncodeStructureScalar(value.result, destination + 16, 4);
+}
+
+// Specialize this for game PODs whose historical wire format must not depend
+// on host padding or alignment. Unspecialized PODs retain the legacy raw path.
+template<class T, class Enable = void>
+struct StructureFieldCodec {
+  static constexpr bool kPortable = false;
+  static constexpr std::size_t kWireSize = sizeof(T);
+};
+
+template<class T>
+struct StructureFieldCodec<T, typename std::enable_if<
+    std::is_arithmetic<T>::value || std::is_enum<T>::value>::type> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = sizeof(T);
+  static bool Decode(const std::uint8_t* source, std::size_t length, T* value) {
+    return DecodeStructureScalar(source, length, value);
+  }
+  static bool Encode(const T& value, std::uint8_t* destination, std::size_t length) {
+    return EncodeStructureScalar(value, destination, length);
+  }
+};
+
 
 } // namespace S2FileIO

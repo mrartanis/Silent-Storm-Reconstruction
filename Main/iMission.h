@@ -15,6 +15,7 @@ const int N_FOV = 35;
 #include "wInterface.h"
 #include "..\Misc\RandomGen.h"
 #include "wUnitCommands.h"
+#include "..\FileIO\PortableStructureChunks.h"
 
 namespace NDb
 {
@@ -143,9 +144,10 @@ enum EUnitAction
 	UA_MAXVALUE
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Retail NGame::SActionInfo -- 20 bytes, PDB-exact layout. The struct is RAW-serialized in two
-// places (CMission::operator& tag 16 DoDataVector over actionsInfoSet: 24 x 20 = 480 bytes, and
-// CStateAttack::operator& tag 3 DataChunk(0x14)), so the layout must stay EXACTLY
+// Retail NGame::SActionInfo -- 20-byte wire record, PDB-exact Windows layout.
+// StructureFieldCodec below serializes it explicitly in two places
+// (CMission::operator& tag 16 DoDataVector over actionsInfoSet: 24 x 20 = 480 bytes, and
+// CStateAttack::operator& tag 3 DataChunk(0x14)). Historical wire offsets are
 // {bValid@0, nMinAP@4, nMaxAP@8, bOk@12, bEnoughAP@13, bEnoughAPToStart@14, bAvailable@15,
 // eResult@16} = 20 bytes (wire-audit findings CMission 16.2 save=480 dev=288 and CStateAttack
 // tag 3 save=20 dev=1 were caused by the old dev shape {nActionAP,bOk,bEnoughAP,bAvailable,
@@ -182,7 +184,47 @@ struct SActionInfo
 	// CMission::UpdateActionsInfo for the always-possible actions.
 	void SetValid() { bValid = true; eResult = NWorld::UCR_OK; nMinAP = 0; nMaxAP = 0; bOk = true; bEnoughAP = true; bAvailable = true; }
 };
-static_assert( sizeof(SActionInfo) == 20, "NGame::SActionInfo is raw-serialized (CMission tag 16 / CStateAttack tag 3) -- must stay the retail 20-byte layout" );
+static_assert( sizeof(int) == 4 && sizeof(NWorld::EUnitCommandResult) == 4,
+  "SActionInfo wire AP and result values are 32-bit" );
+} // NGame
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGame::SActionInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 20;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGame::SActionInfo* value) {
+    if (!value) return false;
+    StructureActionInfoFields fields;
+    if (!DecodeStructureActionInfo(source, length, &fields)) return false;
+    NGame::SActionInfo decoded;
+    decoded.bValid = fields.valid;
+    decoded.nMinAP = fields.minAP;
+    decoded.nMaxAP = fields.maxAP;
+    decoded.bOk = fields.ok;
+    decoded.bEnoughAP = fields.enoughAP;
+    decoded.bEnoughAPToStart = fields.enoughAPToStart;
+    decoded.bAvailable = fields.available;
+    decoded.eResult = static_cast<NWorld::EUnitCommandResult>(fields.result);
+    *value = decoded;
+    return true;
+  }
+  static bool Encode(const NGame::SActionInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    StructureActionInfoFields fields;
+    fields.valid = value.bValid;
+    fields.minAP = value.nMinAP;
+    fields.maxAP = value.nMaxAP;
+    fields.ok = value.bOk;
+    fields.enoughAP = value.bEnoughAP;
+    fields.enoughAPToStart = value.bEnoughAPToStart;
+    fields.available = value.bAvailable;
+    fields.result = static_cast<std::int32_t>(value.eResult);
+    return EncodeStructureActionInfo(fields, destination, length);
+  }
+};
+} // S2FileIO
+namespace NGame {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 enum EScriptMode
 {

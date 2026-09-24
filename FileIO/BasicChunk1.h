@@ -130,20 +130,23 @@ private:
 	void DataArrayChunk( const chunk_id idChunk, T *p, std::size_t count,
 		int nChunkNumber, std::true_type )
 	{
-		if ( count > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
+		typedef S2FileIO::StructureFieldCodec<T> Codec;
+		if ( count > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / Codec::kWireSize )
 			throw std::runtime_error( "structure array too large" );
-		const int nBytes = static_cast<int>(count * sizeof(T));
+		const int nBytes = static_cast<int>(count * Codec::kWireSize);
 		std::vector<std::uint8_t> bytes(static_cast<std::size_t>(nBytes));
 		if ( IsReading() )
 		{
 			DataChunk( idChunk, bytes.data(), nBytes, nChunkNumber );
-			if ( !S2FileIO::DecodeStructureScalarArray( bytes.data(), bytes.size(), p, count ) )
-				throw std::runtime_error( "unsupported structure scalar array" );
+			for ( std::size_t i = 0; i < count; ++i )
+				if ( !Codec::Decode( bytes.data() + i * Codec::kWireSize, Codec::kWireSize, p + i ) )
+					throw std::runtime_error( "unsupported structure field array" );
 		}
 		else
 		{
-			if ( !S2FileIO::EncodeStructureScalarArray( p, count, bytes.data(), bytes.size() ) )
-				throw std::runtime_error( "unsupported structure scalar array" );
+			for ( std::size_t i = 0; i < count; ++i )
+				if ( !Codec::Encode( p[i], bytes.data() + i * Codec::kWireSize, Codec::kWireSize ) )
+					throw std::runtime_error( "unsupported structure field array" );
 			DataChunk( idChunk, bytes.data(), nBytes, nChunkNumber );
 		}
 	}
@@ -158,18 +161,19 @@ private:
 	template<class T>
 	void DataScalarChunk( const chunk_id idChunk, T *p, int nChunkNumber, std::true_type )
 	{
-		std::uint8_t bytes[sizeof(T)] = {};
+		typedef S2FileIO::StructureFieldCodec<T> Codec;
+		std::uint8_t bytes[Codec::kWireSize] = {};
 		if ( IsReading() )
 		{
-			DataChunk( idChunk, bytes, sizeof(T), nChunkNumber );
-			if ( !S2FileIO::DecodeStructureScalar( bytes, sizeof(T), p ) )
-				throw std::runtime_error( "unsupported structure scalar" );
+			DataChunk( idChunk, bytes, Codec::kWireSize, nChunkNumber );
+			if ( !Codec::Decode( bytes, Codec::kWireSize, p ) )
+				throw std::runtime_error( "unsupported structure field" );
 		}
 		else
 		{
-			if ( !S2FileIO::EncodeStructureScalar( *p, bytes, sizeof(T) ) )
-				throw std::runtime_error( "unsupported structure scalar" );
-			DataChunk( idChunk, bytes, sizeof(T), nChunkNumber );
+			if ( !Codec::Encode( *p, bytes, Codec::kWireSize ) )
+				throw std::runtime_error( "unsupported structure field" );
+			DataChunk( idChunk, bytes, Codec::kWireSize, nChunkNumber );
 		}
 	}
 	template<class T>
@@ -214,7 +218,7 @@ private:
 		void __cdecl CallObjectSerialize( const chunk_id idChunk, int nChunkNumber, T *p, SGenericNumberTemplate<1> *pp )
 		{
 			DataScalarChunk( idChunk, p, nChunkNumber,
-				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
+				std::integral_constant<bool, S2FileIO::StructureFieldCodec<T>::kPortable>() );
 		}
 	template<class T>
 		void __cdecl AddInternal( const chunk_id idChunk, int nChunkNumber, T *p, ...) 
@@ -346,7 +350,8 @@ private:
 		int nSize = data.size();
 		Add( 1, &nSize );
 		if ( nSize < 0 ||
-			static_cast<std::size_t>(nSize) > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
+			static_cast<std::size_t>(nSize) > static_cast<std::size_t>((std::numeric_limits<int>::max)()) /
+				S2FileIO::StructureFieldCodec<T>::kWireSize )
 			throw std::runtime_error( "structure vector too large" );
 		if ( IsReading() )
 		{
@@ -355,7 +360,7 @@ private:
 		}
 		if ( nSize > 0 )
 			DataArrayChunk( 2, &data[0], static_cast<std::size_t>(nSize), 1,
-				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
+				std::integral_constant<bool, S2FileIO::StructureFieldCodec<T>::kPortable>() );
 	}
 	// unordered_map
 	template <class T1,class T2,class T3,class T4> 
@@ -400,14 +405,15 @@ private:
 		Add( 2, &nYSize );
 		if ( nXSize < 0 || nYSize < 0 ||
 			(static_cast<std::size_t>(nXSize) * static_cast<std::size_t>(nYSize) >
-			 static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T)) )
+			 static_cast<std::size_t>((std::numeric_limits<int>::max)()) /
+			 S2FileIO::StructureFieldCodec<T>::kWireSize) )
 			throw std::runtime_error( "structure 2D array too large" );
 		if ( IsReading() )
 			a.SetSizes( nXSize, nYSize );
 		const std::size_t count = static_cast<std::size_t>(nXSize) * static_cast<std::size_t>(nYSize);
 		if ( count > 0 )
 			DataArrayChunk( 3, &a[0][0], count, 1,
-				std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>() );
+				std::integral_constant<bool, S2FileIO::StructureFieldCodec<T>::kPortable>() );
 	}
 public:
 	enum EMode

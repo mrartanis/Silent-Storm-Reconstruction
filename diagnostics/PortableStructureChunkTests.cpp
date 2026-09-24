@@ -6,6 +6,11 @@
 
 int main() {
   enum class TestMode : std::uint32_t { Active = 0x12345678 };
+  struct OpaqueField { std::uint32_t value; std::uint8_t flag; };
+  if (!S2FileIO::StructureFieldCodec<std::uint32_t>::kPortable ||
+      S2FileIO::StructureFieldCodec<OpaqueField>::kPortable ||
+      S2FileIO::StructureFieldCodec<OpaqueField>::kWireSize != sizeof(OpaqueField))
+    return 1;
   const std::uint8_t scalar32[] = {0x78, 0x56, 0x34, 0x12};
   std::uint32_t unsignedValue = 0;
   const std::uint8_t signedWire[] = {0xfe, 0xff, 0xff, 0xff};
@@ -24,6 +29,11 @@ int main() {
   const std::uint8_t boolArrayWire[] = {0, 2};
   bool boolArray[2] = {};
   std::uint8_t boolArrayEncoded[2] = {};
+  const std::uint8_t actionWire[] = {
+      2, 0xaa, 0xbb, 0xcc, 0xfe, 0xff, 0xff, 0xff,
+      0x34, 0x12, 0, 0, 1, 2, 0, 3, 0x78, 0x56, 0x34, 0x12};
+  S2FileIO::StructureActionInfoFields action;
+  std::uint8_t actionEncoded[sizeof(actionWire)] = {};
   if (!S2FileIO::DecodeStructureScalar(scalar32, sizeof(scalar32), &unsignedValue) ||
       unsignedValue != 0x12345678 ||
       !S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, sizeof(encoded32)) ||
@@ -52,6 +62,17 @@ int main() {
       S2FileIO::EncodeStructureScalarArray(arrayValues, 2, arrayEncoded, 7) ||
       S2FileIO::DecodeStructureScalarArray(nullptr, 8, arrayValues, 2) ||
       !S2FileIO::DecodeStructureScalarArray<std::int32_t>(nullptr, 0, nullptr, 0) ||
+      !S2FileIO::DecodeStructureActionInfo(actionWire, sizeof(actionWire), &action) ||
+      !action.valid || action.minAP != -2 || action.maxAP != 0x1234 ||
+      !action.ok || !action.enoughAP || action.enoughAPToStart ||
+      !action.available || action.result != 0x12345678 ||
+      !S2FileIO::EncodeStructureActionInfo(action, actionEncoded, sizeof(actionEncoded)) ||
+      actionEncoded[0] != 1 || actionEncoded[1] != 0 || actionEncoded[2] != 0 ||
+      actionEncoded[3] != 0 || actionEncoded[13] != 1 || actionEncoded[15] != 1 ||
+      std::memcmp(actionEncoded + 4, actionWire + 4, 9) != 0 ||
+      std::memcmp(actionEncoded + 16, actionWire + 16, 4) != 0 ||
+      S2FileIO::DecodeStructureActionInfo(actionWire, 19, &action) ||
+      S2FileIO::EncodeStructureActionInfo(action, actionEncoded, 19) ||
       S2FileIO::DecodeStructureScalar(scalar32, 3, &unsignedValue) ||
       S2FileIO::EncodeStructureScalar(unsignedValue, encoded32, 3) ||
       S2FileIO::DecodeStructureScalar(nullptr, 4, &unsignedValue)) return 1;
