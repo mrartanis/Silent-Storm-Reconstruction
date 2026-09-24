@@ -1,6 +1,7 @@
 #include "../FileIO/PortableStructureChunks.h"
 
 #include <cstdint>
+#include <array>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -12,6 +13,7 @@ struct Grid {
   std::uint32_t wireId = 0;
   std::uint32_t x = 0, y = 0, z = 0;
   float min[3] = {}, max[3] = {};
+  std::array<std::uint8_t, 96> planeBox = {};
   std::vector<std::uint8_t> hp;
 };
 
@@ -85,13 +87,14 @@ bool ReadGrids(const char* path, std::vector<Grid>* grids) {
     }
     if (type == types.end() || type->second != 0x02741121) continue; // CBuildingGrid
     S2FileIO::StructureChunk objectChunk{1, object.bodyOffset, object.bodyLength};
-    S2FileIO::StructureChunk array, vector, blob, min, max;
+    S2FileIO::StructureChunk array, vector, blob, min, max, box;
     Grid grid;
     grid.wireId = object.wireId;
     std::uint32_t count = 0;
     if (!FindChild(payload, bodies.length, objectChunk, 2, &array) ||
         !FindChild(payload, bodies.length, objectChunk, 4, &min) ||
         !FindChild(payload, bodies.length, objectChunk, 5, &max) ||
+        !FindChild(payload, bodies.length, objectChunk, 10, &box) || box.length != 96 ||
         !S2FileIO::DecodeStructureFloatFields(payload + min.payloadOffset, min.length, grid.min, 3) ||
         !S2FileIO::DecodeStructureFloatFields(payload + max.payloadOffset, max.length, grid.max, 3) ||
         !FindChild(payload, bodies.length, array, 2, &vector) ||
@@ -103,6 +106,10 @@ bool ReadGrids(const char* path, std::vector<Grid>* grids) {
         blob.length != count ||
         static_cast<std::uint64_t>(grid.x) * grid.y * grid.z != count)
       return false;
+    float decodedBox[24];
+    if (!S2FileIO::DecodeStructurePlaneBox(payload + box.payloadOffset, box.length, decodedBox))
+      return false;
+    for (std::size_t i = 0; i < 96; ++i) grid.planeBox[i] = payload[box.payloadOffset + i];
     grid.hp.assign(payload + blob.payloadOffset, payload + blob.payloadOffset + blob.length);
     grids->push_back(grid);
   }
@@ -112,6 +119,9 @@ bool ReadGrids(const char* path, std::vector<Grid>* grids) {
 void Print(const std::vector<Grid>& grids) {
   for (std::size_t i = 0; i < grids.size(); ++i) {
     std::uint64_t sum = 0, hash = UINT64_C(14695981039346656037);
+    std::uint64_t boxHash = UINT64_C(14695981039346656037);
+    for (const std::uint8_t byte : grids[i].planeBox)
+      boxHash = (boxHash ^ byte) * UINT64_C(1099511628211);
     std::size_t positive = 0;
     std::size_t best = 0;
     double bestDistance = 1e100;
@@ -141,7 +151,7 @@ void Print(const std::vector<Grid>& grids) {
               << " box=(" << grids[i].min[0] << "," << grids[i].min[1] << "," << grids[i].min[2]
               << ")-(" << grids[i].max[0] << "," << grids[i].max[1] << "," << grids[i].max[2] << ")"
               << " positive=" << positive << " hp_sum=" << sum
-              << " hash=" << std::hex << hash << std::dec << "\n";
+              << " hash=" << std::hex << hash << " plane_hash=" << boxHash << std::dec << "\n";
     if (positive) std::cout << "occupied_index_box=(" << minX << "," << minY << "," << minZ
                             << ")-(" << maxX << "," << maxY << "," << maxZ
                             << ") center_sample=(" << best % grids[i].x << ","
@@ -175,14 +185,17 @@ int main(int argc, char** argv) {
       std::cerr << "grid dimensions changed at index " << i << "\n";
       return 1;
     }
-    std::size_t gridDecreased = 0, gridIncreased = 0, gridNewlyZero = 0;
+    std::size_t gridDecreased = 0, gridIncreased = 0, gridNewlyZero = 0, boxChanged = 0;
     for (std::size_t j = 0; j < before[i].hp.size(); ++j) {
       gridDecreased += after[i].hp[j] < before[i].hp[j];
       gridIncreased += after[i].hp[j] > before[i].hp[j];
       gridNewlyZero += before[i].hp[j] > 0 && after[i].hp[j] == 0;
     }
+    for (std::size_t j = 0; j < 96; ++j)
+      boxChanged += before[i].planeBox[j] != after[i].planeBox[j];
     std::cout << "grid=" << i << " decreased=" << gridDecreased
-              << " increased=" << gridIncreased << " newly_zero=" << gridNewlyZero << "\n";
+              << " increased=" << gridIncreased << " newly_zero=" << gridNewlyZero
+              << " plane_changed=" << boxChanged << "\n";
     decreased += gridDecreased; increased += gridIncreased; newlyZero += gridNewlyZero;
   }
   std::cout << "total decreased=" << decreased << " increased=" << increased

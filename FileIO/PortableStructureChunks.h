@@ -342,6 +342,27 @@ inline bool EncodeStructureFloatFields(const float* fields, std::size_t count,
   return true;
 }
 
+// Six SPlane records form the CBuildingGrid clipping box (retail tag 10).
+// Keep the single 96-byte blob while avoiding host array/struct layout.
+inline bool DecodeStructurePlaneBox(const std::uint8_t* source,
+                                    std::size_t length, float* fields) {
+  if (!source || !fields || length != 96) return false;
+  float decoded[24];
+  for (std::size_t i = 0; i < 6; ++i)
+    if (!DecodeStructureFloatFields(source + i * 16, 16, decoded + i * 4, 4)) return false;
+  for (std::size_t i = 0; i < 24; ++i) fields[i] = decoded[i];
+  return true;
+}
+
+inline bool EncodeStructurePlaneBox(const float* fields,
+                                    std::uint8_t* destination,
+                                    std::size_t length) {
+  if (!fields || !destination || length != 96) return false;
+  for (std::size_t i = 0; i < 6; ++i)
+    if (!EncodeStructureFloatFields(fields + i * 4, 4, destination + i * 16, 16)) return false;
+  return true;
+}
+
 // Retail explosive-perk modifier: two float32 values, one bool byte and
 // three ignored alignment bytes. The blob stays 12 bytes on every host.
 struct StructureExplosionPerkFields {

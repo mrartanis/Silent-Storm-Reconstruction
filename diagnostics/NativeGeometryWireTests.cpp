@@ -9,11 +9,15 @@ int main() {
   using Vec3 = S2FileIO::StructureFieldCodec<CVec3>;
   using Vec4 = S2FileIO::StructureFieldCodec<CVec4>;
   using Quat = S2FileIO::StructureFieldCodec<CQuat>;
+  using Plane = S2FileIO::StructureFieldCodec<SPlane>;
+  using PlaneBox = S2FileIO::StructureFieldCodec<SPlane[6]>;
   using Matrix = S2FileIO::StructureFieldCodec<SHMatrix>;
   if (!Vec2::kPortable || Vec2::kWireSize != 8 ||
       !Vec3::kPortable || Vec3::kWireSize != 12 ||
       !Vec4::kPortable || Vec4::kWireSize != 16 ||
       !Quat::kPortable || Quat::kWireSize != 16 ||
+      !Plane::kPortable || Plane::kWireSize != 16 ||
+      !PlaneBox::kPortable || PlaneBox::kWireSize != 96 ||
       !Matrix::kPortable || Matrix::kWireSize != 64) return 1;
   CVec2 a(1.0f, -2.0f), decodedA;
   CVec3 b(3.0f, 4.0f, 5.0f), decodedB;
@@ -41,6 +45,18 @@ int main() {
   decodedQuat.GetComponentsForWire(quatFields);
   if (quatFields[0] != 1.0f || quatFields[1] != -2.0f || quatFields[2] != 0.5f ||
       !std::signbit(quatFields[3])) return 1;
+  SPlane planes[6], decodedPlanes[6];
+  for (int i = 0; i < 6; ++i)
+    planes[i] = SPlane(CVec3(static_cast<float>(i + 1), -2.0f, 0.5f), -0.0f);
+  std::uint8_t wirePlanes[96] = {};
+  if (!PlaneBox::Encode(planes, wirePlanes, sizeof(wirePlanes)) ||
+      wirePlanes[3] != 0x3f || wirePlanes[19] != 0x40 ||
+      wirePlanes[15] != 0x80 || wirePlanes[95] != 0x80 ||
+      !PlaneBox::Decode(wirePlanes, sizeof(wirePlanes), &decodedPlanes) ||
+      PlaneBox::Decode(wirePlanes, 95, &decodedPlanes)) return 1;
+  for (int i = 0; i < 6; ++i)
+    if (decodedPlanes[i].n.x != i + 1 || decodedPlanes[i].n.y != -2.0f ||
+        decodedPlanes[i].n.z != 0.5f || !std::signbit(decodedPlanes[i].d)) return 1;
   SHMatrix matrix;
   matrix._11 = 1; matrix._12 = 2; matrix._13 = 3; matrix._14 = 4;
   matrix._21 = 5; matrix._22 = 6; matrix._23 = 7; matrix._24 = 8;

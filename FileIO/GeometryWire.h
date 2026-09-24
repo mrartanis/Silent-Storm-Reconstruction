@@ -75,6 +75,46 @@ struct StructureFieldCodec<CQuat, void> {
 };
 
 template<>
+struct StructureFieldCodec<SPlane, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SPlane* value) {
+    if (!value) return false;
+    float fields[4];
+    if (!DecodeStructureFloatFields(source, length, fields, 4)) return false;
+    value->n.x = fields[0]; value->n.y = fields[1]; value->n.z = fields[2]; value->d = fields[3];
+    return true;
+  }
+  static bool Encode(const SPlane& value, std::uint8_t* destination, std::size_t length) {
+    const float fields[4] = {value.n.x, value.n.y, value.n.z, value.d};
+    return EncodeStructureFloatFields(fields, 4, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<SPlane[6], void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 96;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SPlane (*value)[6]) {
+    if (!value) return false;
+    float fields[24];
+    if (!DecodeStructurePlaneBox(source, length, fields)) return false;
+    for (std::size_t i = 0; i < 6; ++i)
+      (*value)[i] = SPlane(CVec3(fields[i * 4], fields[i * 4 + 1], fields[i * 4 + 2]),
+                           fields[i * 4 + 3]);
+    return true;
+  }
+  static bool Encode(const SPlane (&value)[6], std::uint8_t* destination, std::size_t length) {
+    float fields[24];
+    for (std::size_t i = 0; i < 6; ++i) {
+      fields[i * 4] = value[i].n.x; fields[i * 4 + 1] = value[i].n.y;
+      fields[i * 4 + 2] = value[i].n.z; fields[i * 4 + 3] = value[i].d;
+    }
+    return EncodeStructurePlaneBox(fields, destination, length);
+  }
+};
+
+template<>
 struct StructureFieldCodec<SHMatrix, void> {
   static constexpr bool kPortable = true;
   static constexpr std::size_t kWireSize = 64;
