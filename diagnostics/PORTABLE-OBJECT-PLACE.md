@@ -14,3 +14,11 @@
 собран на Windows x64, CTest 33/33; Linux x86-64 и ARM64/QEMU — по 19/19
 с ASan/UBSan (`detect_leaks=0` на QEMU). Это проверка дискового формата,
 а не поведения размещённых объектов в Steam.
+
+Чистый архив `stage2-object-place-20260925-01` из коммита `5c0f436`
+прошёл изолированный запуск `stage2-object-place-clean-01`: старый слот
+`stational weapons` достиг `LOAD-SLOT-DONE`, новый `OBJECT_PLACE_NEW`
+записался и повторно загрузился до `LOAD-SLOT-DONE`. После `quit` Game/CDB
+завершились без `crash.dmp`. Повторный raw-аудит того же старого слота
+не содержит `NWorld::SObjectPlace` (до переноса было три raw-пути), что
+подтверждает подключение кодека в выбранном игровом сценарии.
