@@ -2,6 +2,10 @@
 static const char LOCAL_FILE[] = __FILE__;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
+#if !defined(_WIN32)
+#include <codecvt>
+#include <locale>
+#endif
 #include "Streams.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 unsigned int CBitStream::nBitsMask[32] = {
@@ -138,11 +142,14 @@ void CFixedMemStream::DirectWrite( const void *pSrc, unsigned int nSize )
 void CMemoryStream::FixupBufferSize( int nNewSize )
 {
 	nNewSize = nNewSize * 2 + 64;
+	const ptrdiff_t nCurrentOffset = pCurrent - pBuffer;
+	const ptrdiff_t nFileEndOffset = pFileEnd - pBuffer;
+	const ptrdiff_t nOldCapacity = pReservedEnd - pBuffer;
 	unsigned char *pNewBuf = dbgnew unsigned char[ nNewSize ];
-	memcpy( pNewBuf, pBuffer, pReservedEnd - pBuffer );
+	memcpy( pNewBuf, pBuffer, nOldCapacity );
 	delete[] pBuffer;
-	pCurrent = pNewBuf + ( pCurrent - pBuffer );
-	pFileEnd = pNewBuf + ( pFileEnd - pBuffer );
+	pCurrent = pNewBuf + nCurrentOffset;
+	pFileEnd = pNewBuf + nFileEndOffset;
 	pReservedEnd = pNewBuf + nNewSize;
 	pBuffer = pNewBuf;
 }
@@ -416,7 +423,15 @@ void CFileStream::Open( const wchar_t *pszFName, const wchar_t *pszMode, int _nF
 {
 	CloseFile();
 	nFlags = _nFlags;
+#if defined(_WIN32)
 	pFile = _wfopen( pszFName, pszMode );
+#else
+	// Linux paths are UTF-8; do not depend on the process locale here.
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8;
+	const std::string path = utf8.to_bytes( pszFName );
+	const std::string mode = utf8.to_bytes( pszMode );
+	pFile = fopen( path.c_str(), mode.c_str() );
+#endif
 	if ( pFile )
 	{
 		fseek( pFile, 0, SEEK_END );

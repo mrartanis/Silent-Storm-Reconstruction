@@ -90,10 +90,8 @@ public:
 		CDataStream& operator>>( T &res ) { Read( &res, sizeof(res) ); return *this; }
 	template<class T>
 		CDataStream& operator<<( const T &res ) { Write( &res, sizeof(res) ); return *this; }
-	template<>
-		CDataStream& operator>>( std::string &res ) { ReadString( res ); return *this; }
-	template<>
-		CDataStream& operator<<( const std::string &res ) { WriteString( res ); return *this; }
+	CDataStream& operator>>( std::string &res ) { ReadString( res ); return *this; }
+	CDataStream& operator<<( const std::string &res ) { WriteString( res ); return *this; }
 	// operations with whole streams
 	inline void ReadTo( CDataStream &dst, unsigned int nSize );
 	inline void WriteFrom( CDataStream &src );
@@ -259,10 +257,8 @@ public:
 		inline void Write( const T &a ) { Write( &a, sizeof(a) ); }
 	template <class T>
 		inline void Read( T &a ) { Read( &a, sizeof(a) ); }
-	template<> 
-		inline void Write<std::string>( const std::string &a ) { WriteCString( a.c_str() ); }
-	template<> 
-		inline void Read<std::string>( std::string &a ) { ReadCString( a ); }
+	inline void Write( const std::string &a ) { WriteCString( a.c_str() ); }
+	inline void Read( std::string &a ) { ReadCString( a ); }
 	//
 	friend class CBitEmbedded;
 };

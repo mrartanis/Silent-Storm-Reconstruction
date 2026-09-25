@@ -10,6 +10,16 @@ add_executable(NativeObjectCoreTests "${root}/diagnostics/NativeObjectCoreTests.
 target_link_libraries(NativeObjectCoreTests PRIVATE s2_game_objects)
 add_test(NAME NativeObjectCoreTests COMMAND NativeObjectCoreTests)
 
+# The game's own binary memory/file stream layer, shared with Windows FileIO.
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/fileio_include")
+file(WRITE "${CMAKE_BINARY_DIR}/fileio_include/stdafx.h" "#include \"${root}/FileIO/StdAfx.h\"\n")
+add_library(s2_game_streams STATIC "${root}/FileIO/Streams.cpp")
+target_include_directories(s2_game_streams PRIVATE "${CMAKE_BINARY_DIR}/fileio_include")
+target_compile_features(s2_game_streams PUBLIC cxx_std_17)
+add_executable(NativeStreamsTests "${root}/diagnostics/NativeStreamsTests.cpp")
+target_link_libraries(NativeStreamsTests PRIVATE s2_game_streams)
+add_test(NAME NativeStreamsTests COMMAND NativeStreamsTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

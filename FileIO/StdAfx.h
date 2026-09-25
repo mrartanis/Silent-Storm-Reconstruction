@@ -10,6 +10,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#if !defined(_WIN32)
+#include "HeadlessPlatform.h"
+#else
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 #include <vcruntime_typeinfo.h>
 
@@ -56,6 +59,7 @@ using namespace std;
 //
 #define for if(false); else for
 #define dbgnew new
+#endif // _WIN32
 
 // TODO: reference additional headers your program requires here
 
