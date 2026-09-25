@@ -24,6 +24,11 @@ detection disabled under QEMU). The Windows x86 diagnostic test and corpus
 probe also passed. These checks verify the effect data format and parser; they
 do not establish visual parity of particles or a playable Linux/ARM64 game.
 
-The native Windows x64 game path and clean-archive smoke are tracked separately
-from this portable parser check. SDL3 and bgfx are not integrated into the
-game here; those are stages 3 and 4 of the renovation plan.
+Clean Windows x64 archive `stage2-effect-data-wire-20260925-01` loaded
+`LIGHT_KEY_NEW` to the game loop (`LOAD-DESERIALIZE-COMPLETE`,
+`LOAD-SLOT-DONE`) and exited on the harness `quit` command without a crash
+dump. The first attempt at this smoke used an empty copied save directory and
+failed in `CICLoad`; the complete `game.sav` and `restart.sav` files were then
+copied and the run repeated successfully. This checks the integrated Windows
+load path, not visual parity of particle effects. SDL3 and bgfx are not
+integrated into the game here; those are stages 3 and 4 of the renovation plan.
