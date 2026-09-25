@@ -16,7 +16,7 @@ struct SBoundCalcer
 	template<class TSet,class TGetPoint>
 		void LookSet( const TSet &a, TGetPoint GetPoint )
 	{
-		for ( TSet::const_iterator i = a.begin(); i != a.end(); ++i )
+		for ( typename TSet::const_iterator i = a.begin(); i != a.end(); ++i )
 		{
 			const CVec3 &p = GetPoint(*i);
 			ptMin.x = Min( ptMin.x, p.x );

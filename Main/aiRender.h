@@ -4,7 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\Misc\2DArray.h"
+#include "../Misc/2Darray.h"
 #include "aiInterval.h"
 #include "Transform.h"
 #include "Render.h"

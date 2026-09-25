@@ -122,7 +122,7 @@ public:
 		const CSyncSrc<T> &src = *pSource;
 		for ( int nID = src.objects[0].nNext; nID != 0; nID = src.objects[nID].nNext )
 		{
-			const CSyncSrc<T>::SObject &o = src.objects[nID];
+			const typename CSyncSrc<T>::SObject &o = src.objects[nID];
 			if ( o.nVersion <= nVersion )
 				break;
 			VisitObject( nID, o.pObject );
@@ -190,25 +190,25 @@ public:
 		for ( int k = 0; k < newSet.size(); ++k )
 		{
 			T *p = newSet[k];
-			CStuffHash::iterator i = t.find( p );
+			typename CStuffHash::iterator i = t.find( p );
 			if ( i != t.end() )
 				t.erase( i );
 			else
-				stuff[p] = Add( p );
+				stuff[p] = this->Add( p );
 		}
-		for ( CStuffHash::iterator i = t.begin(); i != t.end(); ++i )
+		for ( typename CStuffHash::iterator i = t.begin(); i != t.end(); ++i )
 		{
-			CStuffHash::iterator k = stuff.find( i->first );
+			typename CStuffHash::iterator k = stuff.find( i->first );
 			ASSERT( k != stuff.end() );
 			stuff.erase( k );
-			Remove( i->second );
+			this->Remove( i->second );
 		}
 	}
 	void Set( T *p ) 
 	{
-		CStuffHash::iterator k = stuff.find( i->first );
+		typename CStuffHash::iterator k = stuff.find( p );
 		if ( k == stuff.end() )
-			stuff[p] = Add( p );
+			stuff[p] = this->Add( p );
 	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,13 +272,13 @@ class CBoolSyncSrc: public CSyncSrc<T>
 	
 	void BoolSwitch( T *pObject, int nMask )
 	{
-		CObjectsHash::iterator i = objects.find( pObject );
+		typename CObjectsHash::iterator i = objects.find( pObject );
 		if ( i == objects.end() )
 		{
 			SObjectInfo &r = objects[pObject];
 			r.nMask = nMask;
 			if ( TFunc::GetResult( r.nMask ) )
-				r.nTrackID = Add( pObject );
+				r.nTrackID = this->Add( pObject );
 			else
 				r.nTrackID = -1;
 		}
@@ -288,13 +288,13 @@ class CBoolSyncSrc: public CSyncSrc<T>
 			if ( TFunc::GetResult( i->second.nMask ) )
 			{
 				if ( i->second.nTrackID == -1 )
-					i->second.nTrackID = Add( pObject );
+					i->second.nTrackID = this->Add( pObject );
 			}
 			else
 			{
 				if ( i->second.nTrackID >= 0 )
 				{
-					Remove( i->second.nTrackID );
+					this->Remove( i->second.nTrackID );
 					i->second.nTrackID = -1;
 				}
 			}
@@ -307,10 +307,10 @@ class CBoolSyncSrc: public CSyncSrc<T>
 	}
 	void BoolUpdate( T *pObject )
 	{
-		CObjectsHash::iterator i = objects.find( pObject );
+		typename CObjectsHash::iterator i = objects.find( pObject );
 		ASSERT( i != objects.end() );
 		if ( i->second.nTrackID >= 0 )
-			Update( i->second.nTrackID );
+			this->Update( i->second.nTrackID );
 	}
 	virtual void Refresh()
 	{

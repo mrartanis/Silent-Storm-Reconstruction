@@ -39,8 +39,8 @@ public:
 	CLogStream& operator<< ( const long &l );
 	CLogStream& operator<< ( const double &d );
 	CLogStream& operator<< ( const bool &bVal );
-	CLogStream& operator<< ( const CHAR* szText );
-	CLogStream& operator<< ( const WCHAR* szText );
+	CLogStream& operator<< ( const char* szText );
+	CLogStream& operator<< ( const wchar_t* szText );
 	CLogStream& operator<< ( const wstring &szText );
 	CLogStream& operator<< ( const string &szText ) { operator<<(szText.c_str()); return *this; }
 	CLogStream& operator<< ( const EConsoleColor &eColor );

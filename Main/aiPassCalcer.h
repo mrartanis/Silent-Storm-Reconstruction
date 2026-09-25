@@ -37,6 +37,9 @@ class CCollider;
 struct SDoorColliderAnalyzer;
 class CPassCalcer
 {
+public:
+	typedef CNodesLayer::STile STile;
+private:
 	struct SLadderInfo
 	{
 		int x;
@@ -92,7 +95,6 @@ class CPassCalcer
 		const CArray2D<SPCHeight> &tempH, const CFastRenderer &render );
 	STile &GetFlipperTile( int x, int y, int nLayer, const SDoorColliderAnalyzer &analyzer, const STile &t, unsigned char *pNFlipper );
 public:
-	typedef CNodesLayer::STile STile;
 	CPassCalcer( CPathNetwork *_pNet, CLayersGroup *_pGroup, IAIMap *_pMap,	STempArrayGroup<CNodesLayer::STile> &_tempArrays, const CTRect<int> &_region );
 	void MakeInactiveForLadder( int x, int y, int upX, int upY, float fHeight, int nF ) 
 	{	

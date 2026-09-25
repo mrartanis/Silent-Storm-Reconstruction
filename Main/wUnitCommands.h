@@ -26,7 +26,7 @@ class CUnit;
 class CUnitServer;
 class IPassageObject;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EUnitCommandResult
+enum EUnitCommandResult : int
 {
 	//// General
 	UCR_OK,

@@ -13,8 +13,9 @@ comparison, not a substitute for a Steam runtime oracle.
 
 This is not yet the full `ComputeLayers` path. That method includes
 `NAI::CPathNetwork` tile rasterization and spline smoothing. The original
-`aiGrid.cpp` is still Windows-only: a direct Linux build reaches its
-`Main/StdAfx.h` dependency on `vcruntime_typeinfo.h`. The height-cache
+`aiGrid.cpp` now compiles on Linux but does not yet link into a runnable
+`CPathNetwork`: see `NATIVE-AI-GRID-LINUX.md` for the remaining dependencies.
+The height-cache
 test links only methods it exercises by compiling the original translation
 unit with function/data sections and dropping unused sections at link time.
 `-fno-sanitize=vptr` is applied to that translation unit because UBSan's

@@ -7,7 +7,7 @@ namespace NWorld
 {
 template<class TUnit> struct SAISound;   // wUnitSounds.h (CanPlayerSeeOrHearAction's heard part)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum ETBSEvent
+enum ETBSEvent : int
 {
 	TBS_START_NEW_TURN,
 	TBS_FINISH_OWN_TURN,

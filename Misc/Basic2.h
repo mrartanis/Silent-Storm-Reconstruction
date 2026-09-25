@@ -96,14 +96,14 @@ public:
 		classname* Duplicate() const { return dynamic_cast<classname*>(MakeCopy()); }    \
 protected:                                                                           \
 		CObjectBase* MakeCopy() const { return new classname(*this); }                   \
-		virtual void DestroyContents() { classname::~classname(); int nHoldRefs = nRefData, nHoldObjs = nObjData; ::new(this) classname; nRefData += nHoldRefs; nObjData += nHoldObjs; }\
+		virtual void DestroyContents() { this->~classname(); int nHoldRefs = this->nRefData, nHoldObjs = this->nObjData; ::new(this) classname; this->nRefData += nHoldRefs; this->nObjData += nHoldObjs; }\
 		virtual ~classname() {}                                                          \
 	private:
 #define OBJECT_NOCOPY_METHODS(classname)                                             \
 	public:                                                                            \
 		static CObjectBase* New##classname() { return new classname(); }                 \
 	protected:                                                                         \
-		virtual void DestroyContents() { classname::~classname(); int nHoldRefs = nRefData, nHoldObjs = nObjData; ::new(this) classname; nRefData += nHoldRefs; nObjData += nHoldObjs; }\
+		virtual void DestroyContents() { this->~classname(); int nHoldRefs = this->nRefData, nHoldObjs = this->nObjData; ::new(this) classname; this->nRefData += nHoldRefs; this->nObjData += nHoldObjs; }\
 	private:
 #define BASIC_REGISTER_CLASS(classname) \
 template<> CObjectBase* CastToObjectBaseImpl<classname >( classname *p, void* ) { return p; }  \

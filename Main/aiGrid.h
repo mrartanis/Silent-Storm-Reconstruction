@@ -113,25 +113,7 @@ class CLayersSetTracker;
 template<class T>
 struct STempArray : public CObjectBase
 {
-#if defined(_WIN32)
 	OBJECT_BASIC_METHODS( STempArray );
-#else
-public:
-	static CObjectBase* NewSTempArray() { return new STempArray(); }
-	STempArray* Duplicate() const { return dynamic_cast<STempArray*>(MakeCopy()); }
-protected:
-	CObjectBase* MakeCopy() const override { return new STempArray(*this); }
-	void DestroyContents() override
-	{
-		this->~STempArray();
-		int holdRefs = nRefData, holdObjs = nObjData;
-		::new(this) STempArray;
-		nRefData += holdRefs;
-		nObjData += holdObjs;
-	}
-	~STempArray() override {}
-private:
-#endif
 public:
 	CArray2D<T> content;
 };

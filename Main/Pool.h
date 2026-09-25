@@ -18,11 +18,16 @@ class CPool
 	CPool( const CPool &a ) { ASSERT(0); }
 	void operator=( const CPool &a ) { ASSERT(0); }
 	int operator&( CStructureSaver &f ) { ASSERT(0); return 0; }
-	__declspec(noinline) void AllocNewBlock()
+	#if defined(_MSC_VER)
+	__declspec(noinline)
+	#else
+	__attribute__((noinline))
+	#endif
+	void AllocNewBlock()
 	{
 		SBlock *pBlock = &*data.insert( data.end(), SBlock());
-		pCurrent = &pBlock->data[-1];
-		pLast = &pBlock->data[N_BLOCK_SIZE - 1];
+		pCurrent = pBlock->data;
+		pLast = pBlock->data + N_BLOCK_SIZE;
 	}
 public:
 	struct SIterator
@@ -41,17 +46,16 @@ public:
 			if ( !pPool->data.empty() )
 			{
 				--i;
-				pBlockStart = &i->data[-1];
+				pBlockStart = i->data;
 			}
 			else
 				pBlockStart = 0;
-			p = pPool->pCurrent;
+			p = pPool->pCurrent ? pPool->pCurrent - 1 : 0;
 		}
 		void operator--() 
 		{
 			ASSERT(pPool);
-			--p; 
-			if ( p == pBlockStart ) 
+			if ( p == pBlockStart )
 			{
 				if ( i == pPool->data.begin() )
 				{
@@ -61,8 +65,10 @@ public:
 				}
 				--i;
 				p = &i->data[N_BLOCK_SIZE - 1];
-				pBlockStart = &i->data[-1];
+				pBlockStart = i->data;
 			}
+			else
+				--p;
 		}
 		bool operator==( const SIterator &a ) const { return p == a.p; }
 		bool operator!=( const SIterator &a ) const { return p != a.p; }
@@ -72,7 +78,7 @@ public:
 	{
 		if ( pCurrent == pLast )
 			AllocNewBlock();
-		return ++pCurrent;
+		return pCurrent++;
 	}
 	void Clear() { data.clear(); pCurrent = pLast = 0; }
 };

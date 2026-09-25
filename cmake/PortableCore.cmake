@@ -149,6 +149,16 @@ add_executable(NativeHeightLayersTests "${root}/diagnostics/NativeHeightLayersTe
 target_link_libraries(NativeHeightLayersTests PRIVATE s2_game_height_layers)
 target_link_options(NativeHeightLayersTests PRIVATE -Wl,--gc-sections)
 add_test(NAME NativeHeightLayersTests COMMAND NativeHeightLayersTests)
+add_executable(NativePoolTests "${root}/diagnostics/NativePoolTests.cpp")
+target_compile_features(NativePoolTests PUBLIC cxx_std_17)
+add_test(NAME NativePoolTests COMMAND NativePoolTests)
+
+# Original path-network implementation required by height-layer tile input.
+add_library(s2_game_ai_grid STATIC "${root}/Main/aiGrid.cpp")
+target_include_directories(s2_game_ai_grid PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_compile_features(s2_game_ai_grid PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_grid PRIVATE -ffunction-sections -fdata-sections)
 
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.

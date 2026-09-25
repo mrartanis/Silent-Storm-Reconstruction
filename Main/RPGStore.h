@@ -14,7 +14,7 @@ namespace NRPG
 // IDENTICAL to NUI::CStoreSlot::EFilter (iStorePanel.cpp), so the weapon-type classification the UI
 // open-codes lines up with this model. FLT_MAXVALUE (== 8) is the category COUNT: a CStore keeps one
 // dirty flag and one CItemsMap placement grid per category, indexed by the active eFilter.
-enum EStoreFilter
+enum EStoreFilter : int
 {
 	FLT_OTHERS,
 	FLT_RIFLES,

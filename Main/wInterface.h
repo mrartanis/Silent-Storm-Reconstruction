@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
-#include "DG.h"
+#include "../ADOImport/BasicDB.h"
+#include "DG.H"
 #include "Time.h"
 #include "Sync.h"
 #include "wTSFlags.h"
@@ -21,7 +21,7 @@ namespace NRPG
 {
 	struct SStoreItem;
 	struct SMapItem;
-	enum EStoreFilter;
+	enum EStoreFilter : int;
 	class CGlobalGame;
 	class CGlobalPlayer;
 	struct SUnitInfo;
@@ -41,7 +41,7 @@ namespace NDb
 	class CPanzerklein;
 	class CRPGGrenade;       // IExplosionMaster::AddExplosion (ordinary grenade)
 	class CRPGEngGrenade;    // IExplosionMaster::AddExplosion (engineer grenade)
-	enum EDiplomacyState;
+	enum EDiplomacyState : int;
 }
 namespace NWorld
 {
@@ -50,9 +50,9 @@ namespace NWorld
 	class CGlobalAck;
 	class CPocket;               // wPocket.h -- IWorld::GetPocket (retail vtbl+0xd8 @0x376f60)
 	class IHeightLayers;         // wHeightLayers.h -- IWorld::GetHeightLayers (retail vtbl+0x90 @0x376f00)
-	enum ETBSEvent;
+	enum ETBSEvent : int;
 	class CUnitServer;
-	enum EUnitCommandResult;
+	enum EUnitCommandResult : int;
 	class CCmd;
 	struct SItem;
 	struct SPerkMineModifiers;   // wExplosionPerks.h (IExplosionMaster::AddExplosion)

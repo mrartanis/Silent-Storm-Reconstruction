@@ -1,7 +1,7 @@
 #ifndef _AI_MAP_COLOURER_H
 #define _AI_MAP_COLOURER_H
 
-#include "..\Misc\2DArray.h"
+#include "../Misc/2Darray.h"
 #include "aiMapProxy.h"
 #include "aiWaveSearch.h"
 #include "aiSimpleWaveSearch.h"
@@ -12,6 +12,7 @@
 
 namespace NAI
 {
+class CLayerColorConstraints;
 enum ESpecialColor
 {
 	EC_LADDER_COLOR = 32000,
@@ -216,7 +217,7 @@ public:
 	void ForceUpdate() { bMustChange = true; }
 	void CalcBestWays( CPathNetwork *pPathNet, CLayerColorConstraints *pWays, const SZone &src, 
 		const vector<SZone> &dst, const vector<CVec3> &dstCP, bool bStandOnly );
-	CColouredWaysCalcer::CColouredWaysCalcer() : bMustChange( true ) {}
+	CColouredWaysCalcer() : bMustChange( true ) {}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

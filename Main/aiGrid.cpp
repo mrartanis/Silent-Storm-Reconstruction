@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiGrid.h"
 #include "aiPassCalcer.h"
 #include "aiMovesCalcer.h"
@@ -10,7 +16,18 @@
 #include "Bound.h"
 #include "wInterface.h"
 #include "wMine.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
+#if !defined(_WIN32)
+template<std::size_t N, class... Args>
+static int sprintf_s(char (&buffer)[N], const char* format, Args... args)
+{
+	return std::snprintf(buffer, N, format, args...);
+}
+static void OutputDebugString(const char* message)
+{
+	std::fputs(message, stderr);
+}
+#endif
 #include "aiLocker.h"
 #include "aiJob.h"
 #include "aiPassCalcJob.h"
