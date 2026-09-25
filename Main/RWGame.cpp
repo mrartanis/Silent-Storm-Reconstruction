@@ -35,6 +35,7 @@
 #include "LSController.h"
 #include "Sync.h"
 #include "RWSound.h"
+#include "SelectionInfoWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MemObject.h"
 vector<SSphere> sphereParticles;	// test sphere visualization
@@ -112,19 +113,8 @@ void ChooseBodyColor( NDb::CModel *pModel, NLSHead::CHeadInfo *pHead )
 		pModel->pMaterials[1] = m;                     // index 1 = the skin slot (neck/hands)
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail NRender::SSelectionInfo (PDB: 20 bytes, vColor @+0, bIgnoreFloorMask @+16): the visual
-// description of a selection highlight. bIgnoreFloorMask makes the scene-side selection node skip
-// the per-face floor-mask/frame-skip gates (retail NGScene::CSelection +0x38); the dev scene node
-// has no such gate yet, so the flag is carried (save wire + CSelection state) but not consumed.
-struct SSelectionInfo
-{
-	CVec4 vColor;
-	bool bIgnoreFloorMask;
-
-	// retail CSelection default ctor @0x2cfa90 seeds ((0,1,1,1), false)
-	SSelectionInfo(): vColor( 0, 1, 1, 1 ), bIgnoreFloorMask( false ) {}
-	SSelectionInfo( const CVec4 &_vColor, bool _bIgnoreFloorMask ): vColor( _vColor ), bIgnoreFloorMask( _bIgnoreFloorMask ) {}
-};
+// bIgnoreFloorMask makes the retail scene selection node bypass floor-mask
+// gates. The current scene node does not consume it, but the save retains it.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CSelection: public CObjectBase
 {
