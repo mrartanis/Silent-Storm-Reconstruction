@@ -44,3 +44,18 @@ original `BuildingGrid.cpp`, `BuildingInfo.cpp`, `MakeBuilding.cpp`, and
 `GBuilding.cpp`; the terrain group is in `MapBuildTerrain.cpp` and its
 dependencies. They have not yet been linked and executed on Linux. No
 `BuildTerrain`/MapEdit-only surrogate counts as completing this game path.
+
+Clean Windows x64 native-media archive
+`G:\SS\lab\builds\stage2-map-polygons-20260925-01` was built from
+`c4f2fe9`; its `Game.exe` SHA-256 is
+`CD9DBD576297BBCAF87633415BA7FB8130DDAF91D8E582783369A92E24B73556`.
+The fresh linked-resource runs `stage2-map-polygons-clean-01` and `-02`
+did **not** reach `LOAD-SLOT-DONE`: the current Windows graphics session
+returned `0x88760868` from D3D device creation, after which the old
+`ResetDevice` code dereferenced a null device at `Gfx.cpp:138`. An unchanged
+earlier archive (`stage2-resource-loader-20260925-01`), which had previously
+loaded `DB_OLD` successfully, failed at the identical location in a fresh
+`stage2-resource-loader-current-session-01` run. This is a current-session
+graphics gate, not a passing smoke and not evidence of a new polygon
+regression. Repeat the archived game smoke when a working D3D desktop is
+available. The dumps are retained in the corresponding `evidence` folders.
