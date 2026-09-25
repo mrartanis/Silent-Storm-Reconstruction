@@ -5,6 +5,8 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "..\Misc\2Darray.h"
+#include "../Misc/PortablePathPlace.h"
+#include "../FileIO/PortableStructureChunks.h"
 namespace NAI
 {
 class CPathNetwork;
@@ -94,58 +96,46 @@ externA5 int nMoveShift[][2];
 struct SPathPlace
 {
 private:
-	union
-	{
-		struct  
-		{
-			union
-			{
-				struct 
-				{
-					unsigned short nX:8;
-					unsigned short nY:8;
-				};
-				unsigned short nPoint:16;
-			};
-			unsigned short nIntegral:1;
-			unsigned short nLayer:8;
-			unsigned short nFinal:1;
-			unsigned short nMoving:1;
-			unsigned short nDirection:3;
-			unsigned short nPose:2;  // CM_*
-		};
-		int nData;
-	};
+	std::uint32_t nData;
 public:
-	SPathPlace() { nData = -1; nFinal = 0; }
-	SPathPlace( int _nData ): nData(_nData) {}
+	SPathPlace(): nData( UINT32_C(0xffffffff) & ~S2AI::kFinalMask ) {}
+	SPathPlace( int _nData ): nData(static_cast<std::uint32_t>(_nData)) {}
 	SPathPlace( unsigned _nX, unsigned _nY, unsigned _nLayer )
-		: nX(_nX), nY(_nY), nLayer(_nLayer), nDirection(0), nPose(0), 
-		nMoving(0), nFinal(0), nIntegral(1) {}
+		: nData(S2AI::MakePathPlace(_nX, _nY, _nLayer, 0, 0, 0)) {}
 	SPathPlace( unsigned _nX, unsigned _nY, unsigned _nLayer, unsigned _nDirection, 
 		unsigned _nPose, unsigned _nMoving )
-		: nX(_nX), nY(_nY), nLayer(_nLayer), nDirection(_nDirection), nPose(_nPose), 
-		nMoving(_nMoving), nFinal(0), nIntegral(1) {}
-	bool IsFinal() const { return nFinal; }
-	int GetData() const { return nData; }
-	unsigned short GetLayer() const { return nLayer; }
-	unsigned short GetDirection() const { return nDirection; }
-	unsigned short IsMoving() const { return nMoving; }
-	unsigned short GetPose() const { return nPose; }
-	bool IsIntegral() const { return nIntegral; }
-	unsigned short GetX() const { return nX; }
-	unsigned short GetY() const { return nY; }
-	unsigned short GetLadderStep() const { ASSERT( !nIntegral ); return nY; }
-	void SetXY( unsigned int _nX, unsigned int _nY ) { nX = _nX; nY = _nY; }
-	void SetY( unsigned int _nY ) { nY = _nY; }
-	void SetDirection( unsigned short _n ) { nDirection = _n; }
-	void SetPose( unsigned short _n ) { nPose = _n; } // CM_*
-	void SetOnLayer( int _nLayer, int _nX, int _nY, int _nIntegral = 1 ) { nX = _nX; nY = _nY; nIntegral = _nIntegral; nLayer = _nLayer; nPose = 0; nFinal = 0; }
-	void SetFinal( unsigned n ) { nFinal = n; }
-	void SetMoving( unsigned n ) { nMoving = n; }
+		: nData(S2AI::MakePathPlace(_nX, _nY, _nLayer, _nDirection, _nPose, _nMoving)) {}
+	static SPathPlace FromBits( std::uint32_t bits ) { SPathPlace p; p.nData = bits; return p; }
+	std::uint32_t GetBits() const { return nData; }
+	bool IsFinal() const { return (nData & S2AI::kFinalMask) != 0; }
+	int GetData() const { return S2AI::PathPlaceSigned(nData); }
+	unsigned short GetLayer() const { return static_cast<unsigned short>((nData & S2AI::kLayerMask) >> 17); }
+	unsigned short GetDirection() const { return static_cast<unsigned short>((nData & S2AI::kDirectionMask) >> 27); }
+	unsigned short IsMoving() const { return static_cast<unsigned short>((nData & S2AI::kMovingMask) >> 26); }
+	unsigned short GetPose() const { return static_cast<unsigned short>((nData & S2AI::kPoseMask) >> 30); }
+	bool IsIntegral() const { return (nData & S2AI::kIntegralMask) != 0; }
+	unsigned short GetX() const { return static_cast<unsigned short>(nData & S2AI::kXMask); }
+	unsigned short GetY() const { return static_cast<unsigned short>((nData & S2AI::kYMask) >> 8); }
+	unsigned short GetLadderStep() const { ASSERT( !IsIntegral() ); return GetY(); }
+	void SetXY( unsigned int _nX, unsigned int _nY ) { nData = S2AI::SetField(nData, S2AI::kXMask, 0, _nX); SetY(_nY); }
+	void SetY( unsigned int _nY ) { nData = S2AI::SetField(nData, S2AI::kYMask, 8, _nY); }
+	void SetDirection( unsigned short _n ) { nData = S2AI::SetField(nData, S2AI::kDirectionMask, 27, _n); }
+	void SetPose( unsigned short _n ) { nData = S2AI::SetField(nData, S2AI::kPoseMask, 30, _n); } // CM_*
+	void SetLayer( unsigned _n ) { nData = S2AI::SetField(nData, S2AI::kLayerMask, 17, _n); }
+	void SetIntegral( unsigned _n ) { nData = S2AI::SetField(nData, S2AI::kIntegralMask, 16, _n); }
+	void SetOnLayer( int _nLayer, int _nX, int _nY, int _nIntegral = 1 ) {
+		SetXY(_nX, _nY);
+		nData = S2AI::SetField(nData, S2AI::kIntegralMask, 16, _nIntegral);
+		nData = S2AI::SetField(nData, S2AI::kLayerMask, 17, _nLayer);
+		SetPose(0);
+		SetFinal(0);
+	}
+	void SetFinal( unsigned n ) { nData = S2AI::SetField(nData, S2AI::kFinalMask, 25, n); }
+	void SetMoving( unsigned n ) { nData = S2AI::SetField(nData, S2AI::kMovingMask, 26, n); }
 	bool operator==( const SPathPlace &a ) const { return nData == a.nData; }
 	SPathPlace& operator=( const SPathPlace &a ) { nData = a.nData; return *this; }
 };
+static_assert( sizeof(SPathPlace) == 4, "game path place must remain one word" );
 struct SPathPlaceHash
 {
 	int operator()( const SPathPlace &a ) const { return a.GetData(); }
@@ -398,5 +388,25 @@ bool IsLockerUnit( CObjectBase *pUnit );                 // live CUnitServer who
 bool IsUnitNear( CObjectBase *pUnit, const CVec3 &pt );  // center within 2 (4 big-locker) grid steps of pt
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::SPathPlace, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SPathPlace* value) {
+    if (!value) return false;
+    std::uint32_t bits = 0;
+    if (!S2AI::DecodePathPlace(source, length, &bits)) return false;
+    *value = NAI::SPathPlace::FromBits(bits);
+    return true;
+  }
+  static bool Encode(const NAI::SPathPlace& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return S2AI::EncodePathPlace(value.GetBits(), destination, length);
+  }
+};
+} // namespace S2FileIO
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

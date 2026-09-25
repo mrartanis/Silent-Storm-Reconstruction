@@ -11,17 +11,17 @@ namespace NAI
 // recheck catches the all-three-points-coincide case.
 bool NotSmooth( const vector<SPathPlace> &pts, int i )
 {
-	int nDXF = (int)pts[i].nX - (int)pts[i + 1].nX;
-	int nDXB = (int)pts[i - 1].nX - (int)pts[i].nX;
-	int nDYF = (int)pts[i].nY - (int)pts[i + 1].nY;
-	int nDYB = (int)pts[i - 1].nY - (int)pts[i].nY;
+	int nDXF = (int)pts[i].GetX() - (int)pts[i + 1].GetX();
+	int nDXB = (int)pts[i - 1].GetX() - (int)pts[i].GetX();
+	int nDYF = (int)pts[i].GetY() - (int)pts[i + 1].GetY();
+	int nDYB = (int)pts[i - 1].GetY() - (int)pts[i].GetY();
 	// @0xa3ab0: an axis is a "corner axis" when its backward delta CHANGES, OR the point actually MOVES along
 	// that axis (`!=`). FIX (2026-07-01): the original reconstruction used `==` here, which inverted the
 	// movement test -> NotSmooth only fired on full 90-degree L-corners (both axes reverse) and MISSED the
 	// horizontal->diagonal junction (one axis keeps moving), so SmoothenPath left the dog-leg uncut. The retail
 	// disasm is `!=` on both axes.
-	if ( ( nDXF != nDXB || pts[i].nX != pts[i + 1].nX ) &&
-	     ( nDYF != nDYB || pts[i].nY != pts[i + 1].nY ) )
+	if ( ( nDXF != nDXB || pts[i].GetX() != pts[i + 1].GetX() ) &&
+	     ( nDYF != nDYB || pts[i].GetY() != pts[i + 1].GetY() ) )
 	{
 		if ( nDXF == nDXB && nDYF == nDYB )
 			return false;
@@ -35,17 +35,17 @@ bool NotSmooth( const vector<SPathPlace> &pts, int i )
 // no INACTIVE pose (nPose==3) on the run (an INACTIVE predecessor stops the scan).
 int FindMaxPreSize( const vector<SPathPlace> &pts, int i )
 {
-	if ( pts[i - 1].nPose == 3 )
+	if ( pts[i - 1].GetPose() == 3 )
 		return 0;
-	int nDX = (int)pts[i].nX - (int)pts[i - 1].nX;
-	int nDY = (int)pts[i].nY - (int)pts[i - 1].nY;
+	int nDX = (int)pts[i].GetX() - (int)pts[i - 1].GetX();
+	int nDY = (int)pts[i].GetY() - (int)pts[i - 1].GetY();
 	int j = i - 1;
 	while ( j > 0 )
 	{
-		if ( pts[j].nLayer != pts[i].nLayer ||
-		     (int)pts[j].nX - (int)pts[j - 1].nX != nDX ||
-		     (int)pts[j].nY - (int)pts[j - 1].nY != nDY ||
-		     pts[j - 1].nPose == 3 )
+		if ( pts[j].GetLayer() != pts[i].GetLayer() ||
+		     (int)pts[j].GetX() - (int)pts[j - 1].GetX() != nDX ||
+		     (int)pts[j].GetY() - (int)pts[j - 1].GetY() != nDY ||
+		     pts[j - 1].GetPose() == 3 )
 			break;
 		--j;
 	}
@@ -57,18 +57,18 @@ int FindMaxPreSize( const vector<SPathPlace> &pts, int i )
 // path's end; same INACTIVE rules.
 int FindMaxPostSize( const vector<SPathPlace> &pts, int i )
 {
-	if ( pts[i + 1].nPose == 3 )
+	if ( pts[i + 1].GetPose() == 3 )
 		return 0;
-	int nDX = (int)pts[i + 1].nX - (int)pts[i].nX;
-	int nDY = (int)pts[i + 1].nY - (int)pts[i].nY;
+	int nDX = (int)pts[i + 1].GetX() - (int)pts[i].GetX();
+	int nDY = (int)pts[i + 1].GetY() - (int)pts[i].GetY();
 	int j = i + 1;
 	int nLast = (int)pts.size() - 1;
 	while ( j < nLast )
 	{
-		if ( pts[j].nLayer != pts[i].nLayer ||
-		     (int)pts[j + 1].nX - (int)pts[j].nX != nDX ||
-		     (int)pts[j + 1].nY - (int)pts[j].nY != nDY ||
-		     pts[j + 1].nPose == 3 )
+		if ( pts[j].GetLayer() != pts[i].GetLayer() ||
+		     (int)pts[j + 1].GetX() - (int)pts[j].GetX() != nDX ||
+		     (int)pts[j + 1].GetY() - (int)pts[j].GetY() != nDY ||
+		     pts[j + 1].GetPose() == 3 )
 			break;
 		++j;
 	}
@@ -94,16 +94,16 @@ bool SmoothenPrePost( vector<SPathPlace> &pts, IPathNetwork *pNet, int nPre, int
 			return false;
 		double fRatio = (double)( nPre - 1 ) / (double)( nPost - 1 );
 		int nA = nPre - 1, nB = nPost - 1;
-		int nLayer = pts[i].nLayer;
-		unsigned nDirPre = pts[i - 1].nDirection;
-		unsigned nDirPost = pts[i].nDirection;
-		int nDXPre = (int)pts[i].nX - (int)pts[i - 1].nX;
-		int nDYPre = (int)pts[i].nY - (int)pts[i - 1].nY;
-		int nDXPost = (int)pts[i + 1].nX - (int)pts[i].nX;
-		int nDYPost = (int)pts[i + 1].nY - (int)pts[i].nY;
+		int nLayer = pts[i].GetLayer();
+		unsigned nDirPre = pts[i - 1].GetDirection();
+		unsigned nDirPost = pts[i].GetDirection();
+		int nDXPre = (int)pts[i].GetX() - (int)pts[i - 1].GetX();
+		int nDYPre = (int)pts[i].GetY() - (int)pts[i - 1].GetY();
+		int nDXPost = (int)pts[i + 1].GetX() - (int)pts[i].GetX();
+		int nDYPost = (int)pts[i + 1].GetY() - (int)pts[i].GetY();
 		buf[0] = pts[nStart + 1];
-		int nX = pts[nStart + 1].nX;
-		int nY = pts[nStart + 1].nY;
+		int nX = pts[nStart + 1].GetX();
+		int nY = pts[nStart + 1].GetY();
 		int nOrig = nStart + 1;   // original element whose pose/moving flags feed buf[k] (retail @0xa3deb: buf[1]
 		                          // inherits from pts[nStart+1], not +2 -- flag-source off-by-one, geometry-neutral)
 		int k = 0;
@@ -132,13 +132,12 @@ bool SmoothenPrePost( vector<SPathPlace> &pts, IPathNetwork *pNet, int nPre, int
 				nY += nDYPost;
 				--nB;
 			}
-			buf[k].nDirection = (unsigned short)nDir;
+			buf[k].SetDirection((unsigned short)nDir);
 			SPathPlace p = pts[nOrig];   // pose/moving inherited
-			p.nX = (unsigned short)( nX & 0xff );
-			p.nY = (unsigned short)( nY & 0xff );
-			p.nLayer = (unsigned short)nLayer;
-			p.nIntegral = 1;
-				p.nFinal = 0;   // retail masks off the nFinal/n3D bit (word & 0xfc01 @0xa3ed0) on interleaved points
+			p.SetXY(nX & 0xff, nY & 0xff);
+			p.SetLayer(nLayer);
+			p.SetIntegral(1);
+			p.SetFinal(0);   // retail masks off the nFinal/n3D bit (word & 0xfc01 @0xa3ed0) on interleaved points
 			++nOrig;
 			buf[++k] = p;
 		}
