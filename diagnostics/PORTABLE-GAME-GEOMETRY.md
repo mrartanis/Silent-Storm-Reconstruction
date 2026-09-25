@@ -17,3 +17,18 @@ float; `SMassSphere` — пять float; `SBound` — семь float. Все ч�
 и ARM64/QEMU прошли по 21/21 с ASan/UBSan (`detect_leaks=0` на QEMU).
 Это перенос используемых игрой дисковых данных этапа 2, не перенос
 графического рендера этапов 3–4 и не доказательство паритета Steam-кадров.
+
+Чистый x64-архив `stage2-game-geometry-20260925-01` из коммита `f882bd6`
+в LabRun `stage2-game-geometry-clean-01` загрузил старый
+`stational weapons`, записал `GAME_GEOMETRY_NEW` и повторно загрузил
+его до `LOAD-SLOT-DONE`; после `quit` дампа нет. Raw-аудит того же
+слота больше не содержит точных типов `SBound`, `STriangle`,
+`SMassSphere`, `SSphere`. Строка `SBoundCalcer` в журнале относится
+к другому raw-типу и не считается перенесённой.
+
+Чистый диагностический x86-архив
+`stage2-game-geometry-x86-diagnostic-20260925-01` из того же коммита
+прочитал `GAME_GEOMETRY_NEW` до `LOAD-SLOT-DONE` в
+`stage2-game-geometry-x86-read-01` и завершился без дампа. Это
+проверка совместимости текущих реконструированных сборок; Steam
+остаётся эталоном поведения, а не эта x86-сборка.
