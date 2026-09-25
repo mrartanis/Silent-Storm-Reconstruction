@@ -61,6 +61,9 @@ pass. Linux GCC x86-64 sanitizer and Clang 14 x86-64 release suites each
 pass 62/62. GCC ARM64 also passes 62/62 under ASan/UBSan with the
 serialization assertion included. The Windows x64 suite passes 89/89.
 The full `CHeightLayers`/`aiGrid` path is still downstream.
+The next cache-only boundary, which exercises the original `CHeightLayers`
+floor lookup and save data but not `ComputeLayers` path-network rasterization,
+is documented in `NATIVE-HEIGHT-LAYERS-LINUX.md`.
 The recovered x86 build printed the same region result. This small region
 test has not been compared with runtime values from the original Steam
 executable; the restored x86 build is only a supplemental implementation

@@ -543,6 +543,11 @@ target_include_directories(NativeTerrainInfoTests PRIVATE "${root}/Main" "${CMAK
 target_precompile_headers(NativeTerrainInfoTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeTerrainInfoTests PRIVATE Main)
 add_test(NAME NativeTerrainInfoTests COMMAND NativeTerrainInfoTests)
+add_executable(NativeHeightLayersTests "${root}/diagnostics/NativeHeightLayersTests.cpp")
+target_include_directories(NativeHeightLayersTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeHeightLayersTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeHeightLayersTests PRIVATE Main)
+add_test(NAME NativeHeightLayersTests COMMAND NativeHeightLayersTests)
 add_executable(NativeSelectionInfoWireTests "${root}/diagnostics/NativeSelectionInfoWireTests.cpp")
 target_include_directories(NativeSelectionInfoWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeSelectionInfoWireTests PRIVATE "${root}/Main/StdAfx.h")
@@ -678,7 +683,7 @@ if(S2_ENABLE_NATIVE_VIDEO)
   target_link_libraries(BinkCompatProbe PRIVATE s2_bink_compat)
 endif()
 if(TARGET s2_bink_compat)
-  set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests PROPERTIES ENVIRONMENT_MODIFICATION
+  set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests NativeHeightLayersTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
 endif()
 add_dependencies(Game ls_implibs)   # the lib/def import libs must exist before Game links
@@ -750,6 +755,6 @@ else()
   message(STATUS "Game install not found -- pass -DS2_GAME_DIR=\"<path>\" to set the working dir.")
 endif()
 if(S2_GAME_DIR AND NOT TARGET s2_bink_compat)
-  set_tests_properties(NativeAITileWireTests NativeZoneWireTests NativeAIDistanceWireTests PROPERTIES ENVIRONMENT_MODIFICATION
+  set_tests_properties(NativeAITileWireTests NativeZoneWireTests NativeAIDistanceWireTests NativeHeightLayersTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
 endif()

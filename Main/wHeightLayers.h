@@ -18,7 +18,7 @@
 // CHeightLayers 72 (terrainLayer@12, layers@28, desired2realFloor@48, bHasTerrain@68); saveload id
 // 0xa2313130. Vtable slot order is retail-exact (walked from the CHeightLayers vftable VA 0x8ca118).
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\Misc\2DArray.h"   // CArray2D<float> -- complete type (SHLayer member)
+#include "../Misc/2Darray.h"   // CArray2D<float> -- complete type (SHLayer member)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct STerrainInfo;
 template <class TResult> class CFuncBase;

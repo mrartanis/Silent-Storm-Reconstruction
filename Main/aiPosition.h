@@ -238,6 +238,7 @@ EBlowHeight GetBlowHeight( const SUnitPosition &attackerPos, const CVec3 &ptTarg
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SMove
 {
+#if defined(_WIN32)
 	union
 	{
 		struct 
@@ -251,13 +252,22 @@ struct SMove
 			EMoveType second;
 		};
 	};
+#else
+	// The MSVC anonymous union contains a non-trivial SPathPlace. GCC/Clang
+	// reject that extension; the two aliases have identical storage and only
+	// dest/type are used outside this definition.
+	SPathPlace dest;
+	EMoveType type;
+#endif
 	SMove() {};
-	SMove &SMove::operator=(const SMove& src)
+	SMove &operator=(const SMove& src)
 	{
 		this->dest = src.dest;
 		this->type = src.type;
+#if defined(_WIN32)
 		this->first = src.first;
 		this->second = src.second;
+#endif
 		return *this;
 	}
 };

@@ -135,6 +135,21 @@ if(S2_GAME_DB_PATH)
     COMMAND NativeTerrainInfoTests "${S2_GAME_DB_PATH}")
 endif()
 
+# The original world height-cache translation unit, including its floor
+# rasterization code. Its path-network ownership is the next link boundary.
+add_library(s2_game_height_layers STATIC "${root}/Main/wHeightLayers.cpp")
+target_include_directories(s2_game_height_layers PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_height_layers PUBLIC
+  s2_game_terrain_info s2_game_beta_spline)
+target_compile_features(s2_game_height_layers PUBLIC cxx_std_17)
+target_compile_options(s2_game_height_layers PRIVATE
+  -ffunction-sections -fdata-sections -fno-sanitize=vptr)
+add_executable(NativeHeightLayersTests "${root}/diagnostics/NativeHeightLayersTests.cpp")
+target_link_libraries(NativeHeightLayersTests PRIVATE s2_game_height_layers)
+target_link_options(NativeHeightLayersTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeHeightLayersTests COMMAND NativeHeightLayersTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

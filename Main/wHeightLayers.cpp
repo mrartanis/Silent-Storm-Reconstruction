@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wHeightLayers.h"
 #include "TerrainInfo.h"   // STerrainInfo (heightMap) + CFuncBase<STerrainInfo>::GetValue
 #include "Grid.h"          // FP_TERRAIN_H_SCALE (1.0f/64.0f) + FP_INV_GRID_STEP
