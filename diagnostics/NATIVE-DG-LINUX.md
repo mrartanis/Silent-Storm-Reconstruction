@@ -49,3 +49,11 @@ world-module boundary includes `TerrainInfo`, `aiGrid`/path-network tiles,
 Full CTest after this change: Windows x64 88/88, Linux GCC x86-64 58/58
 under ASan/UBSan, Linux GCC ARM64/QEMU 58/58 under ASan/UBSan, and Linux
 Clang 14 x86-64 release 58/58.
+
+Clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-native-dg-20260925-01` came from source commit
+`9d6dc7a`. A fresh linked-resource LabRun
+`G:\SS\lab\runs\stage2-native-dg-clean-01` loaded the existing `DB_OLD`
+mission slot to `LOAD-SLOT-DONE`, accepted `quit`, exited normally, and
+produced no crash dump. This is a Windows integration regression, not a
+Linux mission load or proof of full world behavior.
