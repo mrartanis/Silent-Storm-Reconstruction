@@ -3,6 +3,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include <cstddef>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T> class CSyncSrc;
 template<class T> class CSyncDst;
@@ -254,9 +255,14 @@ class CBoolSyncSrc: public CSyncSrc<T>
 	typedef CBoolSyncSrc<T,TFunc> TThis;
 	struct SObjectInfo
 	{
+		using S2BoolSyncObjectInfoWire = void;
 		int nMask;
 		int nTrackID;
 	};
+	static_assert(sizeof(SObjectInfo) == 8 &&
+		offsetof(SObjectInfo, nMask) == 0 &&
+		offsetof(SObjectInfo, nTrackID) == 4,
+		"bool sync object wire layout");
 	typedef unordered_map<CPtr<T>, SObjectInfo, SPtrHash> CObjectsHash;
 	typedef CSyncSrc<T> TParent;
 	ZDATA_(TParent)
@@ -340,5 +346,8 @@ class CSubtractFunc
 public:
 	static bool GetResult( int nMask ) { return nMask == 1; }
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableBoolSyncWire.h"
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif
