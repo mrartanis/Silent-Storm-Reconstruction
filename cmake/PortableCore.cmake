@@ -56,6 +56,15 @@ add_executable(NativeBetaSplineTests "${root}/diagnostics/NativeBetaSplineTests.
 target_link_libraries(NativeBetaSplineTests PRIVATE s2_game_beta_spline)
 add_test(NAME NativeBetaSplineTests COMMAND NativeBetaSplineTests)
 
+# The game's dependency-graph frame/version and deferred object-hold runtime.
+add_library(s2_game_dg STATIC "${root}/Main/DG.CPP")
+target_include_directories(s2_game_dg PRIVATE "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_dg PUBLIC s2_game_structure)
+target_compile_features(s2_game_dg PUBLIC cxx_std_17)
+add_executable(NativeDGTests "${root}/diagnostics/NativeDGTests.cpp")
+target_link_libraries(NativeDGTests PRIVATE s2_game_dg)
+add_test(NAME NativeDGTests COMMAND NativeDGTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

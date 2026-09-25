@@ -1,5 +1,16 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#endif
+#if defined(_WIN32)
 #include "DG.h"
+#else
+#include "DG.H"
+#endif
+#include <cstdint>
+#include <cstring>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifdef _MAPEDIT 
 	const int N_HOLD_TIME = 16384; // must be power of 2
@@ -22,7 +33,9 @@ void SetToHoldQueue( CObjectBase *p, int *pnFrame )
 	//	holdQueue[ (*pnFrame) & (N_HOLD_TIME-1) ].remove( p );
 	*pnFrame = nDGCurrentFrame;
 	holdQueue[ (*pnFrame) & (N_HOLD_TIME-1) ].push_back( p );
-	nDGIncFrameRnd = nDGIncFrameRnd * 13 + 2457823;
+	const std::uint32_t next = static_cast<std::uint32_t>( nDGIncFrameRnd ) * 13u + 2457823u;
+	static_assert( sizeof(next) == sizeof(nDGIncFrameRnd), "DG frame RNG requires 32-bit int" );
+	std::memcpy( &nDGIncFrameRnd, &next, sizeof(next) );
 	*pnFrame += ( nDGIncFrameRnd & 63 ) + 64;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

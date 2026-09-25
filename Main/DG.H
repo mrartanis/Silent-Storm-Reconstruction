@@ -150,13 +150,13 @@ inline bool IsValid( const CDGPtr<T,TPtrType> &p ) { return IsValid( p.Get() ); 
 template <class TSet, class TParam>
 inline void UpdateSet( TSet *a, TParam *p )
 {
-	for ( TSet::iterator i = a->begin(); i != a->end(); )
+	for ( typename TSet::iterator i = a->begin(); i != a->end(); )
 	{
 		if ( IsValid( *i ) && (*i)->Update( p ) )
 			++i;
 		else
 		{
-			TSet::iterator k = i;
+			typename TSet::iterator k = i;
 			++i;
 			a->erase( k );
 		}
@@ -166,13 +166,13 @@ inline void UpdateSet( TSet *a, TParam *p )
 template <class TSet, class TParam, class TParam2>
 inline void UpdateSet( TSet *a, TParam *p, TParam2 *p2 )
 {
-	for ( TSet::iterator i = a->begin(); i != a->end(); )
+	for ( typename TSet::iterator i = a->begin(); i != a->end(); )
 	{
 		if ( IsValid( *i ) && (*i)->Update( p, p2 ) )
 			++i;
 		else
 		{
-			TSet::iterator k = i;
+			typename TSet::iterator k = i;
 			++i;
 			a->erase( k );
 		}
@@ -182,13 +182,13 @@ inline void UpdateSet( TSet *a, TParam *p, TParam2 *p2 )
 template <class TSet, class TParam, class TParam2, class TParam3>
 inline void UpdateSet( TSet *a, TParam *p, TParam2 *p2, TParam3 *p3 )
 {
-	for ( TSet::iterator i = a->begin(); i != a->end(); )
+	for ( typename TSet::iterator i = a->begin(); i != a->end(); )
 	{
 		if ( IsValid( *i ) && (*i)->Update( p, p2, p3 ) )
 			++i;
 		else
 		{
-			TSet::iterator k = i;
+			typename TSet::iterator k = i;
 			++i;
 			a->erase( k );
 		}
