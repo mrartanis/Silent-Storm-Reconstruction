@@ -76,4 +76,27 @@ struct SMapBuilding
 	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableMapStoreyWire.h"
+
+static_assert(sizeof(SMapBuilding::SStorey) == 8, "map storey wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<SMapBuilding::SStorey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     SMapBuilding::SStorey* value) {
+    if (!value) return false;
+    MapStoreyFields fields{};
+    if (!DecodeMapStorey(source, length, &fields)) return false;
+    value->nFloor = fields.localFloor;
+    value->nRealFloor = fields.globalFloor;
+    return true;
+  }
+  static bool Encode(const SMapBuilding::SStorey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeMapStorey({value.nFloor, value.nRealFloor}, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
