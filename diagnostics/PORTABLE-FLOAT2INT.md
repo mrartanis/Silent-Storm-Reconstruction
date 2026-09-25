@@ -34,5 +34,9 @@ ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-a
 Ограничение: это перенос одного арифметического пути, а не сборка всей
 игры на Linux/ARM64 и не прямой паритет всей симуляции со Steam. Для
 последнего нужны одинаковое игровое состояние и сценарий на оригинальном
-Steam EXE и новом порте. Чистый Windows-архив и игровой smoke указать
-после их завершения.
+Steam EXE и новом порте. Чистый Windows x64-архив с native media из
+коммита `177678e` лежит в
+`C:\SS-lab\builds\stage2-float2int-20260925-01`; изолированный запуск
+`C:\SS-lab\runs\stage2-float2int-clean-01` загрузил старый `DB_OLD` до
+`LOAD-SLOT-DONE` и завершился после `quit` без crash dump. Это smoke
+Windows-интеграции, не тест хода ИИ на ARM64.
