@@ -174,6 +174,54 @@ CFuncBase<vector<NGfx::SCompactTransformer> >* MakeMMXAnimation( CFuncBase<vecto
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableGroupWire.h"
+
+static_assert(sizeof(NGScene::SGroupInfo) == 4 &&
+              sizeof(NGScene::SGroupSelect) == 4,
+              "scene group wire sizes");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::SGroupInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SGroupInfo* value) {
+    if (!value) return false;
+    GroupInfoFields fields{};
+    if (!DecodeGroupInfo(source, length, &fields)) return false;
+    value->nLightGroup = fields.lightGroup;
+    value->nObjectGroup = fields.objectGroup;
+    return true;
+  }
+  static bool Encode(const NGScene::SGroupInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeGroupInfo(GroupInfoFields{
+        value.nLightGroup, value.nObjectGroup}, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NGScene::SGroupSelect, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SGroupSelect* value) {
+    if (!value) return false;
+    GroupSelectFields fields{};
+    if (!DecodeGroupSelect(source, length, &fields)) return false;
+    value->nMaskAny = fields.maskAny;
+    value->nMaskEvery = fields.maskEvery;
+    return true;
+  }
+  static bool Encode(const NGScene::SGroupSelect& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeGroupSelect(GroupSelectFields{
+        value.nMaskAny, value.nMaskEvery}, destination, length);
+  }
+};
+} // namespace S2FileIO
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif
 
 

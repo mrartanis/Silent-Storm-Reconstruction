@@ -70,6 +70,8 @@ add_executable(PortableMeshWireTests "${root}/diagnostics/PortableMeshWireTests.
 add_test(NAME PortableMeshWireTests COMMAND PortableMeshWireTests)
 add_executable(PortableAIColourWireTests "${root}/diagnostics/PortableAIColourWireTests.cpp")
 add_test(NAME PortableAIColourWireTests COMMAND PortableAIColourWireTests)
+add_executable(PortableGroupWireTests "${root}/diagnostics/PortableGroupWireTests.cpp")
+add_test(NAME PortableGroupWireTests COMMAND PortableGroupWireTests)
 add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
 add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)
 add_executable(PortableParticleWireTests "${root}/diagnostics/PortableParticleWireTests.cpp")

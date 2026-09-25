@@ -1,5 +1,6 @@
 #include "../Main/StdAfx.h"
 #include "../Main/aiColourer.h"
+#include "../Main/GScene.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -16,6 +17,11 @@ static_assert(offsetof(NAI::SNeighbour, wNodeNumber) == 0 &&
 static_assert(offsetof(NAI::SLocalColorInfo, wAverageX) == 0 &&
               offsetof(NAI::SLocalColorInfo, wAverageY) == 2,
               "native local colour offsets");
+static_assert(offsetof(NGScene::SGroupInfo, nLightGroup) == 0 &&
+              offsetof(NGScene::SGroupInfo, nObjectGroup) == 2 &&
+              offsetof(NGScene::SGroupSelect, nMaskAny) == 0 &&
+              offsetof(NGScene::SGroupSelect, nMaskEvery) == 2,
+              "native scene group offsets");
 
 int main() {
   using Codec = S2FileIO::StructureFieldCodec<NAI::SZone>;
@@ -55,5 +61,21 @@ int main() {
       std::memcmp(colorWire, &color, sizeof(colorWire)) != 0 ||
       !ColorCodec::Decode(colorWire, sizeof(colorWire), &decodedColor) ||
       std::memcmp(&color, &decodedColor, sizeof(color)) != 0) return 6;
+  using GroupCodec = S2FileIO::StructureFieldCodec<NGScene::SGroupInfo>;
+  using SelectCodec = S2FileIO::StructureFieldCodec<NGScene::SGroupSelect>;
+  if (!GroupCodec::kPortable || GroupCodec::kWireSize != 4 ||
+      !SelectCodec::kPortable || SelectCodec::kWireSize != 4) return 7;
+  NGScene::SGroupInfo group(0x1234, 0x80ff), decodedGroup;
+  std::uint8_t groupWire[4] = {};
+  if (!GroupCodec::Encode(group, groupWire, sizeof(groupWire)) ||
+      std::memcmp(groupWire, &group, sizeof(groupWire)) != 0 ||
+      !GroupCodec::Decode(groupWire, sizeof(groupWire), &decodedGroup) ||
+      std::memcmp(&group, &decodedGroup, sizeof(group)) != 0) return 8;
+  NGScene::SGroupSelect select(0x8000, 0x0fff), decodedSelect(0, 0);
+  std::uint8_t selectWire[4] = {};
+  if (!SelectCodec::Encode(select, selectWire, sizeof(selectWire)) ||
+      std::memcmp(selectWire, &select, sizeof(selectWire)) != 0 ||
+      !SelectCodec::Decode(selectWire, sizeof(selectWire), &decodedSelect) ||
+      std::memcmp(&select, &decodedSelect, sizeof(select)) != 0) return 9;
   return 0;
 }
