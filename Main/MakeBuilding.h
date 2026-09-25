@@ -62,7 +62,7 @@ struct SBuildingInfo
 	SStoreyInfo& GetPart( const SPart &part )
 	{
 		SStoreyInfo &s = info[part];
-		s.nFloor = part.nFloor;
+		s.nFloor = part.GetFloor();
 		return s;
 	}
 	//void Clear() { stories.clear(); }
