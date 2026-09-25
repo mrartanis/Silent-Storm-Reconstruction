@@ -80,3 +80,11 @@ ASAN_OPTIONS=detect_leaks=0 qemu-aarch64-static -L /usr/aarch64-linux-gnu \
 Это не проверяет loose-файлы, моды, декодирование изображений/звука,
 подгрузку каждого ресурса реальной игровой сессией и не является
 сборкой всей игры на Linux/ARM64.
+
+Из коммита `1d196b7` собран чистый x64-архив с native media
+`C:\SS-lab\builds\stage2-steam-res-corpus-20260925-01`.
+`C:\SS-lab\runs\stage2-steam-res-corpus-clean-01` загрузил старый
+`DB_OLD` до `LOAD-SLOT-DONE` и завершился по `quit` без crash dump.
+Этот игровой smoke подтверждает чистую Windows-интеграцию текущей
+ревизии, но не заменяет полный проход пробника и не утверждает,
+что игровая сессия запросила все 57 880 ресурсов.
