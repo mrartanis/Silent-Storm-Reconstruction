@@ -26,5 +26,12 @@ int main() {
       std::memcmp(&query, &decoded, sizeof(query)) != 0 ||
       Codec::Decode(wire, 31, &decoded) ||
       Codec::Encode(query, wire, 31)) return 1;
+  if (SVec3Hash()(CVec3(1.0f, -2.0f, 0.5f)) !=
+          S2Math::SignedHash(0xc0800000u)) return 2;
+  query.vFrom = CVec3(1.0f, -2.0f, 3.0f);
+  query.vWhat = CVec3(-4.0f, 5.0f, -0.0f);
+  query.fRange = 40.0f;
+  query.fCosFOV = 0.5f;
+  if (NRPG::SVisionQueryHash()(query) != -1075837824) return 3;
   return 0;
 }

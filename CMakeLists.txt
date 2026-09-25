@@ -64,6 +64,8 @@ add_executable(PortableAITileWireTests "${root}/diagnostics/PortableAITileWireTe
 add_test(NAME PortableAITileWireTests COMMAND PortableAITileWireTests)
 add_executable(PortableVisionQueryWireTests "${root}/diagnostics/PortableVisionQueryWireTests.cpp")
 add_test(NAME PortableVisionQueryWireTests COMMAND PortableVisionQueryWireTests)
+add_executable(PortableVectorHashTests "${root}/diagnostics/PortableVectorHashTests.cpp")
+add_test(NAME PortableVectorHashTests COMMAND PortableVectorHashTests)
 add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
 add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)
 add_executable(PortableParticleWireTests "${root}/diagnostics/PortableParticleWireTests.cpp")

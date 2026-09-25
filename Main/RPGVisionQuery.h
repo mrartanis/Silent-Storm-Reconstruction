@@ -19,10 +19,10 @@ struct SVisionQuery {
 
 struct SVisionQueryHash {
   int operator()(const SVisionQuery& query) const {
-    SVec3Hash hash;
-    return hash(query.vFrom) + hash(query.vWhat) +
-           static_cast<int>(query.fRange * 16) +
-           static_cast<int>(query.fCosFOV * 1024);
+    return S2Math::SignedHash(S2Math::VisionQueryHashBits(
+        query.vFrom.x, query.vFrom.y, query.vFrom.z,
+        query.vWhat.x, query.vWhat.y, query.vWhat.z,
+        query.fRange, query.fCosFOV));
   }
 };
 
