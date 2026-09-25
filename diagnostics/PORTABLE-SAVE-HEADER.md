@@ -33,7 +33,16 @@ hash was `865ae361a188f494`. Commands were delivered to the isolated LabRun's
 atomically to `_harness_cmd.txt`: direct creation can race the polling harness
 and produce an empty, silently consumed command.
 
+The isolated original Steam `Game.exe` (SHA-256
+`4f417593a9f73e2bfde12d83cdbd694ae47eecb92812140d67b8b343e4a95705`)
+showed `SAVE_HEADER_NEW` first in the load menu with a screenshot preview and
+opened it to the mission screen (character, motorcycles, building). Evidence
+image: `D:\SS-lab\steam-ui-oracle-01\screen-save-header-new.png`. The game
+exited through its menu. Source and copied `game.sav` both retained SHA-256
+`7e3e6759139c0d98f0efcc3fc57914b542697497b4d4996e30c57073fc50c9fb`;
+`Test-SteamUnchanged.ps1` passed all 2,698 installed Steam files.
+
 These checks establish the header byte contract, architecture-independent
-decoded values, and one native Windows load/save path. They do not prove full
-save compatibility with the original Steam EXE or gameplay parity; direct
-Steam loading of this new slot remains to be checked.
+decoded values, one native Windows load/save path, and direct original-Steam
+reading of this particular new slot. They do not prove complete save coverage,
+dynamic gameplay parity, or a playable Linux/ARM64 game.
