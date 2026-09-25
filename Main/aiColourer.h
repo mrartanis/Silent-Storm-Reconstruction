@@ -8,6 +8,7 @@
 #include "../Misc/PortableZone.h"
 #include "../FileIO/PortableStructureChunks.h"
 #include "../FileIO/PortableAIColourWire.h"
+#include "../FileIO/PortableAIDistanceWire.h"
 
 namespace NAI
 {
@@ -220,6 +221,14 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 static_assert(sizeof(NAI::SZone) == 8, "game zone must keep its 8-byte wire layout");
+static_assert(sizeof(NAI::SDistanceInfo) == 32 &&
+              offsetof(NAI::SDistanceInfo, distance) == 0 &&
+              offsetof(NAI::SDistanceInfo, parent) == 4 &&
+              offsetof(NAI::SDistanceInfo, isProceeded) == 12 &&
+              offsetof(NAI::SDistanceInfo, isInList) == 13 &&
+              offsetof(NAI::SDistanceInfo, prev) == 16 &&
+              offsetof(NAI::SDistanceInfo, next) == 24,
+              "AI zone distance wire layout");
 static_assert(sizeof(NAI::SNeighbour) == 8 && sizeof(NAI::SLocalColorInfo) == 4,
               "game colour network wire sizes");
 namespace S2FileIO {
@@ -279,6 +288,37 @@ struct StructureFieldCodec<NAI::SZone, void> {
   static bool Encode(const NAI::SZone& value,
                      std::uint8_t* destination, std::size_t length) {
     return S2AI::EncodeZone(value.wColor, value.nLayer, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NAI::SDistanceInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SDistanceInfo* value) {
+    if (!value) return false;
+    AIDistanceFields fields{};
+    if (!DecodeAIDistance(source, length, &fields)) return false;
+    value->distance = fields.distance;
+    value->parent.wColor = fields.parent.color;
+    value->parent.nLayer = fields.parent.layer;
+    value->isProceeded = fields.proceeded != 0;
+    value->isInList = fields.inList != 0;
+    value->prev.wColor = fields.previous.color;
+    value->prev.nLayer = fields.previous.layer;
+    value->next.wColor = fields.next.color;
+    value->next.nLayer = fields.next.layer;
+    return true;
+  }
+  static bool Encode(const NAI::SDistanceInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeAIDistance(AIDistanceFields{
+        value.distance,
+        {value.parent.wColor, value.parent.nLayer},
+        static_cast<std::uint8_t>(value.isProceeded ? 1 : 0),
+        static_cast<std::uint8_t>(value.isInList ? 1 : 0),
+        {value.prev.wColor, value.prev.nLayer},
+        {value.next.wColor, value.next.nLayer}}, destination, length);
   }
 };
 } // namespace S2FileIO

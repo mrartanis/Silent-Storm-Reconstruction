@@ -84,6 +84,8 @@ add_executable(PortableClipShareWireTests "${root}/diagnostics/PortableClipShare
 add_test(NAME PortableClipShareWireTests COMMAND PortableClipShareWireTests)
 add_executable(PortablePartFlagsWireTests "${root}/diagnostics/PortablePartFlagsWireTests.cpp")
 add_test(NAME PortablePartFlagsWireTests COMMAND PortablePartFlagsWireTests)
+add_executable(PortableAIDistanceWireTests "${root}/diagnostics/PortableAIDistanceWireTests.cpp")
+add_test(NAME PortableAIDistanceWireTests COMMAND PortableAIDistanceWireTests)
 add_executable(PortablePixel8888WireTests "${root}/diagnostics/PortablePixel8888WireTests.cpp")
 add_test(NAME PortablePixel8888WireTests COMMAND PortablePixel8888WireTests)
 add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
@@ -490,6 +492,11 @@ add_executable(NativePartFlagsWireTests "${root}/diagnostics/NativePartFlagsWire
 target_include_directories(NativePartFlagsWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativePartFlagsWireTests PRIVATE "${root}/Main/StdAfx.h")
 add_test(NAME NativePartFlagsWireTests COMMAND NativePartFlagsWireTests)
+add_executable(NativeAIDistanceWireTests "${root}/diagnostics/NativeAIDistanceWireTests.cpp")
+target_include_directories(NativeAIDistanceWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAIDistanceWireTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAIDistanceWireTests PRIVATE Main)
+add_test(NAME NativeAIDistanceWireTests COMMAND NativeAIDistanceWireTests)
 add_executable(NativeParticleWireTests "${root}/diagnostics/NativeParticleWireTests.cpp")
 target_include_directories(NativeParticleWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeParticleWireTests PRIVATE "${root}/Main/StdAfx.h")
@@ -555,7 +562,7 @@ if(S2_ENABLE_NATIVE_VIDEO)
   target_link_libraries(BinkCompatProbe PRIVATE s2_bink_compat)
 endif()
 if(TARGET s2_bink_compat)
-  set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests PROPERTIES ENVIRONMENT_MODIFICATION
+  set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
 endif()
 add_dependencies(Game ls_implibs)   # the lib/def import libs must exist before Game links
@@ -627,6 +634,6 @@ else()
   message(STATUS "Game install not found -- pass -DS2_GAME_DIR=\"<path>\" to set the working dir.")
 endif()
 if(S2_GAME_DIR AND NOT TARGET s2_bink_compat)
-  set_tests_properties(NativeAITileWireTests NativeZoneWireTests PROPERTIES ENVIRONMENT_MODIFICATION
+  set_tests_properties(NativeAITileWireTests NativeZoneWireTests NativeAIDistanceWireTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
 endif()
