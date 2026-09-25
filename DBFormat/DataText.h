@@ -1,7 +1,7 @@
 #ifndef __DATATEXT_H_
 #define __DATATEXT_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 namespace NDb
 {

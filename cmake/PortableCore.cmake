@@ -78,6 +78,52 @@ target_include_directories(s2_game_database_runtime PRIVATE
 target_link_libraries(s2_game_database_runtime PUBLIC
   s2_game_structure s2_portable_database)
 target_compile_features(s2_game_database_runtime PUBLIC cxx_std_17)
+add_library(s2_game_misc_runtime STATIC
+  "${root}/Misc/RandomGen.cpp"
+  "${root}/Misc/StrProc.cpp"
+  "${root}/Misc/Tools.cpp")
+target_include_directories(s2_game_misc_runtime PRIVATE
+  "${root}/Misc" "${root}/FileIO")
+target_link_libraries(s2_game_misc_runtime PUBLIC s2_game_structure)
+target_compile_features(s2_game_misc_runtime PUBLIC cxx_std_17)
+add_executable(NativeStrProcTests "${root}/diagnostics/NativeStrProcTests.cpp")
+target_link_libraries(NativeStrProcTests PRIVATE s2_game_misc_runtime)
+add_test(NAME NativeStrProcTests COMMAND NativeStrProcTests)
+# Typed game.db records and the original post-load link builder. Editor-only
+# dbinfo/StdAfx translation units are intentionally not part of this target.
+add_library(s2_game_dbformat_records STATIC
+  "${root}/DBFormat/DataFormat.cpp"
+  "${root}/DBFormat/DataAck.cpp"
+  "${root}/DBFormat/DataAI.cpp"
+  "${root}/DBFormat/DataCamera.cpp"
+  "${root}/DBFormat/DataChest.cpp"
+  "${root}/DBFormat/DataConst.cpp"
+  "${root}/DBFormat/DataDifficulty.cpp"
+  "${root}/DBFormat/DataFaceGen.cpp"
+  "${root}/DBFormat/DataInterface.cpp"
+  "${root}/DBFormat/DataMap.cpp"
+  "${root}/DBFormat/DataMisc.cpp"
+  "${root}/DBFormat/DataPerk.cpp"
+  "${root}/DBFormat/DataPhys.cpp"
+  "${root}/DBFormat/DataRPG.cpp"
+  "${root}/DBFormat/DataRPGTmp.cpp"
+  "${root}/DBFormat/DataRpgConstants.cpp"
+  "${root}/DBFormat/DataScenario.cpp"
+  "${root}/DBFormat/DataScript.cpp")
+target_include_directories(s2_game_dbformat_records PRIVATE
+  "${root}/DBFormat" "${root}/ADOImport" "${root}/FileIO" "${root}/Misc" "${root}/Main")
+target_link_libraries(s2_game_dbformat_records PUBLIC
+  s2_game_database_runtime s2_game_misc_runtime)
+target_compile_features(s2_game_dbformat_records PUBLIC cxx_std_17)
+add_executable(NativeGameDatabaseLoadTests
+  "${root}/diagnostics/NativeGameDatabaseLoadTests.cpp")
+target_link_libraries(NativeGameDatabaseLoadTests PRIVATE
+  "-Wl,--whole-archive" s2_game_dbformat_records "-Wl,--no-whole-archive")
+set(S2_GAME_DB_PATH "" CACHE FILEPATH "Path to an original game.db for native load regression")
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeGameDatabaseLoadTests
+    COMMAND NativeGameDatabaseLoadTests "${S2_GAME_DB_PATH}")
+endif()
 # Linking this module into a headless game target still needs the original
 # BasicDB record registry and CMaterial/CRPGArmor vtables. Until that runtime
 # is ported, build the original translation unit but keep its executable test

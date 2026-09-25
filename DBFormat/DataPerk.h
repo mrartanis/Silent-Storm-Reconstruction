@@ -1,7 +1,7 @@
 #ifndef __DATAPERK_H_
 #define __DATAPERK_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 namespace NDb
 {

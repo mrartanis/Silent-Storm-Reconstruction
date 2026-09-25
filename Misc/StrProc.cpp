@@ -5,6 +5,15 @@
 #include <unordered_map>
 #include <stack>
 #include <math.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cwchar>
+#if !defined(_WIN32)
+#include <iconv.h>
+#include <codecvt>
+#include <locale>
+#include <stdexcept>
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NStr
@@ -12,12 +21,17 @@ namespace NStr
 	static std::unordered_map<char, char> brackets;   // map with open bracket <=> close bracket respection
 	static char cBracketTypes[8] = "({[\" ";     // all available brackets (open)
 	static const int NUM_BRACKET_TYPES = 4;      // number of available brackets
-	static int nCodePage = CP_ACP;
+	static int nCodePage =
+#if defined(_WIN32)
+		CP_ACP;
+#else
+		65001; // Portable default: UTF-8; SetCodePage(1251) remains supported.
+#endif
 	//
 	void InitStringProcessor();
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// проинициализировать внутренние структуры string processor'а
+// РїСЂРѕРёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РІРЅСѓС‚СЂРµРЅРЅРёРµ СЃС‚СЂСѓРєС‚СѓСЂС‹ string processor'Р°
 void NStr::InitStringProcessor()
 {
 	brackets['('] = ')';
@@ -25,7 +39,7 @@ void NStr::InitStringProcessor()
 	brackets['{'] = '}';
 	brackets['\"'] = '\"';
 }
-// это вспомогательная структура для автоматической инициализации string processor'а
+// СЌС‚Рѕ РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё string processor'Р°
 struct SStrProcInit
 {
 	SStrProcInit() { NStr::InitStringProcessor(); }
@@ -37,24 +51,24 @@ bool NStr::IsOpenBracket( const char cSymbol )
 	return brackets.find( cSymbol ) != brackets.end();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// добавить новую пару скобок
+// РґРѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РїР°СЂСѓ СЃРєРѕР±РѕРє
 void NStr::AddBrackets( const char cOpenBracket, const char cCloseBracket )
 {
 	brackets[cOpenBracket] = cCloseBracket;
 }
-// удалить пару скобок
+// СѓРґР°Р»РёС‚СЊ РїР°СЂСѓ СЃРєРѕР±РѕРє
 void NStr::RemoveBrackets( const char cOpenBracket, const char cCloseBracket )
 {
 	brackets.erase( cOpenBracket );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// получить закрывающую скобку по открывающей
+// РїРѕР»СѓС‡РёС‚СЊ Р·Р°РєСЂС‹РІР°СЋС‰СѓСЋ СЃРєРѕР±РєСѓ РїРѕ РѕС‚РєСЂС‹РІР°СЋС‰РµР№
 const char NStr::GetCloseBracket( const char cOpenBracket )
 {
 	return brackets[cOpenBracket];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// разделить строку на массив строк по заданному разделителю
+// СЂР°Р·РґРµР»РёС‚СЊ СЃС‚СЂРѕРєСѓ РЅР° РјР°СЃСЃРёРІ СЃС‚СЂРѕРє РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ СЂР°Р·РґРµР»РёС‚РµР»СЋ
 void NStr::SplitString( const std::string &szString, std::vector<std::string> &szVector, const char cSeparator )
 {
 	int nPos = 0, nLastPos = 0;
@@ -69,7 +83,7 @@ void NStr::SplitString( const std::string &szString, std::vector<std::string> &s
 	} while( nPos != std::string::npos );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// разделить строку на массив строк по заданному разделителю с учётом скобок одной вложенности
+// СЂР°Р·РґРµР»РёС‚СЊ СЃС‚СЂРѕРєСѓ РЅР° РјР°СЃСЃРёРІ СЃС‚СЂРѕРє РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ СЂР°Р·РґРµР»РёС‚РµР»СЋ СЃ СѓС‡С‘С‚РѕРј СЃРєРѕР±РѕРє РѕРґРЅРѕР№ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
 void NStr::SplitStringWithBrackets( const std::string &szString, std::vector<std::string> &szVector, const char cSeparator )
 {
 	int nPos = 0, nLastPos = 0;
@@ -94,7 +108,7 @@ void NStr::SplitStringWithBrackets( const std::string &szString, std::vector<std
 	} while( nPos != std::string::npos );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// разделить строку на массив строк по заданному разделителю с учётом скобок любой вложенности
+// СЂР°Р·РґРµР»РёС‚СЊ СЃС‚СЂРѕРєСѓ РЅР° РјР°СЃСЃРёРІ СЃС‚СЂРѕРє РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ СЂР°Р·РґРµР»РёС‚РµР»СЋ СЃ СѓС‡С‘С‚РѕРј СЃРєРѕР±РѕРє Р»СЋР±РѕР№ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
 void NStr::SplitStringWithMultipleBrackets( const std::string &szString, std::vector<std::string> &szVector, const char cSeparator )
 {
 	std::stack<char> stackBrackets;
@@ -122,13 +136,13 @@ void NStr::SplitStringWithMultipleBrackets( const std::string &szString, std::ve
 		szVector.push_back( szString.substr( nLastPos ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// найти закрывающую скобку без учёта внутренних скобок
+// РЅР°Р№С‚Рё Р·Р°РєСЂС‹РІР°СЋС‰СѓСЋ СЃРєРѕР±РєСѓ Р±РµР· СѓС‡С‘С‚Р° РІРЅСѓС‚СЂРµРЅРЅРёС… СЃРєРѕР±РѕРє
 int NStr::FindCloseBracket( const std::string &szString, int nPos, const char cOpenBracket )
 {
 	return szString.find( brackets[cOpenBracket], nPos );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// найти закрывающую скобку с учётом внутренних скобок
+// РЅР°Р№С‚Рё Р·Р°РєСЂС‹РІР°СЋС‰СѓСЋ СЃРєРѕР±РєСѓ СЃ СѓС‡С‘С‚РѕРј РІРЅСѓС‚СЂРµРЅРЅРёС… СЃРєРѕР±РѕРє
 int NStr::FindMultipleCloseBracket( const std::string &szString, int nPos, const char cOpenBracket )
 {
 	std::stack<char> stackBrackets;
@@ -150,7 +164,7 @@ int NStr::FindMultipleCloseBracket( const std::string &szString, int nPos, const
 	return std::string::npos;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// отрезать все символы 'cTrim' справа
+// РѕС‚СЂРµР·Р°С‚СЊ РІСЃРµ СЃРёРјРІРѕР»С‹ 'cTrim' СЃРїСЂР°РІР°
 void NStr::TrimRight( std::string &szString, const char cTrim )
 {
 	int nPos = szString.find_last_not_of( cTrim );
@@ -174,7 +188,7 @@ void NStr::TrimRight( std::string &szString, const char *pszTrim )
 		szString.erase( nPos + 1, std::string::npos );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// вырезать все символы 'cTrim' из строки
+// РІС‹СЂРµР·Р°С‚СЊ РІСЃРµ СЃРёРјРІРѕР»С‹ 'cTrim' РёР· СЃС‚СЂРѕРєРё
 class CSymbolCheckFunctional
 {
 private:
@@ -196,7 +210,7 @@ void NStr::TrimInside( std::string &szString, const char *pszTrim )
   szString.erase( std::remove_if(szString.begin(), szString.end(), CSymbolCheckFunctional(pszTrim)), szString.end() );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// преобразовать целое в строку, разделяя каждые три знака (три порядка) специальным разделителем (.)
+// РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ С†РµР»РѕРµ РІ СЃС‚СЂРѕРєСѓ, СЂР°Р·РґРµР»СЏСЏ РєР°Р¶РґС‹Рµ С‚СЂРё Р·РЅР°РєР° (С‚СЂРё РїРѕСЂСЏРґРєР°) СЃРїРµС†РёР°Р»СЊРЅС‹Рј СЂР°Р·РґРµР»РёС‚РµР»РµРј (.)
 void NStr::ToDotString( std::wstring *pDst, int nVal, const wchar_t cSeparator )
 {
 	wchar_t buff[32], buff2[32];
@@ -206,23 +220,32 @@ void NStr::ToDotString( std::wstring *pDst, int nVal, const wchar_t cSeparator )
   while ( nOrderVal > 1 )
   {
     int nVal1 = nVal / nOrderVal;
+#if defined(_WIN32)
 		swprintf( buff2, L"%d%c", nVal1, cSeparator );
+#else
+		swprintf( buff2, sizeof(buff2) / sizeof(buff2[0]), L"%d%lc", nVal1, cSeparator );
+#endif
 		wcscat( buff, buff2 );
     nVal -= nVal1 * nOrderVal;
     nOrderVal /= 1000;
   }
+#if defined(_WIN32)
 	wcscat( buff, _itow(nVal, buff2, 10) );
+#else
+	swprintf( buff2, sizeof(buff2) / sizeof(buff2[0]), L"%d", nVal );
+	wcscat( buff, buff2 );
+#endif
   *pDst = buff;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// форматирование строки
+// С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё
 const char* __cdecl NStr::Format( const char *pszFormat, ... )
 {
   static char buff[2048];
   va_list va;
 	// 
   va_start( va, pszFormat );
-  vsprintf( buff, pszFormat, va );
+  vsnprintf( buff, sizeof(buff), pszFormat, va );
   va_end( va );
 	//
 	return buff;
@@ -234,7 +257,11 @@ const wchar_t* __cdecl NStr::Format( const wchar_t *pszFormat, ... )
   va_list va;
 	// 
   va_start( va, pszFormat );
+#if defined(_WIN32)
   vswprintf( buff, pszFormat, va );
+#else
+  vswprintf( buff, sizeof(buff) / sizeof(buff[0]), pszFormat, va );
+#endif
   va_end( va );
 	//
 	return buff;
@@ -347,8 +374,25 @@ void NStr::SetCodePage( int _nCodePage )
 	nCodePage = _nCodePage;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if !defined(_WIN32)
+// Windows-1251 high half, from the platform code-page mapping. Keep this
+// game-used legacy encoding available even when an ARM runtime has no gconv
+// modules installed (notably the QEMU test sysroot).
+static const wchar_t kCp1251High[128] = {
+	0x0402, 0x0403, 0x201A, 0x0453, 0x201E, 0x2026, 0x2020, 0x2021, 0x20AC, 0x2030, 0x0409, 0x2039, 0x040A, 0x040C, 0x040B, 0x040F,
+	0x0452, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014, 0x0098, 0x2122, 0x0459, 0x203A, 0x045A, 0x045C, 0x045B, 0x045F,
+	0x00A0, 0x040E, 0x045E, 0x0408, 0x00A4, 0x0490, 0x00A6, 0x00A7, 0x0401, 0x00A9, 0x0404, 0x00AB, 0x00AC, 0x00AD, 0x00AE, 0x0407,
+	0x00B0, 0x00B1, 0x0406, 0x0456, 0x0491, 0x00B5, 0x00B6, 0x00B7, 0x0451, 0x2116, 0x0454, 0x00BB, 0x0458, 0x0405, 0x0455, 0x0457,
+	0x0410, 0x0411, 0x0412, 0x0413, 0x0414, 0x0415, 0x0416, 0x0417, 0x0418, 0x0419, 0x041A, 0x041B, 0x041C, 0x041D, 0x041E, 0x041F,
+	0x0420, 0x0421, 0x0422, 0x0423, 0x0424, 0x0425, 0x0426, 0x0427, 0x0428, 0x0429, 0x042A, 0x042B, 0x042C, 0x042D, 0x042E, 0x042F,
+	0x0430, 0x0431, 0x0432, 0x0433, 0x0434, 0x0435, 0x0436, 0x0437, 0x0438, 0x0439, 0x043A, 0x043B, 0x043C, 0x043D, 0x043E, 0x043F,
+	0x0440, 0x0441, 0x0442, 0x0443, 0x0444, 0x0445, 0x0446, 0x0447, 0x0448, 0x0449, 0x044A, 0x044B, 0x044C, 0x044D, 0x044E, 0x044F
+};
+#endif
+////////////////////////////////////////////////////////////////////////////////////////////////////
 void NStr::ToAscii( std::string *pRes, const std::wstring &szSrc )
 {
+#if defined(_WIN32)
 	const int N_STACK_BUFF_SIZE = 1024;
 	char static_buff[N_STACK_BUFF_SIZE];
 	int nBufLeng = szSrc.length() * 2 + 10;
@@ -362,10 +406,52 @@ void NStr::ToAscii( std::string *pRes, const std::wstring &szSrc )
 	*pRes = pszBuf;
 	if ( nBufLeng >= N_STACK_BUFF_SIZE )
 		delete[] pszBuf;
+#else
+	if ( nCodePage == 65001 )
+	{
+		*pRes = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes( szSrc );
+		return;
+	}
+	if ( nCodePage == 1251 )
+	{
+		pRes->clear();
+		pRes->reserve( szSrc.size() );
+		for ( wchar_t c : szSrc )
+		{
+			if ( c <= 0x7f )
+			{
+				pRes->push_back( static_cast<char>(c) );
+				continue;
+			}
+			const wchar_t *end = kCp1251High + 128;
+			const wchar_t *found = std::find( kCp1251High, end, c );
+			if ( found == end )
+				throw std::runtime_error( "character is not representable in CP1251" );
+			pRes->push_back( static_cast<char>(0x80 + (found - kCp1251High)) );
+		}
+		return;
+	}
+	const std::string encoding = nCodePage == 65001 ? "UTF-8" : "CP" + std::to_string(nCodePage);
+	iconv_t converter = iconv_open( encoding.c_str(), "WCHAR_T" );
+	if ( converter == (iconv_t)-1 )
+		throw std::runtime_error( "unsupported game text code page" );
+	std::string result( szSrc.size() * 4 + 16, '\0' );
+	char *input = reinterpret_cast<char*>( const_cast<wchar_t*>(szSrc.data()) );
+	size_t inputLeft = szSrc.size() * sizeof(wchar_t);
+	char *output = result.data();
+	size_t outputLeft = result.size();
+	const size_t status = iconv( converter, &input, &inputLeft, &output, &outputLeft );
+	iconv_close( converter );
+	if ( status == (size_t)-1 )
+		throw std::runtime_error( "invalid game text conversion to code page" );
+	result.resize( result.size() - outputLeft );
+	*pRes = std::move(result);
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void NStr::ToUnicode( std::wstring *pRes, const std::string &szSrc )
 {
+#if defined(_WIN32)
 	const int N_STACK_BUFF_SIZE = 1024;
 	WCHAR static_buff[N_STACK_BUFF_SIZE];
 	int nBufLeng = szSrc.length() + 3;
@@ -379,5 +465,35 @@ void NStr::ToUnicode( std::wstring *pRes, const std::string &szSrc )
 	*pRes = pszBuf;
 	if ( nBufLeng >= N_STACK_BUFF_SIZE )
 		delete[] pszBuf;
+#else
+	if ( nCodePage == 65001 )
+	{
+		*pRes = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes( szSrc );
+		return;
+	}
+	if ( nCodePage == 1251 )
+	{
+		pRes->clear();
+		pRes->reserve( szSrc.size() );
+		for ( unsigned char c : szSrc )
+			pRes->push_back( c < 0x80 ? static_cast<wchar_t>(c) : kCp1251High[c - 0x80] );
+		return;
+	}
+	const std::string encoding = nCodePage == 65001 ? "UTF-8" : "CP" + std::to_string(nCodePage);
+	iconv_t converter = iconv_open( "WCHAR_T", encoding.c_str() );
+	if ( converter == (iconv_t)-1 )
+		throw std::runtime_error( "unsupported game text code page" );
+	std::string bytes( szSrc.size() * sizeof(wchar_t) + 16, '\0' );
+	char *input = const_cast<char*>( szSrc.data() );
+	size_t inputLeft = szSrc.size();
+	char *output = bytes.data();
+	size_t outputLeft = bytes.size();
+	const size_t status = iconv( converter, &input, &inputLeft, &output, &outputLeft );
+	iconv_close( converter );
+	if ( status == (size_t)-1 || (bytes.size() - outputLeft) % sizeof(wchar_t) != 0 )
+		throw std::runtime_error( "invalid game text conversion from code page" );
+	pRes->resize( (bytes.size() - outputLeft) / sizeof(wchar_t) );
+	std::memcpy( pRes->data(), bytes.data(), bytes.size() - outputLeft );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -24,14 +24,18 @@
 #include "DataChest.h"
 #include "DataPhys.h"
 
-#include "..\Misc\StrProc.h"
+#include "../Misc/StrProc.h"
 
 const int N_DEF_BUMP_ID = 606;
 static void ErrOut( const string &str, int nID )
 {
 	static char buf[1024];
 	sprintf( buf, "%s %d\n", str.c_str(), nID );
+#if defined(_WIN32)
 	OutputDebugString( buf );
+#else
+	DebugTrace( "%s", buf );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 union UColor
@@ -1362,7 +1366,11 @@ CDebris* CDebrisMaterial::GetDebris()
 {
 	if ( debris.empty() )
 		return 0;
+#if defined(_WIN32)
 	return debris[ random.Get( debris.size() ) ];
+#else
+	return debris[ s2_game_random.Get( debris.size() ) ];
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDebrisMaterial::Import()

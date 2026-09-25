@@ -4,13 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NDb
 {
-template <class L>
-void ImportItem( L *pLink )
-{
-	NDatabase::ImportField( "RPGItemID", &pLink->pItem );
-	NDatabase::ImportField( "RPGPersID", &pLink->pPers );
-	NDatabase::ImportField( "Quantity", &pLink->nQuantity );
-}
 /*void CRPGWeapon4Pers::Import()
 {
 	ImportItem(this);

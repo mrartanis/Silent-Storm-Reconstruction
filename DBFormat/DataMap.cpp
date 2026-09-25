@@ -3,12 +3,13 @@
 #include "DataMap.h"
 #include "DataRPGTmp.h"
 #include "DataAnimation.h"
-#include "..\FileIO\PortableGameLinks.h"
+#include "../FileIO/PortableGameLinks.h"
 #include "DataTerrain.h"
-#include "..\Main\Grid.h"
-#include "..\Misc\StrProc.h"
+#include "../Main/Grid.h"
+#include "../Misc/StrProc.h"
 #include <limits>
 #include <map>
+#include <cstdlib>
 #include "DataScenario.h"
 #include "DataSound.h"
 #include "DataText.h"
@@ -25,7 +26,11 @@ inline void DebugStringInt( const char *str, int i )
 {
 	char buf[512];
 	sprintf( buf, "%s %d\n", str, i );
+#if defined(_WIN32)
 	OutputDebugString( buf );
+#else
+	DebugTrace( "%s", buf );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // PushItem<T> hoisted to DataFormat.h so DataFaceGen.cpp (and any other DB-record TU) can share one
@@ -740,6 +745,9 @@ public:
 	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
+// These uninstantiated MSVC-era helpers reference fields absent from the
+// retail CTemplVariant layout and are not used by the game link builder.
 template<class T>
 void MinMaxTiles( CTemplVariant *pVar, const vector<CPtr<T> > &fragments )
 {
@@ -776,6 +784,7 @@ void MinMaxTiles4Solids( CTemplVariant *pVar, const vector<CPtr<T> > &fragments 
 		pVar->nMaxFloor = Max( pVar->nMaxFloor, frag.nFloor + frag.pModel->nHeight );
 	}
 }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 externA5 const char *pszDBUniformSlotNames[];
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -826,9 +835,8 @@ void BuildMapLinks( bool bTranslate, const std::vector<std::int32_t>* animationR
 	// Game/Main.cpp right after the game.db load.)
 	{
 		CDBTable<CAnimation> *pATable = NDatabase::GetTable<CAnimation>();
-		char parityFlag[2] = {};
-		const bool checkParity = GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag,
-			sizeof(parityFlag) ) == 1 && parityFlag[0] == '1';
+		const char *parityFlag = std::getenv( "S2_DB_PARITY" );
+		const bool checkParity = parityFlag && parityFlag[0] == '1' && parityFlag[1] == '\0';
 		std::vector<S2FileIO::GameDatabaseLink> animationLinks;
 		std::map<std::pair<int, int>, int> lastAnimationInGroup;
 		std::map<std::pair<int, int>, std::vector<std::int32_t>> animationGroups;

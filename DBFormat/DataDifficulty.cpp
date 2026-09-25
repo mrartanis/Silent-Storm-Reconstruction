@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Misc\StrProc.h"
+#include "../Misc/StrProc.h"
 #include "DataDifficulty.h"
 //
 // Release version: Import() column order/names taken verbatim from Game.exe (CDBDifficulty::Import

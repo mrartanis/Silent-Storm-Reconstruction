@@ -1,7 +1,7 @@
 #ifndef __DATAPHYS_H_
 #define __DATAPHYS_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 // Reconstructed from release Game.exe (dataphys.obj / DataFormat.obj). Member layout, serialization
 // tags (operator&), Import() columns and the saveload id (0x72532130) are taken verbatim from the

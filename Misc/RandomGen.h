@@ -6,6 +6,7 @@
 #include "PortableIsaac.h"
 #include "PortableRand.h"
 #include "../FileIO/PortableStructureChunks.h"
+class CStructureSaver;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SRandomSeed

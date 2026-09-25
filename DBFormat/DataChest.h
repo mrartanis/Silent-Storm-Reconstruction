@@ -10,7 +10,7 @@
 // random pool (CRndPtr<CRPGChest>) just like CTRndModel/CTRndObject; each CRPGChest variant pushes
 // itself into its template's roulette via the standard PushItemWithWeight idiom (RndWeight column).
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 #include "DataConst.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NDb

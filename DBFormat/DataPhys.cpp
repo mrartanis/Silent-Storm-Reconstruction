@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Misc\StrProc.h"
+#include "../Misc/StrProc.h"
 #include "DataPhys.h"
 //
 namespace NDb

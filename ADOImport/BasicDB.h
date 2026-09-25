@@ -86,6 +86,7 @@ public:
 	void PreCreate( int nTypeID );
 	void Import();
 	CDBRecord* GetDBRecord( int nID );
+	std::size_t GetRecordCount() const { return records.size(); }
 	int operator&( CStructureSaver &f ) 
 	{
 		f.Add( 1, &records );
@@ -190,9 +191,9 @@ namespace NDatabase
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #define REGISTER_DATABASE_CLASS( N, table, name ) NDatabase::AddTable( N, table, \
-(NDatabase::RecordCreateFunc)name##::New##name );
+(NDatabase::RecordCreateFunc)name::New##name );
 #define REGISTER_DATABASE_CLASS_TEMPL( N, table, name,className ) NDatabase::AddTable( N, table, \
-(NDatabase::RecordCreateFunc)name##::New##className );
+(NDatabase::RecordCreateFunc)name::New##className );
 #define REGISTER_DATABASE_RELATION( table ) NDatabase::AddRelation( table );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

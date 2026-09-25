@@ -20,11 +20,29 @@ public:
 	int nQuantity;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&pPers); f.Add(3,&nQuantity); return 0; }
 };
-template <class L> void ImportItem( L *pLink );
+template <class L> void ImportItem( L *pLink )
+{
+	NDatabase::ImportField( "RPGItemID", &pLink->pItem );
+	NDatabase::ImportField( "RPGPersID", &pLink->pPers );
+	NDatabase::ImportField( "Quantity", &pLink->nQuantity );
+}
 template<class T>
 class CRPGSomethingForPers : public CRPGLink4Pers
 {
-	OBJECT_BASIC_METHODS(CRPGSomethingForPers);
+	public:
+		static CObjectBase* NewCRPGSomethingForPers() { return new CRPGSomethingForPers<T>(); }
+		CRPGSomethingForPers* Duplicate() const { return dynamic_cast<CRPGSomethingForPers*>(MakeCopy()); }
+	protected:
+		CObjectBase* MakeCopy() const { return new CRPGSomethingForPers<T>(*this); }
+		virtual void DestroyContents()
+		{
+			this->~CRPGSomethingForPers();
+			const int nHoldRefs = nRefData, nHoldObjs = nObjData;
+			::new(this) CRPGSomethingForPers<T>;
+			nRefData += nHoldRefs;
+			nObjData += nHoldObjs;
+		}
+		virtual ~CRPGSomethingForPers() {}
 public:
 	ZDATA_(CRPGLink4Pers)
 	CPtr<T> pItem;

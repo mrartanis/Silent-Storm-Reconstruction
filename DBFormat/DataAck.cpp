@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "StdAfx.h"
+#if !defined(_WIN32)
+#include <strings.h>
+#endif
 #include "DataAck.h"
 #include "DataFormat.h"
 #include "DataSound.h"
@@ -136,7 +139,12 @@ NDb::CDBDialog* GetDBDialogByCode( const string &szCode )
 	while ( pTable && i.MoveNext() )
 	{
 		CDBPtr<NDb::CDBDialog> pDialog = i.Get();
-		if ( IsValid( pDialog ) && stricmp( pDialog->szCode.c_str(), szCode.c_str() ) == 0 )
+		if ( IsValid( pDialog ) &&
+#if defined(_WIN32)
+			stricmp( pDialog->szCode.c_str(), szCode.c_str() ) == 0 )
+#else
+			strcasecmp( pDialog->szCode.c_str(), szCode.c_str() ) == 0 )
+#endif
 			return pDialog;
 	}
 	return 0;

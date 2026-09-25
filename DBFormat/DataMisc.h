@@ -8,7 +8,7 @@
 // constants, picklocks, UI hints/cursors. Member layout, operator& tags and Import() column names are
 // verbatim from the matched Game.exe + PDB. Registered in DataFormat.cpp's RegisterDatabaseClasses().
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NDb
 {

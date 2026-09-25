@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "DataFormat.h"
-#include "..\Misc\StrProc.h"
+#include "../Misc/StrProc.h"
 //
 #include "DataInterface.h"	// CUITexture, for CDBScenarioZone::pPWLImage import
 #include "DataScenario.h"

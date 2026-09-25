@@ -1,7 +1,7 @@
 #ifndef __DATACAMERA_H_
 #define __DATACAMERA_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 namespace NDb
 {

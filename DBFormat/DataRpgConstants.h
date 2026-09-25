@@ -1,7 +1,7 @@
 #ifndef __DATARPGCONSTANTS_H_
 #define __DATARPGCONSTANTS_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 namespace NDb
 {

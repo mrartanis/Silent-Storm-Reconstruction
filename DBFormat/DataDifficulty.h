@@ -1,7 +1,7 @@
 #ifndef __DATADIFFICULTY_H_
 #define __DATADIFFICULTY_H_
 //
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 //
 // Release version of CDBDifficulty, reconstructed from Game.exe (type, operator& tags @0x8005b0,
 // Import columns @0x82c7b0). Serialization tags 2..15 are identical to the dev snapshot; release

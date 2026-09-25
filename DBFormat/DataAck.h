@@ -1,7 +1,7 @@
 #ifndef __DATAACK_H_
 #define __DATAACK_H_
 
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 #include "DataFaceGen.h"	// EFaceExpression (retail SAckVoice carries the phrase's facial expression)
 
 namespace NDb

@@ -3,7 +3,7 @@
 #include "PortableRand.h"
 #include "PortableIsaacSeed.h"
 #include "PortableClockSeed.h"
-#include "..\FileIO\basicChunk1.h"
+#include "../FileIO/BasicChunk1.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Disabled in every normal run.  The harness sets this only before paired
@@ -63,7 +63,11 @@ int CRoulette::operator&( CStructureSaver &f )
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 CRandomGenerator random;
+#else
+CRandomGenerator s2_game_random;
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRandomGenerator::Init()
 {

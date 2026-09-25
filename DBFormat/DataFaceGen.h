@@ -9,7 +9,7 @@
 // names are taken verbatim from the decompile so they round-trip game.db identically. These records
 // were entirely absent from the dev snapshot - see CHead::pTransformableTextures / CComplexHead::pBodyColor.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
+#include "../ADOImport/BasicDB.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NDb
 {
