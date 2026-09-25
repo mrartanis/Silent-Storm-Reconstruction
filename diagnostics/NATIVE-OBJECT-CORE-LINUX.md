@@ -20,6 +20,17 @@ cmake --build BUILD_DIR --target NativeObjectCoreTests -j 8
 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir BUILD_DIR -R '^NativeObjectCoreTests$' --output-on-failure
 ```
 
+Verified 2026-09-25: Windows x64 rebuilt `Game.exe` and passed CTest 81/81;
+Linux x86-64 and ARM64/QEMU passed 48/48 each with
+`CMAKE_CXX_FLAGS=-fsanitize=address,undefined`. The Linux x86-64 object test
+also passed with leak detection enabled. A fresh Windows x64 build directory
+produced clean archive `D:\SS-lab\builds\stage2-object-events-20260925-01`
+from source commit `5aaeeae`. Isolated LabRun
+`D:\SS-lab\runs\stage2-object-events-01` opened the existing mission slot
+`TOPWRITE_NEW` to `LOAD-SLOT-DONE`, then exited via the harness with no crash
+dump. The save retained SHA-256
+`1385447ae22f6da374f44453bbb93034d99e2e7476e5faa9034d026b4ee3e16a`.
+
 This is a prerequisite, **not completion** of stage 2. Linux still does not
 build or run the gameplay loop, Lua interpreter, AI, combat or native game
 database object instantiation. In particular, save-load teardown's dangling
