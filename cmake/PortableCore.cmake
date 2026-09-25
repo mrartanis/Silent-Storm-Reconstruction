@@ -40,6 +40,23 @@ add_executable(NativeCruncherTests "${root}/diagnostics/NativeCruncherTests.cpp"
 target_link_libraries(NativeCruncherTests PRIVATE s2_game_structure)
 add_test(NAME NativeCruncherTests COMMAND NativeCruncherTests)
 
+# The game's .res package stream, excluding its Windows/editor-only package
+# creation and directory rescan path.
+add_library(s2_game_resource_package STATIC "${root}/FileIO/FilesPackage.cpp")
+target_include_directories(s2_game_resource_package PRIVATE
+  "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_resource_package PUBLIC
+  s2_game_structure s2_portable_package)
+target_compile_features(s2_game_resource_package PUBLIC cxx_std_17)
+set(S2_RESOURCE_PACKAGE_PATH "" CACHE FILEPATH "Original .res package for native stream regression")
+add_executable(NativeResourcePackageTests
+  "${root}/diagnostics/NativeResourcePackageTests.cpp")
+target_link_libraries(NativeResourcePackageTests PRIVATE s2_game_resource_package)
+if(S2_RESOURCE_PACKAGE_PATH)
+  add_test(NAME NativeResourcePackageTests
+    COMMAND NativeResourcePackageTests "${S2_RESOURCE_PACKAGE_PATH}")
+endif()
+
 # The game's world/camera transform and bound mathematics, without a renderer.
 add_library(s2_game_transform STATIC "${root}/Main/Transform.cpp")
 target_include_directories(s2_game_transform PRIVATE "${root}/Main" "${root}/Misc" "${root}/FileIO")
@@ -269,6 +286,40 @@ target_include_directories(s2_game_ai_waypoint PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
 target_compile_features(s2_game_ai_waypoint PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_waypoint PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_resource_loader STATIC "${root}/Main/GResource.cpp")
+target_include_directories(s2_game_resource_loader PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_resource_loader PUBLIC
+  s2_game_resource_package s2_game_dg s2_game_structure)
+target_compile_features(s2_game_resource_loader PUBLIC cxx_std_17)
+target_compile_options(s2_game_resource_loader PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeResourceOpenerTests
+  "${root}/diagnostics/NativeResourceOpenerTests.cpp")
+target_link_libraries(NativeResourceOpenerTests PRIVATE
+  -Wl,--start-group s2_game_resource_loader s2_game_resource_package
+  s2_game_dg s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_package s2_portable_structure -Wl,--end-group)
+target_link_options(NativeResourceOpenerTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH)
+  add_test(NAME NativeResourceOpenerTests
+    COMMAND NativeResourceOpenerTests "${S2_RESOURCE_PACKAGE_PATH}"
+      "${CMAKE_BINARY_DIR}/resource-opener-fixture")
+endif()
+add_executable(NativeWaypointResourceTests
+  "${root}/diagnostics/NativeWaypointResourceTests.cpp")
+target_include_directories(NativeWaypointResourceTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeWaypointResourceTests PRIVATE
+  -Wl,--start-group s2_game_ai_waypoint s2_game_basic_share
+  s2_game_resource_loader s2_game_resource_package s2_game_ai_position
+  s2_game_dg s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_package s2_portable_structure s2_game_misc_runtime
+  -Wl,--end-group)
+target_link_options(NativeWaypointResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH)
+  add_test(NAME NativeWaypointResourceTests
+    COMMAND NativeWaypointResourceTests "${S2_RESOURCE_PACKAGE_PATH}")
+endif()
 add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp")
 target_link_libraries(NativeMapFlagsTests PRIVATE
   -Wl,--start-group s2_game_map_build

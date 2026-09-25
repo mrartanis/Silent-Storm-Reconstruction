@@ -464,6 +464,9 @@ set_tests_properties(StructureWireRead PROPERTIES FIXTURES_REQUIRED structure_wi
 add_executable(NativeCruncherTests "${root}/diagnostics/NativeCruncherTests.cpp")
 target_link_libraries(NativeCruncherTests PRIVATE FileIO)
 add_test(NAME NativeCruncherTests COMMAND NativeCruncherTests)
+add_executable(NativeResourcePackageTests
+  "${root}/diagnostics/NativeResourcePackageTests.cpp")
+target_link_libraries(NativeResourcePackageTests PRIVATE FileIO)
 s2_module(MiscDll   lib LINK FileIO Misc DEFINES MISCDLL_EXPORTS)
 s2_module(Image     lib LINK zlib libpng squish)
 s2_module(ADOImport lib LINK FileIO Misc DEFINES ADOIMPORT_EXPORTS)
@@ -561,6 +564,16 @@ add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp"
 target_include_directories(NativeMapFlagsTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapFlagsTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeMapFlagsTests PRIVATE Main)
+add_executable(NativeResourceOpenerTests "${root}/diagnostics/NativeResourceOpenerTests.cpp")
+target_include_directories(NativeResourceOpenerTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeResourceOpenerTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeResourceOpenerTests PRIVATE Main)
+target_compile_features(NativeResourceOpenerTests PRIVATE cxx_std_17)
+add_executable(NativeWaypointResourceTests "${root}/diagnostics/NativeWaypointResourceTests.cpp")
+target_include_directories(NativeWaypointResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeWaypointResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeWaypointResourceTests PRIVATE Main)
+target_compile_features(NativeWaypointResourceTests PRIVATE cxx_std_17)
 add_executable(NativePoolTests "${root}/diagnostics/NativePoolTests.cpp")
 target_include_directories(NativePoolTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativePoolTests PRIVATE "${root}/Main/StdAfx.h")
@@ -778,6 +791,22 @@ if(S2_GAME_DIR)
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
     else()
       set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+    endif()
+  endif()
+  if(EXISTS "${S2_GAME_DIR}/res/Waypoints.res")
+    add_test(NAME NativeResourcePackageTests
+      COMMAND NativeResourcePackageTests "${S2_GAME_DIR}/res/Waypoints.res")
+    add_test(NAME NativeResourceOpenerTests
+      COMMAND NativeResourceOpenerTests "${S2_GAME_DIR}/res/Waypoints.res"
+        "${CMAKE_BINARY_DIR}/resource-opener-fixture")
+    add_test(NAME NativeWaypointResourceTests
+      COMMAND NativeWaypointResourceTests "${S2_GAME_DIR}/res/Waypoints.res")
+    if(TARGET s2_bink_compat)
+      set_tests_properties(NativeResourceOpenerTests NativeWaypointResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+    else()
+      set_tests_properties(NativeResourceOpenerTests NativeWaypointResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
     endif()
   endif()

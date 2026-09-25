@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "DG.H"
 #include "../FileIO/FilesPackage.h"
+#include <atomic>
 namespace NGScene
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ class CFileRequest : public CObjectBase
 	OBJECT_NOCOPY_METHODS(CFileRequest);
 	const char *pszResName;
 	int nID;
-	bool bIsReady;
+	std::atomic<bool> bIsReady;
 	CMemoryStream data;
 public:
 	CFileRequest() : pszResName(0), nID(0), bIsReady(true) {}
@@ -49,7 +50,7 @@ public:
 	CMemoryStream* operator->() { return &data;; }
 	CMemoryStream* GetStream() { return &data; }
 	void Read();
-	bool IsReady() const { return bIsReady; }
+	bool IsReady() const { return bIsReady.load(); }
 };
 void ReleaseFileRequestHolder();
 void AddFileRequest( CFileRequest *pReq );

@@ -97,13 +97,17 @@ bool ResolvePackagePath(const std::string& requested, std::string* resolved) {
 }
 } // namespace
 
+bool ResolveGameResourcePath(const std::string& requested, std::string* resolved) {
+  return resolved && ResolvePackagePath(requested, resolved);
+}
+
 bool PortablePackageIndex::Open(const std::string& path, std::string* error) {
   path_.clear();
   entries_.clear();
   indexOffset_ = 0;
   fileSize_ = 0;
   std::string resolvedPath;
-  if (!ResolvePackagePath(path, &resolvedPath))
+  if (!ResolveGameResourcePath(path, &resolvedPath))
     return Fail(error, "cannot resolve package path");
   std::ifstream file(resolvedPath, std::ios::binary | std::ios::ate);
   if (!file) return Fail(error, "cannot open package");

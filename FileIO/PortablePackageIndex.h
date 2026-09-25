@@ -7,6 +7,10 @@
 
 namespace S2FileIO {
 
+// Resolve Windows-style game resource paths on a case-sensitive host.
+// An ambiguous case-insensitive component is rejected.
+bool ResolveGameResourcePath(const std::string& requested, std::string* resolved);
+
 // The .res wire format uses 32-bit little-endian offsets, lengths and IDs.
 // These are values, not serialized C++ pointers or container nodes.
 struct PackageEntry {

@@ -1,4 +1,9 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "BasicChunk1.h"
+#endif
 #include "FilesPackage.h"
 #include "BasicChunk1.h"
 #include "PortablePackageIndex.h"
@@ -26,7 +31,9 @@ class IFilesPackage : public CObjectBase
 {
 protected:
 	typedef unordered_map< FILE_ID, SFileInfo, SFileHash > CFileInfoHash;
+#if defined(_WIN32)
 	typedef unordered_map< FILE_ID, FILETIME, SFileHash > CFileTimeHash;
+#endif
 	CFileInfoHash files;
 public:
 	virtual void Read( unsigned int nPos, void *pDest, unsigned int nSize ) = 0;
@@ -99,8 +106,10 @@ class CFilesPackage : public TFilesPackage<CFileStream>
 	OBJECT_NOCOPY_METHODS( CFilesPackage );
 public:
 	bool Open( const char *pszFileName );
+#if defined(_WIN32)
 	bool Update( CDataStream *pErr, const char *pszFileName, const char *pszDir );
 	bool RescanDir( CDataStream *pErr, const char *pszDir, CFileTimeHash *pDates, int *pnStartPos );
+#endif
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CFilesPackage::Open( const char *pszFileName ) 
@@ -119,6 +128,7 @@ bool CFilesPackage::Open( const char *pszFileName )
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 static bool IsNumber( const char *pszFileName )
 {
 	char szBuf[16];
@@ -293,6 +303,7 @@ bool CFilesPackage::Update( CDataStream *pErr, const char *pszFileName, const ch
 	}
 	return true;
 }
+#endif // editor package creation/update is Windows-only
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CCachedFilesPackage : public TFilesPackage<CMemoryStream>
 {
@@ -382,10 +393,12 @@ bool DoesFileExist( IFilesPackage *pPack, FILE_ID nFileID )
 	return pPack->GetFileInfo( nFileID ) != 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 bool UpdateFilesPackage( CDataStream *pErr, const char *pszFileName, const char *pszDir )
 {
 	CPtr<CFilesPackage> pRes = new CFilesPackage;
 	return pRes->Update( pErr, pszFileName, pszDir );
 }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 BASIC_REGISTER_CLASS( IFilesPackage )

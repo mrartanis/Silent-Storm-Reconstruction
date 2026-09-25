@@ -1,6 +1,39 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#include "../Misc/Win32Helper.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#include <algorithm>
+#include <condition_variable>
+#include <filesystem>
+#include <mutex>
+#include <thread>
+namespace NWin32Helper {
+class CCriticalSection {
+	std::recursive_mutex mutex;
+	friend class CCriticalSectionLock;
+};
+class CCriticalSectionLock {
+	std::unique_lock<std::recursive_mutex> lock;
+public:
+	explicit CCriticalSectionLock(CCriticalSection &section): lock(section.mutex) {}
+};
+class CEvent {
+	std::mutex mutex;
+	std::condition_variable ready;
+	bool signaled = false;
+public:
+	void Set() { std::lock_guard<std::mutex> lock(mutex); signaled = true; ready.notify_all(); }
+	void Reset() { std::lock_guard<std::mutex> lock(mutex); signaled = false; }
+	void Wait() { std::unique_lock<std::mutex> lock(mutex); ready.wait(lock, [this] { return signaled; }); }
+};
+}
+static void OutputDebugString(const char *message) { std::fputs(message, stderr); }
+#endif
 #include "GResource.h"
-#include "..\Misc\Win32Helper.h"
+#include "../FileIO/PortablePackageIndex.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
 {
@@ -32,8 +65,14 @@ static vector<string> szDirs;
 void AddResourceDir( const char *pszName )
 {
 	string szDir = pszName;
+#if !defined(_WIN32)
+	std::replace(szDir.begin(), szDir.end(), '\\', '/');
+	if ( !szDir.empty() && szDir.back() != '/' )
+		szDir += "/";
+#else
 	if ( !szDir.empty() && szDir[ szDir.length() - 1 ] != '\\' )
 		szDir += "\\";
+#endif
 	szDirs.push_back( szDir );
 }
 // release NGScene::ClearResourceDirs @0x157950 -- drop every registered resource dir
@@ -102,6 +141,18 @@ static int GetID( const SPartKey &key )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline string GetFileResourceName( const char *pszResName, FILE_ID nFileID )
 {
+#if !defined(_WIN32)
+	const std::string suffix = std::string(pszResName) + "/" + std::to_string(nFileID);
+	if ( szDirs.empty() )
+		return suffix;
+	for ( int i = (int)szDirs.size() - 1; i >= 0; --i )
+	{
+		std::string resolved;
+		if ( S2FileIO::ResolveGameResourcePath(szDirs[i] + suffix, &resolved) )
+			return resolved;
+	}
+	return szDirs.front() + suffix;
+#else
 	// Prefix a resource dir (e.g. ".\res\") so a loose file resolves as "<dir><ResName>\<id>" -
 	// matching the release's GetFileResourceName(dir,name,id). With several dirs registered the
 	// release probes them LAST-TO-FIRST for the loose file (NGScene::DoesFileExist @0x157780 --
@@ -125,18 +176,24 @@ inline string GetFileResourceName( const char *pszResName, FILE_ID nFileID )
 	}
 	sprintf( szBuf, "%s%s\\%d", szDirs[0].c_str(), pszResName, nFileID );
 	return szBuf;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Does a LOOSE on-disk file exist for this resource? The release checks this BEFORE the package
 // (loose overrides package) - that's how the shipped 1.2 patch's updated loose assets take effect.
 inline bool DoesLooseFileExist( const char *pszResName, int nID )
 {
+#if !defined(_WIN32)
+	std::error_code error;
+	return std::filesystem::is_regular_file(GetFileResourceName(pszResName, nID), error) && !error;
+#else
 	HANDLE h = CreateFile( GetFileResourceName( pszResName, nID ).c_str(),
 		GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0 );
 	if ( h == INVALID_HANDLE_VALUE )
 		return false;
 	CloseHandle( h );
 	return true;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CFileResource
@@ -264,15 +321,15 @@ CFileRequest::CFileRequest( const char *_pszResName, const SPartKey &_key )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static NWin32Helper::CCriticalSection readResource;
-static bool bIsFileReading = false;
+static std::atomic<bool> bIsFileReading(false);
 void CFileRequest::Read()
 {
-	ASSERT(!bIsReady);
-	if ( bIsReady )
+	ASSERT(!bIsReady.load());
+	if ( bIsReady.load() )
 		return;
 	NWin32Helper::CCriticalSectionLock l( readResource );
 	NWin32Helper::CCriticalSectionLock lp( packageWork );
-	bIsFileReading = true;
+	bIsFileReading.store(true);
 	//OutputDebugString( "request " );
 	//TypeReq( pszResName, nID );
 	try
@@ -294,15 +351,19 @@ void CFileRequest::Read()
 	catch (...) 
 	{
 	}
-	bIsFileReading = false;
-	bIsReady = true;
+	bIsFileReading.store(false);
+	bIsReady.store(true);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Resource loading thread
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static NWin32Helper::CCriticalSection reqQueue, pendingCheck;
 static NWin32Helper::CEvent newRequest;
+#if defined(_WIN32)
 static HANDLE hLoaderThread;
+#else
+static std::thread loaderThread;
+#endif
 static list<CPtr<CFileRequest> > holdRequests;
 static list<CFileRequest*> requests;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,14 +374,22 @@ static void WaitAllPendingLoad()
 		{
 			NWin32Helper::CCriticalSectionLock lp( pendingCheck );
 			NWin32Helper::CCriticalSectionLock l( reqQueue );
-			if ( requests.empty() )
+			if ( requests.empty() && !bIsFileReading.load() )
 				return;
 		}
+#if defined(_WIN32)
 		Sleep(0);
+#else
+		std::this_thread::yield();
+#endif
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 static DWORD WINAPI LoaderThread( void* )
+#else
+static void LoaderThread()
+#endif
 {
 	for (;;)
 	{
@@ -337,15 +406,25 @@ static DWORD WINAPI LoaderThread( void* )
 					break;
 				pRes = requests.front();
 				requests.pop_front();
+				if ( pRes ) bIsFileReading.store(true);
 			}
 			if ( pRes == 0 )
+#if defined(_WIN32)
 				return 0;
+#else
+				return;
+#endif
 			if ( !IsValid(pRes) )
+			{
+				bIsFileReading.store(false);
 				continue;
+			}
 			pRes->Read();
 		}
 	}
+#if defined(_WIN32)
 	return 0;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddFileRequest( CFileRequest *pReq )
@@ -363,7 +442,7 @@ void AddFileRequest( CFileRequest *pReq )
 bool HasFileRequestsInFly()
 {
 	NWin32Helper::CCriticalSectionLock l( reqQueue );
-	return bIsFileReading || !requests.empty();
+	return bIsFileReading.load() || !requests.empty();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void ReleaseFileRequestHolder()
@@ -375,22 +454,35 @@ void ReleaseFileRequestHolder()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void RunResourceLoadingThread()
 {
+#if defined(_WIN32)
 	DWORD dwThread;
 	hLoaderThread = CreateThread( 0, 102400, LoaderThread, 0, 0, &dwThread );
+#else
+	if ( !loaderThread.joinable() )
+		loaderThread = std::thread(LoaderThread);
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SKillLoaderThread
 {
 	~SKillLoaderThread()
 	{
+#if defined(_WIN32)
 		if ( hLoaderThread )
+#else
+		if ( loaderThread.joinable() )
+#endif
 		{
 			{
 				NWin32Helper::CCriticalSectionLock l( reqQueue );
 				newRequest.Set();
 				requests.push_front( 0 );
 			}
+#if defined(_WIN32)
 			WaitForSingleObject( hLoaderThread, INFINITE );
+#else
+			loaderThread.join();
+#endif
 		}
 	}
 } killLoaderThread;
