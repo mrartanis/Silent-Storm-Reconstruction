@@ -54,3 +54,13 @@ regression gate for the shared headers. The Windows x64 game rebuilt and
 and ARM64 sanitizer suites and Clang x86-64 each passed 64/64. As
 elsewhere, the recovered x86 build is a supplemental implementation
 comparator, not Steam itself.
+
+Clean native-media x64 archive
+`G:\SS\lab\builds\stage2-ai-grid-compile-20260925-01` was produced
+from source commit `79cc6e9`. Fresh linked-resource run
+`G:\SS\lab\runs\stage2-ai-grid-compile-clean-01` had no `fmod.dll`,
+loaded the existing `DB_OLD` slot to `LOAD-SLOT-DONE`, accepted `quit`,
+and exited without a crash dump. Its `Game.exe` SHA-256 matched the archive:
+`C70F04B1AFA3A7A985FD37733778B8E426C0DA20DD8C9015B75AA8CEAE9C3A4B`.
+This checks the Windows x64 game after common-header edits, not Linux
+`CPathNetwork` execution.
