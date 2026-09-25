@@ -12,7 +12,7 @@
 static bool g_bHarnessSeedActive = false;
 static unsigned int g_nHarnessSeed = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRandomSeed::SRandomSeed() : nSeed( g_bHarnessSeedActive ? g_nHarnessSeed : S2Random::ClockSeed32() )
+SRandomSeed::SRandomSeed() : nSeed( g_bHarnessSeedActive ? S2Random::SeedFromBits( g_nHarnessSeed ) : S2Random::ClockSeed32() )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ SRandomSeed::SRandomSeed( int seed ) : nSeed( seed )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRand::SRand() : seed( g_bHarnessSeedActive ? g_nHarnessSeed : S2Random::ClockSeed32() )
+SRand::SRand() : seed( g_bHarnessSeedActive ? S2Random::SeedFromBits( g_nHarnessSeed ) : S2Random::ClockSeed32() )
 {
 	Get( 4 );
 }

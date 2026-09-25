@@ -12,6 +12,7 @@ int main() {
   std::uint32_t wrappedBits = 0;
   std::memcpy(&wrappedBits, &wrapped, sizeof(wrappedBits));
   if (wrappedBits != UINT32_C(0x80000000)) return 1;
+  if (S2Random::SeedFromBits(UINT32_C(0x80000000)) != wrapped) return 1;
   (void)S2Random::ClockSeed32();
 
   std::int32_t seed = 0;
