@@ -40,6 +40,9 @@ bool S2_STRUCTURE_CALL DecodeStructureLength(const std::uint8_t* encoded,
                                               std::size_t encodedSize,
                                               std::uint64_t remaining,
                                               std::uint32_t* length);
+bool S2_STRUCTURE_CALL EncodeStructureLength(std::uint32_t length,
+                                              std::uint8_t* encoded,
+                                              std::size_t* encodedSize);
 // Decode one nested chunk in an already-loaded byte span. Returns false at
 // the end or for a truncated/out-of-range chunk; offset is relative to bytes.
 bool S2_STRUCTURE_CALL DecodeStructureChunkAt(const std::uint8_t* bytes,
@@ -53,6 +56,9 @@ bool S2_STRUCTURE_CALL ScanStructureFile(const std::string& path,
 bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
     const std::uint8_t* bytes, std::size_t length,
     std::vector<StructureObjectRecord>* records);
+bool S2_STRUCTURE_CALL EncodeStructureObjectRecord(
+    const StructureObjectRecord& record, std::uint8_t* bytes,
+    std::size_t length);
 // Chunk 2 contains one id-1 record per object, with a disk id-0 wire ID and
 // an id-1 serialized body. Offsets refer to the chunk-2 payload.
 bool S2_STRUCTURE_CALL IndexStructureObjectBodies(

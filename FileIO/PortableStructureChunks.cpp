@@ -30,6 +30,19 @@ bool S2_STRUCTURE_CALL DecodeStructureLength(const std::uint8_t* encoded,
   return true;
 }
 
+bool S2_STRUCTURE_CALL EncodeStructureLength(std::uint32_t length,
+                                              std::uint8_t* encoded,
+                                              std::size_t* encodedSize) {
+  if (!encoded || !encodedSize || length > 0x7fffffffu) return false;
+  const bool extended = length >= 128;
+  const std::uint32_t raw = (length << 1) | (extended ? 1u : 0u);
+  const std::size_t count = extended ? 4 : 1;
+  for (std::size_t i = 0; i < count; ++i)
+    encoded[i] = static_cast<std::uint8_t>(raw >> (i * 8));
+  *encodedSize = count;
+  return true;
+}
+
 bool S2_STRUCTURE_CALL DecodeStructureChunkAt(const std::uint8_t* bytes,
                                               std::size_t size,
                                               std::size_t offset,
@@ -93,6 +106,18 @@ bool S2_STRUCTURE_CALL DecodeStructureObjectTable(
     }
     records->push_back({typeId, wireId, bytes[offset + 8] != 0});
   }
+  return true;
+}
+
+bool S2_STRUCTURE_CALL EncodeStructureObjectRecord(
+    const StructureObjectRecord& record, std::uint8_t* bytes,
+    std::size_t length) {
+  if (!bytes || length != 9) return false;
+  for (unsigned i = 0; i != 4; ++i) {
+    bytes[i] = static_cast<std::uint8_t>(record.typeId >> (i * 8));
+    bytes[4 + i] = static_cast<std::uint8_t>(record.wireId >> (i * 8));
+  }
+  bytes[8] = record.valid ? 1 : 0;
   return true;
 }
 

@@ -136,6 +136,31 @@ int main() {
       S2FileIO::IndexStructureObjectBodies(objectBody, sizeof(objectBody) - 1, &bodies) ||
       !bodies.empty())
     return 1;
+  std::uint8_t encodedLength[4] = {};
+  std::size_t encodedLengthSize = 0;
+  const std::uint8_t boundaryLong[] = {0x01, 0x01, 0x00, 0x00};
+  if (!S2FileIO::EncodeStructureLength(0, encodedLength, &encodedLengthSize) ||
+      encodedLengthSize != 1 || encodedLength[0] != 0 ||
+      !S2FileIO::EncodeStructureLength(127, encodedLength, &encodedLengthSize) ||
+      encodedLengthSize != 1 || encodedLength[0] != 0xfe ||
+      !S2FileIO::EncodeStructureLength(128, encodedLength, &encodedLengthSize) ||
+      encodedLengthSize != 4 ||
+      std::memcmp(encodedLength, boundaryLong, 4) != 0 ||
+      !S2FileIO::EncodeStructureLength(1916, encodedLength, &encodedLengthSize) ||
+      encodedLengthSize != 4 ||
+      std::memcmp(encodedLength, longLength, 4) != 0 ||
+      S2FileIO::EncodeStructureLength(0x80000000u, encodedLength,
+                                       &encodedLengthSize) ||
+      S2FileIO::EncodeStructureLength(1, nullptr, &encodedLengthSize) ||
+      S2FileIO::EncodeStructureLength(1, encodedLength, nullptr)) return 1;
+  std::uint8_t encodedRecord[9] = {};
+  if (!S2FileIO::EncodeStructureObjectRecord(
+          {0xa1843130u, 1u, true}, encodedRecord, sizeof(encodedRecord)) ||
+      std::memcmp(encodedRecord, objectTable, 9) != 0 ||
+      S2FileIO::EncodeStructureObjectRecord(
+          {0, 0, false}, encodedRecord, 8) ||
+      S2FileIO::EncodeStructureObjectRecord(
+          {0, 0, false}, nullptr, 9)) return 1;
   return S2FileIO::DecodeStructureLength(shortLength, 1, 4, &length) && length == 4 &&
          S2FileIO::DecodeStructureLength(longLength, 4, 1916, &length) && length == 1916 &&
          !S2FileIO::DecodeStructureLength(shortLength, 1, 3, &length) &&

@@ -144,17 +144,15 @@ static bool ReadShortChunkSave( CDataStream &file, chunk_id &dwID, CMemoryStream
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static bool WriteShortChunkSave( CDataStream &file, chunk_id dwID, CMemoryStream &chunk )
 {
-	DWORD dwLeng;
-	file.Write( &dwID, sizeof( dwID ) );
-	dwLeng = chunk.GetSize();
-	dwLeng <<= 1;
-	if ( dwLeng >= 256 )
-	{
-		dwLeng |= 1;
-		file.Write( &dwLeng, sizeof( dwLeng ) );
-	}
-	else
-		file.Write( &dwLeng, 1 );
+	if ( chunk.GetSize() < 0 )
+		throw std::runtime_error( "negative structure chunk size" );
+	std::uint8_t encoded[4] = {};
+	std::size_t encodedSize = 0;
+	if ( !S2FileIO::EncodeStructureLength(
+		static_cast<std::uint32_t>(chunk.GetSize()), encoded, &encodedSize ) )
+		throw std::runtime_error( "structure chunk too large" );
+	file.Write( &dwID, 1 );
+	file.Write( encoded, static_cast<unsigned int>(encodedSize) );
 	file.Write( chunk.GetBuffer(), chunk.GetSize() );
 	return true;
 }
@@ -611,8 +609,10 @@ void CStructureSaver::Start( bool bRead )
 		nVersion = 0;
 		{
 			CMemoryStream verChunk;
-			if ( GetShortChunkSave( res, 4, verChunk, nBaseSeek ) && verChunk.GetSize() >= 4 )
-				memcpy( &nVersion, verChunk.GetBuffer(), 4 );
+			if ( GetShortChunkSave( res, 4, verChunk, nBaseSeek ) && verChunk.GetSize() >= 4 &&
+				!S2FileIO::DecodeStructureScalar(
+					static_cast<const std::uint8_t*>(verChunk.GetBuffer()), 4, &nVersion ) )
+				throw std::runtime_error( "invalid structure version" );
 		}
 		// retail pack marker (top-level chunk id 3, "A3\0"): its presence means the three payload
 		// chunks (0 = object table, 2 = per-object data, 1 = main data) are CNetCompressor-packed.
@@ -711,7 +711,10 @@ void CStructureSaver::Finish()
 		// Retail Finish (v1.2 0x812a53..0x812a85): version is a separate, unpacked chunk.
 		// Payloads remain unpacked here, so no compression marker (chunk 3) is emitted.
 		CMemoryStream version;
-		version.Write( &nVersion, sizeof(nVersion) );
+		std::uint8_t encodedVersion[4] = {};
+		if ( !S2FileIO::EncodeStructureScalar( nVersion, encodedVersion, 4 ) )
+			throw std::runtime_error( "invalid structure version" );
+		version.Write( encodedVersion, sizeof(encodedVersion) );
 		WriteShortChunkSave( res, 4, version );
 		// save standard data
 		AlignDataFileSize();
@@ -731,9 +734,12 @@ void CStructureSaver::Finish()
 				throw SFileIOError( "serialized object has no wire ID" );
 			std::uint32_t wireID = it->second;
 			ASSERT( nTypeID != -1 );
-			obj.Write( &nTypeID, 4 );
-			obj.Write( &wireID, 4 );
-			obj.Write( &bValid, 1 );
+			std::uint8_t objectRecord[9] = {};
+			if ( !S2FileIO::EncodeStructureObjectRecord(
+				{static_cast<std::uint32_t>(nTypeID), wireID, bValid},
+				objectRecord, sizeof(objectRecord) ) )
+				throw std::runtime_error( "invalid structure object record" );
+			obj.Write( objectRecord, sizeof(objectRecord) );
 			// save object data
 			StartChunk( (chunk_id) 1, nObject );
 			DataChunk( 0, &wireID, 4, 1 );
