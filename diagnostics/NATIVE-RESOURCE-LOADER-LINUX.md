@@ -53,6 +53,17 @@ use ASan/UBSan (ARM64 under QEMU with `ASAN_OPTIONS=detect_leaks=0`). Full
 regressions after the resource-loader port passed Windows x64 97/97 and
 Linux GCC x64/ARM64 plus Clang x64 71/71 each.
 
+Clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-resource-loader-20260925-01` was built from
+`4d59560`. Fresh linked-resource run
+`G:\SS\lab\runs\stage2-resource-loader-clean-01` loaded `DB_OLD` to
+`LOAD-SLOT-DONE`, accepted `quit`, and exited without a crash dump or
+`fmod.dll`. Archive/run `Game.exe` SHA-256 matched:
+`50045E9F1EFD5B9F0087A8FED7CE5DD2AF543AC248ACCB18B05C652CBC200AB2`.
+This validates the Windows game after the common resource-header and queue
+changes; the Linux opener/waypoint evidence is from the separately linked
+native tests above.
+
 This proves package/loose/async resource access and waypoint deserialization,
 not full map assembly. `BuildMap` still needs its building, terrain, unit,
 script and path-network dependencies linked and executed against a mission.
