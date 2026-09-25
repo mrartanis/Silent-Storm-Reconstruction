@@ -3,6 +3,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include "../FileIO/PortableFontWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma pack( 4 )
 // complete necessary one letter description
@@ -14,6 +15,32 @@ struct STFCharacter
   int nWidth;                         // lone character's width (B + (C > 0 ? C : 0))
 };
 #pragma pack()
+static_assert(sizeof(STFCharacter) == 28 && sizeof(int) == 4,
+              "game font character wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<STFCharacter, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 28;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     STFCharacter* value) {
+    if (!value) return false;
+    FontCharacterFields fields{};
+    if (!DecodeFontCharacter(source, length, &fields)) return false;
+    value->x1 = fields.x1; value->y1 = fields.y1;
+    value->x2 = fields.x2; value->y2 = fields.y2;
+    value->nA = fields.advanceA; value->nBC = fields.advanceBC;
+    value->nWidth = fields.width;
+    return true;
+  }
+  static bool Encode(const STFCharacter& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return EncodeFontCharacter(FontCharacterFields{
+        value.x1, value.y1, value.x2, value.y2,
+        value.nA, value.nBC, value.nWidth}, destination, length);
+  }
+};
+} // namespace S2FileIO
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CFontFormatInfo: public CObjectBase
 {
