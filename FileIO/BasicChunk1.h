@@ -13,6 +13,7 @@
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
+#include <typeinfo>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 externA5 CClassFactory<CObjectBase> *pSSClasses;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,6 +71,7 @@ extern bool g_bSaveLoadTeardown;
 // This mechanically surfaces the Jan03-wire divergence family (swapped/shifted/retyped tags)
 // without gameplay repros. Off unless the harness enables it; zero cost in normal play.
 extern bool g_bWireAudit;
+void RecordRawStructureType( const char *pszType, std::size_t nHostSize, bool bArray, int nTag );
 
 // chunk with index 0 is used for system and should not be used in user code
 template<int N> struct SGenericNumberTemplate {};
@@ -157,6 +159,7 @@ private:
 	{
 		if ( count > static_cast<std::size_t>((std::numeric_limits<int>::max)()) / sizeof(T) )
 			throw std::runtime_error( "structure array too large" );
+		if ( g_bWireAudit && IsReading() ) RecordRawStructureType( typeid(T).name(), sizeof(T), true, idChunk );
 		DataChunk( idChunk, p, static_cast<int>(count * sizeof(T)), nChunkNumber );
 	}
 	template<class T>
@@ -180,6 +183,7 @@ private:
 	template<class T>
 	void DataScalarChunk( const chunk_id idChunk, T *p, int nChunkNumber, std::false_type )
 	{
+		if ( g_bWireAudit && IsReading() ) RecordRawStructureType( typeid(T).name(), sizeof(T), false, idChunk );
 		DataChunk( idChunk, p, sizeof(T), nChunkNumber );
 	}
 	void RawData( void *pData, int nSize );

@@ -40,6 +40,16 @@ namespace NWireAudit
 	static std::vector<SFrame> frames;      // mirrors CStructureSaver::chunks on the read path
 	static int nTypeId = 0;                 // saveload class id of the object being deserialized
 	static std::map<std::string, int> findings;
+	static std::map<std::string, int> rawTypes;
+
+	static void RawType( const char *pszType, std::size_t nHostSize, bool bArray, int nTag )
+	{
+		char szKey[320];
+		std::snprintf( szKey, sizeof(szKey), "0x%08X %s tag=%d host=%u type=%s", nTypeId,
+			bArray ? "ARRAY" : "SCALAR", nTag,
+			static_cast<unsigned int>(nHostSize), pszType );
+		rawTypes[std::string( szKey )]++;
+	}
 
 	static void Finding( const char *szKind, int idTarget, int nSaveLen, int nDevLen )
 	{
@@ -62,9 +72,17 @@ namespace NWireAudit
 		for ( std::map<std::string, int>::const_iterator i = findings.begin(); i != findings.end(); ++i )
 			fprintf( pF, "%s x%d\n", i->first.c_str(), i->second );
 		fprintf( pF, "WIRE-AUDIT-DONE (%d distinct findings)\n", (int)findings.size() );
+		for ( std::map<std::string, int>::const_iterator i = rawTypes.begin(); i != rawTypes.end(); ++i )
+			fprintf( pF, "RAW-TYPE %s x%d\n", i->first.c_str(), i->second );
+		fprintf( pF, "RAW-TYPE-AUDIT-DONE (%d distinct types/paths)\n", (int)rawTypes.size() );
 		fclose( pF );
 		findings.clear();
+		rawTypes.clear();
 	}
+}
+void RecordRawStructureType( const char *pszType, std::size_t nHostSize, bool bArray, int nTag )
+{
+	if ( g_bWireAudit ) NWireAudit::RawType( pszType, nHostSize, bArray, nTag );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class factory
