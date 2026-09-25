@@ -44,6 +44,9 @@ and linker paths:
 ```sh
 export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11:/usr/include/c++/11/backward
 export LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11
+cmake -S /tmp/s2-matrix-links.zCkO0O/src -B /tmp/s2-matrix-links.zCkO0O/build-clang-release \
+  -G Ninja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release \
+  -DS2_GAME_DB_PATH=/tmp/s2-matrix-links.zCkO0O/game.db
 cmake --build /tmp/s2-matrix-links.zCkO0O/build-clang-release -j 16
 ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-clang-release --output-on-failure -j 8
 ```
@@ -64,3 +67,11 @@ conversion modules; `NativeStrProcTests` checks both encodings on x86-64 and
 ARM64. Other code pages fall back to `iconv`, whose modules may not exist in
 the ARM64 test sysroot; code-page call sites in the remaining game runtime
 still need auditing.
+
+Clean Windows x64 native-media archive
+`G:\SS\lab\builds\stage2-native-game-db-20260925-01` was produced from
+source commit `3e044c2`. A new linked-resource LabRun
+`G:\SS\lab\runs\stage2-native-game-db-clean-01` contains no `fmod.dll`,
+loaded the existing `DB_OLD` save to `LOAD-SLOT-DONE`, accepted `quit`, exited
+normally, and produced no crash dump. This checks that the shared source edits
+did not break Windows mission loading; it is not Linux gameplay evidence.

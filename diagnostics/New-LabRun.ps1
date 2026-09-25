@@ -16,6 +16,7 @@ $buildMetadata=Get-Content "$archive\build.json" -Raw | ConvertFrom-Json
 New-Item -ItemType Directory "$run\game","$run\evidence" -Force | Out-Null
 $copyArgs=@($baseline,"$run\game",'/E','/R:1','/W:1','/NFL','/NDL','/NP',"/LOG:$run\evidence\copy.log")
 if($LinkResources){$copyArgs+=@('/XD',$resSource)}
+if($buildMetadata.NativeSFX){$copyArgs+=@('/XF',(Join-Path $baseline 'fmod.dll'))}
 & robocopy @copyArgs | Out-Null
 if($LASTEXITCODE -ge 8){throw 'Copy failed'}
 if($LinkResources){
@@ -27,7 +28,7 @@ foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){Copy-Item "$archiv
 if($buildMetadata.Architecture -eq 'x64'){
  foreach($file in 'binkw32.dll'){Copy-Item "$archive\$file" "$run\game"}
  if($buildMetadata.NativeSFX){
-  if(Test-Path -LiteralPath "$run\game\fmod.dll"){Remove-Item -LiteralPath "$run\game\fmod.dll"}
+  if(Test-Path -LiteralPath "$run\game\fmod.dll"){throw 'Native SFX run must not contain fmod.dll'}
  } elseif(Test-Path -LiteralPath "$archive\fmod.dll"){
   Copy-Item "$archive\fmod.dll" "$run\game"
  }
