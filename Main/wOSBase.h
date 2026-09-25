@@ -7,6 +7,7 @@
 #include "wInterfaceVisitors.h"
 #include "RPGAttackMech.h"
 #include "wDynObject.h"
+#include "../FileIO/PortableObjectPlace.h"
 namespace NAnimation
 {
 	class CSkeletonAnimator;
@@ -188,4 +189,36 @@ namespace NWorld
 // destroy stages through CObjectServerBase). phCollider's friction collider is its release call site.
 bool CheckItemsBreakGlass( const NAI::SSourceInfo *pSrc );
 }
+#if defined(_MSC_VER)
+static_assert(sizeof(NWorld::SObjectPlace) == 32, "game object place must remain 32 bytes");
+#endif
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NWorld::SObjectPlace, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NWorld::SObjectPlace* value) {
+    if (!value) return false;
+    ObjectPlaceFields fields{};
+    if (!DecodeObjectPlace(source, length, &fields)) return false;
+    value->ptPos = CVec3(fields.position[0], fields.position[1], fields.position[2]);
+    value->ptScale = CVec3(fields.scale[0], fields.scale[1], fields.scale[2]);
+    value->fAngle = fields.angle;
+    value->nFloor = fields.floor;
+    return true;
+  }
+  static bool Encode(const NWorld::SObjectPlace& value,
+                     std::uint8_t* destination, std::size_t length) {
+    ObjectPlaceFields fields{};
+    fields.position[0] = value.ptPos.x; fields.position[1] = value.ptPos.y;
+    fields.position[2] = value.ptPos.z;
+    fields.scale[0] = value.ptScale.x; fields.scale[1] = value.ptScale.y;
+    fields.scale[2] = value.ptScale.z;
+    fields.angle = value.fAngle;
+    fields.floor = value.nFloor;
+    return EncodeObjectPlace(fields, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
