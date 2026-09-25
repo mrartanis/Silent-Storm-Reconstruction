@@ -5,6 +5,7 @@
 #include "GObjectInfo.h"
 #include "GFileSkin.h"
 #include "../FileIO/PortableMeshWire.h"
+#include "PortableClipShareCodecs.h"
 
 static_assert(sizeof(NGScene::SLoadVertex) == 60, "mesh resource vertex size");
 static_assert(sizeof(NGScene::SLoadVertexWeight) == 12, "mesh resource weight size");
