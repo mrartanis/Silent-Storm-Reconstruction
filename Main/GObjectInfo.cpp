@@ -7,6 +7,7 @@
 #include "GObjectInfo.h"
 #include "GPixelFormat.h"
 #include "GFileSkin.h"
+#include "PortableMeshCodecs.h"
 #include "aiObject.h"
 #include "aiObjectLoader.h"
 

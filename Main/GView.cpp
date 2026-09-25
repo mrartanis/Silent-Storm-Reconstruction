@@ -7,6 +7,7 @@
 #include "GMesh.h"
 #include "GBuilding.h"
 #include "GObjectInfo.h"
+#include "PortableMeshCodecs.h"
 #include "GTexture.h"
 #include "GMemFormat.h"
 //#include "MemObject.h"

@@ -4,6 +4,7 @@
 #include "..\Misc\BasicShare.h"
 #include "aiObject.h"
 #include "GFileSkin.h"
+#include "PortableMeshCodecs.h"
 #include "BSPTree.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI

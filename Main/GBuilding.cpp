@@ -8,6 +8,7 @@
 #include "GResource.h"
 #include "..\Misc\BasicShare.h"
 #include "GObjectInfo.h"
+#include "PortableMeshCodecs.h"
 #include "BuildingInfo.h"
 #include "BuildingGrid.h"
 #include "..\DBFormat\DataGeometry.h"
