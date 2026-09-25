@@ -262,7 +262,7 @@ bool CStructureSaver::WriteShortChunk( CChunkLevel &dst, chunk_id dwID,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CStructureSaver::GetShortChunk( CChunkLevel &src, chunk_id dwID, CChunkLevel &res, int nNumber )
 {
-	ASSERT( dwID != 0xff );
+	ASSERT( static_cast<unsigned char>(dwID) != 0xff );
 	int nPos = src.nLastPos; // search from last found position
 	int nCounter = nNumber;
 	if ( src.idLastChunk == dwID )

@@ -7,6 +7,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
 #include "PortableFloat2Int.h"
+#if !defined(_WIN32)
+#include <cstdint>
+#if defined(__i386__) || defined(__x86_64__)
+#include <cpuid.h>
+#endif
+typedef std::uint32_t DWORD;
+typedef std::uint16_t WORD;
+typedef std::uint8_t BYTE;
+#define __forceinline inline
+#endif
 #if defined(_MSC_VER)
 #include <intrin.h>
 #endif
@@ -45,7 +55,11 @@ const float FP_EPSILON2 = 1e-24f;
 #define FP_ONE_BITS 0x3F800000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // standard is long long but msvc does not support this name
+#if defined(_WIN32)
 typedef __int64 int64;
+#else
+typedef std::int64_t int64;
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <class T, class TElem>
 inline bool IsInSet( const T &c, const TElem &e ) { return find( c.begin(), c.end(), e ) != c.end(); }
@@ -825,10 +839,15 @@ inline DWORD GetCPUID()
 	}
 	return dwRes;
 	#undef GET_CPUID
-	#else
+	#elif defined(_MSC_VER)
 	int regs[4] = {};
 	__cpuid( regs, 1 );
 	return static_cast<DWORD>( regs[3] );
+	#elif defined(__i386__) || defined(__x86_64__)
+	unsigned int eax = 0, ebx = 0, ecx = 0, edx = 0;
+	return __get_cpuid( 1, &eax, &ebx, &ecx, &edx ) ? edx : 0;
+	#else
+	return 0;
 	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

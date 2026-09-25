@@ -227,6 +227,7 @@ inline bool Normalize( CVec4 *pVec ) { float fLeng = fabs2(*pVec); if ( fLeng !=
 struct SPlane
 {
 public:
+#if defined(_WIN32)
   union
   {
     struct 
@@ -239,9 +240,17 @@ public:
       CVec4 vec4;
     };
   };
+#else
+  CVec3 n;
+  float d;
+#endif
 public:
   SPlane( const CVec3 &ptNormale, const float fDist ) : n( ptNormale ), d( fDist ) {  }
+#if defined(_WIN32)
   SPlane( const CVec4 &pt ) : vec4( pt ) {  }
+#else
+  SPlane( const CVec4 &pt ) : n( pt.x, pt.y, pt.z ), d( pt.w ) {  }
+#endif
   SPlane() {  }
   // setup functions
   bool Set( const CVec3 &pt0, const CVec3 &pt1, const CVec3 &pt2 );
@@ -284,6 +293,7 @@ public :
 			float zx, zy, zz, zw;
 			float wx, wy, wz, ww;
 		};
+#if defined(_WIN32)
 		struct  
 		{
 			CVec4 x, y, z, w;
@@ -295,6 +305,7 @@ public :
 			CVec3 z3; float zw3;
 			CVec3 w3; float ww3;
 		};
+#endif
 	};
 public :
 	// matrix-vector multiplication 
@@ -330,6 +341,7 @@ private:
     {
       float x, y, z, w;
     };
+#if defined(_WIN32)
     struct
     {
       CVec3 n;
@@ -339,6 +351,7 @@ private:
     {
       CVec4 vec4;
     };
+#endif
   };
 public:
   CQuat( float fX, float fY, float fZ, float fW ) : x( fX ), y( fY ), z( fZ ), w( fW ) {}
@@ -906,7 +919,8 @@ inline const CVec3 CQuat::Rotate( const CVec3 &r ) const
 }
 inline void CQuat::Rotate( CVec3 *pRes, const CVec3 &vec ) const
 {
-	*pRes = ( vec*(w*w - n*n) + (2.0f*w)*(n^vec) + (2.0f*(n*vec))*n );
+	const CVec3 axis( x, y, z );
+	*pRes = ( vec*(w*w - axis*axis) + (2.0f*w)*(axis^vec) + (2.0f*(axis*vec))*axis );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline const CQuat operator*( const CQuat &a, const CQuat &b )

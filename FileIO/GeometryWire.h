@@ -6,6 +6,9 @@
 #include "PortableFBTransformWire.h"
 #include "../Misc/Geom.h"
 
+static_assert(sizeof(SPlane) == 16, "plane wire size");
+static_assert(sizeof(CQuat) == 16, "quaternion wire size");
+static_assert(sizeof(SHMatrix) == 64, "matrix wire size");
 static_assert(sizeof(STriangle) == 6, "triangle wire size");
 static_assert(sizeof(SSphere) == 16, "sphere wire size");
 static_assert(sizeof(SMassSphere) == 20, "mass sphere wire size");

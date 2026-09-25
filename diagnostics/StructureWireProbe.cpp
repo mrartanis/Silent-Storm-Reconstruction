@@ -9,8 +9,23 @@ class CWireProbeNode: public CObjectBase
   OBJECT_BASIC_METHODS(CWireProbeNode);
 public:
   int value;
-  CWireProbeNode(): value(0) {}
-  virtual int operator&(CStructureSaver& f) { f.Add(2, &value); return 0; }
+  CVec3 position;
+  CQuat rotation;
+  SPlane plane;
+  SHMatrix matrix;
+  CWireProbeNode(): value(0), position(0, 0, 0), rotation(0, 0, 0, 0),
+      plane(CVec3(0, 0, 0), 0) {
+    const float zeros[16] = {};
+    S2FileIO::AssignMatrixFields(&matrix, zeros);
+  }
+  virtual int operator&(CStructureSaver& f) {
+    f.Add(2, &value);
+    f.Add(3, &position);
+    f.Add(4, &rotation);
+    f.Add(5, &plane);
+    f.Add(6, &matrix);
+    return 0;
+  }
 };
 
 REGISTER_SAVELOAD_CLASS(0xA5923171, CWireProbeNode);
@@ -32,6 +47,14 @@ int main(int argc, char** argv)
       second = new CWireProbeNode;
       first->value = 42;
       second->value = 77;
+      first->position = CVec3(1.5f, -2.0f, 3.0f);
+      second->position = CVec3(4.0f, 5.0f, 6.0f);
+      first->rotation = CQuat(0.25f, -0.5f, 0.75f, 1.0f);
+      second->rotation = CQuat(-1.0f, 0.0f, 0.5f, 0.25f);
+      first->plane = SPlane(CVec3(2.0f, 3.0f, 4.0f), -5.0f);
+      second->plane = SPlane(CVec3(-2.0f, -3.0f, -4.0f), 5.0f);
+      first->matrix._11 = 11.0f; first->matrix._44 = 44.0f;
+      second->matrix._11 = -11.0f; second->matrix._44 = -44.0f;
       alias = second;
       file.OpenWrite(argv[2]);
     }
@@ -48,8 +71,16 @@ int main(int argc, char** argv)
     std::fprintf(stderr, "structure wire I/O failed\n");
     return 3;
   }
+  float firstRotation[4] = {}, secondRotation[4] = {};
+  if (first) first->rotation.GetComponentsForWire(firstRotation);
+  if (second) second->rotation.GetComponentsForWire(secondRotation);
   if (!first || !second || !alias || first->value != 42 ||
-      second->value != 77 || alias.GetBarePtr() != second.GetBarePtr())
+      second->value != 77 || alias.GetBarePtr() != second.GetBarePtr() ||
+      first->position.x != 1.5f || first->position.y != -2.0f ||
+      second->position.z != 6.0f || firstRotation[0] != 0.25f ||
+      secondRotation[3] != 0.25f || first->plane.n.y != 3.0f ||
+      second->plane.d != 5.0f || first->matrix._11 != 11.0f ||
+      second->matrix._44 != -44.0f)
   {
     std::fprintf(stderr, "structure wire contents mismatch\n");
     return 4;
