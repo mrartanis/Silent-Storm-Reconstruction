@@ -1,5 +1,7 @@
 #ifndef __EVENTS_BASE_H__
 #define __EVENTS_BASE_H__
+#include <typeinfo>
+#include "Basic2.h"
 //
 namespace NGlobal
 {
@@ -10,9 +12,9 @@ public:
 	virtual void Call( const void *pStuff ) = 0;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void ThrowEventInner( const type_info &eventID, const void *pStuff );
-void RegisterEventHandler( IEventRegister *pReg, const type_info &eventID );
-void UnregisterEventHandler( IEventRegister *pReg, const type_info &eventID );
+void ThrowEventInner( const std::type_info &eventID, const void *pStuff );
+void RegisterEventHandler( IEventRegister *pReg, const std::type_info &eventID );
+void UnregisterEventHandler( IEventRegister *pReg, const std::type_info &eventID );
 //
 template<class T> void ThrowEvent( const T &event ) 
 { 
@@ -48,4 +50,4 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 //
-#endif __EVENTS_BASE_H__
+#endif // __EVENTS_BASE_H__

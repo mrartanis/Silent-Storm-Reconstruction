@@ -163,12 +163,12 @@ public:                                                                         
 	inline TPtrName() {}                                                                      \
 	inline TPtrName( T *_ptr ): CBase( _ptr ) {}                                              \
 	inline TPtrName( const TPtrName &a ): CBase( a ) {}                                       \
-	inline TPtrName& operator=( T *_ptr ) { Set( _ptr ); return *this; }                      \
-	inline TPtrName& operator=( const TPtrName &a ) { SetObject( a.Get() ); return *this; }   \
-	inline bool operator< ( const TPtrName &a ) const { return Get() < a.Get(); }             \
-	inline bool operator> ( const TPtrName &a ) const { return Get() > a.Get(); }             \
-	inline bool operator<=( const TPtrName &a ) const { return Get() <= a.Get(); }            \
-	inline bool operator>=( const TPtrName &a ) const { return Get() >= a.Get(); }            \
+	inline TPtrName& operator=( T *_ptr ) { this->Set( _ptr ); return *this; }                \
+	inline TPtrName& operator=( const TPtrName &a ) { this->SetObject( a.Get() ); return *this; } \
+	inline bool operator< ( const TPtrName &a ) const { return this->Get() < a.Get(); }       \
+	inline bool operator> ( const TPtrName &a ) const { return this->Get() > a.Get(); }       \
+	inline bool operator<=( const TPtrName &a ) const { return this->Get() <= a.Get(); }      \
+	inline bool operator>=( const TPtrName &a ) const { return this->Get() >= a.Get(); }      \
 	inline int operator&( CStructureSaver &f ) { return (*(CBase*)this) & (f); }              \
 };
 #ifdef STUPID_VISUAL_ASSIST
@@ -205,7 +205,7 @@ template<class TContainer>
 inline bool EraseInvalidRefs( TContainer *pData )
 {
 	bool bRes = false;
-	for ( TContainer::iterator i = pData->begin(); i != pData->end(); )
+	for ( typename TContainer::iterator i = pData->begin(); i != pData->end(); )
 	{
 		if ( IsValid( *i ) )
 			++i;

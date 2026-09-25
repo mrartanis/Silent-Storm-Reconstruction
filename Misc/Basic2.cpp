@@ -1,4 +1,13 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include <cassert>
+#include <cstring>
+#include <list>
+#include <new>
+#include <typeinfo>
+#define ASSERT(value) assert(value)
+#endif
 #include "Basic2.h"
 // During a save-load object-table teardown a deserialized graph can still hold a dangling smart-ptr to a
 // sibling that was already freed (resource/DG layer). Releasing through it faults on freed+unmapped memory.
@@ -6,11 +15,18 @@
 // the object is gone, so decrementing its refcount is a no-op anyway. NOT active during normal play (no cost
 // and no behavior change there). See BasicChunk1.h. ROOT (the specific dangling ref) still open -- pin with
 // PageHeap (gflags /p /enable Game.exe /full) then _loadtest.py; this guard keeps existing saves loadable.
+#if defined(_WIN32)
 extern bool g_bSaveLoadTeardown;
+#endif
 static bool UafCheck( CObjectBase *p )
 {
+#if defined(_WIN32)
 	if ( !g_bSaveLoadTeardown ) return false;
 	return IsBadReadPtr( p, 8 ) != 0;				// unmapped => already freed; skip the release
+#else
+	(void)p;
+	return false;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CObjectBase
@@ -18,10 +34,15 @@ static bool UafCheck( CObjectBase *p )
 const char* CObjectBase::GetTypeName()
 {
 	const char *pszName = typeid(*this).name(), *p;
+#if defined(_WIN32)
 	p = strstr( pszName, "::" );
 	if ( !p )
 		return pszName + 6;
 	return p + 2;
+#else
+	(void)p;
+	return pszName;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////

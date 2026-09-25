@@ -1,4 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include <algorithm>
+#include <cassert>
+#include <typeinfo>
+#include <unordered_map>
+#include <vector>
+#define ASSERT(value) assert(value)
+using namespace std;
+#endif
 #include "EventsBase.h"
 //
 namespace NGlobal

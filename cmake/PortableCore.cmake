@@ -1,6 +1,15 @@
 # Platform-independent data decoding/evaluation used by the native FaceGen path.
 # This is deliberately narrower than the Win32 game target; expand this list as
 # other engine subsystems lose their Windows dependencies.
+add_library(s2_game_objects STATIC
+  "${root}/Misc/Basic2.cpp"
+  "${root}/Misc/EventsBase.cpp")
+target_include_directories(s2_game_objects PUBLIC "${root}/Misc")
+target_compile_features(s2_game_objects PUBLIC cxx_std_17)
+add_executable(NativeObjectCoreTests "${root}/diagnostics/NativeObjectCoreTests.cpp")
+target_link_libraries(NativeObjectCoreTests PRIVATE s2_game_objects)
+add_test(NAME NativeObjectCoreTests COMMAND NativeObjectCoreTests)
+
 add_library(s2_portable_core STATIC
   "${root}/third_party/lifestudio/src/NativeCurve.cpp"
   "${root}/third_party/lifestudio/src/NativeFaceGenData.cpp"

@@ -430,6 +430,9 @@ endfunction()
 
 # leaves
 s2_module(Misc        lib)
+add_executable(NativeObjectCoreTests "${root}/diagnostics/NativeObjectCoreTests.cpp")
+target_link_libraries(NativeObjectCoreTests PRIVATE Misc)
+add_test(NAME NativeObjectCoreTests COMMAND NativeObjectCoreTests)
 # (Scintilla + OpenDynamix are only used by MapEdit, which isn't built -- omitted.)
 # core
 s2_module(FileIO    lib LINK Misc s2_portable_package s2_portable_structure s2_portable_user_paths)
