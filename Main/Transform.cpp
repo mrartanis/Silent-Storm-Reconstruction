@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/HeadlessPlatform.h"
+#include "../Misc/Geom.h"
+#endif
+#include <cstring>
 #include "Transform.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 SFBTransform MakeTransform( const CVec3 &ptPos )
@@ -208,11 +214,14 @@ float CalcRadius2( const SBound &b, const SHMatrix &fwd )
 	ASSERT( b.ptHalfBox.y >= 0 );
 	ASSERT( b.ptHalfBox.z >= 0 );
 	float fSign;
-	CVec3 ptRes = fwd.x3 * b.ptHalfBox.x;
-	fSign = fwd.x3 * fwd.y3 < 0 ? -1 : 1;
-	ptRes += fwd.y3 * (b.ptHalfBox.y * fSign);
-	fSign = ptRes * fwd.z3 < 0 ? -1 : 1;
-	ptRes += fwd.z3 * (b.ptHalfBox.z * fSign);
+	const CVec3 rowX( fwd._11, fwd._12, fwd._13 );
+	const CVec3 rowY( fwd._21, fwd._22, fwd._23 );
+	const CVec3 rowZ( fwd._31, fwd._32, fwd._33 );
+	CVec3 ptRes = rowX * b.ptHalfBox.x;
+	fSign = rowX * rowY < 0 ? -1 : 1;
+	ptRes += rowY * (b.ptHalfBox.y * fSign);
+	fSign = ptRes * rowZ < 0 ? -1 : 1;
+	ptRes += rowZ * (b.ptHalfBox.z * fSign);
 	return fabs2( ptRes );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,14 +282,20 @@ void CTransformStack::MakeProjective( float fAspect, float fFovX, float fZMin, f
 	Q = far_plane/(far_plane - near_plane);
  
 	SHMatrix ret;
-	ZeroMemory(&ret, sizeof(ret));
+	std::memset(&ret, 0, sizeof(ret));
 	ret._11 = w;
 	ret._22 = h;
 	ret._33 = Q;
 	ret._34 = -Q*near_plane;
 	ret._43 = 1;
-	ret.x += vShift.x * ret.w;
-	ret.y += vShift.y * ret.w;
+	ret._11 += vShift.x * ret._41;
+	ret._12 += vShift.x * ret._42;
+	ret._13 += vShift.x * ret._43;
+	ret._14 += vShift.x * ret._44;
+	ret._21 += vShift.y * ret._41;
+	ret._22 += vShift.y * ret._42;
+	ret._23 += vShift.y * ret._43;
+	ret._24 += vShift.y * ret._44;
 	Init( ret );
 
 	PrepareClipPlanes();
@@ -297,7 +312,7 @@ void CTransformStack::MakeProjective( const CVec2 &screenRect, float fFovX, floa
 void CTransformStack::MakeParallel( float fWidth, float fHeight, float fZMin, float fZMax )
 {
 	SHMatrix ret;
-	ZeroMemory(&ret, sizeof(ret));
+	std::memset(&ret, 0, sizeof(ret));
 	ret._11 = 2 / fWidth;
 	ret._22 = 2 / fHeight;
 	ret._33 = 1 / ( fZMax - fZMin );
@@ -317,7 +332,7 @@ void CTransformStack::MakeDirect( const CVec2 &screenRect )
 	fWidth = Max( fWidth, 1.0f );
 	fHeight = Max( fHeight, 1.0f );
 	SHMatrix ret;
-	ZeroMemory(&ret, sizeof(ret));
+	std::memset(&ret, 0, sizeof(ret));
 	ret._11 = 2 / fWidth;
 	ret._14 = -1;
 	ret._22 = -2 / fHeight;
@@ -380,9 +395,9 @@ bool CTransformStack::GetCoverRect( CTRect<float> *pRes, const CVec3 &_ptCenter,
 		return true;
 	}
 
-	float fSX = CalcScale( m.x );
-	float fSY = CalcScale( m.y );
-	float fSW = CalcScale( m.w );
+	float fSX = CalcScale( CVec4(m._11, m._12, m._13, m._14) );
+	float fSY = CalcScale( CVec4(m._21, m._22, m._23, m._24) );
+	float fSW = CalcScale( CVec4(m._41, m._42, m._43, m._44) );
 
 	float fR1 = 1 / fRadius;
 	float fB = ptCenter.w / fSW * fR1;

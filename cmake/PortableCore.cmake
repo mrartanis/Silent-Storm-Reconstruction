@@ -40,6 +40,14 @@ add_executable(NativeCruncherTests "${root}/diagnostics/NativeCruncherTests.cpp"
 target_link_libraries(NativeCruncherTests PRIVATE s2_game_structure)
 add_test(NAME NativeCruncherTests COMMAND NativeCruncherTests)
 
+# The game's world/camera transform and bound mathematics, without a renderer.
+add_library(s2_game_transform STATIC "${root}/Main/Transform.cpp")
+target_include_directories(s2_game_transform PRIVATE "${root}/Main" "${root}/Misc" "${root}/FileIO")
+target_compile_features(s2_game_transform PUBLIC cxx_std_17)
+add_executable(NativeTransformTests "${root}/diagnostics/NativeTransformTests.cpp")
+target_link_libraries(NativeTransformTests PRIVATE s2_game_transform)
+add_test(NAME NativeTransformTests COMMAND NativeTransformTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

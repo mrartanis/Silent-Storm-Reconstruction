@@ -39,6 +39,9 @@ public :
 template <int nMaxNumMatrices>
 class CMatrixStack43: public CBaseMatrixStack<nMaxNumMatrices, SHMatrix>
 {
+protected:
+	using CBaseMatrixStack<nMaxNumMatrices, SHMatrix>::matrices;
+	using CBaseMatrixStack<nMaxNumMatrices, SHMatrix>::nCurrentMatrix;
 public :
 	CMatrixStack43() { for ( int i = 0; i < nMaxNumMatrices; i++ ) Identity( matrices + i ); }
 	void Push43( const SHMatrix &matrix );
@@ -55,6 +58,8 @@ template <int nMaxNumMatrices>
 class CFBMatrixStack: public CBaseMatrixStack<nMaxNumMatrices, SFBTransform>
 {
 protected:
+	using CBaseMatrixStack<nMaxNumMatrices, SFBTransform>::matrices;
+	using CBaseMatrixStack<nMaxNumMatrices, SFBTransform>::nCurrentMatrix;
 	void SetToFirst() { ASSERT( nCurrentMatrix >= 0 ); nCurrentMatrix = 0; }
 public :
 	CFBMatrixStack() {}
@@ -87,7 +92,7 @@ public:
 	CTransformStack() : nClipFlagsPtr(0) { nClipFlags[0] = 63; }
 	void SetCamera( const SHMatrix& pos );
 	// aspect = ysize/xsize
-	// vShift это смещение из расчета того, что несмещенный экран простирается от [-1,1]
+	// vShift СЌС‚Рѕ СЃРјРµС‰РµРЅРёРµ РёР· СЂР°СЃС‡РµС‚Р° С‚РѕРіРѕ, С‡С‚Рѕ РЅРµСЃРјРµС‰РµРЅРЅС‹Р№ СЌРєСЂР°РЅ РїСЂРѕСЃС‚РёСЂР°РµС‚СЃСЏ РѕС‚ [-1,1]
 	void MakeProjective( float fAspect, float fFovX = 90, float fZMin = 0.1f, float fZMax = 100, const CVec2 &vShift = CVec2( 0, 0 ) );
 	void MakeProjective( const CVec2 &screenRect, float fFovX = 90, float fZMin = 0.1f, float fZMax = 100, const CVec2 &vShift = CVec2( 0, 0 ) );
 	void MakeParallel( float fWidth, float fHeight, float fZMin = 0.1f, float fZMax = 1000.0f );
@@ -332,14 +337,14 @@ template <int nMaxNumMatrices>
 inline void CMatrixStack43<nMaxNumMatrices>::Push( const CQuat &rot )
 {
 	SHMatrix matrix;
-	rot.DecompEulerMatrix( matrix );
+	rot.DecompEulerMatrix( &matrix );
 	Push33( matrix );
 }
 template <int nMaxNumMatrices>
 inline void CMatrixStack43<nMaxNumMatrices>::Push( const CVec3 &pos, const CQuat &rot )
 {
 	SHMatrix matrix;
-	rot.DecompEulerMatrix( matrix );
+	rot.DecompEulerMatrix( &matrix );
 	matrix._14 = pos.x; matrix._24 = pos.y; matrix._34 = pos.z;
 	Push43( matrix );
 }
