@@ -1,38 +1,29 @@
 #include "StdAfx.h"
 #include "GParticleFormat.h"
 #include "Bound.h"
+#include "../FileIO/PortableEffectData.h"
 #include <cstdint>
 #include <cstring>
+#include <limits>
 #include <stdexcept>
 namespace NGScene
 {
-// Effect files store 32-bit offsets, not in-memory pointers. The old loader
-// overlaid SParticle on the file and happened to work only with x86 pointers.
-#pragma pack( push, 2 )
-struct SKeyTrackDisk
+template<class TValue, class TWireValue, class TConvert>
+static void CopyTrack( TKeyTrack<TValue> *dst,
+	std::vector<TParticleKey<TValue>> *owned,
+	const std::vector<S2FileIO::EffectKey<TWireValue>> &source,
+	TConvert convert )
 {
-	short nKeys;
-	std::uint32_t keysOffset;
-};
-struct SParticleDisk
-{
-	short nTStart;
-	short nTEnd;
-	SKeyTrackDisk pos, rot, scale, color, sprite;
-};
-#pragma pack( pop )
-static_assert( sizeof(SKeyTrackDisk) == 6, "effect track wire size" );
-static_assert( sizeof(SParticleDisk) == 34, "effect particle wire size" );
-
-template<class TValue>
-static void ResolveTrack( TKeyTrack<TValue> *dst, const SKeyTrackDisk &src,
-	char *data, size_t dataBytes )
-{
-	if ( src.nKeys < 0 || src.keysOffset > dataBytes ||
-		static_cast<size_t>(src.nKeys) > (dataBytes - src.keysOffset) / sizeof(TKey<TValue>) )
-		throw std::runtime_error( "invalid effect key track" );
-	dst->nKeys = src.nKeys;
-	dst->keys = src.nKeys ? reinterpret_cast<TKey<TValue>*>(data + src.keysOffset) : 0;
+	if ( source.size() > static_cast<size_t>((std::numeric_limits<short>::max)()) )
+		throw std::runtime_error( "effect key count overflow" );
+	owned->resize( source.size() );
+	for ( size_t i = 0; i < source.size(); ++i )
+	{
+		(*owned)[i].nT = source[i].frame;
+		(*owned)[i].value = convert( source[i].value );
+	}
+	dst->nKeys = static_cast<short>( source.size() );
+	dst->keys = owned->empty() ? 0 : &(*owned)[0];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CParticlesInfo
@@ -110,39 +101,45 @@ CFileRequest* CParticlesLoader::CreateRequest()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CParticlesLoader::RecalcValue( CFileRequest *pRequest )
 {
+	CMemoryStream *stream = pRequest->GetStream();
+	if ( stream->GetSize() < 0 )
+		throw std::runtime_error( "invalid effect file size" );
+	S2FileIO::EffectData effect;
+	std::string error;
+	if ( !S2FileIO::DecodeEffectData(
+		reinterpret_cast<const std::uint8_t*>(stream->GetBufferForWrite()),
+		static_cast<size_t>(stream->GetSize()), &effect, &error ) )
+		throw std::runtime_error( error );
+	if ( effect.payloadSize > static_cast<std::uint32_t>((std::numeric_limits<int>::max)()) ||
+		effect.particles.size() > static_cast<size_t>((std::numeric_limits<int>::max)()) )
+		throw std::runtime_error( "effect size exceeds runtime limits" );
 	pValue = new CParticlesInfo;
 	pValue->pData = pRequest;
-	CMemoryStream *stream = pRequest->GetStream();
-	if ( stream->GetSize() < 4 )
-		throw std::runtime_error( "effect file too short" );
-	char *pData = reinterpret_cast<char*>(stream->GetBufferForWrite());
-	std::memcpy( &pValue->nBytes, pData, sizeof(int) );
-	if ( pValue->nBytes < 12 || pValue->nBytes > stream->GetSize() - 4 )
-		throw std::runtime_error( "invalid effect payload size" );
-	pData += 4;
-	std::memcpy( &pValue->fTEnd, pData, sizeof(float) );
-	std::memcpy( &pValue->fFrameRate, pData + 4, sizeof(float) );
-	std::memcpy( &pValue->nParticles, pData + 8, sizeof(int) );
-	if ( pValue->nParticles < 0 ||
-		static_cast<size_t>(pValue->nParticles) >
-		(static_cast<size_t>(pValue->nBytes) - 12) / sizeof(SParticleDisk) )
-		throw std::runtime_error( "invalid effect particle count" );
-	const char *diskData = pData + 12;
-	pValue->particleStorage.resize( pValue->nParticles );
+	pValue->nBytes = static_cast<int>(effect.payloadSize);
+	pValue->fTEnd = effect.endTime;
+	pValue->fFrameRate = effect.frameRate;
+	pValue->nParticles = static_cast<int>(effect.particles.size());
+	pValue->particleStorage.resize( effect.particles.size() );
+	pValue->keyStorage.resize( effect.particles.size() );
 	pValue->particles = pValue->particleStorage.empty() ? 0 : &pValue->particleStorage[0];
 
 	for ( int nP = 0; nP < pValue->nParticles; ++nP )
 	{
-		SParticleDisk disk;
-		std::memcpy( &disk, diskData + nP * sizeof(disk), sizeof(disk) );
+		const S2FileIO::EffectParticle &src = effect.particles[nP];
 		SParticle &particle = pValue->particles[nP];
-		particle.nTStart = disk.nTStart;
-		particle.nTEnd = disk.nTEnd;
-		ResolveTrack( &particle.pos, disk.pos, pData, pValue->nBytes );
-		ResolveTrack( &particle.rot, disk.rot, pData, pValue->nBytes );
-		ResolveTrack( &particle.scale, disk.scale, pData, pValue->nBytes );
-		ResolveTrack( &particle.color, disk.color, pData, pValue->nBytes );
-		ResolveTrack( &particle.sprite, disk.sprite, pData, pValue->nBytes );
+		SParticleKeyStorage &owned = pValue->keyStorage[nP];
+		particle.nTStart = src.start;
+		particle.nTEnd = src.end;
+		CopyTrack( &particle.pos, &owned.pos, src.position,
+			[]( S2FileIO::EffectVec3 v ) { return CVec3(v.x, v.y, v.z); } );
+		CopyTrack( &particle.rot, &owned.rot, src.rotation,
+			[]( float v ) { return v; } );
+		CopyTrack( &particle.scale, &owned.scale, src.scale,
+			[]( S2FileIO::EffectVec2 v ) { return CVec2(v.x, v.y); } );
+		CopyTrack( &particle.color, &owned.color, src.color,
+			[]( std::uint32_t v ) { return static_cast<DWORD>(v); } );
+		CopyTrack( &particle.sprite, &owned.sprite, src.sprite,
+			[]( std::int16_t v ) { return static_cast<short>(v); } );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

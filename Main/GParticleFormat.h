@@ -27,14 +27,24 @@ public:
 	short nT;
 	TValue value;
 };
+#pragma pack( pop )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Runtime keys are decoded from Effects.res and naturally aligned. TKey above
+// retains the historical packed save-record ABI for animated light vectors.
+template <class TValue>
+struct TParticleKey
+{
+	short nT;
+	TValue value;
+};
+
 // could use coherence between fetches to make key retrieve faster
 template <class TValue>
 class TKeyTrack
 {
 public:
 	short nKeys;
-	TKey<TValue> *keys;
+	TParticleKey<TValue> *keys;
 
 	void GetValue( float fT, TValue *pRes ) const
 	{
@@ -58,8 +68,8 @@ private:
 			else
 				e = n;
 		}
-		const TKey<TValue> &start = keys[s];
-		const TKey<TValue> &end = keys[e];
+		const TParticleKey<TValue> &start = keys[s];
+		const TParticleKey<TValue> &end = keys[e];
 		float fAlpha = (fT - start.nT) / (end.nT - start.nT);
 		Interpolate( start.value, end.value, fAlpha, pRes );
 	}
@@ -76,7 +86,14 @@ struct SParticle
 	TKeyTrack<short> sprite;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma pack( pop )
+struct SParticleKeyStorage
+{
+	std::vector<TParticleKey<CVec3>> pos;
+	std::vector<TParticleKey<float>> rot;
+	std::vector<TParticleKey<CVec2>> scale;
+	std::vector<TParticleKey<DWORD>> color;
+	std::vector<TParticleKey<short>> sprite;
+};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CParticlesInfo: public CObjectBase
 {
@@ -90,7 +107,8 @@ public:
 	float fFrameRate;
 	int nParticles;
 	SParticle *particles;
-	std::vector<SParticle> particleStorage; // runtime pointers; never overlaid on the 32-bit file format
+	std::vector<SParticle> particleStorage;
+	std::vector<SParticleKeyStorage> keyStorage; // owns naturally aligned decoded keys
 
 	CParticlesInfo() { nBytes = 0; nParticles = 0; particles = 0; }
 	void CalcBound( SBound *pRes );
