@@ -5,6 +5,7 @@
 #endif // _MSC_VER > 1000
 
 #include "aiPosition.h"
+#include "../FileIO/PortableAITileWire.h"
 
 namespace NAI
 {
@@ -541,4 +542,66 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
+static_assert(sizeof(NAI::STile) == 16 && sizeof(NAI::CNodesLayer::SLink) == 8,
+              "game AI tile and link wire sizes");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::STile, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length, NAI::STile* value) {
+    if (!value) return false;
+    AITileFields fields{};
+    if (!DecodeAITile(source, length, &fields)) return false;
+    for (std::size_t i = 0; i < 4; ++i)
+      std::memcpy(&value->nMove[i], &fields.move[i], 1);
+    value->nHeight = fields.height; value->nFloor = fields.floor;
+    std::memcpy(&value->nLocks, &fields.locks, 1);
+    std::memcpy(&value->nDynLocks, &fields.dynamicLocks, 1);
+    std::memcpy(&value->nPassable, &fields.passable, 1);
+    std::memcpy(&value->nDisplacement, &fields.displacement, 1);
+    std::memcpy(&value->nFlags, &fields.flags, 1);
+    value->nFlipper = fields.flipper;
+    std::memcpy(&value->nFake1, &fields.reserved1, 1);
+    std::memcpy(&value->nFake2, &fields.reserved2, 1);
+    return true;
+  }
+  static bool Encode(const NAI::STile& value, std::uint8_t* destination,
+                     std::size_t length) {
+    AITileFields fields{};
+    for (std::size_t i = 0; i < 4; ++i)
+      std::memcpy(&fields.move[i], &value.nMove[i], 1);
+    fields.height = value.nHeight; fields.floor = value.nFloor;
+    std::memcpy(&fields.locks, &value.nLocks, 1);
+    std::memcpy(&fields.dynamicLocks, &value.nDynLocks, 1);
+    std::memcpy(&fields.passable, &value.nPassable, 1);
+    std::memcpy(&fields.displacement, &value.nDisplacement, 1);
+    std::memcpy(&fields.flags, &value.nFlags, 1);
+    fields.flipper = value.nFlipper;
+    std::memcpy(&fields.reserved1, &value.nFake1, 1);
+    std::memcpy(&fields.reserved2, &value.nFake2, 1);
+    return EncodeAITile(fields, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NAI::CNodesLayer::SLink, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::CNodesLayer::SLink* value) {
+    if (!value) return false;
+    AILinkFields fields{};
+    if (!DecodeAILink(source, length, &fields)) return false;
+    value->dst = NAI::SPathPlace::FromBits(fields.destination);
+    value->nHeight = fields.height;
+    return true;
+  }
+  static bool Encode(const NAI::CNodesLayer::SLink& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeAILink(AILinkFields{value.dst.GetBits(), value.nHeight},
+                        destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
