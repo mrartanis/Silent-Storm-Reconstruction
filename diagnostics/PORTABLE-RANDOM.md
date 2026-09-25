@@ -98,3 +98,12 @@ harness-seed. Точное совпадение стартовой послед�
 обычными запусками, включая Steam, не ожидается. `PortableIsaacTests`
 проверяет заполнение всех 256 слов и живой системный путь на Windows x64,
 Linux x86-64 и ARM64/QEMU; последние две архитектуры — с ASan/UBSan.
+Windows x64 CTest прошёл 26/26; Linux x86-64 и ARM64/QEMU — по 15/15
+с `ASAN_OPTIONS=detect_leaks=0`. Чистый архив из коммита `fe19b1e`,
+`G:\SS\lab\builds\stage2-isaac-entropy-20260925-01`, с нативными
+звуком/видео проверен в `stage2-isaac-entropy-clean-01`: старый `DB_OLD`
+загружен до `LOAD-SLOT-DONE`, новый `ENTROPY_NEW` записан и повторно
+загружен до `LOAD-SLOT-DONE`; после `quit` Game и CDB завершились без
+crash dump. Это проверяет Windows-интеграцию начального seed и сохранений,
+но не является запуском всей игры на Linux/ARM64 и не доказывает
+статистическое качество конкретного системного источника.
