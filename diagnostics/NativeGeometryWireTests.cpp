@@ -18,6 +18,9 @@ static_assert(offsetof(CTRect<int>, x1) == 0 && offsetof(CTRect<int>, y1) == 4 &
 static_assert(offsetof(CTRect<float>, x1) == 0 && offsetof(CTRect<float>, y1) == 4 &&
               offsetof(CTRect<float>, x2) == 8 && offsetof(CTRect<float>, y2) == 12,
               "float rect field offsets");
+static_assert(sizeof(SFBTransform) == 128 &&
+              offsetof(SFBTransform, backward) == 64,
+              "forward/backward transform offsets");
 
 int main() {
   using Vec2 = S2FileIO::StructureFieldCodec<CVec2>;
@@ -85,6 +88,23 @@ int main() {
       decodedMatrix._11 != 1 || decodedMatrix._14 != 4 ||
       decodedMatrix._21 != 5 || decodedMatrix._34 != 12 ||
       decodedMatrix._44 != 16 || Matrix::Decode(wireMatrix, 63, &decodedMatrix)) return 1;
+  using Transform = S2FileIO::StructureFieldCodec<SFBTransform>;
+  if (!Transform::kPortable || Transform::kWireSize != 128) return 10;
+  float forwardFields[16], backwardFields[16];
+  for (int i = 0; i < 16; ++i) {
+    forwardFields[i] = static_cast<float>(i + 1);
+    backwardFields[i] = static_cast<float>(-i - 1);
+  }
+  forwardFields[5] = -0.0f;
+  SFBTransform transform, decodedTransform;
+  S2FileIO::AssignMatrixFields(&transform.forward, forwardFields);
+  S2FileIO::AssignMatrixFields(&transform.backward, backwardFields);
+  std::uint8_t transformWire[128] = {};
+  if (!Transform::Encode(transform, transformWire, sizeof(transformWire)) ||
+      std::memcmp(transformWire, &transform, sizeof(transformWire)) != 0 ||
+      !Transform::Decode(transformWire, sizeof(transformWire), &decodedTransform) ||
+      std::memcmp(&transform, &decodedTransform, sizeof(transform)) != 0 ||
+      Transform::Decode(transformWire, 127, &decodedTransform)) return 11;
   using Triangle = S2FileIO::StructureFieldCodec<STriangle>;
   using Sphere = S2FileIO::StructureFieldCodec<SSphere>;
   using MassSphere = S2FileIO::StructureFieldCodec<SMassSphere>;

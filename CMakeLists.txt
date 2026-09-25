@@ -58,6 +58,8 @@ add_executable(PortableVertexWireTests "${root}/diagnostics/PortableVertexWireTe
 add_test(NAME PortableVertexWireTests COMMAND PortableVertexWireTests)
 add_executable(PortableGeometryWireTests "${root}/diagnostics/PortableGeometryWireTests.cpp")
 add_test(NAME PortableGeometryWireTests COMMAND PortableGeometryWireTests)
+add_executable(PortableFBTransformWireTests "${root}/diagnostics/PortableFBTransformWireTests.cpp")
+add_test(NAME PortableFBTransformWireTests COMMAND PortableFBTransformWireTests)
 add_executable(PortableFontWireTests "${root}/diagnostics/PortableFontWireTests.cpp")
 add_test(NAME PortableFontWireTests COMMAND PortableFontWireTests)
 add_executable(PortableAITileWireTests "${root}/diagnostics/PortableAITileWireTests.cpp")

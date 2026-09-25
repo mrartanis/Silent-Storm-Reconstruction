@@ -3,6 +3,7 @@
 
 #include "PortableStructureChunks.h"
 #include "PortableGameGeometry.h"
+#include "PortableFBTransformWire.h"
 #include "..\Misc\Geom.h"
 
 static_assert(sizeof(STriangle) == 6, "triangle wire size");
@@ -13,6 +14,8 @@ static_assert(sizeof(CTPoint<int>) == 8 && sizeof(CTPoint<float>) == 8,
               "point wire size");
 static_assert(sizeof(CTRect<int>) == 16 && sizeof(CTRect<float>) == 16,
               "rect wire size");
+static_assert(sizeof(SFBTransform) == 128 && offsetof(SFBTransform, backward) == 64,
+              "forward/backward transform wire layout");
 
 namespace S2FileIO {
 template<class T>
@@ -237,6 +240,22 @@ struct StructureFieldCodec<SPlane[6], void> {
   }
 };
 
+inline void AssignMatrixFields(SHMatrix* value, const float* fields) {
+  value->_11 = fields[0]; value->_12 = fields[1]; value->_13 = fields[2]; value->_14 = fields[3];
+  value->_21 = fields[4]; value->_22 = fields[5]; value->_23 = fields[6]; value->_24 = fields[7];
+  value->_31 = fields[8]; value->_32 = fields[9]; value->_33 = fields[10]; value->_34 = fields[11];
+  value->_41 = fields[12]; value->_42 = fields[13]; value->_43 = fields[14]; value->_44 = fields[15];
+}
+
+inline void ExtractMatrixFields(const SHMatrix& value, float* fields) {
+  const float extracted[16] = {
+      value._11, value._12, value._13, value._14,
+      value._21, value._22, value._23, value._24,
+      value._31, value._32, value._33, value._34,
+      value._41, value._42, value._43, value._44};
+  for (std::size_t i = 0; i < 16; ++i) fields[i] = extracted[i];
+}
+
 template<>
 struct StructureFieldCodec<SHMatrix, void> {
   static constexpr bool kPortable = true;
@@ -245,19 +264,35 @@ struct StructureFieldCodec<SHMatrix, void> {
     if (!value) return false;
     float fields[16];
     if (!DecodeStructureFloatFields(source, length, fields, 16)) return false;
-    value->_11 = fields[0]; value->_12 = fields[1]; value->_13 = fields[2]; value->_14 = fields[3];
-    value->_21 = fields[4]; value->_22 = fields[5]; value->_23 = fields[6]; value->_24 = fields[7];
-    value->_31 = fields[8]; value->_32 = fields[9]; value->_33 = fields[10]; value->_34 = fields[11];
-    value->_41 = fields[12]; value->_42 = fields[13]; value->_43 = fields[14]; value->_44 = fields[15];
+    AssignMatrixFields(value, fields);
     return true;
   }
   static bool Encode(const SHMatrix& value, std::uint8_t* destination, std::size_t length) {
-    const float fields[16] = {
-        value._11, value._12, value._13, value._14,
-        value._21, value._22, value._23, value._24,
-        value._31, value._32, value._33, value._34,
-        value._41, value._42, value._43, value._44};
+    float fields[16];
+    ExtractMatrixFields(value, fields);
     return EncodeStructureFloatFields(fields, 16, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<SFBTransform, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 128;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     SFBTransform* value) {
+    if (!value) return false;
+    FBTransformFields fields{};
+    if (!DecodeFBTransform(source, length, &fields)) return false;
+    AssignMatrixFields(&value->forward, fields.forward);
+    AssignMatrixFields(&value->backward, fields.backward);
+    return true;
+  }
+  static bool Encode(const SFBTransform& value,
+                     std::uint8_t* destination, std::size_t length) {
+    FBTransformFields fields{};
+    ExtractMatrixFields(value.forward, fields.forward);
+    ExtractMatrixFields(value.backward, fields.backward);
+    return EncodeFBTransform(fields, destination, length);
   }
 };
 } // namespace S2FileIO
