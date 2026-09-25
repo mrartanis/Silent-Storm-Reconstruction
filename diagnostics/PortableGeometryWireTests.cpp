@@ -76,5 +76,39 @@ int main() {
       boundDecoded.halfBox[0] != 3.0f || boundDecoded.halfBox[1] != 4.0f ||
       boundDecoded.halfBox[2] != 5.0f ||
       S2FileIO::DecodeBound(boundWire, 27, &boundDecoded)) return 5;
+  const S2FileIO::PointFields<std::int32_t> intPoint{-2, 0x12345678};
+  const std::uint8_t intPointExpected[8] = {0xfe, 0xff, 0xff, 0xff,
+                                             0x78, 0x56, 0x34, 0x12};
+  std::uint8_t pointWire[8] = {};
+  S2FileIO::PointFields<std::int32_t> intPointDecoded{};
+  if (!S2FileIO::EncodePoint(intPoint, pointWire, 8) ||
+      std::memcmp(pointWire, intPointExpected, 8) != 0 ||
+      !S2FileIO::DecodePoint(intPointExpected, 8, &intPointDecoded) ||
+      intPointDecoded.x != -2 || intPointDecoded.y != 0x12345678) return 6;
+  const S2FileIO::PointFields<float> floatPoint{1.0f, -0.0f};
+  const std::uint8_t floatPointExpected[8] = {0, 0, 0x80, 0x3f, 0, 0, 0, 0x80};
+  S2FileIO::PointFields<float> floatPointDecoded{};
+  if (!S2FileIO::EncodePoint(floatPoint, pointWire, 8) ||
+      std::memcmp(pointWire, floatPointExpected, 8) != 0 ||
+      !S2FileIO::DecodePoint(floatPointExpected, 8, &floatPointDecoded) ||
+      floatPointDecoded.x != 1.0f || !std::signbit(floatPointDecoded.y)) return 7;
+  const S2FileIO::RectFields<std::int32_t> intRect{-2, 3, 4, 5};
+  const std::uint8_t intRectExpected[16] = {0xfe, 0xff, 0xff, 0xff,
+                                             3, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0};
+  std::uint8_t rectWire[16] = {};
+  S2FileIO::RectFields<std::int32_t> intRectDecoded{};
+  if (!S2FileIO::EncodeRect(intRect, rectWire, 16) ||
+      std::memcmp(rectWire, intRectExpected, 16) != 0 ||
+      !S2FileIO::DecodeRect(intRectExpected, 16, &intRectDecoded) ||
+      intRectDecoded.x1 != -2 || intRectDecoded.y1 != 3 ||
+      intRectDecoded.x2 != 4 || intRectDecoded.y2 != 5) return 8;
+  const S2FileIO::RectFields<float> floatRect{1.0f, -2.0f, 0.5f, -0.0f};
+  S2FileIO::RectFields<float> floatRectDecoded{};
+  if (!S2FileIO::EncodeRect(floatRect, rectWire, 16) ||
+      std::memcmp(rectWire, expected, 16) != 0 ||
+      !S2FileIO::DecodeRect(expected, 16, &floatRectDecoded) ||
+      floatRectDecoded.x1 != 1.0f || floatRectDecoded.y1 != -2.0f ||
+      floatRectDecoded.x2 != 0.5f || !std::signbit(floatRectDecoded.y2) ||
+      S2FileIO::DecodeRect(expected, 15, &floatRectDecoded)) return 9;
   return 0;
 }

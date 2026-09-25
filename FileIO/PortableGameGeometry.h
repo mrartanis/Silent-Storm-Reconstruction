@@ -5,8 +5,62 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <type_traits>
 
 namespace S2FileIO {
+
+template<class T> struct PointFields { T x, y; };
+template<class T> struct RectFields { T x1, y1, x2, y2; };
+
+template<class T>
+inline bool DecodePoint(const std::uint8_t* source, std::size_t length,
+                        PointFields<T>* value) {
+  static_assert(std::is_same<T, std::int32_t>::value || std::is_same<T, float>::value,
+                "only game int32 and float points use this wire format");
+  if (!source || !value || length != 8) return false;
+  PointFields<T> result{};
+  if (!DecodeStructureScalar(source, 4, &result.x) ||
+      !DecodeStructureScalar(source + 4, 4, &result.y)) return false;
+  *value = result;
+  return true;
+}
+
+template<class T>
+inline bool EncodePoint(const PointFields<T>& value,
+                        std::uint8_t* destination, std::size_t length) {
+  static_assert(std::is_same<T, std::int32_t>::value || std::is_same<T, float>::value,
+                "only game int32 and float points use this wire format");
+  return destination && length == 8 &&
+      EncodeStructureScalar(value.x, destination, 4) &&
+      EncodeStructureScalar(value.y, destination + 4, 4);
+}
+
+template<class T>
+inline bool DecodeRect(const std::uint8_t* source, std::size_t length,
+                       RectFields<T>* value) {
+  static_assert(std::is_same<T, std::int32_t>::value || std::is_same<T, float>::value,
+                "only game int32 and float rects use this wire format");
+  if (!source || !value || length != 16) return false;
+  RectFields<T> result{};
+  if (!DecodeStructureScalar(source, 4, &result.x1) ||
+      !DecodeStructureScalar(source + 4, 4, &result.y1) ||
+      !DecodeStructureScalar(source + 8, 4, &result.x2) ||
+      !DecodeStructureScalar(source + 12, 4, &result.y2)) return false;
+  *value = result;
+  return true;
+}
+
+template<class T>
+inline bool EncodeRect(const RectFields<T>& value,
+                       std::uint8_t* destination, std::size_t length) {
+  static_assert(std::is_same<T, std::int32_t>::value || std::is_same<T, float>::value,
+                "only game int32 and float rects use this wire format");
+  return destination && length == 16 &&
+      EncodeStructureScalar(value.x1, destination, 4) &&
+      EncodeStructureScalar(value.y1, destination + 4, 4) &&
+      EncodeStructureScalar(value.x2, destination + 8, 4) &&
+      EncodeStructureScalar(value.y2, destination + 12, 4);
+}
 
 struct TriangleFields { std::uint16_t first, second, third; };
 struct SphereFields { float center[3]; float radius; };

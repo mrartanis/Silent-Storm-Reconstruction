@@ -10,6 +10,14 @@ static_assert(offsetof(STriangle, i3) == 4, "triangle third index offset");
 static_assert(offsetof(SSphere, fRadius) == 12, "sphere radius offset");
 static_assert(offsetof(SMassSphere, fMass) == 16, "mass sphere mass offset");
 static_assert(offsetof(SBound, ptHalfBox) == 16, "bound half-box offset");
+static_assert(offsetof(CTPoint<int>, y) == 4, "integer point y offset");
+static_assert(offsetof(CTPoint<float>, y) == 4, "float point y offset");
+static_assert(offsetof(CTRect<int>, x1) == 0 && offsetof(CTRect<int>, y1) == 4 &&
+              offsetof(CTRect<int>, x2) == 8 && offsetof(CTRect<int>, y2) == 12,
+              "integer rect field offsets");
+static_assert(offsetof(CTRect<float>, x1) == 0 && offsetof(CTRect<float>, y1) == 4 &&
+              offsetof(CTRect<float>, x2) == 8 && offsetof(CTRect<float>, y2) == 12,
+              "float rect field offsets");
 
 int main() {
   using Vec2 = S2FileIO::StructureFieldCodec<CVec2>;
@@ -112,5 +120,31 @@ int main() {
       std::memcmp(boundWire, &bound, 28) != 0 ||
       !Bound::Decode(boundWire, 28, &decodedBound) ||
       std::memcmp(&decodedBound, &bound, 28) != 0) return 6;
+  using IntPoint = S2FileIO::StructureFieldCodec<CTPoint<int>>;
+  using FloatPoint = S2FileIO::StructureFieldCodec<CTPoint<float>>;
+  using IntRect = S2FileIO::StructureFieldCodec<CTRect<int>>;
+  using FloatRect = S2FileIO::StructureFieldCodec<CTRect<float>>;
+  if (!IntPoint::kPortable || IntPoint::kWireSize != 8 ||
+      !FloatPoint::kPortable || FloatPoint::kWireSize != 8 ||
+      !IntRect::kPortable || IntRect::kWireSize != 16 ||
+      !FloatRect::kPortable || FloatRect::kWireSize != 16) return 7;
+  CTPoint<int> pi(-2, 0x12345678), decodedPi;
+  CTPoint<float> pf(1.0f, -0.0f), decodedPf;
+  std::uint8_t pointWire[8] = {};
+  if (!IntPoint::Encode(pi, pointWire, 8) || std::memcmp(pointWire, &pi, 8) != 0 ||
+      !IntPoint::Decode(pointWire, 8, &decodedPi) ||
+      std::memcmp(&decodedPi, &pi, 8) != 0 ||
+      !FloatPoint::Encode(pf, pointWire, 8) || std::memcmp(pointWire, &pf, 8) != 0 ||
+      !FloatPoint::Decode(pointWire, 8, &decodedPf) ||
+      std::memcmp(&decodedPf, &pf, 8) != 0) return 8;
+  CTRect<int> ri(-2, 3, 4, 5), decodedRi;
+  CTRect<float> rf(1.0f, -2.0f, 0.5f, -0.0f), decodedRf;
+  std::uint8_t rectWire[16] = {};
+  if (!IntRect::Encode(ri, rectWire, 16) || std::memcmp(rectWire, &ri, 16) != 0 ||
+      !IntRect::Decode(rectWire, 16, &decodedRi) ||
+      std::memcmp(&decodedRi, &ri, 16) != 0 ||
+      !FloatRect::Encode(rf, rectWire, 16) || std::memcmp(rectWire, &rf, 16) != 0 ||
+      !FloatRect::Decode(rectWire, 16, &decodedRf) ||
+      std::memcmp(&decodedRf, &rf, 16) != 0) return 9;
   return 0;
 }

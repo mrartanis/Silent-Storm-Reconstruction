@@ -9,8 +9,52 @@ static_assert(sizeof(STriangle) == 6, "triangle wire size");
 static_assert(sizeof(SSphere) == 16, "sphere wire size");
 static_assert(sizeof(SMassSphere) == 20, "mass sphere wire size");
 static_assert(sizeof(SBound) == 28, "bound wire size");
+static_assert(sizeof(CTPoint<int>) == 8 && sizeof(CTPoint<float>) == 8,
+              "point wire size");
+static_assert(sizeof(CTRect<int>) == 16 && sizeof(CTRect<float>) == 16,
+              "rect wire size");
 
 namespace S2FileIO {
+template<class T>
+struct GamePointCodec {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length, CTPoint<T>* value) {
+    if (!value) return false;
+    PointFields<T> fields{};
+    if (!DecodePoint(source, length, &fields)) return false;
+    value->x = fields.x; value->y = fields.y;
+    return true;
+  }
+  static bool Encode(const CTPoint<T>& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return EncodePoint(PointFields<T>{value.x, value.y}, destination, length);
+  }
+};
+template<> struct StructureFieldCodec<CTPoint<int>, void> : GamePointCodec<int> {};
+template<> struct StructureFieldCodec<CTPoint<float>, void> : GamePointCodec<float> {};
+
+template<class T>
+struct GameRectCodec {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length, CTRect<T>* value) {
+    if (!value) return false;
+    RectFields<T> fields{};
+    if (!DecodeRect(source, length, &fields)) return false;
+    value->x1 = fields.x1; value->y1 = fields.y1;
+    value->x2 = fields.x2; value->y2 = fields.y2;
+    return true;
+  }
+  static bool Encode(const CTRect<T>& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return EncodeRect(RectFields<T>{value.x1, value.y1, value.x2, value.y2},
+                      destination, length);
+  }
+};
+template<> struct StructureFieldCodec<CTRect<int>, void> : GameRectCodec<int> {};
+template<> struct StructureFieldCodec<CTRect<float>, void> : GameRectCodec<float> {};
+
 template<>
 struct StructureFieldCodec<STriangle, void> {
   static constexpr bool kPortable = true;
