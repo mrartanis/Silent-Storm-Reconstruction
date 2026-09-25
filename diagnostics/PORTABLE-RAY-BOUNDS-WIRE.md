@@ -1,0 +1,42 @@
+# Игровые луч и накопитель границ на диске
+
+Аудит миссионной загрузки в `stage2-camera-effect-clean-01` обнаружил
+сырые записи `CRay` (луч интерфейса миссии, tag 20) и `SBoundCalcer`
+(накопитель границ обломков, tag 4). Коммит `f46e862` заменил их
+host-копирование на явные little-endian `float32`: начало и направление
+луча, минимум и максимум границ — по шесть чисел, 24 байта. Геометрию
+рендера и логику вычислений эта правка не меняет.
+
+В существующие `PortableGeometryWireTests` и `NativeGeometryWireTests`
+добавлены точные байты, round-trip, проверка длины и соответствие
+прежнему Windows ABI. Windows x64 собрал `Game.exe` и прошёл CTest
+70/70; Windows x86 — целевые тесты 2/2. Linux x86-64 и ARM64/QEMU
+под ASan/UBSan прошли по 41/41. На Linux/ARM64 это проверки
+переносимых библиотек без игрового окна, а не сборка всей игры.
+
+Чистый архив `D:\SS-lab\builds\stage2-ray-bounds-wire-20260925-01`
+(x64, FFmpeg/miniaudio) в запуске
+`D:\SS-lab\runs\stage2-ray-bounds-clean-01` загрузил прежний
+`CAMERA_EFFECT_NEW`, записал `RAY_BOUNDS_NEW`, повторно загрузил его
+до `LOAD-SLOT-DONE` и штатно вышел без дампа. В проходе миссионной
+загрузки полный `_wireaudit.log` содержит 10 оставшихся raw-путей
+вместо 12: `CRay` и `SBoundCalcer` исчезли. Это один сценарий, не
+полный перечень игровых типов; ручной `AddRawData(void*)` аудит не видит.
+SHA-256 нового `game.sav`:
+`1ad205b6534f0b0dea7c05853b7467af0a89e5546ed19ff4671157f8a038067e`.
+Диагностическая восстановленная x86-игра в
+`D:\SS-lab\runs\stage2-ray-bounds-x86-01` открыла тот же неизменённый
+слот до `LOAD-SLOT-DONE`, затем вышла без дампа. Это проверка чтения
+формата, не эталон поведения.
+
+Повторение: на каждой архитектуре запустить CMake/CTest; для Windows
+игры создать чистый архив `Build-Lab.ps1 -Architecture x64 -NativeMedia`,
+из него `New-LabRun.ps1 -SkipIntro -LinkResources`, положить слот в
+`<run>/user-data/save/default`, имя в `<run>/game/_loadslot.txt`,
+запустить `Start-LabRun.ps1` с
+`-windowed -800 -harness -loadslot`. После `LOAD-SLOT-DONE` подать
+`save RAY_BOUNDS_NEW`, `load RAY_BOUNDS_NEW`, `quit` через
+`<run>/game/_harness_cmd.txt`; проверить весь журнал аудита,
+`_saveload.log`, отсутствие дампа и хеш сейва. Пока это не доказывает
+совместимость нового слота с оригинальным Steam EXE: для неё нужна
+отдельная прямая проверка в изолированной копии оригинала.
