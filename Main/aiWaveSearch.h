@@ -150,4 +150,31 @@ public:
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
+#include "../FileIO/PortableStructureChunks.h"
+#include "../FileIO/PortableSquareMoveWire.h"
+
+static_assert(sizeof(NAI::CSquareMapCosts::SMove) == 4,
+              "square move is four wire bytes");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::CSquareMapCosts::SMove, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::CSquareMapCosts::SMove* value) {
+    if (!value) return false;
+    SquareMoveFields fields{};
+    if (!DecodeSquareMove(source, length, &fields)) return false;
+    value->parentPos.x = fields.parentX;
+    value->parentPos.y = fields.parentY;
+    value->cost = fields.cost;
+    return true;
+  }
+  static bool Encode(const NAI::CSquareMapCosts::SMove& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeSquareMove({value.parentPos.x, value.parentPos.y, value.cost},
+                            destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
