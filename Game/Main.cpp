@@ -14,6 +14,7 @@
 #include "..\Main\iLoading.h"      // NGame::InitLoadingScreen / TermLoadingScreen -- loading-screen UI built once at boot
 #include "..\Misc\HPTimer.h"       // NHPTimer::UpdateHPTimerFrequency -- the per-frame TSC recalibration
 #include "..\Misc\RandomGen.h"     // [HARNESS] deterministic ISAAC seed for paired architecture tests
+#include "..\Misc\PortableClockSeed.h" // 32-bit millisecond seed without Win32 clock dependency
 #include "..\Main\iSaveManager.h" // CRAP, to start from mission
 #include "..\Main\Sound.h"
 #include "..\Main\WinInputConv.h" // Win32->NInput bridge: replays WM_KEYDOWN/WM_CHAR (OS auto-repeat)
@@ -691,7 +692,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   _CrtSetDbgFlag( tmpFlag );
 	//_CrtSetBreakAlloc( 114 );
 #else
-	srand( GetTickCount() );
+	srand( static_cast<unsigned int>( S2Random::ClockSeed32() ) );
 #endif // _DEBUG
 	NGScene::AddResourceDir( ".\\res" );
 	NGScene::RunResourceLoadingThread();

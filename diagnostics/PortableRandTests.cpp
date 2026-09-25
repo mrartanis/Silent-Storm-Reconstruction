@@ -1,8 +1,19 @@
 #include "../Misc/PortableRand.h"
+#include "../Misc/PortableClockSeed.h"
 
 #include <cstdint>
+#include <cstring>
 
 int main() {
+  if (S2Random::ClockSeedFromMilliseconds(0) != 0 ||
+      S2Random::ClockSeedFromMilliseconds(UINT64_C(0x100000001)) != 1)
+    return 1;
+  const std::int32_t wrapped = S2Random::ClockSeedFromMilliseconds(UINT64_C(0x80000000));
+  std::uint32_t wrappedBits = 0;
+  std::memcpy(&wrappedBits, &wrapped, sizeof(wrappedBits));
+  if (wrappedBits != UINT32_C(0x80000000)) return 1;
+  (void)S2Random::ClockSeed32();
+
   std::int32_t seed = 0;
   const std::int32_t expectedSeeds[] = {
       2531011, 505908858, -755606699, 159719620, -1567142793,

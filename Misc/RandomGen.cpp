@@ -2,6 +2,7 @@
 #include "RandomGen.h"
 #include "PortableRand.h"
 #include "PortableIsaacSeed.h"
+#include "PortableClockSeed.h"
 #include "..\FileIO\basicChunk1.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@
 static bool g_bHarnessSeedActive = false;
 static unsigned int g_nHarnessSeed = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRandomSeed::SRandomSeed() : nSeed( g_bHarnessSeedActive ? g_nHarnessSeed : GetTickCount() )
+SRandomSeed::SRandomSeed() : nSeed( g_bHarnessSeedActive ? g_nHarnessSeed : S2Random::ClockSeed32() )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +20,7 @@ SRandomSeed::SRandomSeed( int seed ) : nSeed( seed )
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-SRand::SRand() : seed( g_bHarnessSeedActive ? g_nHarnessSeed : GetTickCount() )
+SRand::SRand() : seed( g_bHarnessSeedActive ? g_nHarnessSeed : S2Random::ClockSeed32() )
 {
 	Get( 4 );
 }
