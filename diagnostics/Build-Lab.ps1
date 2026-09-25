@@ -1,5 +1,6 @@
 param(
  [string]$LabRoot='G:\SS\lab',
+ [string]$ArchiveRoot,
  [string]$ToolRoot='G:\SS\lab\tools\VS2022',
  [ValidateSet('Win32','x64')][string]$Architecture='x64',
  [string]$BuildId=(Get-Date -Format 'yyyyMMdd-HHmmss'),
@@ -12,7 +13,9 @@ $ErrorActionPreference='Stop'
 $env:UCRTContentRoot='C:\Program Files (x86)\Windows Kits\10\'
 $repo=Split-Path $PSScriptRoot -Parent
 $cmake=Join-Path $ToolRoot 'Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe'
-$archive=Join-Path $LabRoot "builds\$BuildId"
+if(!$ArchiveRoot){$ArchiveRoot=Join-Path $LabRoot 'builds'}
+$ArchiveRoot=[IO.Path]::GetFullPath($ArchiveRoot)
+$archive=Join-Path $ArchiveRoot $BuildId
 if(Test-Path $archive){throw "Build ID already exists: $archive"}
 $sourceStatus=@(& git -C $repo status --porcelain=v1 --untracked-files=all)
 if($LASTEXITCODE){throw 'Cannot inspect source worktree'}
@@ -22,7 +25,7 @@ if($NativeMedia){
  if(!(Test-Path -LiteralPath "$FFmpegRoot\include\libavformat\avformat.h")){throw 'Set FFmpegRoot to the shared development package root'}
  if(!(Test-Path -LiteralPath "$MiniaudioIncludeDir\miniaudio.h")){throw 'Set MiniaudioIncludeDir to miniaudio 0.11.25'}
 }
-New-Item -ItemType Directory $archive | Out-Null
+New-Item -ItemType Directory $archive -Force | Out-Null
 $sha=(& git -C $repo rev-parse HEAD).Trim()
 & git -C $repo archive --format=zip "--output=$archive\source.zip" HEAD
 Set-Content -LiteralPath "$archive\git-status.txt" -Value '' -NoNewline

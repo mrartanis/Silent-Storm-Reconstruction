@@ -1,7 +1,9 @@
-param([string]$LabRoot='G:\SS\lab',[Parameter(Mandatory)][string]$BuildId,[Parameter(Mandatory)][ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$RunId,[switch]$SkipIntro)
+param([string]$LabRoot='G:\SS\lab',[string]$ArchiveRoot,[string]$RunRoot,[Parameter(Mandatory)][string]$BuildId,[Parameter(Mandatory)][ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$RunId,[switch]$SkipIntro)
 $ErrorActionPreference='Stop'
-$archive=Join-Path $LabRoot "builds\$BuildId"
-$run=Join-Path $LabRoot "runs\$RunId"
+if(!$ArchiveRoot){$ArchiveRoot=Join-Path $LabRoot 'builds'}
+if(!$RunRoot){$RunRoot=Join-Path $LabRoot 'runs'}
+$archive=Join-Path ([IO.Path]::GetFullPath($ArchiveRoot)) $BuildId
+$run=Join-Path ([IO.Path]::GetFullPath($RunRoot)) $RunId
 if(Test-Path $run){throw 'Run already exists; use a fresh ID to preserve evidence'}
 if(!(Test-Path "$archive\build.json")){throw 'Incomplete build archive'}
 $buildMetadata=Get-Content "$archive\build.json" -Raw | ConvertFrom-Json
