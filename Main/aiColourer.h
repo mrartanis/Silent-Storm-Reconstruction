@@ -5,6 +5,8 @@
 #include "aiMapProxy.h"
 #include "aiWaveSearch.h"
 #include "aiSimpleWaveSearch.h"
+#include "../Misc/PortableZone.h"
+#include "../FileIO/PortableStructureChunks.h"
 
 namespace NAI
 {
@@ -81,7 +83,7 @@ struct SZone
 {
 	WORD wColor;
 	int nLayer;
-	SZone(): wColor(65535) {}
+	SZone(): wColor(65535), nLayer(0) {}
 	SZone(WORD _wColor, int _nLayer): wColor(_wColor), nLayer(_nLayer) {}
 	SZone(const CPathNetwork* pNet, const SPathPlace& point);
 	void MakeNull() { wColor = 65535; }
@@ -216,4 +218,26 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+static_assert(sizeof(NAI::SZone) == 8, "game zone must keep its 8-byte wire layout");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::SZone, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SZone* value) {
+    if (!value) return false;
+    std::uint16_t color = 0;
+    std::int32_t layer = 0;
+    if (!S2AI::DecodeZone(source, length, &color, &layer)) return false;
+    value->wColor = color;
+    value->nLayer = layer;
+    return true;
+  }
+  static bool Encode(const NAI::SZone& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return S2AI::EncodeZone(value.wColor, value.nLayer, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
