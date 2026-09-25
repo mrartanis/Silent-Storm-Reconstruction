@@ -9,7 +9,12 @@ int main(int argc,char**argv){
  if(argc<3){fprintf(stderr,"LabInput PID focus|move dx dy|key scancode|click\n");return 2;}
  DWORD pid=strtoul(argv[1],0,10);HANDLE h=OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION,FALSE,pid);char path[MAX_PATH]={};DWORD size=MAX_PATH;
  if(!h||!QueryFullProcessImageNameA(h,0,path,&size)){fprintf(stderr,"Cannot identify target\n");return 3;}CloseHandle(h);
- if(_strnicmp(path,"G:\\SS\\lab\\",10)!=0){fprintf(stderr,"Target is outside lab\n");return 3;}
+ const char labRoot[]="G:\\SS\\lab\\";
+ const char steamOracleRoot[]="D:\\SS-lab\\steam-ui-oracle-01\\";
+ if(_strnicmp(path,labRoot,sizeof(labRoot)-1)!=0 &&
+    _strnicmp(path,steamOracleRoot,sizeof(steamOracleRoot)-1)!=0){
+   fprintf(stderr,"Target is outside lab: %s\n",path);return 3;
+ }
  EnumWindows(Find,(LPARAM)pid);if(!target){fprintf(stderr,"No visible target window\n");return 3;}
  if(GetForegroundWindow()!=target){ShowWindow(target,SW_RESTORE);SetForegroundWindow(target);Sleep(250);}
  if(GetForegroundWindow()!=target){fprintf(stderr,"Target not foreground; no input sent\n");return 4;}
