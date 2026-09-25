@@ -22,6 +22,16 @@ The exact result was observed on Windows x86/x64, Linux GCC x64 with
 ASan/UBSan, Linux GCC ARM64 with ASan/UBSan under QEMU, and Linux Clang x64.
 Full CTest suites: Windows x64 94/94 and each Linux configuration 68/68.
 
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-map-flags-20260925-01` was built from `c628f5e`
+with the repository's `Build-Lab.ps1`. Fresh linked-resource run
+`G:\SS\lab\runs\stage2-map-flags-clean-01` loaded `DB_OLD` to
+`LOAD-SLOT-DONE`, accepted `quit`, and exited without a dump or `fmod.dll`.
+Archive and run `Game.exe` SHA-256 both equal
+`4E0EFFAB305826FBB0338F7A97CC44AE99633650209B60A46E9E359CCA967A64`.
+This Windows smoke specifically checks that moving the shared loader objects
+did not break the game link/start/load path.
+
 This is a *linked game-map entry point*, not a complete mission load.
 `BuildMap` itself still depends on `aiWaypoint.cpp`'s resource loaders and
 `GResource.cpp`; those use Windows-specific synchronization/file APIs and
