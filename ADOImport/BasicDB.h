@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\Misc\basic2.h"
-#include "..\FileIO\BasicChunk1.h"
+#include "../Misc/Basic2.h"
+#include "../FileIO/BasicChunk1.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CDBRecord;
 namespace NDatabase {
@@ -20,6 +20,10 @@ namespace NDatabase {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CDBTableBase;
+template <class T> class CDBTable;
+namespace NDatabase {
+	template <class T> CDBTable<T>* GetTable( CDBTable<T> **pDest = 0 );
+}
 class CDBRecord: public CObjectBase
 {
 	int nID;
@@ -38,8 +42,8 @@ public:
 	CDBPtr() {}
 	CDBPtr( T *_ptr ): CBase( _ptr ) {}
 	CDBPtr( const CDBPtr &a ): CBase( a.Get() ) {}
-	CDBPtr& operator=( T *_ptr ) { Set( _ptr ); return *this; }
-	CDBPtr& operator=( const CDBPtr &a ) { SetObject( a.Get() ); return *this; }
+	CDBPtr& operator=( T *_ptr ) { this->Set( _ptr ); return *this; }
+	CDBPtr& operator=( const CDBPtr &a ) { this->SetObject( a.Get() ); return *this; }
 	//
 	int operator&( CStructureSaver &f ) 
 	{ 
@@ -58,11 +62,11 @@ public:
 				ASSERT( pTable );
 				if ( pTable )
 					*this = ( pTable->GetRecord( nID ) );
-				ASSERT( nID == -1 || GetPtr() );
+					ASSERT( nID == -1 || this->GetPtr() );
 			}
 			else
 			{
-				CDBRecord *pRec = (CDBRecord*)GetPtr();
+					CDBRecord *pRec = (CDBRecord*)this->GetPtr();
 				int nID = pRec ? pRec->GetRecordID() : -1;
 				f.Add( 1, &nID );
 			}
@@ -142,7 +146,7 @@ namespace NDatabase
 	void AddRelation( const char *pszTableName );
 	CDBTableBase* GetTable( int nTableID );
 	template<class T>
-		CDBTable<T>* GetTable( CDBTable<T> **pDest = 0 )
+		CDBTable<T>* GetTable( CDBTable<T> **pDest )
 		{
 			T *p = 0;
 			CDBTable<T> *pRes = (CDBTable<T>*) GetTable( GetRecordTypes().GetTypeID( p ) );

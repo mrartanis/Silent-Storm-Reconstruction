@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
-#include "..\Misc\Geom.h"
+#include "../ADOImport/BasicDB.h"
+#include "../Misc/Geom.h"
 #include "DataConst.h"
 #include "DataGeometry.h"
 #include "DataAnimation.h"
@@ -21,7 +21,7 @@
 template<class T> inline bool PushItem( vector<CPtr<T> > *pItems, T *p )
 {
 	ASSERT( pItems );
-	vector<CPtr<T> >::const_iterator i = find( pItems->begin(), pItems->end(), p );
+	typename vector<CPtr<T> >::const_iterator i = find( pItems->begin(), pItems->end(), p );
 	if ( i == pItems->end() )
 	{
 		pItems->push_back( p );

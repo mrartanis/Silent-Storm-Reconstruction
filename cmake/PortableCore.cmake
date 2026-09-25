@@ -65,6 +65,16 @@ add_executable(NativeDGTests "${root}/diagnostics/NativeDGTests.cpp")
 target_link_libraries(NativeDGTests PRIVATE s2_game_dg)
 add_test(NAME NativeDGTests COMMAND NativeDGTests)
 
+# Original terrain data fields, save tags, and region invalidation atop DG.
+add_library(s2_game_terrain_info STATIC "${root}/Main/TerrainInfo.cpp")
+target_include_directories(s2_game_terrain_info PRIVATE "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_terrain_info PUBLIC s2_game_dg)
+target_compile_features(s2_game_terrain_info PUBLIC cxx_std_17)
+# Linking this module into a headless game target still needs the original
+# BasicDB record registry and CMaterial/CRPGArmor vtables. Until that runtime
+# is ported, build the original translation unit but keep its executable test
+# on Windows where the full DBFormat/ADOImport libraries are already linked.
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

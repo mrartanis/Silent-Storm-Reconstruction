@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\ADOImport\BasicDB.h"
-#include "..\misc\RandomGen.h"
+#include "../ADOImport/BasicDB.h"
+#include "../Misc/RandomGen.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <class T> 
 class CRndPtr : public CDBRecord
@@ -32,7 +32,7 @@ public:
 			ASSERT( false );
 			return 0;
 		}
-		if ( params.empty() )	// подходит любой вариант
+		if ( params.empty() )	// РїРѕРґС…РѕРґРёС‚ Р»СЋР±РѕР№ РІР°СЂРёР°РЅС‚
 			return variants[roulette.GetRandomSector( pRand )];
 
 		vector<int> vSuitableIndices;
@@ -84,12 +84,12 @@ const int N_HEAD_MESHES = 4;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SVariantFlags
 {
-	vector<int> flags; // индексы атрибутов в таблице Attributes
+	vector<int> flags; // РёРЅРґРµРєСЃС‹ Р°С‚СЂРёР±СѓС‚РѕРІ РІ С‚Р°Р±Р»РёС†Рµ Attributes
 	
 	int operator&( CStructureSaver &f );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Слоты для ношения предметов
+// РЎР»РѕС‚С‹ РґР»СЏ РЅРѕС€РµРЅРёСЏ РїСЂРµРґРјРµС‚РѕРІ
 enum ESlot
 {
 	SLOT_1 = 0,

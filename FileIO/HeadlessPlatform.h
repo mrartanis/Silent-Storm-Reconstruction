@@ -16,4 +16,6 @@
 #define externA5 extern
 #define __cdecl
 
+using BOOL = int;
+
 using namespace std;

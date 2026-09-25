@@ -105,6 +105,11 @@ inline float SRand::GetFloat( float fpMin, float fpMax )
 	return fpMin + float( Get( 0xFFFF ) * ( ( fpMax - fpMin ) * (1/double(0xFFFF)) ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 extern CRandomGenerator random;
+#else
+// POSIX libc exports random(); the game-owned generator needs a distinct symbol.
+extern CRandomGenerator s2_game_random;
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

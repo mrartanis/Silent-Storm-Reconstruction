@@ -190,7 +190,7 @@ enum EDirection
 {
 	RIGHT= 0, UPRIGHT, UP, UPLEFT, LEFT, DOWNLEFT, DOWN, DOWNRIGHT, NONE
 };
-enum EHitLocation
+enum EHitLocation : int
 {
 	HL_ANY = -1,
 	HL_BODY = 0,
