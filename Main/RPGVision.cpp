@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "RPGVision.h"
+#include "RPGVisionQuery.h"
 #include "aiRender.h"
 #include "DG.h"
 #include "wTSFlags.h"
@@ -54,25 +55,10 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CVisionTracker
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail SVisionQuery (0x20 bytes, MakeVisionQuery @0x2c8040 fills it as the cache key):
-// {vFrom, vWhat, fRange = the EFFECTIVE sight distance, fCosFOV = cos(FOV/2)}. The legacy 3-arg
-// IsCubeVisible salts the two floats with its fixed constants so its key-space stays disjoint and
-// deterministic. (Save note: visionCache/pointVisionCache are serialized raw-keyed caches -- the key
-// grew 8 bytes, so entries from older dev saves load garbled; harmless, they are caches.)
-struct SVisionQuery
-{
-	CVec3 vFrom, vWhat;
-	float fRange, fCosFOV;
-	SVisionQuery(): fRange( 0 ), fCosFOV( 0 ) {}
-	bool operator ==( const SVisionQuery &a ) const
-	{ return vFrom == a.vFrom && vWhat == a.vWhat && fRange == a.fRange && fCosFOV == a.fCosFOV; }
-};
-////////////////////////////////////////////////////////////////////////////////////////////////////
-struct SVisionQueryHash
-{
-	int operator()( const SVisionQuery &a ) const
-	{ SVec3Hash h; return h( a.vFrom ) + h( a.vWhat ) + (int)( a.fRange * 16 ) + (int)( a.fCosFOV * 1024 ); }
-};
+// The 0x20-byte retail cache key and its portable disk codec are in RPGVisionQuery.h.
+// The legacy 3-arg IsCubeVisible salts range/FOV with fixed constants so its
+// key-space remains distinct. Older reconstructed saves with 24-byte keys are
+// incompatible; these entries are caches and can be regenerated.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CVisionTracker : public IVisionTracker
 {
