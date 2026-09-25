@@ -31,7 +31,9 @@ The reconstructed x86 archive in
 behavioral parity with the shipped game. The original Steam executable's
 main menu was opened from an isolated copy, but this run did not provide a
 reliable observation of the new slot loading; the direct Steam gate for
-`LUA_STATE_NEW` remains open.
+`LUA_STATE_NEW` remains open. A later composite save, `RENDER_STATE_NEW`,
+includes these Lua records and was loaded by the original Steam EXE;
+see `PORTABLE-RENDER-STATE-WIRE.md`. That does not isolate every Lua state.
 
 Reproduce with CMake/CTest on each architecture. On Windows create a clean
 archive using `diagnostics/Build-Lab.ps1 -Architecture x64 -NativeMedia`,
