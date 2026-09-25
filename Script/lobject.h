@@ -360,6 +360,32 @@ struct CallInfo
   int refi;  /* current index in `lineinfo' */
 };
 
+#include "../FileIO/PortableLuaStateWire.h"
+
+static_assert(sizeof(CallInfo) == 20, "Lua call information wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<CallInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 20;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     CallInfo* value) {
+    if (!value) return false;
+    std::int32_t f[5];
+    if (!DecodeLuaStateIntegers(source, length, f, 5)) return false;
+    value->nFunc = f[0]; value->nProto = f[1]; value->lastpc = f[2];
+    value->line = f[3]; value->refi = f[4];
+    return true;
+  }
+  static bool Encode(const CallInfo& value, std::uint8_t* destination,
+                     std::size_t length) {
+    const std::int32_t f[5] = {value.nFunc, value.nProto, value.lastpc,
+                               value.line, value.refi};
+    return EncodeLuaStateIntegers(f, 5, destination, length);
+  }
+};
+} // namespace S2FileIO
+
 extern const char *const luaO_typenames[];
 
 inline const char *luaO_typename( const TObject * o ) { return luaO_typenames[ o->GetType() ]; }

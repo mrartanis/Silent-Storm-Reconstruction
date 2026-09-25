@@ -41,6 +41,29 @@ struct TMinfo
   int method[TM_N];
 };
 
+static_assert(TM_N == 15 && sizeof(TMinfo) == 60, "Lua tag methods wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<TMinfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 60;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     TMinfo* value) {
+    if (!value) return false;
+    std::int32_t methods[TM_N];
+    if (!DecodeLuaStateIntegers(source, length, methods, TM_N)) return false;
+    for (int i = 0; i < TM_N; ++i) value->method[i] = methods[i];
+    return true;
+  }
+  static bool Encode(const TMinfo& value, std::uint8_t* destination,
+                     std::size_t length) {
+    std::int32_t methods[TM_N];
+    for (int i = 0; i < TM_N; ++i) methods[i] = value.method[i];
+    return EncodeLuaStateIntegers(methods, TM_N, destination, length);
+  }
+};
+} // namespace S2FileIO
+
 struct TM {
 	ZDATA
 	TMinfo info;
