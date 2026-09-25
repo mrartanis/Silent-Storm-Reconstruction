@@ -10,6 +10,7 @@
 
 #include <limits.h>
 #include <stddef.h>
+#include <stdint.h>
 
 
 
@@ -50,7 +51,7 @@ typedef LUA_NUM_TYPE Number;
 
 
 
-typedef unsigned long lint32;  /* unsigned int with at least 32 bits */
+typedef uint32_t lint32;  /* Lua 4 and the game's saved values use 32-bit words */
 
 
 #define MAX_SIZET	((size_t)(~(size_t)0)-2)
@@ -62,7 +63,13 @@ typedef unsigned long lint32;  /* unsigned int with at least 32 bits */
 ** conversion of pointer to int (for hashing only)
 ** (the shift removes bits that are usually 0 because of alignment)
 */
-#define IntPoint(p)  (((unsigned long)(p)) >> 3)
+inline uintptr_t LuaPointBits(const void* pointer) {
+  return reinterpret_cast<uintptr_t>(pointer);
+}
+inline uintptr_t LuaPointBits(int index) {
+  return static_cast<uint32_t>(index);
+}
+#define IntPoint(p)  (LuaPointBits(p) >> 3)
 
 
 
@@ -87,7 +94,7 @@ union L_Umaxalign { double d; char *s; long l; };
 ** For a very small machine, you may change that to 2 bytes (and adjust
 ** the following limits accordingly)
 */
-typedef unsigned long Instruction;
+typedef uint32_t Instruction;
 
 
 /*

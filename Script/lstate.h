@@ -167,7 +167,7 @@ struct lua_State
   vector<TM> TMtable;  // table for tag methods
   vector<Ref> refArray;  // locked objects
   int refFree;  // list of free positions in refArray
-  unsigned long nGCticks;  // number of `bytes' currently allocated
+  uint32_t nGCticks;  // retail 32-bit counter, independent of host long width
 	int nGCAvoid;
   int allowhooks;
 	int nNoWait;
@@ -187,6 +187,8 @@ struct lua_State
 	UserData *GetUData( StkId from ) { return userdatas[ pCT->stack[ from ].GetUData() ]; }
 	CallInfo *GetCallInfo( StkId from ) { return callInfos[ pCT->stack[ from ].GetCI() ]; }
 };
+static_assert(sizeof(decltype(lua_State::nGCticks)) == 4,
+              "Lua GC counter must remain a 32-bit game value");
 //////////////////////////////////////////////////////////////////////////
 inline TObject *LObj( lua_State *L, StkId st ) { return &L->pCT->stack[ st ]; }
 inline bool iscfunction( lua_State *L, TObject *o )	

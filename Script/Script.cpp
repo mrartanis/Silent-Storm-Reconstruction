@@ -22,7 +22,9 @@
 #include "lstate.h"
 #endif
 
+#ifdef _WIN32
 #include "..\MiscDll\LogStream.h"
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NScript
 {
@@ -49,7 +51,7 @@ static int Script_LOG(lua_State* state)
 	return 0;
 }
 
-char *pErrToString[] = 
+const char *const pErrToString[] =
 {
 	"OK",
 	"Error while running the chunk",
@@ -112,7 +114,11 @@ static void luaWarningNVA( Script *pScript, string szFuncName, int nArg )
 	str += char( '0' + nArg );
 	str += " is no more valid, when calling function ";
 	str += szFuncName;
+#ifdef _WIN32
 	csSystem << str << endl;
+#else
+	std::fprintf(stderr, "%s\n", str.c_str());
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Script::CheckArgs( const char *szArgList, string sFuncName, vector<SLuaParams> *pParams, bool bMakeLog )
