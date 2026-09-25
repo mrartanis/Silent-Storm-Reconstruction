@@ -124,6 +124,14 @@ if(S2_GAME_DB_PATH)
   add_test(NAME NativeGameDatabaseLoadTests
     COMMAND NativeGameDatabaseLoadTests "${S2_GAME_DB_PATH}")
 endif()
+add_executable(NativeMapDatabaseTests
+  "${root}/diagnostics/NativeMapDatabaseTests.cpp")
+target_link_libraries(NativeMapDatabaseTests PRIVATE
+  "-Wl,--whole-archive" s2_game_dbformat_records "-Wl,--no-whole-archive")
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeMapDatabaseTests
+    COMMAND NativeMapDatabaseTests "${S2_GAME_DB_PATH}")
+endif()
 # The typed database now supplies the material/armor vtables required by
 # STerrainInfo's saved CDBPtr fields. Link the original region/version test.
 add_executable(NativeTerrainInfoTests "${root}/diagnostics/NativeTerrainInfoTests.cpp")
