@@ -56,3 +56,12 @@ an integration test that supplies real path-network tiles to `ComputeLayers`
 and compares the resulting floor heights with the recovered x86 reference
 and, where observable, Steam. A cache-only test cannot establish mission
 routing or building-aware height parity.
+
+Clean native-media x64 archive
+`G:\SS\lab\builds\stage2-height-cache-20260925-01` came from source commit
+`d4b11b7`. Fresh linked-resource run
+`G:\SS\lab\runs\stage2-height-cache-clean-01` contained no `fmod.dll`,
+loaded the existing `DB_OLD` mission slot to `LOAD-SLOT-DONE`, accepted
+`quit`, and exited without a crash dump. Its `Game.exe` SHA-256 matches the
+archive (`5F28E63D9550460CF89EB2CA1A8EB229C069834ADEB73D3350FBB455FC0B7F22`).
+This Windows smoke test does not exercise the Linux path-network branch.
