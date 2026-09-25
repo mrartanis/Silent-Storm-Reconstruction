@@ -4,6 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "../FileIO/PortableRenderStateWire.h"
+
 namespace NGfx
 {
 	class CTexture;
@@ -101,4 +103,39 @@ struct SFogParams
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
+static_assert(sizeof(NGScene::SFogParams) == 64, "fog parameters wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::SFogParams, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 64;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SFogParams* value) {
+    if (!value) return false;
+    float f[16];
+    if (!DecodeRenderFloatFields<16>(source, length, f)) return false;
+    value->fDist = f[0];
+    value->vFogColor = CVec3(f[1], f[2], f[3]);
+    value->fHeight = f[4]; value->fDensity = f[5];
+    value->vWaterColor = CVec3(f[6], f[7], f[8]);
+    value->fCameraHeight = f[9];
+    value->fVapourNoiseParam = f[10]; value->fVapourSpeed = f[11];
+    value->fVapourSwitchTime = f[12]; value->fTime = f[13];
+    value->fDistStart = f[14]; value->fVapourHeightStart = f[15];
+    return true;
+  }
+  static bool Encode(const NGScene::SFogParams& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const float f[16] = {
+        value.fDist, value.vFogColor.x, value.vFogColor.y, value.vFogColor.z,
+        value.fHeight, value.fDensity,
+        value.vWaterColor.x, value.vWaterColor.y, value.vWaterColor.z,
+        value.fCameraHeight, value.fVapourNoiseParam, value.fVapourSpeed,
+        value.fVapourSwitchTime, value.fTime, value.fDistStart,
+        value.fVapourHeightStart};
+    return EncodeRenderFloatFields<16>(f, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif

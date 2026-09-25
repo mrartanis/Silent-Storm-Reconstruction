@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "GfxBuffers.h"
-#include "GLightmapCalc.h"
+#include "GLightmapStateWire.h"
 #include "GGeometry.h"
 #include "..\Misc\RandomGen.h"
 #include "GRenderExecute.h"

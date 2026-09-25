@@ -11,7 +11,7 @@
 #include "GCombiner.h"
 #include "GRenderExecute.h"
 #include "GTransparent.h"
-#include "GLightmapCalc.h"
+#include "GLightmapStateWire.h"
 #include "DiscretePos.h"
 #include "GRenderLight.h"
 #include "GDecal.h"

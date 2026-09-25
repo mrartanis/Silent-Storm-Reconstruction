@@ -736,12 +736,76 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 #include "../FileIO/PortablePartFlagsWire.h"
+#include "../FileIO/PortableRenderStateWire.h"
 
 static_assert(sizeof(NGScene::CPartFlags) == 32, "scene part flags wire size");
+static_assert(sizeof(NGScene::SDirectionalDepthInfo) == 64,
+              "directional depth wire size");
+static_assert(sizeof(NGScene::SDynamicAmbientInfo) == 96 &&
+              sizeof(NGScene::SDynamicAmbientInfo::SPad) == 16,
+              "dynamic ambient wire size");
 static_assert(sizeof(unsigned int) == 4, "scene part flags bit width");
 static_assert(NGScene::N_BLOCKS_IN_PART_FLAGS == 8, "scene part flags block count");
 
 namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::SDirectionalDepthInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 64;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SDirectionalDepthInfo* value) {
+    if (!value) return false;
+    float f[16];
+    if (!DecodeRenderFloatFields<16>(source, length, f)) return false;
+    value->vChannelSelect = CVec4(f[0], f[1], f[2], f[3]);
+    value->vDepth = CVec4(f[4], f[5], f[6], f[7]);
+    value->vVecU = CVec4(f[8], f[9], f[10], f[11]);
+    value->vVecV = CVec4(f[12], f[13], f[14], f[15]);
+    return true;
+  }
+  static bool Encode(const NGScene::SDirectionalDepthInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const CVec4* vectors[4] = {&value.vChannelSelect, &value.vDepth,
+                               &value.vVecU, &value.vVecV};
+    float f[16];
+    for (int i = 0; i < 4; ++i) {
+      f[i * 4] = vectors[i]->x; f[i * 4 + 1] = vectors[i]->y;
+      f[i * 4 + 2] = vectors[i]->z; f[i * 4 + 3] = vectors[i]->w;
+    }
+    return EncodeRenderFloatFields<16>(f, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NGScene::SDynamicAmbientInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 96;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SDynamicAmbientInfo* value) {
+    if (!value) return false;
+    float f[24];
+    if (!DecodeRenderFloatFields<24>(source, length, f)) return false;
+    NGScene::SDynamicAmbientInfo::SPad* pads[6] = {
+        &value->vXPos, &value->vXNeg, &value->vYPos,
+        &value->vYNeg, &value->vZPos, &value->vZNeg};
+    for (int i = 0; i < 6; ++i) {
+      pads[i]->v = CVec3(f[i * 4], f[i * 4 + 1], f[i * 4 + 2]);
+      pads[i]->f = f[i * 4 + 3];
+    }
+    return true;
+  }
+  static bool Encode(const NGScene::SDynamicAmbientInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const NGScene::SDynamicAmbientInfo::SPad* pads[6] = {
+        &value.vXPos, &value.vXNeg, &value.vYPos,
+        &value.vYNeg, &value.vZPos, &value.vZNeg};
+    float f[24];
+    for (int i = 0; i < 6; ++i) {
+      f[i * 4] = pads[i]->v.x; f[i * 4 + 1] = pads[i]->v.y;
+      f[i * 4 + 2] = pads[i]->v.z; f[i * 4 + 3] = pads[i]->f;
+    }
+    return EncodeRenderFloatFields<24>(f, destination, length);
+  }
+};
 template<>
 struct StructureFieldCodec<NGScene::CPartFlags, void> {
   static constexpr bool kPortable = true;
