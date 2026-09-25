@@ -43,17 +43,25 @@ public:
 	void Set( int nIndex ) 
 	{ 
 		ASSERT( nIndex >= 0 && nIndex < PF_MAX_PARTS_PER_COMBINER );
-		flags[ nIndex / 32 ] |= 1 << ( nIndex & 31 ); 
+		unsigned int bits;
+		memcpy( &bits, &flags[ nIndex / 32 ], sizeof(bits) );
+		bits |= 1u << ( nIndex & 31 );
+		memcpy( &flags[ nIndex / 32 ], &bits, sizeof(bits) );
 	}
 	void Reset( int nIndex ) 
 	{ 
 		ASSERT( nIndex >= 0 && nIndex < PF_MAX_PARTS_PER_COMBINER );
-		flags[ nIndex / 32 ] &= ~( 1 << ( nIndex & 31 ) );
+		unsigned int bits;
+		memcpy( &bits, &flags[ nIndex / 32 ], sizeof(bits) );
+		bits &= ~( 1u << ( nIndex & 31 ) );
+		memcpy( &flags[ nIndex / 32 ], &bits, sizeof(bits) );
 	}
 	int IsSet( int nIndex ) const 
 	{ 
 		ASSERT( nIndex >= 0 && nIndex < PF_MAX_PARTS_PER_COMBINER ); 
-		return flags[ nIndex / 32 ] & ( 1 << nIndex ); 
+		unsigned int bits;
+		memcpy( &bits, &flags[ nIndex / 32 ], sizeof(bits) );
+		return ( bits & ( 1u << ( nIndex & 31 ) ) ) != 0;
 	}
 	bool IsEmpty() const { for ( int k = 0; k < GetBlocksNumber(); ++k ) { if ( flags[k] ) return false; } return true; }
 	bool IsFullGet() const { for ( int k = 0; k < GetBlocksNumber(); ++k ) { if ( flags[k] != 0xffffffff ) return false; } return true; }
@@ -730,6 +738,7 @@ public:
 #include "../FileIO/PortablePartFlagsWire.h"
 
 static_assert(sizeof(NGScene::CPartFlags) == 32, "scene part flags wire size");
+static_assert(sizeof(unsigned int) == 4, "scene part flags bit width");
 static_assert(NGScene::N_BLOCKS_IN_PART_FLAGS == 8, "scene part flags block count");
 
 namespace S2FileIO {

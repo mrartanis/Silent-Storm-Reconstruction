@@ -17,5 +17,15 @@ int main() {
       std::memcmp(&value, &decoded, sizeof(value)) != 0 ||
       Codec::Decode(wire, 31, &decoded) ||
       Codec::Encode(value, wire, 31)) return 2;
+  for (int index = 0; index < NGScene::PF_MAX_PARTS_PER_COMBINER; ++index) {
+    NGScene::CPartFlags single;
+    single.Clear();
+    single.Set(index);
+    for (int other = 0; other < NGScene::PF_MAX_PARTS_PER_COMBINER; ++other) {
+      if (bool(single.IsSet(other)) != (other == index)) return 3;
+    }
+    single.Reset(index);
+    if (!single.IsEmpty() || single.IsSet(index)) return 4;
+  }
   return 0;
 }
