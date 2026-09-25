@@ -10,6 +10,13 @@
 cmake_minimum_required(VERSION 3.21)
 project(A5 LANGUAGES C CXX)
 
+# The game uses MSVC's historical /Gr calling convention. Keep the portable
+# libraries and their probes on the same ABI when built as diagnostic x86;
+# adding this only below their targets silently gives them __cdecl symbols.
+if(MSVC)
+  add_compile_options(/Gr)
+endif()
+
 set(root "${CMAKE_CURRENT_SOURCE_DIR}")
 include("${root}/cmake/MediaProbe.cmake")
 add_library(s2_portable_package STATIC "${root}/FileIO/PortablePackageIndex.cpp")
@@ -120,7 +127,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 # Engine-wide compile settings: __fastcall default (/Gr), big translation units,
 # C++ exceptions, parallel compile, and the common WIN32 defines. externA5 is
 # libpng's API-decoration macro -- 'extern' here (we build libpng statically).
-add_compile_options(/Gr /Zm300 /FS $<$<COMPILE_LANGUAGE:CXX>:/EHsc> /wd4996)  # no /MP: ADOImport uses #import
+add_compile_options(/Zm300 /FS $<$<COMPILE_LANGUAGE:CXX>:/EHsc> /wd4996)  # no /MP: ADOImport uses #import
 add_compile_definitions(
   WIN32 _WINDOWS externA5=extern
   $<$<CONFIG:Debug>:_DEBUG FAST_DEBUG>
