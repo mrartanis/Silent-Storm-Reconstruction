@@ -197,7 +197,7 @@ static bool GetShortChunkSave( CDataStream &file, chunk_id dwID, CMemoryStream &
 // should copy data from start
 static void WritePtrData( unsigned char *pDst, const void *pSrc, int *nPos, int nSize )
 {
-	memcpy( pDst + *nPos, pSrc, nSize );
+	memmove( pDst + *nPos, pSrc, nSize );
 	*nPos += nSize;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,8 +223,24 @@ bool CStructureSaver::ReadShortChunk( CChunkLevel &src, int &nPos, CChunkLevel &
 bool CStructureSaver::WriteShortChunk( CChunkLevel &dst, chunk_id dwID, 
 																			const unsigned char *pData, int nLength )
 {
-	DWORD dwLeng;
+	std::uint32_t dwLeng;
+	const unsigned char *pOldBuffer = data.GetBuffer();
+	const std::size_t oldSize = static_cast<std::size_t>(data.GetSize());
+	std::size_t sourceOffset = 0;
+	bool sourceInData = false;
+	if ( pData && pOldBuffer && nLength >= 0 )
+	{
+		const std::uintptr_t source = reinterpret_cast<std::uintptr_t>(pData);
+		const std::uintptr_t base = reinterpret_cast<std::uintptr_t>(pOldBuffer);
+		if ( source >= base && source - base <= oldSize &&
+			static_cast<std::size_t>(nLength) <= oldSize - (source - base) )
+		{
+			sourceOffset = static_cast<std::size_t>(source - base);
+			sourceInData = true;
+		}
+	}
 	data.SetSize( dst.nStart + dst.nLength + 1 + 4 + nLength );
+	if ( sourceInData ) pData = data.GetBuffer() + sourceOffset;
 	unsigned char *pDst = data.GetBufferForWrite() + dst.nStart;
 	WritePtrData( pDst, &dwID, &dst.nLength, sizeof( dwID ) );
 	dwLeng = nLength;

@@ -30,15 +30,17 @@ To include this resource-dependent regression in CTest, configure with
 `ctest --test-dir BUILD_DIR -R '^NativeLua' --output-on-failure`. Linux builds
 use `-fsanitize=address,undefined`; under ARM64/QEMU set
 `ASAN_OPTIONS=detect_leaks=0` because LeakSanitizer cannot operate under
-QEMU's ptrace-based execution. The runtime test also proves that attempting
-Lua state serialization on Linux throws instead of writing a fake save.
+QEMU's ptrace-based execution. The runtime test now round-trips a live
+`Script` through the original Linux `CStructureSaver`: global `39` is
+restored, then another Lua chunk advances it to `42`. This replaced the
+earlier throwing persistence placeholder; see `NATIVE-STRUCTURE-LINUX.md`.
 
 Verified 2026-09-25: Windows x64 CTest 84/84, Linux x86-64 and ARM64/QEMU
 51/51 each, including the autoload corpus. These checks do **not** close
 stage 2: most game-specific Lua bindings in `Main/` and the world/AI/combat
-loop still have no Linux target. The Linux `CStructureSaver` bridge explicitly
-rejects persistence; Lua state save/load is not yet ported. No Linux
-`Game.exe` or playable mission is claimed.
+loop still have no Linux target. The earlier Linux persistence stub has since
+been replaced by the real serializer, but only a bounded Lua-state round-trip
+has been verified. No Linux `Game.exe` or playable mission is claimed.
 
 A clean Windows x64 native-media archive
 `D:\SS-lab\builds\stage2-lua-runtime-20260925-01` was built from commit

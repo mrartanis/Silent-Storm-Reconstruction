@@ -145,7 +145,12 @@ public:
 	// fast buffer access, use only if perfomance is of paramount importance
 	const unsigned char* GetBuffer() const { return pBuffer; }
 	unsigned char* GetBufferForWrite() const { return pBuffer; }
-	void SetSize( int nSize ) { pFileEnd = pBuffer + nSize; pCurrent = pBuffer; if ( pFileEnd > pReservedEnd ) FixupBufferSize( nSize ); }
+	void SetSize( int nSize ) {
+		if ( nSize < 0 ) throw SFileIOError( "negative memory stream size" );
+		if ( nSize > pReservedEnd - pBuffer ) FixupBufferSize( nSize );
+		pFileEnd = pBuffer + nSize;
+		pCurrent = pBuffer;
+	}
 	void SetSizeDiscard( int nSize );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////

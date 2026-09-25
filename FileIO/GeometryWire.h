@@ -4,7 +4,7 @@
 #include "PortableStructureChunks.h"
 #include "PortableGameGeometry.h"
 #include "PortableFBTransformWire.h"
-#include "..\Misc\Geom.h"
+#include "../Misc/Geom.h"
 
 static_assert(sizeof(STriangle) == 6, "triangle wire size");
 static_assert(sizeof(SSphere) == 16, "sphere wire size");

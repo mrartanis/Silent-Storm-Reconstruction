@@ -20,6 +20,26 @@ add_executable(NativeStreamsTests "${root}/diagnostics/NativeStreamsTests.cpp")
 target_link_libraries(NativeStreamsTests PRIVATE s2_game_streams)
 add_test(NAME NativeStreamsTests COMMAND NativeStreamsTests)
 
+# The game's object-graph serializer, including its retail packed-chunk codec.
+add_library(s2_game_structure STATIC
+  "${root}/FileIO/BasicChunk1.cpp"
+  "${root}/FileIO/Cruncher.cpp")
+target_include_directories(s2_game_structure PRIVATE "${CMAKE_BINARY_DIR}/fileio_include")
+target_link_libraries(s2_game_structure PUBLIC
+  s2_game_streams s2_game_objects s2_portable_structure)
+target_compile_features(s2_game_structure PUBLIC cxx_std_17)
+add_executable(StructureWireProbe "${root}/diagnostics/StructureWireProbe.cpp")
+target_link_libraries(StructureWireProbe PRIVATE s2_game_structure)
+add_test(NAME StructureWireWrite
+  COMMAND StructureWireProbe write "${CMAKE_BINARY_DIR}/StructureWireProbe.bin")
+add_test(NAME StructureWireRead
+  COMMAND StructureWireProbe read "${CMAKE_BINARY_DIR}/StructureWireProbe.bin")
+set_tests_properties(StructureWireWrite PROPERTIES FIXTURES_SETUP structure_wire)
+set_tests_properties(StructureWireRead PROPERTIES FIXTURES_REQUIRED structure_wire)
+add_executable(NativeCruncherTests "${root}/diagnostics/NativeCruncherTests.cpp")
+target_link_libraries(NativeCruncherTests PRIVATE s2_game_structure)
+add_test(NAME NativeCruncherTests COMMAND NativeCruncherTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")
@@ -45,7 +65,7 @@ add_library(s2_game_lua STATIC
   "${root}/Script/lzio.cpp"
   "${root}/Script/Script.cpp")
 target_include_directories(s2_game_lua PRIVATE "${CMAKE_BINARY_DIR}/lua_include")
-target_link_libraries(s2_game_lua PUBLIC s2_game_objects)
+target_link_libraries(s2_game_lua PUBLIC s2_game_structure)
 target_compile_features(s2_game_lua PUBLIC cxx_std_17)
 add_executable(NativeLuaRuntimeTests "${root}/diagnostics/NativeLuaRuntimeTests.cpp")
 target_link_libraries(NativeLuaRuntimeTests PRIVATE s2_game_lua)

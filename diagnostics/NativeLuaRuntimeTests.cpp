@@ -1,9 +1,7 @@
 #include "../Script/StdAfx.h"
 #include "../Script/lua.h"
 #include "../Script/Script.h"
-#ifndef _WIN32
-#include "../Script/lstate.h"
-#endif
+#include "../FileIO/BasicChunk1.h"
 
 #include <cmath>
 #include <cstdio>
@@ -77,21 +75,26 @@ int main(int argc, char** argv) {
   const double result = lua_tonumber(state, -1);
   lua_pop(state, 1);
   if (result != 96.0) return 3;
-#ifndef _WIN32
-  bool persistenceBlocked = false;
-  try {
-    CStructureSaver unsupported;
-    state->operator&(unsupported);
-  } catch (const std::logic_error&) {
-    persistenceBlocked = true;
-  }
-  if (!persistenceBlocked) return 9;
-#endif
   std::printf("native-lua result %.0f\n", result);
   lua_close(state);
   Script wrapper;
   if (wrapper.DoString("wrapper_result = 13 * 3") != 0) return 10;
   wrapper.ExecuteThreads();
   if (wrapper.GetGlobal("wrapper_result").GetNumber() != 39.0) return 11;
+  CMemoryStream stateFile;
+  {
+    CStructureSaver saver(stateFile, CStructureSaver::WRITE);
+    saver.Add(1, &wrapper);
+  }
+  stateFile.Seek(0);
+  Script restored;
+  {
+    CStructureSaver saver(stateFile, CStructureSaver::READ);
+    saver.Add(1, &restored);
+  }
+  if (restored.GetGlobal("wrapper_result").GetNumber() != 39.0) return 9;
+  if (restored.DoString("wrapper_result = wrapper_result + 3") != 0) return 15;
+  restored.ExecuteThreads();
+  if (restored.GetGlobal("wrapper_result").GetNumber() != 42.0) return 16;
   return 0;
 }

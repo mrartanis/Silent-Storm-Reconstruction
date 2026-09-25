@@ -31,8 +31,10 @@ ASAN_OPTIONS=detect_leaks=0 /usr/bin/qemu-aarch64-static -L /usr/aarch64-linux-g
 
 The Linux builds used `-fsanitize=address,undefined`. Full CTest results:
 Windows x64 84/84 (plus manual four-script Lua autoload), Linux x86-64
-52/52, ARM64/QEMU 52/52. This is the actual engine stream implementation, but it does not yet
-port `CStructureSaver`, package object instantiation, or the gameplay loop.
+52/52, ARM64/QEMU 52/52. This stream-only milestone did not yet port
+`CStructureSaver`; the subsequent serializer work is in
+`NATIVE-STRUCTURE-LINUX.md`. Package object instantiation and the gameplay
+loop are still absent on Linux.
 Large-file and arbitrary-seek behavior outside the exercised original data
 remains to be audited before declaring the entire FileIO layer portable.
 

@@ -7,10 +7,13 @@
 #include <cstring>
 #include <list>
 #include <string>
+#include <typeinfo>
 #include <unordered_map>
 #include <vector>
 
 #define ASSERT(value) assert(value)
 #define dbgnew new
+#define externA5 extern
+#define __cdecl
 
 using namespace std;
