@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "DG.h"
-#include "Time.h"
+#include "A5Time.h"
 #include "..\DBFormat\DataSound.h"
 #include "..\FModSound\FMSound.h"
 #include "SoundEffect.h"

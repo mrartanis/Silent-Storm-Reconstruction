@@ -52,6 +52,7 @@ externA5 "C" __declspec(dllimport) DWORD __stdcall  GetTickCount();
 
 using namespace std;
 #include "Specific.h"
+#include "A5Time.h"
 //
 #define for if(false); else for
 #define dbgnew new

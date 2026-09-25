@@ -5,7 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "TerrainInfo.h"
-#include "Time.h"
+#include "A5Time.h"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataTerrain.h"
 #include "aiMap.h"

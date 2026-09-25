@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "../ADOImport/BasicDB.h"
 #include "DG.H"
-#include "Time.h"
+#include "A5Time.h"
 #include "Sync.h"
 #include "wTSFlags.h"
 #include "aiPosition.h"

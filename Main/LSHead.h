@@ -4,7 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "Time.h"
+#include "A5Time.h"
 #include "GResource.h"
 #include "..\Misc\RandomGen.h"
 #include "..\DBFormat\DataFaceGen.h"   // NDb::CRace complete type (CHeadInfo::pBodyColor CDBPtr factory)

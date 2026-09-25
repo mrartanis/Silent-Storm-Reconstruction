@@ -5,7 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "DG.h"
-#include "Time.h"
+#include "A5Time.h"
 #include "GParticleFormat.h"
 #include "GResource.h"
 namespace NDb

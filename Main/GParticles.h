@@ -5,7 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "DG.h"
-#include "Time.h"
+#include "A5Time.h"
 // IParticleFilter must be COMPLETE here, not forward-declared: CParticleAnimator serializes a
 // CObj<IParticleFilter> (tag 8), and CastToObjectBase picks its overload on whether T* converts to
 // CObjectBase*. Against an incomplete type that conversion is invisible, so it silently selects the

@@ -277,6 +277,16 @@ target_link_libraries(s2_game_map_build PUBLIC
   s2_game_dbformat_records s2_game_ai_grid s2_game_terrain_info)
 target_compile_features(s2_game_map_build PUBLIC cxx_std_17)
 target_compile_options(s2_game_map_build PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_poly_utils STATIC "${root}/Main/PolyUtils.cpp")
+target_include_directories(s2_game_poly_utils PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_poly_utils PUBLIC s2_game_transform)
+target_compile_features(s2_game_poly_utils PUBLIC cxx_std_17)
+target_compile_options(s2_game_poly_utils PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeMapPolygonTests "${root}/diagnostics/NativeMapPolygonTests.cpp")
+target_link_libraries(NativeMapPolygonTests PRIVATE s2_game_poly_utils)
+target_link_options(NativeMapPolygonTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeMapPolygonTests COMMAND NativeMapPolygonTests)
 add_library(s2_game_basic_share STATIC "${root}/Misc/BasicShare.cpp")
 target_include_directories(s2_game_basic_share PRIVATE
   "${root}/Misc" "${root}/FileIO")

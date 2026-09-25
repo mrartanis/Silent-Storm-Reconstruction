@@ -7,7 +7,7 @@
 #include "DG.H"
 #include "../Misc/Geom.h"
 #include "RectLayout.h"
-#include "Time.h"
+#include "A5Time.h"
 #include "GSkeleton.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene

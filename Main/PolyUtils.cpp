@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "Grid.h"
 #include "PolyUtils.h"
 #include "Transform.h"
-#include "..\Misc\Ring.h"
+#include "../Misc/Ring.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CONST
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +223,7 @@ protected:
 		EPolygon eType;
 		CRing<SEdge>::iterator iEdge;
 
-		SLink(): fAngle( 0.0f ) {}
+		SLink(): fAngle( 0.0f ), eType( POLY_SOURCE ) {}
 		SLink( float _fAngle, EPolygon _eType, CRing<SEdge>::iterator _iEdge ): fAngle( _fAngle ), eType( _eType ), iEdge( _iEdge ) {}
 	};
 	struct SPoint
@@ -235,7 +241,7 @@ protected:
 		list<SPoint>::iterator iEndPoint;
 		EPolygon polygon;
 
-		SEdge(): nFlags( CLIP_UNKNOWN ) {}
+		SEdge(): nFlags( CLIP_UNKNOWN ), polygon( POLY_SOURCE ) {}
 	};
 	struct SPolygon
 	{
@@ -732,7 +738,7 @@ void CPolyClipper::InsertEdge( SPolygon *pResult, const SEdge &_edge, vector<CVe
 		pResult->listEdges.add( edge );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// добавляем в первый полигон все пересечения с ребрами второго
+// РґРѕР±Р°РІР»СЏРµРј РІ РїРµСЂРІС‹Р№ РїРѕР»РёРіРѕРЅ РІСЃРµ РїРµСЂРµСЃРµС‡РµРЅРёСЏ СЃ СЂРµР±СЂР°РјРё РІС‚РѕСЂРѕРіРѕ
 void CPolyClipper::FindIntersections( const SPolygon &sPolygon, const SPolygon &sClipPolygon, SPolygon *psResult )
 {
 	SPolygon sResPolygon;
