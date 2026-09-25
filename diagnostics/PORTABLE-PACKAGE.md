@@ -33,6 +33,21 @@ Steam `Fonts.res` (SHA-256
 FNV-1a-64, что Windows x64. Linux-проверки проходили под ASan/UBSan
 (`detect_leaks=0`); временная копия архива на Linux-хосте удалена.
 
+Повторение проверки исходного комплекта без копирования или изменения Steam:
+
+```powershell
+$steam='G:\SteamLibrary\steamapps\common\Silent Storm'
+$baseline='G:\SS\lab\baseline'
+if((Get-FileHash "$steam\game.db").Hash -ne (Get-FileHash "$baseline\game.db").Hash){throw 'game.db differs'}
+$expected=@{}
+Get-ChildItem "$steam\res" -File -Filter '*.res' | Get-FileHash | ForEach-Object {
+  $expected[[IO.Path]::GetFileName($_.Path)]=$_.Hash
+}
+$actual=@(Get-ChildItem "$baseline\res" -File -Filter '*.res' | Get-FileHash)
+if($expected.Count -ne 23 -or $actual.Count -ne 23 -or
+   @($actual | Where-Object { $expected[[IO.Path]::GetFileName($_.Path)] -ne $_.Hash }).Count){throw 'res differs'}
+```
+
 Когда том с лабораторией заполнен, `Build-Lab.ps1 -ArchiveRoot` и
 `New-LabRun.ps1 -ArchiveRoot/-RunRoot` позволяют хранить **новые** архивы
 и изолированные запуски на другом томе, оставляя исходные Steam-данные,
