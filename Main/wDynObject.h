@@ -16,7 +16,7 @@ public:
 template<class T>
 void CallSegment( T *p )
 {
-	for ( T::iterator i = p->begin(); i != p->end(); )
+	for ( typename T::iterator i = p->begin(); i != p->end(); )
 	{
 		if ( (*i)->Segment() )
 			i = p->erase( i );

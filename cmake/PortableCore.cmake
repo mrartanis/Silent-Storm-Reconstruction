@@ -206,9 +206,35 @@ target_include_directories(s2_game_ai_log PRIVATE
   "${root}/MiscDll" "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(s2_game_ai_log PUBLIC s2_game_misc_runtime)
 target_compile_features(s2_game_ai_log PUBLIC cxx_std_17)
+add_library(s2_game_world_object STATIC "${root}/Main/wOSBase.cpp")
+target_include_directories(s2_game_world_object PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_link_libraries(s2_game_world_object PUBLIC
+  s2_game_ai_collision s2_game_ai_log s2_game_transform)
+target_compile_features(s2_game_world_object PUBLIC cxx_std_17)
+# vptr metadata retains every world/DB RTTI reference even when the link
+# probe discards unrelated world-object methods. Keep ASan and other UBSan
+# checks; remove this exception when the complete world graph is linked.
+target_compile_options(s2_game_world_object PRIVATE
+  -ffunction-sections -fdata-sections -fno-sanitize=vptr)
 add_executable(NativeAILogTests "${root}/diagnostics/NativeAILogTests.cpp")
 target_link_libraries(NativeAILogTests PRIVATE s2_game_ai_log)
 add_test(NAME NativeAILogTests COMMAND NativeAILogTests)
+add_executable(NativeHeightNetworkTests
+  "${root}/diagnostics/NativeHeightNetworkTests.cpp")
+target_link_libraries(NativeHeightNetworkTests PRIVATE
+  -Wl,--start-group
+  s2_game_height_layers s2_game_ai_position s2_game_ai_locker
+  s2_game_ai_pass_jobs s2_game_ai_calculators s2_game_ai_render
+  s2_game_ai_colourer s2_game_ai_collision s2_game_ai_log
+  s2_game_world_object s2_game_ai_grid s2_game_terrain_info
+  s2_game_dg s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_structure s2_game_beta_spline s2_game_transform
+  s2_game_misc_runtime
+  -Wl,--end-group)
+target_link_options(NativeHeightNetworkTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeHeightNetworkTests COMMAND NativeHeightNetworkTests)
 
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.

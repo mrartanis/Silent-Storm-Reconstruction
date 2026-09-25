@@ -1,12 +1,18 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
 #include "wOSBase.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataAnimation.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataSound.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataAnimation.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataSound.h"
+#include "../DBFormat/DataRPG.h"
 #include "RPGObject.h"
 #include "Transform.h"
 #include "aiStability.h"
@@ -16,7 +22,7 @@
 #include "GAnimation.h"
 #include "Grid.h"
 #include "GSceneUtils.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 
 namespace NWorld
 {
@@ -700,7 +706,7 @@ void CAnimObjectServerBase::GetApproachPts( vector<CVec3> *pRes ) const
 		int nIndex = pAnimator->GetBoneIndex( pszName );
 		if ( nIndex < 0 )
 			break;
-		CDGPtr<CFuncBase<NAnimation::SSkeletonPose> > pToUpdate = pAnimator;
+		CDGPtr<CFuncBase<NAnimation::SSkeletonPose> > pToUpdate = pAnimator.GetPtr();
 		pToUpdate.Refresh();
 
 		NAnimation::SBonePose bone;
@@ -729,7 +735,7 @@ void CAnimObjectServerBase::GetApproaches( vector<NAI::SPathPlace> *pRes, NAI::I
 		int nIndex = pAnimator->GetBoneIndex( pszName );
 		if ( nIndex < 0 )
 			break;
-		CDGPtr<CFuncBase<NAnimation::SSkeletonPose> > pToUpdate = pAnimator;
+		CDGPtr<CFuncBase<NAnimation::SSkeletonPose> > pToUpdate = pAnimator.GetPtr();
 		pToUpdate.Refresh();
 
 		NAnimation::SBonePose bone;

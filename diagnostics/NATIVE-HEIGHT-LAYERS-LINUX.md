@@ -11,18 +11,18 @@ Clang x86-64 suites each pass 63/63. The recovered Windows x86 build
 prints the same `6.25/9.50/2` values; it is a supplemental implementation
 comparison, not a substitute for a Steam runtime oracle.
 
-This is not yet the full `ComputeLayers` path. That method includes
-`NAI::CPathNetwork` tile rasterization and spline smoothing. The original
-`aiGrid.cpp` now compiles on Linux but does not yet link into a runnable
-`CPathNetwork`: see `NATIVE-AI-GRID-LINUX.md` for the remaining dependencies.
-The height-cache
-test links only methods it exercises by compiling the original translation
-unit with function/data sections and dropping unused sections at link time.
-`-fno-sanitize=vptr` is applied to that translation unit because UBSan's
-vptr metadata for the unlinked `CPathNetwork` branch otherwise retains its
-unresolved RTTI even when the branch is discarded. ASan and the remaining
-UBSan checks still run on GCC x86-64 and ARM64. This exception must be
-removed when the real path-network implementation is linked.
+The cache test above is not the full `ComputeLayers` path. A second test,
+`NativeHeightNetworkTests`, now creates a real `CPathNetwork`, sets a tile
+height, runs `ComputeLayers`, and checks the separate floor field after
+beta-spline smoothing. Windows x64 and Linux GCC x86-64/ARM64 and Clang
+x86-64 and recovered Windows x86 all report maximum `0.27720881` and
+post-spline 5x5 field hash `CC09769B5563B4C2`; see
+`NATIVE-AI-GRID-LINUX.md`. This is a synthetic map fragment, not proof
+that an original mission builds the same layers or routes units correctly.
+`-fno-sanitize=vptr` is still applied to the height translation unit: its
+other methods' vptr metadata retain unrelated world RTTI when section-GC
+prunes the still-unlinked full world graph. ASan and the other UBSan checks
+remain enabled. Remove this exception when the whole graph is linked.
 
 `aiPosition.h` now represents the transient `SMove` pair as `dest/type` on
 non-Windows compilers; MSVC keeps its original anonymous-union aliases.
@@ -52,11 +52,10 @@ sets the native media DLL search path for x64 and the baseline stub path for
 x86. The copied VS toolchain uses `vcvars64.bat` or `vcvars32.bat`, then
 `cmake --build ... --config Release --target NativeHeightLayersTests --parallel 16 -- /p:UseEnv=true`.
 
-The next substantive dependency is a portable, linked `CPathNetwork`, then
-an integration test that supplies real path-network tiles to `ComputeLayers`
-and compares the resulting floor heights with the recovered x86 reference
-and, where observable, Steam. A cache-only test cannot establish mission
-routing or building-aware height parity.
+The next substantive dependency is original mission-map construction and
+route behaviour on Linux, then comparison of game-used floor heights and
+decisions with the recovered x86 implementation and, where observable,
+Steam. This synthetic tile test does not establish mission parity.
 
 Clean native-media x64 archive
 `G:\SS\lab\builds\stage2-height-cache-20260925-01` came from source commit

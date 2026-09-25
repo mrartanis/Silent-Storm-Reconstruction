@@ -77,7 +77,7 @@ public:
 	void AddUnit( TUnit *pUnit ) { units.push_back( pUnit ); }
 	void RemoveUnit( TUnit *pUnit )
 	{
-		TPlayerUnitSet::iterator iTemp = find( units.begin(), units.end(), pUnit );
+		typename TPlayerUnitSet::iterator iTemp = find( units.begin(), units.end(), pUnit );
 		if ( iTemp != units.end() )
 			units.erase( iTemp );
 		else
@@ -122,7 +122,7 @@ public:
 	{
 		pCommander->OnUnitDied( pUnit );
 		//
-		for ( TPlayerUnitSet::iterator i = units.begin(); i != units.end(); ++i )
+		for ( typename TPlayerUnitSet::iterator i = units.begin(); i != units.end(); ++i )
 			(*i)->OnUnitDied( pUnit );
 	}
 };
@@ -140,7 +140,7 @@ class CTBSWorld
 		SInterrupt() {}
 		SInterrupt( const list<TUnit*> &_units ): pPlayer( _units.front()->GetTBSPlayer() )
 		{ 
-			for ( list<TUnit*>::const_iterator i = _units.begin(); i != _units.end(); ++i )
+			for ( typename list<TUnit*>::const_iterator i = _units.begin(); i != _units.end(); ++i )
 			{
 				ASSERT( (*i)->GetTBSPlayer() == pPlayer );
 				units.push_back( *i ); 
@@ -204,7 +204,7 @@ private:
 	{
 		TPlayer *pBest = 0;
 		int nBest = 0x7fffffff;
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 		{
 			TPlayer *p = *i;
 			if ( p->GetPlayerID() >= nMinimal && p->GetPlayerID() < nBest )
@@ -267,7 +267,7 @@ public:
 	// below), so this broadcasts TBS_GRID_INFO_UPDATED to every player's units directly.
 	void GridInfoUpdated()
 	{
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 		{
 			const vector< CMObj<TUnit> > &pUnits = (*i)->GetPlayerUnits();
 			for ( unsigned int k = 0; k < pUnits.size(); ++k )
@@ -286,13 +286,13 @@ public:
 		// here protected the BURIED turn owner from the old player-level recalc -- obsolete.
 		if ( interrupts.empty() )
 		{
-			for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+			for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 				(*i)->OnTBSEvent( TBS_RECALC_COMMAND );
 			return;
 		}
 		if ( interrupts.back().pPlayer == 0 )
 		{
-			for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+			for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			{
 				const vector< CMObj<TUnit> > &pUnits = (*i)->GetPlayerUnits();
 				for ( unsigned int k = 0; k < pUnits.size(); ++k )
@@ -301,7 +301,7 @@ public:
 			}
 			return;
 		}
-		for ( list< CPtr<TUnit> >::iterator u = interrupts.back().units.begin(); u != interrupts.back().units.end(); ++u )
+		for ( typename list< CPtr<TUnit> >::iterator u = interrupts.back().units.begin(); u != interrupts.back().units.end(); ++u )
 			if ( IsValid( *u ) )
 				(*u)->OnTBSEvent( TBS_RECALC_COMMAND );
 	}
@@ -324,7 +324,7 @@ public:
 
 		OnPassControlNotify();
 		RecalcCurrentPlayerCommands();
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->GetCommander()->OnPassControl( pCurrentPlayer );
 		bHasCommandFromCurrentPlayer = false;   // retail @0x372bf0 tail (after the STBSEvent{9} queue push)
 	}
@@ -378,7 +378,7 @@ protected:
 		// silently swallowed by CUnitServer::Do's re-route branch -- only an ATTACK (pExec->Cancel()) frees
 		// it. (The lighter per-player TBS_CANCEL_ACTION path -- IsRequestCancel / a human's own non-mutual
 		// sighting -- is unchanged.)
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->OnTBSEvent( TBS_STOP_MOVE_AND_CANCEL_ACTION );
 	}
 	virtual bool IsTBSRealTimeModePossible() const = 0;
@@ -391,7 +391,7 @@ protected:
 	}
 	void UnregisterPlayer( TPlayer *pPlayer )
 	{
-		TPlayerList::iterator iTemp = find( players.begin(), players.end(), pPlayer );
+		typename TPlayerList::iterator iTemp = find( players.begin(), players.end(), pPlayer );
 		if ( iTemp != players.end() )
 			players.erase( iTemp );
 		else
@@ -408,7 +408,7 @@ protected:
 			return;
 		//
 		addInterrupts.clear();
-		for ( TInterruptList::iterator i = interrupts.begin(); i != interrupts.end(); ++i )
+		for ( typename TInterruptList::iterator i = interrupts.begin(); i != interrupts.end(); ++i )
 		{
 			if ( i->pPlayer == pPlayer )
 			{
@@ -422,7 +422,7 @@ protected:
 		// retail RemoveTBSUnit @0x377390 erase condition: units EMPTY *** AND pPlayer != null *** --
 		// the OWNERLESS sequence entry (always unit-less) is explicitly exempted, which is how the
 		// sequence survives mid-cutscene unit deaths.
- 		for ( TInterruptList::iterator i = interrupts.begin(); i != interrupts.end(); )
+		for ( typename TInterruptList::iterator i = interrupts.begin(); i != interrupts.end(); )
 		{
 			i->RemoveUnit( pUnit );
 			if ( !i->HasUnits() && i->pPlayer != 0 )
@@ -430,7 +430,7 @@ protected:
 			else
 				++i;
 		}
-		for ( TInterruptList::iterator i = addInterrupts.begin(); i != addInterrupts.end(); )
+		for ( typename TInterruptList::iterator i = addInterrupts.begin(); i != addInterrupts.end(); )
 		{
 			i->RemoveUnit( pUnit );
 			if ( !i->HasUnits() )
@@ -493,7 +493,7 @@ public:
 		if ( IsRealTime() )
 		{
 			OnRealTimeStarted();
-			for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+			for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 				(*i)->OnTBSEvent( TBS_START_REAL_TIME );
 		}
 	}
@@ -522,13 +522,13 @@ public:
 	{
 		int nWatchers = 0;
 		const vector<CMObj<TUnit> > &enemies = pl->GetPlayerUnits();
-		for ( vector<CMObj<TUnit> >::const_iterator iu = enemies.begin(); iu != enemies.end(); ++iu )
+		for ( typename vector<CMObj<TUnit> >::const_iterator iu = enemies.begin(); iu != enemies.end(); ++iu )
 		{
 			if ( !(*iu)->CanFight() )
 				continue;
 			vector<CPtr<CUnit> > visible;
 			(*iu)->GetVisible( &visible );
-			for ( vector<CMObj<TUnit>>::const_iterator ku = units.begin(); ku != units.end(); ++ku )
+			for ( typename vector<CMObj<TUnit>>::const_iterator ku = units.begin(); ku != units.end(); ++ku )
 			{
 				TUnit *pU = *ku;
 				// Just to make the compiler shut the fuck up (it can't compare const CPtr<CUnit> with const TUnit*)
@@ -545,7 +545,7 @@ public:
 			return 0;
 		const vector<CMObj<TUnit> > &units = pPlayer->GetPlayerUnits();
 		int nWatchers = 0;
-		for ( TPlayerList::const_iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::const_iterator i = players.begin(); i != players.end(); ++i )
 			if ( *i != pPlayer )
 				nWatchers += GetEnemyPlayerWatchers( units, *i );
 
@@ -554,7 +554,7 @@ public:
 	void GlobalSituationHasChanged()
 	{
 		// clear all queued cmds since situation has changed
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->GetCommander()->ClearList();
 		CancelAllAction();
 	}
@@ -588,7 +588,7 @@ public:
 	}
 	void OnUnitDied( TUnit *p )
 	{
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->OnUnitDied( p );
 		MakeUnitInactive( p );
 	}
@@ -596,7 +596,7 @@ public:
 	{
 		pInterrups->resize( interrupts.size() );
 		int nTemp = 0;
-		for ( TInterruptList::const_iterator iTemp = interrupts.begin(); iTemp != interrupts.end(); iTemp++ )
+		for ( typename TInterruptList::const_iterator iTemp = interrupts.begin(); iTemp != interrupts.end(); iTemp++ )
 		{
 			(*pInterrups)[nTemp] = iTemp->pPlayer;
 			nTemp++;
@@ -631,7 +631,7 @@ public:
 			{
 				OnAction( false );
 				UpdateVisible();
-				for ( TPlayerList::const_iterator k = players.begin(); k != players.end(); ++k )
+				for ( typename TPlayerList::const_iterator k = players.begin(); k != players.end(); ++k )
 					(*k)->OnTBSEvent( TBS_ACTION_FINISH );//OnActionFinish();
 				RecalcCurrentPlayerCommands();
 			}
@@ -653,7 +653,7 @@ public:
 
 		ProcessActionTracker();   // retail @0x76bd13: ProcessTBSEvents #1, before the commander segments
 
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->GetCommander()->Segment();
 
 		ProcessActionTracker();   // retail @0x76bd39: ProcessTBSEvents #2, after the commander segments
@@ -698,7 +698,7 @@ public:
 		// check if someone want interrupt
 		if ( interrupts.empty() )
 		{
-			for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+			for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			{
 				TPlayer *pPlayer = *i;
 				TCommander *pC = pPlayer->GetCommander();
@@ -723,7 +723,7 @@ public:
 			if ( pCommander->IsRequestCancel() )//|| pCommander->IsRequestInterrupt() )
 				CancelAllAction();
 		}
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 			(*i)->GetCommander()->ClearRequests();
 
 		ProcessActionTracker();   // retail @0x76bd4a: ProcessTBSEvents #3, after CheckCancelAndInterruptRequests @0x377830
@@ -737,7 +737,7 @@ public:
 		{
 			// real time mode
 			// pick commands from every player
-			for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+			for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 				FetchPlayerCommands( *i, IsSequence() );
 		}
 		else
@@ -778,7 +778,7 @@ public:
 	{
 		// check if _pPlayer see any units performing skippable action
 		const list<CPtr<TUnit> > &v = _pPlayer->GetTBSVisible();
-		for ( list<CPtr<TUnit> >::const_iterator k = v.begin(); k != v.end(); ++k )
+		for ( typename list<CPtr<TUnit> >::const_iterator k = v.begin(); k != v.end(); ++k )
 		{
 			TUnit *pTest = (*k);
 			if ( !pTest->CanFight() )
@@ -805,7 +805,7 @@ public:
 		for ( unsigned int k = 0; k < units.size(); ++k )
 			if ( IsValid( units[k].GetPtr() ) )
 				units[k]->AddSounds( &sounds );
-		for ( list< SAISound<TUnit> >::const_iterator i = sounds.begin(); i != sounds.end(); ++i )
+		for ( typename list< SAISound<TUnit> >::const_iterator i = sounds.begin(); i != sounds.end(); ++i )
 		{
 			TUnit *pWho = i->pWho;
 			if ( IsValid( pWho ) && pWho->CanFight() && pWho->IsPerformingAction() )
@@ -830,7 +830,7 @@ public:
 	}
 	bool HasEnemies( TPlayer *pPlayer )
 	{
-		for ( TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::iterator i = players.begin(); i != players.end(); ++i )
 		{
 			TPlayer *p = *i;
 			if ( pPlayer != p && p->HasAlivePeople() )
@@ -853,7 +853,7 @@ public:
 	void GetPlayersList( vector< CPtr<TPlayer> > *pPlayers ) const
 	{
 		pPlayers->clear();
-		for ( TPlayerList::const_iterator i = players.begin(); i != players.end(); ++i )
+		for ( typename TPlayerList::const_iterator i = players.begin(); i != players.end(); ++i )
 			pPlayers->push_back( (*i).GetPtr() );
 	}
 };

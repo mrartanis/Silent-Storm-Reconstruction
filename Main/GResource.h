@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "DG.h"
-#include "..\\FileIO\\FilesPackage.h"
+#include "DG.H"
+#include "../FileIO/FilesPackage.h"
 namespace NGScene
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,25 @@ public:
 	int operator&( CStructureSaver &f ) { f.Add( 1, &key ); return 0; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-class CFileRequest;
+// The lazy loader calls IsReady() inline, so this must be complete here.
+class CFileRequest : public CObjectBase
+{
+	OBJECT_NOCOPY_METHODS(CFileRequest);
+	const char *pszResName;
+	int nID;
+	bool bIsReady;
+	CMemoryStream data;
+public:
+	CFileRequest() : pszResName(0), nID(0), bIsReady(true) {}
+	CFileRequest( const char *pszResName, int nID );
+	CFileRequest( const char *pszResName, const SPartKey &key );
+	CMemoryStream* operator->() { return &data;; }
+	CMemoryStream* GetStream() { return &data; }
+	void Read();
+	bool IsReady() const { return bIsReady; }
+};
+void ReleaseFileRequestHolder();
+void AddFileRequest( CFileRequest *pReq );
 template <class TKey, class TValue>
 class CLazyResourceLoader : public CResourceLoader<TKey,TValue>
 {
@@ -60,7 +78,7 @@ protected:
 				AddFileRequest( pRequest );
 		}
 	}
-	bool NeedUpdate() { TParent::NeedUpdate(); if ( !IsValid(pValue) && IsValid(pRequest) && pRequest->IsReady() ) return true; return false; }
+	bool NeedUpdate() { TParent::NeedUpdate(); if ( !IsValid(this->pValue) && IsValid(pRequest) && pRequest->IsReady() ) return true; return false; }
 public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,22 +180,6 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // if for some package CFileRequest scheme is used all access to that resource should be
 // through CFileRequest system
-class CFileRequest : public CObjectBase
-{
-	OBJECT_NOCOPY_METHODS(CFileRequest);
-	const char *pszResName;
-	int nID;
-	bool bIsReady;
-	CMemoryStream data;
-public:
-	CFileRequest() : pszResName(0), nID(0), bIsReady(true) {}
-	CFileRequest( const char *pszResName, int nID );
-	CFileRequest( const char *pszResName, const SPartKey &key );
-	CMemoryStream* operator->() { return &data;; }
-	CMemoryStream* GetStream() { return &data; }
-	void Read();
-	bool IsReady() const { return bIsReady; }
-};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddResourceDir( const char *pszName );
 void ClearResourceDirs();	// release @0x157950 -- drop all resource dirs (CModManager::Activate)

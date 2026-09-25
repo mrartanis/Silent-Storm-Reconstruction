@@ -1,10 +1,15 @@
-# Original path-network compile boundary
+# Original path-network height execution boundary
 
-Stage 2 now compiles the game's original `Main/aiGrid.cpp` translation unit
-as `s2_game_ai_grid` on Linux GCC x86-64/ARM64 and Clang x86-64. This is a
-compile gate, not yet a runnable Linux `CPathNetwork` or mission-routing
-claim. The source is included in the complete headless build so later
-portable-header changes cannot silently break it.
+Stage 2 compiles the game's original `Main/aiGrid.cpp` translation unit
+as `s2_game_ai_grid` on Linux GCC x86-64/ARM64 and Clang x86-64. It now also
+links and runs a synthetic `CPathNetwork` tile through the original
+`CHeightLayers::ComputeLayers` and beta-spline path in
+`NativeHeightNetworkTests`. All three Linux targets and Windows x86/x64 print
+`height-network maximum=0.27720881 field=CC09769B5563B4C2 tiles=16`
+for this case. The hash covers every float in the post-spline 5x5 field,
+and both the maximum and hash are assertions in the test. This verifies an
+executing path-network/height-layer branch, not a loaded mission or AI
+route parity claim.
 
 The compile port replaced the Windows precompiled-header dependency with
 the existing headless platform/structure/geometry headers, normalized
@@ -43,15 +48,23 @@ in an otherwise no-op branch was replaced with the `IMine` interface.
 The Windows x64 `Game` target rebuilt, and CTest passed 91/91 after
 those common-source edits.
 
-The latest full link probe fails on only the original
-`NWorld::CheckItemsBreakGlass(NAI::SSourceInfo const*)` from `wOSBase.cpp`.
-This is real game behaviour: contact with breakable glass can advance its
-destroy stage and let the moving sphere pass. A fake always-solid stub
-would change grenade and movement behaviour, so no stub is linked.
-Accordingly the height-layer test still discards the `ComputeLayers`
-path-network branch as described in `NATIVE-HEIGHT-LAYERS-LINUX.md`.
-Full execution of that branch, with the original glass behaviour, remains
-required before claiming building-aware floor heights or Linux routing.
+The last missing link, `NWorld::CheckItemsBreakGlass`, is now supplied by
+compiling the original `Main/wOSBase.cpp` as `s2_game_world_object`. This
+preserves the game's breakable-glass contact behaviour; there is no
+always-solid stub. Porting this translation unit required correct case in
+its dependent headers, explicit `typename` for world/TBS template types,
+fixed underlying types for forward-declared enums, and complete
+`CFileRequest` at its inline caller. GCC x86-64/ARM64 and Clang x86-64
+compile it. The executable height-network test links it with the game AI,
+collider, DG, transform, terrain and serializer libraries.
+
+`s2_game_world_object` uses `-fno-sanitize=vptr` while keeping ASan and the
+other UBSan checks: vptr metadata for unrelated world-object methods
+retains RTTI for the not-yet-linked whole renderer/world graph even when
+those methods are section-garbage-collected. This exception is temporary
+and must be removed when that graph is linked. The separate height-layer
+target has the older, analogous exception; see
+`NATIVE-HEIGHT-LAYERS-LINUX.md`.
 
 On the authorized Linux host, after syncing the repository source:
 
@@ -69,39 +82,42 @@ cmake --build /tmp/s2-matrix-links.zCkO0O/build-clang-release --target s2_game_a
 ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-clang-release -R 'NativePoolTests|NativeAILogTests' --output-on-failure
 ```
 
-The deliberately failing complete-link probe, from `build-x64` after all
-targets above are built, is:
+For the newly linked game-network branch, run on each configured build
+(`build-x64`, `build-arm64`, `build-clang-release`):
 
 ```sh
-cd /tmp/s2-matrix-links.zCkO0O/build-x64
-g++ -fsanitize=address,undefined -Wl,--gc-sections \
-  CMakeFiles/NativeHeightLayersTests.dir/diagnostics/NativeHeightLayersTests.cpp.o \
-  -o /tmp/s2-ai-grid-link-probe -Wl,--start-group \
-  libs2_game_height_layers.a libs2_game_ai_position.a libs2_game_ai_locker.a \
-  libs2_game_ai_pass_jobs.a libs2_game_ai_calculators.a libs2_game_ai_render.a \
-  libs2_game_ai_colourer.a libs2_game_ai_collision.a libs2_game_ai_log.a \
-  libs2_game_ai_grid.a libs2_game_terrain_info.a libs2_game_dg.a \
-  libs2_game_structure.a libs2_game_streams.a libs2_game_objects.a \
-  libs2_portable_structure.a libs2_game_beta_spline.a libs2_game_transform.a \
-  libs2_game_misc_runtime.a -Wl,--end-group
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-x64 --target NativeHeightNetworkTests -j 16
+ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-x64 -R NativeHeightNetworkTests --output-on-failure -V
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-arm64 --target NativeHeightNetworkTests -j 16
+ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-arm64 -R NativeHeightNetworkTests --output-on-failure -V
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-clang-release --target NativeHeightNetworkTests -j 16
+ctest --test-dir /tmp/s2-matrix-links.zCkO0O/build-clang-release -R NativeHeightNetworkTests --output-on-failure -V
 ```
 
-It must not be treated as a passing test: the remaining undefined symbol is
-`NWorld::CheckItemsBreakGlass(NAI::SSourceInfo const*)`. In the Windows game
-it is defined in `Main/wOSBase.cpp`. Extracting or linking that genuine
-world behaviour is the next dependency before an executable Linux route
-test can be added.
+The `NativeHeightNetworkTests` CMake target groups the original static
+libraries explicitly because AI, world, serializer and DG objects have
+circular link dependencies; it does not provide alternate implementations
+of game methods. The test sets one tile height in a 4x4 layer, calls the
+real `ComputeLayers(4,4,nullptr,network)`, and checks a separate nonzero
+floor field after smoothing. It does not build a map, route a unit, or
+compare a campaign decision with Steam. The previous failing link probe
+is superseded by this executable test.
 
-Windows `NativePoolTests` is built with the original `Main` include
-environment; the full Windows x64 `Game` target and CTest suite remain the
-regression gate for the shared headers. The Windows x64 game rebuilt and
-91/91 CTest passed; the x86 `NativePoolTests` also passed. Linux GCC x86-64
-and ARM64 sanitizer suites and Clang x86-64 each passed 64/64 before the
-new `NativeAILogTests`; that test passed individually on all three. A full
-rebuild/regression after adding it passed 65/65 on GCC x86-64, GCC ARM64,
-and Clang x86-64. As
-elsewhere, the recovered x86 build is a supplemental implementation
-comparator, not Steam itself.
+Windows `NativeHeightNetworkTests` links the full `Main` library. The
+Windows x64 game rebuilt and the complete CTest suite passed 92/92.
+Linux GCC x86-64/ARM64 sanitizer suites and Clang x86-64 passed 66/66.
+The recovered Windows x86 build produced the same complete-field hash;
+it is a supplemental implementation comparator, not Steam itself.
+With the copied VS CMake on Windows, run:
+
+```powershell
+$cmake = 'G:\SS\lab\tools\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin'
+$env:UCRTContentRoot = 'C:\Program Files (x86)\Windows Kits\10\'
+& "$cmake\cmake.exe" --build G:\SS\lab\build-x64-stage2 --config RelWithDebInfo --target NativeHeightNetworkTests --parallel 16
+& "$cmake\ctest.exe" --test-dir G:\SS\lab\build-x64-stage2 -C RelWithDebInfo -R NativeHeightNetworkTests --output-on-failure -V
+& "$cmake\cmake.exe" --build G:\SS\lab\build-x86-transform --config RelWithDebInfo --target NativeHeightNetworkTests --parallel 16
+& "$cmake\ctest.exe" --test-dir G:\SS\lab\build-x86-transform -C RelWithDebInfo -R NativeHeightNetworkTests --output-on-failure -V
+```
 
 Clean native-media x64 archive
 `G:\SS\lab\builds\stage2-ai-grid-compile-20260925-01` was produced

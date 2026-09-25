@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "DG.h"
-#include "..\misc\Geom.h"
+#include "DG.H"
+#include "../Misc/Geom.h"
 #include "RectLayout.h"
 #include "Time.h"
 #include "GSkeleton.h"
@@ -50,7 +50,7 @@ class CCWString;
 class CCRectLayout;
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//! Ñîçäà¸ò CCTRect
+//! Ð¡Ð¾Ð·Ð´Ð°Ñ‘Ñ‚ CCTRect
 inline CCTRect* CreateRect( int x, int y, int width, int height ) 
 {
 	CCTRect *pRect = new CCTRect( CTRect<int>( x, y, x + width, y + height ) );
