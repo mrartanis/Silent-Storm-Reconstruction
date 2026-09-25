@@ -557,6 +557,10 @@ add_executable(NativeMapDatabaseTests "${root}/diagnostics/NativeMapDatabaseTest
 target_include_directories(NativeMapDatabaseTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapDatabaseTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeMapDatabaseTests PRIVATE Main)
+add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp")
+target_include_directories(NativeMapFlagsTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeMapFlagsTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeMapFlagsTests PRIVATE Main)
 add_executable(NativePoolTests "${root}/diagnostics/NativePoolTests.cpp")
 target_include_directories(NativePoolTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativePoolTests PRIVATE "${root}/Main/StdAfx.h")
@@ -767,6 +771,15 @@ if(S2_GAME_DIR)
   if(EXISTS "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMapDatabaseTests
       COMMAND NativeMapDatabaseTests "${S2_GAME_DIR}/game.db")
+    add_test(NAME NativeMapFlagsTests
+      COMMAND NativeMapFlagsTests "${S2_GAME_DIR}/game.db")
+    if(TARGET s2_bink_compat)
+      set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+    else()
+      set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+    endif()
   endif()
 else()
   message(STATUS "Game install not found -- pass -DS2_GAME_DIR=\"<path>\" to set the working dir.")

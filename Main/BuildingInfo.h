@@ -5,18 +5,18 @@
 #endif // _MSC_VER > 1000
 
 #include "GResource.h"
-#include "..\Misc\2DArray.h"
-#include "..\DBFormat\DataConst.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../Misc/2Darray.h"
+#include "../DBFormat/DataConst.h"
+#include "../DBFormat/DataFormat.h"
 #include "DiscretePos.h"
 struct SRand;
-enum ELayer;
+enum ELayer : int;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NBuilding
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const float WALL_HEIGHT = 2.5f;  // высота этажа
+const float WALL_HEIGHT = 2.5f;  // РІС‹СЃРѕС‚Р° СЌС‚Р°Р¶Р°
 const int WALL_MAX_LEN = 7;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline int MakeFragmentID( ELayer type, int nLayer ) { return type << 16 | nLayer; }
@@ -39,12 +39,12 @@ struct SLadder
 {
 	ZDATA
 	int nID;
-	SDiscretePos pos;						//положение- x,y в тайлах, z-начальный этаж
-	int nHeight;								//высота лестницы в этажах
+	SDiscretePos pos;						//РїРѕР»РѕР¶РµРЅРёРµ- x,y РІ С‚Р°Р№Р»Р°С…, z-РЅР°С‡Р°Р»СЊРЅС‹Р№ СЌС‚Р°Р¶
+	int nHeight;								//РІС‹СЃРѕС‚Р° Р»РµСЃС‚РЅРёС†С‹ РІ СЌС‚Р°Р¶Р°С…
 	// 
-	float fBeginHeight;					//высота начальной точки
-	float fEndHeight;						//высота конечной точки
-	ELadderDirection eDir;			//сторона, по которой можно лезть
+	float fBeginHeight;					//РІС‹СЃРѕС‚Р° РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРё
+	float fEndHeight;						//РІС‹СЃРѕС‚Р° РєРѕРЅРµС‡РЅРѕР№ С‚РѕС‡РєРё
+	ELadderDirection eDir;			//СЃС‚РѕСЂРѕРЅР°, РїРѕ РєРѕС‚РѕСЂРѕР№ РјРѕР¶РЅРѕ Р»РµР·С‚СЊ
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nID); f.Add(3,&pos); f.Add(4,&nHeight); f.Add(5,&fBeginHeight); f.Add(6,&fEndHeight); f.Add(7,&eDir); return 0; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ struct SProjectedSpot
 	int nRotation;
 	int nMaterialID;
 	int nID;
-	int nMaterialMask; // если включен бит n, значит на геометрию с материалом n спот не накладывается
+	int nMaterialMask; // РµСЃР»Рё РІРєР»СЋС‡РµРЅ Р±РёС‚ n, Р·РЅР°С‡РёС‚ РЅР° РіРµРѕРјРµС‚СЂРёСЋ СЃ РјР°С‚РµСЂРёР°Р»РѕРј n СЃРїРѕС‚ РЅРµ РЅР°РєР»Р°РґС‹РІР°РµС‚СЃСЏ
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&ptOrigin); f.Add(3,&ptNormal); f.Add(4,&ptSize); f.Add(5,&nRotation); f.Add(6,&nMaterialID); f.Add(7,&nID); f.Add(8,&nMaterialMask); return 0; }
 	SProjectedSpot(): nID(0), nMaterialMask(0) {}
 	bool IsMaterialEnabled( int nMaterial ) const { return !(nMaterialMask & (1 << nMaterial)); }
@@ -86,7 +86,7 @@ public:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&layers); return 0; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// струкутра, которая хранится в бинарном ресурсном файле
+// СЃС‚СЂСѓРєСѓС‚СЂР°, РєРѕС‚РѕСЂР°СЏ С…СЂР°РЅРёС‚СЃСЏ РІ Р±РёРЅР°СЂРЅРѕРј СЂРµСЃСѓСЂСЃРЅРѕРј С„Р°Р№Р»Рµ
 struct SRawMaterialApply
 {
 	ZDATA
@@ -109,18 +109,18 @@ struct SRawMixedMaterial
 	CMixedMaterial* CreateMixedMaterial( SRand *pRand ) const;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const int OF_OPEN = 0x1; // дверь\окно открыты 
+const int OF_OPEN = 0x1; // РґРІРµСЂСЊ\РѕРєРЅРѕ РѕС‚РєСЂС‹С‚С‹
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SBuildFragment
 {
 	int   nConstructionPartID;
 	int   nSubBlockID;
-	CVec3 ptPos;						// x, y измеряется в игровых тайлах; z в этажах, промежуточный этаж: z - int(z) = 0.5
+	CVec3 ptPos;						// x, y РёР·РјРµСЂСЏРµС‚СЃСЏ РІ РёРіСЂРѕРІС‹С… С‚Р°Р№Р»Р°С…; z РІ СЌС‚Р°Р¶Р°С…, РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Р№ СЌС‚Р°Р¶: z - int(z) = 0.5
 	int   nRotationID;
-	int   nFragmentID;      // тип и номер слоя в котором находится фрагмент
-	int   nObjectFlags;			// флажки для объекта встроенного в фрагмент
+	int   nFragmentID;      // С‚РёРї Рё РЅРѕРјРµСЂ СЃР»РѕСЏ РІ РєРѕС‚РѕСЂРѕРј РЅР°С…РѕРґРёС‚СЃСЏ С„СЂР°РіРјРµРЅС‚
+	int   nObjectFlags;			// С„Р»Р°Р¶РєРё РґР»СЏ РѕР±СЉРµРєС‚Р° РІСЃС‚СЂРѕРµРЅРЅРѕРіРѕ РІ С„СЂР°РіРјРµРЅС‚
 	SRawMixedMaterial materials[NDb::N_CONSTRUCTION_MATERIALS];
-	vector<int> spots;      // id'шники спотов
+	vector<int> spots;      // id'С€РЅРёРєРё СЃРїРѕС‚РѕРІ
 	int   nID;
 
 	SBuildFragment(): nID(0) {}
@@ -151,12 +151,12 @@ public:
 	vector<SLadder> ladders;
 	CArray2D<bool>  cellar; // true <=> hole
 	vector<SLayerGroup> lgroups;
-	int nMaxSpotID; // nID, который будет присвоен следующему добавленному споту
+	int nMaxSpotID; // nID, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РїСЂРёСЃРІРѕРµРЅ СЃР»РµРґСѓСЋС‰РµРјСѓ РґРѕР±Р°РІР»РµРЅРЅРѕРјСѓ СЃРїРѕС‚Сѓ
 	int nMaxLadderID;
 	int nMaxFragmentID;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&wallFragments); f.Add(3,&solidFragments); f.Add(4,&roomMap); f.Add(5,&spots); f.Add(6,&nMaxY); f.Add(7,&nMaxX); f.Add(8,&nMinFloor); f.Add(9,&nMaxFloor); f.Add(10,&ladders); f.Add(11,&cellar); f.Add(12,&lgroups); f.Add(13,&nMaxSpotID); f.Add(14,&nMaxLadderID); f.Add(15,&nMaxFragmentID); return 0; }
 	CBuildInfo();
-	void GetSpotFragments( int nSpotID, vector<int> *pSolids, vector<int> *pWalls ) const; // возвращает индексы фрагментов для спота nSpotID
+	void GetSpotFragments( int nSpotID, vector<int> *pSolids, vector<int> *pWalls ) const; // РІРѕР·РІСЂР°С‰Р°РµС‚ РёРЅРґРµРєСЃС‹ С„СЂР°РіРјРµРЅС‚РѕРІ РґР»СЏ СЃРїРѕС‚Р° nSpotID
 	int  CreateNextFragmentID();
 	int  CreateNextSpotID();
 	int  CreateNextLadderID();

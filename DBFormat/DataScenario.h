@@ -12,7 +12,7 @@ class CUITexture;
 class CScenarioTask;
 class CScenarioGoal;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EScenarioClueType
+enum EScenarioClueType : int
 {
 	CT_PERSON = 0,
 	CT_ITEM,

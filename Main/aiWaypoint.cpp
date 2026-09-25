@@ -1,6 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiPosition.h"
 #include "aiWaypoint.h"
+#include "../Misc/BasicShare.h"
+#if !defined(_WIN32)
+static void OutputDebugString( const char *message ) { std::fputs( message, stderr ); }
+#endif
+CBasicShare<int, NAI::CWaypointLoader> shareWaypoints(133);
+CBasicShare<int, NAI::CUnitAIInfoLoader> shareUnits(134);
+CBasicShare<int, NAI::CUnitGroupAIInfoLoader> shareUnitGroups(144);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
 {

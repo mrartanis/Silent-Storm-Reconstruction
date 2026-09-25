@@ -6,8 +6,8 @@
 #include "aiWaypoint.h"
 #include "TerrainInfo.h"
 #include "MapBuildingInfo.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataChest.h"	// NDb::CRPGChestReal (SMapUnit::pBackpack), NDb::CTRPGChest
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataChest.h"	// NDb::CRPGChestReal (SMapUnit::pBackpack), NDb::CTRPGChest
 
 struct SRandomSeed;
 namespace NBuilding
@@ -25,7 +25,7 @@ namespace NDb
 	class CRPGItem;
 	class CScript;
 	class CRPGGrenade;
-	enum EScenarioClueType;
+	enum EScenarioClueType : int;
 	enum EUnitPose;
 	enum EUnitLogic;
 	class CAnimation;

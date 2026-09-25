@@ -5,8 +5,8 @@
 #endif // _MSC_VER > 1000
 
 #include "DG.h"
-#include "..\Misc\RandomGen.h"
-#include "..\Misc\2DArray.h"
+#include "../Misc/RandomGen.h"
+#include "../Misc/2Darray.h"
 #include "BuildingPart.h"
 
 namespace NBuilding

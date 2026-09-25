@@ -244,6 +244,44 @@ target_link_libraries(NativeHeightNetworkTests PRIVATE
 target_link_options(NativeHeightNetworkTests PRIVATE -Wl,--gc-sections)
 add_test(NAME NativeHeightNetworkTests COMMAND NativeHeightNetworkTests)
 
+# Original mission-template traversal and map assembly, adjacent to the
+# already linked typed map records and path network.
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/main_case_include")
+file(WRITE "${CMAKE_BINARY_DIR}/main_case_include/DG.h"
+  "#include \"${root}/Main/DG.H\"\n")
+file(WRITE "${CMAKE_BINARY_DIR}/main_case_include/dg.h"
+  "#include \"${root}/Main/DG.H\"\n")
+add_library(s2_game_map_build STATIC "${root}/Main/MapBuild.cpp")
+target_include_directories(s2_game_map_build PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_link_libraries(s2_game_map_build PUBLIC
+  s2_game_dbformat_records s2_game_ai_grid s2_game_terrain_info)
+target_compile_features(s2_game_map_build PUBLIC cxx_std_17)
+target_compile_options(s2_game_map_build PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_basic_share STATIC "${root}/Misc/BasicShare.cpp")
+target_include_directories(s2_game_basic_share PRIVATE
+  "${root}/Misc" "${root}/FileIO")
+target_compile_features(s2_game_basic_share PUBLIC cxx_std_17)
+add_library(s2_game_ai_waypoint STATIC "${root}/Main/aiWaypoint.cpp")
+target_include_directories(s2_game_ai_waypoint PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
+target_compile_features(s2_game_ai_waypoint PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_waypoint PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp")
+target_link_libraries(NativeMapFlagsTests PRIVATE
+  -Wl,--start-group s2_game_map_build
+  s2_game_misc_runtime s2_game_ai_grid s2_game_terrain_info
+  s2_game_structure s2_game_streams s2_game_objects s2_portable_structure
+  -Wl,--whole-archive s2_game_dbformat_records -Wl,--no-whole-archive
+  -Wl,--end-group)
+target_link_options(NativeMapFlagsTests PRIVATE -Wl,--gc-sections)
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeMapFlagsTests
+    COMMAND NativeMapFlagsTests "${S2_GAME_DB_PATH}")
+endif()
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")

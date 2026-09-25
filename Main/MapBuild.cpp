@@ -1,25 +1,34 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "DG.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "DG.H"
 #include "MapBuild.h"
 #include "Grid.h"
 #include "Transform.h"
 #include "BuildingGrid.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "BuildingInfo.h"
 #include "BuildingClip.h"
 #include "MapBuildTerrain.h"
 #include "MakeBuilding.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataScenario.h"
-#include "..\MiscDll\LogStream.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataScenario.h"
+#include "../MiscDll/LogStream.h"
 #include "aiWaypoint.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataLight.h"
-#include "..\DBFormat\DataObject.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataAI.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataLight.h"
+#include "../DBFormat/DataObject.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataAI.h"
 #include "aiGrid.h"
+#if !defined(_WIN32)
+static void OutputDebugString( const char *message ) { std::fputs( message, stderr ); }
+#endif
 
 const float WALL_HEIGHT = 2.5f;  // floor height
 const int CLUE_SLOT_ID = 188;
@@ -29,9 +38,9 @@ namespace NGScene
 {
 	externA5 CBasicShare<int, NBuilding::CBuildInfoLoader> shareBuildings;
 }
-CBasicShare<int, NAI::CWaypointLoader> shareWaypoints(133);
-CBasicShare<int, NAI::CUnitAIInfoLoader> shareUnits(134);
-CBasicShare<int, NAI::CUnitGroupAIInfoLoader> shareUnitGroups(144);
+extern CBasicShare<int, NAI::CWaypointLoader> shareWaypoints;
+extern CBasicShare<int, NAI::CUnitAIInfoLoader> shareUnits;
+extern CBasicShare<int, NAI::CUnitGroupAIInfoLoader> shareUnitGroups;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void ConvertFlags( vector<int> *pFlags, const vector<string> &strParams, bool bChooseTimeOfDay )
 {
@@ -711,9 +720,9 @@ void CMapBuilder::WriteLightRooms( SMapInfo *pInfo, NBuilding::CBuildingGrid *pG
 template<class T>
 inline void SetStuffOnLayer( T *pDst, T *pSrc, int nMaxFloor )
 {
-	for ( T::iterator i = pSrc->begin(); i != pSrc->end(); )
+	for ( typename T::iterator i = pSrc->begin(); i != pSrc->end(); )
 	{
-		T::iterator k = i++;
+		typename T::iterator k = i++;
 		int nFloor = k->pos.nFloor;
 		ASSERT( nFloor >= nMaxFloor || nMaxFloor == 1000 );
 		if ( nFloor <= nMaxFloor )
@@ -724,9 +733,9 @@ inline void SetStuffOnLayer( T *pDst, T *pSrc, int nMaxFloor )
 template<class T>
 inline void SetObjectsOnLayer( T *pDst, T *pSrc, int nMaxFloor )
 {
-	for ( T::iterator i = pSrc->begin(); i != pSrc->end(); )
+	for ( typename T::iterator i = pSrc->begin(); i != pSrc->end(); )
 	{
-		T::iterator k = i++;
+		typename T::iterator k = i++;
 		if ( !IsValid( k->pObject ) )
 			continue;
 		int nFloor = k->pos.nFloor;
@@ -739,10 +748,10 @@ inline void SetObjectsOnLayer( T *pDst, T *pSrc, int nMaxFloor )
 template<class T>
 inline void SetWaypointsOnLayer( T *pDst, T *pSrc, int nMaxFloor )
 {
-	for ( T::iterator i = pSrc->begin(); i != pSrc->end(); )
+	for ( typename T::iterator i = pSrc->begin(); i != pSrc->end(); )
 	{
-		T::iterator j = i++;
-		T::reference k = *j;
+		typename T::iterator j = i++;
+		typename T::reference k = *j;
 		int nFloor = k->pos.nFloor;
 		ASSERT( nFloor >= nMaxFloor );
 		if ( nFloor <= nMaxFloor )
@@ -1234,14 +1243,14 @@ void CMapBuilder::GenerateWalls()
 template<class T>
 inline void FixHeights( STerrainInfo &terrain, T *pSet )
 {
-	for ( T::iterator i = pSet->begin(); i != pSet->end(); ++i )
+	for ( typename T::iterator i = pSet->begin(); i != pSet->end(); ++i )
 		i->pos.ptPos.z += GetMeterHeightCheck( terrain, i->ptAlignTo.x, i->ptAlignTo.y );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
 inline void FixHeightsPtr( STerrainInfo &terrain, T *pSet )
 {
-	for ( T::iterator i = pSet->begin(); i != pSet->end(); ++i )
+	for ( typename T::iterator i = pSet->begin(); i != pSet->end(); ++i )
 			(*i)->pos.ptPos.z += GetMeterHeightCheck( terrain, (*i)->ptAlignTo.x, (*i)->ptAlignTo.y );	
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1483,7 +1492,8 @@ bool CMapBuilder::BuildMap( int nPlacementID )
 		pos.ptPos.z = 0;
 		pos.ptScale = CVec3( 1, 1, 1 );
 		CDBPtr<NDb::CRndObject> pRndObject = NDb::GetDBRndObject( 1836 );
-		CPtr<NDb::CObject> pObject = pRndObject->CreateObject( &SRand(), vector<int>() );
+		SRand borderRand;
+		CPtr<NDb::CObject> pObject = pRndObject->CreateObject( &borderRand, vector<int>() );
 		for ( pos.ptPos.x = fX1; pos.ptPos.x <= fX2; pos.ptPos.x += 2 * F_HALF_BLOCK_SIZE )
 		{
 			pos.ptPos.y = fY1;
