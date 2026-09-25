@@ -3,6 +3,13 @@
 
 #include <cstdint>
 #include <cmath>
+#include <cstddef>
+#include <cstring>
+
+static_assert(offsetof(STriangle, i3) == 4, "triangle third index offset");
+static_assert(offsetof(SSphere, fRadius) == 12, "sphere radius offset");
+static_assert(offsetof(SMassSphere, fMass) == 16, "mass sphere mass offset");
+static_assert(offsetof(SBound, ptHalfBox) == 16, "bound half-box offset");
 
 int main() {
   using Vec2 = S2FileIO::StructureFieldCodec<CVec2>;
@@ -70,5 +77,40 @@ int main() {
       decodedMatrix._11 != 1 || decodedMatrix._14 != 4 ||
       decodedMatrix._21 != 5 || decodedMatrix._34 != 12 ||
       decodedMatrix._44 != 16 || Matrix::Decode(wireMatrix, 63, &decodedMatrix)) return 1;
+  using Triangle = S2FileIO::StructureFieldCodec<STriangle>;
+  using Sphere = S2FileIO::StructureFieldCodec<SSphere>;
+  using MassSphere = S2FileIO::StructureFieldCodec<SMassSphere>;
+  using Bound = S2FileIO::StructureFieldCodec<SBound>;
+  if (!Triangle::kPortable || Triangle::kWireSize != 6 ||
+      !Sphere::kPortable || Sphere::kWireSize != 16 ||
+      !MassSphere::kPortable || MassSphere::kWireSize != 20 ||
+      !Bound::kPortable || Bound::kWireSize != 28) return 2;
+  STriangle tri(0x1234, 0xabcd, 0xffff), decodedTri;
+  std::uint8_t triWire[6] = {};
+  if (!Triangle::Encode(tri, triWire, 6) || std::memcmp(triWire, &tri, 6) != 0 ||
+      !Triangle::Decode(triWire, 6, &decodedTri) ||
+      std::memcmp(&decodedTri, &tri, 6) != 0) return 3;
+  SSphere sphere(CVec3(1.0f, -2.0f, 0.5f), -0.0f), decodedSphere;
+  std::uint8_t sphereWire[16] = {};
+  if (!Sphere::Encode(sphere, sphereWire, 16) ||
+      std::memcmp(sphereWire, &sphere, 16) != 0 ||
+      !Sphere::Decode(sphereWire, 16, &decodedSphere) ||
+      std::memcmp(&decodedSphere, &sphere, 16) != 0) return 4;
+  SMassSphere mass(CVec3(1.0f, -2.0f, 0.5f), -0.0f, 3.0f), decodedMass;
+  std::uint8_t massWire[20] = {};
+  if (!MassSphere::Encode(mass, massWire, 20) ||
+      std::memcmp(massWire, &mass, 20) != 0 ||
+      !MassSphere::Decode(massWire, 20, &decodedMass) ||
+      std::memcmp(&decodedMass, &mass, 20) != 0) return 5;
+  SBound bound;
+  bound.s.ptCenter = CVec3(1.0f, -2.0f, 0.5f);
+  bound.s.fRadius = -0.0f;
+  bound.ptHalfBox = CVec3(3.0f, 4.0f, 5.0f);
+  SBound decodedBound;
+  std::uint8_t boundWire[28] = {};
+  if (!Bound::Encode(bound, boundWire, 28) ||
+      std::memcmp(boundWire, &bound, 28) != 0 ||
+      !Bound::Decode(boundWire, 28, &decodedBound) ||
+      std::memcmp(&decodedBound, &bound, 28) != 0) return 6;
   return 0;
 }

@@ -2,9 +2,88 @@
 #define S2_FILEIO_GEOMETRY_WIRE_H
 
 #include "PortableStructureChunks.h"
+#include "PortableGameGeometry.h"
 #include "..\Misc\Geom.h"
 
+static_assert(sizeof(STriangle) == 6, "triangle wire size");
+static_assert(sizeof(SSphere) == 16, "sphere wire size");
+static_assert(sizeof(SMassSphere) == 20, "mass sphere wire size");
+static_assert(sizeof(SBound) == 28, "bound wire size");
+
 namespace S2FileIO {
+template<>
+struct StructureFieldCodec<STriangle, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 6;
+  static bool Decode(const std::uint8_t* source, std::size_t length, STriangle* value) {
+    if (!value) return false;
+    TriangleFields fields{};
+    if (!DecodeTriangle(source, length, &fields)) return false;
+    value->i1 = fields.first; value->i2 = fields.second; value->i3 = fields.third;
+    return true;
+  }
+  static bool Encode(const STriangle& value, std::uint8_t* destination, std::size_t length) {
+    return EncodeTriangle(TriangleFields{value.i1, value.i2, value.i3}, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<SSphere, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SSphere* value) {
+    if (!value) return false;
+    SphereFields fields{};
+    if (!DecodeSphere(source, length, &fields)) return false;
+    value->ptCenter = CVec3(fields.center[0], fields.center[1], fields.center[2]);
+    value->fRadius = fields.radius;
+    return true;
+  }
+  static bool Encode(const SSphere& value, std::uint8_t* destination, std::size_t length) {
+    return EncodeSphere(SphereFields{{value.ptCenter.x, value.ptCenter.y, value.ptCenter.z},
+                                      value.fRadius}, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<SMassSphere, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 20;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SMassSphere* value) {
+    if (!value) return false;
+    MassSphereFields fields{};
+    if (!DecodeMassSphere(source, length, &fields)) return false;
+    value->ptCenter = CVec3(fields.center[0], fields.center[1], fields.center[2]);
+    value->fRadius = fields.radius; value->fMass = fields.mass;
+    return true;
+  }
+  static bool Encode(const SMassSphere& value, std::uint8_t* destination, std::size_t length) {
+    return EncodeMassSphere(MassSphereFields{{value.ptCenter.x, value.ptCenter.y, value.ptCenter.z},
+                                              value.fRadius, value.fMass}, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<SBound, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 28;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SBound* value) {
+    if (!value) return false;
+    BoundFields fields{};
+    if (!DecodeBound(source, length, &fields)) return false;
+    value->s.ptCenter = CVec3(fields.center[0], fields.center[1], fields.center[2]);
+    value->s.fRadius = fields.radius;
+    value->ptHalfBox = CVec3(fields.halfBox[0], fields.halfBox[1], fields.halfBox[2]);
+    return true;
+  }
+  static bool Encode(const SBound& value, std::uint8_t* destination, std::size_t length) {
+    return EncodeBound(BoundFields{{value.s.ptCenter.x, value.s.ptCenter.y, value.s.ptCenter.z},
+                                    value.s.fRadius,
+                                    {value.ptHalfBox.x, value.ptHalfBox.y, value.ptHalfBox.z}},
+                       destination, length);
+  }
+};
+
 template<>
 struct StructureFieldCodec<CVec2, void> {
   static constexpr bool kPortable = true;
