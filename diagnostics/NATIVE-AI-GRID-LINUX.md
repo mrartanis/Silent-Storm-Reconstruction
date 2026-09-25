@@ -112,3 +112,13 @@ and exited without a crash dump. Its `Game.exe` SHA-256 matched the archive:
 `C70F04B1AFA3A7A985FD37733778B8E426C0DA20DD8C9015B75AA8CEAE9C3A4B`.
 This checks the Windows x64 game after common-header edits, not Linux
 `CPathNetwork` execution.
+
+After the direct AI dependencies were added, clean native-media x64 archive
+`G:\SS\lab\builds\stage2-ai-dependencies-20260925-01` was built from
+source commit `8a47e2d`. A fresh linked-resource run
+`G:\SS\lab\runs\stage2-ai-dependencies-clean-01` loaded the existing
+`DB_OLD` save to `LOAD-SLOT-DONE`, accepted `quit`, and exited with no
+crash dump or `fmod.dll`. Archive and run `Game.exe` SHA-256 both equal
+`4757108D1A583FC855CCCAB081BAA16A7A43CD18969FFE6818823899838C38FC`.
+This is again a Windows x64 smoke test; it does not prove execution of
+the Linux AI path network.
