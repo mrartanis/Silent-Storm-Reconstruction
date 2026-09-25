@@ -226,7 +226,7 @@ void CICLoad::Exec()
 		sFile.OpenRead( pSaveManager->GetSlotFilePathW( szName, S_SAVE_FILENAME ).c_str() );
 
 		SSaveFileHeader sHeader;
-		sFile.Read( &sHeader, sizeof(SSaveFileHeader) );
+		ReadSaveFileHeader( sFile, &sHeader );
 
 		if ( sHeader.nMagic != N_SAVE_MAGIC_NUMBER && sHeader.nMagic != N_SAVE_MAGIC_NUMBER_V0 )
 			throw L"Invalid save file";	// retail CICLoad::Exec @0x1f5fd0 dual magic check (same format)
@@ -331,7 +331,7 @@ void CICSave::Exec()
 			for ( int nTempX = 0; nTempX < N_SAVE_SCREENSHOT_X; nTempX++ )
 				sHeader.sScreenShot[nTempY][nTempX] = sScreenShot320x200[nTempY][nTempX];
 
-		sFile.Write( &sHeader, sizeof(SSaveFileHeader) );
+		WriteSaveFileHeader( sFile, sHeader );
 		for ( int nTemp = 0; nTemp < activeMods.size(); nTemp++ )
 			sFile.WriteString( activeMods[nTemp].szDirectory );
 

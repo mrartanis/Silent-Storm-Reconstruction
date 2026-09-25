@@ -7,6 +7,7 @@
 #include "Interface.h"     // NUI umbrella -- GetDBString (IsValidCustomName's reserved-name lookups)
 #include "iSaveManager.h"
 #include "..\FileIO\PortableUserPaths.h"
+#include "..\FileIO\PortableSaveHeader.h"
 #include "..\FileIO\WindowsUserData.h"
 #include "..\FileIO\WindowsSaveNames.h"
 #include <io.h>
@@ -14,9 +15,56 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <cstdint>
+#include <stdexcept>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NMainLoop
 {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+static_assert( sizeof(int) == sizeof(std::int32_t), "save header integers are 32-bit" );
+static_assert( N_SAVE_SCREENSHOT_X == S2FileIO::kSaveScreenshotWidth &&
+	N_SAVE_SCREENSHOT_Y == S2FileIO::kSaveScreenshotHeight,
+	"save screenshot dimensions must match the wire contract" );
+void ReadSaveFileHeader( CFileStream &stream, SSaveFileHeader *header )
+{
+	if ( !header ) throw std::runtime_error( "null save header" );
+	std::vector<std::uint8_t> wire( S2FileIO::kSaveHeaderWireSize );
+	stream.Read( wire.data(), static_cast<unsigned int>(wire.size()) );
+	S2FileIO::SaveHeaderData decoded;
+	if ( !S2FileIO::DecodeSaveHeader( wire.data(), wire.size(), &decoded ) )
+		throw std::runtime_error( "invalid save header" );
+	header->nMagic = decoded.magic;
+	header->nMods = decoded.activeMods;
+	for ( int y = 0; y < N_SAVE_SCREENSHOT_Y; ++y )
+		for ( int x = 0; x < N_SAVE_SCREENSHOT_X; ++x )
+		{
+			const S2FileIO::Pixel8888Channels &pixel =
+				decoded.screenshot[y * N_SAVE_SCREENSHOT_X + x];
+			header->sScreenShot[y][x] = NGfx::SPixel8888(
+				pixel.red, pixel.green, pixel.blue, pixel.alpha );
+		}
+}
+
+void WriteSaveFileHeader( CFileStream &stream, const SSaveFileHeader &header )
+{
+	S2FileIO::SaveHeaderData value;
+	value.magic = header.nMagic;
+	value.activeMods = header.nMods;
+	value.screenshot.resize( S2FileIO::kSaveScreenshotPixels );
+	for ( int y = 0; y < N_SAVE_SCREENSHOT_Y; ++y )
+		for ( int x = 0; x < N_SAVE_SCREENSHOT_X; ++x )
+		{
+			const NGfx::SPixel8888 &pixel = header.sScreenShot[y][x];
+			value.screenshot[y * N_SAVE_SCREENSHOT_X + x] = {
+				static_cast<std::uint8_t>(pixel.r),
+				static_cast<std::uint8_t>(pixel.g),
+				static_cast<std::uint8_t>(pixel.b),
+				static_cast<std::uint8_t>(pixel.a) };
+		}
+	std::vector<std::uint8_t> wire( S2FileIO::kSaveHeaderWireSize );
+	if ( !S2FileIO::EncodeSaveHeader( value, wire.data(), wire.size() ) )
+		throw std::runtime_error( "invalid save header" );
+	stream.Write( wire.data(), static_cast<unsigned int>(wire.size()) );
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace {
 bool IsReparsePointW( const wstring &path )
@@ -352,7 +400,7 @@ void CSaveManager::GetSlotScreenShot( const string &szName, CArray2D<NGfx::SPixe
 		sFile.OpenRead( GetSlotFilePathW( szName, S_SAVE_FILENAME ).c_str() );
 
 		SSaveFileHeader sHeader;
-		sFile.Read( &sHeader, sizeof(SSaveFileHeader) );
+		ReadSaveFileHeader( sFile, &sHeader );
 
 		// Retail GetSlotScreenShot @0x232720 accepts the same two wire-compatible magics as
 		// CICLoad::Exec. Old autosaves therefore remain visible/selectable in the save menu.

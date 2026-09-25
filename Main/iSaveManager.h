@@ -39,6 +39,10 @@ struct SSaveFileHeader
 
 	NGfx::SPixel8888 sScreenShot[N_SAVE_SCREENSHOT_Y][N_SAVE_SCREENSHOT_X];
 };
+// The save header has an explicit little-endian/BGRA wire format; never read or
+// write this host structure directly.
+void ReadSaveFileHeader( CFileStream &stream, SSaveFileHeader *header );
+void WriteSaveFileHeader( CFileStream &stream, const SSaveFileHeader &header );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CSaveManager
 ////////////////////////////////////////////////////////////////////////////////////////////////////
