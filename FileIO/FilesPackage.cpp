@@ -74,11 +74,13 @@ protected:
 		CStructureSaver ss( info, CStructureSaver::READ );
 		ss.Add( 1, &files );
 	}
-	bool LoadPortableHeaderInfo( const char *pszFileName )
+	bool LoadPortableHeaderInfo( const char *pszFileName, string *pResolvedPath )
 	{
 		S2FileIO::PortablePackageIndex index;
 		if ( !index.Open( pszFileName ) )
 			return false;
+		if ( pResolvedPath )
+			*pResolvedPath = index.ResolvedPath();
 		files.clear();
 		for ( const auto &item : index.Entries() )
 		{
@@ -105,9 +107,10 @@ bool CFilesPackage::Open( const char *pszFileName )
 {
 	try
 	{
-		f.OpenRead( pszFileName );
-		if ( !LoadPortableHeaderInfo( pszFileName ) )
+		string resolvedPath;
+		if ( !LoadPortableHeaderInfo( pszFileName, &resolvedPath ) )
 			return false;
+		f.OpenRead( resolvedPath.c_str() );
 	}
 	catch(...)
 	{
@@ -302,12 +305,13 @@ bool CCachedFilesPackage::Open( const char *pszFileName )
 {
 	try
 	{
+		string resolvedPath;
+		if ( !LoadPortableHeaderInfo( pszFileName, &resolvedPath ) )
+			return false;
 		CFileStream fs;
-		fs.OpenRead( pszFileName );
+		fs.OpenRead( resolvedPath.c_str() );
 		f.WriteFrom( fs );
 		f.Seek(0);
-		if ( !LoadPortableHeaderInfo( pszFileName ) )
-			return false;
 	}
 	catch(...)
 	{

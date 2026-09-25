@@ -1,5 +1,6 @@
 #include "PortablePackageIndex.h"
 
+#include <filesystem>
 #include <fstream>
 #include <limits>
 
@@ -43,6 +44,57 @@ bool Fail(std::string* error, const char* message) {
   if (error) *error = message;
   return false;
 }
+
+bool EqualAsciiNoCase(const std::string& a, const std::string& b) {
+  if (a.size() != b.size()) return false;
+  for (std::size_t i = 0; i < a.size(); ++i) {
+    unsigned char left = static_cast<unsigned char>(a[i]);
+    unsigned char right = static_cast<unsigned char>(b[i]);
+    if (left >= 'A' && left <= 'Z') left += 'a' - 'A';
+    if (right >= 'A' && right <= 'Z') right += 'a' - 'A';
+    if (left != right) return false;
+  }
+  return true;
+}
+
+bool ResolvePackagePath(const std::string& requested, std::string* resolved) {
+#if defined(_WIN32)
+  // Windows already handles the release's case-insensitive package lookup.
+  *resolved = requested;
+  return true;
+#else
+  // The game supplies Windows-style relative resource paths. Resolve each
+  // component against its actual case on a case-sensitive host, preferring
+  // an exact spelling and refusing ambiguous case-insensitive matches.
+  std::string normalized = requested;
+  for (char& ch : normalized) if (ch == '\\') ch = '/';
+  const std::filesystem::path input(normalized);
+  std::filesystem::path current = input.is_absolute() ? input.root_path() : ".";
+  for (const auto& component : input.relative_path()) {
+    if (component == ".") continue;
+    if (component == "..") { current /= component; continue; }
+    const std::filesystem::path exact = current / component;
+    std::error_code error;
+    if (std::filesystem::exists(exact, error) && !error) {
+      current = exact;
+      continue;
+    }
+    if (error) return false;
+    std::filesystem::path match;
+    const std::string wanted = component.string();
+    for (std::filesystem::directory_iterator it(current, error), end;
+         !error && it != end; it.increment(error)) {
+      if (!EqualAsciiNoCase(it->path().filename().string(), wanted)) continue;
+      if (!match.empty()) return false;
+      match = it->path();
+    }
+    if (error || match.empty()) return false;
+    current = match;
+  }
+  *resolved = current.string();
+  return true;
+#endif
+}
 } // namespace
 
 bool PortablePackageIndex::Open(const std::string& path, std::string* error) {
@@ -50,7 +102,10 @@ bool PortablePackageIndex::Open(const std::string& path, std::string* error) {
   entries_.clear();
   indexOffset_ = 0;
   fileSize_ = 0;
-  std::ifstream file(path, std::ios::binary | std::ios::ate);
+  std::string resolvedPath;
+  if (!ResolvePackagePath(path, &resolvedPath))
+    return Fail(error, "cannot resolve package path");
+  std::ifstream file(resolvedPath, std::ios::binary | std::ios::ate);
   if (!file) return Fail(error, "cannot open package");
   const std::streamoff size = file.tellg();
   if (size < 8 || static_cast<std::uint64_t>(size) >
@@ -107,7 +162,7 @@ bool PortablePackageIndex::Open(const std::string& path, std::string* error) {
     } else return Fail(error, "unexpected file map field");
   }
   if (haveKey || entries_.empty()) return Fail(error, "incomplete or empty file map");
-  path_ = path;
+  path_ = resolvedPath;
   return true;
 }
 

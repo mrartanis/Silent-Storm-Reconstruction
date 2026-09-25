@@ -23,6 +23,7 @@ public:
   const std::map<std::int32_t, PackageEntry>& Entries() const { return entries_; }
   std::uint32_t IndexOffset() const { return indexOffset_; }
   std::uint64_t FileSize() const { return fileSize_; }
+  const std::string& ResolvedPath() const { return path_; }
 
 private:
   std::string path_;

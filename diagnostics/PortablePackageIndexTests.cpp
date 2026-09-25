@@ -1,5 +1,6 @@
 #include "../FileIO/PortablePackageIndex.h"
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <filesystem>
@@ -78,7 +79,33 @@ int main() {
   const bool signature = Check(path, badSignature, false);
   const bool span = Check(path, Package(false, true), false);
   const bool duplicate = Check(path, Package(true), false);
+  bool casePath = true;
+#if !defined(_WIN32)
+  const auto caseDir = path.parent_path() / (path.stem().string() + "-MiXeD");
+  const auto actual = caseDir / "Fonts.res";
+  std::error_code caseError;
+  casePath = std::filesystem::create_directory(caseDir, caseError) &&
+             Check(actual, Package(), true);
+  if (casePath) {
+    std::string requested = (path.parent_path() /
+        (path.stem().string() + "-mixed") / "fONTS.RES").string();
+    std::replace(requested.begin(), requested.end(), '/', '\\');
+    S2FileIO::PortablePackageIndex index;
+    Bytes bytes;
+    casePath = index.Open(requested) && index.ResolvedPath() == actual.string() &&
+               index.Read(17, &bytes) && bytes == Bytes({0x12, 0x34, 0x56});
+    const auto conflict = caseDir / "fonts.res";
+    if (casePath && Check(conflict, Package(), true)) {
+      S2FileIO::PortablePackageIndex ambiguous;
+      casePath = !ambiguous.Open(requested);
+    } else casePath = false;
+    std::filesystem::remove(conflict, caseError);
+  }
+  std::filesystem::remove(actual, caseError);
+  std::filesystem::remove(caseDir, caseError);
+  casePath = casePath && !caseError;
+#endif
   std::error_code cleanupError;
   std::filesystem::remove(path, cleanupError);
-  return good && signature && span && duplicate && !cleanupError ? 0 : 1;
+  return good && signature && span && duplicate && casePath && !cleanupError ? 0 : 1;
 }
