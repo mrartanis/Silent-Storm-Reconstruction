@@ -76,4 +76,31 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableResourceKeyWire.h"
+
+static_assert(sizeof(NGScene::STextureKey) == 8, "texture key wire size");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::STextureKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::STextureKey* value) {
+    if (!value) return false;
+    ResourceKeyFields fields{};
+    if (!DecodeResourceKey(source, length, &fields)) return false;
+    value->nID = fields.id;
+    value->nFlags = fields.option;
+    return true;
+  }
+  static bool Encode(const NGScene::STextureKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeResourceKey(ResourceKeyFields{value.nID, value.nFlags},
+                             destination, length);
+  }
+};
+} // namespace S2FileIO
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif // __GTEXTURE_H__

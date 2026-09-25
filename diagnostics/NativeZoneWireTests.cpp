@@ -1,6 +1,7 @@
 #include "../Main/StdAfx.h"
 #include "../Main/aiColourer.h"
 #include "../Main/GScene.h"
+#include "../Main/GTexture.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -22,6 +23,11 @@ static_assert(offsetof(NGScene::SGroupInfo, nLightGroup) == 0 &&
               offsetof(NGScene::SGroupSelect, nMaskAny) == 0 &&
               offsetof(NGScene::SGroupSelect, nMaskEvery) == 2,
               "native scene group offsets");
+static_assert(offsetof(NGScene::SPartKey, nID) == 0 &&
+              offsetof(NGScene::SPartKey, nPart) == 4 &&
+              offsetof(NGScene::STextureKey, nID) == 0 &&
+              offsetof(NGScene::STextureKey, nFlags) == 4,
+              "native resource key offsets");
 
 int main() {
   using Codec = S2FileIO::StructureFieldCodec<NAI::SZone>;
@@ -77,5 +83,23 @@ int main() {
       std::memcmp(selectWire, &select, sizeof(selectWire)) != 0 ||
       !SelectCodec::Decode(selectWire, sizeof(selectWire), &decodedSelect) ||
       std::memcmp(&select, &decodedSelect, sizeof(select)) != 0) return 9;
+  using PartCodec = S2FileIO::StructureFieldCodec<NGScene::SPartKey>;
+  using TextureCodec = S2FileIO::StructureFieldCodec<NGScene::STextureKey>;
+  if (!PartCodec::kPortable || PartCodec::kWireSize != 8 ||
+      !TextureCodec::kPortable || TextureCodec::kWireSize != 8) return 10;
+  NGScene::SPartKey part(0x12345678, -2), decodedPart;
+  std::uint8_t partWire[8] = {};
+  if (!PartCodec::Encode(part, partWire, sizeof(partWire)) ||
+      std::memcmp(partWire, &part, sizeof(partWire)) != 0 ||
+      !PartCodec::Decode(partWire, sizeof(partWire), &decodedPart) ||
+      std::memcmp(&part, &decodedPart, sizeof(part)) != 0) return 11;
+  NGScene::STextureKey texture(0x12345678,
+      NGScene::STextureKey::TK_WRAP | NGScene::STextureKey::TK_TRANSPARENT),
+      decodedTexture;
+  std::uint8_t textureWire[8] = {};
+  if (!TextureCodec::Encode(texture, textureWire, sizeof(textureWire)) ||
+      std::memcmp(textureWire, &texture, sizeof(textureWire)) != 0 ||
+      !TextureCodec::Decode(textureWire, sizeof(textureWire), &decodedTexture) ||
+      std::memcmp(&texture, &decodedTexture, sizeof(texture)) != 0) return 12;
   return 0;
 }

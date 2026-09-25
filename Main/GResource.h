@@ -189,4 +189,31 @@ bool HasFileRequestsInFly();
 void LoadPrecached();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableResourceKeyWire.h"
+
+static_assert(sizeof(NGScene::SPartKey) == 8, "resource part key wire size");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::SPartKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::SPartKey* value) {
+    if (!value) return false;
+    ResourceKeyFields fields{};
+    if (!DecodeResourceKey(source, length, &fields)) return false;
+    value->nID = fields.id;
+    value->nPart = fields.option;
+    return true;
+  }
+  static bool Encode(const NGScene::SPartKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeResourceKey(ResourceKeyFields{value.nID, value.nPart},
+                             destination, length);
+  }
+};
+} // namespace S2FileIO
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif
