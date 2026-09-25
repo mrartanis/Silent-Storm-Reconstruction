@@ -60,6 +60,7 @@ public:
 	void Invert() { for ( int k = 0; k < GetBlocksNumber(); ++k ) flags[k] = ~flags[k]; }
 	int GetBlocksNumber() const { return N_BLOCKS_IN_PART_FLAGS; }
 	int GetBlock( int n ) const { ASSERT( n >= 0 && n < GetBlocksNumber() ); return flags[n]; }
+	void SetBlock( int n, int value ) { ASSERT( n >= 0 && n < GetBlocksNumber() ); flags[n] = value; }
 	void CalcAnd( const CPartFlags &a )
 	{
 		ASSERT( GetBlocksNumber() == a.GetBlocksNumber() );
@@ -726,4 +727,30 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+#include "../FileIO/PortablePartFlagsWire.h"
+
+static_assert(sizeof(NGScene::CPartFlags) == 32, "scene part flags wire size");
+static_assert(NGScene::N_BLOCKS_IN_PART_FLAGS == 8, "scene part flags block count");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::CPartFlags, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::CPartFlags* value) {
+    if (!value) return false;
+    PartFlagsFields fields{};
+    if (!DecodePartFlags(source, length, &fields)) return false;
+    for (int i = 0; i < 8; ++i) value->SetBlock(i, fields.blocks[i]);
+    return true;
+  }
+  static bool Encode(const NGScene::CPartFlags& value,
+                     std::uint8_t* destination, std::size_t length) {
+    PartFlagsFields fields{};
+    for (int i = 0; i < 8; ++i) fields.blocks[i] = value.GetBlock(i);
+    return EncodePartFlags(fields, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
