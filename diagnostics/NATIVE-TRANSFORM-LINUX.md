@@ -55,3 +55,13 @@ x64 86/86, Linux GCC x86-64 56/56, Linux GCC ARM64/QEMU 56/56, and Linux
 Clang x86-64 release 56/56. The GCC Linux suites ran under ASan/UBSan
 (`ASAN_OPTIONS=detect_leaks=0` for QEMU). Full game camera behavior, graphics parity, Linux
 mission loading, and the remaining `Main/` world classes are still open.
+
+Clean Windows x64 archive
+`G:\SS\lab\builds\stage2-native-transform-20260925-01` was produced from
+source commit `0d06a98` with native media. A fresh linked-resource LabRun
+`G:\SS\lab\runs\stage2-native-transform-clean-01` loaded the existing
+`DB_OLD` mission slot to `LOAD-SLOT-DONE`, accepted `quit`, exited normally,
+and left no crash dump. This is a Windows regression, not a Linux mission
+load. The temporary x86 comparison build at
+`G:\SS\lab\build-x86-transform` can be discarded after recording its values;
+x86 is not a supported product build.
