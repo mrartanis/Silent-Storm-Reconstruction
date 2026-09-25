@@ -48,3 +48,11 @@ The recovered x86 build printed the same region result. This small region
 test has not been compared with runtime values from the original Steam
 executable; the restored x86 build is only a supplemental implementation
 check.
+
+Clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-terrain-data-compile-20260925-01` came from
+source commit `bf019b3`. A fresh linked-resource LabRun
+`G:\SS\lab\runs\stage2-terrain-data-compile-clean-01` loaded the existing
+`DB_OLD` mission slot to `LOAD-SLOT-DONE`, accepted `quit`, exited normally,
+and produced no crash dump. This is a Windows regression after shared DB
+header edits; it is not evidence of Linux mission data loading.
