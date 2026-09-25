@@ -62,6 +62,8 @@ add_executable(PortableFBTransformWireTests "${root}/diagnostics/PortableFBTrans
 add_test(NAME PortableFBTransformWireTests COMMAND PortableFBTransformWireTests)
 add_executable(PortableBoolSyncWireTests "${root}/diagnostics/PortableBoolSyncWireTests.cpp")
 add_test(NAME PortableBoolSyncWireTests COMMAND PortableBoolSyncWireTests)
+add_executable(PortableConvexHullMapWireTests "${root}/diagnostics/PortableConvexHullMapWireTests.cpp")
+add_test(NAME PortableConvexHullMapWireTests COMMAND PortableConvexHullMapWireTests)
 add_executable(PortableFontWireTests "${root}/diagnostics/PortableFontWireTests.cpp")
 add_test(NAME PortableFontWireTests COMMAND PortableFontWireTests)
 add_executable(PortableAITileWireTests "${root}/diagnostics/PortableAITileWireTests.cpp")

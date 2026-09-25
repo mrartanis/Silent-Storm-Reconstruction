@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../FileIO/PortableConvexHullMapWire.h"
 #include "aiTerrain.h"
 #include "aiTrace.h"
 #include "aiCollider.h"
@@ -49,10 +50,13 @@ class CConvexHull: public CObjectBase
 public:
 	struct SMap
 	{
+		using S2ConvexHullMapWire = void;
 		int nPieceID, nUserID;
 		SMap() {}
 		SMap( int _nPieceID, int _nUserID ): nPieceID(_nPieceID), nUserID(_nUserID) {}
 	};
+	static_assert(sizeof(SMap) == 8 && offsetof(SMap, nPieceID) == 0 &&
+		offsetof(SMap, nUserID) == 4, "convex hull piece map wire layout");
 	// retail operator& @0x6ed10: tags 2..7 as dev + tag 8 = pUserHulls, the weak back-ref to the
 	// map's per-user-object hull registry (convergence W4).
 	ZDATA
