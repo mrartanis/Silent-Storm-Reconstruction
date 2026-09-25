@@ -4,6 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 #include "PortableIsaac.h"
+#include "PortableRand.h"
+#include "../FileIO/PortableStructureChunks.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SRandomSeed
@@ -66,6 +68,25 @@ private:
 	void InitState();
 	void FillRandRsl();
 };
+static_assert( sizeof(int) == 4, "game random seed requires a 32-bit int" );
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<SRandomSeed, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length, SRandomSeed* value) {
+    if (!value) return false;
+    std::int32_t seed = 0;
+    if (!S2Random::DecodeSeed(source, length, &seed)) return false;
+    value->nSeed = seed;
+    return true;
+  }
+  static bool Encode(const SRandomSeed& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return S2Random::EncodeSeed(value.nSeed, destination, length);
+  }
+};
+} // namespace S2FileIO
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline unsigned int CRandomGenerator::Get()
 {

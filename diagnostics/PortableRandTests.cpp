@@ -5,6 +5,15 @@
 #include <cstring>
 
 int main() {
+  const std::uint8_t seedBytes[] = {0x78, 0x56, 0x34, 0x92};
+  std::int32_t savedSeed = 0;
+  std::uint8_t roundtrip[4] = {};
+  if (!S2Random::DecodeSeed(seedBytes, sizeof(seedBytes), &savedSeed) ||
+      !S2Random::EncodeSeed(savedSeed, roundtrip, sizeof(roundtrip)) ||
+      std::memcmp(seedBytes, roundtrip, sizeof(seedBytes)) != 0 ||
+      S2Random::DecodeSeed(seedBytes, 3, &savedSeed) ||
+      S2Random::EncodeSeed(savedSeed, roundtrip, 3))
+    return 1;
   if (S2Random::ClockSeedFromMilliseconds(0) != 0 ||
       S2Random::ClockSeedFromMilliseconds(UINT64_C(0x100000001)) != 1)
     return 1;
