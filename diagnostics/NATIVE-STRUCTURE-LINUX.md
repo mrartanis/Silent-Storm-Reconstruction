@@ -41,4 +41,13 @@ compile the game's `Misc/Geom.h` types, so geometry field codecs in
 `GeometryWire.h` are temporarily excluded there; Windows keeps them. Most
 `Main/` object classes and Lua game bindings still have no Linux target, and
 no Linux mission or game loop is claimed. The archive and a full Windows
-mission load remain separate regression gates.
+mission load were checked separately:
+
+Clean native-media x64 archive
+`D:\SS-lab\builds\stage2-native-structure-20260925-01` came from commit
+`1465ccc`. Isolated LabRun `D:\SS-lab\runs\stage2-native-structure-01`
+loaded `TOPWRITE_NEW` to `LOAD-SLOT-DONE`, exited normally, and produced no
+crash dump. Its copied `game.sav` retained SHA-256
+`1385447ae22f6da374f44453bbb93034d99e2e7476e5faa9034d026b4ee3e16a`.
+This checks the Windows game after shared serializer fixes; it does not
+claim a Linux mission load.
