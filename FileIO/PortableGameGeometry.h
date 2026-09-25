@@ -66,6 +66,41 @@ struct TriangleFields { std::uint16_t first, second, third; };
 struct SphereFields { float center[3]; float radius; };
 struct MassSphereFields { float center[3]; float radius; float mass; };
 struct BoundFields { float center[3]; float radius; float halfBox[3]; };
+struct RayFields { float origin[3]; float direction[3]; };
+struct BoundCalcerFields { float minimum[3]; float maximum[3]; };
+
+inline bool DecodeRay(const std::uint8_t* source, std::size_t length,
+                      RayFields* value) {
+  if (!value) return false;
+  float f[6] = {};
+  if (!DecodeStructureFloatFields(source, length, f, 6)) return false;
+  *value = RayFields{{f[0], f[1], f[2]}, {f[3], f[4], f[5]}};
+  return true;
+}
+
+inline bool EncodeRay(const RayFields& value, std::uint8_t* destination,
+                      std::size_t length) {
+  const float f[6] = {value.origin[0], value.origin[1], value.origin[2],
+                      value.direction[0], value.direction[1], value.direction[2]};
+  return EncodeStructureFloatFields(f, 6, destination, length);
+}
+
+inline bool DecodeBoundCalcer(const std::uint8_t* source, std::size_t length,
+                              BoundCalcerFields* value) {
+  if (!value) return false;
+  float f[6] = {};
+  if (!DecodeStructureFloatFields(source, length, f, 6)) return false;
+  *value = BoundCalcerFields{{f[0], f[1], f[2]}, {f[3], f[4], f[5]}};
+  return true;
+}
+
+inline bool EncodeBoundCalcer(const BoundCalcerFields& value,
+                              std::uint8_t* destination,
+                              std::size_t length) {
+  const float f[6] = {value.minimum[0], value.minimum[1], value.minimum[2],
+                      value.maximum[0], value.maximum[1], value.maximum[2]};
+  return EncodeStructureFloatFields(f, 6, destination, length);
+}
 
 inline bool DecodeTriangle(const std::uint8_t* source, std::size_t length,
                            TriangleFields* value) {

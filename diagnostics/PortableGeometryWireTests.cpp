@@ -110,5 +110,27 @@ int main() {
       floatRectDecoded.x1 != 1.0f || floatRectDecoded.y1 != -2.0f ||
       floatRectDecoded.x2 != 0.5f || !std::signbit(floatRectDecoded.y2) ||
       S2FileIO::DecodeRect(expected, 15, &floatRectDecoded)) return 9;
+  const S2FileIO::RayFields ray{{1.0f, -2.0f, 0.5f},
+                                {3.0f, 4.0f, -0.0f}};
+  const S2FileIO::BoundCalcerFields calcer{{1.0f, -2.0f, 0.5f},
+                                            {3.0f, 4.0f, -0.0f}};
+  std::uint8_t sixFloatWire[24] = {};
+  S2FileIO::RayFields rayDecoded{};
+  S2FileIO::BoundCalcerFields calcerDecoded{};
+  if (!S2FileIO::EncodeRay(ray, sixFloatWire, 24) ||
+      sixFloatWire[3] != 0x3f || sixFloatWire[7] != 0xc0 ||
+      sixFloatWire[23] != 0x80 ||
+      !S2FileIO::DecodeRay(sixFloatWire, 24, &rayDecoded) ||
+      rayDecoded.origin[0] != 1.0f || rayDecoded.direction[1] != 4.0f ||
+      !std::signbit(rayDecoded.direction[2]) ||
+      S2FileIO::DecodeRay(sixFloatWire, 23, &rayDecoded) ||
+      S2FileIO::EncodeRay(ray, nullptr, 24) ||
+      !S2FileIO::EncodeBoundCalcer(calcer, sixFloatWire, 24) ||
+      !S2FileIO::DecodeBoundCalcer(sixFloatWire, 24, &calcerDecoded) ||
+      calcerDecoded.minimum[1] != -2.0f ||
+      calcerDecoded.maximum[0] != 3.0f ||
+      !std::signbit(calcerDecoded.maximum[2]) ||
+      S2FileIO::DecodeBoundCalcer(sixFloatWire, 23, &calcerDecoded) ||
+      S2FileIO::EncodeBoundCalcer(calcer, nullptr, 24)) return 10;
   return 0;
 }

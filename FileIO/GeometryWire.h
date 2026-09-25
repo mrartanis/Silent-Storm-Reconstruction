@@ -10,6 +10,7 @@ static_assert(sizeof(STriangle) == 6, "triangle wire size");
 static_assert(sizeof(SSphere) == 16, "sphere wire size");
 static_assert(sizeof(SMassSphere) == 20, "mass sphere wire size");
 static_assert(sizeof(SBound) == 28, "bound wire size");
+static_assert(sizeof(CRay) == 24, "ray wire size");
 static_assert(sizeof(CTPoint<int>) == 8 && sizeof(CTPoint<float>) == 8,
               "point wire size");
 static_assert(sizeof(CTRect<int>) == 16 && sizeof(CTRect<float>) == 16,
@@ -18,6 +19,26 @@ static_assert(sizeof(SFBTransform) == 128 && offsetof(SFBTransform, backward) ==
               "forward/backward transform wire layout");
 
 namespace S2FileIO {
+template<>
+struct StructureFieldCodec<CRay, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 24;
+  static bool Decode(const std::uint8_t* source, std::size_t length, CRay* value) {
+    if (!value) return false;
+    RayFields fields{};
+    if (!DecodeRay(source, length, &fields)) return false;
+    value->ptOrigin = CVec3(fields.origin[0], fields.origin[1], fields.origin[2]);
+    value->ptDir = CVec3(fields.direction[0], fields.direction[1], fields.direction[2]);
+    return true;
+  }
+  static bool Encode(const CRay& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return EncodeRay({{value.ptOrigin.x, value.ptOrigin.y, value.ptOrigin.z},
+                      {value.ptDir.x, value.ptDir.y, value.ptDir.z}},
+                     destination, length);
+  }
+};
+
 template<class T>
 struct GamePointCodec {
   static constexpr bool kPortable = true;

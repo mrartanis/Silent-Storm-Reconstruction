@@ -1,5 +1,6 @@
 #include "../Main/StdAfx.h"
 #include "../FileIO/GeometryWire.h"
+#include "../Main/Bound.h"
 
 #include <cstdint>
 #include <cmath>
@@ -10,6 +11,8 @@ static_assert(offsetof(STriangle, i3) == 4, "triangle third index offset");
 static_assert(offsetof(SSphere, fRadius) == 12, "sphere radius offset");
 static_assert(offsetof(SMassSphere, fMass) == 16, "mass sphere mass offset");
 static_assert(offsetof(SBound, ptHalfBox) == 16, "bound half-box offset");
+static_assert(offsetof(CRay, ptDir) == 12, "ray direction offset");
+static_assert(offsetof(SBoundCalcer, ptMax) == 12, "bound calcer maximum offset");
 static_assert(offsetof(CTPoint<int>, y) == 4, "integer point y offset");
 static_assert(offsetof(CTPoint<float>, y) == 4, "float point y offset");
 static_assert(offsetof(CTRect<int>, x1) == 0 && offsetof(CTRect<int>, y1) == 4 &&
@@ -166,5 +169,26 @@ int main() {
       !FloatRect::Encode(rf, rectWire, 16) || std::memcmp(rectWire, &rf, 16) != 0 ||
       !FloatRect::Decode(rectWire, 16, &decodedRf) ||
       std::memcmp(&decodedRf, &rf, 16) != 0) return 9;
+  using Ray = S2FileIO::StructureFieldCodec<CRay>;
+  using Calcer = S2FileIO::StructureFieldCodec<SBoundCalcer>;
+  CRay ray{}, decodedRay{};
+  ray.ptOrigin = CVec3(1.0f, -2.0f, 0.5f);
+  ray.ptDir = CVec3(3.0f, 4.0f, -0.0f);
+  SBoundCalcer calcer, decodedCalcer;
+  calcer.ptMin = ray.ptOrigin;
+  calcer.ptMax = ray.ptDir;
+  std::uint8_t sixFloatWire[24] = {};
+  if (!Ray::kPortable || Ray::kWireSize != 24 ||
+      !Calcer::kPortable || Calcer::kWireSize != 24 ||
+      !Ray::Encode(ray, sixFloatWire, 24) ||
+      std::memcmp(sixFloatWire, &ray, 24) != 0 ||
+      !Ray::Decode(sixFloatWire, 24, &decodedRay) ||
+      std::memcmp(&decodedRay, &ray, 24) != 0 ||
+      Ray::Decode(sixFloatWire, 23, &decodedRay) ||
+      !Calcer::Encode(calcer, sixFloatWire, 24) ||
+      std::memcmp(sixFloatWire, &calcer, 24) != 0 ||
+      !Calcer::Decode(sixFloatWire, 24, &decodedCalcer) ||
+      std::memcmp(&decodedCalcer, &calcer, 24) != 0 ||
+      Calcer::Decode(sixFloatWire, 23, &decodedCalcer)) return 12;
   return 0;
 }

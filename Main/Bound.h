@@ -79,6 +79,32 @@ struct SBoundCalcer
 	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableGameGeometry.h"
+
+static_assert(sizeof(SBoundCalcer) == 24, "bound calcer wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<SBoundCalcer, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 24;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     SBoundCalcer* value) {
+    if (!value) return false;
+    BoundCalcerFields fields{};
+    if (!DecodeBoundCalcer(source, length, &fields)) return false;
+    value->ptMin = CVec3(fields.minimum[0], fields.minimum[1], fields.minimum[2]);
+    value->ptMax = CVec3(fields.maximum[0], fields.maximum[1], fields.maximum[2]);
+    return true;
+  }
+  static bool Encode(const SBoundCalcer& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return EncodeBoundCalcer({{value.ptMin.x, value.ptMin.y, value.ptMin.z},
+                              {value.ptMax.x, value.ptMax.y, value.ptMax.z}},
+                             destination, length);
+  }
+};
+} // namespace S2FileIO
+////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class TRes, class TSet,class TGetPoint>
 inline void CalcBound( TRes *pRes, const TSet &a, TGetPoint GetPoint )
 {
