@@ -115,19 +115,25 @@ target_include_directories(s2_game_dbformat_records PRIVATE
 target_link_libraries(s2_game_dbformat_records PUBLIC
   s2_game_database_runtime s2_game_misc_runtime)
 target_compile_features(s2_game_dbformat_records PUBLIC cxx_std_17)
+set(S2_GAME_DB_PATH "" CACHE FILEPATH "Path to an original game.db for native load regression")
 add_executable(NativeGameDatabaseLoadTests
   "${root}/diagnostics/NativeGameDatabaseLoadTests.cpp")
 target_link_libraries(NativeGameDatabaseLoadTests PRIVATE
   "-Wl,--whole-archive" s2_game_dbformat_records "-Wl,--no-whole-archive")
-set(S2_GAME_DB_PATH "" CACHE FILEPATH "Path to an original game.db for native load regression")
 if(S2_GAME_DB_PATH)
   add_test(NAME NativeGameDatabaseLoadTests
     COMMAND NativeGameDatabaseLoadTests "${S2_GAME_DB_PATH}")
 endif()
-# Linking this module into a headless game target still needs the original
-# BasicDB record registry and CMaterial/CRPGArmor vtables. Until that runtime
-# is ported, build the original translation unit but keep its executable test
-# on Windows where the full DBFormat/ADOImport libraries are already linked.
+# The typed database now supplies the material/armor vtables required by
+# STerrainInfo's saved CDBPtr fields. Link the original region/version test.
+add_executable(NativeTerrainInfoTests "${root}/diagnostics/NativeTerrainInfoTests.cpp")
+target_link_libraries(NativeTerrainInfoTests PRIVATE s2_game_terrain_info
+  "-Wl,--whole-archive" s2_game_dbformat_records "-Wl,--no-whole-archive")
+add_test(NAME NativeTerrainInfoTests COMMAND NativeTerrainInfoTests)
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeTerrainInfoDatabaseTests
+    COMMAND NativeTerrainInfoTests "${S2_GAME_DB_PATH}")
+endif()
 
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
