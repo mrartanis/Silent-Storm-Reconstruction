@@ -1,11 +1,17 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "..\ADOImport\BasicDB.h"
-#include "..\Misc\BasicFactory.h"
-#include "..\FileIO\BasicChunk1.h"
-#include "..\FileIO\PortableGameDatabase.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../ADOImport/BasicDB.h"
+#include "../Misc/BasicFactory.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../FileIO/PortableGameDatabase.h"
 #include <set>
-#include <strstream>
+#include <cstdlib>
 
+#if defined(_WIN32)
 #import "C:\Program Files (x86)\Common Files\System\ADO\msado15.dll" no_namespace rename("EOF", "EndOfFile")
 #include <ole2.h>
 #include <conio.h>
@@ -70,6 +76,7 @@ public:
 	// cached index sequence consistent).
 	bool HasField( const char *pszField ) const { return find( fields.begin(), fields.end(), pszField ) != fields.end(); }
 };
+#endif // _WIN32: SQL/ADO import is editor-only.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CDBTableDataStorage - the release/Steam runtime DB-load representation.
 //
@@ -294,9 +301,8 @@ static void ReportStorageShape( int nTableID, CDBTableDataStorage *pStorage )
 {
 	if ( !pStorage )
 		return;
-	char parityFlag[2] = {};
-	if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
-		parityFlag[0] == '1' )
+	const char *parityFlag = std::getenv( "S2_DB_PARITY" );
+	if ( parityFlag && parityFlag[0] == '1' && parityFlag[1] == '\0' )
 	{
 		// Diagnostic only: compare values decoded through the game's CStructureSaver
 		// against the independent portable game.db loader, table by table.
@@ -385,6 +391,7 @@ static void ReportUnusedStorageFields( CDBTableDataStorage *pStorage,
 				diagnostics.nTableID, pStorage->stringFileds[i].c_str() );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 static void PrintProviderError(_ConnectionPtr pConnection)
 {
 	ErrorPtr  pErr  = NULL;
@@ -581,6 +588,7 @@ _bstr_t COLETable::GetString( int nField )
 		return "";
 	return fieldData;
 }
+#endif // _WIN32: SQL/ADO source import is not part of the game runtime.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -637,7 +645,9 @@ namespace NDatabase
 	}
 	static string szDataSource;
 	bool bIsDatabaseLoading = false;
+#if defined(_WIN32)
 	COLETable table;
+#endif
 
 	static CDBTableBase* GetTableByName( const char *pszTable );
 }
@@ -727,6 +737,7 @@ static string RelationField2TableName( const string &src )
 	return src.substr( 0, src.length() - 2 ) + "s";
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 void NDatabase::Import()
 {
 	bIsDatabaseLoading = true;
@@ -815,6 +826,7 @@ void NDatabase::Refresh( int nTableID )
 	table.Close();
 	CloseConnection();
 }
+#endif // _WIN32: legacy SQL import/refresh is not used when loading game.db.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // v1.2 @0x7ef6d0-family: the scalar ImportFields now report success -- a missing
 // column returns false and leaves *pData untouched (v1.1 zero-filled on the storage
@@ -833,10 +845,14 @@ bool NDatabase::ImportField( const char *pszFieldName, int *pData )
 		*pData = pStorageSource->GetInt( pszFieldName );
 		return true;
 	}
+#if defined(_WIN32)
 	if ( !table.HasField( pszFieldName ) )
 		return false;
 	*pData = table.GetInt( pszFieldName );
 	return true;
+#else
+	throw std::runtime_error( "ADO field import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool NDatabase::ImportField( const char *pszFieldName, bool *pData )
@@ -852,10 +868,14 @@ bool NDatabase::ImportField( const char *pszFieldName, bool *pData )
 		*pData = pStorageSource->GetBool( pszFieldName );
 		return true;
 	}
+#if defined(_WIN32)
 	if ( !table.HasField( pszFieldName ) )
 		return false;
 	*pData = table.GetBool( pszFieldName );
 	return true;
+#else
+	throw std::runtime_error( "ADO field import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool NDatabase::ImportField( const char *pszFieldName, float *pData )
@@ -871,10 +891,14 @@ bool NDatabase::ImportField( const char *pszFieldName, float *pData )
 		*pData = pStorageSource->GetFloat( pszFieldName );
 		return true;
 	}
+#if defined(_WIN32)
 	if ( !table.HasField( pszFieldName ) )
 		return false;
 	*pData = table.GetFloat( pszFieldName );
 	return true;
+#else
+	throw std::runtime_error( "ADO field import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool NDatabase::ImportField( const char *pszFieldName, std::string *pData )
@@ -894,10 +918,14 @@ bool NDatabase::ImportField( const char *pszFieldName, std::string *pData )
 			(*pData)[i] = (char)ws[i];
 		return true;
 	}
+#if defined(_WIN32)
 	if ( !table.HasField( pszFieldName ) )
 		return false;
 	*pData = (const char*)table.GetString( pszFieldName );
 	return true;
+#else
+	throw std::runtime_error( "ADO field import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool NDatabase::ImportField( const char *pszFieldName, std::wstring *pData )
@@ -913,10 +941,14 @@ bool NDatabase::ImportField( const char *pszFieldName, std::wstring *pData )
 		*pData = pStorageSource->GetWString( pszFieldName );
 		return true;
 	}
+#if defined(_WIN32)
 	if ( !table.HasField( pszFieldName ) )
 		return false;
 	*pData = (const wchar_t*)table.GetString( pszFieldName );
 	return true;
+#else
+	throw std::runtime_error( "ADO field import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void NDatabase::ImportRelation( CDBRecord *pSrc, CDBTableBase *pDestTable, std::vector< CPtr<CDBRecord> > *pRefs )
@@ -985,7 +1017,16 @@ void NDatabase::ImportField( const char *pszFieldName, CDBRecord **pRef, CDBTabl
 			pStorageSource->GetCurrentRecordID() );
 		return;
 	}
-	int nID = pStorageSource ? pStorageSource->GetInt( pszFieldName ) : table.GetInt( pszFieldName );
+	int nID = 0;
+	if ( pStorageSource )
+		nID = pStorageSource->GetInt( pszFieldName );
+#if defined(_WIN32)
+	else
+		nID = table.GetInt( pszFieldName );
+#else
+	else
+		throw std::runtime_error( "ADO reference import is unavailable on Linux" );
+#endif
 	if ( pDestTable )
 		*pRef = pDestTable->GetDBRecord( nID );
 	if ( nID > 0 && !*pRef )
@@ -1039,9 +1080,8 @@ static void ImportReleaseStorage( CStorageHash &storageTables,
 			DebugTrace( "DB-SCHEMA ERROR relation=%s unresolved tables left=0x%08X right=0x%08X\n",
 				relation.szTable.c_str(), relation.nTableLeft, relation.nTableRight );
 	}
-	char parityFlag[2] = {};
-	if ( GetEnvironmentVariableA( "S2_DB_PARITY", parityFlag, sizeof(parityFlag) ) == 1 &&
-		parityFlag[0] == '1' )
+	const char *parityFlag = std::getenv( "S2_DB_PARITY" );
+	if ( parityFlag && parityFlag[0] == '1' && parityFlag[1] == '\0' )
 	{
 		std::vector<S2FileIO::GameDatabaseRelation> relationSnapshot;
 		for ( const NDatabase::SRelation &relation : relations )
@@ -1201,6 +1241,7 @@ void CDBTableBase::PreCreate( int nTypeID )
 		}
 		return;
 	}
+#if defined(_WIN32)
 	// iterate through recordset & create records
 	for ( ; !table.IsEof(); table.MoveNext() )
 	{
@@ -1216,8 +1257,12 @@ void CDBTableBase::PreCreate( int nTypeID )
 #endif
 		records[ pRes->nID ] = pRes;
 	}
+#else
+	throw std::runtime_error( "ADO record creation is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(_WIN32)
 void CDBTableBase::Refresh( int nTypeID )
 {
 	Sleep(0); // transfer control to the other thread (writing to DB usually happens not in the current thread)
@@ -1242,6 +1287,7 @@ void CDBTableBase::Refresh( int nTypeID )
 		records[ pRes->nID ] = pRes;
 	}
 }
+#endif // _WIN32: SQL refresh is editor-only.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDBTableBase::Import()
 {
@@ -1257,6 +1303,7 @@ void CDBTableBase::Import()
 		}
 		return;
 	}
+#if defined(_WIN32)
 	// iterate through records & Import() them
 	for ( ; !table.IsEof(); table.MoveNext() )
 	{
@@ -1269,6 +1316,9 @@ void CDBTableBase::Import()
 		}
 		i->second->Import();
 	}
+#else
+	throw std::runtime_error( "ADO record import is unavailable on Linux" );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CDBRecord* CDBTableBase::GetDBRecord( int nID )

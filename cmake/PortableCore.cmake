@@ -70,6 +70,14 @@ add_library(s2_game_terrain_info STATIC "${root}/Main/TerrainInfo.cpp")
 target_include_directories(s2_game_terrain_info PRIVATE "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(s2_game_terrain_info PUBLIC s2_game_dg)
 target_compile_features(s2_game_terrain_info PUBLIC cxx_std_17)
+# The game's original registry and columnar game.db import, excluding the
+# SQL/ADO source importer used by editor tools.
+add_library(s2_game_database_runtime STATIC "${root}/ADOImport/BasicDB.cpp")
+target_include_directories(s2_game_database_runtime PRIVATE
+  "${root}/ADOImport" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_database_runtime PUBLIC
+  s2_game_structure s2_portable_database)
+target_compile_features(s2_game_database_runtime PUBLIC cxx_std_17)
 # Linking this module into a headless game target still needs the original
 # BasicDB record registry and CMaterial/CRPGArmor vtables. Until that runtime
 # is ported, build the original translation unit but keep its executable test

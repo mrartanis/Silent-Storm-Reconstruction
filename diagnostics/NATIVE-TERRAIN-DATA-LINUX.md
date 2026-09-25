@@ -17,21 +17,28 @@ from CP1251 to UTF-8 before its include paths changed. None of these changes
 alters the terrain data algorithms or wire tags intentionally.
 
 The next boundary is concrete: linking a Linux test that constructs
-`CTerrainInfoHolder` currently needs `NDatabase::bIsDatabaseLoading`,
+`CTerrainInfoHolder` needs `NDatabase::bIsDatabaseLoading`,
 `NDatabase::GetTable`, `CDBTableBase::GetDBRecord`, the record registry, and
-the vtables/RTTI for `NDb::CMaterial` and `NDb::CRPGArmor`. These come from
-the real game `BasicDB` and DBFormat runtime, whose current implementation
-still contains Windows ADO/COM code. A fake record registry would not prove
-game-data loading, so no Linux runtime-test result is claimed yet.
+the vtables/RTTI for `NDb::CMaterial` and `NDb::CRPGArmor`. The game's
+original `ADOImport/BasicDB.cpp` now compiles on Linux as
+`s2_game_database_runtime`: the game.db columnar path remains available,
+while the SQL/ADO source importer and refresh path are Windows-only. This
+is still a compile gate, not a Linux database-load test. Linking and loading
+real game data also needs the DBFormat record implementations/registrations
+and `NDb::BuildMapLinks` from `DataMap.cpp`. A fake registry would not prove
+that path, so no Linux terrain runtime-test result is claimed yet.
 
 On the authorized Linux host, the compile boundary is reproducible with:
 
 ```sh
 cmake --build /tmp/s2-matrix-links.zCkO0O/build-x64 --target s2_game_terrain_info -j 16
 cmake --build /tmp/s2-matrix-links.zCkO0O/build-arm64 --target s2_game_terrain_info -j 16
-export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-x64 --target s2_game_database_runtime -j 16
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-arm64 --target s2_game_database_runtime -j 16
+export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11:/usr/include/c++/11/backward
 export LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11
 cmake --build /tmp/s2-matrix-links.zCkO0O/build-clang-release --target s2_game_terrain_info -j 16
+cmake --build /tmp/s2-matrix-links.zCkO0O/build-clang-release --target s2_game_database_runtime -j 16
 ```
 
 `NativeTerrainInfoTests` is currently Windows-only, linked against the full
@@ -48,6 +55,15 @@ The recovered x86 build printed the same region result. This small region
 test has not been compared with runtime values from the original Steam
 executable; the restored x86 build is only a supplemental implementation
 check.
+
+After adding the original `BasicDB.cpp` compile target, the Linux GCC
+x86-64 ASan/UBSan suite passed 58/58, ARM64 under QEMU passed 58/58 with
+`ASAN_OPTIONS=detect_leaks=0` (LeakSanitizer cannot operate under QEMU's
+ptrace), and Clang 14 x86-64 passed 58/58. Windows MSVC `/Zs` syntax check
+of the modified `BasicDB.cpp` passed; a full Windows rebuild was unavailable
+in this shell because MSBuild did not inherit the SDK UCRT include path.
+These are regression and compile checks, not a runtime `game.db` load through
+the Linux `BasicDB` target.
 
 Clean native-media Windows x64 archive
 `G:\SS\lab\builds\stage2-terrain-data-compile-20260925-01` came from
