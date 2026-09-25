@@ -28,6 +28,7 @@ static_assert(offsetof(NGScene::SPartKey, nID) == 0 &&
               offsetof(NGScene::STextureKey, nID) == 0 &&
               offsetof(NGScene::STextureKey, nFlags) == 4,
               "native resource key offsets");
+static_assert(sizeof(NGfx::SPixel8888) == 4, "native 8888 pixel size");
 
 int main() {
   using Codec = S2FileIO::StructureFieldCodec<NAI::SZone>;
@@ -101,5 +102,15 @@ int main() {
       std::memcmp(textureWire, &texture, sizeof(textureWire)) != 0 ||
       !TextureCodec::Decode(textureWire, sizeof(textureWire), &decodedTexture) ||
       std::memcmp(&texture, &decodedTexture, sizeof(texture)) != 0) return 12;
+  using PixelCodec = S2FileIO::StructureFieldCodec<NGfx::SPixel8888>;
+  if (!PixelCodec::kPortable || PixelCodec::kWireSize != 4) return 13;
+  NGfx::SPixel8888 pixel(0x12, 0x34, 0x56, 0x78), decodedPixel;
+  const std::uint8_t expectedPixel[4] = {0x56, 0x34, 0x12, 0x78};
+  std::uint8_t pixelWire[4] = {};
+  if (!PixelCodec::Encode(pixel, pixelWire, sizeof(pixelWire)) ||
+      std::memcmp(pixelWire, expectedPixel, sizeof(pixelWire)) != 0 ||
+      std::memcmp(pixelWire, &pixel, sizeof(pixelWire)) != 0 ||
+      !PixelCodec::Decode(pixelWire, sizeof(pixelWire), &decodedPixel) ||
+      decodedPixel.color != pixel.color) return 14;
   return 0;
 }

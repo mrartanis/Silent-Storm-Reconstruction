@@ -218,4 +218,37 @@ struct SCompactTransformer
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }; // namespace NGfx
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortablePixel8888Wire.h"
+
+static_assert(sizeof(NGfx::SPixel8888) == 4, "pixel 8888 wire size");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGfx::SPixel8888, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGfx::SPixel8888* value) {
+    if (!value) return false;
+    Pixel8888Channels channels{};
+    if (!DecodePixel8888(source, length, &channels)) return false;
+    value->color = static_cast<DWORD>(channels.blue) |
+                   (static_cast<DWORD>(channels.green) << 8) |
+                   (static_cast<DWORD>(channels.red) << 16) |
+                   (static_cast<DWORD>(channels.alpha) << 24);
+    return true;
+  }
+  static bool Encode(const NGfx::SPixel8888& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const DWORD packed = value.color;
+    return EncodePixel8888(Pixel8888Channels{
+        static_cast<std::uint8_t>(packed >> 16),
+        static_cast<std::uint8_t>(packed >> 8),
+        static_cast<std::uint8_t>(packed),
+        static_cast<std::uint8_t>(packed >> 24)}, destination, length);
+  }
+};
+} // namespace S2FileIO
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif // __GPIXELFORMAT_H__
