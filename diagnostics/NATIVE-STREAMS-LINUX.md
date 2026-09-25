@@ -35,3 +35,11 @@ Windows x64 84/84 (plus manual four-script Lua autoload), Linux x86-64
 port `CStructureSaver`, package object instantiation, or the gameplay loop.
 Large-file and arbitrary-seek behavior outside the exercised original data
 remains to be audited before declaring the entire FileIO layer portable.
+
+A clean Windows x64 native-media archive
+`D:\SS-lab\builds\stage2-native-streams-20260925-01` was built from commit
+`266c60e`. Isolated LabRun `D:\SS-lab\runs\stage2-native-streams-01`
+loaded mission slot `TOPWRITE_NEW` to `LOAD-SLOT-DONE` and exited with no
+crash dump. The copied `game.sav` retained SHA-256
+`1385447ae22f6da374f44453bbb93034d99e2e7476e5faa9034d026b4ee3e16a`.
+This is a Windows game regression check, not Linux gameplay.
