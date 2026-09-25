@@ -7,6 +7,7 @@
 #include "aiSimpleWaveSearch.h"
 #include "../Misc/PortableZone.h"
 #include "../FileIO/PortableStructureChunks.h"
+#include "../FileIO/PortableAIColourWire.h"
 
 namespace NAI
 {
@@ -219,7 +220,48 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 static_assert(sizeof(NAI::SZone) == 8, "game zone must keep its 8-byte wire layout");
+static_assert(sizeof(NAI::SNeighbour) == 8 && sizeof(NAI::SLocalColorInfo) == 4,
+              "game colour network wire sizes");
 namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::SNeighbour, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 8;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SNeighbour* value) {
+    if (!value) return false;
+    NeighbourFields fields{};
+    if (!DecodeNeighbour(source, length, &fields)) return false;
+    value->wNodeNumber = fields.node;
+    value->wDistance = fields.distance;
+    value->nLayer = fields.layer;
+    return true;
+  }
+  static bool Encode(const NAI::SNeighbour& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeNeighbour(NeighbourFields{
+        value.wNodeNumber, value.wDistance, value.nLayer}, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NAI::SLocalColorInfo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SLocalColorInfo* value) {
+    if (!value) return false;
+    LocalColorFields fields{};
+    if (!DecodeLocalColor(source, length, &fields)) return false;
+    value->wAverageX = fields.averageX;
+    value->wAverageY = fields.averageY;
+    return true;
+  }
+  static bool Encode(const NAI::SLocalColorInfo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeLocalColor(LocalColorFields{
+        value.wAverageX, value.wAverageY}, destination, length);
+  }
+};
 template<>
 struct StructureFieldCodec<NAI::SZone, void> {
   static constexpr bool kPortable = true;

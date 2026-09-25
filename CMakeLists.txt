@@ -68,6 +68,8 @@ add_executable(PortableVectorHashTests "${root}/diagnostics/PortableVectorHashTe
 add_test(NAME PortableVectorHashTests COMMAND PortableVectorHashTests)
 add_executable(PortableMeshWireTests "${root}/diagnostics/PortableMeshWireTests.cpp")
 add_test(NAME PortableMeshWireTests COMMAND PortableMeshWireTests)
+add_executable(PortableAIColourWireTests "${root}/diagnostics/PortableAIColourWireTests.cpp")
+add_test(NAME PortableAIColourWireTests COMMAND PortableAIColourWireTests)
 add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
 add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)
 add_executable(PortableParticleWireTests "${root}/diagnostics/PortableParticleWireTests.cpp")
@@ -596,7 +598,7 @@ if(S2_GAME_DIR)
 else()
   message(STATUS "Game install not found -- pass -DS2_GAME_DIR=\"<path>\" to set the working dir.")
 endif()
-if(TARGET NativeAITileWireTests AND S2_GAME_DIR AND NOT TARGET s2_bink_compat)
-  set_tests_properties(NativeAITileWireTests PROPERTIES ENVIRONMENT_MODIFICATION
+if(S2_GAME_DIR AND NOT TARGET s2_bink_compat)
+  set_tests_properties(NativeAITileWireTests NativeZoneWireTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
 endif()
