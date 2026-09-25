@@ -8,6 +8,7 @@
 #include "../DBFormat/DataRPG.h"
 #include "../Misc/2Darray.h"
 #include "aiPMConst.h"		// NAI::F_TEST_SPHERE_RADIUS (unit collision radius, 0.31f)
+#include "../FileIO/PortableJunction.h"
 namespace NAI
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,4 +147,26 @@ struct SHullSet
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static_assert(sizeof(NAI::SJunction) == 16, "AI junction must remain 16 bytes");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAI::SJunction, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::SJunction* value) {
+    if (!value) return false;
+    JunctionFields fields{};
+    if (!DecodeJunction(source, length, &fields)) return false;
+    value->pt = CVec3(fields.x, fields.y, fields.z);
+    value->bGround = fields.ground;
+    return true;
+  }
+  static bool Encode(const NAI::SJunction& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeJunction(JunctionFields{value.pt.x, value.pt.y, value.pt.z,
+                                          value.bGround}, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
