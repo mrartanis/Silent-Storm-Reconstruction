@@ -124,4 +124,100 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../FileIO/PortableAnimationWire.h"
+
+static_assert(sizeof(NAnimation::SBoneAnimKey) == 16, "bone key wire size");
+static_assert(sizeof(NAnimation::SRootAnimKey) == 28, "root key wire size");
+static_assert(sizeof(NAnimation::SAddBoneAnimKey) == 32, "added bone key wire size");
+static_assert(sizeof(NAnimation::SMSRAnimKey) == 40, "scaled key wire size");
+
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAnimation::SBoneAnimKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 16;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAnimation::SBoneAnimKey* value) {
+    if (!value) return false;
+    float f[4];
+    if (!DecodeAnimationFloats(source, length, f, 4)) return false;
+    value->rot = CQuat(f[0], f[1], f[2], f[3]);
+    return true;
+  }
+  static bool Encode(const NAnimation::SBoneAnimKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    float f[4];
+    value.rot.GetComponentsForWire(f);
+    return EncodeAnimationFloats(f, 4, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<NAnimation::SRootAnimKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 28;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAnimation::SRootAnimKey* value) {
+    if (!value) return false;
+    float f[7];
+    if (!DecodeAnimationFloats(source, length, f, 7)) return false;
+    value->pos = CVec3(f[0], f[1], f[2]);
+    value->rot = CQuat(f[3], f[4], f[5], f[6]);
+    return true;
+  }
+  static bool Encode(const NAnimation::SRootAnimKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    float f[7] = {value.pos.x, value.pos.y, value.pos.z};
+    value.rot.GetComponentsForWire(f + 3);
+    return EncodeAnimationFloats(f, 7, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<NAnimation::SAddBoneAnimKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 32;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAnimation::SAddBoneAnimKey* value) {
+    if (!value) return false;
+    std::int32_t parent = 0;
+    float f[7];
+    if (!DecodeAnimationParentFloats(source, length, &parent, f, 7)) return false;
+    value->nParent = parent;
+    value->pos = CVec3(f[0], f[1], f[2]);
+    value->rot = CQuat(f[3], f[4], f[5], f[6]);
+    return true;
+  }
+  static bool Encode(const NAnimation::SAddBoneAnimKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    float f[7] = {value.pos.x, value.pos.y, value.pos.z};
+    value.rot.GetComponentsForWire(f + 3);
+    return EncodeAnimationParentFloats(value.nParent, f, 7,
+                                        destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<NAnimation::SMSRAnimKey, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 40;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAnimation::SMSRAnimKey* value) {
+    if (!value) return false;
+    float f[10];
+    if (!DecodeAnimationFloats(source, length, f, 10)) return false;
+    value->pos = CVec3(f[0], f[1], f[2]);
+    value->rot = CQuat(f[3], f[4], f[5], f[6]);
+    value->scale = CVec3(f[7], f[8], f[9]);
+    return true;
+  }
+  static bool Encode(const NAnimation::SMSRAnimKey& value,
+                     std::uint8_t* destination, std::size_t length) {
+    float f[10] = {value.pos.x, value.pos.y, value.pos.z};
+    value.rot.GetComponentsForWire(f + 3);
+    f[7] = value.scale.x; f[8] = value.scale.y; f[9] = value.scale.z;
+    return EncodeAnimationFloats(f, 10, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
