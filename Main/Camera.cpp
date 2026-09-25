@@ -425,18 +425,6 @@ private:
 	// @+0x18C (0x38 bytes, PDB layout -- the FOV-spring members tOn/tOnFOVSpring/tMaxLen/
 	// sDesiredPlacement drive Update's separate effect, still unported; carried + serialized so the
 	// save chunk is the retail 0x38). Ctor defaults = the release ctor stores (nSloMo 1, FOV 35).
-	struct SCameraSloMo     { int nSloMo; int tOn; STime tMaxLen; SCameraSloMo(): nSloMo(1), tOn(0), tMaxLen(0) {} };
-	struct SCameraFOVEffect
-	{
-		int nSloMo;						// +0x00 (0x18C)
-		int tOn;						// +0x04
-		int tOnFOVSpring;				// +0x08
-		STime tMaxLen;					// +0x0C
-		float fFOV;						// +0x10 (0x19C)
-		SCameraPos sDesiredPlacement;	// +0x14 (0x1A0)
-		float fRoll;					// +0x34 (0x1C0)
-		SCameraFOVEffect(): nSloMo(1), tOn(0), tOnFOVSpring(0), tMaxLen(0), fFOV(35.0f), fRoll(0) {}
-	};
 	// retail CCamera serialized state -- full parity with operator& @0xd0c30 (tags 2..13).
 	ZDATA_(CBaseCamera)
 	CPtr<NWorld::IWorld>     pWorld;					// tag 2, release +0x0F4 (the raycast + terrain world handle)
@@ -447,8 +435,8 @@ private:
 	float                    fFloorSliderValue;			// tag 7 (the retail floor-slider input accumulator; no dev floor-slider bind -- inert, serialized)
 	float                    fAttenuation;				// tag 8, release +0x15C: the WORKING attenuation -- while script-LOCKED, Update eases with dt * this, ramping toward sLimits.fAttenuation*0.5; reset by the SlowCameraAcceleration settle (@0xd03c0)
 	SCameraPos               sPlacementToAccelerateTo;	// tag 9, release +0x160 (SlowCameraAcceleration compares/copies)
-	SCameraSloMo             sloMo;						// tag 10, release +0x180
-	SCameraFOVEffect         fov;						// tag 11, release +0x18C
+	S2CameraWire::SCameraSloMo sloMo;					// tag 10, release +0x180
+	S2CameraWire::SCameraFOVEffect fov;				// tag 11, release +0x18C
 	CPtr<CObjectBase>        pFollowUnit;				// tag 12, release +0x1C4
 	STime                    sMaxFollowUnitTime;		// tag 13, release +0x1C8 (= sLastTime + 10000)
 public:

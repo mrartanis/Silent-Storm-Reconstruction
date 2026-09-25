@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Time.h"
 #include "..\FileIO\PortableStructureChunks.h"
+#include "..\FileIO\PortableCameraEffectWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CTransformStack;
 class CObjectBase;
@@ -207,6 +208,30 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ICamera* CreateCamera( ECameraType eType = CAMERA_PC, float fCameraSpeed = 1.0f );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace S2CameraWire {
+struct SCameraSloMo {
+  int nSloMo;
+  int tOn;
+  STime tMaxLen;
+  SCameraSloMo(): nSloMo(1), tOn(0), tMaxLen(0) {}
+};
+
+struct SCameraFOVEffect {
+  int nSloMo;
+  int tOn;
+  int tOnFOVSpring;
+  STime tMaxLen;
+  float fFOV;
+  ICamera::SCameraPos sDesiredPlacement;
+  float fRoll;
+  SCameraFOVEffect(): nSloMo(1), tOn(0), tOnFOVSpring(0),
+                      tMaxLen(0), fFOV(35.0f), fRoll(0) {}
+};
+}
+
+static_assert(sizeof(S2CameraWire::SCameraSloMo) == 12, "camera slow motion wire size");
+static_assert(sizeof(S2CameraWire::SCameraFOVEffect) == 56, "camera FOV effect wire size");
+
 namespace S2FileIO {
 template<>
 struct StructureFieldCodec<ICamera::SCameraPos, void> {
@@ -251,6 +276,73 @@ struct StructureFieldCodec<ICamera::SCameraLimits, void> {
                               value.fScrollSpeed, value.fZoomAcceleration, value.fZoomSpeed,
                               value.fYawSpeed, value.fYawZoomAcceleration, value.fPitchSpeed};
     return EncodeStructureCameraLimits(fields, value.bMovie, destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<S2CameraWire::SCameraSloMo, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 12;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     S2CameraWire::SCameraSloMo* value) {
+    if (!value) return false;
+    CameraSloMoFields fields{};
+    if (!DecodeCameraSloMo(source, length, &fields)) return false;
+    value->nSloMo = fields.ratio;
+    value->tOn = fields.enabled;
+    value->tMaxLen = fields.maxDuration;
+    return true;
+  }
+  static bool Encode(const S2CameraWire::SCameraSloMo& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeCameraSloMo({value.nSloMo, value.tOn, value.tMaxLen},
+                             destination, length);
+  }
+};
+
+template<>
+struct StructureFieldCodec<S2CameraWire::SCameraFOVEffect, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 56;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     S2CameraWire::SCameraFOVEffect* value) {
+    if (!value) return false;
+    CameraFOVEffectFields fields{};
+    if (!DecodeCameraFOVEffect(source, length, &fields)) return false;
+    value->nSloMo = fields.ratio;
+    value->tOn = fields.enabled;
+    value->tOnFOVSpring = fields.springEnabled;
+    value->tMaxLen = fields.maxDuration;
+    value->fFOV = fields.fov;
+    value->sDesiredPlacement.fRod = fields.placement[0];
+    value->sDesiredPlacement.fPitch = fields.placement[1];
+    value->sDesiredPlacement.fYaw = fields.placement[2];
+    value->sDesiredPlacement.fRoll = fields.placement[3];
+    value->sDesiredPlacement.fFOV = fields.placement[4];
+    value->sDesiredPlacement.ptAnchor.x = fields.placement[5];
+    value->sDesiredPlacement.ptAnchor.y = fields.placement[6];
+    value->sDesiredPlacement.ptAnchor.z = fields.placement[7];
+    value->fRoll = fields.roll;
+    return true;
+  }
+  static bool Encode(const S2CameraWire::SCameraFOVEffect& value,
+                     std::uint8_t* destination, std::size_t length) {
+    CameraFOVEffectFields fields{};
+    fields.ratio = value.nSloMo;
+    fields.enabled = value.tOn;
+    fields.springEnabled = value.tOnFOVSpring;
+    fields.maxDuration = value.tMaxLen;
+    fields.fov = value.fFOV;
+    fields.placement[0] = value.sDesiredPlacement.fRod;
+    fields.placement[1] = value.sDesiredPlacement.fPitch;
+    fields.placement[2] = value.sDesiredPlacement.fYaw;
+    fields.placement[3] = value.sDesiredPlacement.fRoll;
+    fields.placement[4] = value.sDesiredPlacement.fFOV;
+    fields.placement[5] = value.sDesiredPlacement.ptAnchor.x;
+    fields.placement[6] = value.sDesiredPlacement.ptAnchor.y;
+    fields.placement[7] = value.sDesiredPlacement.ptAnchor.z;
+    fields.roll = value.fRoll;
+    return EncodeCameraFOVEffect(fields, destination, length);
   }
 };
 }
