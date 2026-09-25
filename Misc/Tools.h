@@ -6,6 +6,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
+#include "PortableFloat2Int.h"
 #if defined(_MSC_VER)
 #include <intrin.h>
 #endif
@@ -307,9 +308,11 @@ int __forceinline Float2Int( const float fpVar )
 		fistp nRet
 	}
 	return nRet;
-	#else
+	#elif defined(_MSC_VER) && defined(_M_X64)
 	// _mm_cvtss_si32 honors the active rounding mode, like the original FISTP.
 	return _mm_cvtss_si32( _mm_set_ss( fpVar ) );
+	#else
+	return S2Math::Float2IntWithCurrentRounding( fpVar );
 	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
