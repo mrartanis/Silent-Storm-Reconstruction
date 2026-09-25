@@ -138,3 +138,14 @@ crash dump or `fmod.dll`. Archive and run `Game.exe` SHA-256 both equal
 `4757108D1A583FC855CCCAB081BAA16A7A43CD18969FFE6818823899838C38FC`.
 This is again a Windows x64 smoke test; it does not prove execution of
 the Linux AI path network.
+
+After the linked height-network test, clean native-media x64 archive
+`G:\SS\lab\builds\stage2-ai-height-network-20260925-01` was built from
+source commit `332b162`. Fresh linked-resource run
+`G:\SS\lab\runs\stage2-ai-height-network-clean-01` loaded `DB_OLD` to
+`LOAD-SLOT-DONE`, accepted `quit`, and exited without a dump or `fmod.dll`.
+Archive and run `Game.exe` SHA-256 both equal
+`4DC44CE1316ACAEC0D1384A3B6A17EBF86A9CB96A92941A28D0BAD7594754226`.
+This checks the Windows x64 game after world-header changes. The Linux
+`ComputeLayers` evidence is the separately linked and executed
+`NativeHeightNetworkTests`, not the Windows smoke run.
