@@ -39,3 +39,11 @@ stage 2: most game-specific Lua bindings in `Main/` and the world/AI/combat
 loop still have no Linux target. The Linux `CStructureSaver` bridge explicitly
 rejects persistence; Lua state save/load is not yet ported. No Linux
 `Game.exe` or playable mission is claimed.
+
+A clean Windows x64 native-media archive
+`D:\SS-lab\builds\stage2-lua-runtime-20260925-01` was built from commit
+`c8f2abf`. Its isolated LabRun `D:\SS-lab\runs\stage2-lua-runtime-01`
+loaded the mission slot `TOPWRITE_NEW` to `LOAD-SLOT-DONE`, then exited with
+no crash dump. The copied `game.sav` kept SHA-256
+`1385447ae22f6da374f44453bbb93034d99e2e7476e5faa9034d026b4ee3e16a`.
+This verifies a Windows game regression boundary, not Linux gameplay.
