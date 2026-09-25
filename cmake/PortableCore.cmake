@@ -159,6 +159,56 @@ target_include_directories(s2_game_ai_grid PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
 target_compile_features(s2_game_ai_grid PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_grid PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_ai_position STATIC "${root}/Main/aiPosition.cpp")
+target_include_directories(s2_game_ai_position PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_ai_position PUBLIC s2_game_ai_grid s2_game_structure)
+target_compile_features(s2_game_ai_position PUBLIC cxx_std_17)
+add_library(s2_game_ai_locker STATIC "${root}/Main/aiLocker.cpp")
+target_include_directories(s2_game_ai_locker PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_locker PUBLIC s2_game_ai_grid)
+target_compile_features(s2_game_ai_locker PUBLIC cxx_std_17)
+add_library(s2_game_ai_pass_jobs STATIC "${root}/Main/aiPassCalcJob.cpp")
+target_include_directories(s2_game_ai_pass_jobs PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_pass_jobs PUBLIC s2_game_ai_grid)
+target_compile_features(s2_game_ai_pass_jobs PUBLIC cxx_std_17)
+add_library(s2_game_ai_calculators STATIC
+  "${root}/Main/aiPassCalcer.cpp"
+  "${root}/Main/aiMovesCalcer.cpp")
+target_include_directories(s2_game_ai_calculators PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_calculators PUBLIC s2_game_ai_grid)
+target_compile_features(s2_game_ai_calculators PUBLIC cxx_std_17)
+add_library(s2_game_ai_render STATIC "${root}/Main/aiRender.cpp")
+target_include_directories(s2_game_ai_render PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_render PUBLIC s2_game_ai_grid)
+target_compile_features(s2_game_ai_render PUBLIC cxx_std_17)
+add_library(s2_game_ai_colourer STATIC "${root}/Main/aiColourer.cpp")
+target_include_directories(s2_game_ai_colourer PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_colourer PUBLIC s2_game_ai_grid)
+target_compile_features(s2_game_ai_colourer PUBLIC cxx_std_17)
+add_library(s2_game_ai_collision STATIC
+  "${root}/Main/aiCollider.cpp"
+  "${root}/Main/aiObject.cpp"
+  "${root}/Main/SuperCollider.cpp"
+  "${root}/Main/VolumeContainer.cpp"
+  "${root}/Main/phCollider.cpp")
+target_include_directories(s2_game_ai_collision PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
+target_link_libraries(s2_game_ai_collision PUBLIC s2_game_ai_grid s2_game_transform)
+target_compile_features(s2_game_ai_collision PUBLIC cxx_std_17)
+add_library(s2_game_ai_log STATIC "${root}/MiscDll/LogStream.cpp")
+target_include_directories(s2_game_ai_log PRIVATE
+  "${root}/MiscDll" "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_ai_log PUBLIC s2_game_misc_runtime)
+target_compile_features(s2_game_ai_log PUBLIC cxx_std_17)
+add_executable(NativeAILogTests "${root}/diagnostics/NativeAILogTests.cpp")
+target_link_libraries(NativeAILogTests PRIVATE s2_game_ai_log)
+add_test(NAME NativeAILogTests COMMAND NativeAILogTests)
 
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.

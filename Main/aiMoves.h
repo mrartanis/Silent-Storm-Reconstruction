@@ -5,7 +5,7 @@
 #endif // _MSC_VER > 1000
 namespace NRPG
 {
-enum EAction;
+enum EAction : int;
 }
 namespace NAI
 {

@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiMovesCalcer.h"
 #include "Grid.h"
 #include "aiPMConst.h"
@@ -8,7 +14,7 @@
 #include "wInterface.h"
 #include "aiDoorCollider.h"
 #include "phCollider.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 namespace NAI
 {
 //
@@ -267,8 +273,8 @@ void CMovesCalcer::TestHCMoves( NAI::CCollider *pCollider, CArray2D<STile> *pRes
 //! try to map src points to dest region
 // src/dest squares are exclusive
 void CMovesCalcer::CreateGrid2GridCandidates( IAIMap *pMap, 
-	const CTRect<int> &src, CNodesLayer *pSrc, CArray2D<STile> &srcTiles, CTPoint<int> &srcOrigin,
-	const CTRect<int> &dest, CNodesLayer *pDst, CArray2D<STile> &dstTiles, CTPoint<int> &dstOrigin,
+	const CTRect<int> &src, CNodesLayer *pSrc, CArray2D<STile> &srcTiles, const CTPoint<int> &srcOrigin,
+	const CTRect<int> &dest, CNodesLayer *pDst, CArray2D<STile> &dstTiles, const CTPoint<int> &dstOrigin,
 	vector<SSphere> *pSpheres, vector<CVec3> *pMoves, vector<SPossibleTransition> *pPossibilities,
 	bool bDoRefresh ) 
 {

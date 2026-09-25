@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "SuperCollider.h"
 namespace NCollider
 {
@@ -106,7 +112,7 @@ static void ClosestPointOnSegment( CVec3 *pRes, const CVec3 &p, const CVec3 &a, 
 		return;
 	}
 	float t = v * c;
-	// Check to see if ‘t’ is beyond the extents of the line segment
+	// Check to see if â€˜tâ€™ is beyond the extents of the line segment
 	if (t < 0)
 	{
 		*pRes = a;
@@ -194,7 +200,7 @@ float CSuperCollider::CollideSegmentTriangle( const SFullSegment &segment,
 {
 	float fDistance1 = tri.plane.n * segment.pt1 + tri.plane.d;
 	float fDistance2 = tri.plane.n * segment.pt2 + tri.plane.d;
-		// ïðÿìàÿ ïåðåñåêàåò òðåóãîëüíèê
+		// Ð¿Ñ€ÑÐ¼Ð°Ñ Ð¿ÐµÑ€ÐµÑÐµÐºÐ°ÐµÑ‚ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸Ðº
 	if ( fDistance1 * fDistance2 > 0 )
 		return F_NO_COLLISION;
 	if ( SegmentDotProduct( segment, triseg.s1 ) < 0 )

@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "phCollider.h"
 #include "Bound.h"
 #include "aiObject.h"
 #include "aiMap.h"
-#include "../dbformat/DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 #include "wTSFlags.h"
 
 // wOSBase.obj @0x347bd0 -- breakable-glass collider gate (defined in wOSBase.cpp). Declared here so the

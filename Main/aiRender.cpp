@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiRender.h"
 #include "aiObject.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,8 +123,15 @@ void CFastRenderer::InitParallel( const CVec2 &_ptOrigin, float fAngle, float fS
 	MakeMatrix( &t, CVec3(fStep, fStep, 1), CVec3(_ptOrigin.x,_ptOrigin.y,0), fAngle );
 	transform = t.backward;
 	// shift by 0.5 pixel
-	transform.x += transform.w * 0.499f; // should be 0.5f, but until terrain patches are not shifted this is required
-	transform.y += transform.w * 0.499f;
+	// CVec4 row aliases exist only on Windows; scalar fields preserve the transform.
+	transform._11 += transform._41 * 0.499f; // terrain patches still require 0.499f
+	transform._12 += transform._42 * 0.499f;
+	transform._13 += transform._43 * 0.499f;
+	transform._14 += transform._44 * 0.499f;
+	transform._21 += transform._41 * 0.499f;
+	transform._22 += transform._42 * 0.499f;
+	transform._23 += transform._43 * 0.499f;
+	transform._24 += transform._44 * 0.499f;
 	// init ts
 	ts.MakeParallel( region.Width() + 0.01f, region.Height() + 0.01f );
 	SHMatrix cam;
@@ -147,9 +160,14 @@ void CFastRenderer::InitParallel( const SHMatrix &cameraPos, float fHalfSize, in
 	ts.MakeParallel( fHalfSize * 2, fHalfSize * 2, -5000, 5000 );
 	ts.SetCamera( cameraPos );
 	transform = ts.Get().forward;
-	transform.x *= nHalfSize;
-	transform.y *= nHalfSize;
-	transform.z = transform.z * 10000 - transform.w * 5000;
+	transform._11 *= nHalfSize; transform._12 *= nHalfSize;
+	transform._13 *= nHalfSize; transform._14 *= nHalfSize;
+	transform._21 *= nHalfSize; transform._22 *= nHalfSize;
+	transform._23 *= nHalfSize; transform._24 *= nHalfSize;
+	transform._31 = transform._31 * 10000 - transform._41 * 5000;
+	transform._32 = transform._32 * 10000 - transform._42 * 5000;
+	transform._33 = transform._33 * 10000 - transform._43 * 5000;
+	transform._34 = transform._34 * 10000 - transform._44 * 5000;
 	// setup grids
 	SetRegion( CTRect<int>( -nHalfSize, -nHalfSize, nHalfSize, nHalfSize ) );
 	bPerspective = false;
@@ -165,8 +183,10 @@ void CFastRenderer::InitProjective( const SHMatrix &cameraPos, float fDistance, 
 	ts.SetCamera( cameraPos );
 	transform = ts.Get().forward;
 	CTRect<int> region( -nHalfSize, -nHalfSize, nHalfSize, nHalfSize );
-	transform.x *= nHalfSize;
-	transform.y *= nHalfSize;
+	transform._11 *= nHalfSize; transform._12 *= nHalfSize;
+	transform._13 *= nHalfSize; transform._14 *= nHalfSize;
+	transform._21 *= nHalfSize; transform._22 *= nHalfSize;
+	transform._23 *= nHalfSize; transform._24 *= nHalfSize;
 	//
 	SetRegion( region );
 	//grid.SetSizes( region.Width(), region.Height() );

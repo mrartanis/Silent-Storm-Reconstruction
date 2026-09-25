@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiPassCalcer.h"
 #include "aiGrid.h"
 #include "aiCollider.h"
@@ -11,7 +17,10 @@
 #include "aiPMConst.h"
 #include "wInterface.h"
 #include "aiDoorCollider.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
+#if !defined(_WIN32)
+static void OutputDebugString(const char* message) { std::fputs(message, stderr); }
+#endif
 namespace NAI
 {
 
@@ -788,7 +797,7 @@ void CPassCalcer::CreateAdditionalLayers()
 	float fBadHeight = 0;
 	CVec2 ptBadHeightCP;
 	bool bBadFloor = false;
-	ZeroMemory( nLayersMustHave, N_MAX_FLOORS );
+	std::memset( nLayersMustHave, 0, sizeof nLayersMustHave );
 	for ( int nFloor = 0; nFloor < N_MAX_FLOORS; ++nFloor )
 	{
 		nIntersectsOnFloor[ nFloor ].SetSizes( render.resGrid.GetXSize(), render.resGrid.GetYSize() );
@@ -969,7 +978,7 @@ void CPassCalcer::CreateAdditionalLayers()
 	if ( fBadHeight < 0 )
 	{
 		char buf[128];
-		sprintf( buf, "[[ ERROR ]] DETECTED HEIGHT = %f < 0 at x = %f, y = %f\n", fBadHeight, ptBadHeightCP.x, ptBadHeightCP.y );
+		std::snprintf( buf, sizeof buf, "[[ ERROR ]] DETECTED HEIGHT = %f < 0 at x = %f, y = %f\n", fBadHeight, ptBadHeightCP.x, ptBadHeightCP.y );
 		csSystem << CC_RED << buf;
 		OutputDebugString( buf ); 
 	}

@@ -15,7 +15,6 @@
 #include "wTSFlags.h"
 #include "Bound.h"
 #include "wInterface.h"
-#include "wMine.h"
 #include "../MiscDll/LogStream.h"
 #if !defined(_WIN32)
 template<std::size_t N, class... Args>
@@ -2031,7 +2030,7 @@ void CPathNetwork::LockSelected( const list<CObjectBase*> &selected )
 			}
 			else
 			{
-				CDynamicCast<NWorld::CMine> pMine(pLocker);
+				CDynamicCast<NWorld::IMine> pMine(pLocker);
 				if (pMine)
 				{
 					//mineTempLocks.push_back( pMine->GetPlace().p );

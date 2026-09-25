@@ -1,7 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
 #include "Commands.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../Misc/Basic2.h"
+#include "../Misc/StrProc.h"
+#include <codecvt>
+#include <locale>
+#endif
 #include "LogStream.h"
-#include "..\FileIO\BasicChunk1.h"   // START_REGISTER / FINISH_REGISTER (ui_messages)
+#include "../FileIO/BasicChunk1.h"   // START_REGISTER / FINISH_REGISTER (ui_messages)
 #include <fstream>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int nID = 0;
@@ -69,8 +77,13 @@ static void AddConsoleLine( const SConsoleLine &sLine )
 		if ( pF )
 		{
 			char szBuf[4096];
+#if defined(_WIN32)
 			int n = WideCharToMultiByte( CP_UTF8, 0, sLine.szText.data(), (int)sLine.szText.size(), szBuf, sizeof(szBuf) - 1, 0, 0 );
 			if ( n >= 0 ) { szBuf[n] = 0; fprintf( pF, "%s\n", szBuf ); }
+#else
+			const std::string utf8 = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes( sLine.szText );
+			fprintf( pF, "%s\n", utf8.c_str() );
+#endif
 			fclose( pF );
 		}
 	}
@@ -105,41 +118,59 @@ CLogStream& CLogStream::operator<< ( const bool &bVal )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CLogStream& CLogStream::operator<< ( const int &nVal )
 {
-	WCHAR wszBuffer[1024];
+	wchar_t wszBuffer[1024];
 
 	bConsoleUpdated = true;
+#if defined(_WIN32)
 	swprintf( wszBuffer, L"%d", nVal );
+#else
+	std::swprintf( wszBuffer, 1024, L"%d", nVal );
+#endif
 	wsStreamBuffer = wsStreamBuffer + wszBuffer;
 	return *this;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CLogStream& CLogStream::operator<< ( const long &lVal )
 {
-	WCHAR wszBuffer[1024];
+	wchar_t wszBuffer[1024];
 	
 	bConsoleUpdated = true;
+#if defined(_WIN32)
 	swprintf( wszBuffer, L"%d", lVal );
+#else
+	std::swprintf( wszBuffer, 1024, L"%ld", lVal );
+#endif
 	wsStreamBuffer = wsStreamBuffer + wszBuffer;
 	return *this;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CLogStream& CLogStream::operator<< ( const double &dVal )
 {
-	WCHAR wszBuffer[1024];
+	wchar_t wszBuffer[1024];
 	
 	bConsoleUpdated = true;
+#if defined(_WIN32)
 	swprintf( wszBuffer, L"%.3f", dVal );
+#else
+	std::swprintf( wszBuffer, 1024, L"%.3f", dVal );
+#endif
 	wsStreamBuffer = wsStreamBuffer + wszBuffer;
 	return *this;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CLogStream& CLogStream::operator<< ( const CHAR* szText )
+CLogStream& CLogStream::operator<< ( const char* szText )
 {
 	int nLen = 0;
-	WCHAR wszText[1024];
+	wchar_t wszText[1024];
 	
 	bConsoleUpdated = true;
+#if defined(_WIN32)
 	nLen = MultiByteToWideChar( CP_ACP, 0, szText, strlen( szText ), wszText, 1024 );
+#else
+	const std::wstring wide = NStr::ToUnicode( szText );
+	nLen = static_cast<int>( std::min<size_t>( wide.size(), 1023 ) );
+	std::wmemcpy( wszText, wide.data(), nLen );
+#endif
 
 	if ( nLen > 0 )
 	{
@@ -150,7 +181,7 @@ CLogStream& CLogStream::operator<< ( const CHAR* szText )
 	return *this;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CLogStream& CLogStream::operator<< ( const WCHAR* szText ) 
+CLogStream& CLogStream::operator<< ( const wchar_t* szText )
 {
 	bConsoleUpdated = true;
 
@@ -228,7 +259,9 @@ CLogStream& CLogStream::operator<< ( CLogStream& (*Func)( CLogStream& csStream )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail LogStream.obj registrar: single var (bShowMessages defined above AddConsoleLine)
+#if defined(_WIN32)
 START_REGISTER(LogStream)
 	REGISTER_VAR_EX( "ui_messages", NGlobal::VarBoolHandler, &bShowMessages, 1, true )
 FINISH_REGISTER
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////

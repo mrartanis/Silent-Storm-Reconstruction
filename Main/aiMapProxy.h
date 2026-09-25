@@ -10,7 +10,7 @@
 
 namespace NAI 
 {
-externA5 char cTranslations[][2];
+externA5 signed char cTranslations[][2];
 
 enum EPathfinderMode
 {

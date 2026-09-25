@@ -40,8 +40,8 @@ class CMovesCalcer
 	//void TestLadders( NAI::CCollider *pCollider, vector<char> *pRes );
 	//void TestWLadders( NAI::CCollider *pCollider, vector<char> *pRes );
 	void CreateGrid2GridCandidates( IAIMap *pMap, 
-		const CTRect<int> &src, CNodesLayer *pSrc, CArray2D<STile> &srcTiles, CTPoint<int> &srcOrigin,
-		const CTRect<int> &dest, CNodesLayer *pDst, CArray2D<STile> &dstTiles, CTPoint<int> &dstOrigin,
+		const CTRect<int> &src, CNodesLayer *pSrc, CArray2D<STile> &srcTiles, const CTPoint<int> &srcOrigin,
+		const CTRect<int> &dest, CNodesLayer *pDst, CArray2D<STile> &dstTiles, const CTPoint<int> &dstOrigin,
 		vector<SSphere> *pSpheres, vector<CVec3> *pMoves, vector<SPossibleTransition> *pPossibilities,
 		bool bDoRefresh );
 	void NormalizeTransitions( vector<SPossibleTransition> *pRes );

@@ -4,7 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "DG.h"
+#include "DG.H"
+#include <stdexcept>
 #include "../DBFormat/DataRPG.h"
 #include "../Misc/2Darray.h"
 #include "aiPMConst.h"		// NAI::F_TEST_SPHERE_RADIUS (unit collision radius, 0.31f)
@@ -136,7 +137,7 @@ struct SConvexHull
 	SConvexHull( const vector<CVec3> &_points, const CEdgesInfo &_tris, const SFBTransform &_trans,
 		SSourceInfo &_src, int _nUserID, const vector<CPtr<CPrecalcSpheres> > _precalc )
 		: points(_points), tris(_tris), trans(_trans), src(_src), nUserID(_nUserID), precalc(_precalc) {}
-	int operator&( CStructureSaver &f ) { ASSERT(0&&"This struct could not be serialized!"); }
+	int operator&( CStructureSaver &f ) { throw std::logic_error("SConvexHull cannot be serialized"); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //! group of entities; entity terrain is represented with several SConvexHull

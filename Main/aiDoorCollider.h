@@ -25,7 +25,7 @@ struct SDoorColliderAnalyzer
 		return ( bInOpen && bInClosed );
 	}
 	bool IsCollided() const { return bInOpen && bInClosed; }
-	SDoorColliderAnalyzer::SDoorColliderAnalyzer() : bInOpen( false ), bInClosed( false ), pSrc( 0 )  {}
+	SDoorColliderAnalyzer() : bInOpen( false ), bInClosed( false ), pSrc( 0 )  {}
 	void Clear() 
 	{
 		bInOpen = bInClosed = false;

@@ -1,11 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#include <cstring>
+inline void ZeroMemory( void *p, size_t n ) { std::memset( p, 0, n ); }
+#endif
 #include "aiColourer.h"
 #include "Grid.h"
 #include "aiWayConstraints.h"
 
 namespace NAI
 {
-char cTranslations[][2] = { {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1} };
+signed char cTranslations[][2] = { {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1} };
 enum EApproximateCosts
 {
 	AC_LADDER_STEP = 2,

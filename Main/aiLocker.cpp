@@ -1,17 +1,27 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "wUnitServer.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "wInterface.h"
+#include "aiLocker.h"
 namespace NAI
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool IsBigLocker( CObjectBase *pUnit )
 {
-	CDynamicCast<NWorld::CUnitServer> pUS( pUnit );
+	// CUnitServer::IsWearingPK() is exactly IsValid(GetWearingDBPK()).
+	// Use the game-unit interface so this routing helper does not depend on
+	// the concrete world-unit header or its Windows renderer includes.
+	CDynamicCast<NWorld::CUnit> pUS( pUnit );
 	if ( !pUS )
 	{
 		ASSERT(0);
 		return false;
 	}
-	if ( pUS->IsEmptyPK() || pUS->IsWearingPK() )
+	if ( pUS->IsEmptyPK() || IsValid( pUS->GetWearingDBPK() ) )
 		return true;
 	return false;
 }

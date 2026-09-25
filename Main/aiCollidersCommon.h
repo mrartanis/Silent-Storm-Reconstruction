@@ -4,6 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 #include "../DBFormat/DataRPG.h"
+#include <stdexcept>
 namespace NAI
 {
 struct SConvexHull;
@@ -29,7 +30,7 @@ struct SCollisionPoint
 	SCollisionPoint() {}
 	SCollisionPoint( float _fDist, const CVec3 &_pt, const SSourceInfo *_pSrc, int _nUserID, const SPlane &_plane )
 		: fDist(_fDist), pt(_pt), pSrc(_pSrc), nUserID(_nUserID), plane(_plane) {}
-	int operator&( CStructureSaver &f ) { ASSERT(0&&"This struct could not be serialized!"); }
+	int operator&( CStructureSaver &f ) { throw std::logic_error("SCollisionPoint cannot be serialized"); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class IPrepareCollider

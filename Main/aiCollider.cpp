@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiCollider.h"
 #include "Bound.h"
 #include "aiObject.h"
 #include "aiMap.h"
-#include "../dbformat/DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 #include "wTSFlags.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
