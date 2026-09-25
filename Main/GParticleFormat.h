@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "DG.h"
 #include "GResource.h"
+#include "../FileIO/PortableLightKeyWire.h"
 #include <vector>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
@@ -104,4 +105,51 @@ class CParticlesLoader: public CLazyResourceLoader<int, CParticlesInfo>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static_assert(sizeof(NGScene::TKey<CVec3>) == 14 &&
+              sizeof(NGScene::TKey<float>) == 6,
+              "animated light key wire sizes");
+static_assert(offsetof(NGScene::TKey<CVec3>, value) == 2 &&
+              offsetof(NGScene::TKey<float>, value) == 2,
+              "animated light key value offsets");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NGScene::TKey<CVec3>, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 14;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::TKey<CVec3>* value) {
+    if (!value) return false;
+    std::int16_t frame;
+    float f[3];
+    if (!DecodeLightKey<3>(source, length, &frame, f)) return false;
+    value->nT = frame;
+    value->value = CVec3(f[0], f[1], f[2]);
+    return true;
+  }
+  static bool Encode(const NGScene::TKey<CVec3>& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const float f[3] = {value.value.x, value.value.y, value.value.z};
+    return EncodeLightKey<3>(value.nT, f, destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NGScene::TKey<float>, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 6;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NGScene::TKey<float>* value) {
+    if (!value) return false;
+    std::int16_t frame;
+    float f;
+    if (!DecodeLightKey<1>(source, length, &frame, &f)) return false;
+    value->nT = frame;
+    value->value = f;
+    return true;
+  }
+  static bool Encode(const NGScene::TKey<float>& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return EncodeLightKey<1>(value.nT, &value.value, destination, length);
+  }
+};
+} // namespace S2FileIO
 #endif
