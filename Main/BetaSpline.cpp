@@ -1,7 +1,12 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#endif
 //
-#include "..\Misc\Geom.h"        // CVec3
-#include "..\Misc\2Darray.h"     // CArray2D<T>
+#include "../Misc/Geom.h"        // CVec3
+#include "../Misc/2Darray.h"     // CArray2D<T>
 //
 #include "BetaSpline.h"
 //

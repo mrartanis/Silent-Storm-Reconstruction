@@ -48,6 +48,14 @@ add_executable(NativeTransformTests "${root}/diagnostics/NativeTransformTests.cp
 target_link_libraries(NativeTransformTests PRIVATE s2_game_transform)
 add_test(NAME NativeTransformTests COMMAND NativeTransformTests)
 
+# The game's terrain-height smoothing kernel; world/path-network ownership follows later.
+add_library(s2_game_beta_spline STATIC "${root}/Main/BetaSpline.cpp")
+target_include_directories(s2_game_beta_spline PRIVATE "${root}/Main" "${root}/Misc" "${root}/FileIO")
+target_compile_features(s2_game_beta_spline PUBLIC cxx_std_17)
+add_executable(NativeBetaSplineTests "${root}/diagnostics/NativeBetaSplineTests.cpp")
+target_link_libraries(NativeBetaSplineTests PRIVATE s2_game_beta_spline)
+add_test(NAME NativeBetaSplineTests COMMAND NativeBetaSplineTests)
+
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")
