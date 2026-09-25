@@ -47,3 +47,11 @@ Clang 14 x86-64 release 57/57. The full height-layer cache,
 path-network rasterization, mission load, and camera use of terrain heights
 are not yet in a Linux game target; this is one original game-used kernel,
 not a complete terrain or world port.
+
+Clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-native-terrain-spline-20260925-01` came from
+source commit `5de426d`. A fresh linked-resource LabRun
+`G:\SS\lab\runs\stage2-native-terrain-spline-clean-01` loaded the existing
+`DB_OLD` mission slot to `LOAD-SLOT-DONE`, accepted `quit`, exited normally,
+and produced no crash dump. This verifies Windows game integration after
+the shared-source include change; it does not prove Linux mission loading.
