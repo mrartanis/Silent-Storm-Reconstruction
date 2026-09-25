@@ -20,5 +20,9 @@ endian; `Main/aiPosition.h` теперь держит `uint32_t` и предос
 Проверено 2026-09-25: Windows x64 `Game.exe` собран, CTest 29/29;
 Linux x86-64 и ARM64/QEMU — по 17/17 с ASan/UBSan (на QEMU
 `ASAN_OPTIONS=detect_leaks=0`: LeakSanitizer не работает под ptrace).
-Игровой цикл старое сохранение → новая запись → повторная загрузка
-проверяется отдельно в чистом LabRun.
+Чистый архив `stage2-path-place-20260925-01` из коммита `914f2a4`
+прошёл игровой цикл в `C:\SS-lab\runs\stage2-path-place-clean-01`:
+старое `stational weapons` загрузилось до `LOAD-SLOT-DONE`, новая запись
+`PATH_PLACE_NEW` сохранилась и загрузилась до `LOAD-SLOT-DONE`. После
+`quit` игра и отладчик завершились, `crash.dmp` отсутствует. Это smoke-тест
+совместимости сохранения, не тест выбора маршрутов ИИ относительно Steam.
