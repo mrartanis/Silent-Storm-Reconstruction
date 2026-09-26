@@ -1,5 +1,11 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "Rod.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "rod.h"
 #include "RodJunction.h"
 #include "BuildingSchema.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -13,8 +19,8 @@ CRod::CRod( CBuildingSchema *_pSchema, CJunctionID nLJ, CJunctionID nRJ )
 	ASSERT( pSchema->IsJunctionValid( nLJ ) && pSchema->IsJunctionValid( nRJ ) );
 	CJunction *pLJ = pSchema->GetJunction( nLJ );
 	CJunction *pRJ = pSchema->GetJunction( nRJ );
-	ASSERT( pLJ->ptJ != pRJ->ptJ ); // нулевой длины ?
-	ASSERT( pLJ->ptJ.x == pRJ->ptJ.x || pLJ->ptJ.y == pRJ->ptJ.y ); // диагональный ?
+	ASSERT( pLJ->ptJ != pRJ->ptJ ); // РЅСѓР»РµРІРѕР№ РґР»РёРЅС‹ ?
+	ASSERT( pLJ->ptJ.x == pRJ->ptJ.x || pLJ->ptJ.y == pRJ->ptJ.y ); // РґРёР°РіРѕРЅР°Р»СЊРЅС‹Р№ ?
 	bVert = pLJ->ptJ.x == pRJ->ptJ.x && pLJ->ptJ.y == pRJ->ptJ.y;
 	if ( IsVert() )
 	{

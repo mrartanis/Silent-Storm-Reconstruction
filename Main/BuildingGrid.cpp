@@ -1,10 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "..\Misc\2DArray.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../Misc/2Darray.h"
 #include "BuildingGrid.h"
 #include "BuildingInfo.h" // WALL_HEIGHT
 #include "Grid.h"
 #include "MELayers.h"
 #include "BuildingSchema.h"
+#if !defined(_WIN32)
+#include "../Misc/PortableClockSeed.h"
+#endif
 
 namespace NBuilding
 {
@@ -17,7 +26,12 @@ const int N_CELLAR = 254;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CBuildingGrid
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CBuildingGrid::CBuildingGrid() : seed( GetTickCount() )
+CBuildingGrid::CBuildingGrid()
+#if defined(_WIN32)
+	: seed( GetTickCount() )
+#else
+	: seed( S2Random::ClockSeed32() )
+#endif
 {
 	nDZ = 0;
 	bStabilityUpdate = true;
@@ -90,8 +104,8 @@ void CBuildingGrid::UpdatePart( const SPoint3 &pt )
 		for ( int y = -1; y < 2; ++y )
 			for ( int z = -1; z < 2; ++z )
 			{
-				SPoint3 pt( pt.x + x, pt.y + y, pt.z + z );
-				const SPart part = Point2Part( pt );
+				const SPoint3 neighbor( pt.x + x, pt.y + y, pt.z + z );
+				const SPart part = Point2Part( neighbor );
 				updatedParts[part] = true;
 			}
 }

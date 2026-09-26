@@ -34,15 +34,13 @@ build here runs through `qemu-aarch64-static -L /usr/aarch64-linux-gnu` with
 emulated process.
 
 This is a map-building dependency, **not** a successful full mission build.
-An experimental link of original `BuildMap` after adding `PolyUtils.cpp`
-still lacked game-used building-grid, building-info, solid/wall-map and
-terrain functions (`CBuildingGrid::Setup`/`Explode`, `MakeSWMap`,
-`BuildingHP`, `CBuildInfoLoader`, `BlendTerrainInfo`, `LoadRootTerrain`,
-`MakeSoundMap`, `CalcAverageColor`, `GetMeterHeightCheck`, and
-`ClearTerrainCache`). The first three groups are implemented in the
-original `BuildingGrid.cpp`, `BuildingInfo.cpp`, `MakeBuilding.cpp`, and
-`GBuilding.cpp`; the terrain group is in `MapBuildTerrain.cpp` and its
-dependencies. They have not yet been linked and executed on Linux. No
+An experimental link of original `BuildMap` immediately after adding
+`PolyUtils.cpp` lacked building-grid, building-info, solid/wall-map, and
+terrain functions. The later building/terrain batch now compiles and
+directly tests `BuildingGrid.cpp`, `BuildingInfo.cpp`, and
+`MapBuildTerrain.cpp` on Linux (see `NATIVE-BUILDING-TERRAIN-LINUX.md`).
+`MakeSWMap`/`BuildingHP` in `MakeBuilding.cpp` and their solid/wall-map
+dependencies remain for a full original `BuildMap` mission link. No
 `BuildTerrain`/MapEdit-only surrogate counts as completing this game path.
 
 Clean Windows x64 native-media archive

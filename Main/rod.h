@@ -18,9 +18,10 @@ public:
 	int operator=(int op) { nID = op; return nID;}
 	operator int() const { return nID; }
 };
+static_assert( sizeof(CJunctionID) == sizeof(int), "junction ID must remain a 32-bit slot" );
 typedef int CRodID;
 typedef vector<CJunctionID> CJuncList;
-enum EDirection;
+enum EDirection : int;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct CIVec3
 {
@@ -49,7 +50,7 @@ enum ERodSide
 struct SPath;
 class CRod;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Если стержень вертикальный, то левый край должен быть ниже правого
+// Р•СЃР»Рё СЃС‚РµСЂР¶РµРЅСЊ РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№, С‚Рѕ Р»РµРІС‹Р№ РєСЂР°Р№ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅРёР¶Рµ РїСЂР°РІРѕРіРѕ
 class CRod
 {
 	CBuildingSchema *const pSchema;
@@ -58,13 +59,13 @@ class CRod
 		int juncs[2]; // CJunctionID
 		struct 
 		{
-			CJunctionID nLJunction;
-			CJunctionID nRJunction;
+			int nLJunction; // CJunctionID's 32-bit storage; trivial for GCC union rules
+			int nRJunction;
 		};
 	};
 	enum { NLOCKS = 2 };
 	BYTE bLock;
-	bool bVert;						// вертикальный стержень 
+	bool bVert;						// РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№ СЃС‚РµСЂР¶РµРЅСЊ
 	bool bDestroy;
 
 public:
@@ -97,13 +98,13 @@ public:
 	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// возвращает узел со стороны side
+// РІРѕР·РІСЂР°С‰Р°РµС‚ СѓР·РµР» СЃРѕ СЃС‚РѕСЂРѕРЅС‹ side
 inline CJunctionID CRod::GetJunction( ERodSide side ) const
 {
 	return juncs[side];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// возвращает узел противоположный стороне side
+// РІРѕР·РІСЂР°С‰Р°РµС‚ СѓР·РµР» РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅС‹Р№ СЃС‚РѕСЂРѕРЅРµ side
 inline CJunctionID CRod::GetOppositeJunction( ERodSide side ) const
 {
 	return juncs[side^1];

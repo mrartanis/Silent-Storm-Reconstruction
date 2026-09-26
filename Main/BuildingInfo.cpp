@@ -1,9 +1,24 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#include <cstdio>
+#endif
 #include "BuildingInfo.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataMap.h"
 #include "Grid.h"
-#include "..\Misc\2Darray.h"
+#include "../Misc/2Darray.h"
+#if !defined(_WIN32)
+#include "../Misc/BasicShare.h"
+// On Windows this game-used share is owned by GBuilding.cpp, whose renderer is
+// not part of the headless core. Keep the same ID and loader on Linux.
+namespace NGScene {
+CBasicShare<int, NBuilding::CBuildInfoLoader> shareBuildings(108);
+}
+#endif
 
 namespace NBuilding
 {
@@ -37,7 +52,11 @@ void CBuildInfoLoader::Recalc()
 	}
 	catch(...)
 	{
+		#if defined(_WIN32)
 		OutputDebugString( "Exception: CBuildInfoLoader::Recalc()\n" );
+		#else
+		std::fputs( "Exception: CBuildInfoLoader::Recalc()\n", stderr );
+		#endif
 		return;
 	}
 }

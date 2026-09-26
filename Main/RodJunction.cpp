@@ -1,8 +1,17 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RodJunction.h"
 #include "BuildingSchema.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataRPG.h"
+#if !defined(_WIN32)
+#include <cstdio>
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NBuilding
 {
@@ -30,7 +39,7 @@ CJunction::CJunction( CBuildingSchema *_pSchema, int _nID, const SRodEdge &_pt, 
 void CJunction::Init()
 {
 	const int CONSTANT_FLAGS = FLAG_GROUND | FLAG_CELLARWALL | FLAG_FILLED | FLAG_BOTTOM;
-	nFlags &= CONSTANT_FLAGS; // обнуляем неконстантные флаги
+	nFlags &= CONSTANT_FLAGS; // РѕР±РЅСѓР»СЏРµРј РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅС‹Рµ С„Р»Р°РіРё
 	stability = Flag( FLAG_GROUND ) ? STABLE : UNKNOWN;
 
 	memset( moments, 0, sizeof( moments ) );
@@ -99,7 +108,7 @@ void CJunction::AddNeighbour( const SNeighb &neighb )
 	CRod *pNeighbRod = pSchema->GetRod( neighb.nRod );
 	const CIVec3 &ptLeft = pNeighbRod->GetLeftPt();
 	const CIVec3 &ptRight = pNeighbRod->GetRightPt();
-	ASSERT( ptLeft == ptJ || ptRight == ptJ ); // связан ли neighb с текущим узлом?
+	ASSERT( ptLeft == ptJ || ptRight == ptJ ); // СЃРІСЏР·Р°РЅ Р»Рё neighb СЃ С‚РµРєСѓС‰РёРј СѓР·Р»РѕРј?
 	//
 	EDirection dir = XP;
 	if ( pNeighbRod->IsVert() )
@@ -111,7 +120,7 @@ void CJunction::AddNeighbour( const SNeighb &neighb )
 			CJunction *pTopJ = pSchema->GetJunction( pNeighbRod->GetJunction( RS_RIGHT ) );
 			if ( pTopJ->IsGround() )
 			{
-				// вышележащий узел помечен как устойчивый
+				// РІС‹С€РµР»РµР¶Р°С‰РёР№ СѓР·РµР» РїРѕРјРµС‡РµРЅ РєР°Рє СѓСЃС‚РѕР№С‡РёРІС‹Р№
 				SetGround();
 				if ( !pTopJ->IsCellarWall() )
 					pTopJ->SetGround( false );
@@ -124,7 +133,7 @@ void CJunction::AddNeighbour( const SNeighb &neighb )
 			CJunction *pDonJ = pSchema->GetJunction( pNeighbRod->GetJunction( RS_LEFT ) );
 			if ( IsGround() )
 			{
-				// нижележащий узел должен быть помечен как устойчивый
+				// РЅРёР¶РµР»РµР¶Р°С‰РёР№ СѓР·РµР» РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕРјРµС‡РµРЅ РєР°Рє СѓСЃС‚РѕР№С‡РёРІС‹Р№
 				pDonJ->SetGround();
 				if ( !IsCellarWall() )
 					SetGround( false );
@@ -145,12 +154,12 @@ void CJunction::AddNeighbour( const SNeighb &neighb )
 	nNeighbs = CountLinks();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// возвращает false если не произошло изменения состояния стабильности текущего или последующих узлов
+// РІРѕР·РІСЂР°С‰Р°РµС‚ false РµСЃР»Рё РЅРµ РїСЂРѕРёР·РѕС€Р»Рѕ РёР·РјРµРЅРµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃС‚Р°Р±РёР»СЊРЅРѕСЃС‚Рё С‚РµРєСѓС‰РµРіРѕ РёР»Рё РїРѕСЃР»РµРґСѓСЋС‰РёС… СѓР·Р»РѕРІ
 bool CJunction::Shoot( EDirection dir )
 {
 	ASSERT( dir >= XP && dir <= XPYM );
 	if ( Arrow( dir ) )
-		return false; // в этом напрвлении уже ходили
+		return false; // РІ СЌС‚РѕРј РЅР°РїСЂРІР»РµРЅРёРё СѓР¶Рµ С…РѕРґРёР»Рё
 	//
 	bool bRet = false;
 	SetArrow( dir );
@@ -196,8 +205,8 @@ bool CJunction::Shoot( EDirection dir )
 	return CheckStability() || bRet;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// на основе массива "стрел" bArrows опрделяем стабильность узла
-// false если новое значение стабильности равно старому
+// РЅР° РѕСЃРЅРѕРІРµ РјР°СЃСЃРёРІР° "СЃС‚СЂРµР»" bArrows РѕРїСЂРґРµР»СЏРµРј СЃС‚Р°Р±РёР»СЊРЅРѕСЃС‚СЊ СѓР·Р»Р°
+// false РµСЃР»Рё РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃС‚Р°Р±РёР»СЊРЅРѕСЃС‚Рё СЂР°РІРЅРѕ СЃС‚Р°СЂРѕРјСѓ
 inline bool CJunction::CheckStability()
 {
 	EStability newstability = stability;
@@ -292,7 +301,7 @@ CJunction::EStability CJunction::RecurseCheckStability()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CJunction::EStability CJunction::CheckFree( list<CJunction*> *pDomain, int nDepth )
 {
-	ASSERT( FREE != stability ); // принадлежит другой связной области - такого не может быть
+	ASSERT( FREE != stability ); // РїСЂРёРЅР°РґР»РµР¶РёС‚ РґСЂСѓРіРѕР№ СЃРІСЏР·РЅРѕР№ РѕР±Р»Р°СЃС‚Рё - С‚Р°РєРѕРіРѕ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ
 	//
 	if ( STABLE == stability || UNSTABLE_NOTFREE == stability )
 		return STABLE;
@@ -398,7 +407,11 @@ void CJunction::ComputeMoment()
 	if ( stableJunctions.empty() && GetStability() != FREE )
 	{
 		ASSERT( 0 );
+#if defined(_WIN32)
 		OutputDebugString( "Cant compute momemnt\n" );
+#else
+		std::fputs( "Cant compute momemnt\n", stderr );
+#endif
 		stability = UNKNOWN_MOMENT;
 		return;
 	}

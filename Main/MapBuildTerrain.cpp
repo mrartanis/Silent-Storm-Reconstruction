@@ -1,13 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "MapBuildTerrain.h"
 #include "TerrainInfo.h"
 #include "Grid.h"
 #include "GResource.h"
 #include "Interpolate.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataTerrain.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\Misc\BasicShare.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataTerrain.h"
+#include "../DBFormat/DataFormat.h"
+#include "../Misc/BasicShare.h"
 #include "BuildingInfo.h"
 #include "PolyUtils.h"
 #include "METerrain.h"
@@ -467,7 +473,7 @@ void BlendTerrainInfo( STerrainInfo *pRes, int nVariantID, const CVec3 &ptCenter
 		}
 		if ( pTerrInfo->info.color.GetXSize() > 1 || pTerrInfo->info.color.GetYSize() > 1 )
 		{
-			// Надо будет смешивать по альфе!
+			// РќР°РґРѕ Р±СѓРґРµС‚ СЃРјРµС€РёРІР°С‚СЊ РїРѕ Р°Р»СЊС„Рµ!
 		//	const CArray2D<DWORD> &src = pTerrInfo->info.color;
 		//	Blend( &pRes->color, r, src.GetXSize(), src.GetYSize(), SColorBlend( src ) );
 		}
