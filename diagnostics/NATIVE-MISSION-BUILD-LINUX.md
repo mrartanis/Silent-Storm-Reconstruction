@@ -39,6 +39,23 @@ This proves the original builder consumes the original route resources and
 resolves names through `game.db`; actual per-turn AI route execution remains
 unverified.
 
+The route digest above checks only the number of waypoint commands. An
+additional `behavior_digest` now covers every resolved route point's
+position, floor, name, existence flag, and full command payload (kind,
+position, time, pose, direction); all placed units' person template,
+initial pose/logic, roaming and fear settings, guard animation, diplomacy
+and scenario player; ordered group membership; all map waypoints; and the
+exact attached Lua script bytes. The Windows x86 reconstructed build gives
+`CBF29CE484222325` (218), `1150A6A5921D1F4D` (810),
+`12659D562097CF78` (2400), and `7EAF4F97AD129EED` (4526).
+Windows x64 and Linux GCC x64/ARM64 assert these values on the same
+baseline data. This is stronger static map-data parity, not evidence that
+the original Steam EXE or a live AI turn makes the same decisions.
+The four cases passed on Windows x86/x64 and Linux GCC x64/ARM64;
+the full Windows x64 CTest passed 107/107 and Linux x64/ARM64 passed
+80/80 each with ASan/UBSan. The ARM64 suite ran under QEMU with
+`ASAN_OPTIONS=detect_leaks=0`.
+
 The expanded four-case mission set passed on Windows x86/x64 and Linux GCC
 x64/ARM64. In the same packet the full Windows x64 build/CTest passed
 107/107 and Linux GCC x64/ARM64 passed 80/80 under ASan/UBSan.
@@ -91,11 +108,11 @@ files named above are available. On Windows use `cmake --build <build>
 --test-dir <build> -C RelWithDebInfo -R '^NativeMission(MapProbe|RouteMapProbe|UnitRouteMapProbe|LargeMapProbe)$'
 --output-on-failure`; configure `S2_GAME_DIR` with its `game.db` and `res`
 folder. The probe also accepts explicit arguments `<game.db> <res-dir>
-<variant-id>`. IDs 218, 810, and 4526 have asserted regression digests;
+<variant-id>`. IDs 218, 810, 2400, and 4526 have asserted regression digests;
 ID 0 lists
 database candidates with units and waypoints; ID -1 lists placements whose
 unit IDs have entries in `Units.res` (a candidate can still have an empty
-route). ID 2400 is the asserted unit-route regression.
+route). ID 2400 is the unit-route regression.
 Pass `--print-scripts` after a variant ID to inspect its attached authored
 Lua source locally when deciding which game bindings to port; the source is
 not included in this repository.
