@@ -1,16 +1,22 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RPGVision.h"
 #include "RPGVisionQuery.h"
 #include "aiRender.h"
-#include "DG.h"
+#include "DG.H"
 #include "wTSFlags.h"
 #include "aiVoxelRender.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiMap.h"
-#include "grid.h"
+#include "Grid.h"
 #include "TerrainInfo.h"
-#include "..\Misc\2darray.h"
-#include "..\Misc\HPTimer.h"
+#include "../Misc/2Darray.h"
+#include "../Misc/HPTimer.h"
 
 const int N_HALFSIZE = 64;
 

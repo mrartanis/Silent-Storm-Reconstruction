@@ -364,7 +364,11 @@ add_library(s2_game_ai_actions STATIC
   "${root}/Main/aiMultiMoves.cpp"
   "${root}/Main/aiCombatLog.cpp"
   "${root}/Main/aiMoves.cpp"
-  "${root}/Main/aiPath.cpp")
+  "${root}/Main/aiPath.cpp"
+  "${root}/Main/aiChoosePlace.cpp"
+  "${root}/Main/aiSnipeAction.cpp"
+  "${root}/Main/aiLootAction.cpp"
+  "${root}/Main/aiHeavyGunAction.cpp")
 target_include_directories(s2_game_ai_actions PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
@@ -380,6 +384,23 @@ target_include_directories(s2_game_rpg_combat PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_rpg_combat PUBLIC cxx_std_17)
 target_compile_options(s2_game_rpg_combat PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_rpg_inventory_vision STATIC
+  "${root}/Main/RPGItemMap.cpp"
+  "${root}/Main/RPGMedals.cpp"
+  "${root}/Main/RPGInventory.cpp"
+  "${root}/Main/RPGVision.cpp")
+target_include_directories(s2_game_rpg_inventory_vision PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_rpg_inventory_vision PUBLIC cxx_std_17)
+target_compile_options(s2_game_rpg_inventory_vision PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeRPGItemMapTests
+  "${root}/diagnostics/NativeRPGItemMapTests.cpp")
+target_link_libraries(NativeRPGItemMapTests PRIVATE
+  s2_game_rpg_inventory_vision s2_game_structure s2_game_objects)
+target_link_options(NativeRPGItemMapTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeRPGItemMapTests COMMAND NativeRPGItemMapTests)
 add_executable(NativeAIIntervalTests
   "${root}/diagnostics/NativeAIIntervalTests.cpp")
 target_link_libraries(NativeAIIntervalTests PRIVATE

@@ -1,7 +1,13 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiUnitState.h"      // NAI::SAIUnitState: pEnemy / pPossibleEnemy
 #include "aiPosition.h"       // NAI::SUnitPosition::GetCP, fabs( CVec3 )
 #include "aiControl.h"        // IPlayer / commander access
@@ -16,7 +22,7 @@
 #include "wMain.h"            // NWorld::CWorld: GetGame / GetPathNetwork
 #include "RPGGame.h"          // NRPG::IGame::CheckPositionVisibility
 #include "RPGUnit.h"          // NRPG::CUnit::GetSightFOV (@0x2ba6c0) for the retail sight cone
-#include "..\DBFormat\DataRPG.h" // NDb::SM_Snipe
+#include "../DBFormat/DataRPG.h" // NDb::SM_Snipe
 //
 #include "aiActions.h"
 //

@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RPGMedals.h"
 #include "RPGUnit.h"
-#include "RPGGlobal.h"
-#include "..\MiscDll\LogStream.h"   // CLogStream / csSystem / EConsoleColor (CC_RED=1, CC_GREEN=2)
+#include "rpgGlobal.h"
+#include "../MiscDll/LogStream.h"   // CLogStream / csSystem / EConsoleColor (CC_RED=1, CC_GREEN=2)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {

@@ -1,6 +1,12 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataRPG.h" // NDb::EShootMode (aiInventory.h decls reference it)
+#include "../DBFormat/DataRPG.h" // NDb::EShootMode (aiInventory.h decls reference it)
 #include "aiUnit.h"
 #include "aiInventory.h"      // NAI::CAIInventory: IsItemNecessary / GetMostNecessaryItem
 #include "aiWeapon.h"         // NAI::CAIFireArmsWeapon (the IAIInventoryItem to drop)
