@@ -20,6 +20,7 @@
 #include "RPGAttackMech.h"
 #include "GSceneUtils.h"
 #include "GView.h"
+#include "GSceneInternal.h"
 #if defined(_WIN32)
 static CRandomGenerator &DebrisRandom() { return random; }
 #else

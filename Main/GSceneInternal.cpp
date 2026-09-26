@@ -53,30 +53,6 @@ class CGetTranspCache : public CPtrFuncBase<NGfx::CTexture>
 	OBJECT_NOCOPY_METHODS(CGetTranspCache);
 	void Recalc() { pValue = NGfx::GetTransparentTextureCache(); }
 };
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLightGroup
-////////////////////////////////////////////////////////////////////////////////////////////////////
-class CLightGroup: public CObjectBase
-{
-	OBJECT_NOCOPY_METHODS(CLightGroup);
-	ZDATA
-	CPtr<CGScene> pGame;
-	int nGroup;
-public:
-	SDynamicAmbientInfo ambientData;
-	CVec3 vPrevPos;
-	// retail CLightGroup::operator& @0x1674d0 also emits tag 4 (ambientData, 0x60 POD) and tag 5
-	// (vPrevPos, CVec3) -- dev was dropping the cached dynamic-ambient + prev-position on load.
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pGame); f.Add(3,&nGroup); f.Add(4,&ambientData); f.Add(5,&vPrevPos); return 0; }
-	CLightGroup() {}
-	CLightGroup( CGScene *p, int _n ) : pGame(p), nGroup(_n), vPrevPos(-1e6f, -1e6f, -1e6f) {}
-	~CLightGroup()
-	{
-		if ( IsValid( pGame ) )
-			pGame->FreeLightGroup( nGroup );
-	}
-	int GetGroup() const { return nGroup; }
-};
 int GetGroup( CLightGroup *p ) { return p->GetGroup(); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CDynamicLightCache

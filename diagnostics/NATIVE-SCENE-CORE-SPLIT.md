@@ -17,8 +17,11 @@ ARM64. `NativeScenePartCoreTests` round-trips a default `CNonePart`: 90 bytes,
 FNV `BE951C13732CB2A0` on the same three targets. Both Linux tests run
 under ASan/UBSan.
 
-The full Linux AI/world archive link has now only one distinct unresolved
-scene symbol: `CLightGroup`'s object-base cast. That type retains a
-concrete `CGScene` and frees its group on destruction. The extraction above
-is genuine CPU state and serialization, but it is not a headless mission,
-rendering parity, or a claim that every scene type is portable.
+The full Linux AI/world archive link initially retained one unresolved
+scene symbol: `CLightGroup`'s object-base cast. This was caused by
+`wDebris.cpp` seeing only a forward declaration. The real class definition
+is now in `GSceneInternal.h`, visible to `wDebris.cpp`; the original
+`CGScene` ownership, group-release rule, class ID and serialization remain.
+The archive link succeeds on x86-64 and ARM64, but this is not yet a
+headless mission, rendering parity, or a claim that every scene type is
+portable.

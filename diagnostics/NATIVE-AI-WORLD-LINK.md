@@ -58,3 +58,25 @@ unresolved symbol is `CastToObjectBaseImpl<NGScene::CLightGroup>` from
 `CDFrozenItem::Visit`. `CLightGroup` still owns a concrete `CGScene` and
 calls `FreeLightGroup` on destruction; it must be separated without losing
 that ownership rule. The earlier three-symbol output above is historical.
+
+The next probe exposed an incomplete-type problem rather than a missing
+implementation: `wDebris.cpp` included `GView.h`, which only forward-declared
+`CLightGroup`. Its real definition now lives in `GSceneInternal.h`, and
+`wDebris.cpp` includes that header. The registration remains in
+`GSceneInternal.cpp`; no dummy cast or replacement scene was introduced.
+`s2_game_world_entities` needs the existing Linux `main_case_include`
+directory because `GScene.h` includes `DG.h` while the source file is
+`DG.H`. A fresh-build probe can force the formerly unresolved caller:
+
+```sh
+g++ -fsanitize=address,undefined -Wl,--gc-sections \
+  -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE \
+  CMakeFiles/NativeScenePartCoreTests.dir/diagnostics/NativeScenePartCoreTests.cpp.o \
+  -o /tmp/s2-scene-link-probe-x64 -Wl,--start-group lib*.a -Wl,--end-group
+ASAN_OPTIONS=detect_leaks=0 /tmp/s2-scene-link-probe-x64
+```
+
+The x86-64 probe succeeds and prints the scene-part wire checksum. An
+ARM64 link with `aarch64-linux-gnu-g++` and the same forced symbol also
+succeeds; its QEMU/ASan probe passes. This is a linked-library boundary, not yet a
+Linux mission executable or a complete renderer-free gameplay loop.

@@ -359,6 +359,7 @@ add_library(s2_game_world_entities STATIC
   "${root}/Main/wMine.cpp"
   "${root}/Main/wObject.cpp")
 target_include_directories(s2_game_world_entities PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
   "${root}/third_party/lifestudio/include")
