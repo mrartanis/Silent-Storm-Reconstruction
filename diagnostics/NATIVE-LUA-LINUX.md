@@ -77,3 +77,12 @@ After this packet, the full Windows x64 build and CTest passed 104/104;
 Linux GCC x64 and ARM64/QEMU with ASan/UBSan passed 78/78 each. The updated `Game.exe` runtime
 smoke remains open: the current D3D desktop cannot create a device even for
 the older known-good archive, so build success is not treated as playability.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-script-corpus-20260926-01` was produced from
+source commit `7d6a9d25456e47766d00be91eb8bd50d9942d9e6` with 16 build
+jobs. `Game.exe` SHA-256 is
+`DB66DD392B8F795E59FF955FB7E7DF0F5EAEC52C4B804B56724A9ED8A1B93BD9`.
+The archive contains five FFmpeg runtime DLLs and no FMOD DLL; `Game.exe`
+has no `fmod.dll` or `FSOUND_` import. Game runtime smoke remains unverified
+for the D3D reason above.
