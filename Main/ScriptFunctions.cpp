@@ -23,8 +23,6 @@
 #include "scriptScenario.h"
 #include "scriptTemplate.h"
 #include "scriptPosition.h"
-#include "scriptUI.h"		// script-UI property bridge (CreateWindow/GetWindow/windowGet+SetProperty/
-							// ButtonGet+CreateState/GetCursorPos) -- declarations; impl in scriptUI.cpp.
 //
 namespace NScript
 {
@@ -284,15 +282,6 @@ Script::SRegFunction pRegList[] =
 	REG_FUNCTION( ShowHint ),
 	REG_FUNCTION( AddHints ),
 	REG_FUNCTION( SetTutorialMode ),
-	// ===== LUA convergence: script-UI property bridge =====
-	REG_FUNCTION( CreateWindow ),
-	REG_FUNCTION( GetWindow ),
-	{ "windowGetProperty", luaWindowGetProperty },
-	{ "windowSetProperty", luaWindowSetProperty },
-	REG_FUNCTION( ButtonGetState ),
-	REG_FUNCTION( ButtonCreateState ),
-	REG_FUNCTION( GetCursorPos ),
-	REG_FUNCTION( GetUITime ),
 	//
 	{ 0, 0 } // End
 };

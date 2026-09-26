@@ -35,6 +35,11 @@ boundary. No dummy UI functions or unresolved-symbol linker bypass
 were added. Full Lua mission execution and the Linux game are not yet
 available.
 
+Follow-up on 2026-09-26: the shipped-script usage audit and the split
+between game and window-only Lua registration are documented in
+`NATIVE-LUA-USED-SURFACE.md`. The 17-symbol diagnostic above is the
+historical count for this package, not the current link boundary.
+
 A clean native-media Windows x64 archive from source commit `a1ce918`
 was built with 16 jobs at
 `G:\SS\lab\builds\stage2-script-bindings-20260926-01`.

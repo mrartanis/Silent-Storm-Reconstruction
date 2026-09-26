@@ -15,7 +15,9 @@
 #include "wInterface.h"
 #include "../Script/lua.h"
 #include "A5Script.h"
-#include "scriptUI.h"		// NScript::RegisterScriptUITagMethods (window.x gettable/settable tag methods)
+#if defined(_WIN32)
+#include "scriptUI.h"		// Windows window-UI Lua bindings and tag methods
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NScript
 {
@@ -25,11 +27,15 @@ Script::SRegFunction pLuaPtrTagFuncList[] = { {0,0} };
 static void SharedInit( Script *scr )
 {
 	scr->Register( pRegList );
+#if defined(_WIN32)
+	scr->Register( pUIRegList );
+#endif
 	int nTag = 0;
 	nTag = scr->RegisterNewTag( pLuaPtrTagFuncList );
 	ASSERT( nTag == tagLuaCPtr );
 	nTag = scr->RegisterNewTag( pLuaPtrTagFuncList );
 	ASSERT( nTag == tagLuaCObj );
+#if defined(_WIN32)
 	// script-UI bridge: a third user tag for NUI::CWindow userdata. The built-in type tags are 0..5
 	// (LUA_TUSERDATA..LUA_TFUNCTION), tagLuaCPtr/tagLuaCObj are 6/7, so this third RegisterNewTag yields
 	// 8 == tagLuaWindow -- byte-identical to retail's window tag. Like the CPtr/CObj tags it carries no
@@ -40,6 +46,7 @@ static void SharedInit( Script *scr )
 	// make the window property accessors reachable via lua `window.x` / `window.x = v` (the retail wiring):
 	// windowGet/SetProperty become the tagLuaWindow gettable/settable tag methods.
 	RegisterScriptUITagMethods( scr );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void CommandShowScriptError( const string &szID, const vector<wstring> &paramsSet, void *pContext )

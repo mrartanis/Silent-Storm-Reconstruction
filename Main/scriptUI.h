@@ -4,10 +4,12 @@
 // scriptUI -- the script-UI property bridge (LUA convergence). Declarations of the 7 registered global
 // lua C-functions; the implementation (+ the absent infra: SRegProperty/GetRegPropMap/ShowPropertyError/
 // GetChildByPath/CheckProperty + the 17 property thunks) lives in scriptUI.cpp, which owns the heavy UI
-// include chain (Interface.h et al). Include this from ScriptFunctions.cpp for the pRegList references.
+// include chain (Interface.h et al). A5Script registers this list for the Windows UI runtime.
 //
 namespace NScript
 {
+// Window-only Lua globals; registered separately from the gameplay bindings.
+extern Script::SRegFunction pUIRegList[];
 int luaCreateWindow( lua_State* pState );		// "sonnnnsb[true]b[true]" -- create a typed window
 int luaGetWindow( lua_State* pState );			// "s" -- find a window by dotted id path
 int luaWindowGetProperty( lua_State* pState );	// get-dispatcher (window, propName)

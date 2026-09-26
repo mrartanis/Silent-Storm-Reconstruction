@@ -75,8 +75,9 @@ public:
 	void AddMiscObject( CObjectBase *pObj );
 	// script-UI bridge: the UI interface this script drives (release CScript::pInterface, a
 	// CPtr<NUI::CInterface>). GetWindow/GetCursorPos root their lookups here. Set by CMission to the
-	// in-mission HUD interface so the bridge is LIVE in-mission (defined in scriptUI.cpp, where the NUI
-	// types are complete). pInterface is a weak CPtr saved alongside the mission's own CInterface, so it
+	// in-mission HUD interface (defined in scriptUI.cpp, where the NUI types are complete).
+	// This wiring alone does not establish that shipped mission scripts call the window API.
+	// pInterface is a weak CPtr saved alongside the mission's own CInterface, so it
 	// round-trips through save/load.
 	NUI::CInterface* GetScriptInterface();
 	void SetScriptInterface( NUI::CInterface *pInterface );

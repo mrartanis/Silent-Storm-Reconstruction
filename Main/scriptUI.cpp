@@ -9,8 +9,8 @@
 //  the real csScript log stream -- so NO hooks are needed (every seam the
 //  answer-key modelled with a pfn* is a real engine call here).
 //
-//  Registered global lua C-functions (the 8 pRegList entries, declared in
-//  scriptUI.h, registered in ScriptFunctions.cpp):
+//  Registered global lua C-functions (the 8 pUIRegList entries, registered
+//  by A5Script.cpp on Windows):
 //    CreateWindow  GetWindow  windowGetProperty  windowSetProperty
 //    ButtonGetState  ButtonCreateState  GetCursorPos  GetUITime
 //
@@ -35,9 +35,9 @@
 //     (CWindow still carries the retail eventsMap/pScript save fields).
 //   * text property: retail SetText(GetDBString(s)); dev GetDBString takes an
 //     int id -> SetText(GetDBString(atoi(s))). image likewise GetUITexture(atoi).
-//   * CMission wires CScript::pInterface to its HUD interface. GetWindow,
-//     GetCursorPos, GetUITime and CreateWindow are therefore live in missions;
-//     they still fail gracefully before a mission interface exists.
+//   * CMission wires CScript::pInterface to its HUD interface. That allows
+//     window calls if invoked, but shipped data currently links no game flow
+//     to script 126, the only game.db script using this API.
 // ============================================================================
 //
 #include "Gfx.h"
@@ -64,6 +64,18 @@
 //
 namespace NScript
 {
+Script::SRegFunction pUIRegList[] =
+{
+	{ "CreateWindow", luaCreateWindow },
+	{ "GetWindow", luaGetWindow },
+	{ "windowGetProperty", luaWindowGetProperty },
+	{ "windowSetProperty", luaWindowSetProperty },
+	{ "ButtonGetState", luaButtonGetState },
+	{ "ButtonCreateState", luaButtonCreateState },
+	{ "GetCursorPos", luaGetCursorPos },
+	{ "GetUITime", luaGetUITime },
+	{ 0, 0 }
+};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Registered property accessor + table. Each property exposes a get and a set thunk sharing one
 // signature: (script, window, propName, valueStackIdx). Getters push their result and return the lua
