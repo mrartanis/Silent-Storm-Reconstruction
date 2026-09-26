@@ -31,3 +31,12 @@ registration, and several render/terrain vtables. No fake symbols or
 unresolved-symbol linker bypass were used. The full Linux game and
 live mission simulation are not executable yet. SDL3/bgfx integration
 and the UI/render boundary are separate later work, not claimed here.
+
+A clean native-media Windows x64 archive from source commit `01011e3`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-world-gameplay-20260926-01`.
+`Game.exe` SHA-256 is
+`D5600D88BD0ADAEDC82690D8609B85DB931913585F3909C875FC5F19D737E107`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed from the current remote
+D3D session.
