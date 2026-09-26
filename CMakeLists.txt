@@ -611,6 +611,12 @@ target_precompile_headers(NativeAILogicTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeAILogicTests PRIVATE Main)
 target_compile_features(NativeAILogicTests PRIVATE cxx_std_17)
 add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
+add_executable(NativeWorldInitProbe "${root}/diagnostics/NativeWorldInitProbe.cpp")
+target_include_directories(NativeWorldInitProbe PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeWorldInitProbe PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeWorldInitProbe PRIVATE Main Script)
+target_compile_features(NativeWorldInitProbe PRIVATE cxx_std_17)
 add_executable(NativeCommandBridgeTests
   "${root}/diagnostics/NativeCommandBridgeTests.cpp")
 target_include_directories(NativeCommandBridgeTests PRIVATE
@@ -977,6 +983,23 @@ if(S2_GAME_DIR)
   endif()
   message(STATUS "Game working dir: ${S2_GAME_DIR}")
   if(EXISTS "${S2_GAME_DIR}/game.db")
+    if(EXISTS "${S2_GAME_DIR}/scripts/Hint.l" AND
+       EXISTS "${S2_GAME_DIR}/scripts/Common.l" AND
+       EXISTS "${S2_GAME_DIR}/scripts/TriggersManager.l" AND
+       EXISTS "${S2_GAME_DIR}/scripts/Constants.l" AND
+       EXISTS "${S2_GAME_DIR}/res/Waypoints.res")
+      add_test(NAME NativeWorldInitProbe
+        COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+      set_tests_properties(NativeWorldInitProbe PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
+      if(TARGET s2_bink_compat)
+        set_tests_properties(NativeWorldInitProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      else()
+        set_tests_properties(NativeWorldInitProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+    endif()
     add_test(NAME NativeMapDatabaseTests
       COMMAND NativeMapDatabaseTests "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMissionScriptCorpusTests

@@ -15,6 +15,9 @@
 #include "wInterface.h"
 #include "../Script/lua.h"
 #include "A5Script.h"
+#if !defined(_WIN32)
+#include "../FileIO/PortablePackageIndex.h"
+#endif
 #if defined(_WIN32)
 #include "scriptUI.h"		// Windows window-UI Lua bindings and tag methods
 #endif
@@ -123,7 +126,16 @@ int CScript::RunScriptFile( const string &szFileName )
 	{
 		CFileStream f;
 		CMemoryStream m;
+#if defined(_WIN32)
 		f.OpenRead( szFileName.c_str() );
+#else
+		// The database stores Windows separators and casing for loose scripts.
+		// Resolve only this game-resource path; user-save paths stay untouched.
+		string resolved;
+		if ( !S2FileIO::ResolveGameResourcePath( szFileName, &resolved ) )
+			throw SFileIOError( string("error resolving script file ") + szFileName );
+		f.OpenRead( resolved.c_str() );
+#endif
 		m.WriteFrom( f );
 		return DoBuffer( (const char *)m.GetBuffer(), m.GetSize(), szFileName.c_str() );
 	}

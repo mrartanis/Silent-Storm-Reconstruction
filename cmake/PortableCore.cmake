@@ -488,6 +488,7 @@ target_include_directories(s2_game_scenario_scripts PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
   "${root}/third_party/lifestudio/include")
+target_link_libraries(s2_game_scenario_scripts PUBLIC s2_portable_package)
 target_compile_features(s2_game_scenario_scripts PUBLIC cxx_std_17)
 target_compile_options(s2_game_scenario_scripts PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_script_bindings STATIC
@@ -1139,6 +1140,32 @@ target_link_options(NativeAILogicTests PRIVATE -Wl,--gc-sections
   -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE
   -Wl,-u,_ZN6NWorld6CWorldC1EPN4NRPG11CGlobalGameE)
 add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
+add_executable(NativeWorldInitProbe "${root}/diagnostics/NativeWorldInitProbe.cpp")
+target_include_directories(NativeWorldInitProbe PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NativeWorldInitProbe PRIVATE
+  -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
+target_link_options(NativeWorldInitProbe PRIVATE -Wl,--gc-sections)
+if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
+   IS_DIRECTORY "${S2_SCRIPT_CORPUS_DIR}")
+  get_filename_component(_s2_world_resources "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  set(_s2_world_script_files)
+  foreach(_s2_script IN ITEMS Hint.l Common.l TriggersManager.l Constants.l)
+    if(EXISTS "${S2_SCRIPT_CORPUS_DIR}/${_s2_script}")
+      list(APPEND _s2_world_script_files "${S2_SCRIPT_CORPUS_DIR}/${_s2_script}")
+    endif()
+  endforeach()
+  list(LENGTH _s2_world_script_files _s2_world_script_count)
+  if(_s2_world_script_count EQUAL 4)
+    set(_s2_world_root "${CMAKE_BINARY_DIR}/world-probe-root")
+    file(MAKE_DIRECTORY "${_s2_world_root}/Scripts")
+    file(COPY ${_s2_world_script_files} DESTINATION "${_s2_world_root}/Scripts")
+    add_test(NAME NativeWorldInitProbe
+      COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}")
+    set_tests_properties(NativeWorldInitProbe PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+  endif()
+endif()
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
                       NativeMMTreeDataTests NativeSequenceDataTests)
   add_executable(${test} "${root}/diagnostics/${test}.cpp")
