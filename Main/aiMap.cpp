@@ -51,7 +51,11 @@ namespace NAnimation
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
 {
-CBasicShare<int, CLoadGeometryInfo> shareAIModel(110); // also used in MakeBuilding to determine which chunks are present in the geometry
+#if defined(_WIN32)
+CBasicShare<int, CLoadGeometryInfo> shareAIModel(110); // preserve the Windows shared-save registration order
+#else
+externA5 CBasicShare<int, CLoadGeometryInfo> shareAIModel; // owned by aiObjectLoader.cpp on Linux
+#endif
 CBasicShare<int, CFileSkinPointsLoad> shareSkinPoints(111);
 CBasicShare<int, NGScene::CFileAIBind> shareAIBinds(118);
 CBasicShare<int, CLoadTwoBSPTrees> shareBSPTrees(150);

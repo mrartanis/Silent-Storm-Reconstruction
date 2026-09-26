@@ -14,8 +14,8 @@
 #include "BSPtree.h"
 #if !defined(_WIN32)
 namespace NAI {
-// aiMap.cpp owns this share in the Windows game; the headless core links
-// the geometry loader without the renderer-heavy map translation unit.
+// Linux links the standalone loader and full AI map together; own the cache
+// here so both use the same instance without a second definition in aiMap.cpp.
 CBasicShare<int, CLoadGeometryInfo> shareAIModel( 110 );
 }
 #endif
