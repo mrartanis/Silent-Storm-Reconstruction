@@ -330,6 +330,35 @@ target_include_directories(s2_game_ai_routes PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_ai_routes PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_routes PRIVATE -ffunction-sections -fdata-sections)
+# Game-used AI perception, inventory, combat decisions, and voxel tracing.
+# A static archive is not a live Linux AI turn until the world graph links.
+add_library(s2_game_ai_perception STATIC
+  "${root}/Main/aiThreatTracker.cpp"
+  "${root}/Main/aiUnitState.cpp"
+  "${root}/Main/aiMisc.cpp"
+  "${root}/Main/aiInventory.cpp"
+  "${root}/Main/aiCombatLogic.cpp"
+  "${root}/Main/aiDefenceReaction.cpp"
+  "${root}/Main/aiAssassinReaction.cpp"
+  "${root}/Main/aiFearReaction.cpp"
+  "${root}/Main/aiGuardReaction.cpp"
+  "${root}/Main/aiActionBase.cpp"
+  "${root}/Main/aiMoveAction.cpp"
+  "${root}/Main/aiTrace.cpp"
+  "${root}/Main/aiVoxelRender.cpp"
+  "${root}/Main/aiStability.cpp")
+target_include_directories(s2_game_ai_perception PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_ai_perception PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_perception PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeAITraceSphereTests
+  "${root}/diagnostics/NativeAITraceSphereTests.cpp")
+target_link_libraries(NativeAITraceSphereTests PRIVATE
+  s2_game_ai_perception s2_game_transform s2_game_structure s2_game_objects)
+target_link_options(NativeAITraceSphereTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeAITraceSphereTests COMMAND NativeAITraceSphereTests)
 # Original AI map and RPG mission state are game-used prerequisites for
 # executing a Linux world. Static archives alone do not close the link.
 add_library(s2_game_ai_map STATIC "${root}/Main/aiMap.cpp")

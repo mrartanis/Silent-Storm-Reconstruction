@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiAction.h"
 #include "aiPosition.h"
 #include "aiPath.h"
-#include "rpgUnitMission.h"
+#include "RPGUnitMission.h"
 #include "wMain.h"
 #include "wUnitServer.h"
 #include "aiUnit.h"

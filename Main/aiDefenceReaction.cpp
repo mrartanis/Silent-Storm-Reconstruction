@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"            // NAI::IAIUnit
 #include "aiUnitState.h"       // NAI::SAIUnitState (pEnemy / pPossibleEnemy)
@@ -8,7 +14,7 @@
 #include "aiRouteMisc.h"       // NAI::GetNearestPlaces
 #include "aiRouteLogic.h"      // NAI::CreateAIStrafeToPositionLogic
 #include "aiCombatLogic.h"     // NAI::CreateAIDefenceLogic
-#include "..\DBFormat\DataRPG.h"  // NDb::WT_PISTOL / WT_SUB_MACHINE_GUN -- BEFORE aiInventory.h (its NDB:: fwd-decl typo)
+#include "../DBFormat/DataRPG.h"  // NDb::WT_PISTOL / WT_SUB_MACHINE_GUN -- BEFORE aiInventory.h (its NDB:: fwd-decl typo)
 #include "aiInventory.h"       // NAI::CAIInventory::GetFirstFireArms
 #include "aiWeapon.h"          // NAI::CAIFireArmsWeapon::GetAnimType (release hold-type gate)
 #include "wUnitServer.h"       // NWorld::CUnitServer (GetWorld/GetWearingDBPK/CanFight/wish-pose)

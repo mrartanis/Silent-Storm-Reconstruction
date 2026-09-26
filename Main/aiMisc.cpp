@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"          // NAI::IAIUnit (GetUnitServer / IsUnderAIControl)
 #include "aiActionBase.h"    // NAI::SPlaceWithAP (complete) -- aiMoveAction.h has vector<SPlaceWithAP> members
@@ -9,7 +15,7 @@
 #include "wMain.h"           // NWorld::CWorld::GetPathNetwork
 #include "wMainPath.h"       // NWorld::FindPath
 #include "wMainMoves.h"      // NWorld::GetMoveActionType (path-AP step action)
-#include "rpgUnitMission.h"  // NRPG::IUnitMission::GetActionAP
+#include "RPGUnitMission.h"  // NRPG::IUnitMission::GetActionAP
 //
 #include "aiMisc.h"
 //

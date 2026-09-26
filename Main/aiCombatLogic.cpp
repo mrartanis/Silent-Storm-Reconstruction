@@ -1,7 +1,13 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiUnitState.h"   // SAIUnitState (the PS_THINK state re-pin reads pEnemy)
 #include "aiGrid.h"           // IsSamePlace
 #include "AILog.h"            // dev records (CAILogPosition/CAILogSpendAP)

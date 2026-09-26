@@ -1,13 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnitState.h"
 #include "aiUnit.h"        // IAIUnit
 #include "aiMisc.h"        // GetAIUnit
-#include "aiState.h"       // SAIState
+#include "aistate.h"       // SAIState
 #include "aiPlayer.h"      // IAIPlayer::GetUnits / IsContain
 #include "wUnitServer.h"   // CanFight
-#include "..\DBFormat\DataRPG.h"  // NDb::EShootMode -- BEFORE aiInventory.h (its NDB:: fwd-decl typo)
-#include "..\DBFormat\DataMap.h"  // NDb::DS_ENEMY
+#include "../DBFormat/DataRPG.h"  // NDb::EShootMode -- BEFORE aiInventory.h (its NDB:: fwd-decl typo)
+#include "../DBFormat/DataMap.h"  // NDb::DS_ENEMY
 #include "aiInventory.h"   // CAIInventory::GetBestFireArms (the FindMostDangerousEnemy to-hit metric)
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////

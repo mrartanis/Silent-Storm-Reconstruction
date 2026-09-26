@@ -46,7 +46,7 @@ const int N_HUMAN_BODY_ARMOR = 1;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // SKILLS common set of RPG skills 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum ESkillType
+enum ESkillType : int
 {
 	// weapons skills
 	ST_MELEE = 0,
@@ -171,7 +171,7 @@ struct SUniformItem
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pUniform); f.Add(3,&pModelActive); f.Add(4,&pModelInactive); return 0; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EItemSubType
+enum EItemSubType : int
 {
 	SUBTYPE_NONE = 0,
 	SUBTYPE_HEAVY,
@@ -337,7 +337,7 @@ public:
 // MACHETE records, dev WT_RLAUNCHER==7 matched retail MACHINE_GUN records, etc. Values now match
 // retail 1:1 (PDB: MACHETE=6, MACHINE_GUN=7, RLAUNCHER=8, MINE_DETECTOR=9, PLAZMAGUN=10,
 // PK_PLAZMAGUN=11, BOSS_PLAZMAGUN=12, TERROR_SHOOTER=13, TERROR_SPECIAL_GUN=14).
-enum EWeaponType
+enum EWeaponType : int
 {
 	WT_DEFAULT,
 	WT_PISTOL,
@@ -746,7 +746,7 @@ public:
 	virtual void Import();
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum ECriticalLocation
+enum ECriticalLocation : int
 {
 	CL_HEAD = 0,
 	CL_TORSO,

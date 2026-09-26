@@ -1,4 +1,12 @@
+#if defined(_WIN32)
 #include "stdafx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#include "../ADOImport/BasicDB.h"
+#include "../DBFormat/DataRPG.h"
+#endif
 //
 #include "RPGUnitMission.h"
 #include "RPGItemSet.h"
@@ -6,7 +14,7 @@
 #include "RPGAttackMech.h"
 #include "RPGUnit.h"          // NRPG::CUnit::pDefaultWeapon (FetchInventoryItems @0x55f90)
 //
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 //
 #include "aiUnit.h"
 #include "aiWeapon.h"
@@ -15,7 +23,7 @@
 //
 #include "wUnitServer.h"
 #include "wDebris.h"          // NWorld::CDFrozenItem (loot scorers)
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 //
 namespace NAI
 {
@@ -98,7 +106,7 @@ static T* GetBestMeleeWeaponT( const vector< CObj<T> > &weapons )
 {
 	T *pBest = 0;
 	int nBestScore = -1;
-	for ( vector< CObj<T> >::const_iterator i = weapons.begin(); i != weapons.end(); ++i )
+	for ( typename vector< CObj<T> >::const_iterator i = weapons.begin(); i != weapons.end(); ++i )
 	{
 		NDb::CRPGMeleeWeapon *pDB = (*i)->GetItem()->GetDBMeleeWeapon();
 		if ( !IsValid( pDB ) )
@@ -173,7 +181,7 @@ void CAIInventory::GetInventoryItems( list< CPtr<NRPG::IInventoryItem> > *pItems
 	vector<NRPG::SBackPackItem>::const_iterator i;
 	for ( i = vBackPackItems.begin(); i != vBackPackItems.end(); ++i )
 	{
-		CPtr<NRPG::IInventoryItem> pItem = (*i).pItem;
+		CPtr<NRPG::IInventoryItem> pItem = (*i).pItem.GetPtr();
 		if ( !IsValid( pItem ) )
 			continue;
 		CDynamicCast<NRPG::CClipItem> pClip( pItem );

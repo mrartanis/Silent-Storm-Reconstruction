@@ -6,10 +6,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NDb
 {
-	enum EWeaponType;
-	enum ESkillType;
+	enum EWeaponType : int;
+	enum ESkillType : int;
 	enum ECritical : int;
-	enum ECriticalLocation;
+	enum ECriticalLocation : int;
 	class CModel;
 	class CRPGArmor;
 	class CRPGPers;
@@ -20,7 +20,7 @@ namespace NDb
 namespace NAI
 {
 	enum EPose : int;
-	enum EHitLocation;
+	enum EHitLocation : int;
 	enum ETileHitLocation : int;
 	struct SPosition;
 }
