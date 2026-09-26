@@ -32,3 +32,12 @@ RelWithDebInfo --target NativeAILogicTests --parallel 16` followed by
 --output-on-failure`. The data/route and Lua tests live in
 `NATIVE-MISSION-BUILD-LINUX.md` and `NATIVE-LUA-LINUX.md`; they do not
 substitute for the world-command link and live mission execution.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-ai-logic-20260926-01` was produced with 16 jobs
+from source commit `967e43e881290a87797e58c2d99f182e16b6bf50`.
+`Game.exe` SHA-256 is
+`0ED8E683C513FCCA7D9CEF42254B0F4E68C61AD21E72058DC0BAA49CB26251C0`.
+There is no FMOD DLL in the archive and no `fmod.dll` or `FSOUND_` import
+in `Game.exe`. An in-game smoke was not repeated: the current remote D3D
+session cannot create a device even for an older known-good archive.
