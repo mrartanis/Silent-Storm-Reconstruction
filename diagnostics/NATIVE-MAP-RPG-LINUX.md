@@ -32,3 +32,13 @@ with `ASAN_OPTIONS=detect_leaks=0 ctest --test-dir <linux-build> -R
 The complete Windows x64 `RelWithDebInfo` build passed 114/114 CTest
 cases, and Linux GCC x86-64 and ARM64/QEMU passed 86/86 each with
 `ASAN_OPTIONS=detect_leaks=0`.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-map-rpg-20260926-01` was built with 16 jobs
+from commit `07cc29b2f4fbedfa0b487170da4e1fd13fb5afb5`.
+`Game.exe` SHA-256 is
+`43DB83444C25388F109523186E00A8FAF2F47B4C23EC0904EE5061C162469A80`.
+The archive has no FMOD DLL, and `Game.exe` imports neither `fmod.dll`
+nor `FSOUND_`. In-game smoke remains unverified because the current
+remote D3D session cannot create a device even for an older known-good
+archive.
