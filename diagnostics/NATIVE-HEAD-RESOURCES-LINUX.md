@@ -20,6 +20,18 @@ implicit vertex's `type` and `attribute`; the decoder previously left
 them uninitialized. They now default to zero, with a focused
 `NativeHeadDataTests` assertion.
 
+Follow-up: the six-tag read now lives in `Main/HeadResourceData.cpp`.
+The Windows game's real `CHeadMeshLoader::Recalc` consumes its result
+before constructing LifeStudio animators; the same function is called
+by `NativeHeadResourceTests` on Windows/Linux. On Windows the test also
+constructs the live lazy loader for head ID 11 and checks its animator
+count and all five geometry vectors against the shared CPU result.
+The Windows loader behavior is retained, not replaced with a test-only
+parser. Linux currently uses the shared CPU fields but does not
+construct LifeStudio animator objects or `CHeadInfo`.
+After this integration, the full matrix again passed: Windows x64
+119/119, Linux x86-64 and ARM64/QEMU 93/93 each under ASan/UBSan.
+
 The test uses the real engine resource/structure loading path and
 original data. It does not construct `CHeadInfo`, initialize LifeStudio
 animators, transform a head, render a face, or exercise a live game

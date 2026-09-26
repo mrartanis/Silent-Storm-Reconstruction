@@ -852,7 +852,9 @@ target_include_directories(s2_game_ai_waypoint PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
 target_compile_features(s2_game_ai_waypoint PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_waypoint PRIVATE -ffunction-sections -fdata-sections)
-add_library(s2_game_resource_loader STATIC "${root}/Main/GResource.cpp")
+add_library(s2_game_resource_loader STATIC
+  "${root}/Main/GResource.cpp"
+  "${root}/Main/HeadResourceData.cpp")
 target_include_directories(s2_game_resource_loader PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(s2_game_resource_loader PUBLIC

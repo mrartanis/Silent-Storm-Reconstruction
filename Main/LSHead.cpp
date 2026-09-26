@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "LSHead.h"
 #include "GResource.h"
+#include "HeadResourceData.h"
 #include "GGeometry.h"
 #include "..\Misc\BasicShare.h"
 #include "..\DBFormat\DataFormat.h"
@@ -144,21 +145,20 @@ void CHeadMeshLoader::Recalc()
 	EnsureLSInit();   // IAnimator::Create() below is a main-API call -> Init() must precede it
 	try
 	{
-		NGScene::CResourceOpener file( "Heads", GetKey() );
+		SHeadResourceData data;
+		LoadHeadResourceData( GetKey(), &data );
 		pValue = new CHeadMeshInfo;
-		vector<CMemoryStream> streams;
-		file->Add( 1, &streams );
-		file->Add( 2, &pValue->nVertices );
-		file->Add( 3, &pValue->copys );
-		file->Add( 4, &pValue->UVs );
-		file->Add( 5, &pValue->indices );
-		file->Add( 6, &pValue->tris );
-		pValue->pLSAnimators.resize( streams.size() );
-		for ( int i = 0; i < streams.size(); ++i )
+		pValue->nVertices.swap( data.nVertices );
+		pValue->copys.swap( data.copys );
+		pValue->UVs.swap( data.UVs );
+		pValue->indices.swap( data.indices );
+		pValue->tris.swap( data.tris );
+		pValue->pLSAnimators.resize( data.streams.size() );
+		for ( int i = 0; i < data.streams.size(); ++i )
 		{
-			ExportFaceFixture( "head", GetKey(), i, streams[i] );
+			ExportFaceFixture( "head", GetKey(), i, data.streams[i] );
 			pValue->pLSAnimators[i] = LifeStudioHeadAPI::IAnimator::Create();
-			pValue->pLSAnimators[i]->Load( (const char *)streams[i].GetBuffer(), streams[i].GetSize() );
+			pValue->pLSAnimators[i]->Load( (const char *)data.streams[i].GetBuffer(), data.streams[i].GetSize() );
 			LoadLSTree();
 			if ( pLSTree )
 				pValue->pLSAnimators[i]->RegisterMacroMuscle( pLSTree->RootMacroMuscle() );

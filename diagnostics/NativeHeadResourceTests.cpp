@@ -6,6 +6,11 @@
 #include "../Misc/Geom.h"
 #endif
 #include "../Main/GResource.h"
+#include "../Main/HeadResourceData.h"
+#if defined(_WIN32)
+#include "../DBFormat/DataFormat.h"
+#include "../Main/LSHead.h"
+#endif
 #include "../FileIO/PortablePackageIndex.h"
 #include "../third_party/lifestudio/src/NativeHeadData.h"
 
@@ -46,31 +51,30 @@ int main( int argc, char **argv )
 	std::size_t streamsTotal = 0, verticesTotal = 0, musclesTotal = 0;
 	for ( const auto &entry : package.Entries() )
 	{
-		int stage = 0;
 		try
 		{
-			NGScene::CResourceOpener resource("Heads", entry.first);
-			stage = 1;
-			std::vector<CMemoryStream> streams;
-			std::vector<int> nVertices;
-			std::vector<CTPoint<int>> copys;
-			std::vector<CVec2> uvs;
-			std::vector<std::uint16_t> indices;
-			std::vector<int> tris;
-			resource->Add(1, &streams);
-			stage = 2;
-			resource->Add(2, &nVertices);
-			stage = 3;
-			resource->Add(3, &copys);
-			stage = 4;
-			resource->Add(4, &uvs);
-			stage = 5;
-			resource->Add(5, &indices);
-			stage = 6;
-			resource->Add(6, &tris);
-			stage = 7;
+			NLSHead::SHeadResourceData data;
+			NLSHead::LoadHeadResourceData(entry.first, &data);
+			auto &streams = data.streams;
+			const auto &nVertices = data.nVertices;
+			const auto &copys = data.copys;
+			const auto &uvs = data.UVs;
+			const auto &indices = data.indices;
+			const auto &tris = data.tris;
 			if ( streams.empty() || nVertices.empty() || uvs.empty() ||
 				indices.empty() || tris.empty() ) return 4;
+#if defined(_WIN32)
+			if ( entry.first == 11 )
+			{
+				CObj<NLSHead::CHeadMeshLoader> liveLoader = new NLSHead::CHeadMeshLoader;
+				liveLoader->SetKey(entry.first);
+				NLSHead::CHeadMeshInfo *live = liveLoader->GetValue();
+				if ( !live || live->pLSAnimators.size() != streams.size() ||
+					live->nVertices != nVertices || live->copys != copys ||
+					live->UVs != uvs || live->indices != indices || live->tris != tris )
+					return 9;
+			}
+#endif
 			Add(static_cast<std::uint32_t>(entry.first));
 			Add(static_cast<std::uint32_t>(streams.size()));
 			Add(static_cast<std::uint32_t>(uvs.size()));
@@ -146,8 +150,8 @@ int main( int argc, char **argv )
 		}
 		catch (...)
 		{
-			std::fprintf(stderr, "head resource failed id=%d bytes=%u stage=%d\n",
-				entry.first, entry.second.length, stage);
+			std::fprintf(stderr, "head resource failed id=%d bytes=%u\n",
+				entry.first, entry.second.length);
 			return 6;
 		}
 	}

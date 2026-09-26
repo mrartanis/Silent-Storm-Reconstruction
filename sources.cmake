@@ -300,6 +300,7 @@ set(Main_SRC
   "Locks.cpp"
   "LSController.cpp"
   "LSHead.cpp"
+  "HeadResourceData.cpp"
   "MakeBuilding.cpp"
   "MakeBuildingInternal.cpp"
   "MapBuild.cpp"
