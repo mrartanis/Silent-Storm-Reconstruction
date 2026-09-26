@@ -5,7 +5,7 @@
 #endif // _MSC_VER > 1000
 //
 #include "aiLogic.h"             // NAI::CAILogic (the command-driven AI logic base)
-#include "..\Misc\EventsBase.h"  // NGlobal::CEventRegister (regOnNewTurn / regOnSegment)
+#include "../Misc/EventsBase.h"  // NGlobal::CEventRegister (regOnNewTurn / regOnSegment)
 #include "eventPlayer.h"         // NWorld::CEventOnNewPlayerTurn (COMPLETE: the CEventRegister member's dtor
 #include "eventWorld.h"          // NWorld::CEventOnSegment       typeid's the event, so every includer that
                                  // instantiates CAIScriptLogic's special members needs the complete types)

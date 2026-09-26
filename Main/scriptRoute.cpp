@@ -1,4 +1,10 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "A5Script.h"
 #include "aiControl.h"
@@ -6,7 +12,7 @@
 #include "aiPosition.h"
 #include "aiNearestPosition.h"	// NAI::GetNearestPosition (UnitSetToWaypoint blocked-cell relocation)
 #include "aiRoute.h"
-#include "rpgUnitMission.h"
+#include "RPGUnitMission.h"
 #include "aiUnit.h"
 #include "aiTaskCommand.h"
 #include "wUnitServer.h"

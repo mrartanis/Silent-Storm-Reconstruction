@@ -1,4 +1,10 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "A5Script.h"
 #include "scriptCommon.h"
 #include "scriptPtr.h"
@@ -6,21 +12,21 @@
 #include "wUnitServer.h"
 #include "aiPosition.h"
 #include "aiCommander.h"
-#include "rpgUnit.h"
-#include "rpgItemInfo.h"
+#include "RPGUnit.h"
+#include "RPGItemInfo.h"
 #include "RPGItemSet.h"				// NRPG::CWeaponItem / CGrenadeItem (UnitDrawWeapon / UnitSwitchToGrenade)
-#include "rpgUnitMission.h"
-#include "rpgCritical.h"
-#include "rpgGame.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"		// NDb::CTRndModel::CreateModel (UnitHoldItem)
-#include "..\DBFormat\DataMap.h"			// NDb::EDiplomacyState / DS_ENEMY (KillEmAll diplomacy gate)
-#include "..\Misc\RandomGen.h"			// SRand (UnitHoldItem)
-#include "..\MiscDll\LogStream.h"
+#include "RPGUnitMission.h"
+#include "RPGCritical.h"
+#include "RPGGame.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"		// NDb::CTRndModel::CreateModel (UnitHoldItem)
+#include "../DBFormat/DataMap.h"			// NDb::EDiplomacyState / DS_ENEMY (KillEmAll diplomacy gate)
+#include "../Misc/RandomGen.h"			// SRand (UnitHoldItem)
+#include "../MiscDll/LogStream.h"
 #include "wAckBase.h"
 #include "wUnitGroup.h"
 #include "aiRoute.h"
-#include "rpgAttackMech.h"
+#include "RPGAttackMech.h"
 #include "wUnitCommands.h"
 #include "wUnitAttackExec.h"				// NWorld::CreateInventoryItemForUnit @0x3ab3c0 (UnitCreateItem direct insert)
 #include "wUnitAttack.h"					// NWorld::UnitThrowGrenade (UnitGrenadeToUnit / UnitGrenadeToWaypoint)
@@ -28,7 +34,7 @@
 #include "rpgGlobal.h"
 #include "aiUnit.h"
 #include "rpgCheatConstants.h"
-#include "weActiveItem.h"
+#include "wEActiveItem.h"
 #include "scScenarioTracker.h"
 #include "scFlowChartItems.h"
 #include "wUnitStates.h"
@@ -199,14 +205,15 @@ int luaUnitApplyCritical( lua_State* pState )
 	//
 	CScript *pScript;
 	bool bCriticalFromTable = luaGetParamCount( pState ) == 2;
+	vector<SLuaParams> luaParams;
 	if ( !bCriticalFromTable )
 	{
-		if ( !luaPrepareData( pState, "UnitApplyCritical", "unn", &pScript, &vector<SLuaParams>() ) )
+		if ( !luaPrepareData( pState, "UnitApplyCritical", "unn", &pScript, &luaParams ) )
 			return 0;
 	}
 	else
 	{
-		if ( !luaPrepareData( pState, "UnitApplyCritical", "un", &pScript, &vector<SLuaParams>() ) )
+		if ( !luaPrepareData( pState, "UnitApplyCritical", "un", &pScript, &luaParams ) )
 			return 0;
 	}
 	//
@@ -502,7 +509,7 @@ BEGIN_SCRIPT_COMMAND( UnitRemove, "u" )
 	if (pUS)
 	{
 		// if this is a clue, it is considered destroyed
-		CPtr<NScenario::CScenarioTracker> pTracker = pScript->pWorld->GetGlobalGame()->pScenarioTracker;
+		CPtr<NScenario::CScenarioTracker> pTracker = pScript->pWorld->GetGlobalGame()->pScenarioTracker.GetPtr();
 		if ( IsValid( pTracker ) )
 		{
 			int nPersID = pUS->GetUnitRPG()->GetRPGPersID();

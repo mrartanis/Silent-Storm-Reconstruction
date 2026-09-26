@@ -408,6 +408,24 @@ target_include_directories(s2_game_scenario_scripts PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_scenario_scripts PUBLIC cxx_std_17)
 target_compile_options(s2_game_scenario_scripts PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_script_bindings STATIC
+  "${root}/Main/ScriptFunctions.cpp"
+  "${root}/Main/scriptDialog.cpp"
+  "${root}/Main/scriptDiplomacy.cpp"
+  "${root}/Main/scriptObject.cpp"
+  "${root}/Main/scriptPosition.cpp"
+  "${root}/Main/scriptRoute.cpp"
+  "${root}/Main/scriptScenario.cpp"
+  "${root}/Main/scriptSequence.cpp"
+  "${root}/Main/scriptTemplate.cpp"
+  "${root}/Main/scriptUnit.cpp"
+  "${root}/Main/scriptUnitGroup.cpp")
+target_include_directories(s2_game_script_bindings PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_script_bindings PUBLIC cxx_std_17)
+target_compile_options(s2_game_script_bindings PRIVATE -ffunction-sections -fdata-sections)
 # Original AI commander, route, reaction, and nearest-position units.
 # These compile as the next game-used dependency group; complete Linux
 # AI/world execution still requires the remaining map and mission modules.
@@ -455,6 +473,8 @@ target_compile_features(s2_game_ai_perception PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_perception PRIVATE -ffunction-sections -fdata-sections)
 # Original combat action, weapon, place-source, log and path-job units.
 add_library(s2_game_ai_actions STATIC
+  "${root}/Main/aiScriptLogic.cpp"
+  "${root}/Main/aiScriptReaction.cpp"
   "${root}/Main/aiActions.cpp"
   "${root}/Main/aiWeapon.cpp"
   "${root}/Main/aiActionPlaceSource.cpp"

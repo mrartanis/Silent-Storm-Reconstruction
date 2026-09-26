@@ -1,4 +1,10 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "A5Script.h"
 #include "scriptCommon.h"
@@ -7,11 +13,11 @@
 #include "wOSBase.h"
 #include "wObject.h"
 #include "RPGItemSet.h"
-#include "rpgAttackMech.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataObject.h"
-#include "..\MiscDll\LogStream.h"
+#include "RPGAttackMech.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataObject.h"
+#include "../MiscDll/LogStream.h"
 #include "aiRoute.h"
 #include "wDebris.h"
 //
@@ -211,7 +217,7 @@ BEGIN_SCRIPT_COMMAND( ItemSetToWaypoint, "us" )
 	CPtr<NAI::CAIRouteWaypoint> pWaypoint = pScript->pWorld->GetWaypoint( luaParams[ 1 ].s );
 	if ( !IsValid( pWaypoint ) )
 		return 0;
-	CPtr<NRPG::IInventoryItem> pHold = pItem;   // survive the remove below
+	CPtr<NRPG::IInventoryItem> pHold = pItem.GetPtr();   // survive the remove below
 	NWorld::SObjectPlace place = pWaypoint->GetObjectPlace( 0 );
 	pScript->pWorld->RemoveFrozenItem( pItem );
 	pScript->pWorld->AddFrozenItem( pScript->pWorld->GetAIMap(), place.ptPos, CQuat( place.fAngle, CVec3( 0, 0, 1 ) ), pItem, false, place.nFloor );

@@ -1,5 +1,6 @@
 #ifndef __SCRIPTPTR_H_
 #define __SCRIPTPTR_H_
+#include "../ADOImport/BasicDB.h"
 //
 class CDBRecord;
 //

@@ -1,4 +1,10 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "A5Script.h"
 #include "scriptPtr.h"
 #include "scriptCommon.h"
@@ -6,8 +12,8 @@
 #include "wUnitGroup.h"
 #include "wUnitServer.h"
 #include "aiRoute.h"
-#include "rpgUnitMission.h"
-#include "rpgUnit.h"
+#include "RPGUnitMission.h"
+#include "RPGUnit.h"
 #include "rpgGlobal.h"			// NRPG::CGlobalPlayer money accessors (Player*Money)
 #include "wUnitCommands.h"
 //
