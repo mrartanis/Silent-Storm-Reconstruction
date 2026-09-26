@@ -36,5 +36,13 @@ execute these three new archives.
 
 The full Windows x64 game build and CTest passed 109/109. Linux GCC
 x86-64 and ARM64/QEMU built all targets and passed 81/81 each under
-ASan/UBSan with `ASAN_OPTIONS=detect_leaks=0`. Clean archive metadata
-follows after packaging.
+ASan/UBSan with `ASAN_OPTIONS=detect_leaks=0`.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-unit-execution-20260926-01` was built with
+16 jobs from source commit
+`9328b761dfb88ec77a2697935233051231733fea`. `Game.exe` SHA-256 is
+`8622B85AB3DF53D21908A74C0DDBA379F0691E360A14CAFF6E210E2F793B1F29`.
+The archive has no FMOD DLL, and `Game.exe` imports neither `fmod.dll`
+nor `FSOUND_`. In-game smoke remains unverified because the remote D3D
+session cannot create a device even for an older known-good archive.
