@@ -27,16 +27,30 @@ reactions with the Steam x86 game. The current focused test is about
 pointer-width correctness; a live explosion/damage comparison is still
 required by stage 2. No claim about a Linux mission follows from this.
 
+`NativeExplosionVoxelRendererTests` adds a narrower gameplay-path check:
+the original `CExplVoxelRenderer` rasterizes four triangles into a voxel
+grid, keyed by two different object pointers and two user IDs on one
+pointer. Repeating the first hull must reuse its existing object ID;
+terrain must use ID 1. Linux x86-64 and ARM64/QEMU each produced six
+voxels for every triangle under ASan/UBSan. This exercises the real hash
+map and rasterizer together, but not `CExplosionTracker`'s damage-order
+iteration or a running Linux mission.
+
 Reproduce the focused test after configuring the repository:
 
 ```
 ctest --test-dir G:\SS\lab\build-x64-stage2 -C RelWithDebInfo -R ^PortableVoxelObjectHashTests$ -V
+ctest --test-dir G:\SS\lab\build-x64-stage2 -C RelWithDebInfo -R ^NativeExplosionVoxelRendererTests$ -V
 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-x64 -R ^PortableVoxelObjectHashTests$ -V
 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-arm64 -R ^PortableVoxelObjectHashTests$ -V
+ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-x64 -R ^NativeExplosionVoxelRendererTests$ -V
+ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-arm64 -R ^NativeExplosionVoxelRendererTests$ -V
 ```
 
-Full regression matrix on 2026-09-26: Windows x64 120/120;
-Linux x86-64 and ARM64/QEMU 94/94 each under ASan/UBSan.
+Full regression matrix after the renderer test on 2026-09-26:
+Windows x64 121/121; Linux x86-64 and ARM64/QEMU 95/95 each under
+ASan/UBSan. The clean game archive below predates this test-only commit;
+the game binary was not modified.
 
 Clean native-media Windows x64 archive from source commit `d9599bd`:
 `G:\SS\lab\builds\stage2-voxel-object-hash-20260926-01`.

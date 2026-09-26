@@ -558,6 +558,12 @@ target_link_libraries(NativeAITraceSphereTests PRIVATE
   s2_game_ai_perception s2_game_transform s2_game_structure s2_game_objects)
 target_link_options(NativeAITraceSphereTests PRIVATE -Wl,--gc-sections)
 add_test(NAME NativeAITraceSphereTests COMMAND NativeAITraceSphereTests)
+add_executable(NativeExplosionVoxelRendererTests
+  "${root}/diagnostics/NativeExplosionVoxelRendererTests.cpp")
+target_link_libraries(NativeExplosionVoxelRendererTests PRIVATE
+  s2_game_ai_perception s2_game_transform s2_game_structure s2_game_objects)
+target_link_options(NativeExplosionVoxelRendererTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeExplosionVoxelRendererTests COMMAND NativeExplosionVoxelRendererTests)
 # Original AI map and RPG mission state are game-used prerequisites for
 # executing a Linux world. Static archives alone do not close the link.
 add_library(s2_game_ai_map STATIC "${root}/Main/aiMap.cpp")

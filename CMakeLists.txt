@@ -657,6 +657,13 @@ target_precompile_headers(NativeAITraceSphereTests PRIVATE "${root}/Main/StdAfx.
 target_link_libraries(NativeAITraceSphereTests PRIVATE Main)
 target_compile_features(NativeAITraceSphereTests PRIVATE cxx_std_17)
 add_test(NAME NativeAITraceSphereTests COMMAND NativeAITraceSphereTests)
+add_executable(NativeExplosionVoxelRendererTests
+  "${root}/diagnostics/NativeExplosionVoxelRendererTests.cpp")
+target_include_directories(NativeExplosionVoxelRendererTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeExplosionVoxelRendererTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeExplosionVoxelRendererTests PRIVATE Main)
+add_test(NAME NativeExplosionVoxelRendererTests COMMAND NativeExplosionVoxelRendererTests)
 add_executable(NativeMissionScriptCorpusTests
   "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
 target_include_directories(NativeMissionScriptCorpusTests PRIVATE
