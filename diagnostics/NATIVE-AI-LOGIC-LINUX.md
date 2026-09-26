@@ -16,7 +16,10 @@ x64 and checks pause/resume, finish, and end-of-turn transitions.
 
 This is a compile boundary, **not a running Linux AI world**. Linking the
 detached logic test on Linux still requires the original `CUnitServer`,
-`CCmdSetCommand`, RPG mission cast, and related world-command methods.
+RPG mission cast, and related world-command methods. The
+`CCmdSetCommand::IsSkippable` slice is now available separately through
+`s2_game_command_bridge` (see `NATIVE-COMMAND-BRIDGE-LINUX.md`), but this
+does not link the full AI logic object.
 These remain outside the current Linux link graph; no replacement methods
 or unresolved-symbol linker exceptions were added. In particular, the
 Windows lifecycle test does not prove route movement or enemy decisions.

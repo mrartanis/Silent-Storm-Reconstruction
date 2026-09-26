@@ -261,6 +261,23 @@ target_include_directories(s2_game_ai_logic PRIVATE
   "${root}/ADOImport" "${root}/MiscDll")
 target_compile_features(s2_game_ai_logic PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_logic PRIVATE -ffunction-sections -fdata-sections)
+# Actual world-to-unit command wrapper used by the AI command queue.
+add_library(s2_game_command_bridge STATIC "${root}/Main/wCommandBridge.cpp")
+target_include_directories(s2_game_command_bridge PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport")
+target_compile_features(s2_game_command_bridge PUBLIC cxx_std_17)
+add_library(s2_game_unit_commands STATIC "${root}/Main/wUnitCommands.cpp")
+target_include_directories(s2_game_unit_commands PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport")
+target_compile_features(s2_game_unit_commands PUBLIC cxx_std_17)
+add_executable(NativeCommandBridgeTests
+  "${root}/diagnostics/NativeCommandBridgeTests.cpp")
+target_link_libraries(NativeCommandBridgeTests PRIVATE
+  s2_game_command_bridge s2_game_unit_commands
+  s2_game_structure s2_game_objects)
+add_test(NAME NativeCommandBridgeTests COMMAND NativeCommandBridgeTests)
 add_executable(NativeAILogTests "${root}/diagnostics/NativeAILogTests.cpp")
 target_link_libraries(NativeAILogTests PRIVATE s2_game_ai_log)
 add_test(NAME NativeAILogTests COMMAND NativeAILogTests)

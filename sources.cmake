@@ -407,6 +407,7 @@ set(Main_SRC
   "wExplTracker.cpp"
   "wGrenade.cpp"
   "wInterface.cpp"
+  "wCommandBridge.cpp"
   "wInterfaceVisitors.cpp"
   "wKnife.cpp"
   "wMain.cpp"
