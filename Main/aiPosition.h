@@ -178,7 +178,7 @@ struct SObjectPosition
 	int operator&( CStructureSaver &f );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EPose	// DO NOT REORDER! This is tied to AP calculation!
+enum EPose : int	// DO NOT REORDER! This is tied to AP calculation!
 {
 	CRAWL = 0,	// prone (crawling)
 	CROUCH,		// crouched
@@ -201,7 +201,7 @@ enum EHitLocation : int
 	HL_LLEG,
 	N_HL
 };
-enum ETileHitLocation
+enum ETileHitLocation : int
 {
 	THL_LOWER = 0,
 	THL_MIDDLE,

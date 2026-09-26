@@ -19,9 +19,9 @@ namespace NDb
 }
 namespace NAI
 {
-	enum EPose;
+	enum EPose : int;
 	enum EHitLocation;
-	enum ETileHitLocation;
+	enum ETileHitLocation : int;
 	struct SPosition;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

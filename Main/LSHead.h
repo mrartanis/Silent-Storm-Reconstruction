@@ -6,8 +6,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "A5Time.h"
 #include "GResource.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataFaceGen.h"   // NDb::CRace complete type (CHeadInfo::pBodyColor CDBPtr factory)
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataFaceGen.h"   // NDb::CRace complete type (CHeadInfo::pBodyColor CDBPtr factory)
+#if !defined(_WIN32)
+// The game needs CHeadInfo's data declarations on Linux; the proprietary
+// LifeStudio DLL ABI and its Windows import/calling-convention attributes
+// are not linked into this portable target.
+#define LIFESTUDIOHEADAPI_EXPORTS_LIB
+#ifndef __stdcall
+#define __stdcall
+#endif
+#endif
 #include <LifeStudioHeadAPI.h>
 #include <LifeStudioHeadAPIMMTS.h>
 #include <LifeStudioHeadAPITransform.h>   // LifeStudioHeadAPI::ITransformer (CHeadTransformInfo value)

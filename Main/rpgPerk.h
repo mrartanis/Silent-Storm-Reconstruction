@@ -1,9 +1,9 @@
 #ifndef __RPGPERK_H_
 #define __RPGPERK_H_
 //
-#include "..\Misc\Set.h"
+#include "../Misc/Set.h"
 //
-#include "..\DBFormat\DataPerk.h"
+#include "../DBFormat/DataPerk.h"
 namespace NDb
 {
 	class CDBPerk;

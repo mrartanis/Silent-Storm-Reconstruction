@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 //
-#include "..\Script\Script.h"
-#include "..\MiscDll\Commands.h"
+#include "../Script/Script.h"
+#include "../MiscDll/Commands.h"
 //
 namespace NScenario
 {
@@ -27,7 +27,7 @@ namespace NWorld
 	class CWorld;
 	class IWorld;
 	class CUICmd;
-	enum EInterfaceActionType;
+	enum EInterfaceActionType : int;
 }
 //
 namespace NGame

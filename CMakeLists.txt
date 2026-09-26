@@ -603,6 +603,32 @@ target_precompile_headers(NativeAnimationPathTests PRIVATE "${root}/Main/StdAfx.
 target_link_libraries(NativeAnimationPathTests PRIVATE Main)
 target_compile_features(NativeAnimationPathTests PRIVATE cxx_std_17)
 add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
+add_executable(NativeConsoleConfigTests
+  "${root}/diagnostics/NativeConsoleConfigTests.cpp")
+target_include_directories(NativeConsoleConfigTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeConsoleConfigTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeConsoleConfigTests PRIVATE Main)
+target_compile_features(NativeConsoleConfigTests PRIVATE cxx_std_17)
+add_test(NAME NativeConsoleConfigTests COMMAND NativeConsoleConfigTests)
+set_tests_properties(NativeConsoleConfigTests PROPERTIES
+  ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/native-console-user")
+add_executable(NativeAttackRulesTests
+  "${root}/diagnostics/NativeAttackRulesTests.cpp")
+target_include_directories(NativeAttackRulesTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAttackRulesTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAttackRulesTests PRIVATE Main)
+target_compile_features(NativeAttackRulesTests PRIVATE cxx_std_17)
+add_test(NAME NativeAttackRulesTests COMMAND NativeAttackRulesTests)
+add_executable(NativePerkPointsTests
+  "${root}/diagnostics/NativePerkPointsTests.cpp")
+target_include_directories(NativePerkPointsTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativePerkPointsTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativePerkPointsTests PRIVATE Main)
+target_compile_features(NativePerkPointsTests PRIVATE cxx_std_17)
+add_test(NAME NativePerkPointsTests COMMAND NativePerkPointsTests)
 add_executable(NativeMissionScriptCorpusTests
   "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
 target_include_directories(NativeMissionScriptCorpusTests PRIVATE

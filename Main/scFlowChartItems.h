@@ -2,9 +2,20 @@
 #define __FLOWCHARTITEMS_H_
 //
 #include "../DBFormat/DataScenario.h"
+#include <chrono>
 //
 namespace NScenario
 {
+inline unsigned int ScenarioSeedTick()
+{
+#if defined(_WIN32)
+	return GetTickCount();
+#else
+	using namespace std::chrono;
+	return static_cast<unsigned int>(duration_cast<milliseconds>(
+		steady_clock::now().time_since_epoch()).count());
+#endif
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CScenarioClue;
 class CScenarioObjective;
@@ -87,7 +98,7 @@ public:
 		int nEmptyInventorySlots;
 		ZEND int operator&( CStructureSaver &f ) { f.Add(2,&sSeed); f.Add(3,&nVariantID); f.Add(4,&nItemSlots); f.Add(5,&nPersonSlots); f.Add(6,&nInventorySlots); f.Add(7,&nEmptyItemSlots); f.Add(8,&nEmptyPersonSlots); f.Add(9,&nEmptyInventorySlots); return 0; }
 		//
-		STemplate(): sSeed( GetTickCount() ), nItemSlots( 0 ), nPersonSlots( 0 ), nInventorySlots( 0 ),
+		STemplate(): sSeed( ScenarioSeedTick() ), nItemSlots( 0 ), nPersonSlots( 0 ), nInventorySlots( 0 ),
 			nEmptyItemSlots( 0 ), nEmptyPersonSlots( 0 ), nEmptyInventorySlots( 0 ), nVariantID( 0 ) {}
 	};
 	OBJECT_BASIC_METHODS( CScenarioZone );

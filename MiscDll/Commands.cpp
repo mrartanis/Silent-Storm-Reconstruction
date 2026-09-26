@@ -1,10 +1,21 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "Commands.h"
-#include "..\Misc\StrProc.h"
+#include "../Misc/StrProc.h"
 #include "LogStream.h"
-#include "..\FileIO\BasicChunk1.h"
-#include "..\FileIO\WindowsUserData.h"
-#include "..\FileIO\WindowsSaveNames.h"
+#include "../FileIO/BasicChunk1.h"
+#if defined(_WIN32)
+#include "../FileIO/WindowsUserData.h"
+#include "../FileIO/WindowsSaveNames.h"
+#else
+#include "../FileIO/LinuxUserData.h"
+#endif
+#include <cwchar>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGlobal
 {
@@ -65,7 +76,11 @@ CValue::CValue( float _fVal ): fVal( _fVal )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CValue::CValue( const wstring &_szVal ): fVal( 0.0f ), szVal( _szVal )
 {
+#if defined(_WIN32)
 	fVal = _wtof( szVal.c_str() );
+#else
+	fVal = std::wcstof( szVal.c_str(), nullptr );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 float CValue::GetFloat() const
@@ -239,9 +254,15 @@ void LoadConfig( const string &szFileName )
 		CFileStream sFile;
 		if ( szFileName == ".\\cfg\\config.cfg" )
 		{
+#if defined(_WIN32)
 			const wstring path = S2FileIO::WindowsConfigPath();
 			if ( path.empty() ) throw SFileIOError( "user config path unavailable" );
 			sFile.OpenRead( path.c_str() );
+#else
+			const string path = S2FileIO::LinuxConfigPath();
+			if ( path.empty() ) throw SFileIOError( "user config path unavailable" );
+			sFile.OpenRead( path.c_str() );
+#endif
 		}
 		else sFile.OpenRead( szFileName.c_str() );
 		sStream.WriteFrom( sFile );
@@ -279,8 +300,13 @@ void SaveConfig( const string &szFileName )
 	FILE *pFile = 0;
 	if ( szFileName == ".\\cfg\\config.cfg" )
 	{
+#if defined(_WIN32)
 		const wstring path = S2FileIO::WindowsConfigPath();
 		if ( !path.empty() ) pFile = _wfopen( path.c_str(), L"w+" );
+#else
+		const string path = S2FileIO::LinuxConfigPath();
+		if ( !path.empty() ) pFile = fopen( path.c_str(), "w+" );
+#endif
 	}
 	else pFile = fopen( szFileName.c_str(), "w+" );
 	if ( pFile == 0 )
@@ -300,7 +326,11 @@ void SaveConfig( const string &szFileName )
 			continue;
 
 		const string value = iTemp->first == "game_profile" ?
+#if defined(_WIN32)
 			S2FileIO::EncodeWindowsProfileConfig( iTemp->second.sValue.GetString() ) :
+#else
+			S2FileIO::EncodeLinuxProfileConfig( iTemp->second.sValue.GetString() ) :
+#endif
 			NStr::ToAscii( iTemp->second.sValue.GetString() );
 		saveRecords.push_back( pair<string, string>( iTemp->first, value ) );
 	}
@@ -344,7 +374,8 @@ CVar::~CVar()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const CValue& CVar::Get()
 {
-	return GetVar( szID, CValue() );
+	static const CValue missing;
+	return GetVar( szID, missing );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CVar::Set( const CValue &sValue )
@@ -387,12 +418,12 @@ void VarFloatHandler( const string &szID, const NGlobal::CValue &sValue, void *p
 static void SplitString( const wstring &szCmd, vector<wstring> *pRes )
 {
 	vector<wstring> params;
-	list<WCHAR> stackBrackets;
+	list<wchar_t> stackBrackets;
 	int i, nLastPos = 0;
 	//
 	for ( i = 0; i < szCmd.size(); ++i )
 	{
-		WCHAR c = szCmd[i];
+		wchar_t c = szCmd[i];
 		if ( NStr::IsOpenBracket(c) )
 			stackBrackets.push_back( NStr::GetCloseBracket( c ) );
 		else if ( stackBrackets.empty() )
@@ -453,7 +484,11 @@ static void CmdSetVar( const string &szID, const vector<wstring> &paramsSet, voi
 		if ( value.compare( 0, 5, L"S2U8:" ) == 0 )
 		{
 			const string encoded = NStr::ToAscii( value );
+#if defined(_WIN32)
 			if ( !S2FileIO::DecodeWindowsProfileConfig( encoded, &value ) ) return;
+#else
+			if ( !S2FileIO::DecodeLinuxProfileConfig( encoded, &value ) ) return;
+#endif
 		}
 		else for ( size_t i = 3; i < paramsSet.size(); ++i )
 			value += L" " + paramsSet[i];

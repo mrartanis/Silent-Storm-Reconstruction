@@ -1,13 +1,20 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../DBFormat/DataFormat.h"
 #include "RPGUnit.h"
 #include "LSHead.h"        // NLSHead::CHeadInfo complete type (SetHead / GetHead)
 #include "RPGItemSet.h"
 #include "A5Script.h"
-#include "..\Misc\RandomGen.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataChest.h"	// NDb::CRPGChestReal / SLootItem (ctor pBackpack consumption)
+#include "../Misc/RandomGen.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataChest.h"	// NDb::CRPGChestReal / SLootItem (ctor pBackpack consumption)
 #include "rpgPerk.h"
 #include "rpgPerkConstants.h"
 #include <cstdint>

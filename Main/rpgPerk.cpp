@@ -1,8 +1,14 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataPerk.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\Misc\RandomGen.h"		// SRand (TakeRandomPerks)
+#include "../DBFormat/DataPerk.h"
+#include "../MiscDll/LogStream.h"
+#include "../Misc/RandomGen.h"		// SRand (TakeRandomPerks)
 #include "rpgPerk.h"
 //
 #include <fstream>

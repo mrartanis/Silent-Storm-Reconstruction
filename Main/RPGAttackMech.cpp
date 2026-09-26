@@ -1,12 +1,25 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RPGAttackMech.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 // complete types CalcStructDmg needs: IWorld::GetGlobalGame, CGlobalGame::pDifficulty,
 // CDBDifficulty::f{Enemy,Our}DamageMult, IUnitMissionInfo::IsAIPlayer.
-#include "..\DBFormat\DataDifficulty.h"
+#include "../DBFormat/DataDifficulty.h"
 #include "wInterface.h"
 #include "rpgGlobal.h"
 #include "RPGUnitInfo.h"
+#include "../Misc/RandomGen.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {
@@ -88,7 +101,7 @@ int CAttackPortion::CalcStructDmg( NWorld::IWorld *pWorld, const NDb::CRPGArmor 
 	if ( nDmgMax <= nDmgMin )
 		nDmg = nDmgMin;
 	else
-		nDmg = random.Get( nDmgMin, nDmgMax );
+		nDmg = GameRandom().Get( nDmgMin, nDmgMax );
 	int nResDmg = nDmg + Min( nAPA - pArmor->pMaterial->nThreshold, 0 );
 	nResDmg = Max( nResDmg, 0 );
 	float fRes = fStructDmgModifier * fDamageCoeff * nResDmg;

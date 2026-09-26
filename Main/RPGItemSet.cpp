@@ -1,12 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../DBFormat/DataFormat.h"
 #include "RPGItem.h"
 #include "RPGItemSet.h"
 #include "aiPosition.h"
 #include "RPGAttackMech.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataMisc.h"   // NDb::CRPGPicklock (CPicklockItem ctor + the CreateItem cascade)
-#include "..\DBFormat\DataPerk.h"
-#include "rpgUnit.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataMisc.h"   // NDb::CRPGPicklock (CPicklockItem ctor + the CreateItem cascade)
+#include "../DBFormat/DataPerk.h"
+#include "RPGUnit.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {
@@ -673,7 +680,7 @@ IWeaponItem *CreateWeaponItem( NDb::CRPGWeapon *pDBWeapon )
 	return new CWeaponItem( pDBWeapon );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static IInventoryItem *CreateGrenadeItem( NDb::CRPGGrenade *pDBGrenade )
+IInventoryItem *CreateGrenadeItem( NDb::CRPGGrenade *pDBGrenade )
 {
 	CGrenadeItem *pGrenade = new CGrenadeItem(pDBGrenade);
 	return pGrenade;
@@ -713,7 +720,7 @@ NDb::CRPGItem *GetGrenadeRecItem( IGrenadeItemInfo *pGrenade )
 	return pGrenade->GetDBEngGrenade()->pItem;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static IInventoryItem *CreateUniformItem( NDb::CRPGUniform *pDBUniform )
+IInventoryItem *CreateUniformItem( NDb::CRPGUniform *pDBUniform )
 {
 	//CUniformItem *pUniform = new CUniformItem(pDBUniform);
 	return 0;

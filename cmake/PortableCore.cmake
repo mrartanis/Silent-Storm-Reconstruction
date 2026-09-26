@@ -240,6 +240,48 @@ target_include_directories(s2_game_ai_log PRIVATE
   "${root}/MiscDll" "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(s2_game_ai_log PUBLIC s2_game_misc_runtime)
 target_compile_features(s2_game_ai_log PUBLIC cxx_std_17)
+add_library(s2_game_console STATIC
+  "${root}/MiscDll/Commands.cpp"
+  "${root}/FileIO/LinuxUserData.cpp")
+target_include_directories(s2_game_console PRIVATE
+  "${root}/MiscDll" "${root}/FileIO" "${root}/Misc" "${root}/Main")
+target_link_libraries(s2_game_console PUBLIC
+  s2_game_ai_log s2_game_misc_runtime s2_game_structure
+  s2_portable_user_paths)
+target_compile_features(s2_game_console PUBLIC cxx_std_17)
+add_library(s2_game_rpg_execution STATIC
+  "${root}/Main/RPGUnit.cpp"
+  "${root}/Main/RPGItemSet.cpp"
+  "${root}/Main/RPGAttackMech.cpp"
+  "${root}/Main/rpgPerk.cpp"
+  "${root}/Main/rpgGlobal.cpp")
+target_include_directories(s2_game_rpg_execution PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_rpg_execution PUBLIC cxx_std_17)
+target_compile_options(s2_game_rpg_execution PRIVATE
+  -ffunction-sections -fdata-sections)
+add_executable(NativeAttackRulesTests
+  "${root}/diagnostics/NativeAttackRulesTests.cpp")
+target_link_libraries(NativeAttackRulesTests PRIVATE
+  s2_game_rpg_execution s2_game_dbformat_records
+  s2_game_structure s2_game_objects)
+target_link_options(NativeAttackRulesTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeAttackRulesTests COMMAND NativeAttackRulesTests)
+add_executable(NativePerkPointsTests
+  "${root}/diagnostics/NativePerkPointsTests.cpp")
+target_link_libraries(NativePerkPointsTests PRIVATE
+  s2_game_rpg_execution s2_game_dbformat_records
+  s2_game_ai_log s2_game_structure s2_game_objects)
+target_link_options(NativePerkPointsTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativePerkPointsTests COMMAND NativePerkPointsTests)
+add_executable(NativeConsoleConfigTests
+  "${root}/diagnostics/NativeConsoleConfigTests.cpp")
+target_link_libraries(NativeConsoleConfigTests PRIVATE s2_game_console)
+add_test(NAME NativeConsoleConfigTests COMMAND NativeConsoleConfigTests)
+set_tests_properties(NativeConsoleConfigTests PROPERTIES
+  ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/native-console-user")
 add_library(s2_game_world_object STATIC "${root}/Main/wOSBase.cpp")
 target_include_directories(s2_game_world_object PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"

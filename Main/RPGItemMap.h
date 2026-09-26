@@ -4,8 +4,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 //
-#include "..\Misc\Geom.h"        // CTPoint
-#include "..\Misc\2DArray.h"     // CArray2D
+#include "../Misc/Geom.h"        // CTPoint
+#include "../Misc/2Darray.h"     // CArray2D
 #include "RPGItemInfo.h"         // NRPG::IInventoryItem (GetSize)
 //
 namespace NRPG

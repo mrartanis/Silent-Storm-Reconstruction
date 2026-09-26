@@ -1,17 +1,24 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../DBFormat/DataFormat.h"
 #include "GSceneUtils.h"
 #include "GMemFormat.h"
-#include "RPGGlobal.h"
+#include "rpgGlobal.h"
 #include "RPGStore.h"	// NRPG::CStore -- per-player vendor stock (retail side-seeded ctor @0x29a7c0 creates it)
 #include "RPGMerc.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataRPG.h"
 #include "scScenarioTracker.h"
 #include "scFlowChartItems.h"
 #include "RPGDiplomacy.h"
-#include "..\DBFormat\DataDifficulty.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataAck.h"
+#include "../DBFormat/DataDifficulty.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataAck.h"
 //
 namespace NRPG
 {

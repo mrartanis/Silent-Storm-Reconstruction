@@ -107,7 +107,7 @@ class CCmdEndOfTurn: public CCommand
 	OBJECT_BASIC_METHODS(CCmdEndOfTurn);
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EInterfaceActionType
+enum EInterfaceActionType : int
 {
 	IAT_CAMERA = 0,
 	IAT_DIALOG,
