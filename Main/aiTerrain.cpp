@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiTerrain.h"
 #include "Grid.h"
 #include "aiObject.h"
 #include "TerrainInfo.h"
-#include "BSPTree.h"
+#include "BSPtree.h"
 namespace NAI
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////

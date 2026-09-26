@@ -1,8 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wDecal.h"
 #include "wMain.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataFormat.h"
+#if defined(_WIN32)
+static CRandomGenerator &DecalRandom() { return random; }
+#else
+static CRandomGenerator &DecalRandom() { return s2_game_random; }
+#endif
 namespace NWorld
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,7 +26,7 @@ CDecal::CDecal( CWorld *_pWorld, const CVec3 &_vCenter, const CVec3 &_vNormal, f
 	info.vCenter = _vCenter;
 	info.vNormal = _vNormal;
 	info.fRadius = _fSize;
-	info.fRotation = random.GetFloat( 0, FP_2PI );
+	info.fRotation = DecalRandom().GetFloat( 0, FP_2PI );
 	bindGlobal.Link( pWorld->GetActive(), this );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +38,7 @@ CDecal::CDecal( CWorld *_pWorld, const CVec3 &_vCenter, float _fSize, NDb::CMate
 	info.vCenter = _vCenter;
 	info.vNormal = CVec3(0,0,0);
 	info.fRadius = _fSize;
-	info.fRotation = random.GetFloat( 0, FP_2PI );
+	info.fRotation = DecalRandom().GetFloat( 0, FP_2PI );
 	bindGlobal.Link( pWorld->GetActive(), this );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

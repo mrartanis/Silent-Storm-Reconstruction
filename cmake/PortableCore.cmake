@@ -363,6 +363,7 @@ target_compile_features(s2_game_world_events PUBLIC cxx_std_17)
 target_compile_options(s2_game_world_events PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_world_gameplay STATIC
   "${root}/Main/wBuilding.cpp"
+  "${root}/Main/wDecal.cpp"
   "${root}/Main/wTerrain.cpp"
   "${root}/Main/wInterface.cpp"
   "${root}/Main/InventoryUnit.cpp"
@@ -375,6 +376,24 @@ target_include_directories(s2_game_world_gameplay PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world_gameplay PUBLIC cxx_std_17)
 target_compile_options(s2_game_world_gameplay PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_scene_data STATIC
+  "${root}/Main/GGeometryCore.cpp"
+  "${root}/Main/aiTerrain.cpp"
+  "${root}/Main/GBind.cpp"
+  "${root}/Main/GMesh.cpp")
+target_include_directories(s2_game_scene_data PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_scene_data PUBLIC cxx_std_17)
+target_compile_options(s2_game_scene_data PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeGeometryCoreTests
+  "${root}/diagnostics/NativeGeometryCoreTests.cpp")
+target_include_directories(NativeGeometryCoreTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeGeometryCoreTests PRIVATE s2_game_scene_data)
+target_link_options(NativeGeometryCoreTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeGeometryCoreTests COMMAND NativeGeometryCoreTests)
 add_library(s2_game_scenario_scripts STATIC
   "${root}/Main/scScenarioTracker.cpp"
   "${root}/Main/scFlowChartItems.cpp"

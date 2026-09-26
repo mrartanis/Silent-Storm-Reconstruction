@@ -210,6 +210,7 @@ set(Main_SRC
   "GfxShaders.cpp"
   "GfxUtils.cpp"
   "GGeometry.cpp"
+  "GGeometryCore.cpp"
   "GGeometryUtil.cpp"
   "GGrass.cpp"
   "GInit.cpp"
