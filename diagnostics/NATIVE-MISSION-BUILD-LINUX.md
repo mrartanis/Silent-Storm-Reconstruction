@@ -69,3 +69,11 @@ in a loaded mission, not just map construction. The
 separate Windows `Game.exe` smoke remains deferred until the current D3D
 desktop can create a device; an unchanged older archive failed at the
 same `NGfx::ResetDevice` location before save loading.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-mission-map-20260926-01` was built from source
+commit `111dc78b0b35700023483b14c401b5a4c764ccca` with 16 build jobs.
+Its `Game.exe` SHA-256 is
+`447E33CA0D8AC27FB63E26CD767D5C2BA0465987E5E1A2A031A5217B131A2641`.
+The archive contains no FMOD DLL and `Game.exe` has no FMOD import. The
+archive build is verified; the D3D-gated game runtime smoke is not.
