@@ -568,7 +568,7 @@ add_executable(NativeMissionMapProbe "${root}/diagnostics/NativeMissionMapProbe.
 target_include_directories(NativeMissionMapProbe PRIVATE
   "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMissionMapProbe PRIVATE "${root}/Main/StdAfx.h")
-target_link_libraries(NativeMissionMapProbe PRIVATE Main)
+target_link_libraries(NativeMissionMapProbe PRIVATE Main Script)
 target_compile_features(NativeMissionMapProbe PRIVATE cxx_std_17)
 add_executable(NativeMapPolygonTests "${root}/diagnostics/NativeMapPolygonTests.cpp")
 target_include_directories(NativeMapPolygonTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")

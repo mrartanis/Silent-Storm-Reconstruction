@@ -25,6 +25,19 @@ and Linux GCC x64/ARM64 and Clang x64 report `558E222D9ED26DA6`.
 This proves construction of a small
 unit/route map, not script execution or live enemy AI.
 
+The probe now also passes every script attached by `BuildMap` through the
+game's original Lua parser, using `CScript::strCode` from `game.db`. Variant
+810 has one 1,016-byte script; variant 4526 has one 4,266-byte script. The
+probe asserts these sizes in addition to successful parsing. This bridges
+the authored mission data and the native Lua VM; it does not register the
+game-specific bindings or execute mission commands. Those remain a stage-2
+runtime gate. The linked parser cases passed on Windows x64 and Linux GCC
+x64/ARM64; full CTest passed 103/103 on Windows x64 and 77/77 on Linux GCC
+x64. All three ARM64 cases passed under QEMU. Clang was not reverified for
+this incremental Lua link because the current Linux host's Clang toolchain
+could not locate standard C++ headers; the previous map-only Clang results
+below remain historical.
+
 Variant 4526 is a larger authored map: seven buildings, 49 units, 24
 waypoints, 1514 items, two clue slots, and one attached script. A fixed
 builder seed makes the generated item count and digest repeatable.

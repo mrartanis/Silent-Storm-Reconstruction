@@ -293,7 +293,7 @@ if(S2_ENABLE_MISSION_MAP_PROBE)
   add_executable(NativeMissionMapProbe
     "${root}/diagnostics/NativeMissionMapProbe.cpp")
   target_link_libraries(NativeMissionMapProbe PRIVATE
-    -Wl,--start-group s2_game_map_build s2_game_make_building
+    -Wl,--start-group s2_game_map_build s2_game_lua s2_game_make_building
     s2_game_building_internal s2_game_building_info s2_game_building_grid
     s2_game_building_clip s2_game_map_terrain s2_game_ai_geometry_loader
     s2_game_ai_collision s2_game_ai_grid s2_game_ai_position

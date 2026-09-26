@@ -10,6 +10,8 @@
 #include "../Main/aiGrid.h"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataRPG.h"
+#include "../Script/lua.h"
 
 #include <cstdint>
 #include <cstdio>
@@ -59,6 +61,21 @@ int main( int argc, char **argv )
 	SMapInfo map;
 	const bool built = BuildMap( variantID, std::vector<std::string>(),
 		network, &map, -1, SRandomSeed( 123 ) );
+	// Mission scripts are stored in game.db, not in the startup .l corpus.
+	// Parse every script selected by the real builder with the game's Lua VM.
+	// This does not claim that the game-specific bindings can run headlessly.
+	std::size_t scriptBytes = 0;
+	for ( const CDBPtr<NDb::CScript> &record : map.scripts )
+	{
+		if ( !record || record->strCode.empty() ) return 7;
+		lua_State *state = lua_open( 0 );
+		if ( !state ) return 8;
+		const int status = lua_parsebuffer( state, record->strCode.data(),
+			record->strCode.size(), "game.db mission script" );
+		lua_close( state );
+		if ( status ) return 9;
+		scriptBytes += record->strCode.size();
+	}
 	Add( built );
 	Add( map.terrain.nWidth ); Add( map.terrain.nHeight );
 	if ( map.terrain.nWidth > 0 && map.terrain.nHeight > 0 )
@@ -115,9 +132,9 @@ int main( int argc, char **argv )
 		Add( item.nRelFloor );
 		Add( item.bOpen ); Add( item.bBorder );
 	}
-	std::printf( "built=%d buildings=%zu units=%zu items=%zu waypoints=%zu slots=%zu scripts=%zu digest=%016llX\n",
+	std::printf( "built=%d buildings=%zu units=%zu items=%zu waypoints=%zu slots=%zu scripts=%zu script_bytes=%zu digest=%016llX\n",
 		built, map.buildings.size(), map.units.size(), map.items.size(),
-		map.waypoints.size(), map.slots.size(), map.scripts.size(),
+		map.waypoints.size(), map.slots.size(), map.scripts.size(), scriptBytes,
 		static_cast<unsigned long long>( digest ) );
 	if ( variantID == 218 &&
 		( map.buildings.size() != 1 || !map.units.empty() ||
@@ -128,13 +145,13 @@ int main( int argc, char **argv )
 	if ( variantID == 810 &&
 		( map.buildings.size() != 1 || map.units.size() != 2 ||
 		  map.items.size() != 24 || map.waypoints.size() != 2 ||
-		  !map.slots.empty() || map.scripts.size() != 1 ||
+		  !map.slots.empty() || map.scripts.size() != 1 || scriptBytes != 1016 ||
 		  digest != UINT64_C(0x558E222D9ED26DA6) ) )
 		return 4;
 	if ( variantID == 4526 &&
 		( map.buildings.size() != 7 || map.units.size() != 49 ||
 		  map.items.size() != 1514 || map.waypoints.size() != 24 ||
-		  map.slots.size() != 2 || map.scripts.size() != 1 ||
+		  map.slots.size() != 2 || map.scripts.size() != 1 || scriptBytes != 4266 ||
 		  digest != UINT64_C(0x8C92AD1F7E8B90FA) ) )
 		return 4;
 	return built ? 0 : 3;
