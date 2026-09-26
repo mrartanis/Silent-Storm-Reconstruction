@@ -25,7 +25,7 @@ namespace NAI
 namespace NWorld
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EUnitCommandResult;
+enum EUnitCommandResult : int;
 class CCmd;
 class CWorld;
 class CCannon;

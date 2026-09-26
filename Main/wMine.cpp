@@ -1,16 +1,27 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wMine.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataGeometry.h"
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataGeometry.h"
 #include "wMain.h"
 #include "wUnitServer.h"   // complete NWorld::CUnitServer before CMinesWorld forces the CWorld TBS template instantiation
 #include "Transform.h"
 #include "wOSBase.h"
 #include "aiMap.h"
 #include "aiStability.h"
-#include "scriptCallLua.h"
+#include "scriptCallLUA.h"
+#if defined(_WIN32)
+static CRandomGenerator &MineRandom() { return random; }
+#else
+static CRandomGenerator &MineRandom() { return s2_game_random; }
+#endif
 //
 namespace NWorld
 {
@@ -23,7 +34,7 @@ CMine::CMine( CWorld *_pWorld, const CVec3 &_vPlace, NDb::CRPGMine *_pMine, int 
 	SRand rnd;
 	pModel = pMine->pItem->pModel->CreateModel( &rnd );
 	// retail @0x37ead0: -111111 sentinel -> random facing, else degrees * pi/180
-	fAngle = _nAngle == MINE_ANGLE_RANDOM ? random.GetFloat( 0, FP_2PI ) : ToRadian( (float)_nAngle );
+	fAngle = _nAngle == MINE_ANGLE_RANDOM ? MineRandom().GetFloat( 0, FP_2PI ) : ToRadian( (float)_nAngle );
 	bindGlobal.Link( pWorld->GetUnits(), this );
 	pWorld->AddMine( this );
 	pMineTracker = pWorld->GetMineTracker();

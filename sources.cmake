@@ -426,6 +426,7 @@ set(Main_SRC
   "wUICommands.cpp"
   "wUnitAttack.cpp"
   "wUnitAttackExec.cpp"
+  "wHumanReach.cpp"
   "wUnitCommands.cpp"
   "wUnitExec.cpp"
   "wUnitGroup.cpp"

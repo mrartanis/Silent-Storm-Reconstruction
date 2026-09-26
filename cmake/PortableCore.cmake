@@ -301,6 +301,7 @@ add_library(s2_game_world STATIC
   "${root}/Main/wMain.cpp"
   "${root}/Main/wMainMoves.cpp"
   "${root}/Main/wMainTrace.cpp"
+  "${root}/Main/wMainPath.cpp"
   "${root}/Main/wUICommands.cpp")
 target_include_directories(s2_game_world PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
@@ -308,6 +309,41 @@ target_include_directories(s2_game_world PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world PUBLIC cxx_std_17)
 target_compile_options(s2_game_world PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_unit_execution STATIC
+  "${root}/Main/wUnitAttack.cpp"
+  "${root}/Main/wUnitExec.cpp"
+  "${root}/Main/wUnitMove.cpp"
+  "${root}/Main/wUnitQueue.cpp"
+  "${root}/Main/wUnitAttackExec.cpp")
+target_include_directories(s2_game_unit_execution PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_unit_execution PUBLIC cxx_std_17)
+target_compile_options(s2_game_unit_execution PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_human_reach STATIC "${root}/Main/wHumanReach.cpp")
+target_include_directories(s2_game_human_reach PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_compile_features(s2_game_human_reach PUBLIC cxx_std_17)
+target_compile_options(s2_game_human_reach PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeHumanReachTests
+  "${root}/diagnostics/NativeHumanReachTests.cpp")
+target_link_libraries(NativeHumanReachTests PRIVATE
+  s2_game_human_reach)
+target_link_options(NativeHumanReachTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeHumanReachTests COMMAND NativeHumanReachTests)
+add_library(s2_game_world_entities STATIC
+  "${root}/Main/wHintsFunc.cpp"
+  "${root}/Main/wMisc.cpp"
+  "${root}/Main/wDebris.cpp"
+  "${root}/Main/wMine.cpp"
+  "${root}/Main/wObject.cpp")
+target_include_directories(s2_game_world_entities PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_world_entities PUBLIC cxx_std_17)
+target_compile_options(s2_game_world_entities PRIVATE -ffunction-sections -fdata-sections)
 # Original AI commander, route, reaction, and nearest-position units.
 # These compile as the next game-used dependency group; complete Linux
 # AI/world execution still requires the remaining map and mission modules.
@@ -365,6 +401,7 @@ add_library(s2_game_ai_actions STATIC
   "${root}/Main/aiCombatLog.cpp"
   "${root}/Main/aiMoves.cpp"
   "${root}/Main/aiPath.cpp"
+  "${root}/Main/aiSmoothPath.cpp"
   "${root}/Main/aiChoosePlace.cpp"
   "${root}/Main/aiSnipeAction.cpp"
   "${root}/Main/aiLootAction.cpp"
@@ -377,7 +414,8 @@ target_compile_features(s2_game_ai_actions PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_actions PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_rpg_combat STATIC
   "${root}/Main/RPGToHit.cpp"
-  "${root}/Main/RPGCritical.cpp")
+  "${root}/Main/RPGCritical.cpp"
+  "${root}/Main/RPGBullet.cpp")
 target_include_directories(s2_game_rpg_combat PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"

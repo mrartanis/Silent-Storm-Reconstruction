@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wHintsFunc.h"
 #include "aiMap.h"		// NAI::IAIMap, NAI::SInterval (via aiInterval.h), CFloorsSet
 #include "wDebris.h"		// NWorld::CDebrisController

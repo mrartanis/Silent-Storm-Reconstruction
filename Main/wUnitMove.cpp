@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitMove.h"
 #include "wUICommands.h"
 #include "wUnitServer.h"
@@ -10,7 +16,7 @@
 #include "RPGItem.h"
 #include "RPGUnitMission.h"
 #include "aiMoves.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 namespace NWorld
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////

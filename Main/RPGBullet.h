@@ -21,7 +21,7 @@
 //   * CanHitTarget (needs the shooter diplomacy/relation -> ally mapping) and the
 //     per-ray GetHitIntersections (reads a finished CCoverInfo) are deferred.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "time.h"
+#include "A5Time.h"
 #include "RPGGame.h"      // NRPG::STrailPoint, NRPG::CAttackPortion, NRPG::IAttackable, EAttackResult, CRay, CObj/CPtr, vector, NDb::CRPGArmor
 #include "aiRender.h"     // NAI::CFastRenderer::SResult / SSourceInfo
 #include "aiPosition.h"   // NAI::SUnitPosition / SPosition / SPathPlace

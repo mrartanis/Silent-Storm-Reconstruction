@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitAttack.h"
 #include "wUnitMove.h"
 #include "wUnitServer.h"
@@ -11,15 +17,15 @@
 #include "RPGGame.h"
 #include "aiMap.h"
 #include "aiCollider.h"
-#include "..\misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
 #include "wObject.h"
 #include "wUnitStates.h"
 #include "wAckBase.h"
 #include "RPGToHit.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataAI.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataAI.h"
 #include "RPGCritical.h"
 #include "aiPath.h"
 #include "wUnitAttackExec.h"
@@ -419,7 +425,7 @@ static CCommandExecute* CreateActionExecMove( CUnitServer *pUS, const vector<NAI
 	CObj<NAI::CPath> pPath = FindPath( pWorld->GetPathNetwork(), pUS, pUS->GetPosition().pos.p,
 		dst, 0, false, NAI::PF_USE_POSEDIR, bStrafe );
 	if ( IsValid( pPath ) )
-		return CreateMoveExecutor( pUS, pPath, NAI::PF_USE_POSEDIR, eActive, pError );
+		return CreateMoveExecutor( pUS, pPath.GetPtr(), NAI::PF_USE_POSEDIR, eActive, pError );
 
 	*pError = UCR_PATH_NOT_FOUND;
 	return 0;

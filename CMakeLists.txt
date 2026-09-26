@@ -621,6 +621,14 @@ target_precompile_headers(NativeAttackRulesTests PRIVATE "${root}/Main/StdAfx.h"
 target_link_libraries(NativeAttackRulesTests PRIVATE Main)
 target_compile_features(NativeAttackRulesTests PRIVATE cxx_std_17)
 add_test(NAME NativeAttackRulesTests COMMAND NativeAttackRulesTests)
+add_executable(NativeHumanReachTests
+  "${root}/diagnostics/NativeHumanReachTests.cpp")
+target_include_directories(NativeHumanReachTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeHumanReachTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeHumanReachTests PRIVATE Main)
+target_compile_features(NativeHumanReachTests PRIVATE cxx_std_17)
+add_test(NAME NativeHumanReachTests COMMAND NativeHumanReachTests)
 add_executable(NativePerkPointsTests
   "${root}/diagnostics/NativePerkPointsTests.cpp")
 target_include_directories(NativePerkPointsTests PRIVATE

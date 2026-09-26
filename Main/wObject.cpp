@@ -1,12 +1,18 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
 #include "wObject.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataAnimation.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataSound.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataAnimation.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataSound.h"
+#include "../DBFormat/DataRPG.h"
 #include "RPGObject.h"
 #include "RPGItem.h"
 #include "Transform.h"
@@ -21,6 +27,13 @@
 #include "aiNearestPosition.h"
 #include "scriptCallLUA.h"
 #include "aiMap.h"
+#if !defined(_WIN32)
+#include <cstdio>
+static void OutputDebugString( const char *message )
+{
+	std::fputs( message, stderr );
+}
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWorld

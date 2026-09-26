@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitAttack.h"
 #include "wUnitMove.h"
 #include "wUnitServer.h"
@@ -13,17 +19,17 @@
 #include "aiMap.h"
 #include "aiCollider.h"
 #include "phCollider.h"	// PhysCollideInfo (impact path; the free NAI::CollideInfo was removed)
-#include "..\misc\RandomGen.h"
-#include "..\MiscDll\LogStream.h"
+#include "../Misc/RandomGen.h"
+#include "../MiscDll/LogStream.h"
 #include "wObject.h"
 #include "wUnitStates.h"
 #include "wAckBase.h"
 #include "RPGToHit.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataSound.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\DBFormat\DataMap.h"	// NDb::EDiplomacyState / DS_ENEMY (CExecHeal::CanDoIt diplomacy gate)
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataSound.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataMap.h"	// NDb::EDiplomacyState / DS_ENEMY (CExecHeal::CanDoIt diplomacy gate)
 #include "RPGCritical.h"
 #include "wUnitAttack.h"
 #include "wUnitAttackExec.h"
@@ -33,20 +39,16 @@
 #include "wUnitQueue.h"
 #include "wDialog.h"
 #include "scriptCallLUA.h"
-#include "..\Misc\EventsBase.h"
+#include "../Misc/EventsBase.h"
 #include "eventUnit.h"
+#if defined(_WIN32)
+static CRandomGenerator &AttackExecRandom() { return random; }
+#else
+static CRandomGenerator &AttackExecRandom() { return s2_game_random; }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWorld
 {
-////////////////////////////////////////////////////////////////////////////////////////////////////
-bool IsWithinHumanReach( const CVec3 &ptFrom, const CVec3 &ptTarget, float fPlaneDist )
-{
-	if ( sqr( ptFrom.x - ptTarget.x ) + sqr( ptFrom.y - ptTarget.y ) > sqr( fPlaneDist ) )
-		return false;
-	if ( ptTarget.z < ptFrom.z - 0.5 || ptTarget.z > ptFrom.z + 2 )
-		return false;
-	return true;
-}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail @0x3a1db0: reach gate for a melee swing -- F_MELEE_DISTANCE, doubled when the unit
 // carries a reach extender (docked PK cannon).
@@ -674,8 +676,8 @@ static EUnitCommandResult CanMoveInventoryItem( CUnitServer *pUS, CCmdMoveInvent
 static void LaunchItem( CUnitServer *pUS, NRPG::IInventoryItem *pItem )
 {
 	CVec3 shift;
-	shift.x = random.GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
-	shift.y = random.GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
+	shift.x = AttackExecRandom().GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
+	shift.y = AttackExecRandom().GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
 	shift.z = 1.5f;
 	CDumbUnitServer::SResItem item;
 	item.ptCenter = pUS->GetPosition().GetCP() + shift;
@@ -1586,7 +1588,7 @@ bool CExecShootUnit::IsAttackCanceled()
 	CPtr<NRPG::IUnitMission> pRPG = pUS->GetUnitRPG();
 	CPtr<NRPG::IWeaponItem> pWeapon = pRPG->GetWeaponItem();
 	bool bCanStopBurst = pRPG->HasPerk( NRPG::N_PERK_LONG_BURST_AUTO_STOP ) ||
-		random.Check( pRPG->GetSkillValue( NDb::ST_BURST ) );
+		AttackExecRandom().Check( pRPG->GetSkillValue( NDb::ST_BURST ) );
 	if ( !IsValid( pTarget ) )
 		return true;
 	if ( IsValid( pWeapon ) && pWeapon->GetShootMode() == NDb::SM_LongBurst && 
@@ -1828,15 +1830,15 @@ void CExecThrowGrenade::CheckToHitAndDelay( NRPG::IGrenadeItem *pGrenade )
 	pToHitCalcer->Log();
 
 	// find the actual grenade explosion delay
-	int nRandom = random.Get(100);
+	int nRandom = AttackExecRandom().Get(100);
 	if ( nRandom > nToHit )
 	{
 		// we miss
 			// find where the grenade will actually fly
 		float fD = 0.2f * fabs( grenadeParams.vel );
-		grenadeParams.vel.x += random.GetFloat( -fD, +fD );
-		grenadeParams.vel.y += random.GetFloat( -fD, +fD );
-		grenadeParams.vel.z += random.GetFloat( -fD, +fD );
+		grenadeParams.vel.x += AttackExecRandom().GetFloat( -fD, +fD );
+		grenadeParams.vel.y += AttackExecRandom().GetFloat( -fD, +fD );
+		grenadeParams.vel.z += AttackExecRandom().GetFloat( -fD, +fD );
 	}
 	csRPG << "<font size=16pt>";
 	csRPG << CC_ORANGE << " \tCheck:" << nRandom;
@@ -1846,11 +1848,11 @@ void CExecThrowGrenade::CheckToHitAndDelay( NRPG::IGrenadeItem *pGrenade )
 	grenadeParams.fT = Clamp( grenadeParams.fT, 0.f, float(nMaxDelay) );
 	grenadeParams.fT = nMaxDelay - grenadeParams.fT;
 	csRPG << " True delay: " << grenadeParams.fT;
-	nRandom = random.Get(100);
+	nRandom = AttackExecRandom().Get(100);
 	if ( nRandom >= 99 || nRandom >= pToHitCalcer->GetSkill() )
 	{
 		// change the delay time
-		grenadeParams.fT *= random.GetFloat( 0.5f, 2.f );
+		grenadeParams.fT *= AttackExecRandom().GetFloat( 0.5f, 2.f );
 		grenadeParams.fT = Clamp( grenadeParams.fT, 0.f, float(nMaxDelay) * 0.75f );
 	}
 	csRPG << " Used delay: " << grenadeParams.fT << endl;
@@ -1994,7 +1996,7 @@ void CExecLaunchRocket::LaunchRocket( )
 		CObj<NRPG::CCoverInfo> pCover = pUS->GetWorld()->GetGame()->CalcCoversForTile( pUS->GetAttackOrigin( pUS->GetPosition() ),
 			attack[0], pUS, ptAnimTarget, pUS->GetMinClearDistance() );
 		//
-		if ( !NRPG::PeekRayForRocket( pCover, &r, random.Get( 1, 100 ) <= nToHit ) )
+		if ( !NRPG::PeekRayForRocket( pCover, &r, AttackExecRandom().Get( 1, 100 ) <= nToHit ) )
 		{
 			ASSERT( 0 );
 			return;
@@ -3168,14 +3170,14 @@ void CExecThrowKnife::ThrowKnife()
 	CVec3 speed = ptTarget - item.ptCenter;
 	Normalize(&speed);
 	speed *= fSpeed;
-	if ( random.Get( 1, 100 ) > nToHit )
+	if ( AttackExecRandom().Get( 1, 100 ) > nToHit )
 	{
 		// we miss
 		// find where the knife will actually fly
 		float fD = 0.15f * fabs( fSpeed );
-		speed.x += random.GetFloat( -fD, +fD );
-		speed.y += random.GetFloat( -fD, +fD );
-		speed.z += random.GetFloat( -fD, +fD );
+		speed.x += AttackExecRandom().GetFloat( -fD, +fD );
+		speed.y += AttackExecRandom().GetFloat( -fD, +fD );
+		speed.z += AttackExecRandom().GetFloat( -fD, +fD );
 	}
 	pUS->GetWorld()->ThrowKnife( item.ptCenter, speed, 
 		pUS->animator.GetTimeLabel1(), fMaxDist, item.pModel, attack.front(), item.pItem, pUS ); 

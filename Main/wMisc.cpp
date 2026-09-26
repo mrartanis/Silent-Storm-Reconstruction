@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wMisc.h"
 #include "Transform.h"
 #include "GSceneUtils.h"
 #include "wMain.h"
-#include "..\DBFormat\DataSound.h"
+#include "../DBFormat/DataSound.h"
 namespace NWorld
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////

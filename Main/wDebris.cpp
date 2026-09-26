@@ -1,19 +1,30 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wDebris.h"
 #include "wInterface.h"
 #include "GAnimParticles.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataGeometry.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataGeometry.h"
 #include "aiMap.h"
 #include "aiStability.h"
 #include "GAnimation.h"
 #include "RPGItemInfo.h"
 #include "Transform.h"
-#include "..\Misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
 #include "RPGAttackMech.h"
 #include "GSceneUtils.h"
 #include "GView.h"
+#if defined(_WIN32)
+static CRandomGenerator &DebrisRandom() { return random; }
+#else
+static CRandomGenerator &DebrisRandom() { return s2_game_random; }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWorld
 {
@@ -476,11 +487,11 @@ bool CDebrisController::Segment( NAI::IAIMap *pMap, SSphere *pInvalidate )
 		if ( !IsValid( pInventoryItem ) )
 			continue;
 		//
-		CDBPtr<NDb::CTEffect> pTEffect = pInventoryItem->GetDBItem()->pDestructionEffect;
+		CDBPtr<NDb::CTEffect> pTEffect = pInventoryItem->GetDBItem()->pDestructionEffect.GetPtr();
 		if ( IsValid( pTEffect ) )
 		{
 			SRand rand;
-			CQuat rot = CQuat( random.GetFloat( 0, 10000 ), CVec3( 0, 0, 1 ) );
+			CQuat rot = CQuat( DebrisRandom().GetFloat( 0, 10000 ), CVec3( 0, 0, 1 ) );
 			CDBPtr<NDb::CEffect> pEffect = pTEffect->GetEffect( &rand );
 			if ( IsValid( pEffect ) )
 				CreateParticle( (*i)->GetPos(), rot, pEffect, pItem->GetFloor() );

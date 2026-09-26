@@ -1,14 +1,20 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitQueue.h"
 #include "aiPath.h"
 #include "wMain.h"
 #include "wOSBase.h"
 #include "wObject.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\DBFormat\DataRPG.h"    // NDb::CRPGKey (HasKey @0x3bcfb0 key-number match)
-#include "..\DBFormat\DataMisc.h"   // NDb::CRPGPicklock (the pick attempt @0x3bdb70)
-#include "..\Misc\RandomGen.h"      // SRand (the tick-seeded local pick roll)
-#include "..\MiscDll\LogStream.h"   // csSystem pick-attempt log lines (retail verbatim)
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataRPG.h"    // NDb::CRPGKey (HasKey @0x3bcfb0 key-number match)
+#include "../DBFormat/DataMisc.h"   // NDb::CRPGPicklock (the pick attempt @0x3bdb70)
+#include "../Misc/RandomGen.h"      // SRand (the tick-seeded local pick roll)
+#include "../MiscDll/LogStream.h"   // csSystem pick-attempt log lines (retail verbatim)
 #include "RPGUnitInfo.h"
 #include "RPGUnitMission.h"         // NRPG::IUnitMission (GetInventory/GetSkillValue/HasPerk)
 #include "RPGItemSet.h"             // NRPG::CPicklockItem (WorkingPicklock @0x3bcd60)
@@ -223,7 +229,7 @@ void CExecQueue::FullCancel()
 {
 	if ( !execList.empty() )
 	{
-		CPtr<CCommandExecute> pFront = execList.front();
+		CPtr<CCommandExecute> pFront = execList.front().GetPtr();
 		CDynamicCast<IExecMove> pMove(pFront);
 		if (pMove)
 			pMove->FullCancel();
