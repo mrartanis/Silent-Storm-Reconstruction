@@ -290,6 +290,18 @@ target_link_libraries(NativeConsoleConfigTests PRIVATE s2_game_console)
 add_test(NAME NativeConsoleConfigTests COMMAND NativeConsoleConfigTests)
 set_tests_properties(NativeConsoleConfigTests PROPERTIES
   ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/native-console-user")
+add_library(s2_game_save_manager STATIC "${root}/Main/iSaveManagerLinux.cpp")
+target_include_directories(s2_game_save_manager PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/MiscDll")
+target_link_libraries(s2_game_save_manager PUBLIC
+  s2_game_console s2_game_streams s2_portable_user_paths)
+target_compile_features(s2_game_save_manager PUBLIC cxx_std_17)
+add_executable(NativeSaveManagerTests
+  "${root}/diagnostics/NativeSaveManagerTests.cpp")
+target_link_libraries(NativeSaveManagerTests PRIVATE s2_game_save_manager)
+add_test(NAME NativeSaveManagerTests COMMAND NativeSaveManagerTests)
+set_tests_properties(NativeSaveManagerTests PROPERTIES
+  ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/native-save-user")
 add_library(s2_game_world_object STATIC "${root}/Main/wOSBase.cpp")
 target_include_directories(s2_game_world_object PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
