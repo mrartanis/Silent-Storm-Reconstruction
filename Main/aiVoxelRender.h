@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "../Misc/2Darray.h"
 #include "../FileIO/PortableStructureChunks.h"
+#include "VoxelObjectHash.h"
 //
 namespace NDb
 {
@@ -170,7 +171,11 @@ struct SVoxelObjectKey
 };
 struct SVoxelObjectHash
 {
-	int operator()( const SVoxelObjectKey &k ) const { return ((int)(size_t)k.pUser.GetPtr()) ^ k.nUserID; }
+	std::size_t operator()( const SVoxelObjectKey &k ) const
+	{
+		return HashVoxelObjectKey(
+			reinterpret_cast<std::uintptr_t>( k.pUser.GetPtr() ), k.nUserID );
+	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef unsigned short ushort;
