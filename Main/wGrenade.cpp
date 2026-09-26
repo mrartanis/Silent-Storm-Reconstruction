@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wGrenade.h"
 #include "wInterfaceVisitors.h"
 #include "Sync.h"
@@ -6,9 +12,9 @@
 #include "wMain.h"
 #include "GAnimation.h"
 #include "GAnimParticles.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiMap.h"
 #include "RPGAttackMech.h"
 #include "wUnitServer.h"    // complete CUnitServer: the thrower->CObjectBase cast (CASphereSet pIgnore) needs the real bases

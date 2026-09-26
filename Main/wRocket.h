@@ -4,7 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
  
-#include "time.h"
+#include "A5Time.h"
 namespace NDb
 {
 	class CModel;

@@ -1,25 +1,32 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "A5Script.h"
 #include "wMain.h"
 #include "wUnitServer.h"
 #include "wUnitGroup.h"
 #include "wOSBase.h"
-#include "..\DBFormat\DataCamera.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\Misc\RandomGen.h"
+#include "../DBFormat/DataCamera.h"
+#include "../MiscDll/LogStream.h"
+#include "../Misc/RandomGen.h"
 #include "rpgGlobal.h"
 #include "scriptPtr.h"
 #include "aiPosition.h"
 #include "aiRoute.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataDifficulty.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataDifficulty.h"
+#include "../DBFormat/DataFormat.h"
 #include "scriptCallLUA.h"
 #include "scriptCommon.h"
 #include "scriptPosition.h"
-#include "..\Script\lstate.h"
+#include "../Script/lstate.h"
 #include "wDebris.h"
 #include <cstdint>
+#include <cstdarg>
 //
 // lua_showlog (retail @0x9c70f8, default 0, saved; registered in the A5Script block)
 bool bShowLuaLog = false;

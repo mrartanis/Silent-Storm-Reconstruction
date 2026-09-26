@@ -344,6 +344,36 @@ target_include_directories(s2_game_world_entities PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world_entities PUBLIC cxx_std_17)
 target_compile_options(s2_game_world_entities PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_world_events STATIC
+  "${root}/Main/wAckBase.cpp"
+  "${root}/Main/wAck.cpp"
+  "${root}/Main/wPocket.cpp"
+  "${root}/Main/wUnitGroup.cpp"
+  "${root}/Main/wBullet.cpp"
+  "${root}/Main/wGrenade.cpp"
+  "${root}/Main/wKnife.cpp"
+  "${root}/Main/wRocket.cpp"
+  "${root}/Main/wExplTracker.cpp")
+target_include_directories(s2_game_world_events PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_world_events PUBLIC cxx_std_17)
+target_compile_options(s2_game_world_events PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_scenario_scripts STATIC
+  "${root}/Main/scScenarioTracker.cpp"
+  "${root}/Main/scFlowChartItems.cpp"
+  "${root}/Main/scFlowChart.cpp"
+  "${root}/Main/scCommands.cpp"
+  "${root}/Main/scriptCommon.cpp"
+  "${root}/Main/A5Script.cpp"
+  "${root}/Main/scriptPtr.cpp")
+target_include_directories(s2_game_scenario_scripts PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_scenario_scripts PUBLIC cxx_std_17)
+target_compile_options(s2_game_scenario_scripts PRIVATE -ffunction-sections -fdata-sections)
 # Original AI commander, route, reaction, and nearest-position units.
 # These compile as the next game-used dependency group; complete Linux
 # AI/world execution still requires the remaining map and mission modules.

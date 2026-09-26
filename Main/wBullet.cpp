@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wDynObject.h"
 #include "wInterfaceVisitors.h"
 #include "Sync.h"
@@ -6,18 +12,24 @@
 #include "wMain.h"
 #include "GAnimation.h"
 #include "GAnimParticles.h"
-#include "..\Misc\StrProc.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../Misc/StrProc.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiMap.h"
 #include "wUnitServer.h"
 #include "RPGUnitMission.h"
 #include "wAckBase.h"
 #include "wDecal.h"
 #include "wExplosionPerks.h"
-#include "..\Misc\EventsBase.h"   // NGlobal::ThrowEvent
+#include "../Misc/EventsBase.h"   // NGlobal::ThrowEvent
 #include "eventUnit.h"            // NWorld::CEventOnBullet (AI bullet-perception event)
+#include "../Misc/RandomGen.h"
+#if defined(_WIN32)
+static CRandomGenerator &BulletRandom() { return random; }
+#else
+static CRandomGenerator &BulletRandom() { return s2_game_random; }
+#endif
 
 namespace NWorld
 {
@@ -141,7 +153,7 @@ bool CBulletServer::Segment()
 			if ( pShotEffect )
 			{
 				CVec3 dir = -trailpointsSet[nTemp].vNormal;
-				CQuat rndX( random.GetFloat(0,10000), CVec3(1,0,0) );
+				CQuat rndX( BulletRandom().GetFloat(0,10000), CVec3(1,0,0) );
 				if ( fabs( dir.x ) < 0.999f )
 					rndX = CQuat( acos( dir.x ), CVec3( 0, -dir.z, dir.y ), true ) * rndX;
 				else if ( dir.x < 0 )

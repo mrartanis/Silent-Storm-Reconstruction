@@ -1,14 +1,20 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wRocket.h"
 #include "GAnimation.h"
 #include "GSkeleton.h"
 #include "aiMap.h"
 #include "RPGGame.h"
 #include "RPGItemInfo.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 #include "wUnitServer.h"
 #include "Transform.h"
-#include "gSceneUtils.h"
+#include "GSceneUtils.h"
 #include "wMain.h"
 
 namespace NWorld
@@ -181,7 +187,7 @@ bool CRocketServer::Segment()
 	//
 	if ( pWorld->GetTime()->GetValue() > tFinish )
 	{
-		// add ôèêòèâíóþ grenade
+		// add Ñ„Ð¸ÐºÑ‚Ð¸Ð²Ð½ÑƒÑŽ grenade
 		pWorld->ThrowGrenade( curPos, velocity, pWorld->GetTime()->GetValue(), 
 			0, pModel, pRocket->GetDBAmmo()->pExplosiveBullet, pIgnored );
 		return true;

@@ -108,7 +108,7 @@ public:
 	CScenarioFlowChart( int _nScenarioID, bool _bFull );
 	//
 	CScenarioFlowChartPathFinder* GetPathFinder() { return pPathFinder; }
-	void CScenarioFlowChart::GetZonesWhichCanBeOpened( CScenarioClue *pClue, 
+	void GetZonesWhichCanBeOpened( CScenarioClue *pClue,
 		list< CPtr<CScenarioZone> > *pZones );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////

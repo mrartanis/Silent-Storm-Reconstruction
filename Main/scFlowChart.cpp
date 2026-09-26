@@ -1,16 +1,34 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\MiscDll\Commands.h"
-#include "..\Misc\RandomGen.h"
-#include "..\Misc\StrProc.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/Commands.h"
+#include "../Misc/RandomGen.h"
+#include "../Misc/StrProc.h"
+#include "../MiscDll/LogStream.h"
 //
-#include "..\DBFormat\DataScenario.h"
+#include "../DBFormat/DataScenario.h"
 //
 #include "scFlowChartItems.h"
 #include "scFlowChart.h"
 //
 #include <fstream>
+#if !defined(_WIN32)
+#include <cstdio>
+static void OutputDebugString( const char *message )
+{
+	std::fputs( message, stderr );
+}
+#endif
+#if defined(_WIN32)
+static CRandomGenerator &FlowChartRandom() { return random; }
+#else
+static CRandomGenerator &FlowChartRandom() { return s2_game_random; }
+#endif
 //
 namespace NScenario
 {
@@ -187,7 +205,7 @@ void CScenarioFlowChartBase::PlaceClue( CScenarioClue *pClue )
 			for ( int i = 0; i < nSize; ++i )
 				possibleZones[i]->PlaceClue( pClue );
 		else
-			possibleZones[ random.Get( 0, nSize ) ]->PlaceClue( pClue );
+			possibleZones[ FlowChartRandom().Get( 0, nSize ) ]->PlaceClue( pClue );
 		//
 		possibleZones.clear();
 	}
@@ -279,7 +297,7 @@ void CScenarioFlowChartBase::Generate()
 	{
 		int n = 0;
 		if ( !bFull )
-			n = random.Get( 0, cluesToPlace.size() );
+			n = FlowChartRandom().Get( 0, cluesToPlace.size() );
 		PlaceClue( cluesToPlace[ n ] );
 		cluesToPlace.erase( cluesToPlace.begin() + n );
 	}
@@ -614,12 +632,12 @@ void CScenarioFlowChart::SetPathDifficulty( const list< CPtr<CScenarioZone> > &p
 	if ( bCheckBegin )
 		fBegin = path.front()->GetDifficulty();
 	else
-		fBegin = max( 1, fEnd - path.size() + 1 );
+		fBegin = max( 1.f, fEnd - path.size() + 1 );
 	float fStep = ( fEnd - fBegin ) / ( path.size() - 1 );
 	float fCurrent = fBegin;
 	for ( list< CPtr<CScenarioZone> >::const_iterator zone = path.begin(); zone != path.end(); ++zone )
 	{
-		(*zone)->SetDifficulty( max( 1, fCurrent ) );
+		(*zone)->SetDifficulty( max( 1.f, fCurrent ) );
 		fCurrent += fStep;
 	}
 	//
@@ -736,7 +754,7 @@ void CScenarioFlowChartItemsList<T>::UpdateSignature()
 		signature.resize( nMaxSize / 32 + 1 );
 		for ( int i = 0; i < signature.size(); ++i )
 			signature[i] = 0;
-		for (	list< CPtr<T> >::iterator i = items.begin(); i != items.end(); ++i )
+		for (	typename list< CPtr<T> >::iterator i = items.begin(); i != items.end(); ++i )
 			signature[ (*i)->GetInnerID() / 32 ] |= ( 1 << ( (*i)->GetInnerID() % 32 ) );
 		bUpdateSignature = false;
 	}
@@ -781,7 +799,7 @@ void CScenarioFlowChartItemsList<T>::Erase( T *pItem )
 	//
 	if ( IsContainItem( pItem ) )
 	{
-		list< CPtr<T> >::iterator i = find( items.begin(), items.end(), pItem );
+		typename list< CPtr<T> >::iterator i = find( items.begin(), items.end(), pItem );
 		if ( i != items.end() )
 		{
 			items.erase( i );

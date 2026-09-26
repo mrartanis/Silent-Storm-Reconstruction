@@ -1,13 +1,25 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataScenario.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../DBFormat/DataScenario.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataFormat.h"
 //
 #include "MapBuild.h"
 //
 #include "scFlowChartItems.h"
 #include <fstream>
+#include "../Misc/RandomGen.h"
+#if defined(_WIN32)
+static CRandomGenerator &ScenarioRandom() { return random; }
+#else
+static CRandomGenerator &ScenarioRandom() { return s2_game_random; }
+#endif
 //
 namespace NScenario
 {
@@ -31,7 +43,7 @@ static void RemoveVectorItem( vector< CPtr<T> > *pVector, T *pItem )
 	ASSERT( IsValid( pItem ) );
 	if ( !IsValid( pItem ) || pVector == 0 )
 		return;
-	vector< CPtr<T> >::iterator i = find( pVector->begin(), pVector->end(), pItem );
+	typename vector< CPtr<T> >::iterator i = find( pVector->begin(), pVector->end(), pItem );
 	if ( i != pVector->end() )
 		pVector->erase( i );
 }
@@ -178,7 +190,7 @@ int CScenarioZone::GetTemplateIDForClue( CScenarioClue *pClue )
 		return 0;
 	//
 	int k = 0;
-	int n = random.Get( 0, nMax );
+	int n = ScenarioRandom().Get( 0, nMax );
 	while ( n > 0 )
 	{
 		if ( templatesIDs[k] > 0 )
@@ -334,7 +346,7 @@ bool CScenarioClue::CanPlaceObjective( CScenarioObjective *pObjective )
 	for ( vector< CPtr<NDb::CDBScenarioObjective> >::iterator objective = pDBClue->objectives.begin();
 		objective != pDBClue->objectives.end(); ++objective )
 			if ( *objective == pObjective->GetDBObjective() )
-				return TRUE;
+				return true;
 	//
 	return false;
 }

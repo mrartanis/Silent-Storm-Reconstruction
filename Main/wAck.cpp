@@ -1,17 +1,23 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataAck.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../DBFormat/DataAck.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
 #include "time.h"
 #include "wAckBase.h"
 #include "wDumbUnit.h"
 #include "wUnitServer.h"
 #include "wMain.h"	// CPlayer roster (CAckNPercentOfGroupIsKilled squad/dead counts)
-#include "rpgUnit.h"
-#include "rpgUnitMission.h"
+#include "RPGUnit.h"
+#include "RPGUnitMission.h"
 #include "RPGItemInfo.h"	// item interfaces for GetRatingDifference (grenade/melee/weapon)
-#include "..\Misc\EventsBase.h"
+#include "../Misc/EventsBase.h"
 #include "eventUnit.h"
 //
 #include "wAck.h"

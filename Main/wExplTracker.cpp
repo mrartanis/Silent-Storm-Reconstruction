@@ -1,21 +1,33 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiMap.h"
 #include "wExplTracker.h"
 #include "RPGAttackMech.h"
 #include "wMain.h"
-#include "../dbformat/DataFormat.h"
-#include "../dbformat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
 #include "wUnitServer.h"
 #include "wAckBase.h"
 #include "RPGUnitMission.h"
 #include "aiVoxelRender.h"
 #include "wTSFlags.h"
-#include "..\Misc\HPTimer.h"
+#include "../Misc/HPTimer.h"
 #include "wDecal.h"
-#include "..\Misc\EventsBase.h"   // NGlobal::ThrowEvent
+#include "../Misc/EventsBase.h"   // NGlobal::ThrowEvent
 #include "eventUnit.h"            // NWorld::CEventOnGrenadeExplosion (AI grenade-perception event)
 #include "wTerrain.h"             // CTerrain::DrawExplosion (blast grass scorch)
 #include "wMisc.h"                // CreateDGrassEvent
+#include "../Misc/RandomGen.h"
+#if defined(_WIN32)
+static CRandomGenerator &ExplosionRandom() { return random; }
+#else
+static CRandomGenerator &ExplosionRandom() { return s2_game_random; }
+#endif
 
 namespace NWorld
 {
@@ -563,7 +575,7 @@ void CVoxelExplTracker::MakeDamage()
 				fDecalRadius = pEngGrenade->fDecalRadius;
 			// retail rolls the [0.8,1.2) factor ONCE and the SAME randomized radius feeds the decal, the
 			// terrain grass scorch AND the grass-event square (disasm @0x756836: single ISAAC roll in ebx).
-			const float fRadius = fDecalRadius * random.GetFloat( 0.8f, 1.2f );
+			const float fRadius = fDecalRadius * ExplosionRandom().GetFloat( 0.8f, 1.2f );
 			if ( !targets.empty() && IsValid(pWorld) )
 				new CDecal( pWorld, ptCenter + CVec3(0,0,0.3f), fRadius, NDb::GetMaterial( 3264 ), targets );
 			if ( IsValid( pWorld ) )
@@ -653,14 +665,14 @@ void CVoxelExplTracker::ExplodeFragments()
 	int nTargeted = Min( (int)units.size(), nFragments - 20 );
 	for ( int i = 0; i < nTargeted; ++i )
 	{
-		int nIdx = units.empty() ? 0 : (int)random.Get( (unsigned int)units.size() );   // retail: raw isaac % size
+		int nIdx = units.empty() ? 0 : (int)ExplosionRandom().Get( (unsigned int)units.size() );   // retail: raw isaac % size
 		list< CPtr<CUnitServer> >::iterator it = units.begin();
 		for ( int k = 0; k < nIdx; ++k )
 			++it;
 		if ( IsValid( *it ) )
 		{
 			CVec3 pt;
-			pWorld->GetAIMap()->GetUnitHLPos( &pt, CastToObjectBase( it->GetPtr() ), (int)random.Get( 6 ) );   // retail: isaac % 6
+			pWorld->GetAIMap()->GetUnitHLPos( &pt, CastToObjectBase( it->GetPtr() ), (int)ExplosionRandom().Get( 6 ) );   // retail: isaac % 6
 			v = pt - ptCenter;
 			Normalize( &v );   // self-guarded against a zero delta, matching the retail fabs2 != 0 gate
 			pWorld->PerformRangedAttack( att, ray, ignores, pWorld->GetTime()->GetValue(), 0, 0, fRange );
@@ -674,9 +686,9 @@ void CVoxelExplTracker::ExplodeFragments()
 		float fN2;
 		do
 		{
-			v.x = random.GetFloat( -1, 1 );
-			v.y = random.GetFloat( -1, 1 );
-			v.z = random.GetFloat( -1, 1 );
+			v.x = ExplosionRandom().GetFloat( -1, 1 );
+			v.y = ExplosionRandom().GetFloat( -1, 1 );
+			v.z = ExplosionRandom().GetFloat( -1, 1 );
 			fN2 = fabs2( v );
 		} while ( fN2 > 1.0f || fN2 <= 0.001f );
 		Normalize( &v );

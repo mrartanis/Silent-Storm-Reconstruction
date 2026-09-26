@@ -1,20 +1,26 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "..\Misc\StrProc.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataRPG.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../Misc/StrProc.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataRPG.h"
 #include "rpgGlobal.h"
 #include "scScenarioTracker.h"
 #include "wMain.h"
 #include "wUICommands.h"
 #include "wInterface.h"
-#include "..\Script\lua.h"
+#include "../Script/lua.h"
 #include "A5Script.h"
 #include "scriptUI.h"		// NScript::RegisterScriptUITagMethods (window.x gettable/settable tag methods)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NScript
 {
 externA5 Script::SRegFunction pRegList[];
-Script::SRegFunction pLuaPtrTagFuncList[] = { (0,0) };
+Script::SRegFunction pLuaPtrTagFuncList[] = { {0,0} };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void SharedInit( Script *scr )
 {
@@ -240,7 +246,12 @@ static void PrintScriptState( const string &szID, const vector<wstring> &szParam
 	else
 		csSystem << pScr->GetObjectAsText( strParam.c_str() );
 }
-#include "..\Misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
+#if defined(_WIN32)
+static CRandomGenerator &ScriptTestRandom() { return random; }
+#else
+static CRandomGenerator &ScriptTestRandom() { return s2_game_random; }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void TestRnd( const string &szID, const vector<wstring> &szParams, void *pContext )
 {
@@ -254,7 +265,7 @@ static void TestRnd( const string &szID, const vector<wstring> &szParams, void *
 	int nLast = 200;
 	for( int i = 0; i < nMaxC; ++i )
 	{
-		int nN = random.Get(100);
+		int nN = ScriptTestRandom().Get(100);
 		if ( abs(nN-nLast) < 10 )
 			nCount++;
 		nLast = nN;

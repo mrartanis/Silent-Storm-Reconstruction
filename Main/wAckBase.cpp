@@ -1,8 +1,14 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wAckBase.h"
-#include "..\Misc\RandomGen.h"
-#include "..\DBFormat\DataAck.h"
-#include "..\DBFormat\DataMap.h"	// NDb::EDiplomacyState / DS_ENEMY (CAckBase::IsEnemy gate)
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataAck.h"
+#include "../DBFormat/DataMap.h"	// NDb::EDiplomacyState / DS_ENEMY (CAckBase::IsEnemy gate)
 #include "wInterface.h"
 #include "wUnitServer.h"
 #include "wAck.h"
@@ -285,7 +291,8 @@ NDb::CDBAckSequence *CGlobalAck::GetSequence( IPlayer *pPlayer, CUnitServer **pp
 		if ( fProb > 0 )
 			roulette.AddSector( fProb );
 		//
-		int nSector = roulette.GetRandomSector( &SRand() );
+		SRand randomSeed;
+		int nSector = roulette.GetRandomSector( &randomSeed );
 		if ( nSector < sequences.size() )
 		{
 			list< SAck >::iterator i = sequences.begin();

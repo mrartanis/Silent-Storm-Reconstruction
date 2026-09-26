@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "wInterface.h"
 #include "wUnitServer.h"
@@ -7,20 +13,31 @@
 #include "RPGMerc.h"
 #include "RPGItem.h"
 #include "RPGItemInfo.h"
-#include "RPGGlobal.h"
+#include "rpgGlobal.h"
 //
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataScenario.h"
-#include "..\DBFormat\DataConst.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataScenario.h"
+#include "../DBFormat/DataConst.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataMap.h"
 //
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 //
 #include "scFlowChart.h"
 #include "scFlowChartItems.h"
 #include "scScenarioTracker.h"
 #include "scCommands.h"
+#if !defined(_WIN32)
+#include <chrono>
+#include <cstdint>
+static std::uint32_t ScenarioTickCount()
+{
+	using namespace std::chrono;
+	return static_cast<std::uint32_t>(duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count());
+}
+#else
+static DWORD ScenarioTickCount() { return GetTickCount(); }
+#endif
 //
 namespace NScenario
 {
@@ -52,7 +69,7 @@ SRandomSeed CScenarioTracker::GetRandomSeedForTemplate( int nTemplateID ) const
 			return pZone->GetRandomSeedForTemplate( nTemplateID );
 	}
 	//
-	return SRandomSeed( GetTickCount() );
+	return SRandomSeed( ScenarioTickCount() );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 NDb::CString *CScenarioTracker::GetClueDescriptionFromObjective( CScenarioClue *pClue ) const
@@ -564,7 +581,7 @@ void CScenarioTracker::ProcessScenario( const vector< CPtr<NRPG::CUnit> > &units
 	for ( vector< CPtr<NRPG::CUnit> >::const_iterator i = units.begin();
 		i != units.end(); ++i )
 	{
-		CPtr<NRPG::IInventory> pInventory = (*i)->pInventory;
+		CPtr<NRPG::IInventory> pInventory = (*i)->pInventory.GetPtr();
 		// slots
 		for ( int n = 0; n < NDb::N_SLOTS; ++n )
 		{
@@ -616,7 +633,7 @@ void CScenarioTracker::GetCluesFromPers( NRPG::CUnit *pPers, NRPG::CUnit *pCorps
 	if ( IsValid( pClue ) && !pPers->IsDead() )
 		pClues->push_back( pClue );
 	//
-	CPtr<NRPG::IInventory> pInventory = pPers->pInventory;
+	CPtr<NRPG::IInventory> pInventory = pPers->pInventory.GetPtr();
 	// hand slots (retail scans slots 0..1 only)
 	for ( int n = 0; n < NDb::N_SLOTS; ++n )
 	{
