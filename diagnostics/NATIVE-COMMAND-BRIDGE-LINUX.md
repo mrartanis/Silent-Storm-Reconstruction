@@ -26,3 +26,13 @@ The command bridge removes one linker dependency of `s2_game_ai_logic`.
 Linux still lacks the linked `CUnitServer` and RPG world needed for
 `CAILogic::GetCommand` and live route execution. No test double or
 unresolved-symbol exception is counted as completing that gate.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-command-bridge-20260926-01` was built with 16
+jobs from source commit `f85441fabb09745de28ce0f779d5d96e9571db73`.
+`Game.exe` SHA-256 is
+`7C0CE667D88638A4A950A23D713E71825A15F9964703977AD1FB12EE3730050E`.
+The archive has no FMOD DLL, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` import. In-game smoke remains unverified because the current
+remote D3D session cannot create a device even for an older known-good
+archive.
