@@ -1,19 +1,25 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "Transform.h"
 #include "InterfaceConst.h"
 #include "MapBuild.h"
 #include "wUnitServer.h"
 #include "RPGGame.h"
 #include "RPGBullet.h"
-#include "RPGGlobal.h"
+#include "rpgGlobal.h"
 #include "RPGStore.h"    // NRPG::CStore -- the serialized vendor stock (CGlobalPlayer tag 3)
 #include "RPGUnitInfo.h"
 #include "wObject.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataSound.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataSound.h"
 #include "RPGUnitMission.h"
 #include "RPGItemInfo.h"
 #include "RPGAttackMech.h"
@@ -21,7 +27,7 @@
 #include "GSceneUtils.h"
 #include "aiMap.h"
 #include "aiStability.h"
-#include "..\MiscDll\Commands.h"   // REGISTER_VAR_EX (game_eq_on_grenades)
+#include "../MiscDll/Commands.h"   // REGISTER_VAR_EX (game_eq_on_grenades)
 #include "wDebris.h"
 #include "wHintsFunc.h"  // NAI::FindClosePositionOnSurface @0x645b0
 #include "BuildingGrid.h"
@@ -39,42 +45,52 @@
 #include "wAckBase.h"
 #include "wAck.h"
 #include "wTerrain.h"
-#include "..\DBFormat\DataAck.h"
+#include "../DBFormat/DataAck.h"
 #include "wMainMoves.h"
 #include "wMainTrace.h"
-#include "..\DBFormat\DataTerrain.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataTerrain.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiJob.h"
 #include "A5Script.h"
-#include "scriptCallLua.h"
-#include "..\DBFormat\DataScenario.h"
-#include "..\DBFormat\DataMisc.h"			// NDb::CUIHint + NDatabase::GetTable/CDBIterator (AddNextUIHint)
+#include "scriptCallLUA.h"
+#include "../DBFormat/DataScenario.h"
+#include "../DBFormat/DataMisc.h"			// NDb::CUIHint + NDatabase::GetTable/CDBIterator (AddNextUIHint)
 #include "scFlowChartItems.h"
 #include "scScenarioTracker.h"
 #include "RPGDiplomacy.h"
 #include "RPGUnit.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 #include "RPGMerc.h"
 #include "wUnitStates.h"
-#include "..\Misc\StrProc.h"
-#include "..\DBFormat\DataCamera.h"
-#include "..\DBFormat\DataScript.h"
+#include "../Misc/StrProc.h"
+#include "../DBFormat/DataCamera.h"
+#include "../DBFormat/DataScript.h"
 #include "wUnitGroup.h"
 #include "wUICommands.h"
-#include "..\Misc\set.h"
+#include "../Misc/Set.h"
 #include "aiRoute.h"
 #include "aiReaction.h"			// NAI::CreateUnitReaction -- the map-deploy reaction install (AI-convergence Stage 2)
 #include "aiNearestPosition.h"	// NAI::GetNearestPosition -- FetchDeployPoint's free-cell snap (retail LookWhereToMoveUnit analog)
 #include "rpgCheatConstants.h"
 #include "wUnitCommands.h"
-#include "..\DBFormat\DataDifficulty.h"
-#include "..\Misc\EventsBase.h"
+#include "../DBFormat/DataDifficulty.h"
+#include "../Misc/EventsBase.h"
 #include "eventUnit.h"   // NWorld::CEventOnHearEnemy / CEventOnHearAlly / CEventOnStartGame (AI perception events)
 #include "eventPlayer.h"
 #include "eventWorld.h"     // NWorld::CEventOnSegment (thrown per segment for NAI::CAIScriptLogic)
 #include "aiControl.h"
 #include "wDecal.h"
 #include "phCollider.h"
+#include "../Misc/RandomGen.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+static void GameDebugString(const char *s) { OutputDebugString(s); }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+static void GameDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 //
 #include "wMain.h"
 //
@@ -521,7 +537,7 @@ CObjectServerBase *CWorld::AddObject( const SObjectPlace &pos,
 	NRPG::IObject *pRPGObject, const SMapElement &mapElement, CPostWorldCreateInfo *pPostInfo )
 {
 	CPtr<CObjectServerBase> pResult = 0;
-	CDBPtr<NDb::CObject> pDBObject = mapElement.pObject;
+	CDBPtr<NDb::CObject> pDBObject = mapElement.pObject.GetPtr();
 	if ( pDBObject->pDoor || pDBObject->pGun )
 	{
 		if ( !pDBObject->pModels[0] || !pDBObject->pModels[0]->pModel || !pDBObject->pModels[0]->pModel->pSkeleton )
@@ -755,7 +771,7 @@ void CWeatherTracker::RollNewWeather( int nTicks )
 		}
 		if ( weather == IWorld::WEATHER_SUNNY )
 		{
-			if ( random.GetFloat(0, 1) < 0.000625f )
+			if ( GameRandom().GetFloat(0, 1) < 0.000625f )
 			{
 				if ( weatherType == NDb::TWT_MAY_RAIN )
 				{
@@ -770,17 +786,17 @@ void CWeatherTracker::RollNewWeather( int nTicks )
 		}
 		else
 		{
-			if ( random.GetFloat(0, 1) < 0.0016666667f )
+			if ( GameRandom().GetFloat(0, 1) < 0.0016666667f )
 			{
 				if ( IsValid(pEffect) )
 					pEffect->EndSound();
 				weather = IWorld::WEATHER_SUNNY;
 				nWeatherCoolDown = 60;
 			}
-			if ( weather == IWorld::WEATHER_RAIN && random.GetFloat(0, 1) < 0.0025f )
+			if ( weather == IWorld::WEATHER_RAIN && GameRandom().GetFloat(0, 1) < 0.0025f )
 			{
 				static const int nThunderSounds[] = { 15075, 15076, 15077, 15078, 15079, 15080 };
-				AttachMiscObject( Create2DSound( NDb::GetSound(nThunderSounds[random.Get(6)]) ) );
+				AttachMiscObject( Create2DSound( NDb::GetSound(nThunderSounds[GameRandom().Get(6)]) ) );
 			}
 		}
 	}
@@ -1314,7 +1330,7 @@ void CWorld::DistributeClues( const SMapInfo &mapInfo,
 			if ( !personSlots.empty() && (*clue)->GetDBClue()->clueType == NDb::CT_PERSON &&
 				(*clue)->GetDBClue()->nPersID > 0 )
 			{
-				int n = random.Get( 0, personSlots.size() );
+				int n = GameRandom().Get( 0, personSlots.size() );
 				SClueSlot &slot = personSlots[n];
 				(*personClueToSlot)[ *clue ] = slot;
 				if ( slot.bInventorySlot )
@@ -1333,14 +1349,14 @@ void CWorld::DistributeClues( const SMapInfo &mapInfo,
 			if ( !itemSlots.empty() && (*clue)->GetDBClue()->clueType == NDb::CT_ITEM && 
 				(*clue)->GetDBClue()->nItemID > 0 )
 			{
-				int n = random.Get( 0, itemSlots.size() );
+				int n = GameRandom().Get( 0, itemSlots.size() );
 				(*itemClueToSlot)[ *clue ] = itemSlots[ n ];
 				itemSlots.erase( itemSlots.begin() + n );
 			}
 	//
 	char szStr[128];
 	sprintf( szStr, "[SCENARIO TRACKER] %d person slots, %d item slots\n", nPersonSlots, nItemSlots );
-	OutputDebugString( szStr );
+	GameDebugString( szStr );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::PlaceItemSlotsToMap( const ClueToSlot &clueToSlot )
@@ -1397,7 +1413,7 @@ void CWorld::PlaceItemSlotsToInventory( const ClueToSlot &clueToSlot )
 					pInventory->FindPlace( pItem, &position );
 					pInventory->Place( position, pItem );
 					sprintf( szStr, "[SCENARIO TRACKER] item %d was placed in an inventory\n", i->first->GetDBClue()->nItemID );
-					OutputDebugString( szStr );
+					GameDebugString( szStr );
 				}
 			}
 		}
@@ -1628,7 +1644,8 @@ bool CWorld::PlaceTemplate( int nTemplateID, CVec3 ptPos )
 	if ( !IsValid( pTemplate ) )
 		return false;
 	//
-	int nVariantID = NDb::GetTemplVariant( pTemplate, vector<int>(), -1, &SRand() )->GetRecordID();
+	SRand rand;
+	int nVariantID = NDb::GetTemplVariant( pTemplate, vector<int>(), -1, &rand )->GetRecordID();
 	//
 	SMapInfo mapInfo;
 	if ( !BuildMap( nVariantID, vector<string>(), GetPathNetwork(), &mapInfo ) )
@@ -1774,7 +1791,7 @@ void CWorld::CreateRandom( int nVariantID, const vector<string> &params,
 			}
 			char buf[128];
 			sprintf( buf, "Deploy spot at floor %d\n", nMinFloor );
-			OutputDebugString( buf );
+			GameDebugString( buf );
 			p.SetDirection( pPathNetwork->GetClosestDir( p.GetLayer(), ToRadian( s.pos.fRotation ) ) );
 			p.SetPose( NAI::CM_STAND );
 			deploySpots.push_back( SWorldDeploySpot( p, 0, k ) );
@@ -2546,7 +2563,7 @@ void CWorld::CheckForAcks()
 void CWorld::Explode( const CVec3 &ptEpicentre, int nPower )
 {
 	AttachMiscObject( CreateDGrassEvent( ptEpicentre ) );
-	CreateParticle( ptEpicentre, CQuat(random.GetFloat(0,10000),CVec3(0,0,1)), NDb::GetEffect( 51 ) );
+	CreateParticle( ptEpicentre, CQuat(GameRandom().GetFloat(0,10000),CVec3(0,0,1)), NDb::GetEffect( 51 ) );
 	//
 	MakeSound( ptEpicentre, NDb::GetSound(63) );
 	//
@@ -2573,9 +2590,9 @@ void CWorld::GenerateDebris( NDb::CDebrisMaterial *pDebrisMaterial, const CVec3 
 		SRand rand;
 		CPtr<NDb::CModel> pModel = pDebris->pModel->CreateModel( &rand );
 		CVec3 randVel;
-		randVel.x = random.GetFloat(-1,1);
-		randVel.y = random.GetFloat(-1,1);
-		randVel.z = random.GetFloat(1,3);
+		randVel.x = GameRandom().GetFloat(-1,1);
+		randVel.y = GameRandom().GetFloat(-1,1);
+		randVel.z = GameRandom().GetFloat(1,3);
 		// retail @0x762928: anonymous blast debris -- bFallFromBody=false, no parent, no item, floor -2
 		AddDebris( pModel.GetPtr(), pAIMap, ptCenter + CVec3(0,0,1), QNULL, randVel, pTime, false, 0, 0, -2 );
 	}
@@ -2978,7 +2995,7 @@ void CWorld::AddGrenadeExplosion( const CVec3 &vStartPosition, NDb::CRPGGrenade 
 	}
 	SRand rnd;
 	if ( pRPGGrenade->pEffect.p[ nEffectType ] )
-		CreateParticle( vStartPosition, CQuat(random.GetFloat(0,10000),CVec3(0,0,1)), pRPGGrenade->pEffect.p[ nEffectType ]->GetEffect( &rnd ) );
+		CreateParticle( vStartPosition, CQuat(GameRandom().GetFloat(0,10000),CVec3(0,0,1)), pRPGGrenade->pEffect.p[ nEffectType ]->GetEffect( &rnd ) );
 	//AttachMiscObject( new CDFlash( vStartPosition + CVec3(0,0,5), CVec3(1,1,1), 10, 3 ) );
 	if ( pRPGGrenade->pSound.p[ nSoundType ] )
 		MakeSound( vStartPosition, pRPGGrenade->pSound.p[ nSoundType ]->GetSound( &rnd )->pSound );
@@ -3023,7 +3040,7 @@ void CWorld::AddGrenadeExplosion( const CVec3 &vStartPosition, NDb::CRPGEngGrena
 	}
 	SRand rnd;
 	if ( pRPGEngGrenade->pEffect.p[ nEffectType ] )
-		CreateParticle( vStartPosition, CQuat(random.GetFloat(0,10000),CVec3(0,0,1)), pRPGEngGrenade->pEffect.p[ nEffectType ]->GetEffect( &rnd ) );
+		CreateParticle( vStartPosition, CQuat(GameRandom().GetFloat(0,10000),CVec3(0,0,1)), pRPGEngGrenade->pEffect.p[ nEffectType ]->GetEffect( &rnd ) );
 	if ( pRPGEngGrenade->pSound.p[ nSoundType ] )
 		MakeSound( vStartPosition, pRPGEngGrenade->pSound.p[ nSoundType ]->GetSound( &rnd )->pSound );
 	// retail @0x3648c0: enqueue into the explosion master (IExplosionMaster vtbl+0x10, the ENG
@@ -3189,7 +3206,7 @@ void CWorld::CheckSpot( const vector< CPtr<CPlayer> > &players )
 					{
 						float fDistance = fabs( pEnemyUS->GetPosition().GetCP() - (*u)->GetPosition().GetCP() ) / FP_GRID_STEP;
 						int nProbability = pEnemyUS->GetUnitRPG()->GetUnhideProbability( (*u)->GetUnitRPG(), fDistance );
-						int nCheck = random.Get( 0,100 );
+						int nCheck = GameRandom().Get( 0,100 );
 						if ( nCheck < nProbability )
 						{
 							csSystem << CC_RED << 
@@ -3562,9 +3579,9 @@ static CVec3 GetRandomSpherePoint()
 	float fpX, fpY, fpZ, fpLeng;
 	for ( int nSafe = 10; nSafe > 0; nSafe-- )
 	{
-		fpX = random.GetFloat( -1, 1 );
-		fpY = random.GetFloat( -1, 1 );
-		fpZ = random.GetFloat( -1, 1 );
+		fpX = GameRandom().GetFloat( -1, 1 );
+		fpY = GameRandom().GetFloat( -1, 1 );
+		fpZ = GameRandom().GetFloat( -1, 1 );
 		fpLeng = sqr( fpX ) + sqr( fpY ) + sqr( fpZ );
 		if ( fpLeng < 1 )
 			break;
@@ -3589,9 +3606,9 @@ void CWorld::CreateBloodyMess( const CVec3 &_vCenter, const CVec3 &vDirection, C
 		{
 			vel = vDirection;
 			Normalize( &vel );
-			vel.x += random.GetFloat( -0.2f, 0.2f );
-			vel.y += random.GetFloat( -0.2f, 0.2f );
-			vel.z += random.GetFloat( -0.2f, 0.2f );
+			vel.x += GameRandom().GetFloat( -0.2f, 0.2f );
+			vel.y += GameRandom().GetFloat( -0.2f, 0.2f );
+			vel.z += GameRandom().GetFloat( -0.2f, 0.2f );
 			vel *= 1.5f;
 		}
 		else
@@ -3610,7 +3627,7 @@ void CWorld::CreateBloodyMess( const CVec3 &_vCenter, const CVec3 &vDirection, C
 			if (pBuilding)
 				pUserData = pBuilding->GetSceneHandle();
 			float fRadius = pArmor->fShotRadius;
-			fRadius *= random.GetFloat( 0.9f, fRadiusKoef + 0.1f );
+			fRadius *= GameRandom().GetFloat( 0.9f, fRadiusKoef + 0.1f );
 			new CDecal( this, p.pt, vDir, fRadius, pArmor->pShotMaterial->GetMaterial(&rnd), pUserData );
 		}
 	}

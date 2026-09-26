@@ -1,7 +1,7 @@
 #ifndef __WUNITGROUP_H_
 #define __WUNITGROUP_H_
 //
-#include "..\Misc\set.h"
+#include "../Misc/Set.h"
 //
 namespace NWorld
 {

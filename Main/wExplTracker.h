@@ -6,7 +6,7 @@
 #include "aiVoxelRender.h"
 #include "aiMap.h"             // NAI::IAIMapTracker (base of the retail CExplosionCube) + IAIMap
 #include "wInterface.h"        // NWorld::IExplosionMaster (base of the retail CExplosionMaster)
-#include "..\Misc\HPTimer.h"
+#include "../Misc/HPTimer.h"
 #include "wExplosionPerks.h"   // NWorld::SPerkMineModifiers (explosive-perk damage modifiers)
 
 namespace NAI

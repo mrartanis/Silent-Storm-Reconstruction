@@ -8,7 +8,7 @@
 #include "aiPosition.h"
 namespace NRPG
 {
-	enum EAction;
+	enum EAction : int;
 }
 namespace NWorld
 {

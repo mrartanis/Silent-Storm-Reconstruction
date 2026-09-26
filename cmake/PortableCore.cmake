@@ -294,6 +294,20 @@ target_compile_features(s2_game_world_object PUBLIC cxx_std_17)
 # checks; remove this exception when the complete world graph is linked.
 target_compile_options(s2_game_world_object PRIVATE
   -ffunction-sections -fdata-sections -fno-sanitize=vptr)
+# The original world coordinator now compiles as one Linux translation unit.
+# This is a compile boundary, not yet an executable world: its render, UI,
+# mission and script bindings still need to join the game link graph.
+add_library(s2_game_world STATIC
+  "${root}/Main/wMain.cpp"
+  "${root}/Main/wMainMoves.cpp"
+  "${root}/Main/wMainTrace.cpp"
+  "${root}/Main/wUICommands.cpp")
+target_include_directories(s2_game_world PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_world PUBLIC cxx_std_17)
+target_compile_options(s2_game_world PRIVATE -ffunction-sections -fdata-sections)
 # The original command-driven AI logic base. It compiles on Linux, but
 # executable linking still needs the world unit server and command queue;
 # do not confuse this compile boundary with live AI execution.

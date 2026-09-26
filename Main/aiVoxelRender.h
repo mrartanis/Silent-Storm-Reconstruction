@@ -3,8 +3,8 @@
 //
 #include "Transform.h"
 #include "Render.h"
-#include "..\Misc\2DArray.h"
-#include "..\FileIO\PortableStructureChunks.h"
+#include "../Misc/2Darray.h"
+#include "../FileIO/PortableStructureChunks.h"
 //
 namespace NDb
 {
@@ -135,10 +135,21 @@ public:
 		//pBaseVoxel[ nDeltaX * nX + nDeltaY * nY + nDeltaZ * Float2Int( fShift + fWZ * ( nResolution - 1 ) ) ];
 		ts.SetCamera( cam );
 		transform = ts.Get().forward;
+#if defined(_WIN32)
 		transform.x = transform.x * 0.5f + transform.w * 0.5f; // [0,1] range instead of [-1,1]
 		transform.y = transform.y * 0.5f + transform.w * 0.5f; // [0,1] range
 		transform.x *= nResolution;
 		transform.y *= nResolution;
+#else
+		transform.xx = ( transform.xx * 0.5f + transform.wx * 0.5f ) * nResolution;
+		transform.xy = ( transform.xy * 0.5f + transform.wy * 0.5f ) * nResolution;
+		transform.xz = ( transform.xz * 0.5f + transform.wz * 0.5f ) * nResolution;
+		transform.xw = ( transform.xw * 0.5f + transform.ww * 0.5f ) * nResolution;
+		transform.yx = ( transform.yx * 0.5f + transform.wx * 0.5f ) * nResolution;
+		transform.yy = ( transform.yy * 0.5f + transform.wy * 0.5f ) * nResolution;
+		transform.yz = ( transform.yz * 0.5f + transform.wz * 0.5f ) * nResolution;
+		transform.yw = ( transform.yw * 0.5f + transform.ww * 0.5f ) * nResolution;
+#endif
 	}
 	friend class CRasterizer<TFinal>;
 };
@@ -219,7 +230,7 @@ public:
 	void TraceEntity( const vector<SConvexHull> &e, bool bTerrain )	{	ASSERT(0); }
 	void TraceEntity( const SConvexHull &e, bool bTerrain );
 	//
-	friend class CTParent;
+	friend CTParent;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CVisionVoxelRenderer : public CTVoxelRenderer<CVisionVoxelRenderer, char>
@@ -251,7 +262,7 @@ public:
 	void TraceEntity( const SConvexHull &e, bool bTerrain );
 	void FillSolid();
 	//
-	friend class CTParent;
+	friend CTParent;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
