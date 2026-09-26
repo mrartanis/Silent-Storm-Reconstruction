@@ -31,3 +31,10 @@ known differences; compare game decisions with the Steam reference
 before claiming AI parity. This batch has no in-game smoke because the
 remote Windows D3D session cannot create a device even for an older
 known-good archive.
+
+A clean native-media Windows x64 archive was produced from source commit
+`4445a0a` as `G:\SS\lab\builds\stage2-ai-rpg-inventory-20260926-01`
+with 16 build jobs. `Game.exe` SHA-256 is
+`B00321172898F0E6B878F947A7FF58F218CD20C0E416C1A17F88A89989A15A42`.
+The archive contains no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports.
