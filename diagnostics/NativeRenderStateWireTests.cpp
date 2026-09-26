@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "../Main/StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "../Main/GDecalInfo.h"
 #include "../Main/GRenderCore.h"
 #include "../Main/GLightmapStateWire.h"
@@ -49,6 +55,13 @@ int main() {
   seed.nSeed = 0x12345678;
   if (!CheckPlain(decal) || !CheckPlain(fog) || !CheckPlain(depth) ||
       !CheckPlain(ambient) || !CheckPlain(seed)) return 1;
+
+  std::memset(&ambient, 0x7f, sizeof(ambient));
+  ambient.Clear();
+  std::uint8_t cleared[sizeof(ambient)] = {};
+  if (!S2FileIO::StructureFieldCodec<NGScene::SDynamicAmbientInfo>::Encode(
+          ambient, cleared, sizeof(cleared))) return 3;
+  for (std::uint8_t byte : cleared) if (byte != 0) return 4;
 
   using Directional = NGScene::SGlobalIlluminationInfo::SDirectional;
   using Codec = S2FileIO::StructureFieldCodec<Directional>;

@@ -95,7 +95,7 @@ class CCubeTexture;
 class CGeometry;
 class CTriList;
 struct S3DTriangle;
-enum EFace;
+enum EFace : int;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CRenderContext
 {

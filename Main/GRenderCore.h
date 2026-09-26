@@ -328,7 +328,7 @@ struct SDynamicAmbientInfo
 	SPad vXPos, vXNeg, vYPos, vYNeg, vZPos, vZNeg; // CVec4 to make vs registers load easier
 
 	CVec4* GetVec4() const { return (CVec4*)&vXPos; }
-	void Clear() { SPad z; z.v = CVec3(0,0,0); vXPos = vXNeg = vYPos = vYNeg = vZPos = vZNeg = z; }
+	void Clear() { SPad z; z.v = CVec3(0,0,0); z.f = 0.0f; vXPos = vXNeg = vYPos = vYNeg = vZPos = vZNeg = z; }
 	void AddLight( const CVec3 &vColor, const CVec3 &vDir )
 	{
 		vXPos.v += vColor * Max( vDir.x, 0.0f );

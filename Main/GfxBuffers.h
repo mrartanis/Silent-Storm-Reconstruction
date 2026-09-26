@@ -26,7 +26,7 @@ namespace NGfx
 		INPLACE,
 		INPLACE_READONLY
 	};
-	enum EFace
+	enum EFace : int
 	{
 		POSITIVE_X,
 		POSITIVE_Y,

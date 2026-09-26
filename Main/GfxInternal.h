@@ -13,7 +13,7 @@ namespace NGfx
 	class CGeometry;
 	class CTexture;
 	class CCubeTexture;
-	enum EFace;
+	enum EFace : int;
 	externA5 NWin32Helper::com_ptr<IDirect3D9> pD3D;
 	externA5 NWin32Helper::com_ptr<IDirect3DDevice9> pDevice;
 	externA5 int nCurrentFrame;

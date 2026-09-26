@@ -397,6 +397,14 @@ target_include_directories(s2_game_scene_serialization PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_scene_serialization PUBLIC cxx_std_17)
 target_compile_options(s2_game_scene_serialization PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeRenderStateWireTests
+  "${root}/diagnostics/NativeRenderStateWireTests.cpp")
+target_include_directories(NativeRenderStateWireTests PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script")
+target_compile_features(NativeRenderStateWireTests PRIVATE cxx_std_17)
+add_test(NAME NativeRenderStateWireTests COMMAND NativeRenderStateWireTests)
 add_executable(NativeSceneClassIDsTests
   "${root}/diagnostics/NativeSceneClassIDsTests.cpp"
   "${root}/Main/GSceneUtils.cpp")
