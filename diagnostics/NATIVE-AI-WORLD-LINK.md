@@ -80,3 +80,13 @@ The x86-64 probe succeeds and prints the scene-part wire checksum. An
 ARM64 link with `aarch64-linux-gnu-g++` and the same forced symbol also
 succeeds; its QEMU/ASan probe passes. This is a linked-library boundary, not yet a
 Linux mission executable or a complete renderer-free gameplay loop.
+
+`NativeAILogicTests` is now an ordinary Linux CMake/CTest target on x86-64
+and ARM64. It links the original `CAILogic` lifecycle against the portable
+static-library graph and forces `CDFrozenItem::Visit(IRenderVisitor*)` into
+that link, so the former `CLightGroup` break cannot silently disappear
+through linker garbage collection. Run it with `ctest --test-dir <build>
+-R '^NativeAILogicTests$' --output-on-failure` (and
+`ASAN_OPTIONS=detect_leaks=0` under QEMU). The test covers pause, resume
+and finish, not AI decisions, routing, Lua-driven mission state or a Linux
+turn loop.

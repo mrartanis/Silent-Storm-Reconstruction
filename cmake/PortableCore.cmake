@@ -1119,6 +1119,25 @@ if(NOT WIN32)
 endif()
 
 enable_testing()
+# Exercise the original AI lifecycle through the complete portable archive
+# graph.  Forcing the debris visitor keeps the scene/world cast boundary in
+# the link even when the lifecycle test itself does not visit a render item.
+get_property(_s2_all_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
+set(_s2_portable_archives)
+foreach(_s2_target IN LISTS _s2_all_targets)
+  get_target_property(_s2_target_type ${_s2_target} TYPE)
+  if(_s2_target_type STREQUAL "STATIC_LIBRARY")
+    list(APPEND _s2_portable_archives ${_s2_target})
+  endif()
+endforeach()
+add_executable(NativeAILogicTests "${root}/diagnostics/NativeAILogicTests.cpp")
+target_include_directories(NativeAILogicTests PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NativeAILogicTests PRIVATE
+  -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
+target_link_options(NativeAILogicTests PRIVATE -Wl,--gc-sections
+  -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE)
+add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
                       NativeMMTreeDataTests NativeSequenceDataTests)
   add_executable(${test} "${root}/diagnostics/${test}.cpp")
