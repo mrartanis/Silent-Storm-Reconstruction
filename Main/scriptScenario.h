@@ -8,7 +8,6 @@ DECLARE_SCRIPT_COMMAND( ScenarioGiveClue );
 DECLARE_SCRIPT_COMMAND( ScenarioAddGoal );
 DECLARE_SCRIPT_COMMAND( ScenarioSetGoalComplete );
 DECLARE_SCRIPT_COMMAND( ScenarioSetTaskComplete );
-DECLARE_SCRIPT_COMMAND( ShowObjectives );
 DECLARE_SCRIPT_COMMAND( ScenarioOpenZone );
 DECLARE_SCRIPT_COMMAND( ScenarioBlockZone );
 DECLARE_SCRIPT_COMMAND( ExitToChapter );

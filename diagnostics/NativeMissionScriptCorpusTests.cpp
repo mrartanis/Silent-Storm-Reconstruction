@@ -116,6 +116,12 @@ int main( int argc, char **argv )
 	}
 	std::printf( "game_db_lua_unique_globals=%zu window_reads=%zu\n",
 		globalReads.size(), windowReads );
+	static const char *interfaceGlobals[] = {
+		"ShowObjectives", "uiShowStore", "uiShowTeamMngMenu",
+		"ShowLoseDialog", "ShowLeaveZoneDialog", "ShowHint", "AddHints",
+		"SetTutorialMode", "ClueShow", "ExitToChapter" };
+	for ( const char *name : interfaceGlobals )
+		std::printf( "game_db_lua_interface %s=%zu\n", name, globalReads[name] );
 	if ( !NDatabase::GetTable<NDb::CUIContainer>() ||
 		!NDatabase::GetTable<NDb::CTemplVariant>() ||
 		!NDatabase::GetTable<NDb::CGlobalMap>() ||
@@ -162,6 +168,7 @@ int main( int argc, char **argv )
 	// The original baseline corpus is our fixed cross-architecture oracle.
 	return scripts.size() == 113 && empty == 1 && bytes == 355575 &&
 		digest == UINT64_C(0xB5163E4E76664106) && windowReads == 6 &&
+		globalReads["ShowObjectives"] == 0 &&
 		windowScriptIDs.size() == 1 && *windowScriptIDs.begin() == 126 &&
 		script126References == 0 ? 0 : 7;
 }

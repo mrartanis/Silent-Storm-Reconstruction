@@ -19,8 +19,6 @@
 #include "aiCommander.h"  // NAI::CAICommander (LeaveToSubZone: skip AI players)
 #include "aiMisc.h"       // NAI::IsAIPlayer (retail @0x73df0 -- the human/AI probe LeaveToSubZone uses)
 #include "wUnitServer.h"  // NWorld::CUnitServer (LeaveToSubZone)
-#include "iObjectivesMenu.h"  // NGame::CICObjectives (ShowObjectives)
-#include "iShowObjectives.h"  // NGame::CICShowObjectives -- the retail framed objectives modal
 //
 #include "scriptScenario.h"
 //
@@ -91,21 +89,6 @@ BEGIN_SCRIPT_COMMAND( ScenarioSetTaskComplete, "nnb[true]" )
 		bDone = pTracker->ScriptTaskSetComplete( pGG->pCurrentZone, luaParams[ 0 ].n, luaParams[ 1 ].n, luaParams[ 2 ].b );
 	if ( !bDone )
 		csSystem << CC_RED << "Script warning: " << "Could not complete task " << luaParams[ 1 ].n << ", GoalID=" << luaParams[ 0 ].n << endl;
-	return 0;
-END_SCRIPT_COMMAND
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Open the OBJECTIVES/JOURNAL modal that renders the goals/tasks stored by ScenarioAddGoal /
-// SetGoalComplete / SetTaskComplete (otherwise invisible). NMainLoop::Command is deferred (queued, not
-// run inline), so pushing the CIC from the script step is safe.
-BEGIN_SCRIPT_COMMAND( ShowObjectives, "" )
-	NRPG::CGlobalGame *pGG = pScript->GetGlobalGame();
-	if ( IsValid( pGG ) )
-		// retail framed objectives modal (CGlobalGame has no mission accessor -> null mission; the rows render
-		// from the goal/task strings and the backdrop is a fresh B&W capture of the current frame). Exec no-ops
-		// when pCurrentZone is null (off-zone), matching retail GetGoalsFromZone's bail on a null current zone.
-		NMainLoop::Command( new NGame::CICShowObjectives( 0, pGG->pCurrentZone ) );
-	else
-		csSystem << CC_RED << "Script warning: " << CC_GREY << "ShowObjectives: no global game" << endl;
 	return 0;
 END_SCRIPT_COMMAND
 ////////////////////////////////////////////////////////////////////////////////////////////////////

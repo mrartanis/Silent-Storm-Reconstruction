@@ -32,6 +32,20 @@ Other game-used UI commands remain in the portable Lua registration
 table and still need a real headless/portable boundary. A linked,
 running Linux mission and gameplay parity are **not** yet established.
 
+Follow-up audit of interface globals: the shipped corpus reads
+`ShowObjectives` zero times, but does read `uiShowStore` 5 times,
+`uiShowTeamMngMenu` 3, `ShowLoseDialog` 3,
+`ShowLeaveZoneDialog` 4, `ShowHint` 69, `AddHints` 2,
+`SetTutorialMode` 1, `ClueShow` 11, and `ExitToChapter` 6.
+The four external `.l` files also do not call `ShowObjectives`.
+Its original implementation moved from the game scenario binding
+unit into Windows `scriptUI.cpp`, and Windows still registers it.
+No other interface global was removed. This narrows the diagnostic
+link from six unresolved symbols to four: two `CNonePart` casts,
+one `CLightGroup` cast, and the game-used FaceGen `CHeadInfo`
+constructor. This is a boundary audit, not a substitute for
+implementing the four dependencies or the game-used UI commands.
+
 Validation on 2026-09-26: Windows x64 `Game.exe` builds and CTest is
 118/118; Linux GCC x86-64 and ARM64/QEMU are each 92/92 under
 ASan/UBSan.

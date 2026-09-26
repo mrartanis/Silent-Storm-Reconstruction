@@ -9,7 +9,7 @@
 //  the real csScript log stream -- so NO hooks are needed (every seam the
 //  answer-key modelled with a pfn* is a real engine call here).
 //
-//  Registered global lua C-functions (the 8 pUIRegList entries, registered
+//  Registered global lua C-functions (the pUIRegList entries, registered
 //  by A5Script.cpp on Windows):
 //    CreateWindow  GetWindow  windowGetProperty  windowSetProperty
 //    ButtonGetState  ButtonCreateState  GetCursorPos  GetUITime
@@ -56,6 +56,8 @@
 #include "scriptCommon.h"				// luaPrepareData, BEGIN_SCRIPT_COMMAND, SLuaParams
 #include "scriptPtr.h"					// tagLuaWindow (lua.h), luaGetPtr
 #include "scriptUI.h"
+#include "rpgGlobal.h"
+#include "iShowObjectives.h"
 //
 #include <math.h>
 #include <stdlib.h>
@@ -66,6 +68,7 @@ namespace NScript
 {
 Script::SRegFunction pUIRegList[] =
 {
+	{ "ShowObjectives", luaShowObjectives },
 	{ "CreateWindow", luaCreateWindow },
 	{ "GetWindow", luaGetWindow },
 	{ "windowGetProperty", luaWindowGetProperty },
@@ -76,6 +79,17 @@ Script::SRegFunction pUIRegList[] =
 	{ "GetUITime", luaGetUITime },
 	{ 0, 0 }
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// This Lua entry is absent from the shipped game.db and external .l scripts.
+// Keep its original Windows behavior with the other window-only commands.
+BEGIN_SCRIPT_COMMAND( ShowObjectives, "" )
+	NRPG::CGlobalGame *pGG = pScript->GetGlobalGame();
+	if ( IsValid( pGG ) )
+		NMainLoop::Command( new NGame::CICShowObjectives( 0, pGG->pCurrentZone ) );
+	else
+		csSystem << CC_RED << "Script warning: " << CC_GREY << "ShowObjectives: no global game" << endl;
+	return 0;
+END_SCRIPT_COMMAND
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Registered property accessor + table. Each property exposes a get and a set thunk sharing one
 // signature: (script, window, propName, valueStackIdx). Getters push their result and return the lua

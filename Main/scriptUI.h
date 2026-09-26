@@ -10,6 +10,7 @@ namespace NScript
 {
 // Window-only Lua globals; registered separately from the gameplay bindings.
 extern Script::SRegFunction pUIRegList[];
+int luaShowObjectives( lua_State* pState );
 int luaCreateWindow( lua_State* pState );		// "sonnnnsb[true]b[true]" -- create a typed window
 int luaGetWindow( lua_State* pState );			// "s" -- find a window by dotted id path
 int luaWindowGetProperty( lua_State* pState );	// get-dispatcher (window, propName)

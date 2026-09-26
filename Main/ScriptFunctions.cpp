@@ -171,7 +171,6 @@ Script::SRegFunction pRegList[] =
 	REG_FUNCTION( ScenarioAddGoal ),
 	REG_FUNCTION( ScenarioSetGoalComplete ),
 	REG_FUNCTION( ScenarioSetTaskComplete ),
-	REG_FUNCTION( ShowObjectives ),
 	REG_FUNCTION( ScenarioOpenZone ),
 	REG_FUNCTION( ScenarioBlockZone ),
 	REG_FUNCTION( ExitToChapter ),
