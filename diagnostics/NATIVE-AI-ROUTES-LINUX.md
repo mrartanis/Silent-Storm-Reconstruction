@@ -24,3 +24,13 @@ tests in subsequent packages.
 Windows x64 `RelWithDebInfo` rebuilt `Game.exe` and passed 113/113
 CTest cases; Linux GCC x86-64 and ARM64/QEMU passed 85/85 each under
 ASan/UBSan with `ASAN_OPTIONS=detect_leaks=0`.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-ai-routes-20260926-01` was built with 16
+jobs from commit `38e7b8f5d45b91b0863b1506d66b873a0ef90139`.
+`Game.exe` SHA-256 is
+`ECAA195AE3E7D3F236B76C0F8FEC5CEDCC45A6B32989358E1BA4559A4433B4E7`.
+The archive contains no FMOD DLL and the executable has no `fmod.dll`
+or `FSOUND_` imports. In-game smoke is still unverified: the current
+remote D3D session fails to create a device even for an older known-good
+archive.
