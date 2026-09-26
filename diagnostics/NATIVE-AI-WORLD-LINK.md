@@ -85,7 +85,9 @@ Linux mission executable or a complete renderer-free gameplay loop.
 and ARM64. It links the original `CAILogic` lifecycle against the portable
 static-library graph and forces `CDFrozenItem::Visit(IRenderVisitor*)` into
 that link, so the former `CLightGroup` break cannot silently disappear
-through linker garbage collection. Run it with `ctest --test-dir <build>
+through linker garbage collection. It also forces the complete
+`CWorld(CGlobalGame*)` constructor into the link; this checks resolution,
+not execution of the world constructor. Run it with `ctest --test-dir <build>
 -R '^NativeAILogicTests$' --output-on-failure` (and
 `ASAN_OPTIONS=detect_leaks=0` under QEMU). The test covers pause, resume
 and finish, not AI decisions, routing, Lua-driven mission state or a Linux

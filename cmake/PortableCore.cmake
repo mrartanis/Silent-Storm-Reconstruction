@@ -1136,7 +1136,8 @@ target_include_directories(NativeAILogicTests PRIVATE
 target_link_libraries(NativeAILogicTests PRIVATE
   -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
 target_link_options(NativeAILogicTests PRIVATE -Wl,--gc-sections
-  -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE)
+  -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE
+  -Wl,-u,_ZN6NWorld6CWorldC1EPN4NRPG11CGlobalGameE)
 add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
                       NativeMMTreeDataTests NativeSequenceDataTests)
