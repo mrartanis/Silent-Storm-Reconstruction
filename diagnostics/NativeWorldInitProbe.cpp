@@ -47,11 +47,14 @@ int main(int argc, char** argv) {
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
   world->ExecuteOwnScript();
-  if (!world->GetOwnScript() ||
-      world->GetOwnScript()->GetGlobal("DIR_DOWNRIGHT").GetNumber() != 7.0 ||
-      world->GetOwnScript()->GetGlobal("maxTriggerIndex").GetNumber() != 0.0 ||
-      world->GetOwnScript()->GetGlobal("N_WAIT_TIME_TO_SLEEP").GetNumber() != 2.0)
-    return 7;
+  if (!world->GetOwnScript()) return 7;
+  {
+    Script::AutoBlock stack(*world->GetOwnScript());
+    if (world->GetOwnScript()->GetGlobal("DIR_DOWNRIGHT").GetNumber() != 7.0 ||
+        world->GetOwnScript()->GetGlobal("maxTriggerIndex").GetNumber() != 0.0 ||
+        world->GetOwnScript()->GetGlobal("N_WAIT_TIME_TO_SLEEP").GetNumber() != 2.0)
+      return 7;
+  }
   std::printf("world initialized with %d autoload scripts\n", scriptCount);
   if (mission) {
     const int variant = std::atoi(argv[4]);
@@ -63,7 +66,19 @@ int main(int argc, char** argv) {
       return 9;
     std::printf("world mission variant %d built\n", variant);
     std::printf("mission scripts queued: %zu\n", post->scripts.size());
+    if (variant == 810) {
+      if (post->scripts.size() != 1) return 10;
+      world->SetTimeOfDay(NWorld::TOD_NIGHT);
+    }
     world->RunPostInit(post);
+    if (variant == 810 && world->GetTimeOfDay() != NWorld::TOD_DAY)
+      return 11; // The authored SetTimeOfDay(DAY) command actually ran.
+    if (!NScript::luaLastError.szError.empty()) return 12;
+    const auto before = world->GetTime()->GetValue();
+    world->UpdateWorld(before + 220 * 50, nullptr);
+    if (world->GetTime()->GetValue() <= before ||
+        !NScript::luaLastError.szError.empty())
+      return 13;
     std::printf("world mission variant %d post-init completed\n", variant);
   }
   return 0;

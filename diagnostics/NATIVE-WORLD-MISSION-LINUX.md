@@ -41,11 +41,22 @@ unsigned modulo-32 arithmetic now states the original wraparound explicitly.
 The coordinate hashes retain their original signed `int` return values, so
 the 64-bit hash table sees the same sign extension as before.
 
+The probe now restores the active Lua stack after reading startup globals.
+Without that guard, the diagnostic itself left the numeric constant `7` in
+the `TriggersManager` thread's call slot; its later `Sleep(10)` then produced
+"attempt to call a number value" even on a script-free map. This was a
+probe-induced failure, not evidence of a game Lua defect. After the guard,
+both map variants advance 220 world segments without a Lua error. For variant
+810 the probe first forces NIGHT and verifies that the authored script's
+`SetTimeOfDay(DAY)` changes the world back to DAY during post-init. This is a
+specific observed mission-script effect, not merely successful parsing.
+
 This is a headless original-world startup, **not** a full Linux game. The
 probe does not create the mission UI, deploy a human party, issue a combat
 command, save/reload the resulting mission, or compare dynamic AI, route,
-battle, and destruction decisions against Steam x86. `RunPostInit` invokes
-the authored Lua string but does not expose its return code to this probe;
-successful completion alone is not proof that every mission binding worked.
+battle, and destruction decisions against Steam x86. The variant-810 script
+also waits on sequence/UI actions; the headless probe does not prove that its
+later callbacks or unit-shot command complete. The absence of Lua errors and
+the time-of-day effect do not prove that every mission binding worked.
 Those are the next stage-2 checks. SDL3/bgfx integration remains in stages
 3-4, and no macOS result is claimed.
