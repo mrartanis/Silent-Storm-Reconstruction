@@ -130,6 +130,10 @@ add_executable(PortablePixel8888WireTests "${root}/diagnostics/PortablePixel8888
 add_test(NAME PortablePixel8888WireTests COMMAND PortablePixel8888WireTests)
 add_executable(PortableSaveHeaderTests "${root}/diagnostics/PortableSaveHeaderTests.cpp")
 add_test(NAME PortableSaveHeaderTests COMMAND PortableSaveHeaderTests)
+add_executable(PortableScenarioSignatureTests
+  "${root}/diagnostics/PortableScenarioSignatureTests.cpp")
+target_compile_features(PortableScenarioSignatureTests PRIVATE cxx_std_17)
+add_test(NAME PortableScenarioSignatureTests COMMAND PortableScenarioSignatureTests)
 add_executable(PortableSaveHeaderProbe "${root}/diagnostics/PortableSaveHeaderProbe.cpp")
 add_executable(PortableExplosionPerkWireTests "${root}/diagnostics/PortableExplosionPerkWireTests.cpp")
 add_test(NAME PortableExplosionPerkWireTests COMMAND PortableExplosionPerkWireTests)

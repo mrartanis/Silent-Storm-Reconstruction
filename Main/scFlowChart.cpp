@@ -15,8 +15,10 @@
 //
 #include "scFlowChartItems.h"
 #include "scFlowChart.h"
+#include "ScenarioSignature.h"
 //
 #include <fstream>
+static_assert( sizeof(DWORD) == sizeof(std::uint32_t), "scenario signatures require 32-bit words" );
 #if !defined(_WIN32)
 #include <cstdio>
 static void OutputDebugString( const char *message )
@@ -755,7 +757,12 @@ void CScenarioFlowChartItemsList<T>::UpdateSignature()
 		for ( int i = 0; i < signature.size(); ++i )
 			signature[i] = 0;
 		for (	typename list< CPtr<T> >::iterator i = items.begin(); i != items.end(); ++i )
-			signature[ (*i)->GetInnerID() / 32 ] |= ( 1 << ( (*i)->GetInnerID() % 32 ) );
+		{
+			const int id = (*i)->GetInnerID();
+			ASSERT( id >= 0 && id <= nMaxSize );
+			if ( id >= 0 && id <= nMaxSize )
+				signature[ ScenarioSignatureWord( id ) ] |= ScenarioSignatureBit( id );
+		}
 		bUpdateSignature = false;
 	}
 }
@@ -816,7 +823,10 @@ bool CScenarioFlowChartItemsList<T>::IsContainItem( T *pItem )
 		return false;
 	//
 	UpdateSignature();
-	return ( signature[ pItem->GetInnerID() / 32 ] & ( 1 << ( pItem->GetInnerID() % 32 ) ) ) > 0;
+	const int id = pItem->GetInnerID();
+	ASSERT( id >= 0 && id <= nMaxSize );
+	return id >= 0 && id <= nMaxSize &&
+		( signature[ ScenarioSignatureWord( id ) ] & ScenarioSignatureBit( id ) ) != 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template < class T >

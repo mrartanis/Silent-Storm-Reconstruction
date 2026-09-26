@@ -28,6 +28,14 @@ objects to make this diagnostic green. The portable game-world boundary
 still needs a genuine scene/render separation before a headless Linux
 mission can be claimed.
 
+A direct Linux syntax check of `GSceneInternal.h` succeeds, but compiling the
+real `GCombiner.cpp` stops at `GfxBuffers.h` requiring `D3D9.h`. `IPart`'s
+constructor and destructor call `CPerMaterialCombiner` methods; moving only
+its class registration would not produce a working data type. This confirms
+that the next step is a genuine CPU scene/combiner boundary, not an include
+case fix or linker shim. The diagnostic used the unmodified source after the
+probe; no experimental scene edit was retained.
+
 Reproduce the probe on Linux from the configured build directory:
 
 ```sh
