@@ -52,5 +52,13 @@ to the build and `-C RelWithDebInfo` to CTest.
 
 The complete Windows x64 game build and CTest passed 113/113. Linux GCC
 x86-64 and ARM64/QEMU built all targets and passed 85/85 each under
-ASan/UBSan with `ASAN_OPTIONS=detect_leaks=0`. The clean archive's
-provenance follows below.
+ASan/UBSan with `ASAN_OPTIONS=detect_leaks=0`.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-console-rpg-20260926-01` was built with 16
+jobs from source commit `52c270952c5ca5988edaad069c2a0947cd8f31d1`.
+`Game.exe` SHA-256 is
+`67B516745F3524E95BD84D1BDB153C948FE1FFE690E9E10B8485D18BBE063612`.
+The archive has no FMOD DLL, and `Game.exe` imports neither `fmod.dll`
+nor `FSOUND_`. In-game smoke remains unverified because the remote D3D
+session cannot create a device even for an older known-good archive.
