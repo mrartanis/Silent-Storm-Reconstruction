@@ -7,6 +7,7 @@
 #include "RPGUnit.h"
 #include "RPGUnitInfo.h"
 #include "../FileIO/PortableCritical.h"
+#include <cstdio>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
@@ -57,7 +58,11 @@ public:
 	// false if this critical needs no cancellation (no modifiers were applied)
 	virtual bool SetModifiers( CUnit *pRPGUnit, IUnitMission *pRPGMission  )
 	{
+		#if defined(_WIN32)
 		OutputDebugString( "Empty critical\n" );
+		#else
+		std::fputs( "Empty critical\n", stderr );
+		#endif
 		return false;
 	}
 	virtual void RemoveModifiers() { modifiers.clear(); }

@@ -16,7 +16,7 @@ namespace NDb
 	class CRPGArmor;
 	class CTSound;
 	class CAISound;
-	enum ECritical;
+	enum ECritical : int;
 	enum ESlot;
 	class CPanzerklein;
 }
@@ -27,7 +27,7 @@ namespace NAI
 }
 namespace NRPG
 {
-	enum EAction;
+	enum EAction : int;
 	//enum ECriticalAction;
 	class IUnitMission;
 	class IInventoryInfo;   // NWorld::IsActiveItemToShow arg

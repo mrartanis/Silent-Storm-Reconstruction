@@ -5,8 +5,8 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "A5Time.h"
-#include "..\FileIO\PortableStructureChunks.h"
-#include "..\FileIO\PortableCameraEffectWire.h"
+#include "../FileIO/PortableStructureChunks.h"
+#include "../FileIO/PortableCameraEffectWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CTransformStack;
 class CObjectBase;

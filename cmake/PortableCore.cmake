@@ -261,6 +261,14 @@ target_include_directories(s2_game_ai_logic PRIVATE
   "${root}/ADOImport" "${root}/MiscDll")
 target_compile_features(s2_game_ai_logic PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_logic PRIVATE -ffunction-sections -fdata-sections)
+# The original server-side unit command/executor translation unit. Its
+# dependencies on the full world are not linked into Linux game execution yet.
+add_library(s2_game_unit_server STATIC "${root}/Main/wUnitServer.cpp")
+target_include_directories(s2_game_unit_server PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_unit_server PUBLIC cxx_std_17)
+target_compile_options(s2_game_unit_server PRIVATE -ffunction-sections -fdata-sections)
 # Actual world-to-unit command wrapper used by the AI command queue.
 add_library(s2_game_command_bridge STATIC "${root}/Main/wCommandBridge.cpp")
 target_include_directories(s2_game_command_bridge PRIVATE

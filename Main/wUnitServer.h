@@ -6,9 +6,9 @@
 
 #include "wDumbUnit.h"
 #include "wUnitSounds.h"
+#include "wInterface.h"
 #include "wTurnBased.h"
 #include "wVision.h"
-#include "wInterface.h"
 #include "wUnitCommands.h"   // SItem -- retail CUnitServer embeds sHandItem (@+0x200, tag 33)
 #include "RPGItemInfo.h"     // NRPG::IInventoryItem -- pHandItemHolder (@+0x224, tag 34)
 #include "Locks.h"           // CLockable -- retail CUnitServer base @+0x17c (tag 31)
@@ -18,7 +18,7 @@ namespace NDb
 {
 	class CAISound;
 	struct SAISound;
-	enum ECritical;
+	enum ECritical : int;
 	enum EDiplomacyState;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -34,7 +34,7 @@ namespace NDb
 	struct SInterruptsConstants;
 	class CRPGMine;
 	enum ECriticalLocation;
-	enum ECritical;
+	enum ECritical : int;
 }
 namespace NRPG
 {

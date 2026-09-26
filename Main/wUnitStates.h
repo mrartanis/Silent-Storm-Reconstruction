@@ -6,7 +6,7 @@
 namespace NRPG
 {
 	//enum ECriticalAction;
-	enum ECritical;
+	enum ECritical : int;
 }		
 namespace NAI
 {

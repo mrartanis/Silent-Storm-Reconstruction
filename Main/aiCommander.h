@@ -2,7 +2,7 @@
 #define _AICOMMANDER_H_
 
 #include "wInterface.h"
-#include "aiState.h"     // SAIState is embedded BY VALUE (operator& tag7) -- needs the full definition
+#include "aistate.h"     // SAIState is embedded BY VALUE (operator& tag7) -- needs the full definition
 
 namespace NWorld
 {

@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUICommands.h"
 #include "wUnitServer.h"
 #include "RPGItem.h"
@@ -12,30 +18,35 @@
 #include "wUnitMove.h"
 #include "wUnitAttack.h"
 #include "wUnitExec.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\Misc\RandomGen.h"
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../Misc/RandomGen.h"
 #include "RPGUnit.h"
 #include "aiPath.h"
 #include "aiMap.h"                // NAI::IAIMap::GetObjectBound (mine-LOS probe pull-back)
 #include "scScenarioTracker.h"
 #include "scriptCallLUA.h"		// NScript::luaCallFunction (OnClickUsable)
-#include "RPGGlobal.h"
+#include "rpgGlobal.h"
 #include "RPGDiplomacy.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 #include "rpgCheatConstants.h"
-#include "rpgCritical.h"
+#include "RPGCritical.h"
 #include "wUnitCommands.h"
-#include "..\Misc\EventsBase.h"   // NGlobal::ThrowEvent
+#include "../Misc/EventsBase.h"   // NGlobal::ThrowEvent
 #include "eventUnit.h"            // NWorld::CEventOnSeeNewEnemy / CEventOnUnitDiedOrLoseConsciousness (AI events)
-#include "..\DBFormat\DataDifficulty.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataDifficulty.h"
+#include "../DBFormat/DataMap.h"
 #include "eventPlayer.h"
-#include "..\DBFormat\DataAck.h"
+#include "../DBFormat/DataAck.h"
 #include "RPGVision.h"
 #include "aiCommander.h"
 #include "aiMisc.h"               // NAI::IsAIPlayer (retail IsAIUnit @0x3c0340 probe)
+#if !defined(_WIN32)
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+#else
+static CRandomGenerator &GameRandom() { return random; }
+#endif
 //
 namespace NWorld
 {
@@ -1029,7 +1040,13 @@ void CUnitServer::Segment()
 			break;
 		++nDoNotFreeze;
 		if ( nDoNotFreeze > 100 )
+		{
+#if defined(_WIN32)
 			__debugbreak(); // somehow we freezed here?
+#else
+			__builtin_trap();
+#endif
+		}
 		if ( nDoNotFreeze > 150 )
 			break;
 	}
@@ -1375,7 +1392,7 @@ bool CUnitServer::CheckSpot( CUnitServer *pTarget )
 	{
 		float fDistance = fabs( GetPosition().GetCP() - pTarget->GetPosition().GetCP() ) / FP_GRID_STEP;
 		int nProbability = GetUnitRPG()->GetUnhideProbability( pTarget->GetUnitRPG(), fDistance );
-		int nCheck = random.Get( 0, 100 );   // @0x7bff43: shared global RNG (retail &random@0x9c9978)
+		int nCheck = GameRandom().Get( 0, 100 );   // @0x7bff43: shared global RNG (retail &random@0x9c9978)
 		if ( nCheck >= nProbability && !IsAudible( pTarget ) )
 			return false;
 		pTarget->Hide( false, true );
@@ -1790,8 +1807,8 @@ void CUnitServer::FlipPanzerklein( CUnitServer *pPK, bool bUnloadWeapons, bool b
 				else 
 				{
 					CVec3 shift;
-					shift.x = random.GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
-					shift.y = random.GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
+					shift.x = GameRandom().GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
+					shift.y = GameRandom().GetFloat( - FP_GRID_STEP * 0.5f, FP_GRID_STEP * 0.5f );
 					shift.z = 0.1f;
 					GetWorld()->AddFrozenItem( GetWorld()->GetAIMap(), GetPosition().GetCP() + shift, QNULL, pItem );
 				}
