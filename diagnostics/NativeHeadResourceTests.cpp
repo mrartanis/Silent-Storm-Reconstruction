@@ -13,6 +13,7 @@
 #endif
 #include "../FileIO/PortablePackageIndex.h"
 #include "../third_party/lifestudio/src/NativeHeadData.h"
+#include "../third_party/lifestudio/include/LifeStudioHeadAPI.h"
 
 #include <cstdint>
 #include <cmath>
@@ -49,6 +50,9 @@ int main( int argc, char **argv )
 	if ( !package.Open(argv[1]) ) return 3;
 	NGScene::AddResourceDir(std::filesystem::path(argv[1]).parent_path().string().c_str());
 	std::size_t streamsTotal = 0, verticesTotal = 0, musclesTotal = 0;
+	std::uint64_t neutralDigest = UINT64_C(14695981039346656037);
+	std::uint64_t neutralCoarseDigest = UINT64_C(14695981039346656037);
+	double neutralAbsoluteSum = 0.0;
 	for ( const auto &entry : package.Entries() )
 	{
 		try
@@ -105,6 +109,38 @@ int main( int argc, char **argv )
 				++streamsTotal;
 				verticesTotal += head.vertexCount;
 				musclesTotal += head.muscleCount;
+				if ( entry.first == 11 && &stream == &streams.front() )
+				{
+				LifeStudioHeadAPI::IAnimator *animator = LifeStudioHeadAPI::IAnimator::Create();
+				if ( !animator ) return 10;
+				const bool loaded = animator->Load(
+					reinterpret_cast<const char *>(stream.GetBuffer()), stream.GetSize());
+				const bool countsMatch = loaded && animator->VerticesCount() == head.vertexCount &&
+					animator->MusclesCount() == head.muscleCount &&
+					animator->BonesCount() == head.boneCount;
+				std::vector<float> neutral(head.vertexCount * 3, 0.0f);
+				const bool processed = countsMatch && animator->Process(neutral.data(), 3);
+				std::vector<char> saved(stream.GetSize());
+				const bool roundTrip = processed && animator->SaveBufferSize() == stream.GetSize() &&
+					animator->Save(saved.data()) &&
+					std::memcmp(saved.data(), stream.GetBuffer(), saved.size()) == 0;
+				animator->Destroy();
+				if ( !roundTrip ) return 11;
+				for ( float value : neutral )
+				{
+					if ( !std::isfinite(value) || std::fabs(value) > 10000.0f ) return 12;
+					neutralAbsoluteSum += std::fabs(value);
+					const std::int32_t quantized = static_cast<std::int32_t>(std::lround(value * 10000.0f));
+					const std::int32_t coarse = static_cast<std::int32_t>(std::lround(value * 100.0f));
+					for ( int byte = 0; byte < 4; ++byte )
+					{
+						neutralDigest ^= static_cast<std::uint8_t>(quantized >> (8 * byte));
+						neutralDigest *= UINT64_C(1099511628211);
+						neutralCoarseDigest ^= static_cast<std::uint8_t>(coarse >> (8 * byte));
+						neutralCoarseDigest *= UINT64_C(1099511628211);
+					}
+				}
+			}
 				Add(head.vertexCount);
 				Add(head.muscleCount);
 				Add(head.boneCount);
@@ -156,9 +192,11 @@ int main( int argc, char **argv )
 		}
 	}
 	NGScene::CloseAllResources();
-	std::printf("heads=%zu streams=%zu vertices=%zu muscles=%zu digest=%016llX\n",
+	std::printf("heads=%zu streams=%zu vertices=%zu muscles=%zu digest=%016llX neutral=%016llX coarse=%016llX sum_abs=%.6f\n",
 		package.Entries().size(), streamsTotal, verticesTotal, musclesTotal,
-		static_cast<unsigned long long>(digest));
+		static_cast<unsigned long long>(digest),
+		static_cast<unsigned long long>(neutralDigest),
+		static_cast<unsigned long long>(neutralCoarseDigest), neutralAbsoluteSum);
 	return package.Entries().size() == 134 && streamsTotal == 136 &&
 		verticesTotal == 56462 && musclesTotal == 4825 &&
 		digest == UINT64_C(0x8A6A6F3A612C18D0) ? 0 : 7;

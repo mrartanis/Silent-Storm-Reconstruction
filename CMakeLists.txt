@@ -721,6 +721,13 @@ add_executable(NativeHeadResourceTests "${root}/diagnostics/NativeHeadResourceTe
 target_include_directories(NativeHeadResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeHeadResourceTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeHeadResourceTests PRIVATE Main lifestudio_native_data)
+add_executable(NativeHeadSequenceRuntimeTests
+  "${root}/diagnostics/NativeHeadSequenceRuntimeTests.cpp")
+target_include_directories(NativeHeadSequenceRuntimeTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeHeadSequenceRuntimeTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeHeadSequenceRuntimeTests PRIVATE Main lifestudio_native_data)
+target_compile_features(NativeHeadSequenceRuntimeTests PRIVATE cxx_std_17)
 target_compile_features(NativeHeadResourceTests PRIVATE cxx_std_17)
 add_executable(NativeAIRouteResourceTests "${root}/diagnostics/NativeAIRouteResourceTests.cpp")
 target_include_directories(NativeAIRouteResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
@@ -1055,6 +1062,17 @@ if(S2_GAME_DIR)
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
     else()
       set_tests_properties(NativeHeadResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+    endif()
+  endif()
+  if(EXISTS "${S2_GAME_DIR}/res/Sequences.res" AND EXISTS "${S2_GAME_DIR}/tree.mma")
+    add_test(NAME NativeHeadSequenceRuntimeTests
+      COMMAND NativeHeadSequenceRuntimeTests "${S2_GAME_DIR}/res/Sequences.res" "${S2_GAME_DIR}/tree.mma")
+    if(TARGET s2_bink_compat)
+      set_tests_properties(NativeHeadSequenceRuntimeTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+    else()
+      set_tests_properties(NativeHeadSequenceRuntimeTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
     endif()
   endif()

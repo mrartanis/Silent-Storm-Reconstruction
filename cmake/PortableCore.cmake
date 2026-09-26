@@ -984,13 +984,23 @@ target_include_directories(s2_portable_core PUBLIC
   "${root}/third_party/lifestudio/src"
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_portable_core PUBLIC cxx_std_17)
+add_library(s2_native_lifestudio STATIC
+  "${root}/third_party/lifestudio/src/lifestudio_x64_stub.cpp")
+target_include_directories(s2_native_lifestudio PUBLIC
+  "${root}/third_party/lifestudio/include"
+  "${root}/third_party/lifestudio/src")
+target_compile_definitions(s2_native_lifestudio PUBLIC
+  LIFESTUDIOHEADAPI_EXPORTS_LIB "__stdcall=")
+target_link_libraries(s2_native_lifestudio PUBLIC s2_portable_core)
+target_compile_features(s2_native_lifestudio PUBLIC cxx_std_17)
 set(S2_HEAD_RESOURCE_PATH "" CACHE FILEPATH "Original Heads.res package for head data regression")
+set(S2_HEAD_TREE_PATH "" CACHE FILEPATH "Original tree.mma for game-used facial sequence runtime")
 add_executable(NativeHeadResourceTests
   "${root}/diagnostics/NativeHeadResourceTests.cpp")
 target_include_directories(NativeHeadResourceTests PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(NativeHeadResourceTests PRIVATE
-  -Wl,--start-group s2_portable_core s2_game_resource_loader
+  -Wl,--start-group s2_native_lifestudio s2_portable_core s2_game_resource_loader
   s2_game_resource_package s2_game_dg s2_game_structure
   s2_game_streams s2_game_objects s2_portable_package
   s2_portable_structure -Wl,--end-group)
@@ -998,6 +1008,27 @@ target_link_options(NativeHeadResourceTests PRIVATE -Wl,--gc-sections)
 if(S2_HEAD_RESOURCE_PATH)
   add_test(NAME NativeHeadResourceTests
     COMMAND NativeHeadResourceTests "${S2_HEAD_RESOURCE_PATH}")
+endif()
+add_executable(NativeHeadSequenceRuntimeTests
+  "${root}/diagnostics/NativeHeadSequenceRuntimeTests.cpp")
+target_include_directories(NativeHeadSequenceRuntimeTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeHeadSequenceRuntimeTests PRIVATE
+  -Wl,--start-group s2_native_lifestudio s2_portable_core s2_game_resource_loader
+  s2_game_resource_package s2_game_dg s2_game_structure
+  s2_game_streams s2_game_objects s2_portable_package
+  s2_portable_structure -Wl,--end-group)
+target_link_options(NativeHeadSequenceRuntimeTests PRIVATE -Wl,--gc-sections)
+if(S2_HEAD_RESOURCE_PATH)
+  get_filename_component(_s2_head_resource_dir "${S2_HEAD_RESOURCE_PATH}" DIRECTORY)
+  get_filename_component(_s2_head_game_dir "${_s2_head_resource_dir}" DIRECTORY)
+  if(NOT S2_HEAD_TREE_PATH)
+    set(S2_HEAD_TREE_PATH "${_s2_head_game_dir}/tree.mma")
+  endif()
+  if(EXISTS "${_s2_head_resource_dir}/Sequences.res" AND EXISTS "${S2_HEAD_TREE_PATH}")
+    add_test(NAME NativeHeadSequenceRuntimeTests
+      COMMAND NativeHeadSequenceRuntimeTests "${_s2_head_resource_dir}/Sequences.res" "${S2_HEAD_TREE_PATH}")
+  endif()
 endif()
 if(NOT WIN32)
   # These are declaration-only legacy ABI keywords; the portable data code
