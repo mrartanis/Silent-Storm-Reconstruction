@@ -1,10 +1,16 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "..\DBFormat\DataRPG.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../DBFormat/DataRPG.h"
 #include "RPGUnit.h"
 #include "RPGUnitInfo.h"
 #include "RPGCritical.h"
 #include "aiPosition.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static string szCriticalNames[NDb::N_CRIT_TYPES];
 static string szStatNames[NDb::SKILL_TYPE_NUMBERS];

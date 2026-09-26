@@ -1,16 +1,28 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wBuilding.h"
 #include "BuildingInfo.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "RPGGame.h"
 #include "MakeBuilding.h"
 #include "BuildingGrid.h"
-#include "..\DBFormat\DataGeometry.h"
+#include "../DBFormat/DataGeometry.h"
 #include "Grid.h"
 #include "Transform.h"
 #include "wMain.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataMap.h"
 #include "aiObjectLoader.h"
+#include "../Misc/RandomGen.h"
+#if defined(_WIN32)
+static CRandomGenerator &BuildingRandom() { return random; }
+#else
+static CRandomGenerator &BuildingRandom() { return s2_game_random; }
+#endif
 namespace NGScene
 {
 	extern CBasicShare<int, NBuilding::CBuildInfoLoader> shareBuildings;
@@ -296,7 +308,7 @@ void CBuilding::RenderDestructionEffects()
 		SRand rand;
 		for ( int i = 0; i < nSpots; ++i )
 			pW->CreateParticle( worldPts[ i ],
-				CQuat( random.GetFloat( 0, 10000 ), CVec3( 0, 0, 1 ) ),
+				CQuat( BuildingRandom().GetFloat( 0, 10000 ), CVec3( 0, 0, 1 ) ),
 				pTEffect->GetEffect( &rand ) );
 	}
 	// collapse sounds: ~one per 10 destroyed voxels (>=1), each at a random destroyed spot. Draw the sound index
@@ -304,8 +316,8 @@ void CBuilding::RenderDestructionEffects()
 	int nSounds = Max( 1, nSpots / 10 );
 	for ( int i = 0; i < nSounds; ++i )
 	{
-		int nSoundIdx = random.Get( 7 );
-		int nSpotIdx  = random.Get( nSpots );
+		int nSoundIdx = BuildingRandom().Get( 7 );
+		int nSpotIdx  = BuildingRandom().Get( nSpots );
 		pW->MakeSound( worldPts[ nSpotIdx ], NDb::GetSound( DESTRUCTION_SOUNDS[ nSoundIdx ] ) );
 	}
 }

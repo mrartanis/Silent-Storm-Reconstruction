@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wInterface.h"
 #include "wMain.h"
 #include "aiPath.h"
@@ -7,6 +13,7 @@
 // CRAP{ for smooth path visualization
 #include "GAnimPath.h"
 #include "scriptCallLUA.h"
+#include <cstdarg>
 // CRPA}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWorld

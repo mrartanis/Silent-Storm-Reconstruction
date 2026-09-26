@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include <limits>
 #include "Grid.h"
 #include "RPGGame.h"
@@ -6,14 +12,14 @@
 #include "wTerrain.h"
 #include "PolyUtils.h"
 #include "Transform.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataMap.h"
 #include "GSceneUtils.h"
 #include "GGrass.h"
 #include "GGeometry.h"
 #include "TerrainInfo.h"
 #include "MapBuild.h"
-#include "..\Misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
 #include "wTSFlags.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NTerrain

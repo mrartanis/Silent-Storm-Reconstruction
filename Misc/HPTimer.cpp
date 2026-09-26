@@ -1,5 +1,35 @@
 #include "StdAfx.h"
 #include "HPTimer.h"
+#if !defined(_WIN32)
+#include <chrono>
+
+// The native core uses a monotonic, nanosecond clock. The Windows retail
+// calibration below is retained for the existing game build.
+double NHPTimer::GetSeconds( const STime &time )
+{
+	return static_cast<double>( time ) * 1e-9;
+}
+
+double NHPTimer::GetClockRate()
+{
+	return 1e9;
+}
+
+void NHPTimer::GetTime( STime *pTime )
+{
+	*pTime = std::chrono::duration_cast<std::chrono::nanoseconds>(
+		std::chrono::steady_clock::now().time_since_epoch() ).count();
+}
+
+double NHPTimer::GetTimePassed( STime *pTime )
+{
+	const STime old = *pTime;
+	GetTime( pTime );
+	return GetSeconds( *pTime - old );
+}
+
+void NHPTimer::UpdateHPTimerFrequency() {}
+#else
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 using namespace NHPTimer;
 static double fProcFreq1 = 1;
@@ -109,3 +139,4 @@ struct SHPTimerInit
 };
 static SHPTimerInit hptInit;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#endif

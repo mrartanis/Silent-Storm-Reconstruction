@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RPGGame.h"
 #include "RPGAttackMech.h"
 #include "BuildingGrid.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 namespace NRPG
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////

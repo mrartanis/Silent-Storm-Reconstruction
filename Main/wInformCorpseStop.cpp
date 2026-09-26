@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitServer.h"     // NWorld::CUnitServer (+ CDumbUnitServer::GetWorld) -- complete before wMain.h
 #include "wMain.h"           // NWorld::CWorld (: IWorld)
 #include "wInterface.h"      // NWorld::IWorld::InformCorpseStop

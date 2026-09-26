@@ -1,11 +1,17 @@
-#include "stdafx.h"
+#if defined(_WIN32)
+#include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataAck.h"
-#include "..\DBFormat\DataRPG.h"
-#include "rpgUnit.h"
+#include "../DBFormat/DataAck.h"
+#include "../DBFormat/DataRPG.h"
+#include "RPGUnit.h"
 #include "rpgGlobal.h"
-#include "rpgGame.h"
-#include "rpgUnitMission.h"
+#include "RPGGame.h"
+#include "RPGUnitMission.h"
 #include "wMain.h"
 #include "wUICommands.h"
 #include "wInterface.h"
@@ -163,7 +169,7 @@ void PlayDialogAsAcks( CWorld *pWorld, int nDialogID )
 	vector< CPtr<NWorld::CAckEvent> > phrases;
 	vector< CObj<NWorld::CUnit> > units;
 	MakeDialogData( pWorld, nDialogID, &phrases, &units );
-	phrases.resize( min( NDb::N_ACKINFO_MAX_COUNT, phrases.size() ) );
+	phrases.resize( std::min<size_t>( static_cast<size_t>(NDb::N_ACKINFO_MAX_COUNT), phrases.size() ) );
 	pWorld->AddUICommand( new NWorld::CUICmdPlayAck( phrases ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -96,6 +96,7 @@ target_link_libraries(s2_game_database_runtime PUBLIC
   s2_game_structure s2_portable_database)
 target_compile_features(s2_game_database_runtime PUBLIC cxx_std_17)
 add_library(s2_game_misc_runtime STATIC
+	"${root}/Misc/HPTimer.cpp"
   "${root}/Misc/RandomGen.cpp"
   "${root}/Misc/StrProc.cpp"
   "${root}/Misc/Tools.cpp")
@@ -360,6 +361,20 @@ target_include_directories(s2_game_world_events PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world_events PUBLIC cxx_std_17)
 target_compile_options(s2_game_world_events PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_world_gameplay STATIC
+  "${root}/Main/wBuilding.cpp"
+  "${root}/Main/wTerrain.cpp"
+  "${root}/Main/wInterface.cpp"
+  "${root}/Main/InventoryUnit.cpp"
+  "${root}/Main/wDialog.cpp"
+  "${root}/Main/wInformCorpseStop.cpp"
+  "${root}/Main/wExplosionPerks.cpp")
+target_include_directories(s2_game_world_gameplay PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_world_gameplay PUBLIC cxx_std_17)
+target_compile_options(s2_game_world_gameplay PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_scenario_scripts STATIC
   "${root}/Main/scScenarioTracker.cpp"
   "${root}/Main/scFlowChartItems.cpp"
@@ -443,9 +458,11 @@ target_include_directories(s2_game_ai_actions PRIVATE
 target_compile_features(s2_game_ai_actions PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_actions PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_rpg_combat STATIC
+	"${root}/Main/RPGBuilding.cpp"
   "${root}/Main/RPGToHit.cpp"
   "${root}/Main/RPGCritical.cpp"
-  "${root}/Main/RPGBullet.cpp")
+  "${root}/Main/RPGBullet.cpp"
+  "${root}/Main/RPGStatInfo.cpp")
 target_include_directories(s2_game_rpg_combat PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
