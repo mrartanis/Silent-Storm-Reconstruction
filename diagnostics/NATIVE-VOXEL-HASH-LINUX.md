@@ -37,3 +37,11 @@ ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-arm64 -R ^PortableVoxelObject
 
 Full regression matrix on 2026-09-26: Windows x64 120/120;
 Linux x86-64 and ARM64/QEMU 94/94 each under ASan/UBSan.
+
+Clean native-media Windows x64 archive from source commit `d9599bd`:
+`G:\SS\lab\builds\stage2-voxel-object-hash-20260926-01`.
+`Game.exe` SHA-256 is
+`A7D957E162700D1CDFB2EA8571AD0E55122AAE08331CE23EA544C461B573D8EA`.
+The archive has no `fmod.dll` file, and the executable has no
+`fmod.dll` or `FSOUND_` imports. No live-game explosion smoke is
+claimed from this archive.
