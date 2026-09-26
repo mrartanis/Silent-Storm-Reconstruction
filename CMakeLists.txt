@@ -674,6 +674,15 @@ target_precompile_headers(NativeGeometryCoreTests PRIVATE "${root}/Main/StdAfx.h
 target_link_libraries(NativeGeometryCoreTests PRIVATE Main)
 target_compile_features(NativeGeometryCoreTests PRIVATE cxx_std_17)
 add_test(NAME NativeGeometryCoreTests COMMAND NativeGeometryCoreTests)
+add_executable(NativeSceneClassIDsTests
+  "${root}/diagnostics/NativeSceneClassIDsTests.cpp"
+  "${root}/Main/GSceneUtils.cpp")
+target_include_directories(NativeSceneClassIDsTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeSceneClassIDsTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeSceneClassIDsTests PRIVATE Main)
+target_compile_features(NativeSceneClassIDsTests PRIVATE cxx_std_17)
+add_test(NAME NativeSceneClassIDsTests COMMAND NativeSceneClassIDsTests)
 add_executable(NativeBuildingGridTests "${root}/diagnostics/NativeBuildingGridTests.cpp")
 target_include_directories(NativeBuildingGridTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeBuildingGridTests PRIVATE "${root}/Main/StdAfx.h")

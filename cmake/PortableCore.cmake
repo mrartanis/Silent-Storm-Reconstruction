@@ -387,6 +387,27 @@ target_include_directories(s2_game_scene_data PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_scene_data PUBLIC cxx_std_17)
 target_compile_options(s2_game_scene_data PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_scene_serialization STATIC
+  "${root}/Main/GSceneUtils.cpp"
+  "${root}/Main/GDecalTarget.cpp"
+  "${root}/Main/DebugParticles.cpp")
+target_include_directories(s2_game_scene_serialization PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_scene_serialization PUBLIC cxx_std_17)
+target_compile_options(s2_game_scene_serialization PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeSceneClassIDsTests
+  "${root}/diagnostics/NativeSceneClassIDsTests.cpp"
+  "${root}/Main/GSceneUtils.cpp")
+target_include_directories(NativeSceneClassIDsTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
+target_link_libraries(NativeSceneClassIDsTests PRIVATE
+  -Wl,--start-group s2_game_transform
+  s2_game_dg s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_structure -Wl,--end-group)
+target_link_options(NativeSceneClassIDsTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeSceneClassIDsTests COMMAND NativeSceneClassIDsTests)
 add_executable(NativeGeometryCoreTests
   "${root}/diagnostics/NativeGeometryCoreTests.cpp")
 target_include_directories(NativeGeometryCoreTests PRIVATE

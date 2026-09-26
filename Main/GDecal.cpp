@@ -194,4 +194,3 @@ void CDecalsManager::Walk()
 using namespace NGScene;
 REGISTER_SAVELOAD_CLASS( 0x003c2140, CDecal )
 REGISTER_SAVELOAD_CLASS( 0x003c2141, CDecalsManager )
-REGISTER_SAVELOAD_CLASS( 0x003c2142, CDecalTarget )
