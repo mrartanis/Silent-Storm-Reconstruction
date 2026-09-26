@@ -3,6 +3,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include <cstdint>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline int GetBits( const float *f ) { return *(const int*)f; }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,14 +236,20 @@ class CRasterizer
 		pThis->ClipVertical( &nSY, &nFY2, &nFY );
 
 		pZGradient->fZ = nSY * pZGradient->fZy + pZGradient->fZ0;
-		int nLeftX = ( nSY - sLeft.nSY ) * sLeft.nDX + sLeft.nX0;
-		int nRightX = ( nSY - sRight.nSY ) * sRight.nDX + sRight.nX0;
+		// The original 16.16 edge walker uses 32-bit wraparound. Express it in
+		// unsigned arithmetic so steep/negative edges do not invoke signed UB.
+		const auto fixedXAt = []( int y, const SFixedEdgeInfo &edge ) {
+			return ( std::uint32_t( y ) - std::uint32_t( edge.nSY ) ) *
+				std::uint32_t( edge.nDX ) + std::uint32_t( edge.nX0 );
+		};
+		std::uint32_t nLeftX = fixedXAt( nSY, sLeft );
+		std::uint32_t nRightX = fixedXAt( nSY, sRight );
 		int nY = nSY;
 		for ( ; nY < nFY2; ++nY, nLeftX += sLeft.nDX, nRightX += sRight.nDX,
 			pZGradient->fZ += pZGradient->fZy )
 		{
-			int nLeft = nLeftX >> 16;
-			int nRight = nRightX >> 16;
+			int nLeft = std::int32_t( nLeftX ) >> 16;
+			int nRight = std::int32_t( nRightX ) >> 16;
 			int nBackface;
 			if ( nLeft > nRight )
 			{
@@ -261,12 +268,12 @@ class CRasterizer
 				pZGradient->fZx, nBackface );
 		}
 
-		nRightX = ( nY - sRight2.nSY ) * sRight2.nDX + sRight2.nX0;
+		nRightX = fixedXAt( nY, sRight2 );
 		for ( ; nY < nFY; ++nY, nLeftX += sLeft.nDX, nRightX += sRight2.nDX,
 			pZGradient->fZ += pZGradient->fZy )
 		{
-			int nLeft = nLeftX >> 16;
-			int nRight = nRightX >> 16;
+			int nLeft = std::int32_t( nLeftX ) >> 16;
+			int nRight = std::int32_t( nRightX ) >> 16;
 			int nBackface;
 			if ( nLeft > nRight )
 			{
@@ -289,7 +296,8 @@ class CRasterizer
 	{
 		const float fDX = dif.x / dif.y;
 		pRes->nDX = Float2Int( fDX * 65536.0f );
-		pRes->nX0 = Float2Int( ( a.x - ( a.y - 0.5f - nSY ) * fDX ) * 65536.0f ) + 0x8000;
+		pRes->nX0 = std::int32_t( std::uint32_t( Float2Int(
+			( a.x - ( a.y - 0.5f - nSY ) * fDX ) * 65536.0f ) ) + 0x8000u );
 		pRes->nSY = nSY;
 		pRes->nFY = nFY;
 	}

@@ -409,7 +409,7 @@ public:
 		bool bOpen;
 		int nFixedFlags;
 		ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nFlipper); f.Add(3,&locksOpen); f.Add(4,&locksClosed); f.Add(5,&bOpen); f.Add(6,&nFixedFlags); return 0; }
-		SFlipper() {}
+		SFlipper() : nFlipper( 0 ), bOpen( false ), nFixedFlags( 0 ) {}
 	};
 	typedef unordered_map<CPtr<CObjectBase>, SDynLockInfo, SPtrHash> CDynLocksHash;
 	typedef unordered_map<CPtr<CObjectBase>, int, SPtrHash> CFlippersHash;

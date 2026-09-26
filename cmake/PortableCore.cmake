@@ -1164,6 +1164,13 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}")
     set_tests_properties(NativeWorldInitProbe PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    foreach(_s2_world_variant IN ITEMS 218 810)
+      add_test(NAME NativeWorldMission${_s2_world_variant}
+        COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+          --mission ${_s2_world_variant})
+      set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
+        WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    endforeach()
   endif()
 endif()
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests

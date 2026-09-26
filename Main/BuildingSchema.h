@@ -5,6 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "RodJunction.h"
+#include <cstdint>
 namespace NDb
 {
 	class CRPGArmor;
@@ -16,14 +17,22 @@ struct SPoint3;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SJunctionHash
 {
-	int operator() ( const CIVec3 &pt ) const { return pt.z << 24 | pt.y << 16 | pt.x; }
+	int operator() ( const CIVec3 &pt ) const
+	{
+		return std::int32_t( (std::uint32_t( pt.z ) << 24) |
+			(std::uint32_t( pt.y ) << 16) | std::uint32_t( pt.x ) );
+	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef unordered_map<CIVec3, CJunctionID, SJunctionHash> CJunctionHash;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SGroundHash // z �� �����������
 {
-	int operator() ( const CTPoint<int> &pt ) const { return pt.y << 16 | pt.x; }
+	int operator() ( const CTPoint<int> &pt ) const
+	{
+		return std::int32_t( (std::uint32_t( pt.y ) << 16) |
+			std::uint32_t( pt.x ) );
+	}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef unordered_map<CTPoint<int>, CJunctionID, SGroundHash> CGroundHash;

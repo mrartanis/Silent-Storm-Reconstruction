@@ -6,12 +6,20 @@
 #include "../Misc/Geom.h"
 #endif
 #include "../Main/BuildingGrid.h"
+#include "../Main/BuildingSchema.h"
 
 #include <cstdint>
 #include <cstdio>
 
 int main()
 {
+	const NBuilding::CIVec3 signedJunction( 4, -2, -4 );
+	const CTPoint<int> signedGround( 4, -2 );
+	if ( std::uint32_t( NBuilding::SJunctionHash()( signedJunction ) ) !=
+			UINT32_C( 0xFFFE0004 ) ||
+		std::uint32_t( NBuilding::SGroundHash()( signedGround ) ) !=
+			UINT32_C( 0xFFFE0004 ) )
+		return 9;
 	CObj<NBuilding::CBuildingGrid> grid = new NBuilding::CBuildingGrid;
 	grid->Setup( 2, 2, 0, 0, CVec2( 0, 0 ) );
 	const NBuilding::SPoint3 target( 2, 2, 0 );

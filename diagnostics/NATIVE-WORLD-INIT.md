@@ -35,6 +35,10 @@ audio. The test requires the original `game.db`, `Waypoints.res`, and the
 four autoload `.l` files. A missing data configuration omits the data test;
 the probe executable is still built.
 
+The subsequent `--mission` mode uses the same executable to run actual
+`CreateRandom` and `RunPostInit`; its distinct tests, results and remaining
+limits are documented in `NATIVE-WORLD-MISSION-LINUX.md`.
+
 On 2026-09-26 the full CTest matrix after this change passed 127/127 on
 Windows x64 and 104/104 on both Linux x86-64 and ARM64/QEMU. The Linux
 targets were built with GCC and ASan/UBSan. These counts include the new

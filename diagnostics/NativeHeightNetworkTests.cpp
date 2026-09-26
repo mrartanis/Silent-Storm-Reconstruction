@@ -12,9 +12,18 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <vector>
 
 int main()
 {
+	// GetFlipper appends and may reallocate before it assigns the door state.
+	// Moving an uninitialized bool there is UB in a real mission grid build.
+	std::vector<NAI::CPathNetwork::SFlipper> flippers;
+	flippers.emplace_back();
+	flippers.emplace_back();
+	for ( const auto &flipper : flippers )
+		if ( flipper.nFlipper != 0 || flipper.bOpen || flipper.nFixedFlags != 0 )
+			return 5;
 	CObj<NAI::CPathNetwork> network = new NAI::CPathNetwork;
 	const int layerIndex = network->CreateLayer( 4, 4, CVec2( 0, 0 ), 0.0f, 0 );
 	if ( layerIndex != 0 || network->GetLayers().size() != 1 )

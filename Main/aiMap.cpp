@@ -768,8 +768,6 @@ void CVolumeNode::AddTracker( IAIMapTracker *_pTracker, const SBound &_bound, in
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CConvexHull* CVolumeNode::GetHull( CObjectBase *pSrc, SBound *pBound )
 {
-	if ( this == 0 )
-		return 0;
 	for ( int i = 0; i < hulls.size(); ++i )
 	{
 		CConvexHull *pHull = hulls[i].pHull;
@@ -782,9 +780,12 @@ CConvexHull* CVolumeNode::GetHull( CObjectBase *pSrc, SBound *pBound )
 	}
 	for ( int k = 0; k < 8; ++k )
 	{
-		CConvexHull *pRes = GetNode(k)->GetHull( pSrc, pBound );
-		if ( pRes )
-			return pRes;
+		if ( CVolumeNode *pNode = GetNode(k) )
+		{
+			CConvexHull *pRes = pNode->GetHull( pSrc, pBound );
+			if ( pRes )
+				return pRes;
+		}
 	}
 	return 0;
 }
@@ -793,8 +794,6 @@ CConvexHull* CVolumeNode::GetHull( CObjectBase *pSrc, SBound *pBound )
 // GetObjectBound @0x465800 unions ALL of the user's hulls, not just the first).
 void CVolumeNode::AddHullBounds( CObjectBase *pSrc, SBoundCalcer *pRes, bool *pbFound )
 {
-	if ( this == 0 )
-		return;
 	for ( int i = 0; i < hulls.size(); ++i )
 	{
 		CConvexHull *pHull = hulls[i].pHull;
@@ -805,7 +804,8 @@ void CVolumeNode::AddHullBounds( CObjectBase *pSrc, SBoundCalcer *pRes, bool *pb
 		}
 	}
 	for ( int k = 0; k < 8; ++k )
-		GetNode(k)->AddHullBounds( pSrc, pRes, pbFound );
+		if ( CVolumeNode *pNode = GetNode(k) )
+			pNode->AddHullBounds( pSrc, pRes, pbFound );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CAIMap
