@@ -1,20 +1,35 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "Transform.h"
 #include "GAnimFormat.h"
 #include "GAnimParticles.h"
 #include "aiMap.h"
 #include "aiCollider.h"
 #include "phCollider.h"
-#include "..\misc\Tools.h"
-#include "..\misc\RandomGen.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\misc\StrProc.h"
-#include "..\MiscDll\Commands.h"
+#include "../Misc/Tools.h"
+#include "../Misc/RandomGen.h"
+#include "../MiscDll/LogStream.h"
+#include "../Misc/StrProc.h"
+#include "../MiscDll/Commands.h"
 #include "wTSFlags.h"
 #include "GSceneUtils.h"
 #include "Bound.h"          // SBoundCalcer/SBound for the BeStopped resting corpse bound (retail @0xea4f0)
 #include "aiStability.h"    // IStabilityTrackers for the BeStopped corpse registration (retail @0xea4f0)
 #include "RPGItemInfo.h"    // IGrenadeItemInfo/IWeaponItemInfo RTTI for the Init physics-case (retail @0x4ebe00)
+#include <cstdio>
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+static void GameDebugString(const char *s) { OutputDebugString(s); }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+static void GameDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // wOSBase.obj @0x347bd0 -- breakable-glass collider gate (defined in wOSBase.cpp). Declared here so the
 // particle-physics step can let flying debris pass THROUGH a breakable pane (and break it) instead of
@@ -30,40 +45,40 @@ void OutputInt( char *pszText, const int n )
 {
 	char buf[128];
 	sprintf( buf, "%s: %d\n", pszText, n );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 }
 void OutputFloat( char *pszText, const float f )
 {
 	char buf[128];
 	sprintf( buf, "%s: %f\n", pszText, f );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 }
 void OutputVector( char *pszText, const CVec3 &vec )
 {
 	char buf[128];
 	sprintf( buf, "%s: %f %f %f\n", pszText, vec.x, vec.y, vec.z );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 }
 void OutputQuat( char *pszText, const CQuat &q )
 {
 	char buf[128];
 	CVec4 *p = (CVec4*)&q;
 	sprintf( buf, "%s: %f %f %f %f\n", pszText, p->x, p->y, p->z, p->w );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 }
 void OutputMatrix( char *pszText, const SHMatrix &m )
 {
 	char buf[128];
 	sprintf( buf, "%s:\n", pszText );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 	sprintf( buf, "%f %f %f %f\n", m._11, m._12, m._13, m._14 );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 	sprintf( buf, "%f %f %f %f\n", m._21, m._22, m._23, m._24 );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 	sprintf( buf, "%f %f %f %f\n", m._31, m._32, m._33, m._34 );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 	sprintf( buf, "%f %f %f %f\n", m._41, m._42, m._43, m._44 );
-	OutputDebugString( buf );
+	GameDebugString( buf );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAnimation
@@ -1158,9 +1173,9 @@ void CASphereSet::Init( STime t, const CVec3 &position, const CQuat &rotation, c
 	else
 		lastPos = pos = position + rot.Rotate( massCenter );
 	p = fMass * velocity;
-	l.x = random.GetFloat(-2.0f,2.0f);
-	l.y = random.GetFloat(-2.0f,2.0f);
-	l.z = random.GetFloat(-2.0f,2.0f);
+	l.x = GameRandom().GetFloat(-2.0f,2.0f);
+	l.y = GameRandom().GetFloat(-2.0f,2.0f);
+	l.z = GameRandom().GetFloat(-2.0f,2.0f);
 	//l = VNULL3;
 	//l.y = 0.5f;
 	inertia.RotateVector( &l, l );

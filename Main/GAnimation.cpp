@@ -1,10 +1,16 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "..\DBFormat\DataAnimation.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\Misc\RandomGen.h"
-#include "..\Misc\BasicShare.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\MiscDll\Commands.h"   // NGlobal::GetVar (d_idle_animation, retail @0x4deac0)
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../DBFormat/DataAnimation.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../Misc/RandomGen.h"
+#include "../Misc/BasicShare.h"
+#include "../MiscDll/LogStream.h"
+#include "../MiscDll/Commands.h"   // NGlobal::GetVar (d_idle_animation, retail @0x4deac0)
 #include "GSceneUtils.h"
 #include "GAnimFormat.h"
 #include "GAnimParticles.h"
@@ -12,6 +18,15 @@
 #include "GAnimPath.h"
 #include "GAnimation.h"
 #include "aiMap.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+static void GameDebugString(const char *s) { OutputDebugString(s); }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+static void GameDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAnimation
 {
@@ -701,7 +716,7 @@ void CASmartAimer::GetFrame( STime t, SSkeletonPose *pPose )
 					if ( pAnim->GetTime() )
 					{
 						if ( tIdleEnd != 0 && t - tIdleEnd > pAnim->GetTime() )
-							tFrom = t - random.Get( pAnim->GetTime() );
+							tFrom = t - GameRandom().Get( pAnim->GetTime() );
 					}
 					pAnim->SetInterval( tFrom, tFrom + pAnim->GetTime() );
 					pAnim->SetStand( tFrom, state.pos, state.fAngle );
@@ -840,10 +855,10 @@ CARandom::CARandom( int nBones )
 			continue;
 		}
 		CVec3 axis;
-		axis.x = random.GetFloat(-1,1);
-		axis.y = random.GetFloat(-1,1);
-		axis.z = random.GetFloat(-1,1);
-		rotations[i] = CQuat( random.GetFloat(-0.5f, 0.5f), axis, true );
+		axis.x = GameRandom().GetFloat(-1,1);
+		axis.y = GameRandom().GetFloat(-1,1);
+		axis.z = GameRandom().GetFloat(-1,1);
+		rotations[i] = CQuat( GameRandom().GetFloat(-0.5f, 0.5f), axis, true );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -916,7 +931,7 @@ bool CSkeletonAnimator::NeedUpdate()
 	{
 		char buf[128];
 		sprintf( buf, "Updated animation: %d <%x> - %s\n", time, this, bServer ? "Server" : "Client" );
-		OutputDebugString( buf );
+		GameDebugString( buf );
 	}
 	*/
 	return bUpdate;
@@ -1133,7 +1148,7 @@ bool CSkeletonAnimator::IsInstableCorpse()
 		float fFreedom = pCorpse->CalcFreedomDegree();
 		char buf[128];
 		sprintf( buf, "FreedomDegree: %f\n", fFreedom );
-		OutputDebugString( buf );
+		GameDebugString( buf );
 		return fFreedom > 0.05f;
 	}
 	else*/

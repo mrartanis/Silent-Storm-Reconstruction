@@ -289,6 +289,32 @@ target_include_directories(s2_game_unit_animator PRIVATE
   "${root}/ADOImport" "${root}/MiscDll")
 target_compile_features(s2_game_unit_animator PUBLIC cxx_std_17)
 target_compile_options(s2_game_unit_animator PRIVATE -ffunction-sections -fdata-sections)
+# Original skeleton, terrain, path, and particle animation used by units.
+add_library(s2_game_animation_runtime STATIC
+  "${root}/Main/GAnimBase.cpp"
+  "${root}/Main/GAnimFormat.cpp"
+  "${root}/Main/GAnimation.cpp"
+  "${root}/Main/GSkeleton.cpp"
+  "${root}/Main/GAnimTerrain.cpp"
+  "${root}/Main/GAnimPath.cpp"
+  "${root}/Main/GAnimParticles.cpp")
+target_include_directories(s2_game_animation_runtime PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_animation_runtime PUBLIC cxx_std_17)
+target_compile_options(s2_game_animation_runtime PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_ai_height STATIC "${root}/Main/aiHeight.cpp")
+target_include_directories(s2_game_ai_height PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_ai_height PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_height PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeAnimationPathTests
+  "${root}/diagnostics/NativeAnimationPathTests.cpp")
+target_link_libraries(NativeAnimationPathTests PRIVATE
+  s2_game_animation_runtime s2_game_dg s2_game_structure s2_game_objects)
+target_link_options(NativeAnimationPathTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
 # Actual world-to-unit command wrapper used by the AI command queue.
 add_library(s2_game_command_bridge STATIC "${root}/Main/wCommandBridge.cpp")
 target_include_directories(s2_game_command_bridge PRIVATE

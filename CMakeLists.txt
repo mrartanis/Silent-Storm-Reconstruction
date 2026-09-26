@@ -595,6 +595,14 @@ target_precompile_headers(NativeCommandBridgeTests PRIVATE "${root}/Main/StdAfx.
 target_link_libraries(NativeCommandBridgeTests PRIVATE Main)
 target_compile_features(NativeCommandBridgeTests PRIVATE cxx_std_17)
 add_test(NAME NativeCommandBridgeTests COMMAND NativeCommandBridgeTests)
+add_executable(NativeAnimationPathTests
+  "${root}/diagnostics/NativeAnimationPathTests.cpp")
+target_include_directories(NativeAnimationPathTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAnimationPathTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAnimationPathTests PRIVATE Main)
+target_compile_features(NativeAnimationPathTests PRIVATE cxx_std_17)
+add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
 add_executable(NativeMissionScriptCorpusTests
   "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
 target_include_directories(NativeMissionScriptCorpusTests PRIVATE
