@@ -63,3 +63,12 @@ Clean native-media Windows x64 archive from source commit `12de5d0`:
 `774F6C5E4AAD58A6155A4AA8B67E8ECB538F17AF814D8E9A397448B8B7EE1E87`.
 The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
 `FSOUND_` imports. No in-game smoke is claimed for this archive.
+
+Clean Windows x64 archive after the shared-loader integration, from
+source commit `e57ee88`:
+`G:\SS\lab\builds\stage2-shared-head-loader-20260926-01`.
+`Game.exe` SHA-256 is
+`1BB071F569B0A69EA9F5EBD03C1EBC65D43E54A4433733BDCA66F0B859EC1E45`.
+There is no `fmod.dll` file or `fmod.dll`/`FSOUND_` import. No live-game
+smoke is claimed for this archive; the in-process lazy-loader test is
+the direct game-code check for this package.
