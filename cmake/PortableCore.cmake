@@ -55,6 +55,13 @@ target_link_libraries(NativeResourcePackageTests PRIVATE s2_game_resource_packag
 if(S2_RESOURCE_PACKAGE_PATH)
   add_test(NAME NativeResourcePackageTests
     COMMAND NativeResourcePackageTests "${S2_RESOURCE_PACKAGE_PATH}")
+  get_filename_component(_s2_package_corpus_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_package_corpus_dir}/Textures.res" AND
+     EXISTS "${_s2_package_corpus_dir}/Sounds.res")
+    add_test(NAME NativeResourceCorpusTests
+      COMMAND NativeResourcePackageTests --corpus "${_s2_package_corpus_dir}")
+    set_tests_properties(NativeResourceCorpusTests PROPERTIES TIMEOUT 900)
+  endif()
 endif()
 
 # The game's world/camera transform and bound mathematics, without a renderer.

@@ -471,6 +471,7 @@ add_test(NAME NativeCruncherTests COMMAND NativeCruncherTests)
 add_executable(NativeResourcePackageTests
   "${root}/diagnostics/NativeResourcePackageTests.cpp")
 target_link_libraries(NativeResourcePackageTests PRIVATE FileIO)
+target_compile_features(NativeResourcePackageTests PRIVATE cxx_std_17)
 s2_module(MiscDll   lib LINK FileIO Misc DEFINES MISCDLL_EXPORTS)
 s2_module(Image     lib LINK zlib libpng squish)
 s2_module(ADOImport lib LINK FileIO Misc DEFINES ADOIMPORT_EXPORTS)
@@ -1041,6 +1042,12 @@ if(S2_GAME_DIR)
   if(EXISTS "${S2_GAME_DIR}/res/Waypoints.res")
     add_test(NAME NativeResourcePackageTests
       COMMAND NativeResourcePackageTests "${S2_GAME_DIR}/res/Waypoints.res")
+    if(EXISTS "${S2_GAME_DIR}/res/Textures.res" AND
+       EXISTS "${S2_GAME_DIR}/res/Sounds.res")
+      add_test(NAME NativeResourceCorpusTests
+        COMMAND NativeResourcePackageTests --corpus "${S2_GAME_DIR}/res")
+      set_tests_properties(NativeResourceCorpusTests PROPERTIES TIMEOUT 600)
+    endif()
     add_test(NAME NativeResourceOpenerTests
       COMMAND NativeResourceOpenerTests "${S2_GAME_DIR}/res/Waypoints.res"
         "${CMAKE_BINARY_DIR}/resource-opener-fixture")
