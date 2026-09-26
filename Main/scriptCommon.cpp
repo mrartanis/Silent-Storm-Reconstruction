@@ -244,20 +244,6 @@ int luaOut(lua_State* state)
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-int luaRandom( lua_State* state )
-{
-	Script script(state);
-	if ( !script.GetObject( 1 ).IsNumber() )
-		script.PushNumber( 0 );
-	else if ( script.GetTop() == 0 )
-		script.PushNumber( random.Get() );
-	else if ( script.GetTop() > 1 )
-		script.PushNumber( random.Get( script.GetObject(1).GetInteger(), script.GetObject(2).GetInteger() ) );
-	else
-		script.PushNumber( random.Get( script.GetObject(1).GetInteger() ) );
-	return 1;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 BEGIN_SCRIPT_COMMAND( IsRealTime, "" )
 	if ( pScript->pWorld->IsRealTime() )
 		pScript->PushNumber( 1 );

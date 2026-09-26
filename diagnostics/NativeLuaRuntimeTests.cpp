@@ -2,6 +2,7 @@
 #include "../Script/lua.h"
 #include "../Script/Script.h"
 #include "../FileIO/BasicChunk1.h"
+#include "../Misc/RandomGen.h"
 
 #include <cmath>
 #include <cstdio>
@@ -9,6 +10,8 @@
 #include <fstream>
 #include <iterator>
 #include <string>
+
+namespace NScript { int luaRandom(lua_State*); }
 
 namespace {
 int outputCalls = 0;
@@ -96,5 +99,28 @@ int main(int argc, char** argv) {
   if (restored.DoString("wrapper_result = wrapper_result + 3") != 0) return 15;
   restored.ExecuteThreads();
   if (restored.GetGlobal("wrapper_result").GetNumber() != 42.0) return 16;
+
+  // The authored DB scripts call the game's actual random binding (for
+  // example, the patrol branch in mission variant 4526).
+#if defined(_WIN32)
+  CRandomGenerator& gameRandom = random;
+#else
+  CRandomGenerator& gameRandom = s2_game_random;
+#endif
+  gameRandom.SeedForHarness(2026);
+  const unsigned int expectedOne = gameRandom.Get(29);
+  const unsigned int expectedRange = gameRandom.Get(5, 20);
+  gameRandom.SeedForHarness(2026);
+  Script mission;
+  mission.Register("random", NScript::luaRandom);
+  if (mission.DoString("patrol = random(29); selected = random(5, 20); invalid = random('bad')") != 0)
+    return 17;
+  mission.ExecuteThreads();
+  if (mission.GetGlobal("patrol").GetNumber() != expectedOne ||
+      mission.GetGlobal("selected").GetNumber() != expectedRange ||
+      mission.GetGlobal("invalid").GetNumber() != 0.0)
+    return 18;
+  std::printf("native-lua game random patrol=%u selected=%u\n",
+              expectedOne, expectedRange);
   return 0;
 }

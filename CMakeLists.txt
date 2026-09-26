@@ -478,7 +478,9 @@ add_executable(NativeStreamsTests "${root}/diagnostics/NativeStreamsTests.cpp")
 target_link_libraries(NativeStreamsTests PRIVATE FileIO)
 target_compile_features(NativeStreamsTests PRIVATE cxx_std_17)
 add_test(NAME NativeStreamsTests COMMAND NativeStreamsTests)
-add_executable(NativeLuaRuntimeTests "${root}/diagnostics/NativeLuaRuntimeTests.cpp")
+add_executable(NativeLuaRuntimeTests
+  "${root}/diagnostics/NativeLuaRuntimeTests.cpp"
+  "${root}/Main/scriptRandom.cpp")
 target_link_libraries(NativeLuaRuntimeTests PRIVATE Script)
 add_test(NAME NativeLuaRuntimeTests COMMAND NativeLuaRuntimeTests)
 s2_add_lua_corpus_test()
@@ -570,6 +572,13 @@ target_include_directories(NativeMissionMapProbe PRIVATE
 target_precompile_headers(NativeMissionMapProbe PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeMissionMapProbe PRIVATE Main Script)
 target_compile_features(NativeMissionMapProbe PRIVATE cxx_std_17)
+add_executable(NativeMissionScriptCorpusTests
+  "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
+target_include_directories(NativeMissionScriptCorpusTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeMissionScriptCorpusTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeMissionScriptCorpusTests PRIVATE Main Script)
+target_compile_features(NativeMissionScriptCorpusTests PRIVATE cxx_std_17)
 add_executable(NativeMapPolygonTests "${root}/diagnostics/NativeMapPolygonTests.cpp")
 target_include_directories(NativeMapPolygonTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapPolygonTests PRIVATE "${root}/Main/StdAfx.h")
@@ -809,6 +818,8 @@ if(S2_GAME_DIR)
   if(EXISTS "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMapDatabaseTests
       COMMAND NativeMapDatabaseTests "${S2_GAME_DIR}/game.db")
+    add_test(NAME NativeMissionScriptCorpusTests
+      COMMAND NativeMissionScriptCorpusTests "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMapFlagsTests
       COMMAND NativeMapFlagsTests "${S2_GAME_DIR}/game.db")
     if(EXISTS "${S2_GAME_DIR}/res/Buildings.res" AND
@@ -832,6 +843,8 @@ if(S2_GAME_DIR)
       endif()
     endif()
     if(TARGET s2_bink_compat)
+      set_tests_properties(NativeMissionScriptCorpusTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       if(TEST NativeBuildingTerrainResourceTests)
@@ -851,6 +864,8 @@ if(S2_GAME_DIR)
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       endif()
     else()
+      set_tests_properties(NativeMissionScriptCorpusTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       if(TEST NativeBuildingTerrainResourceTests)

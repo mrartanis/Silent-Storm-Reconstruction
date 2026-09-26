@@ -485,7 +485,8 @@ endif()
 # Build the original modified Lua VM without its Windows-only save adapter.
 # The runtime target is expanded as the native persistence layer is ported.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lua_include")
-file(WRITE "${CMAKE_BINARY_DIR}/lua_include/stdafx.h" "#include \"${root}/Script/StdAfx.h\"\n")
+file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/lua_include/stdafx.h"
+  CONTENT "#include \"${root}/Script/StdAfx.h\"\n")
 add_library(s2_game_lua STATIC
   "${root}/Script/lapi.cpp"
   "${root}/Script/lcode.cpp"
@@ -505,13 +506,26 @@ add_library(s2_game_lua STATIC
   "${root}/Script/lundump.cpp"
   "${root}/Script/lvm.cpp"
   "${root}/Script/lzio.cpp"
-  "${root}/Script/Script.cpp")
+  "${root}/Script/Script.cpp"
+  "${root}/Main/scriptRandom.cpp")
 target_include_directories(s2_game_lua PRIVATE "${CMAKE_BINARY_DIR}/lua_include")
-target_link_libraries(s2_game_lua PUBLIC s2_game_structure)
+target_link_libraries(s2_game_lua PUBLIC s2_game_structure s2_game_misc_runtime)
 target_compile_features(s2_game_lua PUBLIC cxx_std_17)
 add_executable(NativeLuaRuntimeTests "${root}/diagnostics/NativeLuaRuntimeTests.cpp")
 target_link_libraries(NativeLuaRuntimeTests PRIVATE s2_game_lua)
 add_test(NAME NativeLuaRuntimeTests COMMAND NativeLuaRuntimeTests)
+add_executable(NativeMissionScriptCorpusTests
+  "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
+target_link_libraries(NativeMissionScriptCorpusTests PRIVATE
+  -Wl,--start-group s2_game_lua
+  s2_game_database_runtime s2_game_misc_runtime s2_game_structure
+  s2_game_streams s2_game_objects s2_portable_structure
+  -Wl,--whole-archive s2_game_dbformat_records -Wl,--no-whole-archive
+  -Wl,--end-group)
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeMissionScriptCorpusTests
+    COMMAND NativeMissionScriptCorpusTests "${S2_GAME_DB_PATH}")
+endif()
 s2_add_lua_corpus_test()
 
 add_library(s2_portable_core STATIC

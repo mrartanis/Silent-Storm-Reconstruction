@@ -49,3 +49,31 @@ loaded the mission slot `TOPWRITE_NEW` to `LOAD-SLOT-DONE`, then exited with
 no crash dump. The copied `game.sav` kept SHA-256
 `1385447ae22f6da374f44453bbb93034d99e2e7476e5faa9034d026b4ee3e16a`.
 This verifies a Windows game regression boundary, not Linux gameplay.
+
+## Authored `game.db` script corpus and a game-used binding (2026-09-26)
+
+`NativeMissionScriptCorpusTests` loads the original `game.db` through the
+typed database, iterates every `NDb::CScript` record in stable ID order, and
+parses every nonempty source with the game's modified Lua VM. The baseline
+contains 113 records, one intentionally empty, and 355,575 bytes of nonempty
+source. The ordered ID/source digest is `B5163E4E76664106` on Windows x64
+and Linux GCC x64/ARM64; the test asserts all four values. This is authored game
+data, not editor-only input. `NativeMissionMapProbe` independently confirms
+that `BuildMap` selects and parses the 1,016-byte and 4,266-byte scripts in
+variants 810 and 4526. `--print-scripts` on that probe displays the selected
+source locally for binding triage; the licensed text is not checked in.
+
+Variant 4526 calls `random(29)` to select an enemy patrol branch. The
+original `NScript::luaRandom` implementation now has its own compilation
+unit, shared by Windows `Main` and Linux `s2_game_lua`. A deterministic
+runtime regression registers that actual binding, calls its one-argument,
+two-argument, and invalid-argument forms, and checks the game generator's
+results. Seed 2026 gives patrol `10` and selected value `7` on Windows x64,
+Linux GCC x64, and ARM64/QEMU. This is a real game-used Lua binding, but it
+does not claim that `GetUnit`, route actions, cameras, dialogs, or the live
+mission world are portable yet.
+
+After this packet, the full Windows x64 build and CTest passed 104/104;
+Linux GCC x64 and ARM64/QEMU with ASan/UBSan passed 78/78 each. The updated `Game.exe` runtime
+smoke remains open: the current D3D desktop cannot create a device even for
+the older known-good archive, so build success is not treated as playability.

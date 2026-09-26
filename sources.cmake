@@ -358,6 +358,7 @@ set(Main_SRC
   "scFlowChartItems.cpp"
   "ScreenShot.cpp"
   "scriptCommon.cpp"
+  "scriptRandom.cpp"
   "scriptDialog.cpp"
   "scriptDiplomacy.cpp"
   "ScriptFunctions.cpp"

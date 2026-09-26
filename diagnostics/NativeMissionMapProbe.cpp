@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 
 static std::uint64_t digest = UINT64_C(14695981039346656037);
 static void Add( std::uint32_t value )
@@ -29,7 +30,7 @@ static void Add( std::uint32_t value )
 
 int main( int argc, char **argv )
 {
-	if ( argc != 4 )
+	if ( argc != 4 && ( argc != 5 || std::strcmp( argv[4], "--print-scripts" ) ) )
 		return 2;
 	CFileStream database;
 	database.OpenRead( argv[1] );
@@ -68,6 +69,10 @@ int main( int argc, char **argv )
 	for ( const CDBPtr<NDb::CScript> &record : map.scripts )
 	{
 		if ( !record || record->strCode.empty() ) return 7;
+		if ( argc == 5 )
+			std::printf( "\nSCRIPT ID %d (%zu bytes)\n%.*s\n", record->GetRecordID(),
+				record->strCode.size(), static_cast<int>( record->strCode.size() ),
+				record->strCode.data() );
 		lua_State *state = lua_open( 0 );
 		if ( !state ) return 8;
 		const int status = lua_parsebuffer( state, record->strCode.data(),

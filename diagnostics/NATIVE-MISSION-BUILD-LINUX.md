@@ -76,6 +76,9 @@ folder. The probe also accepts explicit arguments `<game.db> <res-dir>
 <variant-id>`. IDs 218, 810, and 4526 have asserted regression digests;
 ID 0 lists
 database candidates with units and waypoints.
+Pass `--print-scripts` after a variant ID to inspect its attached authored
+Lua source locally when deciding which game bindings to port; the source is
+not included in this repository.
 
 The next stage-2 parity gate is script execution and runtime AI interaction
 in a loaded mission, not just map construction. The
