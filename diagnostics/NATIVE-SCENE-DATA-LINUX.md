@@ -29,3 +29,12 @@ resource constructor, Lua UI registration, the complete game Lua
 function table, debug particle storage, and scene/decal serialization
 types. Linking the full Linux game or running a live mission remains
 open. No fake symbols or unresolved-symbol linker bypass were used.
+
+A clean native-media Windows x64 archive from source commit `d59394e`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-scene-data-20260926-01`.
+`Game.exe` SHA-256 is
+`7D81F52F1F231785299246D1B800E7B8E26939F70E71B5036499C45B040E8EB4`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed from the current remote
+D3D session.
