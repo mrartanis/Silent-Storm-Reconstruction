@@ -7,10 +7,9 @@
 #endif
 #include "../Main/GResource.h"
 #include "../Main/HeadResourceData.h"
-#if defined(_WIN32)
 #include "../DBFormat/DataFormat.h"
+#include "../ADOImport/BasicDB.h"
 #include "../Main/LSHead.h"
-#endif
 #include "../FileIO/PortablePackageIndex.h"
 #include "../third_party/lifestudio/src/NativeHeadData.h"
 #include "../third_party/lifestudio/include/LifeStudioHeadAPI.h"
@@ -45,7 +44,9 @@ static void AddString( const std::string &value )
 }
 int main( int argc, char **argv )
 {
-	if ( argc != 2 ) return 2;
+	if ( argc != 2 && argc != 4 ) return 2;
+	if ( argc == 4 )
+		std::filesystem::current_path(std::filesystem::path(argv[2]).parent_path());
 	S2FileIO::PortablePackageIndex package;
 	if ( !package.Open(argv[1]) ) return 3;
 	NGScene::AddResourceDir(std::filesystem::path(argv[1]).parent_path().string().c_str());
@@ -67,7 +68,6 @@ int main( int argc, char **argv )
 			const auto &tris = data.tris;
 			if ( streams.empty() || nVertices.empty() || uvs.empty() ||
 				indices.empty() || tris.empty() ) return 4;
-#if defined(_WIN32)
 			if ( entry.first == 11 )
 			{
 				CObj<NLSHead::CHeadMeshLoader> liveLoader = new NLSHead::CHeadMeshLoader;
@@ -78,7 +78,6 @@ int main( int argc, char **argv )
 					live->UVs != uvs || live->indices != indices || live->tris != tris )
 					return 9;
 			}
-#endif
 			Add(static_cast<std::uint32_t>(entry.first));
 			Add(static_cast<std::uint32_t>(streams.size()));
 			Add(static_cast<std::uint32_t>(uvs.size()));
@@ -190,6 +189,55 @@ int main( int argc, char **argv )
 				entry.first, entry.second.length);
 			return 6;
 		}
+	}
+	if ( argc == 4 )
+	{
+		CFileStream database;
+		database.OpenRead(argv[3]);
+		NDatabase::Serialize(database, CStructureSaver::READ);
+		CDBTable<NDb::CComplexHead> *table = NDatabase::GetTable<NDb::CComplexHead>();
+		if ( !table ) return 13;
+		NDb::CComplexHead *selected = nullptr;
+		CDBIterator<NDb::CComplexHead> it(*table);
+		while ( it.MoveNext() )
+		{
+			NDb::CComplexHead *complex = it.Get();
+			if ( !IsValid(complex) || !IsValid(complex->pHead) ||
+				package.Entries().find(complex->pHead->GetRecordID()) == package.Entries().end() )
+				continue;
+			if ( !selected || complex->GetRecordID() < selected->GetRecordID() )
+				selected = complex;
+		}
+		if ( !selected ) return 16;
+		CObj<NLSHead::CHeadInfo> info = new NLSHead::CHeadInfo(selected);
+		if ( info->GetHead() != selected || !info->GetMesh() ||
+			!info->GetMesh()->GetValue() ||
+			info->GetHair() != selected->pHair ) return 14;
+		NLSHead::CHeadMeshInfo *mesh = info->GetMesh()->GetValue();
+		NLSHead::SHeadResourceData expected;
+		NLSHead::LoadHeadResourceData(selected->pHead->GetRecordID(), &expected);
+		if ( mesh->pLSAnimators.size() != expected.streams.size() ||
+			mesh->nVertices != expected.nVertices || mesh->UVs != expected.UVs ) return 15;
+		std::printf("complex_head=%d head_info=%d animators=%zu\n",
+			selected->GetRecordID(), selected->pHead->GetRecordID(),
+			mesh->pLSAnimators.size());
+		CMemoryStream saved;
+		{
+			CStructureSaver saver(saved, CStructureSaver::WRITE);
+			saver.Add(1, &info);
+		}
+		info = nullptr;
+		saved.SetRMode();
+		saved.Seek(0);
+		CObj<NLSHead::CHeadInfo> reloaded;
+		{
+			CStructureSaver saver(saved, CStructureSaver::READ);
+			saver.Add(1, &reloaded);
+		}
+		if ( !reloaded || reloaded->GetHead() != selected ||
+			!reloaded->GetMesh() || !reloaded->GetMesh()->GetValue() ||
+			reloaded->GetMesh()->GetValue()->nVertices != expected.nVertices ) return 17;
+		std::printf("head_info_save_bytes=%u\n", saved.GetSize());
 	}
 	NGScene::CloseAllResources();
 	std::printf("heads=%zu streams=%zu vertices=%zu muscles=%zu digest=%016llX neutral=%016llX coarse=%016llX sum_abs=%.6f\n",

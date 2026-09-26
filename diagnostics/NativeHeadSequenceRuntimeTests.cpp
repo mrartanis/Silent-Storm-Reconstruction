@@ -7,6 +7,8 @@
 #endif
 #include "../Main/GResource.h"
 #include "../Main/HeadResourceData.h"
+#include "../DBFormat/DataFormat.h"
+#include "../Main/LSHead.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../third_party/lifestudio/include/LifeStudioHeadAPIMMTS.h"
 #include "../third_party/lifestudio/include/LifeStudioHeadAPI.h"
@@ -20,6 +22,7 @@ int main(int argc, char** argv) {
   if (argc != 3) return 2;
   S2FileIO::PortablePackageIndex package;
   if (!package.Open(argv[1])) return 3;
+  std::filesystem::current_path(std::filesystem::path(argv[2]).parent_path());
   NGScene::AddResourceDir(std::filesystem::path(argv[1]).parent_path().string().c_str());
   LifeStudioHeadAPI::IMMTree* tree = LifeStudioHeadAPI::IMMTree::Create();
   if (!tree || !tree->Load(argv[2]) || !tree->RootMacroMuscle()) return 8;
@@ -52,6 +55,12 @@ int main(int argc, char** argv) {
         reinterpret_cast<const char*>(stream.GetBuffer()), stream.GetSize());
     const bool equal = loaded && sequencer->SequenceTime() == static_cast<int>(header.duration) &&
         sequencer->TracksCount() == static_cast<int>(tracks.size());
+    CObj<NLSHead::CHeadSequenceLoader> liveLoader = new NLSHead::CHeadSequenceLoader;
+    liveLoader->SetKey(id);
+    NLSHead::CHeadSequenceInfo* live = liveLoader->GetValue();
+    const bool liveEqual = live && live->pLSSequence &&
+        live->pLSSequence->SequenceTime() == static_cast<int>(header.duration) &&
+        live->pLSSequence->TracksCount() == static_cast<int>(tracks.size());
     if (equal && id == 7552) {
       sequencer->RegisterMMTree(tree);
       sequencer->RenderMacroMuscles(animator, 500);
@@ -66,7 +75,7 @@ int main(int argc, char** argv) {
       if (changed == 0) return 14;
     }
     sequencer->Destroy();
-    if (!equal) return 7;
+    if (!equal || !liveEqual) return 7;
     std::printf("sequence=%d duration=%u tracks=%zu\n", id, header.duration, tracks.size());
   }
   animator->Destroy();

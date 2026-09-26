@@ -1056,7 +1056,7 @@ if(S2_GAME_DIR)
   endif()
   if(EXISTS "${S2_GAME_DIR}/res/Heads.res")
     add_test(NAME NativeHeadResourceTests
-      COMMAND NativeHeadResourceTests "${S2_GAME_DIR}/res/Heads.res")
+      COMMAND NativeHeadResourceTests "${S2_GAME_DIR}/res/Heads.res" "${S2_GAME_DIR}/tree.mma" "${S2_GAME_DIR}/game.db")
     if(TARGET s2_bink_compat)
       set_tests_properties(NativeHeadResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")

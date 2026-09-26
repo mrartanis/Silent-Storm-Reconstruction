@@ -64,6 +64,31 @@ against Steam x86, link `CHeadInfo` on Linux, render a face, or run a
 mission. The native LifeStudio implementation remains partial in other
 API surfaces, so Linux FaceGen is not declared complete.
 
+The follow-up Linux `LSHeadPortable.cpp` now supplies the actual
+game-used lazy `CHeadMeshLoader`, `CHeadSequenceLoader`, shared head cache,
+and `CHeadInfo(NDb::CComplexHead*)` constructor, with their original
+save/load class IDs. The resource test constructs both loaders on Linux,
+then loads original `game.db`, chooses the lowest valid complex-head ID,
+constructs `CHeadInfo`, forces its mesh, and saves/reloads the object.
+Windows x64, Linux x86-64, and ARM64 select complex head 1, source head
+6, one animator, and a 182-byte serialized `CHeadInfo`. This is a real
+database-to-head-to-resource-to-animation-to-save path, not a factory
+that only satisfies a linker symbol. The Linux implementation uses the
+same resource fields and native LifeStudio algorithms as Windows x64,
+although the old `LSHead.cpp` remains the Windows compilation unit.
+
+Re-linking the actual Linux AI-logic object with all available game
+archives now leaves three distinct unresolved scene symbols: two
+`CNonePart` casts and one `CLightGroup` cast. The previous fourth,
+`CHeadInfo` construction, is resolved. This diagnostic link is not a
+Linux game executable; scene ownership/serialization and a live mission
+remain open. A direct Steam x86 comparison for the selected head save
+or all facial vertices has not been run in this packet.
+The full regression matrix after this packet passed on 2026-09-26:
+Windows x64 122/122, Linux x86-64 and ARM64/QEMU 96/96 each under
+ASan/UBSan. No Windows game source changed, so no new Windows game
+archive was made for this Linux-runtime packet.
+
 Reproduce on Windows with the configured `G:\SS\lab\build-x64-stage2`:
 
 ```
@@ -74,7 +99,9 @@ ctest --test-dir G:\SS\lab\build-x64-stage2 -C RelWithDebInfo -R ^NativeHeadReso
 On Linux, configure with
 `-DS2_HEAD_RESOURCE_PATH=/path/to/original/res/Heads.res` and, when
 `tree.mma` is not in the parent of `res`, set
-`-DS2_HEAD_TREE_PATH=/path/to/original/tree.mma`. Build the
+`-DS2_HEAD_TREE_PATH=/path/to/original/tree.mma`. Set
+`-DS2_GAME_DB_PATH=/path/to/original/game.db` to include the
+`CHeadInfo` constructor and save/reload check. Build the
 `NativeHeadResourceTests` and `NativeHeadSequenceRuntimeTests` targets,
 then run `ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build-x64 -R
 'NativeHead(Resource|SequenceRuntime)Tests' -V`. The ARM64 configuration
