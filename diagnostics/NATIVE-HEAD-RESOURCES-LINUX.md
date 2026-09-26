@@ -44,3 +44,10 @@ The ARM64 configuration uses the same resource and test via QEMU.
 
 Full regression matrix on 2026-09-26: Windows x64 119/119;
 Linux x86-64 and ARM64/QEMU 93/93 each under ASan/UBSan.
+
+Clean native-media Windows x64 archive from source commit `12de5d0`:
+`G:\SS\lab\builds\stage2-head-resources-20260926-01`.
+`Game.exe` SHA-256 is
+`774F6C5E4AAD58A6155A4AA8B67E8ECB538F17AF814D8E9A397448B8B7EE1E87`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed for this archive.
