@@ -39,8 +39,9 @@ An experimental link of original `BuildMap` immediately after adding
 terrain functions. The later building/terrain batch now compiles and
 directly tests `BuildingGrid.cpp`, `BuildingInfo.cpp`, and
 `MapBuildTerrain.cpp` on Linux (see `NATIVE-BUILDING-TERRAIN-LINUX.md`).
-`MakeSWMap`/`BuildingHP` in `MakeBuilding.cpp` and their solid/wall-map
-dependencies remain for a full original `BuildMap` mission link. No
+`MakeSWMap`/`BuildingHP` and their solid/wall-map and AI-geometry
+dependencies have since been linked and directly tested too; the full
+original `BuildMap` mission link and execution remain unverified. No
 `BuildTerrain`/MapEdit-only surrogate counts as completing this game path.
 
 Clean Windows x64 native-media archive

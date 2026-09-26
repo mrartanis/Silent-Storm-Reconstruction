@@ -9,6 +9,9 @@
 #include "../FileIO/PortablePackageIndex.h"
 #include "../DBFormat/DataMap.h"
 #include "../Main/BuildingInfo.h"
+#include "../Main/BuildingGrid.h"
+#include "../Main/MakeBuilding.h"
+#include "../Main/MakeBuildingInternal.h"
 #include "../Main/MapBuildTerrain.h"
 #include "../Main/METerrain.h"
 #include "../Main/TerrainInfo.h"
@@ -45,10 +48,11 @@ int main( int argc, char **argv )
 		CFileStream database;
 		database.OpenRead( argv[1] );
 		NDatabase::Serialize( database, CStructureSaver::READ );
-		S2FileIO::PortablePackageIndex buildings, terrainIndex;
+		S2FileIO::PortablePackageIndex buildings, terrainIndex, aiGeometryIndex;
 		const std::string resDir = argv[2];
 		if ( !buildings.Open( resDir + "/Buildings.res" ) ||
-			!terrainIndex.Open( resDir + "/Terrain.res" ) )
+			!terrainIndex.Open( resDir + "/Terrain.res" ) ||
+			!aiGeometryIndex.Open( resDir + "/AIGeometries.res" ) )
 			return 3;
 		NGScene::AddResourceDir( resDir.c_str() );
 		auto *variants = NDatabase::GetTable<NDb::CTemplVariant>();
@@ -63,7 +67,8 @@ int main( int argc, char **argv )
 				ids.push_back( id );
 		}
 		std::sort( ids.begin(), ids.end() );
-		int checked = 0, attempted = 0, empty = 0;
+		int checked = 0, attempted = 0, empty = 0, positiveHp = 0;
+		std::vector<int> checkedIDs;
 		for ( int id : ids )
 		{
 			++attempted;
@@ -108,14 +113,44 @@ int main( int argc, char **argv )
 			Add( terrain.heightMap[0][0] );
 			Add( terrain.typeMap[0][0] );
 			Add( terrain.avrgColor[0][0] );
+			CObj<NBuilding::CSolidAndWallMap> wallMap =
+				NBuilding::MakeSWMap( id, SRandomSeed( 123 ) );
+			CDGPtr<NBuilding::CSolidAndWallMap> wallPin( wallMap );
+			wallPin.Refresh();
+			const auto &wallGrid = wallMap->GetWallGrid();
+			if ( wallGrid.GetWidth() != building->nMaxX + 2 ||
+				wallGrid.GetHeight() != building->nMaxY + 2 ||
+				wallGrid.GetMinFloor() != building->nMinFloor ||
+				wallGrid.GetMaxFloor() != building->nMaxFloor )
+				return 11;
+			Add( wallGrid.GetWidth() ); Add( wallGrid.GetHeight() );
+			Add( static_cast<std::uint32_t>( wallMap->GetSolidMap().size() ) );
+			CObj<NBuilding::CBuildingGrid> hpGrid = new NBuilding::CBuildingGrid;
+			hpGrid->Setup( building->nMaxX, building->nMaxY,
+				building->nMinFloor, building->nMaxFloor, CVec2( 0, 0 ) );
+			NBuilding::BuildingHP( building, hpGrid, wallMap );
+			int variantPositiveHp = 0;
+			for ( int z = building->nMinFloor * 4;
+				z <= building->nMaxFloor * 4 + 4; ++z )
+				for ( int y = 0; y < 2 + building->nMaxY * 2; ++y )
+					for ( int x = 0; x < 2 + building->nMaxX * 2; ++x )
+						variantPositiveHp += hpGrid->GetHP(
+							NBuilding::SPoint3( x, y, z ) ) > 0;
+			positiveHp += variantPositiveHp;
+			Add( variantPositiveHp );
+			checkedIDs.push_back( id );
 			++checked;
 			if ( checked == 8 ) break;
 		}
-		if ( checked != 8 )
+		if ( checked != 8 || positiveHp == 0 )
 			return 8;
-		std::printf( "matched_variants=%zu attempted=%d empty=%d checked=%d digest=%016llX\n",
-			ids.size(), attempted, empty, checked,
+		std::printf( "matched_variants=%zu attempted=%d empty=%d checked=%d positive_hp=%d digest=%016llX\n",
+			ids.size(), attempted, empty, checked, positiveHp,
 			static_cast<unsigned long long>(digest) );
+		std::printf( "checked_ids=" );
+		for ( std::size_t i = 0; i < checkedIDs.size(); ++i )
+			std::printf( "%s%d", i ? "," : "", checkedIDs[i] );
+		std::printf( "\n" );
 		NGScene::CloseAllResources();
 		return 0;
 	}

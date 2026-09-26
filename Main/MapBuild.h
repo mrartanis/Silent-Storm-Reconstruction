@@ -67,11 +67,15 @@ struct SMapElement
 	int nLockHardness;
 	bool bIsChest;				// the element carries a loot chest (CFinalElement::pChest)
 	bool bIsTransparentIfOpen;	// chest containers turn transparent when open
-	SMapElement(): bOpen(false), nObjectPhase(0), bBorder( false ), nDC(0), eTimeOfDay( NWorld::ETimeOfDay(0) ),
+	SMapElement(): nRelFloor(0), bLightmap(false), bOpen(false),
+		nPassageZoneID(0), nPassageObjectID(0), nAPRadius(0),
+		nObjectPhase(0), bBorder( false ), nDC(0), eTimeOfDay( NWorld::ETimeOfDay(0) ),
 		bIsLocked(false), nKeyID(0), nLockHardness(0), bIsChest(false), bIsTransparentIfOpen(false) {}
 	SMapElement( NDb::CObject *_pObject, SMapPosition _pos, bool _bBorder = false ):
-		pObject( _pObject ), pos( _pos ), bOpen( false ), nObjectPhase( 0 ),
-		ptAlignTo( CVec2( _pos.ptPos.x, _pos.ptPos.y ) ), bBorder( _bBorder ), nDC(0), eTimeOfDay( NWorld::ETimeOfDay(0) ),
+		pObject( _pObject ), pos( _pos ), nRelFloor(0), bLightmap(false),
+		ptAlignTo( CVec2( _pos.ptPos.x, _pos.ptPos.y ) ), bOpen( false ),
+		nPassageZoneID(0), nPassageObjectID(0), nAPRadius(0),
+		nObjectPhase( 0 ), bBorder( _bBorder ), nDC(0), eTimeOfDay( NWorld::ETimeOfDay(0) ),
 		bIsLocked(false), nKeyID(0), nLockHardness(0), bIsChest(false), bIsTransparentIfOpen(false) {}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////

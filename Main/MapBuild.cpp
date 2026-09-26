@@ -682,6 +682,8 @@ void CMapBuilder::AddSimpleElements( SMapInfo *pDst, SMapBuilding *pB, NDb::CTem
 					cs.pPers = pUnit->pMonster;
 					cs.bPersSlot = pUnit->bClueSlot;
 					cs.bInventorySlot = pUnit->bClueInventorySlot;
+					cs.ptAlignTo = bTerrAlign
+						? CVec2( cs.pos.ptPos.x, cs.pos.ptPos.y ) : ptAlignTo;
 					pDst->slots.push_back( cs );
 				}
 				if ( IsValid( pUnit->pGroup ) )

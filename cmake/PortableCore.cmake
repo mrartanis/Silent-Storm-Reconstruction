@@ -226,6 +226,15 @@ target_include_directories(s2_game_ai_collision PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
 target_link_libraries(s2_game_ai_collision PUBLIC s2_game_ai_grid s2_game_transform)
 target_compile_features(s2_game_ai_collision PUBLIC cxx_std_17)
+add_library(s2_game_ai_geometry_loader STATIC
+  "${root}/Main/aiObjectLoader.cpp")
+target_include_directories(s2_game_ai_geometry_loader PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
+target_link_libraries(s2_game_ai_geometry_loader PUBLIC
+  s2_game_ai_collision s2_game_resource_loader s2_game_basic_share)
+target_compile_features(s2_game_ai_geometry_loader PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_geometry_loader PRIVATE
+  -ffunction-sections -fdata-sections)
 add_library(s2_game_ai_log STATIC "${root}/MiscDll/LogStream.cpp")
 target_include_directories(s2_game_ai_log PRIVATE
   "${root}/MiscDll" "${root}/Main" "${root}/FileIO" "${root}/Misc")
@@ -275,9 +284,52 @@ target_include_directories(s2_game_map_build PRIVATE
   "${root}/ADOImport" "${root}/MiscDll")
 target_link_libraries(s2_game_map_build PUBLIC
   s2_game_dbformat_records s2_game_ai_grid s2_game_terrain_info
-  s2_game_building_grid s2_game_building_info s2_game_map_terrain)
+  s2_game_building_grid s2_game_building_info s2_game_building_internal
+  s2_game_make_building s2_game_map_terrain)
 target_compile_features(s2_game_map_build PUBLIC cxx_std_17)
 target_compile_options(s2_game_map_build PRIVATE -ffunction-sections -fdata-sections)
+option(S2_ENABLE_MISSION_MAP_PROBE "Link the original game mission builder probe" ON)
+if(S2_ENABLE_MISSION_MAP_PROBE)
+  add_executable(NativeMissionMapProbe
+    "${root}/diagnostics/NativeMissionMapProbe.cpp")
+  target_link_libraries(NativeMissionMapProbe PRIVATE
+    -Wl,--start-group s2_game_map_build s2_game_make_building
+    s2_game_building_internal s2_game_building_info s2_game_building_grid
+    s2_game_building_clip s2_game_map_terrain s2_game_ai_geometry_loader
+    s2_game_ai_collision s2_game_ai_grid s2_game_ai_position
+    s2_game_ai_locker s2_game_ai_pass_jobs s2_game_ai_calculators
+    s2_game_ai_colourer s2_game_ai_render s2_game_ai_log
+    s2_game_world_object s2_game_ai_waypoint
+    s2_game_terrain_info
+    s2_game_poly_utils s2_game_basic_share s2_game_resource_loader
+    s2_game_resource_package s2_game_transform s2_game_dg s2_game_structure
+    s2_game_streams s2_game_objects s2_portable_structure
+    s2_portable_package s2_game_misc_runtime s2_game_database_runtime
+    -Wl,--whole-archive s2_game_dbformat_records -Wl,--no-whole-archive
+    -Wl,--end-group)
+  target_link_options(NativeMissionMapProbe PRIVATE -Wl,--gc-sections)
+  if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
+    get_filename_component(_s2_mission_res_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+    if(EXISTS "${_s2_mission_res_dir}/Waypoints.res" AND
+       EXISTS "${_s2_mission_res_dir}/Buildings.res" AND
+       EXISTS "${_s2_mission_res_dir}/Terrain.res" AND
+       EXISTS "${_s2_mission_res_dir}/AIGeometries.res")
+      add_test(NAME NativeMissionMapProbe
+        COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
+          "${_s2_mission_res_dir}" 218)
+      if(EXISTS "${_s2_mission_res_dir}/Units.res" AND
+         EXISTS "${_s2_mission_res_dir}/Groups.res")
+        add_test(NAME NativeMissionRouteMapProbe
+          COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
+            "${_s2_mission_res_dir}" 810)
+        add_test(NAME NativeMissionLargeMapProbe
+          COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
+            "${_s2_mission_res_dir}" 4526)
+        set_tests_properties(NativeMissionLargeMapProbe PROPERTIES TIMEOUT 300)
+      endif()
+    endif()
+  endif()
+endif()
 add_library(s2_game_building_grid STATIC
   "${root}/Main/BuildingGrid.cpp"
   "${root}/Main/BuildingSchema.cpp"
@@ -297,6 +349,31 @@ target_link_libraries(s2_game_building_info PUBLIC
   s2_game_basic_share)
 target_compile_features(s2_game_building_info PUBLIC cxx_std_17)
 target_compile_options(s2_game_building_info PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_building_internal STATIC
+  "${root}/Main/MakeBuildingInternal.cpp")
+target_include_directories(s2_game_building_internal PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
+target_link_libraries(s2_game_building_internal PUBLIC
+  s2_game_building_info s2_game_building_grid s2_game_dbformat_records)
+target_compile_features(s2_game_building_internal PUBLIC cxx_std_17)
+target_compile_options(s2_game_building_internal PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_building_clip STATIC "${root}/Main/BuildingClip.cpp")
+target_include_directories(s2_game_building_clip PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_building_clip PUBLIC
+  s2_game_building_grid s2_game_structure)
+target_compile_features(s2_game_building_clip PUBLIC cxx_std_17)
+target_compile_options(s2_game_building_clip PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_make_building STATIC "${root}/Main/MakeBuilding.cpp")
+target_include_directories(s2_game_make_building PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_link_libraries(s2_game_make_building PUBLIC
+  s2_game_building_internal s2_game_building_clip
+  s2_game_building_grid s2_game_building_info
+  s2_game_dbformat_records s2_game_ai_geometry_loader)
+target_compile_features(s2_game_make_building PUBLIC cxx_std_17)
+target_compile_options(s2_game_make_building PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_map_terrain STATIC "${root}/Main/MapBuildTerrain.cpp")
 target_include_directories(s2_game_map_terrain PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
@@ -308,7 +385,10 @@ target_compile_options(s2_game_map_terrain PRIVATE -ffunction-sections -fdata-se
 add_executable(NativeBuildingTerrainResourceTests
   "${root}/diagnostics/NativeBuildingTerrainResourceTests.cpp")
 target_link_libraries(NativeBuildingTerrainResourceTests PRIVATE
-  -Wl,--start-group s2_game_building_info s2_game_map_terrain
+  -Wl,--start-group s2_game_make_building s2_game_building_internal
+  s2_game_building_info
+  s2_game_building_grid s2_game_building_clip s2_game_ai_geometry_loader
+  s2_game_ai_collision s2_game_map_terrain
   s2_game_poly_utils s2_game_basic_share s2_game_resource_loader
   s2_game_resource_package s2_game_terrain_info s2_game_transform
   s2_game_dg s2_game_structure s2_game_streams s2_game_objects
@@ -320,7 +400,8 @@ target_link_options(NativeBuildingTerrainResourceTests PRIVATE -Wl,--gc-sections
 if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
   get_filename_component(_s2_resource_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
   if(EXISTS "${_s2_resource_dir}/Buildings.res" AND
-     EXISTS "${_s2_resource_dir}/Terrain.res")
+     EXISTS "${_s2_resource_dir}/Terrain.res" AND
+     EXISTS "${_s2_resource_dir}/AIGeometries.res")
     add_test(NAME NativeBuildingTerrainResourceTests
       COMMAND NativeBuildingTerrainResourceTests "${S2_GAME_DB_PATH}"
         "${_s2_resource_dir}")

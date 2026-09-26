@@ -1,6 +1,12 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "MakeBuildingInternal.h"
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataMap.h"
 
 
 namespace NBuilding
@@ -10,7 +16,7 @@ EPriority GetPriority( const NDb::CConstructionPart *pPart, int x, int y )
 {
 	if ( NDb::CConstructionPart::IsPrimaryPart( pPart->nSubPartsMask, x, y ) )
 		return SP_PRIMARY;
-	// если одна из сторон является смежной для primary, то приоритет - SP_SECONDARY
+	// РµСЃР»Рё РѕРґРЅР° РёР· СЃС‚РѕСЂРѕРЅ СЏРІР»СЏРµС‚СЃСЏ СЃРјРµР¶РЅРѕР№ РґР»СЏ primary, С‚Рѕ РїСЂРёРѕСЂРёС‚РµС‚ - SP_SECONDARY
 	if ( x > 0 && NDb::CConstructionPart::IsPrimaryPart( pPart->nSubPartsMask, x - 1, y ) )
 		return SP_SECONDARY;
 	if ( x < pPart->nSizeX - 1 && NDb::CConstructionPart::IsPrimaryPart( pPart->nSubPartsMask, x + 1, y ) )
@@ -118,13 +124,13 @@ void CSolidAndWallMap::MakeSolidMap( SRand *pRand, const vector<SBuildFragment> 
 					CVec3 spos = pos;
 					spos.x = vv.x < 0 ? pos.x - 1 : pos.x;
 					spos.y = vv.y < 0 ? pos.y - 1 : pos.y;
-					// объединение слоев для клиппинга
+					// РѕР±СЉРµРґРёРЅРµРЅРёРµ СЃР»РѕРµРІ РґР»СЏ РєР»РёРїРїРёРЅРіР°
 					int nClipGroupID = gids[fr.nFragmentID];
 					nClipGroupID = 0 == nClipGroupID ? fr.nFragmentID : nClipGroupID;
 					if ( solidMap.find( nClipGroupID ) == solidMap.end() )
 						solidMap.insert( pair<int, CNodeMap<SSolidElement> >( nClipGroupID, pattern ) );
 					CNodeMap<SSolidElement> &smap = solidMap.find( nClipGroupID )->second;
-					// объединение этажей для клиппинга
+					// РѕР±СЉРµРґРёРЅРµРЅРёРµ СЌС‚Р°Р¶РµР№ РґР»СЏ РєР»РёРїРїРёРЅРіР°
 					SFloorGroup &fgroup = linkedfloors[nClipGroupID];
 					int nZ;
 					if ( fgroup.floors.empty() || fgroup.floors[spos.z].n == DEF_FLOOR )
@@ -137,7 +143,7 @@ void CSolidAndWallMap::MakeSolidMap( SRand *pRand, const vector<SBuildFragment> 
 					SSolidElement &e = smap.At( nZ, spos.x, spos.y );
 					EPriority pr = GetPriority( pCP, nPos.x, nPos.y );
 					if ( e.nPrority > pr ) 
-						continue; // в этом узле уже есть более приоритетный блок
+						continue; // РІ СЌС‚РѕРј СѓР·Р»Рµ СѓР¶Рµ РµСЃС‚СЊ Р±РѕР»РµРµ РїСЂРёРѕСЂРёС‚РµС‚РЅС‹Р№ Р±Р»РѕРє
 					if ( pr > e.nPrority )
 						e.fragments.clear();
 					e.nPrority  = pr;
@@ -151,7 +157,7 @@ void CSolidAndWallMap::MakeSolidMap( SRand *pRand, const vector<SBuildFragment> 
 					const int nsx = Float2Int(spos.x);
 					if ( nsx < nXSize && nsy < nYSize && spos.z < bottom[nsy][nsx] )
 						bottom[Float2Int(spos.y)][Float2Int(spos.x)] = spos.z;
-					// заполняем все тайлы занимаемые блоком
+					// Р·Р°РїРѕР»РЅСЏРµРј РІСЃРµ С‚Р°Р№Р»С‹ Р·Р°РЅРёРјР°РµРјС‹Рµ Р±Р»РѕРєРѕРј
 					vector<CVec3> tiles;
 					tiles.push_back( CVec3( 1, 0, 0 ) );
 					tiles.push_back( CVec3( 1, 1, 0 ) );

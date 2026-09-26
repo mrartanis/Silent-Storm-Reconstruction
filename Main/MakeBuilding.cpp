@@ -1,24 +1,31 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "MakeBuilding.h"
 #include "BuildingInfo.h"
 #include "BuildingGrid.h"
+#include <cmath>
 #include <limits>
 #include "Grid.h"
 #include "Transform.h"
-#include "..\Misc\2Darray.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../Misc/2Darray.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
 #include "BuildingSchema.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "GGeometry.h"
-#include "aiobject.h"
-#include "aiobjectloader.h"
-#include "..\Misc\HPTimer.h"
+#include "aiObject.h"
+#include "aiObjectLoader.h"
+#include "../Misc/HPTimer.h"
 #include "MELayers.h"
-#include "..\MiscDll\LogStream.h"
-#include "BSPTree.h"
+#include "../MiscDll/LogStream.h"
+#include "BSPtree.h"
 #include "MakeBuildingInternal.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +495,7 @@ static void MakeBuilding( SBuildingInfo *pInfo, const CBuildingGrid &grid, CBuil
 			}
 		}
 	}
-	// Стены
+	// РЎС‚РµРЅС‹
 	int nWallLayer = MakeFragmentID( LID_WALLS, 0 );
 	if ( !grid.IsLayerVisible( nWallLayer ) )
 		return;
@@ -755,7 +762,7 @@ void MakeBuildingSchema( CBuildingSchema *pSchema, CBuildingGrid *pGrid, CBuildI
 	pSWMap.Refresh();
 	const CSolidAndWallMap &swMap = *_pSWMap;
 
-	// Сплошные объекты
+	// РЎРїР»РѕС€РЅС‹Рµ РѕР±СЉРµРєС‚С‹
 	const unordered_map<int, CNodeMap<SSolidElement> > &solidMap = swMap.GetSolidMap();
 
 	CArray2D<bool> cellarWalls;
@@ -779,7 +786,7 @@ void MakeBuildingSchema( CBuildingSchema *pSchema, CBuildingGrid *pGrid, CBuildI
 			}
 		}
 	}
-	// Стены
+	// РЎС‚РµРЅС‹
 	const CNodeMap<SGridNode> &wallGrid = swMap.GetWallGrid();
 	const vector<SLRNeighbs> &neighbs = swMap.GetNeighbs();
 
@@ -903,7 +910,7 @@ static void AddNodeHP( CBuildingGrid *pGrid, const SBuildFragment &fr, int nHash
 		{
 			float fHP = 2.0f * pArmor->pMaterial->nVP * ipiece->second.fVolume; //!
 	//		ASSERT(fHP > 1);
-			if ( !_isnan( fHP ) )
+			if ( !std::isnan( fHP ) )
 			{
 #ifdef _DEBUG
 				fTotalHP += fHP;
@@ -942,7 +949,7 @@ void BuildingHP( CBuildInfo *pBuildInfo, CBuildingGrid *pGrid, CSolidAndWallMap 
 	fMaxHP = 0;
 	fTotalHP = 0;
 	nTotalNodes = 0;
-  // Сплошные объекты
+  // РЎРїР»РѕС€РЅС‹Рµ РѕР±СЉРµРєС‚С‹
 	const unordered_map<int, CNodeMap<SSolidElement> > &solidMap = swMap.GetSolidMap();
 	for (unordered_map<int, CNodeMap<SSolidElement> >::const_iterator it = solidMap.begin(); it != solidMap.end(); ++it )
 	{
@@ -962,7 +969,7 @@ void BuildingHP( CBuildInfo *pBuildInfo, CBuildingGrid *pGrid, CSolidAndWallMap 
 			}
 		}
 	}
-	// Стены
+	// РЎС‚РµРЅС‹
 	const CNodeMap<SGridNode> &wallGrid = swMap.GetWallGrid();
 	const vector<SLRNeighbs> &neighbs = swMap.GetNeighbs();
 	for ( int i = 0; i < pBuildInfo->wallFragments.size(); ++i )

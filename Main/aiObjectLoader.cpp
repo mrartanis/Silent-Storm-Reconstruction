@@ -1,11 +1,24 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiObjectLoader.h"
 #include "MemObject.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "aiObject.h"
 #include "GFileSkin.h"
 #include "PortableMeshCodecs.h"
-#include "BSPTree.h"
+#include "BSPtree.h"
+#if !defined(_WIN32)
+namespace NAI {
+// aiMap.cpp owns this share in the Windows game; the headless core links
+// the geometry loader without the renderer-heavy map translation unit.
+CBasicShare<int, CLoadGeometryInfo> shareAIModel( 110 );
+}
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
 {

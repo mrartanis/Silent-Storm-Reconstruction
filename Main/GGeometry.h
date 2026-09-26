@@ -6,7 +6,7 @@
 
 #include "GPixelFormat.h"
 #include "RectPacker.h"
-#include "..\FileIO\PortableStructureChunks.h"
+#include "../FileIO/PortableStructureChunks.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
 {

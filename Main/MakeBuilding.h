@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "BuildingClip.h"
 #include "BuildingPart.h"
-#include "dg.h"
+#include "DG.H"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataRPG.h"
 namespace NBuilding
@@ -33,7 +33,7 @@ struct SStoreyInfo
 		CVec2 ptSize;
 		int   nRotation;
 		CDBPtr<NDb::CMaterial> pMaterial;
-		int   nMaterialMask; // если бит включен - на этот материал спот не накладывается
+		int   nMaterialMask; // РµСЃР»Рё Р±РёС‚ РІРєР»СЋС‡РµРЅ - РЅР° СЌС‚РѕС‚ РјР°С‚РµСЂРёР°Р» СЃРїРѕС‚ РЅРµ РЅР°РєР»Р°РґС‹РІР°РµС‚СЃСЏ
 		SSpot() {}
 		SSpot( const CVec3 &ptO, const CVec3 &ptN, const CVec2 &ptS, int _nRotation, NDb::CMaterial *pM, int nMatMask )
 			: ptOrigin(ptO), ptNormal(ptN), ptSize(ptS), nRotation(_nRotation), pMaterial(pM), nMaterialMask(nMatMask)
@@ -102,7 +102,7 @@ public:
 void BuildingHP( CBuildInfo *pBuildInfo, CBuildingGrid *pGrid, CSolidAndWallMap *pSWMap );
 bool UpdateBuildingStability( int nBuildingID, CBuildingGrid *pGrid, CSolidAndWallMap *pSWMap, int nMaxIterations = 1 );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// объявление вынесено для WYSIWYG
+// РѕР±СЉСЏРІР»РµРЅРёРµ РІС‹РЅРµСЃРµРЅРѕ РґР»СЏ WYSIWYG
 class CBuildingSchema;
 void MakeBuildingSchema( CBuildingSchema *pSchema, CBuildingGrid *pGrid, CBuildInfo *pBuildInfo, CSolidAndWallMap *pSWMap );
 CSolidAndWallMap* MakeSWMap( int nBuildingID, const SRandomSeed &_seed );

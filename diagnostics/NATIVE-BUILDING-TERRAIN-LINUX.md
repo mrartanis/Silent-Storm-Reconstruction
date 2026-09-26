@@ -2,10 +2,14 @@
 
 The Linux portable-core build now compiles the game's original
 `BuildingGrid.cpp`, `BuildingSchema.cpp`, `RodJunction.cpp`, `rod.cpp`,
-`BuildingInfo.cpp`, and `MapBuildTerrain.cpp`. These are linked as original
-game code, not substitutes for a mission build. The renderer-side
+`BuildingInfo.cpp`, and `MapBuildTerrain.cpp`. The next batch also links
+original `MakeBuildingInternal.cpp`, `MakeBuilding.cpp`,
+`BuildingClip.cpp`, and `aiObjectLoader.cpp`. These are original game code,
+not substitutes for a mission build. The renderer-side
 `GBuilding.cpp` is still Windows-only; Linux provides its resource share
-registration in `BuildingInfo.cpp` with the same share ID (108).
+registration in `BuildingInfo.cpp` with the same share ID (108). Likewise,
+`aiObjectLoader.cpp` owns the Linux AI-geometry share with original ID 110
+while renderer-heavy `aiMap.cpp` remains out of the headless core.
 
 `NativeBuildingGridTests` exercises HP damage, destroyed voxels, updated
 building parts, cellar and indestructible spots, and an explosion. It found
@@ -19,11 +23,13 @@ parts, twelve explosion-destroyed cells, and the same HP hash
 `NativeBuildingTerrainResourceTests` loads the real `game.db`, intersects
 the game's template variants with `Buildings.res` and `Terrain.res`, then
 uses `CBuildInfoLoader`, `CMETerrainLoader`, `LoadRootTerrain`,
-`MakeSoundMap`, and `CalcAverageColor`. There are 2012 resource-matched
+`MakeSoundMap`, and `CalcAverageColor`. It also requires
+`AIGeometries.res`, constructs the game's `CSolidAndWallMap` via
+`MakeSWMap`, runs `BuildingHP`, and counts nonzero HP voxels. There are 2012 resource-matched
 variants. The first 29 sorted candidates contain 21 empty/non-geometric
 variants; eight nontrivial variants have a shared semantic digest
-`E28FBA0B16F6B77F` on Windows x86/x64 and Linux GCC x64/ARM64 and Clang
-x64. GCC's original building-info loader also reports three
+`0EC6288794E257DD` and 756 nonzero HP voxels on Windows x86/x64,
+Linux GCC x64/ARM64, and Clang x64. GCC's original building-info loader also reports three
 `CBuildInfoLoader::Recalc()` exceptions among those empty candidates; the
 test counts them as empty only after validating the returned objects. This
 probe is deliberately bounded to eight nontrivial variants, not an
@@ -34,13 +40,12 @@ NativeBuildingGridTests NativeBuildingTerrainResourceTests`, then
 `ctest --test-dir <build> -R '^NativeBuilding(Grid|TerrainResource)Tests$'
 --output-on-failure`. On Windows add `--config RelWithDebInfo` and pass
 `-C RelWithDebInfo` to CTest. Resource tests need `game.db` and both `.res`
-packages in the configured resource directory. The GCC ARM64 run uses
+packages plus `AIGeometries.res` in the configured resource directory. The GCC ARM64 run uses
 `qemu-aarch64-static` and `ASAN_OPTIONS=detect_leaks=0`; GCC x64/ARM64
 builds use ASan/UBSan.
 
-This still does not mean `BuildMap` has linked and executed an actual
-mission on Linux. Its next unresolved game-side dependencies include the
-solid/wall map and building composition in `MakeBuilding.cpp` and
-`GBuilding.cpp`. The Windows game smoke for this batch is postponed until
+The original `BuildMap` now links and runs on a one-building variant;
+see `NATIVE-MISSION-BUILD-LINUX.md` for its narrow coverage and the next
+mission gate. The Windows game smoke for this batch is postponed until
 a D3D device can be created in the current desktop session; an unchanged
 earlier archive also failed at `NGfx::ResetDevice` before loading a save.

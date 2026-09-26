@@ -564,6 +564,12 @@ add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp"
 target_include_directories(NativeMapFlagsTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapFlagsTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeMapFlagsTests PRIVATE Main)
+add_executable(NativeMissionMapProbe "${root}/diagnostics/NativeMissionMapProbe.cpp")
+target_include_directories(NativeMissionMapProbe PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeMissionMapProbe PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeMissionMapProbe PRIVATE Main)
+target_compile_features(NativeMissionMapProbe PRIVATE cxx_std_17)
 add_executable(NativeMapPolygonTests "${root}/diagnostics/NativeMapPolygonTests.cpp")
 target_include_directories(NativeMapPolygonTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapPolygonTests PRIVATE "${root}/Main/StdAfx.h")
@@ -805,9 +811,25 @@ if(S2_GAME_DIR)
       COMMAND NativeMapDatabaseTests "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMapFlagsTests
       COMMAND NativeMapFlagsTests "${S2_GAME_DIR}/game.db")
-    if(EXISTS "${S2_GAME_DIR}/res/Buildings.res" AND EXISTS "${S2_GAME_DIR}/res/Terrain.res")
+    if(EXISTS "${S2_GAME_DIR}/res/Buildings.res" AND
+       EXISTS "${S2_GAME_DIR}/res/Terrain.res" AND
+       EXISTS "${S2_GAME_DIR}/res/AIGeometries.res")
       add_test(NAME NativeBuildingTerrainResourceTests
         COMMAND NativeBuildingTerrainResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+      if(EXISTS "${S2_GAME_DIR}/res/Waypoints.res")
+        add_test(NAME NativeMissionMapProbe
+          COMMAND NativeMissionMapProbe "${S2_GAME_DIR}/game.db"
+            "${S2_GAME_DIR}/res" 218)
+        if(EXISTS "${S2_GAME_DIR}/res/Units.res" AND
+           EXISTS "${S2_GAME_DIR}/res/Groups.res")
+          add_test(NAME NativeMissionRouteMapProbe
+            COMMAND NativeMissionMapProbe "${S2_GAME_DIR}/game.db"
+              "${S2_GAME_DIR}/res" 810)
+          add_test(NAME NativeMissionLargeMapProbe
+            COMMAND NativeMissionMapProbe "${S2_GAME_DIR}/game.db"
+              "${S2_GAME_DIR}/res" 4526)
+        endif()
+      endif()
     endif()
     if(TARGET s2_bink_compat)
       set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
@@ -816,11 +838,35 @@ if(S2_GAME_DIR)
         set_tests_properties(NativeBuildingTerrainResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       endif()
+      if(TEST NativeMissionMapProbe)
+        set_tests_properties(NativeMissionMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      endif()
+      if(TEST NativeMissionRouteMapProbe)
+        set_tests_properties(NativeMissionRouteMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      endif()
+      if(TEST NativeMissionLargeMapProbe)
+        set_tests_properties(NativeMissionLargeMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      endif()
     else()
       set_tests_properties(NativeMapFlagsTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       if(TEST NativeBuildingTerrainResourceTests)
         set_tests_properties(NativeBuildingTerrainResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+      if(TEST NativeMissionMapProbe)
+        set_tests_properties(NativeMissionMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+      if(TEST NativeMissionRouteMapProbe)
+        set_tests_properties(NativeMissionRouteMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+      if(TEST NativeMissionLargeMapProbe)
+        set_tests_properties(NativeMissionLargeMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
     endif()
