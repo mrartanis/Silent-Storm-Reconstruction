@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiEvent.h"
 #include "aiUnit.h"          // IAIUnit
 #include "aiMisc.h"          // NAI::GetAIUnit( CUnitServer* )

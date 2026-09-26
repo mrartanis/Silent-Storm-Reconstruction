@@ -308,6 +308,28 @@ target_include_directories(s2_game_world PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world PUBLIC cxx_std_17)
 target_compile_options(s2_game_world PRIVATE -ffunction-sections -fdata-sections)
+# Original AI commander, route, reaction, and nearest-position units.
+# These compile as the next game-used dependency group; complete Linux
+# AI/world execution still requires the remaining map and mission modules.
+add_library(s2_game_ai_routes STATIC
+  "${root}/Main/aiCommander.cpp"
+  "${root}/Main/aiRoute.cpp"
+  "${root}/Main/aiRouteLogic.cpp"
+  "${root}/Main/aiRouteMisc.cpp"
+  "${root}/Main/aiReaction.cpp"
+  "${root}/Main/aiReactions.cpp"
+  "${root}/Main/aiNearestPosition.cpp"
+  "${root}/Main/aiTaskCommand.cpp"
+  "${root}/Main/aistate.cpp"
+  "${root}/Main/aiUnit.cpp"
+  "${root}/Main/aiPlayer.cpp"
+  "${root}/Main/aiEvent.cpp")
+target_include_directories(s2_game_ai_routes PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_ai_routes PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_routes PRIVATE -ffunction-sections -fdata-sections)
 # The original command-driven AI logic base. It compiles on Linux, but
 # executable linking still needs the world unit server and command queue;
 # do not confuse this compile boundary with live AI execution.

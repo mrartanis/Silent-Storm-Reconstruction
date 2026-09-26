@@ -16,8 +16,8 @@
 // The world producers and corpse range/radius seams are now wired. Oracle:
 // decomp/src/s2_threattracker.h (every handler disasm-verified there).
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "..\Misc\Geom.h"          // CRay / CVec3 (by-value event-payload members)
-#include "..\Misc\EventsBase.h"    // NGlobal::CEventRegister (the 11 auto-subscribing handler slots)
+#include "../Misc/Geom.h"          // CRay / CVec3 (by-value event-payload members)
+#include "../Misc/EventsBase.h"    // NGlobal::CEventRegister (the 11 auto-subscribing handler slots)
 #include "eventUnit.h"             // NWorld::CEventOnUnitUnhide (reused; NOT redefined)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWorld

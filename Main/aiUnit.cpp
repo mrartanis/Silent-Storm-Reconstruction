@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
-#include "aiLog.h"
+#include "AILog.h"
 #include "aiMap.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiPlayer.h"
 #include "aiWeapon.h"
 #include "aiPosition.h"
@@ -24,11 +30,11 @@
 #include "RPGUnit.h"
 #include "rpgCheatConstants.h"
 
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataMap.h"
-#include "..\DBFormat\DataDifficulty.h"   // NDb::CDBDifficulty::nHideProbability (ctor hide-prob seed)
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataDifficulty.h"   // NDb::CDBDifficulty::nHideProbability (ctor hide-prob seed)
 
-#include "RPGGlobal.h"                     // NRPG::CGlobalGame::pDifficulty (ctor hide-prob seed)
+#include "rpgGlobal.h"                     // NRPG::CGlobalGame::pDifficulty (ctor hide-prob seed)
 #include "wMain.h"
 #include "wUnitServer.h"
 #include "wUnitAttack.h"
@@ -36,6 +42,13 @@
 #include "aiLogic.h"          // IAILogic (phase-7 supersede: was aiCompoundAction.h CAILogic)
 
 #include "aiUnit.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static void UnitDebugString(const char *s) { OutputDebugString(s); }
+#else
+static void UnitDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 
 namespace NAI
 {
@@ -425,10 +438,10 @@ void CAIUnit::GetUnitSkillValues()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAIUnit::DebugOutput()
 {
-	OutputDebugString( "[AI UNIT] [\n" );
+	UnitDebugString( "[AI UNIT] [\n" );
 	for ( vector< CObj<IAIControl> >::reverse_iterator i = controls.rbegin(); i != controls.rend(); ++i )
 		(*i)->DebugOutput();
-	OutputDebugString( "[AI UNIT] ]\n" );
+	UnitDebugString( "[AI UNIT] ]\n" );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CAIUnit::HasVisibleEnemies()
@@ -473,7 +486,7 @@ void CAIUnit::AssignControl( IAIControl *pAIControl )
 	//
 	if ( !controls.empty() )
 	{
-		CPtr<IAIControl> pAICurrentControl = controls.back();
+			CPtr<IAIControl> pAICurrentControl = controls.back().GetPtr();
 		EAIControlType type = pAICurrentControl->GetType();
 		if ( type == AI_CONTROL_UNINTERRUPTABLE && manager > currentManager )
 			type = AI_CONTROL_ERASABLE;
@@ -504,7 +517,7 @@ void CAIUnit::OnControlFinished()
 	EAIManager currentManager = AIM_AI;
 	if ( !controls.empty() )
 	{
-		CPtr<IAIControl> pControl = controls.back();
+			CPtr<IAIControl> pControl = controls.back().GetPtr();
 		currentManager = pControl->GetManager();
 		if ( pControl->IsActive() )
 			pControl->DeActivate();
@@ -515,7 +528,7 @@ void CAIUnit::OnControlFinished()
 	//
 	if ( !controls.empty() )
 	{
-		CPtr<IAIControl> pControl = controls.back();
+			CPtr<IAIControl> pControl = controls.back().GetPtr();
 		EAIManager manager = pControl->GetManager();
 		if ( manager >= currentManager )
 			controls.back()->Activate();

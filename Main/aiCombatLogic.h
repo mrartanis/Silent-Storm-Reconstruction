@@ -30,7 +30,7 @@
 #include "aiCombatLog.h"      // CAILog
 #include "aiActionPlaceSource.h"
 #include "aiChoosePlace.h"
-#include "..\Misc\EventsBase.h"   // NGlobal::CEventRegister (CAIAfterCombatLogic::regOnNewTurn)
+#include "../Misc/EventsBase.h"   // NGlobal::CEventRegister (CAIAfterCombatLogic::regOnNewTurn)
 namespace NWorld { class CEventOnNewPlayerTurn; }
 namespace NAI
 {

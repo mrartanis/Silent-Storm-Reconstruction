@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "stdafx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
 #include "wMain.h"
 #include "wMainPath.h"
@@ -6,7 +12,7 @@
 #include "wUnitServer.h"
 #include "wUnitCommands.h"
 
-#include "rpgUnitInfo.h"
+#include "RPGUnitInfo.h"
 #include "rpgCheatConstants.h"
 
 #include "aiUnit.h"
@@ -16,11 +22,18 @@
 #include "aiMultiMoves.h"
 #include "aiPosition.h"
 
-#include "..\dbformat\datamap.h"
-#include "..\dbformat\DataAnimation.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataAnimation.h"
 
 #include "MapBuild.h"
 #include "BuildingInfo.h"
+#include "../Misc/RandomGen.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &TaskRandom() { return random; }
+#else
+static CRandomGenerator &TaskRandom() { return s2_game_random; }
+#endif
 
 #include "aiTaskCommand.h"
 
@@ -46,11 +59,11 @@ void CTask::AddLookAround( bool bWalk )
 {
 	if ( bWalk )
 		AddCommand( new CTaskCommandChangePose( NAI::WALK ) );
-	int n = random.Get( 3, 6 );
+	int n = TaskRandom().Get( 3, 6 );
 	for ( int i = 0; i < n; ++i )
 	{
-		AddCommand( new CTaskCommandWait( random.Get( 1, 6 ) ) );
-		AddCommand( new CTaskCommandChangeDirection( random.Get( 1, 8 ) - 1 ) );
+		AddCommand( new CTaskCommandWait( TaskRandom().Get( 1, 6 ) ) );
+		AddCommand( new CTaskCommandChangeDirection( TaskRandom().Get( 1, 8 ) - 1 ) );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +221,7 @@ void CTaskCommandRoaming::Do()
 		if ( !places.empty() )
 		{
 			// get random place for path command
-			int n = random.Get( 0, places.size() );
+			int n = TaskRandom().Get( 0, places.size() );
 			list<NAI::SPathPlace>::const_iterator i = places.begin();
 			for ( ; n > 0; --n, ++i );
 			// do path command

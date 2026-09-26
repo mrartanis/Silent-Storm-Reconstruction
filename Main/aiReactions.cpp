@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiReactions.h"
 #include "aiUnit.h"          // IAIUnit
 #include "aiUnitState.h"     // SAIUnitState (the per-unit threat tracker)
-#include "aiState.h"         // SAIState
+#include "aistate.h"         // SAIState
 #include "aiLogic.h"         // IAILogic
 #include "aiCombatLogic.h"   // CreateAIAttackLogic / CreateAIAfterCombatLogic / CreateAIRetreatLogic / CreateAIGuardLogic / IsAttackLogic
 #include "aiDefenceReaction.h"   // CanUseDefenceReaction / CreateAIDefenceReaction (the flag-gated Defence branch)
@@ -18,6 +24,13 @@
 #include "aiEvent.h"         // NAI::CreateAIEnemyDiedEvent / IAIEvent (squad-alarm: drop own enemy)
 #include "wUnitServer.h"     // NWorld::CUnitServer
 #include "wMain.h"           // NWorld::CWorld::GetPathNetwork
+#include "../Misc/RandomGen.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &ReactionRandom() { return random; }
+#else
+static CRandomGenerator &ReactionRandom() { return s2_game_random; }
+#endif
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Concrete reaction bodies. CAINormalReaction::Update is the core of the release @0x0047f190: enemy ->
@@ -127,7 +140,7 @@ void CAINormalReaction::Update()
 		// ally to raise the garrison (2+ active side-units && 40% roll) instead of merely retreating. It drops its own
 		// enemy (CreateAIEnemyDiedEvent -> RemoveEnemy) so it disengages and runs the alarm route; the route's
 		// CTaskCommandAlarm then alerts every ally within 5 m on arrival. The Update-top guard lets the route finish.
-		if ( CountActiveAllies( u ) > 1 && random.Get( 100 ) < 40 )   // release @0x47f254: raw Get()%100 < 0x28 (40%)
+		if ( CountActiveAllies( u ) > 1 && ReactionRandom().Get( 100 ) < 40 )   // release @0x47f254: raw Get()%100 < 0x28 (40%)
 		{
 			if ( IAILogic *pAlarm = CreateAIAlarmLogic( u, pEnemy ) )
 			{

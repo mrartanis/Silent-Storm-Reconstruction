@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "wMain.h"
 #include "wUnitServer.h"
@@ -9,7 +15,7 @@
 #include "wUICommands.h"     // NWorld::CUICmdAIUnitWillMove (the AI "unit will move" UI hint)
 //
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiPlayer.h"
 #include "aiUnitState.h"      // SAIUnitState (the per-unit threat tracker: pEnemy / IsModified)
 #include "aiLogic.h"          // IAILogic (per-unit command-driven behaviour)
@@ -20,16 +26,16 @@
 //
 #include "RPGUnitInfo.h"
 #include "RPGItemSet.h"
-#include "rpgDiplomacy.h"
+#include "RPGDiplomacy.h"
 #include "rpgCheatConstants.h"
 //
 #include "aiCommander.h"
 //
-#include "..\MiscDll\Commands.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataConst.h"
-#include "..\DBFormat\DataMap.h"
+#include "../MiscDll/Commands.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataConst.h"
+#include "../DBFormat/DataMap.h"
 #include "aiWeapon.h"
 #include "aiInventory.h"
 //

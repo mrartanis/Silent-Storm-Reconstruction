@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiReaction.h"
 #include "aiLogic.h"       // IAILogic
@@ -9,7 +15,7 @@
 #include "aiFearReaction.h"   // NAI::CreateAIFearReaction
 #include "aiReactions.h"      // NAI::CAINormalReaction
 #include "MapBuild.h"         // ::SMapUnit ( eLogic / nRoamingRadius / pGuardAnimation )
-#include "..\DBFormat\DataMap.h"  // NDb::EUnitLogic ( UL_EMPTY / UL_DEFAULT / UL_ROAMING / UL_FEAR )
+#include "../DBFormat/DataMap.h"  // NDb::EUnitLogic ( UL_EMPTY / UL_DEFAULT / UL_ROAMING / UL_FEAR )
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CAIReaction - base reflex bodies. The helpers forward through the (weak-back-ref) unit, null-guarded.

@@ -1,13 +1,26 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiPosition.h"
 
 #include "wUnitServer.h"
 #include "wInterface.h"
 
 #include "aiPlayer.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static void PlayerDebugString(const char *s) { OutputDebugString(s); }
+#else
+static void PlayerDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 
 namespace NAI
 {
@@ -64,9 +77,9 @@ void CAIPlayer::DebugOutput()
 	{
 		SPathPlace ptPos = (*i)->GetPosition().p;
 		sprintf( buf, "(x:%d, y:%d)", ptPos.GetX(), ptPos.GetY() );
-		OutputDebugString( buf );
+		PlayerDebugString( buf );
 	}
-	OutputDebugString( "\n" );
+	PlayerDebugString( "\n" );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 IAIUnit *CAIPlayer::GetNearestUnit( IAIUnit *pUnit, float *fDistance )

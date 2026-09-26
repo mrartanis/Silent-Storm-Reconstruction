@@ -1,19 +1,25 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "aiLog.h"
+#include "AILog.h"
 #include "aiUnit.h"
 #include "aiPlayer.h"
 #include "aiCommander.h"
 #include "aiInventory.h"     // CAIInventory::GetBestFireArms (GetDangerousAttackableEnemy)
 #include "aiWeapon.h"        // CAIFireArmsWeapon
-#include "rpgUnit.h"
+#include "RPGUnit.h"
 #include "wUnitServer.h"
 #include "wMain.h"           // NWorld::CWorld::GetDiplomacyState
 //
-#include "..\DBFormat\DataRPG.h"   // NDb::EShootMode
-#include "..\DBFormat\DataMap.h"   // NDb::DS_ENEMY (EDiplomacyState)
+#include "../DBFormat/DataRPG.h"   // NDb::EShootMode
+#include "../DBFormat/DataMap.h"   // NDb::DS_ENEMY (EDiplomacyState)
 //
-#include "aiState.h"
+#include "aistate.h"
 //
 namespace NAI
 {

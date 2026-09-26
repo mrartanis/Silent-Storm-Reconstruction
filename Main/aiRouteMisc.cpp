@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "wUnitServer.h"     // NWorld::CUnitServer (+ CUnit base), GetWishPose/SetWishPose/SetStrafe
 #include "RPGUnitMission.h"  // NRPG::IUnitMission (GetUnitRPG()->GetRPGUnit())
@@ -15,11 +21,18 @@
 #include "aiMoveAction.h"    // NAI::GetUnitPos / NAI::GetPos (place -> SUnitPosition / SPosition)
 #include "aiPath.h"          // NAI::CPath (IsNear over a path / GetRestoreAPPoint)
 #include "aiRouteLogic.h"    // NAI::CTaskCommandLookToPosition (RouteAddRoundUp's CreateRCLookToPos)
-#include "RPGGlobal.h"       // NRPG::CGlobalGame::pDifficulty (RouteAddRoundUp avoid-friends gate)
+#include "rpgGlobal.h"       // NRPG::CGlobalGame::pDifficulty (RouteAddRoundUp avoid-friends gate)
 #include "../DBFormat/DataDifficulty.h" // NDb::CDBDifficulty::bAICheckCorpses
 #include "../DBFormat/DataMap.h"        // NDb::DS_ALLY (GetRoundUpPlaces friend diplomacy gate)
 //
 #include "aiRouteMisc.h"
+#include "../Misc/RandomGen.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &RouteMiscRandom() { return random; }
+#else
+static CRandomGenerator &RouteMiscRandom() { return s2_game_random; }
+#endif
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // NAI::GetNearestPlaces -- the reachable-places flood. Reconstructed from the matched-release decode
@@ -84,13 +97,13 @@ void RouteAddLookAround( bool bAddPose, vector< CPtr<CTaskCommand> > &cmds, int 
 	if ( nLo < 0 )
 		nLo = 0;
 	unsigned nSpan = (unsigned)( nHi - nLo );
-	int n = nLo + ( nSpan != 0 ? (int)random.Get( nSpan ) : 0 );
+	int n = nLo + ( nSpan != 0 ? (int)RouteMiscRandom().Get( nSpan ) : 0 );
 	if ( n < 1 )
 		n = 1;
 	for ( ; n > 0; --n )
 	{
-		cmds.push_back( new CTaskCommandChangeDirection( (int)random.Get( 7 ) ) );
-		cmds.push_back( new CTaskCommandWait( (int)random.Get( 5 ) + 1 ) );
+		cmds.push_back( new CTaskCommandChangeDirection( (int)RouteMiscRandom().Get( 7 ) ) );
+		cmds.push_back( new CTaskCommandWait( (int)RouteMiscRandom().Get( 5 ) + 1 ) );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,7 +333,7 @@ bool GetFearPosition( NWorld::CUnitServer *pServer, const vector< CPtr<IAIUnit> 
 		RUN, &res );
 	if ( res.empty() )
 		return false;
-	*pResult = res[ random.Get( (unsigned)res.size() ) ];
+	*pResult = res[ RouteMiscRandom().Get( (unsigned)res.size() ) ];
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,7 +511,7 @@ bool GetRoundUpPlaces( NWorld::CUnitServer *pServer, const SUnitPosition &enemyP
 	bool bGot = false;
 	while ( !cand.empty() )
 	{
-		int i = (int)( random.Get( (unsigned)cand.size() ) );
+		int i = (int)( RouteMiscRandom().Get( (unsigned)cand.size() ) );
 		SUnitPosition up = GetUnitPos( cand[i], pNet );
 		up.pos.p.SetDirection( (unsigned short)( (int)pNet->GetClosestDir( up.pos.p, enemyPos.pos.p ) & 7 ) );
 		if ( (int)up.pos.p.GetPose() == nCheckPose &&
@@ -544,7 +557,7 @@ bool GetRoundUpPlaces( NWorld::CUnitServer *pServer, const SUnitPosition &enemyP
 	bGot = false;
 	while ( !cand.empty() )
 	{
-		int i = (int)( random.Get( (unsigned)cand.size() ) );
+		int i = (int)( RouteMiscRandom().Get( (unsigned)cand.size() ) );
 		SUnitPosition up = GetUnitPos( cand[i], pNet );
 		CVec3 cp = up.pos.GetCP();
 		if ( perp.u * ( cp.u - cpOwn.u ) + perp.v * ( cp.v - cpOwn.v ) + perp.q * ( cp.q - cpOwn.q ) > 0.0f )
@@ -635,7 +648,7 @@ void RouteAddRoundUp( NWorld::CUnitServer *pServer, NWorld::CUnitServer *pEnemy,
 		{
 			if ( !SamePlaceMasked( restore.p, pServer->GetPosition().pos.p ) )
 			{
-				if ( nVisible <= 3 && random.Get( 0, 100 ) < 40 )    // a 40% pause when few points were watched
+				if ( nVisible <= 3 && RouteMiscRandom().Get( 0, 100 ) < 40 )    // a 40% pause when few points were watched
 					cmds.push_back( new CTaskCommandWait( 1 ) );
 				cmds.push_back( new CTaskCommandGoto( restore ) );
 				cmds.push_back( new CTaskCommandWait( 1 ) );
@@ -654,7 +667,7 @@ void RouteAddRoundUp( NWorld::CUnitServer *pServer, NWorld::CUnitServer *pEnemy,
 		cmds.push_back( new CTaskCommandLookToPosition( enemyPos.pos.p ) );
 	}
 	// the tail runs even when the plan failed: a short wait, a randomized look-around, settle at WALK.
-	cmds.push_back( new CTaskCommandWait( (int)( random.Get( 2 ) ) + 2 ) );  // Wait(2 + draw&1) (Get(2)==raw&1)
+	cmds.push_back( new CTaskCommandWait( (int)( RouteMiscRandom().Get( 2 ) ) + 2 ) );  // Wait(2 + draw&1) (Get(2)==raw&1)
 	RouteAddLookAround( false, cmds, 6 );
 	cmds.push_back( new CTaskCommandChangePose( WALK ) );
 }

@@ -3,7 +3,7 @@
 //
 namespace NDB
 {
-	enum EShootMode;
+	enum EShootMode : int;
 }
 //
 namespace NRPG

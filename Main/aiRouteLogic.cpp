@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"            // NAI::IAIUnit (GetUnitServer / GetUnitPosition / GetAP / GetHideProbability)
 #include "aiUnitState.h"       // NAI::SAIUnitState::pEnemy (CreateAICheckPositionLogic no-enemy gate)
@@ -12,10 +18,17 @@
 #include "aiRouteMisc.h"       // NAI::RouteAddLookAround / RouteAddRoaming
 #include "../DBFormat/DataMap.h" // NDb::EDiplomacyState / DS_ENEMY (the Hide diplomacy gate)
 #include "aiEvent.h"           // NAI::CreateAIPossibleEnemyEvent / CreateAIHelpCalledEvent (the alarm's per-unit events)
-#include "aiState.h"           // NAI::SAIState::GetAllyAIPlayer
+#include "aistate.h"           // NAI::SAIState::GetAllyAIPlayer
 #include "aiPlayer.h"          // NAI::IAIPlayer::GetUnits / GetNearestUnit
 //
 #include "aiRouteLogic.h"
+#include "../Misc/RandomGen.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &RouteRandom() { return random; }
+#else
+static CRandomGenerator &RouteRandom() { return s2_game_random; }
+#endif
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // aiRouteLogic -- the route-following AI logic. Reconstructed from the matched-release decode (oracle:
@@ -370,7 +383,7 @@ IAILogic* CreateAIAlarmLogic( IAIUnit *pUnit, IAIUnit *pEnemy )
 	pNet->GetNearPlaces( s, &places );
 	if ( places.empty() )
 		return 0;
-	SPathPlace place = places[ random.Get( places.size() ) ];
+	SPathPlace place = places[ RouteRandom().Get( places.size() ) ];
 	if ( !HasPath( pUnit, pUnit->GetUnitPosition().pos.p, place, RUN, false ) )   // gate: reachable at a run
 		return 0;
 	SPosition go = GetPos( place, pNet );
@@ -454,7 +467,7 @@ IAILogic* CreateAICheckPositionLogic( IAIUnit *pUnit, CUnitArea *pArea, const SP
 	NWorld::CUnitServer *pUS = pUnit->GetUnitServer();
 	vector< CPtr<CTaskCommand> > cmds;
 	// optional hide prefix (hide-probability roll)
-	if ( random.Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
+	if ( RouteRandom().Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
 		cmds.push_back( new CTaskCommandHide() );
 	SPathPlace checkPlace( (int)0xfdffffff );   // SPathPlace(int) ctor (nData is private) -- the invalid sentinel
 	if ( GetCheckPosition( pUnit, pArea, pos, &checkPlace ) )
@@ -463,7 +476,7 @@ IAILogic* CreateAICheckPositionLogic( IAIUnit *pUnit, CUnitArea *pArea, const SP
 		{
 			cmds.push_back( new CTaskCommandLookToPosition( pos.p ) );
 			cmds.push_back( new CTaskCommandChangePose( pose ) );
-			if ( random.Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
+			if ( RouteRandom().Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
 				cmds.push_back( new CTaskCommandHide() );
 			SPosition go = GetPos( checkPlace, pUS->GetWorld()->GetPathNetwork() );
 			cmds.push_back( new CTaskCommandGoto( go ) );
@@ -481,7 +494,7 @@ IAILogic* CreateAICheckPositionLogic( IAIUnit *pUnit, CUnitArea *pArea, const SP
 			if ( !IsValid( pUS->GetWearingDBPK() ) )
 				cmds.push_back( new CTaskCommandChangePose( CROUCH ) );
 			IPathNetwork *pNet = pUS->GetWorld()->GetPathNetwork();
-			int nDir = (int)pNet->GetClosestDir( pUnit->GetUnitPosition().pos.p, pos.p ) + ( (int)random.Get( 3 ) - 1 );
+			int nDir = (int)pNet->GetClosestDir( pUnit->GetUnitPosition().pos.p, pos.p ) + ( (int)RouteRandom().Get( 3 ) - 1 );
 			if ( nDir <= 0 )
 				nDir = 0;
 			else if ( nDir > 7 )
@@ -514,7 +527,7 @@ IAILogic* CreateAICheckForEnemyLogic( IAIUnit *pUnit, const SUnitPosition &enemy
 	NWorld::CUnitServer *pUS = pUnit->GetUnitServer();
 	vector< CPtr<CTaskCommand> > cmds;
 	// optional hide prefix (hide-probability roll)
-	if ( random.Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
+	if ( RouteRandom().Get( 0, 99 ) < (unsigned)pUnit->GetHideProbability() )
 		cmds.push_back( new CTaskCommandHide() );
 	int nBefore = (int)cmds.size();
 	bool bAudible = false;

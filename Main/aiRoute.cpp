@@ -1,6 +1,12 @@
+#if defined(_WIN32)
 #include "stdafx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "mapBuild.h"
+#include "MapBuild.h"
 #include "aiPosition.h"
 #include "aiTaskCommand.h"
 #include "aiWaypoint.h"
@@ -8,7 +14,7 @@
 #include "aiCommander.h"
 #include "aiUnit.h"
 #include "aiRouteLogic.h"   // NAI::CreateAIRouteLogic / CreateAIRoamingLogic (the per-unit route logic)
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataMap.h"
 #include "wUnitCommands.h"
 #include "wUnitGroup.h"
 #include "wUnitServer.h"
