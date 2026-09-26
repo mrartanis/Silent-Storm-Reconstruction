@@ -35,3 +35,10 @@ running Linux mission and gameplay parity are **not** yet established.
 Validation on 2026-09-26: Windows x64 `Game.exe` builds and CTest is
 118/118; Linux GCC x86-64 and ARM64/QEMU are each 92/92 under
 ASan/UBSan.
+
+Clean Windows x64 native-media archive from source commit `633c02c`:
+`G:\SS\lab\builds\stage2-lua-used-surface-20260926-01`.
+`Game.exe` SHA-256 is
+`1DE073D4E0140642885288E703BF5FBFF2D459DB424C4EC81DD866210ED82411`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke was run for this package.
