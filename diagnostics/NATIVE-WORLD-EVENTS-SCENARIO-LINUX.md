@@ -39,3 +39,12 @@ scenario branching, or live Lua calls. The existing mission-script
 corpus test checks resource bytes, not execution of these new units.
 Behavioral parity with the Steam EXE and a headless executable world
 remain open. The clean archive is recorded below after verification.
+
+A clean native-media Windows x64 archive from source commit `a6a7620`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-world-events-scenario-20260926-01`.
+`Game.exe` SHA-256 is
+`BFC11EEE58644C64BAAB5351B713EC99802ED5B16370A87B06E2F789B6B91714`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed from the current remote
+D3D session.
