@@ -108,3 +108,12 @@ With this packet, Windows x86 passed the focused route/Lua tests, the full
 Windows x64 build and CTest passed 107/107, and Linux GCC x64 and ARM64/QEMU
 with ASan/UBSan passed 80/80. The Linux suite covers route construction,
 not the Windows-only `scriptUnit.cpp` binding.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-route-wait-20260926-01` was built with 16 jobs
+from source commit `bc7e00aa74e21cf895ba56c2574238fcc7916f05`.
+`Game.exe` SHA-256 is
+`8542AE2F395968209029092C1567702178CA831728E66010D8E8ED6D37999DD6`.
+It contains no FMOD DLL and has no `fmod.dll` or `FSOUND_` import. The
+archive has not passed an in-game smoke: the current remote D3D session
+cannot create a device even for an older known-good archive.
