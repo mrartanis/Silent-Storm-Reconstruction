@@ -186,7 +186,7 @@ enum EPose : int	// DO NOT REORDER! This is tied to AP calculation!
 	RUN			// running
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EDirection
+enum EDirection : int
 {
 	RIGHT= 0, UPRIGHT, UP, UPLEFT, LEFT, DOWNLEFT, DOWN, DOWNRIGHT, NONE
 };

@@ -1,10 +1,16 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "RPGStore.h"
 #include "RPGItem.h"
 #include "RPGUnit.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CStore - release vendor stock model bodies. Reconstructed from the v1.1 raw disassembly.

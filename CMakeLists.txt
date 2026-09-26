@@ -629,6 +629,14 @@ target_precompile_headers(NativePerkPointsTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativePerkPointsTests PRIVATE Main)
 target_compile_features(NativePerkPointsTests PRIVATE cxx_std_17)
 add_test(NAME NativePerkPointsTests COMMAND NativePerkPointsTests)
+add_executable(NativeDiplomacyBitsTests
+  "${root}/diagnostics/NativeDiplomacyBitsTests.cpp")
+target_include_directories(NativeDiplomacyBitsTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeDiplomacyBitsTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeDiplomacyBitsTests PRIVATE Main)
+target_compile_features(NativeDiplomacyBitsTests PRIVATE cxx_std_17)
+add_test(NAME NativeDiplomacyBitsTests COMMAND NativeDiplomacyBitsTests)
 add_executable(NativeMissionScriptCorpusTests
   "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
 target_include_directories(NativeMissionScriptCorpusTests PRIVATE

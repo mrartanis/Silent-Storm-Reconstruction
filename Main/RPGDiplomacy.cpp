@@ -1,6 +1,12 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataMap.h"
+#include "../DBFormat/DataMap.h"
 //
 #include "RPGUnitMission.h"
 #include "RPGDiplomacy.h"
@@ -17,14 +23,14 @@ SDiplomacy::SDiplomacy( DWORD _nDiplomacy ) : nDiplomacy( _nDiplomacy )
 NDb::EDiplomacyState SDiplomacy::GetDiplomacyState( int nPlayer ) const
 {
 	ASSERT( nPlayer >= 0 && nPlayer < 16 );
-	return NDb::EDiplomacyState( ( nDiplomacy & ( 3 << ( nPlayer << 1 ) ) ) >> ( nPlayer << 1 ) );
+	return NDb::EDiplomacyState( ( nDiplomacy & ( DWORD(3) << ( nPlayer << 1 ) ) ) >> ( nPlayer << 1 ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void SDiplomacy::SetDiplomacyState( int nPlayer, NDb::EDiplomacyState state )
 {
 	ASSERT( nPlayer >= 0 && nPlayer < 16 );
-	nDiplomacy &= ~( 3 << ( nPlayer << 1 ) );
-	nDiplomacy |= ( int( state ) << ( nPlayer << 1 ) );
+	nDiplomacy &= ~( DWORD(3) << ( nPlayer << 1 ) );
+	nDiplomacy |= ( DWORD( state ) << ( nPlayer << 1 ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CGlobalDiplomacy 

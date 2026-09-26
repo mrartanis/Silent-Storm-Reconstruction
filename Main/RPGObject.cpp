@@ -1,12 +1,18 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "rpgobject.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataMap.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "RPGObject.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataMap.h"
 #include "RPGUnit.h"
 #include "RPGAttackMech.h"
-#include "..\MiscDll\LogStream.h"
+#include "../MiscDll/LogStream.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {

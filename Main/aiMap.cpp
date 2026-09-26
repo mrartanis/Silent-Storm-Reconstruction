@@ -1,17 +1,23 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "../FileIO/PortableConvexHullMapWire.h"
 #include "aiTerrain.h"
 #include "aiTrace.h"
 #include "aiCollider.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "GAnimFormat.h"
-#include "..\DBFormat\DataGeometry.h"
-#include "..\DBFormat\DataAnimation.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataAnimation.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
 #include "GSceneUtils.h"
 #include "Transform.h"
-#include "ocTree.h"
+#include "OcTree.h"
 #include "GMesh.h"
 #include "aiRender.h"
 #include "aiObjectLoader.h"
@@ -20,12 +26,19 @@
 #include "wInterfaceVisitors.h"
 #include "Bound.h"
 #include "MemObject.h"
-#include "BSPTree.h"
+#include "BSPtree.h"
 #include "aiVoxelRender.h"
 #include "aiMap.h"
 #include "aiStability.h"
 #include "Sync.h"
 #include "wInterface.h" // for IWorld & ts flags
+#include <cstdio>
+
+#if defined(_WIN32)
+static void MapDebugString(const char *s) { OutputDebugString(s); }
+#else
+static void MapDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const int N_MIN_FLOOR = -3;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1000,7 +1013,7 @@ CObjectBase* CAIMap::AddFlippingHull( NDb::CAIGeometry *pAIGeom, NDb::CSkeleton 
 		   _nDestroyStage >= pTrees->treesOpen.size() )
 	{
 		nDestroyStage = Min( pTrees->treesClosed.size() - 1, pTrees->treesOpen.size() - 1 );
-		OutputDebugString("[[ ERROR! ]] Destroy stage of a door is too big - maybe obsolete database values?\n");
+		MapDebugString("[[ ERROR! ]] Destroy stage of a door is too big - maybe obsolete database values?\n");
 	}
 
 	if ( !pTrees->treesOpen.empty() )

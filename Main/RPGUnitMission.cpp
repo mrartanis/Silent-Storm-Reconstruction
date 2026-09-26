@@ -1,5 +1,11 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "RPGGlobal.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "rpgGlobal.h"
 #include "RPGUnitInfo.h"
 #include "RPGMerc.h"
 #include "RPGItemSet.h"
@@ -7,12 +13,12 @@
 #include "RPGGame.h"        // NRPG::IGame::GetMaxCriticalSeverity (combat critical clamp)
 #include "Grid.h"
 #include "A5Script.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\Misc\RandomGen.h"
-#include "..\Misc\StrProc.h"
-#include "..\MiscDll\LogStream.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataAI.h"
+#include "../Misc/RandomGen.h"
+#include "../Misc/StrProc.h"
+#include "../MiscDll/LogStream.h"
 #include "aiPosition.h"
 #include "RPGCritical.h"
 #include "RPGToHit.h"
@@ -21,10 +27,16 @@
 #include "RPGDiplomacy.h"
 #include "rpgCheatConstants.h"
 #include "rpgPerkConstants.h"
-#include "..\DBFormat\DataRpgConstants.h"
-#include "..\DBFormat\DataMisc.h"   // NDb::CRPGAP (GetActionAP RPGAP-table costs) + CRPGPicklock (AC_PICK_LOCK nAPToUse)
+#include "../DBFormat/DataRpgConstants.h"
+#include "../DBFormat/DataMisc.h"   // NDb::CRPGAP (GetActionAP RPGAP-table costs) + CRPGPicklock (AC_PICK_LOCK nAPToUse)
 
 #include "RPGUnitMission.h"
+
+#if defined(_WIN32)
+static CRandomGenerator &MissionRandom() { return random; }
+#else
+static CRandomGenerator &MissionRandom() { return s2_game_random; }
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NRPG
 {
@@ -499,7 +511,7 @@ int CUnitMission::GetFallDamage( float fHDiff )
 	int nHit = ( fHDiff - 2.8f ) * 50;
 	int nRet = 0;
 	for ( int i = 0; i < 3; ++i )
-		nRet += random.Get( 0, nHit / 4 ); 
+		nRet += MissionRandom().Get( 0, nHit / 4 );
 	return nRet;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -998,7 +1010,7 @@ float CUnitMission::GetXP( int nHowManyPerson ) const
 int CUnitMission::ProcessAttackForPK( NWorld::IWorld *pWorld, int nUserID, CAttackPortion *pAttack,
 	NDb::CRPGArmor *pArmor, bool bApplyToVP )
 {
-	if ( pAttack->CanRicochet() && random.Check( pPanzerklein->nRicochetProb ) )
+	if ( pAttack->CanRicochet() && MissionRandom().Check( pPanzerklein->nRicochetProb ) )
 	{
 		pAttack->nK = 0; // CRAP for now
 			return -1;
@@ -1013,7 +1025,7 @@ int CUnitMission::ProcessAttackForPK( NWorld::IWorld *pWorld, int nUserID, CAtta
 	bool bWasAlive = panzerkleinVP > 0;
 
 	int nDmg = 0;
-	if ( random.Check( int( pPanzerklein->fCriticalResist * float(pAttack->nCrtical) ) ) )
+	if ( MissionRandom().Check( int( pPanzerklein->fCriticalResist * float(pAttack->nCrtical) ) ) )
 	{
 		// we damage only the pilot
 		csRPG << CC_RED << " \tCritical, PK Ignored!" << endl;
@@ -1141,7 +1153,7 @@ int CUnitMission::ProcessAttack( NWorld::IWorld *pWorld, int nUserID, CAttackPor
 		if ( !IsDead() )
 		{
 			int nProbability = pAttack->nUnconsciousProbability;
-			int nCheck = random.Get( 0, 100 );
+			int nCheck = MissionRandom().Get( 0, 100 );
 			if ( pRPGUnit->Skills(NDb::ST_VP) <= 0 || nCheck <= nProbability )
 			{
 				bUnconscious = true;
@@ -1534,7 +1546,7 @@ bool CUnitMission::CheckIC()
 {
 	UseSkill(NDb::ST_IC);
 	// Target movement???
-	bool isCheck = random.Check(GetIC());
+	bool isCheck = MissionRandom().Check(GetIC());
 	csRPG << "\t" << GetName() << " Dodge:" << isCheck << endl;
 	return isCheck;
 }
@@ -1583,7 +1595,7 @@ int CUnitMission::CalcInterruptProbability( const IUnitMission *pEnemy,
 int CUnitMission::CheckInterrupt( const IUnitMission *pEnemy, bool bIsMutual, bool bWasShot )
 {
 	int nProbability = CalcInterruptProbability( pEnemy, bIsMutual, bWasShot );
-	int nCheck = random.Get(100);
+	int nCheck = MissionRandom().Get(100);
 	csRPG << CC_YELLOW << GetName() << CC_WHITE << " interrupt "<< CC_YELLOW << pEnemy->GetName() << CC_WHITE
 		  << " probability " << nProbability << "% Check:" << nCheck << endl;
 	pRPGUnit->UseSkill( NDb::ST_INTERRUPT, GetSkillAddValue( NDb::ST_INTERRUPT ) );
@@ -1651,7 +1663,7 @@ void CUnitMission::ApplyCritical( NDb::CRPGCritical *p, int nDC )
 	}
 	int nDuration = -1;
 	if ( p->nMinDuration > 0 )
-		nDuration = p->nMinDuration + random.Get( p->nMaxDuration - p->nMinDuration );
+		nDuration = p->nMinDuration + MissionRandom().Get( p->nMaxDuration - p->nMinDuration );
 	csRPG << "<font size=16pt>";
 	csRPG << "<color=red>" << "\tCritical: " << "<color=yellow>" << "\"" << p->szName << "\", difficulty=" << nDC;
 	csRPG << "  Duration=" << nDuration << "(" << p->nMinDuration << " : " << p->nMaxDuration;
@@ -1757,7 +1769,7 @@ static NDb::CRPGCritical* GetCritical( int nProbability,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int CUnitMission::RollCritical( NAI::EHitLocation eHL, int nCriticalDifficulty, NDb::CRPGCritical **pCritical )
 {
-	int nRezDiff = nCriticalDifficulty + random.Get(100);
+	int nRezDiff = nCriticalDifficulty + MissionRandom().Get(100);
 	switch ( eHL )
 	{
 		case NAI::HL_HEAD:
@@ -1914,7 +1926,7 @@ bool CUnitMission::CanHearSound( const CVec3 &ptSoundPosition, const CVec3 &ptLi
 		const NDb::SAISound &sound, IUnitMission *pSource )
 {
 	float fDistance = fabs( ptSoundPosition - ptListenerPosition ) * 1.6f;
-	if ( GetHearingProbability( pSource, fDistance, sound, 0 ) <= (int)random.Get( 99 ) )
+	if ( GetHearingProbability( pSource, fDistance, sound, 0 ) <= (int)MissionRandom().Get( 99 ) )
 		return false;
 	UseSkill( NDb::ST_SPOT );
 	return true;
@@ -2140,7 +2152,7 @@ bool CUnitMission::CanClear( int nDC, int nSkillModif )
 {
 	int nEngSkill = GetRPGUnit()->Skills( NDb::ST_ENGINEERING );
 	int nProb = Min( pMinesConstants->nBaseDisarmProb + nEngSkill - nDC, 95 );
-	return random.Get( 0, 100 ) < nProb;
+	return MissionRandom().Get( 0, 100 ) < nProb;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variant for creating a unit from an NRPG::Unit, for the player's characters

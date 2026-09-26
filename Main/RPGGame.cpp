@@ -1,20 +1,32 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "RPGGame.h"
 #include "aiMap.h"
 #include "aiRender.h"
-#include "..\Misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
 #include "wTSFlags.h"
 #include "wInterface.h"
 #include "RPGUnitMission.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataMap.h"   // NDb::EDiplomacyState / DS_ALLY -- friendly-fire ally check in cover penetration
-#include "..\MiscDll\LogStream.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataMap.h"   // NDb::EDiplomacyState / DS_ALLY -- friendly-fire ally check in cover penetration
+#include "../MiscDll/LogStream.h"
 #include "aiGrid.h"
 #include "RPGVision.h"
 #include "rpgCheatConstants.h"
-#include "rpgUnit.h"
+#include "RPGUnit.h"
 #include "wUnitServer.h"   // NWorld::CUnitServer::GetDiplomacyState -- friendly-fire ally block in cover penetration
 #include "wObject.h"       // NWorld::CCannon::GetCurrentUnit -- resolve a cannon/mech shooter for the ally block
+
+#if defined(_WIN32)
+static CRandomGenerator &RPGGameRandom() { return random; }
+#else
+static CRandomGenerator &RPGGameRandom() { return s2_game_random; }
+#endif
 
 // NWorld::CanMeleeAttack @0x3a1db0 (wUnitAttackExec.cpp) -- melee-swing reach gate in the composite
 // tile to-hit. Prototyped here instead of including wUnitAttackExec.h (that header needs the full
@@ -823,7 +835,7 @@ static int GetRandomForToHit( const NWorld::CUnit *pAttacker )
 	//
 	static int nLastRndForToHit = 200;
 	int nRnd;
-	while ( abs( (nRnd = random.Get(0,100)) - nLastRndForToHit ) < 6 );
+	while ( abs( (nRnd = RPGGameRandom().Get(0,100)) - nLastRndForToHit ) < 6 );
 	return nLastRndForToHit = nRnd;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

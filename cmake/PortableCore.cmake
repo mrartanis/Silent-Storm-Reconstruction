@@ -330,6 +330,34 @@ target_include_directories(s2_game_ai_routes PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_ai_routes PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_routes PRIVATE -ffunction-sections -fdata-sections)
+# Original AI map and RPG mission state are game-used prerequisites for
+# executing a Linux world. Static archives alone do not close the link.
+add_library(s2_game_ai_map STATIC "${root}/Main/aiMap.cpp")
+target_include_directories(s2_game_ai_map PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_ai_map PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_map PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_rpg_mission STATIC
+  "${root}/Main/RPGGame.cpp"
+  "${root}/Main/RPGStore.cpp"
+  "${root}/Main/RPGDiplomacy.cpp"
+  "${root}/Main/RPGObject.cpp"
+  "${root}/Main/RPGUnitMission.cpp")
+target_include_directories(s2_game_rpg_mission PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_rpg_mission PUBLIC cxx_std_17)
+target_compile_options(s2_game_rpg_mission PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeDiplomacyBitsTests
+  "${root}/diagnostics/NativeDiplomacyBitsTests.cpp")
+target_link_libraries(NativeDiplomacyBitsTests PRIVATE
+  s2_game_rpg_mission s2_game_dbformat_records
+  s2_game_structure s2_game_objects)
+target_link_options(NativeDiplomacyBitsTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeDiplomacyBitsTests COMMAND NativeDiplomacyBitsTests)
 # The original command-driven AI logic base. It compiles on Linux, but
 # executable linking still needs the world unit server and command queue;
 # do not confuse this compile boundary with live AI execution.
