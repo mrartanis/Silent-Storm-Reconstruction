@@ -37,4 +37,13 @@ and run the full CTest suite with `-C RelWithDebInfo`.
 The complete Windows x64 build/CTest passed 110/110; Linux GCC x86-64
 and ARM64/QEMU built all targets and passed 82/82 each under ASan/UBSan.
 The newly ported targets other than `CPathInterpolator` are still
-compile-checked only. A clean archive's provenance follows below.
+compile-checked only.
+
+A clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-animation-runtime-20260926-01` was built with
+16 jobs from source commit `ef23a32996d7a408e83e6bc1420a84cc7354d4c3`.
+`Game.exe` SHA-256 is
+`450C3562C3FACF910F506D517931657F5B96324DD90485E165E804CDA4FF968F`.
+The archive has no FMOD DLL, and `Game.exe` imports neither `fmod.dll`
+nor `FSOUND_`. In-game smoke remains unverified because the remote D3D
+session cannot create a device even for an older known-good archive.
