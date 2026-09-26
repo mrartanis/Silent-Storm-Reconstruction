@@ -56,3 +56,11 @@ Clean Windows x64 native-media archive from source commit `633c02c`:
 `1DE073D4E0140642885288E703BF5FBFF2D459DB424C4EC81DD866210ED82411`.
 The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
 `FSOUND_` imports. No in-game smoke was run for this package.
+
+Clean follow-up archive from source commit `86268f0`:
+`G:\SS\lab\builds\stage2-lua-interface-surface-20260926-01`.
+`Game.exe` SHA-256 is
+`BBE7945363A7413DF2F0F2D16E24735AA38F229A19667309A47FDD7F4611C6F9`.
+It likewise has no `fmod.dll` file or `fmod.dll`/`FSOUND_` imports.
+Windows x64 CTest passed 118/118, Linux x86-64 and ARM64/QEMU passed
+92/92 each under ASan/UBSan. No in-game smoke was run for this follow-up.
