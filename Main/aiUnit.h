@@ -15,7 +15,7 @@ namespace NDb
 	class CRPGWeapon;
 	class IUnitMission;
 	class CUnit;
-	enum EShootMode;   // MS-extension fwd decl (as NAI::EHitLocation below) -- DataRPG.h defines it
+	enum EShootMode : int;   // DataRPG.h defines the game's int-backed enum
 }
 
 namespace NWorld
@@ -40,7 +40,7 @@ struct SPathPlace;
 struct SPosition;
 struct SUnitPosition;
 struct SAIUnitState;   // per-unit threat state (release IAIUnit vtbl 0x74 GetAIUnitState)
-enum EAIManager;
+enum EAIManager : int;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // IAIUnit
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -164,7 +164,7 @@ public:
 	virtual NDb::CRPGWeapon* GetDBWeapon() const = 0;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EGrenadeMode
+enum EGrenadeMode : int
 {
 	GM_THROW,
 	GM_SETTRAP

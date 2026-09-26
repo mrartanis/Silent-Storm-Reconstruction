@@ -28,7 +28,7 @@ struct SAISound
 template<class TUnit>
 inline void FilterSounds( list<SAISound<TUnit> > *pRes, const list<CPtr<TUnit> > &visible )
 {
-	for ( list<SAISound<TUnit> >::iterator i = pRes->begin(); i != pRes->end(); )
+	for ( typename list<SAISound<TUnit> >::iterator i = pRes->begin(); i != pRes->end(); )
 	{
 		CDumbUnitServer *p = i->pWho;
 		if ( !IsValid(p) )
@@ -56,7 +56,7 @@ public:
 	
 	void HearSound( const vector<CObj<CTimedObject> > &stuff, TUnit *pWho, const NAI::SPathPlace &_place )
 	{
-		for ( list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); ++i )
+		for ( typename list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); ++i )
 		{
 			TSound &s = *i;
 			if ( s.pWho == pWho )
@@ -72,7 +72,7 @@ public:
 	}
 	void ClearSound( TUnit *pWho )
 	{
-		for ( list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); )
+		for ( typename list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); )
 		{
 			TSound &s = *i;
 			if ( s.pWho == pWho )
@@ -83,10 +83,10 @@ public:
 	}
 	void AddSounds( list<TSound> *pRes )
 	{
-		for ( list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); ++i )
+		for ( typename list<TSound>::iterator i = aiSounds.begin(); i != aiSounds.end(); ++i )
 		{
 			bool bFound = false;
-			for ( list<TSound>::iterator k = pRes->begin(); k != pRes->end(); ++k )
+			for ( typename list<TSound>::iterator k = pRes->begin(); k != pRes->end(); ++k )
 			{
 				if ( k->pWho == i->pWho )
 				{
@@ -121,7 +121,7 @@ public:
 	void ClearAudible() { audibleUnits.clear(); }   // retail: list::clear on +0x164 (C_DEAF per-turn forget @0x3c32e0)
 	void SetAudible( TUnit *pUnitServer, bool bAudible )
 	{
-		list< CPtr<TUnit> >::iterator i = find( audibleUnits.begin(), audibleUnits.end(), pUnitServer );
+		typename list< CPtr<TUnit> >::iterator i = find( audibleUnits.begin(), audibleUnits.end(), pUnitServer );
 		if ( bAudible )
 		{
 			if ( i == audibleUnits.end() )

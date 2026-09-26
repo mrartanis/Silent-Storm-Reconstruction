@@ -12,7 +12,7 @@
 #include "wUnitCommands.h"   // SItem -- retail CUnitServer embeds sHandItem (@+0x200, tag 33)
 #include "RPGItemInfo.h"     // NRPG::IInventoryItem -- pHandItemHolder (@+0x224, tag 34)
 #include "Locks.h"           // CLockable -- retail CUnitServer base @+0x17c (tag 31)
-#include "..\Misc\EventsBase.h"
+#include "../Misc/EventsBase.h"
 #include "eventPlayer.h"
 namespace NDb
 {

@@ -356,7 +356,7 @@ enum EWeaponType
 	WT_TERROR_SPECIAL_GUN,
 };
 inline bool IsMeleeWeapon( EWeaponType type ) { return type == WT_DEFAULT || type == WT_KNIFE || type == WT_KATANA; }
-enum EShootMode
+enum EShootMode : int
 {
 	SM_Snap = 0,
 	SM_Aimed,

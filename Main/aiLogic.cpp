@@ -1,11 +1,18 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiGrid.h"
 #include "wMain.h"
 #include "wUnitServer.h"
 #include "wUnitCommands.h"   // NWorld::CCmd, CCmdEmpty, CCommand
+#include "../Misc/RandomGen.h"
 //
 #include "aiLogic.h"
 //
@@ -152,7 +159,12 @@ void CAILogic::CheckCycling()
 	}
 	else if ( cyclingTracker.nSame > 15 )    // retail: nSame > 0xf
 	{
-		if ( ( random.Get() & 3 ) == 0 )     // retail: raw ISAAC draw & 3 == 0 (25%)
+		#if defined(_WIN32)
+		CRandomGenerator &gameRandom = random;
+		#else
+		CRandomGenerator &gameRandom = s2_game_random;
+		#endif
+		if ( ( gameRandom.Get() & 3 ) == 0 ) // retail: raw ISAAC draw & 3 == 0 (25%)
 		{
 			pUS->Do( new NWorld::CCmdCancel( pUS ) );
 			pUnit->SetAP( nLiveAP, pUnit->GetMaxAP() );

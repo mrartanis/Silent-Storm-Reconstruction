@@ -580,6 +580,13 @@ target_precompile_headers(NativeScriptRouteWaitTests PRIVATE "${root}/Main/StdAf
 target_link_libraries(NativeScriptRouteWaitTests PRIVATE Main Script)
 target_compile_features(NativeScriptRouteWaitTests PRIVATE cxx_std_17)
 add_test(NAME NativeScriptRouteWaitTests COMMAND NativeScriptRouteWaitTests)
+add_executable(NativeAILogicTests "${root}/diagnostics/NativeAILogicTests.cpp")
+target_include_directories(NativeAILogicTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAILogicTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAILogicTests PRIVATE Main)
+target_compile_features(NativeAILogicTests PRIVATE cxx_std_17)
+add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
 add_executable(NativeMissionScriptCorpusTests
   "${root}/diagnostics/NativeMissionScriptCorpusTests.cpp")
 target_include_directories(NativeMissionScriptCorpusTests PRIVATE
@@ -830,8 +837,12 @@ if(S2_GAME_DIR)
   if(TARGET s2_bink_compat)
     set_tests_properties(NativeScriptRouteWaitTests PROPERTIES ENVIRONMENT_MODIFICATION
       "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+    set_tests_properties(NativeAILogicTests PROPERTIES ENVIRONMENT_MODIFICATION
+      "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
   else()
     set_tests_properties(NativeScriptRouteWaitTests PROPERTIES ENVIRONMENT_MODIFICATION
+      "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+    set_tests_properties(NativeAILogicTests PROPERTIES ENVIRONMENT_MODIFICATION
       "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
   endif()
   message(STATUS "Game working dir: ${S2_GAME_DIR}")

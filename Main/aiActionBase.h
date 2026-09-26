@@ -90,7 +90,7 @@ struct SActionInfo
 	void GetInfo( const SPlaceWithAP &place, TInfo *pInfo )
 	{
 		const int nKey = place.place.pos.p.GetData();            // the SPathPlace integer id
-		unordered_map<int, TInfo>::iterator it = hash.find( nKey );
+		typename unordered_map<int, TInfo>::iterator it = hash.find( nKey );
 		if ( it != hash.end() )
 			*pInfo = (*it).second;                               // cached evaluation
 		else
