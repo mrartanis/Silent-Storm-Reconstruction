@@ -43,8 +43,9 @@ struct VertexRecord
 struct ImplicitVertexRecord
 {
   std::uint32_t index;
-  std::uint32_t type;
-  std::uint32_t attribute;
+  // The compact saved stream omits these; raw resource streams set both.
+  std::uint32_t type = 0;
+  std::uint32_t attribute = 0;
   float sourcePosition[3];
 };
 

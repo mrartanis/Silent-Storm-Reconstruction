@@ -170,7 +170,9 @@ int main()
   assert(parsed.bones[0].name == "b_Test" && parsed.bones[0].matrixB[0] == 2.0f &&
          parsed.bones[0].muscleIndices[0] == 0);
   assert(parsed.implicitVertices[0].index == 0 &&
-         parsed.implicitVertices[0].sourcePosition[2] == 8.0f);
+         parsed.implicitVertices[0].sourcePosition[2] == 8.0f &&
+         parsed.implicitVertices[0].type == 0 &&
+         parsed.implicitVertices[0].attribute == 0);
   // The game's second neck segment has no muscles/explicit vertices and
   // marks the all-implicit section with 1 rather than 5.
   std::vector<unsigned char> implicitOnly(32 + 4 + 16, 0);

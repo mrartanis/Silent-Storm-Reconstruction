@@ -976,6 +976,21 @@ target_include_directories(s2_portable_core PUBLIC
   "${root}/third_party/lifestudio/src"
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_portable_core PUBLIC cxx_std_17)
+set(S2_HEAD_RESOURCE_PATH "" CACHE FILEPATH "Original Heads.res package for head data regression")
+add_executable(NativeHeadResourceTests
+  "${root}/diagnostics/NativeHeadResourceTests.cpp")
+target_include_directories(NativeHeadResourceTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeHeadResourceTests PRIVATE
+  -Wl,--start-group s2_portable_core s2_game_resource_loader
+  s2_game_resource_package s2_game_dg s2_game_structure
+  s2_game_streams s2_game_objects s2_portable_package
+  s2_portable_structure -Wl,--end-group)
+target_link_options(NativeHeadResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_HEAD_RESOURCE_PATH)
+  add_test(NAME NativeHeadResourceTests
+    COMMAND NativeHeadResourceTests "${S2_HEAD_RESOURCE_PATH}")
+endif()
 if(NOT WIN32)
   # These are declaration-only legacy ABI keywords; the portable data code
   # does not link or call the proprietary LifeStudio DLL.
