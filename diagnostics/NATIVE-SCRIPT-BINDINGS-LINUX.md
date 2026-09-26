@@ -34,3 +34,12 @@ serialization, and debug particle storage. `scriptUI.cpp` itself hits
 boundary. No dummy UI functions or unresolved-symbol linker bypass
 were added. Full Lua mission execution and the Linux game are not yet
 available.
+
+A clean native-media Windows x64 archive from source commit `a1ce918`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-script-bindings-20260926-01`.
+`Game.exe` SHA-256 is
+`EE4873C936D3D66DA283A659F684B255AB5174AECFA0EADBD6244B2A196E9488`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed from the current remote
+D3D session.
