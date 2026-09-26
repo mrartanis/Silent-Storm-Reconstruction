@@ -497,6 +497,21 @@ s2_module(DBFormat  lib LINK ADOImport FileIO Misc)
 s2_module(Main      lib LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
                             lifestudio_shim bink_shim d3d9 dxguid s2_portable_user_paths
                             s2_portable_effects)
+add_executable(NativeCombinerCoreTests
+  "${root}/diagnostics/NativeCombinerCoreTests.cpp")
+target_include_directories(NativeCombinerCoreTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeCombinerCoreTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeCombinerCoreTests PRIVATE Main)
+add_test(NAME NativeCombinerCoreTests COMMAND NativeCombinerCoreTests)
+add_executable(NativeScenePartCoreTests
+  "${root}/diagnostics/NativeScenePartCoreTests.cpp"
+  "${root}/Main/GScenePartCore.cpp")
+target_include_directories(NativeScenePartCoreTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeScenePartCoreTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeScenePartCoreTests PRIVATE Main)
+add_test(NAME NativeScenePartCoreTests COMMAND NativeScenePartCoreTests)
 add_executable(NativeVoxelWireTests "${root}/diagnostics/NativeVoxelWireTests.cpp")
 target_include_directories(NativeVoxelWireTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeVoxelWireTests PRIVATE "${root}/Main/StdAfx.h")

@@ -406,6 +406,38 @@ target_include_directories(s2_game_scene_data PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_scene_data PUBLIC cxx_std_17)
 target_compile_options(s2_game_scene_data PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_combiner_core STATIC "${root}/Main/GCombinerCore.cpp")
+target_include_directories(s2_game_combiner_core PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_link_libraries(s2_game_combiner_core PUBLIC
+  s2_game_dg s2_game_structure s2_game_objects)
+target_compile_features(s2_game_combiner_core PUBLIC cxx_std_17)
+target_compile_options(s2_game_combiner_core PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeCombinerCoreTests
+  "${root}/diagnostics/NativeCombinerCoreTests.cpp")
+target_include_directories(NativeCombinerCoreTests PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NativeCombinerCoreTests PRIVATE s2_game_combiner_core)
+target_link_options(NativeCombinerCoreTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeCombinerCoreTests COMMAND NativeCombinerCoreTests)
+add_library(s2_game_scene_part_core STATIC "${root}/Main/GScenePartCore.cpp")
+target_include_directories(s2_game_scene_part_core PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_link_libraries(s2_game_scene_part_core PUBLIC s2_game_combiner_core)
+target_compile_features(s2_game_scene_part_core PUBLIC cxx_std_17)
+target_compile_options(s2_game_scene_part_core PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeScenePartCoreTests
+  "${root}/diagnostics/NativeScenePartCoreTests.cpp")
+target_include_directories(NativeScenePartCoreTests PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NativeScenePartCoreTests PRIVATE
+  -Wl,--whole-archive s2_game_scene_part_core -Wl,--no-whole-archive)
+target_link_options(NativeScenePartCoreTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeScenePartCoreTests COMMAND NativeScenePartCoreTests)
 add_library(s2_game_scene_serialization STATIC
   "${root}/Main/GSceneUtils.cpp"
   "${root}/Main/GDecalTarget.cpp"
@@ -414,6 +446,7 @@ target_include_directories(s2_game_scene_serialization PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
   "${root}/third_party/lifestudio/include")
+target_link_libraries(s2_game_scene_serialization PUBLIC s2_game_scene_part_core)
 target_compile_features(s2_game_scene_serialization PUBLIC cxx_std_17)
 target_compile_options(s2_game_scene_serialization PRIVATE -ffunction-sections -fdata-sections)
 add_executable(NativeRenderStateWireTests

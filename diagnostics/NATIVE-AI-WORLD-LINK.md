@@ -50,3 +50,11 @@ After this change `Game.exe` built on Windows x64 and full CTest passed
 123/123. Linux GCC x86-64 and ARM64/QEMU built all targets and passed
 98/98 each under ASan/UBSan. These regressions include the original
 mission-map builder but still do not execute a Linux AI/world turn.
+
+After the CPU combiner extraction (`GCombinerCore.cpp`) and real
+`CNonePart` registration (`GScenePartCore.cpp`), the same full-archive link
+resolves both `CNonePart` casts without a shim. Its only remaining distinct
+unresolved symbol is `CastToObjectBaseImpl<NGScene::CLightGroup>` from
+`CDFrozenItem::Visit`. `CLightGroup` still owns a concrete `CGScene` and
+calls `FreeLightGroup` on destruction; it must be separated without losing
+that ownership rule. The earlier three-symbol output above is historical.
