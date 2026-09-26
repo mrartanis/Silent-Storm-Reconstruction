@@ -608,6 +608,11 @@ target_include_directories(NativeWaypointResourceTests PRIVATE "${CMAKE_BINARY_D
 target_precompile_headers(NativeWaypointResourceTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeWaypointResourceTests PRIVATE Main)
 target_compile_features(NativeWaypointResourceTests PRIVATE cxx_std_17)
+add_executable(NativeAIRouteResourceTests "${root}/diagnostics/NativeAIRouteResourceTests.cpp")
+target_include_directories(NativeAIRouteResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAIRouteResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAIRouteResourceTests PRIVATE Main)
+target_compile_features(NativeAIRouteResourceTests PRIVATE cxx_std_17)
 add_executable(NativePoolTests "${root}/diagnostics/NativePoolTests.cpp")
 target_include_directories(NativePoolTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativePoolTests PRIVATE "${root}/Main/StdAfx.h")
@@ -899,6 +904,19 @@ if(S2_GAME_DIR)
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
     else()
       set_tests_properties(NativeResourceOpenerTests NativeWaypointResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+    endif()
+  endif()
+  if(EXISTS "${S2_GAME_DIR}/game.db" AND
+     EXISTS "${S2_GAME_DIR}/res/Units.res" AND
+     EXISTS "${S2_GAME_DIR}/res/Groups.res")
+    add_test(NAME NativeAIRouteResourceTests
+      COMMAND NativeAIRouteResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+    if(TARGET s2_bink_compat)
+      set_tests_properties(NativeAIRouteResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+        "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+    else()
+      set_tests_properties(NativeAIRouteResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
     endif()
   endif()

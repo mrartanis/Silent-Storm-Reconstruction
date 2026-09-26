@@ -469,6 +469,27 @@ if(S2_RESOURCE_PACKAGE_PATH)
   add_test(NAME NativeWaypointResourceTests
     COMMAND NativeWaypointResourceTests "${S2_RESOURCE_PACKAGE_PATH}")
 endif()
+add_executable(NativeAIRouteResourceTests
+  "${root}/diagnostics/NativeAIRouteResourceTests.cpp")
+target_include_directories(NativeAIRouteResourceTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeAIRouteResourceTests PRIVATE
+  -Wl,--start-group s2_game_ai_waypoint s2_game_basic_share
+  s2_game_resource_loader s2_game_resource_package s2_game_ai_position
+  s2_game_dg s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_package s2_portable_structure s2_game_misc_runtime
+  s2_game_database_runtime
+  -Wl,--whole-archive s2_game_dbformat_records -Wl,--no-whole-archive
+  -Wl,--end-group)
+target_link_options(NativeAIRouteResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH AND S2_GAME_DB_PATH)
+  get_filename_component(_s2_ai_route_res_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_ai_route_res_dir}/Units.res" AND
+     EXISTS "${_s2_ai_route_res_dir}/Groups.res")
+    add_test(NAME NativeAIRouteResourceTests
+      COMMAND NativeAIRouteResourceTests "${S2_GAME_DB_PATH}" "${_s2_ai_route_res_dir}")
+  endif()
+endif()
 add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp")
 target_link_libraries(NativeMapFlagsTests PRIVATE
   -Wl,--start-group s2_game_map_build

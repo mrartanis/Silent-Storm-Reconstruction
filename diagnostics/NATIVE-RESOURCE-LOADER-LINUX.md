@@ -38,17 +38,43 @@ so simply checking `GetValue()` would give false confidence. This is a
 recorded original-data/loader limitation, not evidence that every package
 entry represents a valid waypoint.
 
+`NativeAIRouteResourceTests` exercises the two other original
+`aiWaypoint.cpp` loaders that the game uses for AI route data:
+`CUnitAIInfoLoader` over every `Units.res` entry and
+`CUnitGroupAIInfoLoader` over every `Groups.res` entry. It first performs
+strict `CUnitAIInfo` deserialization, then compares every route's waypoint
+vector with the normal loader result. The Steam-matching baseline contains
+169 unit and 42 group records; all 211 decode, with 211 routes and 561
+waypoint-name references. The semantic digest is `F76E40DB1564FEE0` on
+Windows x86/x64 and Linux GCC x64/ARM64. These route integers are IDs of
+`NDb::CWaypointName` in `game.db`, **not** resource IDs in `Waypoints.res`;
+this is how the original `BuildMap` resolves them. Three references do not
+resolve in the baseline database: unit source 330/name 46, unit source
+1680/name 66, and group source 43/name 441. `BuildMap` skips unresolved
+names. Both `.res` inputs and `game.db` match the installed Steam
+files by SHA-256, so the test records the source-data behavior and does not
+invent replacements.
+
+For this AI-route packet, Windows x86 passed the targeted oracle test,
+Windows x64 passed a full build and CTest 105/105, and Linux GCC x64 and
+ARM64/QEMU with ASan/UBSan passed 79/79 each. These are typed data-loader
+checks, not live path-following or enemy-decision tests.
+No new game archive was made for this packet: it adds a diagnostic target
+over already linked game loaders and does not change `Game.exe` source.
+
 Configure the portable build with
 `-DS2_RESOURCE_PACKAGE_PATH=<original-Waypoints.res>`, then run:
 
 ```
-cmake --build <linux-build> --target NativeResourcePackageTests NativeResourceOpenerTests NativeWaypointResourceTests -j 12
-ctest --test-dir <linux-build> -R '^Native(ResourcePackage|ResourceOpener|WaypointResource)Tests$' --output-on-failure
+cmake --build <linux-build> --target NativeResourcePackageTests NativeResourceOpenerTests NativeWaypointResourceTests NativeAIRouteResourceTests -j 12
+ctest --test-dir <linux-build> -R '^Native(ResourcePackage|ResourceOpener|WaypointResource|AIRouteResource)Tests$' --output-on-failure
 ```
 
-On Windows, build the same three targets with `--config RelWithDebInfo` and
-run CTest with `-C RelWithDebInfo`; they are registered when
-`S2_GAME_DIR/res/Waypoints.res` exists. The Linux x64 and ARM64 GCC builds
+On Windows, build the same four targets with `--config RelWithDebInfo` and
+run CTest with `-C RelWithDebInfo`; the AI-route test is registered when
+`game.db`, `Units.res`, and `Groups.res` are present together (the Linux
+configuration uses `S2_RESOURCE_PACKAGE_PATH` to find their `res` directory).
+The Linux x64 and ARM64 GCC builds
 use ASan/UBSan (ARM64 under QEMU with `ASAN_OPTIONS=detect_leaks=0`). Full
 regressions after the resource-loader port passed Windows x64 97/97 and
 Linux GCC x64/ARM64 plus Clang x64 71/71 each.
