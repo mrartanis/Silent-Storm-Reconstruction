@@ -6,6 +6,7 @@
 #include "../Misc/Geom.h"
 #endif
 #include "../FileIO/Streams.h"
+#include "../FileIO/PortablePackageIndex.h"
 #include "../Main/MapBuild.h"
 #include "../Main/aiGrid.h"
 #include "../DBFormat/DataFormat.h"
@@ -17,8 +18,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <algorithm>
+#include <vector>
 
 static std::uint64_t digest = UINT64_C(14695981039346656037);
+static std::uint64_t routeDigest = UINT64_C(14695981039346656037);
 static void Add( std::uint32_t value )
 {
 	for ( int byte = 0; byte < 4; ++byte )
@@ -26,6 +30,26 @@ static void Add( std::uint32_t value )
 		digest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
 		digest *= UINT64_C(1099511628211);
 	}
+}
+static void AddRouteWord( std::uint32_t value )
+{
+	for ( int byte = 0; byte < 4; ++byte )
+	{
+		routeDigest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
+		routeDigest *= UINT64_C(1099511628211);
+	}
+}
+static std::size_t AddRoute( const std::vector<CPtr<CMapWaypoint> > &route )
+{
+	AddRouteWord( static_cast<std::uint32_t>( route.size() ) );
+	for ( const CPtr<CMapWaypoint> &point : route )
+	{
+		if ( !point || !point->pName ) return 0;
+		AddRouteWord( point->pName->GetRecordID() );
+		AddRouteWord( point->bExists );
+		AddRouteWord( static_cast<std::uint32_t>( point->commands.size() ) );
+	}
+	return route.size();
 }
 
 int main( int argc, char **argv )
@@ -37,6 +61,30 @@ int main( int argc, char **argv )
 	NDatabase::Serialize( database, CStructureSaver::READ );
 	NGScene::AddResourceDir( argv[2] );
 	const int variantID = std::atoi( argv[3] );
+	if ( variantID == -1 )
+	{
+		S2FileIO::PortablePackageIndex units;
+		if ( !units.Open( ( std::string( argv[2] ) + "/Units.res" ) ) ) return 11;
+		auto *variants = NDatabase::GetTable<NDb::CTemplVariant>();
+		if ( !variants ) return 5;
+		int shown = 0;
+		CDBIterator<NDb::CTemplVariant> it( *variants );
+		while ( it.MoveNext() && shown < 30 )
+		{
+			const NDb::CTemplVariant *variant = it.Get();
+			const NDb::CTemplate *map = variant->pTemplate.GetPtr();
+			if ( !map || map->nWidth < 16 || map->nHeight < 16 ) continue;
+			int routed = 0;
+			for ( const auto &unit : variant->pUnits )
+				if ( unit && units.Entries().count( unit->GetRecordID() ) ) ++routed;
+			if ( !routed ) continue;
+			std::printf( "route_candidate=%d size=%dx%d units=%zu routed=%d waypoints=%zu\n",
+				variant->GetRecordID(), map->nWidth, map->nHeight,
+				variant->pUnits.size(), routed, variant->waypoints.size() );
+			++shown;
+		}
+		return shown ? 0 : 6;
+	}
 	if ( variantID == 0 )
 	{
 		auto *variants = NDatabase::GetTable<NDb::CTemplVariant>();
@@ -97,6 +145,7 @@ int main( int argc, char **argv )
 	}
 	Add( static_cast<std::uint32_t>( map.scripts.size() ) );
 	Add( static_cast<std::uint32_t>( map.groups.size() ) );
+	std::size_t unitRoutePoints = 0, groupRoutePoints = 0, routedUnits = 0;
 	for ( const SMapUnit &unit : map.units )
 	{
 		Add( unit.nUnitID ); Add( unit.pos.nFloor );
@@ -105,6 +154,17 @@ int main( int argc, char **argv )
 		Add( Float2Int( unit.pos.ptPos.z * 1000 ) );
 		Add( static_cast<std::uint32_t>( unit.route.size() ) );
 		Add( unit.nDiplomacy );
+		AddRouteWord( unit.nUnitID );
+		if ( !unit.route.empty() ) ++routedUnits;
+		unitRoutePoints += AddRoute( unit.route );
+	}
+	std::vector<int> groupIDs;
+	for ( const auto &group : map.groups ) groupIDs.push_back( group.first );
+	std::sort( groupIDs.begin(), groupIDs.end() );
+	for ( int id : groupIDs )
+	{
+		AddRouteWord( id );
+		groupRoutePoints += AddRoute( map.groups.at( id ).route );
 	}
 	for ( const CObj<CMapWaypoint> &waypoint : map.waypoints )
 	{
@@ -141,22 +201,38 @@ int main( int argc, char **argv )
 		built, map.buildings.size(), map.units.size(), map.items.size(),
 		map.waypoints.size(), map.slots.size(), map.scripts.size(), scriptBytes,
 		static_cast<unsigned long long>( digest ) );
+	std::printf( "routes units=%zu unit_points=%zu group_points=%zu route_digest=%016llX\n",
+		routedUnits, unitRoutePoints, groupRoutePoints,
+		static_cast<unsigned long long>( routeDigest ) );
 	if ( variantID == 218 &&
 		( map.buildings.size() != 1 || !map.units.empty() ||
 		  map.items.size() != 21 || !map.waypoints.empty() ||
 		  !map.slots.empty() || !map.scripts.empty() ||
+		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 0 ||
+		  routeDigest != UINT64_C(0xCBF29CE484222325) ||
 		  digest != UINT64_C(0x751202F4B6E394E0) ) )
 		return 4;
 	if ( variantID == 810 &&
 		( map.buildings.size() != 1 || map.units.size() != 2 ||
 		  map.items.size() != 24 || map.waypoints.size() != 2 ||
 		  !map.slots.empty() || map.scripts.size() != 1 || scriptBytes != 1016 ||
+		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 0 ||
+		  routeDigest != UINT64_C(0xC3F6B0B1E282EE0F) ||
 		  digest != UINT64_C(0x558E222D9ED26DA6) ) )
+		return 4;
+	if ( variantID == 2400 &&
+		( map.buildings.size() != 1 || map.units.size() != 5 ||
+		  map.items.size() != 16 || map.waypoints.size() != 2 ||
+		  routedUnits != 5 || unitRoutePoints != 10 || groupRoutePoints != 0 ||
+		  routeDigest != UINT64_C(0xBDADCF3CD005A847) ||
+		  digest != UINT64_C(0x29C99EC264C4C6E7) ) )
 		return 4;
 	if ( variantID == 4526 &&
 		( map.buildings.size() != 7 || map.units.size() != 49 ||
 		  map.items.size() != 1514 || map.waypoints.size() != 24 ||
 		  map.slots.size() != 2 || map.scripts.size() != 1 || scriptBytes != 4266 ||
+		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 14 ||
+		  routeDigest != UINT64_C(0xC9FCDC98D9DCD6F3) ||
 		  digest != UINT64_C(0x8C92AD1F7E8B90FA) ) )
 		return 4;
 	return built ? 0 : 3;

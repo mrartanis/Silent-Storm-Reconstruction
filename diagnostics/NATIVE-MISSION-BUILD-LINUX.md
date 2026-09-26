@@ -25,6 +25,24 @@ and Linux GCC x64/ARM64 and Clang x64 report `558E222D9ED26DA6`.
 This proves construction of a small
 unit/route map, not script execution or live enemy AI.
 
+The game `BuildMap` route-resolution path is now checked separately from
+raw `Units.res`/`Groups.res` decoding. Variant 2400 creates five units and
+assigns all five a route (ten `CMapWaypoint` links total). A route digest
+over each unit ID, ordered waypoint-name ID, authored/pseudo-waypoint flag,
+and command count is `BDADCF3CD005A847`; the map digest is
+`29C99EC264C4C6E7`. Variant 4526 has no unit route in its selected
+placement but resolves a fourteen-point group route; route digest
+`C9FCDC98D9DCD6F3`. The small variant 810 happens to have no resolved
+route despite containing two units, so its test cannot serve as the unit
+route case. Windows x86/x64 and Linux GCC x64/ARM64 match these route digests.
+This proves the original builder consumes the original route resources and
+resolves names through `game.db`; actual per-turn AI route execution remains
+unverified.
+
+The expanded four-case mission set passed on Windows x86/x64 and Linux GCC
+x64/ARM64. In the same packet the full Windows x64 build/CTest passed
+107/107 and Linux GCC x64/ARM64 passed 80/80 under ASan/UBSan.
+
 The probe now also passes every script attached by `BuildMap` through the
 game's original Lua parser, using `CScript::strCode` from `game.db`. Variant
 810 has one 1,016-byte script; variant 4526 has one 4,266-byte script. The
@@ -50,7 +68,7 @@ using the same alignment rule as other placed objects. Two subsequent
 GCC x64 ASan/UBSan runs completed with matching digests without a
 height-sampling guard or diagnostic suppression.
 
-After the three cases were registered, the full Windows x64 build and
+After the initial three cases were registered, the full Windows x64 build and
 CTest passed 103/103. Linux GCC x64/ARM64 and Clang x64 passed 77/77;
 GCC x64 and ARM64 used ASan/UBSan. Windows x86 passed the building/resource
 test and all three mission cases. The ARM64 large-map test took about
@@ -66,16 +84,18 @@ the ARM64 suite runs under QEMU with `ASAN_OPTIONS=detect_leaks=0`.
 
 Reproduce on Linux with `cmake --build <build> --target
 NativeMissionMapProbe` and `ctest --test-dir <build> -R
-'^NativeMission(MapProbe|RouteMapProbe|LargeMapProbe)$' --output-on-failure`. Configure
+'^NativeMission(MapProbe|RouteMapProbe|UnitRouteMapProbe|LargeMapProbe)$' --output-on-failure`. Configure
 `S2_GAME_DB_PATH` and `S2_RESOURCE_PACKAGE_PATH` so the seven original
 files named above are available. On Windows use `cmake --build <build>
 --config RelWithDebInfo --target NativeMissionMapProbe` and `ctest
---test-dir <build> -C RelWithDebInfo -R '^NativeMission(MapProbe|RouteMapProbe|LargeMapProbe)$'
+--test-dir <build> -C RelWithDebInfo -R '^NativeMission(MapProbe|RouteMapProbe|UnitRouteMapProbe|LargeMapProbe)$'
 --output-on-failure`; configure `S2_GAME_DIR` with its `game.db` and `res`
 folder. The probe also accepts explicit arguments `<game.db> <res-dir>
 <variant-id>`. IDs 218, 810, and 4526 have asserted regression digests;
 ID 0 lists
-database candidates with units and waypoints.
+database candidates with units and waypoints; ID -1 lists placements whose
+unit IDs have entries in `Units.res` (a candidate can still have an empty
+route). ID 2400 is the asserted unit-route regression.
 Pass `--print-scripts` after a variant ID to inspect its attached authored
 Lua source locally when deciding which game bindings to port; the source is
 not included in this repository.

@@ -36,6 +36,7 @@
 #include "aiInventory.h"
 #include "aiMisc.h"			// NAI::GetAIUnit
 #include "aiLogic.h"		// NAI::IAILogic
+#include "aiRouteLogic.h"	// NAI::CAIRouteLogic::IsRouteComplete
 //
 #include "scriptUnit.h"
 //
@@ -649,7 +650,9 @@ BEGIN_SCRIPT_COMMAND( UnitGetRoute, "u" )
 			CPtr<NAI::IAIUnit> pUnit( pCommander->GetAIUnit( pUS ) );
 			if ( IsValid( pUnit ) )
 			{
-				luaPushCPtr( pState, pUnit->GetRoute() );
+				// Retail's route slot is an IAILogic, not the predecessor CTask.
+				// Common.l keeps this handle while WaitForUnitRoute polls it.
+				luaPushCPtr( pState, pUnit->GetRouteLogic() );
 				return 1;
 			}
 		}
@@ -660,9 +663,9 @@ END_SCRIPT_COMMAND
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 BEGIN_SCRIPT_COMMAND( RouteIsFinished, "u" )
 	bool bFinished = true;
-	CDynamicCast<NAI::CTask> pTask(luaParams[0].p);
-	if (pTask)
-		bFinished = pTask->IsEndOfTask();
+	CDynamicCast<NAI::CAIRouteLogic> pRoute(luaParams[0].p);
+	if (pRoute)
+		bFinished = pRoute->IsRouteComplete();
 	luaPushBool( pState, bFinished );
 	return 1;
 END_SCRIPT_COMMAND

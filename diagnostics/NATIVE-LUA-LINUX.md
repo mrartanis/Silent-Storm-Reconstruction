@@ -86,3 +86,25 @@ jobs. `Game.exe` SHA-256 is
 The archive contains five FFmpeg runtime DLLs and no FMOD DLL; `Game.exe`
 has no `fmod.dll` or `FSOUND_` import. Game runtime smoke remains unverified
 for the D3D reason above.
+
+## Route-wait binding in the Windows game
+
+The original `Common.l` calls `UnitGetRoute` and polls `RouteIsFinished`
+from `WaitForUnitRoute`/`WaitForGroupRoute`. After the AI conversion to
+per-unit route logic, `UnitGetRoute` still returned the obsolete `CTask`
+slot, which is always null, so those waits could end immediately. The
+Windows game binding now returns the mode-selected `IAILogic` route slot.
+`RouteIsFinished` accepts the concrete `CAIRouteLogic` handle and tests
+its own completion latch (`bFinished`). It must not use the generic
+`CAILogic::IsFinished()`: that method deliberately reports false while a
+unit remains alive so the commander does not discard its logic.
+`NativeScriptRouteWaitTests` invokes the registered Lua binding against
+an actual `CAIRouteLogic` object and sees nil before `Finish()` and true
+after it on Windows x64. This verifies the binding contract, not a live
+unit reaching a waypoint. The `Main/scriptUnit.cpp` binding is still
+Windows-only; it is not claimed as portable Linux AI execution.
+
+With this packet, Windows x86 passed the focused route/Lua tests, the full
+Windows x64 build and CTest passed 107/107, and Linux GCC x64 and ARM64/QEMU
+with ASan/UBSan passed 80/80. The Linux suite covers route construction,
+not the Windows-only `scriptUnit.cpp` binding.

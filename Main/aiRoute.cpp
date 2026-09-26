@@ -205,10 +205,9 @@ CTask *CAIRoute::GetTask( NWorld::CUnitServer *pUS, NWorld::CUnitGroup *_pUnitGr
 // surviving CAIRoute::GetTask) and install it on the unit's OWN IAILogic slot as a CAIRouteLogic -- retail's
 // per-unit-logic model. The `manager` (AIM_AI/AIM_SCRIPT) governed the dev control-stack priority; with a
 // single per-unit logic slot the last SetLogic wins, and script routes are installed AFTER the AI deploy
-// route (so scripts still take precedence). Adversarial note: a route logic installed here is pumped by the
-// retail CAICommander::GenerateCommand @0x353d0 units-tracker round-robin, which lands in Stage 2 (the
-// CAITacticalCommander removal). Per the AI-convergence philosophy (build-green is the gate; runtime deferred
-// until the layer is fully converged) route/roaming units are un-pumped between Stage 1 and Stage 2.
+// route (so scripts still take precedence). The current CAICommander::GenerateCommand pumps these
+// route logics through the retail-style units-tracker round-robin; live mission parity remains a
+// separate regression gate.
 //////////////////////////////////////////////////////////////////////////////////////
 // Build a CAIRouteLogic from a CAIRoute-produced CTask (reusing GetTask's waypoint->command translation +
 // formation/sync handling) and install it on the unit's logic slot. Returns nothing; a null/empty task or

@@ -322,6 +322,9 @@ if(S2_ENABLE_MISSION_MAP_PROBE)
         add_test(NAME NativeMissionRouteMapProbe
           COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
             "${_s2_mission_res_dir}" 810)
+        add_test(NAME NativeMissionUnitRouteMapProbe
+          COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
+            "${_s2_mission_res_dir}" 2400)
         add_test(NAME NativeMissionLargeMapProbe
           COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
             "${_s2_mission_res_dir}" 4526)
