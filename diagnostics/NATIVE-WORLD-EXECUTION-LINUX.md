@@ -34,3 +34,11 @@ build is only an auxiliary rules comparison; the shipped Steam EXE
 remains the behavioral reference. There is no in-game smoke for this
 batch because the current remote Windows D3D session cannot create a
 device even for an older known-good archive.
+
+A clean native-media Windows x64 archive from source commit `e1658b3`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-world-execution-20260926-01`.
+`Game.exe` SHA-256 is
+`1F80DEF92299F7F5F5FB21656FD9B026731469852F9C1F33C41D65D5A354FF79`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports.
