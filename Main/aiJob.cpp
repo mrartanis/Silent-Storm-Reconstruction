@@ -1,6 +1,19 @@
+#if defined(_WIN32)
 #include "stdafx.h"
-#include "..\Misc\HPTimer.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "../Misc/HPTimer.h"
 #include "aiJob.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static void JobDebugString(const char *s) { OutputDebugString(s); }
+#else
+static void JobDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 //
 namespace NAI
 {
@@ -52,10 +65,10 @@ CAIJobManager::CAIJobManager( float _fTime ) :
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAIJobManager::DebugOutput()
 {
-	OutputDebugString( "[AI JOB MANAGER] {\n" );
+	JobDebugString( "[AI JOB MANAGER] {\n" );
 	DebugTrace( "Job manager has %d jobs\n", jobs.size() );
 	DebugTrace( " %d are highest priority\n", nHighestPriJobs );
-	OutputDebugString( "[AI JOB MANAGER] }\n" );
+	JobDebugString( "[AI JOB MANAGER] }\n" );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAIJobManager::Add( IAIJob *pAIJob )

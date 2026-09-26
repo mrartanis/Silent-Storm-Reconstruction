@@ -13,13 +13,13 @@ namespace NRPG
 //
 namespace NDb
 {
-	enum EShootMode;
+	enum EShootMode : int;
 }
 //
 namespace NAI
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EPose;
+enum EPose : int;
 class IAIUnit;
 class CAILogRecord;
 struct SUnitPosition;

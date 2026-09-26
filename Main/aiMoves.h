@@ -12,7 +12,7 @@ namespace NAI
 struct SMove;
 struct SPathPlace;
 class IPathNetwork;
-enum ETransitionType;
+enum ETransitionType : int;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ETransitionType GetTransitionType( const IPathNetwork *pNet, const SPathPlace &src, const SPathPlace &dst );

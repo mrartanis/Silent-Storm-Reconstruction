@@ -353,6 +353,39 @@ target_include_directories(s2_game_ai_perception PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_ai_perception PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_perception PRIVATE -ffunction-sections -fdata-sections)
+# Original combat action, weapon, place-source, log and path-job units.
+add_library(s2_game_ai_actions STATIC
+  "${root}/Main/aiActions.cpp"
+  "${root}/Main/aiWeapon.cpp"
+  "${root}/Main/aiActionPlaceSource.cpp"
+  "${root}/Main/AILog.cpp"
+  "${root}/Main/aiInterval.cpp"
+  "${root}/Main/aiJob.cpp"
+  "${root}/Main/aiMultiMoves.cpp"
+  "${root}/Main/aiCombatLog.cpp"
+  "${root}/Main/aiMoves.cpp"
+  "${root}/Main/aiPath.cpp")
+target_include_directories(s2_game_ai_actions PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_ai_actions PUBLIC cxx_std_17)
+target_compile_options(s2_game_ai_actions PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_rpg_combat STATIC
+  "${root}/Main/RPGToHit.cpp"
+  "${root}/Main/RPGCritical.cpp")
+target_include_directories(s2_game_rpg_combat PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
+  "${root}/third_party/lifestudio/include")
+target_compile_features(s2_game_rpg_combat PUBLIC cxx_std_17)
+target_compile_options(s2_game_rpg_combat PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeAIIntervalTests
+  "${root}/diagnostics/NativeAIIntervalTests.cpp")
+target_link_libraries(NativeAIIntervalTests PRIVATE
+  s2_game_ai_actions s2_game_objects)
+target_link_options(NativeAIIntervalTests PRIVATE -Wl,--gc-sections)
+add_test(NAME NativeAIIntervalTests COMMAND NativeAIIntervalTests)
 add_executable(NativeAITraceSphereTests
   "${root}/diagnostics/NativeAITraceSphereTests.cpp")
 target_link_libraries(NativeAITraceSphereTests PRIVATE

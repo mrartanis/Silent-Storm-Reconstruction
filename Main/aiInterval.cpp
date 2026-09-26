@@ -1,5 +1,18 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiInterval.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static void IntervalDebugString(const char *s) { OutputDebugString(s); }
+#else
+static void IntervalDebugString(const char *s) { std::fputs(s, stderr); }
+#endif
 namespace NAI
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,7 +38,7 @@ void CalcResult(
 		if ( enter.size() != exit.size() )
 		{
 			//ASSERT( 0 );
-			OutputDebugString( "non closed AI model encountered\n" );
+			IntervalDebugString( "non closed AI model encountered\n" );
 		}
 	}
 	else
@@ -42,7 +55,7 @@ void CalcResult(
 		if ( enter.size() != exit.size() )
 		{
 			//ASSERT( 0 );
-			OutputDebugString( "trace does not support fragmented non closed models\n" );
+			IntervalDebugString( "trace does not support fragmented non closed models\n" );
 		}
 	}
 }
@@ -64,7 +77,7 @@ void FillIntersectionResults( vector<SInterval> *pRes,
 		// due to cheating with degenerate cases and computation errors this might happen
 		//ASSERT( enter[i].fT <= exit[i].fT );
 		if ( enter[i].fT > exit[i].fT )
-			OutputDebugString( "AI tracing, something went wrong\n" );
+			IntervalDebugString( "AI tracing, something went wrong\n" );
 		exit[i].fT = Max( enter[i].fT, exit[i].fT ); // this is it Beavis, correct wrong results so it seams less buggy
 		pRes->push_back( SInterval( _src, _nUserID, enter[i], exit[i] ) );
 	}

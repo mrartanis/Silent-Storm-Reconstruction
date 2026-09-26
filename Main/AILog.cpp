@@ -1,6 +1,12 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 
-#include "aiLog.h"
+#include "AILog.h"
 #include "aiUnit.h"
 #include "aiWeapon.h"
 #include "aiInventory.h"
@@ -15,8 +21,8 @@
 #include "RPGItem.h"
 #include "RPGItemSet.h"
 
-#include "..\DBFormat\DataConst.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataConst.h"
+#include "../DBFormat/DataRPG.h"
 
 namespace NAI
 {

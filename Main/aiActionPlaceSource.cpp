@@ -1,13 +1,19 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiActionBase.h"      // SPlaceWithAP, CAIAction (new substrate base - phase 3)
 #include "aiMoveAction.h"      // GetUnitPos, GetPos
 #include "aiPosition.h"        // IPathNetwork (complete), SPathPlace, SUnitPosition
 #include "wUnitServer.h"       // NWorld::CUnitServer (complete): GetWorld/GetPosition/GetActionAP
 #include "wMain.h"             // NWorld::CWorld: GetPathNetwork
-#include "rpgUnitMission.h"    // NRPG::IUnitMission::GetActionAP + NRPG::AC_POSE_WALK/CROUCH (pose AP costs)
+#include "RPGUnitMission.h"    // NRPG::IUnitMission::GetActionAP + NRPG::AC_POSE_WALK/CROUCH (pose AP costs)
 #include "aiPath.h"            // NAI::CPath, NWorld::FindPath
 #include "aiMultiMoves.h"      // NAI::CMultiMovesTable + CPathPlaceTable::GetCost (reachable-area sweep)
 #include "aiRouteMisc.h"       // NAI::GetNearestPlaces (special-position neighbourhood search @0x8e980)
@@ -18,7 +24,7 @@
 #include "aiMisc.h"            // NAI::GetAPForMove @0x74520 (price the held-spot move at CROUCH)
 #include "aiInventory.h"       // CAIInventory::GetFirstFireArms
 #include "aiWeapon.h"          // CAIFireArmsWeapon
-#include "..\DBFormat\DataMap.h" // NDb::DS_ALLY
+#include "../DBFormat/DataMap.h" // NDb::DS_ALLY
 //
 #include "aiActionPlaceSource.h"
 //

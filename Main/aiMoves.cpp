@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiMoves.h"
 #include "aiGrid.h"
 #include "Grid.h"
-#include "rpgUnitInfo.h"
+#include "RPGUnitInfo.h"
 namespace NAI
 {
 //
@@ -240,7 +246,11 @@ void DebugForEach( const SPathPlace	&src, const SMove &m, CPathNetwork *pNet )
 	float fH1 = pNet->GetCP( src ).z;
 	float fH2 = pNet->GetCP( m.dest ).z;
 	if ( fH1 < fH2 - 3 || fH1 > fH2 + 3 )
+	#if defined(_WIN32)
 		__debugbreak();
+	#else
+		__builtin_trap();
+	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline static bool IsGoodPt( const NAI::SPathPlace &p, CPathNetwork *pNet )

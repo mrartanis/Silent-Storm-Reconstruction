@@ -1,14 +1,20 @@
+#if defined(_WIN32)
 #include "stdafx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 //
 #include "aiWeapon.h"
 #include "aiUnit.h"
 //
-#include "rpgUnitMission.h"
-#include "rpgItemSet.h"
-#include "rpgToHit.h"
-#include "rpgUnit.h"
+#include "RPGUnitMission.h"
+#include "RPGItemSet.h"
+#include "RPGToHit.h"
+#include "RPGUnit.h"
 //
 #include "wUnitServer.h"
 //
@@ -158,11 +164,11 @@ bool CAIFireArmsWeaponBase::IsWorseThen( NRPG::CWeaponItem *pCandidate ) const
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #define GET_WEAPON_OPERATION_AP( Name, RPGName )									\
-int CAIFireArmsWeapon::##Name() const															\
+int CAIFireArmsWeapon::Name() const															\
 {																																	\
 	ASSERT( IsValid( pOwner ) );																		\
 	if ( IsValid( pOwner ) )																				\
-		return pOwner->GetRPGUnit()->##RPGName( GetItem() );					\
+		return pOwner->GetRPGUnit()->RPGName( GetItem() );					\
 	else																														\
 		return N_MAX_AP;																							\
 }

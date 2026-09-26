@@ -1,9 +1,15 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 //
-#include "..\DBFormat\DataRPG.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiPosition.h"
 #include "aiUnit.h"
-#include "aiState.h"
+#include "aistate.h"
 #include "aiNearestPosition.h" // NAI::GetNearestPosition (TerrorPK rampage target)
 #include "aiMoveAction.h"      // NAI::GetUnitPos
 #include "aiInventory.h"
@@ -13,11 +19,11 @@
 #include "wMain.h"
 #include "wUnitServer.h"
 #include "wUnitCommands.h"
-#include "rpgItem.h"
+#include "RPGItem.h"
 #include "RPGItemSet.h"       // full NRPG::CGrenadeItem / CWeaponItem defs (the IGrenadeItem/IWeaponItem
                               // bases must be VISIBLE here, else the item->interface upcast silently fails)
-#include "rpgUnitMission.h"
-#include "rpgUnitInfo.h"
+#include "RPGUnitMission.h"
+#include "RPGUnitInfo.h"
 #include "RPGUnit.h"          // NRPG::CUnit::Skills (suit HP via ST_VP), CDynamicSkill
 //
 #include "aiActions.h"

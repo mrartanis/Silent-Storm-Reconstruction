@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "aiPath.h"
 #include "aiMoves.h"
 #include "aiSmoothPath.h"   // NAI::SmoothenPath -- retail corner-cut post-pass
@@ -7,6 +13,13 @@
 #include "aiMovesEnumerator.h"
 #include "aiPathTable.h"
 #include "aiLocker.h"
+#if !defined(_WIN32)
+#include <cstdio>
+static void OutputDebugString( const char *message )
+{
+	std::fputs( message, stderr );
+}
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAI
 {
