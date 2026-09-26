@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wUnitMove.h"
 #include "wUnitServer.h"
 #include "wUnitExec.h"
@@ -7,20 +13,27 @@
 #include "RPGItemSet.h" // CRAP
 #include "wUnitAttack.h"
 #include "wObject.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\misc\RandomGen.h"
-#include "..\MiscDll\LogStream.h"
+#include "../DBFormat/DataRPG.h"
+#include "../Misc/RandomGen.h"
+#include "../MiscDll/LogStream.h"
 #include "wAckBase.h"
 #include "RPGCritical.h"
 #include "time.h"
 #include "RPGGame.h"
 #include "aiPosition.h"
-#include "RPGGlobal.h"
+#include "rpgGlobal.h"
 #include "wUnitCommands.h"
 #include "wUnitAttackExec.h"	// CExecNotHeroWantsToTalk (corpse-carrier talk dispatch mirror)
 #include "rpgCheatConstants.h"
 
 #include "wUnitStates.h"
+#include <cstdarg>
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+#endif
 
 namespace NWorld
 {
@@ -636,7 +649,7 @@ void CUnitStateHealer::ProcessCritical( NDb::ECritical eCA )
 		case NDb::C_ACCIDENTAL_SHOT:
 			// deal small damage ( 4 d4 )
 			for ( int i = 0; i < 4; ++i)
-				pTarget->GetUnitRPG()->MakeDirectDamage( random.Get( 1, 4 ) );
+				pTarget->GetUnitRPG()->MakeDirectDamage( GameRandom().Get( 1, 4 ) );
 			pUS->SetState( new CUnitStateNormal( pUS ) );
 			break;
 		default:

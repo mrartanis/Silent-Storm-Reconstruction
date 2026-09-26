@@ -1,15 +1,21 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wDumbUnit.h"
 #include "wUnitServer.h"     // NWorld::CUnitServer (Die's retail server arg -- cross-cast from this)
 #include "wMain.h"
 #include "wUICommands.h"     // BUG 5: NWorld::CUICmdUnitCamera (death-beauty auto-focus, ProcessAttack)
-#include "..\DBFormat\DataFormat.h"
-#include "..\DBFormat\DataGeometry.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataGeometry.h"
 #include "RPGGame.h"
 #include "RPGItem.h"
 #include "RPGUnit.h"
 #include "RPGUnitMission.h"
-#include "..\misc\RandomGen.h"
+#include "../Misc/RandomGen.h"
 #include "GAnimation.h"
 #include "InventoryUnit.h"
 #include "wMisc.h"
@@ -17,21 +23,28 @@
 #include "wAckBase.h"
 #include "aiCollider.h"
 #include "aiInterval.h"
-#include "..\MiscDll\LogStream.h"
-#include "..\DBFormat\DataTerrain.h"
-#include "..\DBFormat\DataAI.h"
-#include "..\DBFormat\DataTerrain.h"
-#include "..\DBFormat\DataRPG.h"
-#include "..\DBFormat\DataSound.h"
+#include "../MiscDll/LogStream.h"
+#include "../DBFormat/DataTerrain.h"
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataTerrain.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataSound.h"
 #include "aiMap.h"
 #include "aiNearestPosition.h"   // NAI::GetNearestPosition (corpse logical-place re-snap @0x350960)
 #include "aiLocker.h"
 #include "GSceneUtils.h"
-#include "..\MiscDll\Commands.h"
-#include "..\Misc\EventsBase.h"
+#include "../MiscDll/Commands.h"
+#include "../Misc/EventsBase.h"
 #include "eventUnit.h"
 #include "RPGCritical.h" // for bleeding only
 #include "wDecal.h"
+#include <cstdio>
+
+#if defined(_WIN32)
+static CRandomGenerator &GameRandom() { return random; }
+#else
+static CRandomGenerator &GameRandom() { return s2_game_random; }
+#endif
 
 namespace NWorld
 {
@@ -465,7 +478,7 @@ void CDumbUnitServer::DropItems( bool bDropHands, bool bDropCap, bool bDropBackP
 		for ( int nSlot = 0; nSlot != NDb::N_SLOTS; ++nSlot )
 			if ( TearOffItem( &item, (NDb::ESlot)nSlot ) )
 			{
-				CVec3 vInitial( random.GetFloat( -0.3f, 0.3f ), random.GetFloat( -0.3f, 0.3f ), 2 );
+				CVec3 vInitial( GameRandom().GetFloat( -0.3f, 0.3f ), GameRandom().GetFloat( -0.3f, 0.3f ), 2 );
 				LaunchItem( pWorld, item, vInitial, true, (CObjectBase*)this, nFloor );   // retail @0x7504f3
 			}
 	}
@@ -484,7 +497,7 @@ void CDumbUnitServer::DropItems( bool bDropHands, bool bDropCap, bool bDropBackP
 				item.pModel = item.pItem->GetDBItem()->pModel->CreateModel( &rnd );
 				GetBonePos( &item.ptCenter, &item.q, pszBoneName );
 				pRPG->GetInventory()->Take( item.pItem );
-				CVec3 vInitial( random.GetFloat( -0.3f, 0.3f ), random.GetFloat( -0.3f, 0.3f ), 2 );
+				CVec3 vInitial( GameRandom().GetFloat( -0.3f, 0.3f ), GameRandom().GetFloat( -0.3f, 0.3f ), 2 );
 				LaunchItem( pWorld, item, vInitial, true, (CObjectBase*)this, nFloor );   // retail @0x750688
 			}
 		}
@@ -978,7 +991,11 @@ void CDumbUnitServer::PlaceOnPassablePlace()
 		}
 	}
 	ASSERT( 0 ); // no suitable place was found
+#if defined(_WIN32)
 	OutputDebugString( "impossible to place unit correctly\n" );
+#else
+	std::fputs( "impossible to place unit correctly\n", stderr );
+#endif
 	bLocksTwoPlaces = false;
 	pNet->Lock( this, position.pos.p );
 }
@@ -1013,7 +1030,7 @@ C3DSound* CDumbUnitServer::CreateFlash( bool bLeft, bool bFirstBullet )
 	ASSERT( bTest );
 	if ( pWeapon->pShotEffect )
 	{
-		CQuat rndX( random.GetFloat( - FP_PI / 8, FP_PI / 8 ), CVec3(1,0,0) );
+		CQuat rndX( GameRandom().GetFloat( - FP_PI / 8, FP_PI / 8 ), CVec3(1,0,0) );
 		SRand rnd;
 		AttachMiscObject( CreateDParticles( barrel.pos, barrel.rot * rndX, pWeapon->pShotEffect->GetEffect( &rnd ), GetFloor() ) );
 	}

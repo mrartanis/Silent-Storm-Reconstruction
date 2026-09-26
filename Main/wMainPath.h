@@ -9,7 +9,7 @@
 namespace NAI
 {
 	class CMultiMovesTable;
-	enum EFindPathParams;
+	enum EFindPathParams : int;
 }
 namespace NWorld
 {

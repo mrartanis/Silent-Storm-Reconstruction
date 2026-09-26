@@ -10,7 +10,7 @@ namespace NAI
 {
 	class CPath;
 	struct SPathPlace;
-	enum EFindPathParams;
+	enum EFindPathParams : int;
 }
 namespace NWorld
 {

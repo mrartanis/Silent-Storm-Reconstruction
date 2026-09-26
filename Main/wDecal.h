@@ -4,7 +4,7 @@
 #include "wInterfaceVisitors.h"
 #include "Sync.h"
 #include "GDecalInfo.h"
-#include "..\Misc\EventsBase.h"
+#include "../Misc/EventsBase.h"
 
 /*namespace NDb
 {

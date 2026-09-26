@@ -15,7 +15,7 @@ namespace NDb
 namespace NAI
 {
 	class IAIMap;
-	enum EFindPathParams;
+	enum EFindPathParams : int;
 	class CPath;
 	struct SUnitPosition;
 	struct SPathPlace;

@@ -123,7 +123,7 @@ private:
 	NAnimation::CAnimator* PutOnTerrain( NAnimation::CAnimator *pAnim );
 	void Move( const NAI::SUnitPosition &prevPos, 
 		const NAI::SUnitPosition &cmdPos, const NAI::SUnitPosition &nextPos, bool bEnd, bool bInterGrid );
-	void StandStill( CVec2 &pos, float fAngle, bool bNeedStrafe = false );
+	void StandStill( CVec2 pos, float fAngle, bool bNeedStrafe = false );
 	void Stand( const NAI::SUnitPosition &cmdPos, bool bNeedStrafe = false );
 	void HealOn( const NAI::SUnitPosition &cmdPos, const char *pszParams );
 	void IdleOn( const NAI::SUnitPosition &cmdPos );

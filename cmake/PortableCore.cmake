@@ -269,6 +269,26 @@ target_include_directories(s2_game_unit_server PRIVATE
   "${root}/ADOImport" "${root}/MiscDll")
 target_compile_features(s2_game_unit_server PUBLIC cxx_std_17)
 target_compile_options(s2_game_unit_server PRIVATE -ffunction-sections -fdata-sections)
+# The adjacent original unit base and command-state implementations. These
+# compile on Linux, but still require the live world graph to link and run.
+add_library(s2_game_dumb_unit STATIC "${root}/Main/wDumbUnit.cpp")
+target_include_directories(s2_game_dumb_unit PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_dumb_unit PUBLIC cxx_std_17)
+target_compile_options(s2_game_dumb_unit PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_unit_states STATIC "${root}/Main/wUnitStates.cpp")
+target_include_directories(s2_game_unit_states PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_unit_states PUBLIC cxx_std_17)
+target_compile_options(s2_game_unit_states PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_unit_animator STATIC "${root}/Main/wAnimation.cpp")
+target_include_directories(s2_game_unit_animator PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
+  "${root}/ADOImport" "${root}/MiscDll")
+target_compile_features(s2_game_unit_animator PUBLIC cxx_std_17)
+target_compile_options(s2_game_unit_animator PRIVATE -ffunction-sections -fdata-sections)
 # Actual world-to-unit command wrapper used by the AI command queue.
 add_library(s2_game_command_bridge STATIC "${root}/Main/wCommandBridge.cpp")
 target_include_directories(s2_game_command_bridge PRIVATE

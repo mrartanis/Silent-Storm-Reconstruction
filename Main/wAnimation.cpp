@@ -1,10 +1,16 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "wAnimation.h"
 #include "wObject.h"
-#include "..\Misc\2DArray.h"
-#include "..\Misc\randomGen.h"
-#include "..\DBFormat\DataAnimation.h"
-#include "..\DBFormat\DataRPG.h"
+#include "../Misc/2Darray.h"
+#include "../Misc/RandomGen.h"
+#include "../DBFormat/DataAnimation.h"
+#include "../DBFormat/DataRPG.h"
 #include "aiMap.h"
 #include "aiHeight.h"
 #include "aiGridSet.h"
@@ -18,6 +24,7 @@
 #include "wTSFlags.h"
 #include "wMain.h"
 #include "GSceneUtils.h"
+#include <cstdio>
 
 extern vector<SSphere> sphereParticles;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,7 +324,7 @@ bool CUnitAnimator::GetBarrelPos( NDb::CGeometry *pWeaponGeometry, NAnimation::S
 		{
 			CPtr<NAnimation::CAddBoneLocators> pLocators =
 				new NAnimation::CAddBoneLocators( nIndex, pWeaponGeometry );
-			CDGPtr< CFuncBase<NAnimation::SSkeletonPose> > pLocatorsDG = pLocators;
+			CDGPtr< CFuncBase<NAnimation::SSkeletonPose> > pLocatorsDG = pLocators.GetPtr();
 			pLocators->pAnimation = pAnimator;
 			pLocatorsDG.Refresh();
 			nIndex = pLocators->pLocators->GetValue()->GetBoneIndex( "Barrel" );
@@ -351,7 +358,7 @@ void CUnitAnimator::DropStep()
 		tSteps.erase( tSteps.begin() );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void CUnitAnimator::StandStill( CVec2 &pos, float fAngle, bool bNeedStrafe )
+void CUnitAnimator::StandStill( CVec2 pos, float fAngle, bool bNeedStrafe )
 {
 	CPtr<NAnimation::CAnimation> pAnim;
 	if ( bNeedStrafe )
@@ -1091,7 +1098,7 @@ void CUnitAnimator::Attack( const NAI::SUnitPosition &cmdPos, const CRay &ray, b
 	tLabel1 = pAtAnim->GetTimeLabel1();
 	pAtAnim->SetStand( tEnd + tTransit, cmdPos.GetCPNoHeight(), cmdPos.GetDirection() );
 
-	CPtr<NAnimation::CAnimator> pVertAnim = pAtAnim;
+	CPtr<NAnimation::CAnimator> pVertAnim = pAtAnim.GetPtr();
 	CPtr<NAnimation::CAnimation> pUpAnim, pSuperUpAnim;
 	if ( fVertAngle < 0 )
 	{
@@ -1445,7 +1452,11 @@ void CUnitAnimator::ForcedMove( const NAI::SUnitPosition &cmdPos )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitAnimator::Fall( const NAI::SUnitPosition &cmdPos, float fPrevHeight )
 {
+#if defined(_WIN32)
 	OutputDebugString("Forced fall began...\n");
+#else
+	std::fputs("Forced fall began...\n", stderr);
+#endif
 	pTerrainFunc->Move( cmdPos );
 	float fHeightDiff = fPrevHeight - cmdPos.GetCP().z;
 	if ( fHeightDiff < 0 )
@@ -1473,7 +1484,11 @@ void CUnitAnimator::Fall( const NAI::SUnitPosition &cmdPos, float fPrevHeight )
 		return;
 	}
 
+#if defined(_WIN32)
 	OutputDebugString("Forced fall found appropriate animation...\n");
+#else
+	std::fputs("Forced fall found appropriate animation...\n", stderr);
+#endif
 	
 	STime tFall = pBegin->GetTimeLabel1();
 	STime tFallInterval = tFall - tEnd;
