@@ -29,3 +29,12 @@ light groups, FaceGen head construction, mission UI commands, and
 window Lua methods are also unresolved. No fake objects or linker
 bypasses were added. Full game saves and live Linux missions remain
 unverified.
+
+A clean native-media Windows x64 archive from source commit `32e4d91`
+was built with 16 jobs at
+`G:\SS\lab\builds\stage2-scene-serialization-20260926-01`.
+`Game.exe` SHA-256 is
+`A8D7484854A6AD55BCF90782C9590FA24A9A12CF3C01CAD955F3D9A2BC97F7A2`.
+The archive has no `fmod.dll`, and `Game.exe` has no `fmod.dll` or
+`FSOUND_` imports. No in-game smoke is claimed from the current remote
+D3D session.
