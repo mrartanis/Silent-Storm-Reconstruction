@@ -186,6 +186,12 @@ shared cache ID 108: its save/load registration was still owned by the
 renderer-dependent `GBuilding.cpp`. The existing headless `BuildingInfo.cpp`
 now registers the same retail class ID only on non-Windows builds. The
 production Windows registration is unchanged.
+The clean Windows x64 native-media archive from source commit `be79d00` is
+`G:\SS\lab\builds\stage2-party-shot-file-20260927-01`; its `Game.exe`
+SHA-256 is
+`282EA904AAC5E75EAC7443F462418827C3A7DE5A9D2F37F84B60144876672273`.
+The archive contains no `fmod.dll`. No live-game smoke of this specific
+archive is claimed.
 
 This deeper serialization exposed previously hidden uninitialized state in
 `CUnitAnimator::bIdle`, door chest/transparency flags and empty trap data,
@@ -201,7 +207,8 @@ with `Game.exe` built, Linux x86-64 110/110, and ARM64/QEMU 110/110. Both
 Linux suites used ASan/UBSan with `halt_on_error=1`; the ARM64 suite took
 about 279 seconds with eight concurrent tests. These counts do not imply
 a complete Linux game executable or a live Steam parity run.
-The clean Windows x64 native-media archive from source commit `0dae7ca` is
+The preceding memory-stream gate's clean Windows x64 native-media archive
+from source commit `0dae7ca` is
 `G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`
 SHA-256 is
 `F7CEDA604823F4D43D97DA623367D3EC7EF7D605A2730890B2FDE854600A6C05`.
