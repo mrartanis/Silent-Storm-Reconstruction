@@ -662,3 +662,14 @@ build configured against a game directory with `res/Waypoints.res`. The
 same `RunScenarioRootWorlds.cmake` used above accepts `-DPARTY_MODE=ON`
 and the nine disjoint variant ranges for direct headless Linux/ARM64
 diagnosis when the resource files live at the scratch root.
+
+The clean Windows x64 native-media archive from source commit `ed2215e`
+is `G:\SS\lab\builds\stage2-party-root-worlds-20260927-01`.
+`Game.exe` SHA-256 is
+`2D798C053FE1EC8C650A5AB8BB9910951946700B2EF030EC97469002EF337473`;
+the archive contains no `fmod.dll`. Its isolated run
+`stage2-party-root-worlds-smoke-20260927-01` reached the rendered,
+responsive main menu (`evidence/menu.png`); the input helper accepted
+cursor movement, and the window then closed normally with no crash dump.
+The run's executable hash matched the archive. This is a boot/menu
+smoke test, not an in-game tactical or audio-parity result.
