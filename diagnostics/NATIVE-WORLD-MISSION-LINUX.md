@@ -746,3 +746,12 @@ pointer blob and are not asserted compatible with the new structured field.
 This is an own-save/own-load kernel issue for stage 2, not a comparison of
 game decisions with Steam (stage 7). Steam remains available as an oracle
 for specific uncertain contracts.
+
+A clean Windows x64 native-media archive of commit `5a01d3a` was built as
+`G:\SS\lab\builds\stage2-party-save-20260928-01` with 16 build jobs. Its
+`Game.exe` SHA-256 is
+`C69AA587E1B7F8BEF8AEE5BE82DAEB8AF5795FE8424FED68069CF1C55062D6BC`;
+the archive has no `fmod.dll`. An isolated no-intro LabRun
+`stage2-party-save-smoke-20260928-01` loaded the 155 portable DB tables,
+rendered the main menu, and exited through the window close request without
+a crash dump. This is a launch smoke, not mission or audio validation.
