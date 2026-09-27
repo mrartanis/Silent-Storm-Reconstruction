@@ -104,36 +104,35 @@ aim-and-hold branch for the matching executor flag, but
 through the constructor. Ordinary commands still default to `false`.
 This corrects the command-to-executor state transfer; the headless gate still
 does not observe a completed aim animation or prove visual/Steam parity.
-The next headless observation found a second, independent fault: in map 810
-`pers1` completed the scripted prepare action, but its magazine fell from 32
-to 31 rounds. `CExecShootUnit::SelectRay` built its attack portion with
-`bSpendAmmo=true` even for an aim-only command. It now passes false for that
-case. `NativeWorldMission810PartyUIAck` checks that the script-created queue
-finishes, the hero's HP remains unchanged, and the shooter's ammunition does
-not decrease; on Windows x64 the observed values are HP 137 to 137 and ammo
-32 to 32. This establishes a completed, non-firing prepare action in the
-selected headless scenario, but not visible aim animation or Steam parity.
-With this ammunition gate, Windows x64 rebuilt `Game.exe` and passed 131/131
-CTest; Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
-`halt_on_error=1`. These are build/regression gates, not a live-game shot
-comparison with the Steam executable.
-The clean native-media x64 archive for this ammunition fix is
+The next headless observation found that map 810's scripted prepare action
+completes with HP 137 to 137, AP 46 to 46, ammo 32 to 31, and one
+`CEventOnAttackAtUnit`. An initial change suppressed the ammo consumption;
+Windows x64 passed 131/131 CTest and Linux x86-64/ARM64 each passed 108/108
+under ASan/UBSan. Those tests did **not** prove Steam parity. The resulting
+archive is retained only as a record of the rejected experiment:
 `G:\SS\lab\builds\stage2-aim-no-ammo-20260927-01` from commit `e892804`;
 `Game.exe` SHA-256 is
 `B800C1CF07A70A18ADBE5D2AB064EE29D6EA926CB61383FB795BB4CA8CD556BA`.
-There is no `fmod.dll`. Live-game smoke of this archive is not claimed.
-An additional Windows x64 observation of the same headless action shows AP
-46 to 46 and one `CEventOnAttackAtUnit` despite no consumed round. The event
-comes from the current `CExecShoot::OnLabel` -> `CheckShotResult` path when
-aim-only mode ends. Whether the original Steam executable makes the same
-notification has not yet been established, so this is recorded as a parity
-question, not silently removed as a presumed bug. The probe now reports the
-AP and event count for the Linux/ARM64 comparison as well.
-The selected test reports the same AP 46 to 46 and one attack event on Linux
-x86-64 and ARM64/QEMU under ASan/UBSan. Static inspection of the unchanged
-Steam executable confirms that its `CheckShotResult` sends `OnShotAtUnit`
-and the attack event, but does not by itself prove that Steam's aim-only path
-enters `CheckShotResult`. Direct behavioral comparison remains open.
+There is no `fmod.dll`, but this build diverges from the Steam executable's
+aim-only path and must not be used as the parity reference.
+
+Static inspection of the unchanged Steam `game.exe` (SHA-256
+`4f417593a9f73e2bfde12d83cdbd694ae47eecb92812140d67b8b343e4a95705`)
+resolved that question. At VA `0x7a8d60`, `CExecShoot::Start` tests the
+aim-only byte at `+0x115` and still calls virtual `SelectRay`. The unit
+implementation at `0x7a5480` pushes literal `1` as `bSpendAmmo` into
+`CreateAttack` (`0x7a4a00`), even on that aim-only path. At `0x7a9610`,
+`OnLabel` skips arming a bullet for aim-only, then the cancellation branch
+calls virtual `CheckShotResult`; the unit implementation at `0x7a9880`
+sends `OnShotAtUnit` and `CEventOnAttackAtUnit`. Thus the round consumption
+and notification are original release behavior, not port bugs. The
+`bSpendAmmo=false` experiment was reverted; the regression now checks the
+selected original quirk. This static path proof does not replace a live
+Steam mission run or visual aim-animation comparison.
+With the retail path restored, Windows x64 rebuilt `Game.exe` and passed
+131/131 CTest; Linux x86-64 and ARM64/QEMU each passed 108/108 under
+ASan/UBSan with `halt_on_error=1`. A fresh clean x64 archive is recorded
+below after the corrective source commit.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.

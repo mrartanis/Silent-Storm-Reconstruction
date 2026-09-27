@@ -175,6 +175,7 @@ int main(int argc, char** argv) {
         hero->GetInfo(&info);
         auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
         const int shooterAmmoAfter = weapon ? weapon->GetAmmoQuantity() : -1;
+        const int shooterAPAfter = shooter->GetAP();
         std::string finalName;
         const bool finalExecutor = shooter && shooter->GetCurrentCommandName(&finalName);
         std::printf("shooter final command=%d executor=%s\n",
@@ -182,15 +183,18 @@ int main(int argc, char** argv) {
           finalExecutor ? finalName.c_str() : "none");
         std::printf("hero HP after scripted aim: %d\n", info.nHP);
         std::printf("shooter ammo after scripted aim: %d\n", shooterAmmoAfter);
-        std::printf("shooter AP after scripted aim: %d\n", shooter->GetAP());
+        std::printf("shooter AP after scripted aim: %d\n", shooterAPAfter);
         std::printf("attack events during scripted aim: %d\n", attackEvents->count);
         bool prepared = false;
         for (const auto& name : observedCommands)
           prepared |= name.find("CExecQueue") != std::string::npos;
         if (!prepared) return 19;
-        // UnitShootPrepare must finish its aim without firing or consuming a round.
+        // Steam's aim-only path consumes one round during SelectRay and emits
+        // the attack notification on completion, but does not spend AP or damage
+        // the target in this selected scripted scenario.
         if (finalExecutor || shooter->HasCommand() ||
-            info.nHP != heroHPBefore || shooterAmmoAfter != shooterAmmoBefore)
+            info.nHP != heroHPBefore || shooterAmmoAfter != shooterAmmoBefore - 1 ||
+            shooterAPAfter != shooterAPBefore || attackEvents->count != 1)
           return 23;
       }
       if (variant == 810 && acknowledged == 0) return 15;
