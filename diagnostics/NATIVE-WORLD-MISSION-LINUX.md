@@ -346,6 +346,13 @@ covered by this diagnostic.
 After adding this gate, the full matrix passed on 2026-09-27: Windows x64
 136/136 (with `Game.exe` built), Linux x86-64 113/113 and Linux ARM64/QEMU
 113/113 under ASan/UBSan. The ARM64 full run took about 302 seconds.
+The stricter live-cell-loss assertion subsequently passed on Windows x64,
+Linux x86-64 and ARM64/QEMU (targeted test; ARM64 took 98 seconds).
+The clean native-media x64 archive from `46bf268` is
+`G:\SS\lab\builds\stage2-grenade-wave-20260927-01`; its `Game.exe`
+SHA-256 is `4DC33EE20E860259BA53D08183F2F450297C3307892C7A67C320803D5FCA484D`.
+It contains no `fmod.dll`. A live-game smoke of this specific archive is
+not claimed.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
