@@ -265,6 +265,11 @@ After these changes, Windows x64 built `Game.exe` and passed the full 134/134
 CTest suite; Linux x86-64 and ARM64/QEMU each passed 111/111 with ASan/UBSan
 and `halt_on_error=1`. The Windows slot test also passed five consecutive
 repetitions. The ARM64 full suite took 286 seconds.
+The clean Windows x64 native-media archive from source commit `eab7fa7` is
+`G:\SS\lab\builds\stage2-ai-resume-20260927-01`; its `Game.exe` SHA-256 is
+`3EC1BC10B54C0E117D4B826DC5B47C348CA37DDA3C24847B57DDB439A5D103A8`.
+It contains no `fmod.dll`. A separate live-game smoke of this particular
+archive is not claimed.
 The preceding memory-stream gate's clean Windows x64 native-media archive
 from source commit `0dae7ca` is
 `G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`
