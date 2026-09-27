@@ -11,19 +11,24 @@
 #include "../DBFormat/DataScript.h"
 #include "../Main/GSceneUtils.h"
 #include "../Main/A5Script.h"
+#include "../Main/aiCommander.h"
 #include "../Main/rpgGlobal.h"
+#include "../Main/RPGUnit.h"
 #include "../Main/wMain.h"
 #include "../Main/wUICommands.h"
+#include "../Main/wUnitServer.h"
 #include "../Misc/RandomGen.h"
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <set>
 
 int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
-  if (argc != 3 && !mission && !missionUIAck) return 2;
+  const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
+  if (argc != 3 && !mission && !missionUIAck && !missionPartyUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
   NDatabase::Serialize(database, CStructureSaver::READ);
@@ -44,8 +49,10 @@ int main(int argc, char** argv) {
     ++scriptCount;
   }
   if (!scriptCount) return 5;
-  CObj<NRPG::CGlobalGame> game = (mission || missionUIAck)
+  CObj<NRPG::CGlobalGame> game = (mission || missionUIAck || missionPartyUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
+  if (missionPartyUIAck)
+    game->players.push_back(NRPG::CreateGlobalPlayer());
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
   world->ExecuteOwnScript();
@@ -58,7 +65,7 @@ int main(int argc, char** argv) {
       return 7;
   }
   std::printf("world initialized with %d autoload scripts\n", scriptCount);
-  if (mission || missionUIAck) {
+  if (mission || missionUIAck || missionPartyUIAck) {
     const int variant = std::atoi(argv[4]);
     CObj<NWorld::CPostWorldCreateInfo> post;
     world->CreateRandom(variant, std::vector<std::string>(), true,
@@ -72,13 +79,26 @@ int main(int argc, char** argv) {
       if (post->scripts.size() != 1) return 10;
       world->SetTimeOfDay(NWorld::TOD_NIGHT);
     }
+    if (missionPartyUIAck) {
+      // CPlayerTracker does this between CreateRandom and RunPostInit in the
+      // real mission. Its sequence commander also owns human-unit AI wrappers.
+      CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);
+      CDynamicCast<NWorld::CPlayer> player(world->AddPlayer(
+        L"Headless party", game->players.front(), commander));
+      if (!player || !game->GetHero()) return 17;
+      commander->SetPlayer(player);
+      if (!world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID()))
+        return 18;
+      std::printf("headless hero deployed\n");
+    }
     world->RunPostInit(post);
     if (variant == 810 && world->GetTimeOfDay() != NWorld::TOD_DAY)
       return 11; // The authored SetTimeOfDay(DAY) command actually ran.
     if (!NScript::luaLastError.szError.empty()) return 12;
     const auto before = world->GetTime()->GetValue();
     int acknowledged = 0;
-    if (missionUIAck) {
+    std::set<std::string> observedCommands;
+    if (missionUIAck || missionPartyUIAck) {
       // Diagnostic only: the real mission UI consumes these commands and posts
       // CCmdInterfaceEvent on completion. We only acknowledge their IDs; this
       // does not simulate camera motion, unit actions, rendering, or input.
@@ -92,9 +112,23 @@ int main(int argc, char** argv) {
             ++acknowledged;
           }
         }
+        if (variant == 810) {
+          auto* shooter = world->GetUnitServer("pers1");
+          std::string name;
+          if (shooter && shooter->GetCurrentCommandName(&name))
+            observedCommands.insert(name);
+        }
         if (!NScript::luaLastError.szError.empty()) return 14;
       }
       std::printf("headless UI IDs acknowledged: %d\n", acknowledged);
+      for (const auto& name : observedCommands)
+        std::printf("observed shooter executor: %s\n", name.c_str());
+      if (missionPartyUIAck) {
+        bool prepared = false;
+        for (const auto& name : observedCommands)
+          prepared |= name.find("CExecQueue") != std::string::npos;
+        if (!prepared) return 19;
+      }
       if (variant == 810 && acknowledged == 0) return 15;
       if (variant == 810) {
         Script::AutoBlock stack(*world->GetOwnScript());

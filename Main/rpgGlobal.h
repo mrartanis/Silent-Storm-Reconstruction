@@ -59,7 +59,8 @@ struct SUnitDeployData
 	bool bCorpseEnemy;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nPassageObjectID); f.Add(3,&pCorpse); f.Add(4,&bCorpseAlive); f.Add(5,&bCorpseEnemy); return 0; }
 	//
-	SUnitDeployData(): nPassageObjectID( 0 ), pCorpse( 0 ) {}
+	SUnitDeployData(): nPassageObjectID( 0 ), pCorpse( 0 ),
+		bCorpseAlive( false ), bCorpseEnemy( false ) {}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SDeployData

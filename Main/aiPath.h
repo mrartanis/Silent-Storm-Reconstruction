@@ -39,7 +39,7 @@ public:
 	vector<SPathPlace> points;
 	CPtr<IPathNetwork> pNet;
 	vector<SPathAction> actions;
-	bool bStrafePath;
+	bool bStrafePath = false;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&points); f.Add(3,&pNet); f.Add(4,&actions); f.Add(5,&bStrafePath); return 0; }
 	
 	void DebugOutput();

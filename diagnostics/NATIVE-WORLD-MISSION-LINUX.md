@@ -1,7 +1,7 @@
 # Native mission creation and post-init (stage 2)
 
-`NativeWorldInitProbe` has optional `--mission <variant>` and
-`--mission-ui-ack <variant>` paths. It loads the
+`NativeWorldInitProbe` has optional `--mission <variant>`,
+`--mission-ui-ack <variant>`, and `--mission-party-ui-ack <variant>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -9,8 +9,9 @@ building map with no units or attached script. Variant 810 adds two authored
 units and one 1,016-byte attached Lua script; its startup also runs the
 world's first-segment warm-up, vision, physics, and path-colouring jobs.
 
-The tests are `NativeWorldMission218`, `NativeWorldMission810`, and
-`NativeWorldMission810UIAck` in both the Windows and portable CMake builds.
+The tests are `NativeWorldMission218`, `NativeWorldMission810`,
+`NativeWorldMission810UIAck`, and `NativeWorldMission810PartyUIAck` in both
+the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
 `S2_SCRIPT_CORPUS_DIR`:
@@ -36,6 +37,11 @@ With the UI-ack gate added on 2026-09-27, the complete matrix passed:
 Windows x64 130/130, Linux x86-64 107/107, and Linux ARM64/QEMU 107/107
 under the same sanitizer settings. This builds only the diagnostic probe on
 Linux, not a Linux game executable.
+With the deployed-party gate and two UB fixes, the complete matrix passed
+again: Windows x64 131/131 (and `Game.exe` built), Linux x86-64 108/108,
+Linux ARM64/QEMU 108/108 under ASan/UBSan with the same halt-on-error options.
+The ARM64 suite took about 196 seconds, with the party mission probe taking
+about 94 seconds. This remains a headless diagnostic Linux build.
 
 The first live variant-810 run exposed three previously dormant x64/Linux
 undefined behaviors, now covered by the mission gate and local regressions:
@@ -68,6 +74,26 @@ waits, so this proves the Lua thread advanced beyond those waits, rather than
 only that the queue was drained. The probe uses `Script::AutoBlock` for this
 global lookup so it does not damage the active Lua stack. It does not execute
 the visual side of a UI command or validate the result of `UnitShootPrepare`.
+
+The older 810 probe had no `CGlobalPlayer` or hero. Thus its authored
+`GetHero()` returned nil and `UnitShootPrepare(pers1, nil, ...)` was a no-op;
+reaching `OnClickUsable` proved Lua scheduling, **not** unit-command dispatch.
+The new party mode creates the game's default global player, then follows
+`CPlayerTracker`'s mission order: after `CreateRandom` and before `RunPostInit`,
+it registers the player with a `CSequenceCommander` and deploys the hero.
+The test requires a live hero server and samples `pers1`'s executor after
+each segment. With the party, a `CExecQueue` appears; it does not appear in
+the otherwise identical no-party probe. The script's `UnitShootPrepare`
+therefore reaches the unit execution path in this selected scenario. The
+queue's presence does not prove a completed aim, fired projectile, damage,
+or Steam-equivalent outcome.
+
+This newly exercised path exposed two previously hidden UB cases on Linux:
+`SUnitDeployData` left `bCorpseAlive` and `bCorpseEnemy` indeterminate when
+adding a mercenary, and `NAI::CPath` left `bStrafePath` indeterminate before
+`CExecQueue::AddPath` read it. Both now initialize to false. The original
+game's tiny `RPGMerc.cpp` implementation of `CreateMerc` is included in the
+portable RPG target so this is an actual game party, not a fabricated hero.
 
 This is a headless original-world startup, **not** a full Linux game. The
 probe does not create the mission UI, deploy a human party, issue a combat
