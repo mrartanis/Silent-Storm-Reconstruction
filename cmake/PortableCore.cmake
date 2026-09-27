@@ -1183,17 +1183,28 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
     # Include authored scripted routes and two scenario-root campaign maps,
     # not just the small bootstrap maps. All are present in game.db.
-    foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526)
+    foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526 5240)
       add_test(NAME NativeWorldMission${_s2_world_variant}
         COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
           --mission ${_s2_world_variant})
       set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
         WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
-      if(_s2_world_variant EQUAL 3829 OR _s2_world_variant EQUAL 4526)
+      if(_s2_world_variant EQUAL 3829 OR _s2_world_variant EQUAL 4526 OR
+         _s2_world_variant EQUAL 5240)
         # Large authored campaign maps need several minutes under ARM64/QEMU+ASan.
         set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES TIMEOUT 600)
       endif()
     endforeach()
+    add_test(NAME NativeScenarioRootWorlds
+      COMMAND "${CMAKE_COMMAND}"
+        "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+        "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+        "-DGAME_DB=${S2_GAME_DB_PATH}"
+        "-DRESOURCE_DIR=${_s2_world_resources}"
+        "-DTEST_EMULATOR=${CMAKE_CROSSCOMPILING_EMULATOR}"
+        -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+    set_tests_properties(NativeScenarioRootWorlds PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 14400 LABELS extended)
     add_test(NAME NativeWorldMission810UIAck
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
         --mission-ui-ack 810)

@@ -508,3 +508,29 @@ ARM64/QEMU, and Clang Linux x86-64. The ARM64/QEMU test passed under
 ASan/UBSan in about 270 seconds with a 600-second diagnostic timeout.
 This proves `CreateRandom`, `RunPostInit` and initial world advance for
 that authored root, not completion of its mission or Steam-equivalent AI.
+
+The 2026-09-27 scenario-root world sweep discovers the 52 active authored
+roots from `NativeMapDatabaseTests --roots` and runs the production
+`CWorld::CreateRandom`/`RunPostInit`/initial advance for each in a fresh
+`NativeWorldInitProbe` process. `NativeScenarioRootWorlds` is an `extended`
+CTest on Windows x64, Linux x86-64 and ARM64/QEMU. After the fix, Windows
+x64 completed 52/52 in about 104 seconds; its 148 non-extended tests also
+passed. Linux x86-64 under ASan/UBSan/LSan completed the first 27 roots
+through 5175, then stopped at 5240 on an out-of-bounds AI sound-radius read.
+After the fix, the remaining 25 roots from 5240 through 7254 passed under
+the same sanitizers; its 123 non-extended tests passed after the fix. This
+is full root startup coverage across the two Linux runs, not a single
+uninterrupted post-fix CTest run. The full ARM64 extended sweep has not
+been run; its focused 5240 CTest passed under ASan/UBSan with leak
+detection disabled in about 156 seconds.
+
+The failure was a step sound emitted during unit movement. Armor-provided
+`nAISoundType=5` reached `CAISound::GetRadiusFromAISoundType`, while the
+record has only `R1`–`R5` (`vRadius[0..4]`). The accessor now preserves the
+old mapping for 0–4 and bounds out-of-range values to the nearest authored
+radius, so type 5 uses `R5` instead of adjacent object memory. The focused
+`NativeWorldMission5240` CTest permanently exercises this path on all three
+targets. The exact Steam x86 response to this invalid index has not been
+measured; the bounded fallback is a safety correction, not a Steam-parity
+claim. As with the other startup tests, this sweep does not complete those
+missions or compare their dynamic AI decisions with Steam.

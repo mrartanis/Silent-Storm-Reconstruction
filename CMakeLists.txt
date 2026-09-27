@@ -1006,13 +1006,22 @@ if(S2_GAME_DIR)
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       # Exercise authored routes and two scenario-root campaign maps in the
       # full world path as well as the small bootstrap variants.
-      foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526)
+      foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526 5240)
         add_test(NAME NativeWorldMission${_s2_world_variant}
           COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
             --mission ${_s2_world_variant})
         set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
           WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300)
       endforeach()
+      add_test(NAME NativeScenarioRootWorlds
+        COMMAND "${CMAKE_COMMAND}"
+          "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+          "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+          "-DGAME_DB=${S2_GAME_DIR}/game.db"
+          "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
+          -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+      set_tests_properties(NativeScenarioRootWorlds PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 7200 LABELS extended)
       add_test(NAME NativeWorldMission810UIAck
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
           --mission-ui-ack 810)
@@ -1070,11 +1079,11 @@ if(S2_GAME_DIR)
       set_tests_properties(NativeWorldMission810PartyEngGrenadeInventorySave PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission3829 NativeWorldMission4526 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission3829 NativeWorldMission4526 NativeWorldMission5240 NativeScenarioRootWorlds NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission3829 NativeWorldMission4526 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission3829 NativeWorldMission4526 NativeWorldMission5240 NativeScenarioRootWorlds NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
