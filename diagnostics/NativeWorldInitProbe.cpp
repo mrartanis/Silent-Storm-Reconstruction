@@ -8,6 +8,7 @@
 #include "../FileIO/Streams.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataScript.h"
 #include "../Main/GSceneUtils.h"
 #include "../Main/A5Script.h"
@@ -54,8 +55,10 @@ int main(int argc, char** argv) {
   const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
   const bool missionPartyShotSlot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-slot") == 0;
   const bool missionPartyExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-explosion-save") == 0;
+  const bool missionPartyGrenadeSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot ||
-    missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave;
+    missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
+    missionPartyGrenadeSave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -222,7 +225,7 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyExplosionSave) {
+      if (missionPartyExplosionSave || missionPartyGrenadeSave) {
         if (variant != 810) return 45;
         int buildingIndex = -1;
         unsigned long long liveBefore = 0, hpBefore = 0, hashBefore = 0;
@@ -248,12 +251,41 @@ int main(int argc, char** argv) {
         CVec3 epicentre;
         info.pPos->pos.forward.RotateHVector(&epicentre,
           info.pGrid->GetLocalCenterForHarness());
-        world->Explode(epicentre, 1024);
+        if (missionPartyGrenadeSave) {
+          auto* grenade = NDb::GetRPGGrenade(21); // Retail's scripted blast record.
+          auto* thrower = world->GetUnitServer("pers1");
+          if (!grenade || !thrower || !world->GetExplosionMasterForHarness()) return 52;
+          std::printf("grenade 21: waves %d, damage %.1f..%.1f, radius %.2f, structure coeff %.2f\n",
+            grenade->nWaveNumber, grenade->fWaveDmgMin, grenade->fWaveDmgMax,
+            grenade->fWaveRadius, grenade->fStructureDamageCoeff);
+          // Hold process entropy fixed for comparison. The blast registry is
+          // pointer-hashed, so its iteration/draw assignment can still vary
+          // across processes and architectures; retail hashes pointers too.
+#if defined(_WIN32)
+          random.SeedForHarness(81021);
+#else
+          s2_game_random.SeedForHarness(81021);
+#endif
+          world->AddGrenadeExplosion(epicentre, grenade, thrower);
+          for (int tick = 220; tick < 420; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 53;
+          }
+        } else {
+          world->Explode(epicentre, 1024);
+        }
         unsigned long long liveAfter = 0, hpAfter = 0, hashAfter = 0;
         info.pGrid->GetVoxelStatsForHarness(&liveAfter, &hpAfter, &hashAfter);
-        std::printf("building %d explosion: live %llu -> %llu, HP %llu -> %llu, hash %016llx -> %016llx\n",
-          buildingIndex, liveBefore, liveAfter, hpBefore, hpAfter, hashBefore, hashAfter);
-        if (hpAfter >= hpBefore || liveAfter > liveBefore || hashAfter == hashBefore) return 47;
+        std::printf("building %d %s explosion: live %llu -> %llu, HP %llu -> %llu, hash %016llx -> %016llx\n",
+          buildingIndex, missionPartyGrenadeSave ? "grenade" : "world",
+          liveBefore, liveAfter, hpBefore, hpAfter, hashBefore, hashAfter);
+        if (hpAfter >= hpBefore || liveAfter > liveBefore || hashAfter == hashBefore ||
+            (missionPartyGrenadeSave && liveAfter == liveBefore)) return 47;
         {
           CFileStream saved;
           saved.OpenWrite(argv[5]);

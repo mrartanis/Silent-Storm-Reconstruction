@@ -5,7 +5,8 @@
 `--mission-party-shot <variant>`, and
 `--mission-party-shot-save <variant>` and
 `--mission-party-shot-slot <variant>`, plus
-`--mission-party-explosion-save <variant> <save-file>` paths. It loads the
+`--mission-party-explosion-save <variant> <save-file>` and
+`--mission-party-grenade-save <variant> <save-file>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -18,7 +19,8 @@ The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810PartyShot`, and
 `NativeWorldMission810PartyShotSave` and
 `NativeWorldMission810PartyShotSlot` and
-`NativeWorldMission810PartyExplosionSave` in both
+`NativeWorldMission810PartyExplosionSave` and
+`NativeWorldMission810PartyGrenadeSave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -321,6 +323,29 @@ SHA-256 is
 It contains no `fmod.dll`. A live-game smoke of this specific archive is not
 claimed; the headless explosion test uses the same game code but does not
 exercise the UI or GPU.
+
+`--mission-party-grenade-save 810` advances beyond the direct explosion:
+it enqueues original grenade record 21 through `CWorld::AddGrenadeExplosion`
+with the mission shooter as thrower, then lets the original
+`CExplosionMaster::Segment`/`CVoxelExpl::ApplyWaveDamage` reach the building's
+RPG attackable and grid. Record 21 has one wave, 60–100 wave damage, radius
+1.00 and structure coefficient 1.10 in the selected original `game.db`.
+The test requires a lower live-cell count and HP sum, then an exact
+post-save/post-load cell hash; it never edits the voxel grid itself.
+It uses `SeedForHarness(81021)` just before enqueuing to fix process entropy.
+That does **not** force identical damage: the blast-object registry is hashed
+by pointer-derived keys, and iteration assigns random damage rolls to
+objects in an address-dependent order. Ten Windows x64 repetitions under
+this seed left 106–107 live cells (from 108), with an exact restored hash in
+each run; five Linux x86-64 repetitions left 106, and one ARM64/QEMU run left
+106, also with exact reload hashes. This is a genuine normal-grenade damage
+and persistence gate, not proof of the same per-cell outcome on every run
+or of parity with Steam's observable explosion. A thrown item's inventory
+command, flight/fuse, engineer grenades and post-blast AI routing are not
+covered by this diagnostic.
+After adding this gate, the full matrix passed on 2026-09-27: Windows x64
+136/136 (with `Game.exe` built), Linux x86-64 113/113 and Linux ARM64/QEMU
+113/113 under ASan/UBSan. The ARM64 full run took about 302 seconds.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
