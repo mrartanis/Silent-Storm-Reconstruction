@@ -131,8 +131,11 @@ selected original quirk. This static path proof does not replace a live
 Steam mission run or visual aim-animation comparison.
 With the retail path restored, Windows x64 rebuilt `Game.exe` and passed
 131/131 CTest; Linux x86-64 and ARM64/QEMU each passed 108/108 under
-ASan/UBSan with `halt_on_error=1`. A fresh clean x64 archive is recorded
-below after the corrective source commit.
+ASan/UBSan with `halt_on_error=1`. The clean native-media x64 archive from
+corrective commit `06ed84a` is
+`G:\SS\lab\builds\stage2-steam-aim-20260927-01`, with `Game.exe` SHA-256
+`7CB5D1766707E39EF511BDA1E203F69DBFA14C585DF96D188EAC823E630699E3`.
+It contains no `fmod.dll`; no live-game smoke of this archive is claimed.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
