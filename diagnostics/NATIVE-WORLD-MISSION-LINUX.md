@@ -117,6 +117,11 @@ With this ammunition gate, Windows x64 rebuilt `Game.exe` and passed 131/131
 CTest; Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
 `halt_on_error=1`. These are build/regression gates, not a live-game shot
 comparison with the Steam executable.
+The clean native-media x64 archive for this ammunition fix is
+`G:\SS\lab\builds\stage2-aim-no-ammo-20260927-01` from commit `e892804`;
+`Game.exe` SHA-256 is
+`B800C1CF07A70A18ADBE5D2AB064EE29D6EA926CB61383FB795BB4CA8CD556BA`.
+There is no `fmod.dll`. Live-game smoke of this archive is not claimed.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
