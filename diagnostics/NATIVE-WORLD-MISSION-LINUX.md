@@ -399,7 +399,9 @@ explosion and voxel persistence without using the UI. The first diagnostic
 attempt omitted `CCmdContinue`, leaving AP and inventory unchanged; that was
 a harness error, not a game bug. With the complete command sequence, 20/20
 Windows x64 repetitions passed. The full matrices passed Windows x64 138/138
-(with `Game.exe` built) and Linux x86-64 115/115 under ASan/UBSan.
+(with `Game.exe` built), Linux x86-64 115/115 and Linux ARM64/QEMU 115/115
+under ASan/UBSan. The ARM64 suite took about 395 seconds, with this gate
+taking about 99 seconds.
 The visual throw animation, Steam's dynamic damage distribution and other
 grenade types remain outside this gate.
 The clean native-media x64 archive from `d1e5403` is
