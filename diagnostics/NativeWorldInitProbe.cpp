@@ -20,6 +20,7 @@
 #include "../Main/RPGUnitMission.h"
 #include "../Main/wMain.h"
 #include "../Main/wUICommands.h"
+#include "../Main/wUnitCommands.h"
 #include "../Main/wUnitServer.h"
 #include "../Misc/RandomGen.h"
 
@@ -33,7 +34,9 @@ class AttackEventCounter : public CObjectBase {
   OBJECT_BASIC_METHODS(AttackEventCounter);
  public:
   void OnAttack(const NWorld::CEventOnAttackAtUnit&) { ++count; }
+  void OnBullet(const NWorld::CEventOnBullet&) { ++bulletCount; }
   int count = 0;
+  int bulletCount = 0;
 };
 }
 
@@ -41,7 +44,10 @@ int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
-  if (argc != 3 && !mission && !missionUIAck && !missionPartyUIAck) return 2;
+  const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
+  const bool missionParty = missionPartyUIAck || missionPartyShot;
+  const bool missionWithUIAck = missionUIAck || missionParty;
+  if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
   NDatabase::Serialize(database, CStructureSaver::READ);
@@ -62,9 +68,9 @@ int main(int argc, char** argv) {
     ++scriptCount;
   }
   if (!scriptCount) return 5;
-  CObj<NRPG::CGlobalGame> game = (mission || missionUIAck || missionPartyUIAck)
+  CObj<NRPG::CGlobalGame> game = (mission || missionWithUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
-  if (missionPartyUIAck)
+  if (missionParty)
     game->players.push_back(NRPG::CreateGlobalPlayer());
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
@@ -78,7 +84,7 @@ int main(int argc, char** argv) {
       return 7;
   }
   std::printf("world initialized with %d autoload scripts\n", scriptCount);
-  if (mission || missionUIAck || missionPartyUIAck) {
+  if (mission || missionWithUIAck) {
     const int variant = std::atoi(argv[4]);
     CObj<NWorld::CPostWorldCreateInfo> post;
     world->CreateRandom(variant, std::vector<std::string>(), true,
@@ -92,7 +98,7 @@ int main(int argc, char** argv) {
       if (post->scripts.size() != 1) return 10;
       world->SetTimeOfDay(NWorld::TOD_NIGHT);
     }
-    if (missionPartyUIAck) {
+    if (missionParty) {
       // CPlayerTracker does this between CreateRandom and RunPostInit in the
       // real mission. Its sequence commander also owns human-unit AI wrappers.
       CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);
@@ -111,7 +117,9 @@ int main(int argc, char** argv) {
     CObj<AttackEventCounter> attackEvents = new AttackEventCounter;
     NGlobal::CEventRegister<AttackEventCounter, NWorld::CEventOnAttackAtUnit>
       attackRegistration(attackEvents.GetPtr(), &AttackEventCounter::OnAttack);
-    if (missionPartyUIAck) {
+    NGlobal::CEventRegister<AttackEventCounter, NWorld::CEventOnBullet>
+      bulletRegistration(attackEvents.GetPtr(), &AttackEventCounter::OnBullet);
+    if (missionParty) {
       auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
       auto* shooter = world->GetUnitServer("pers1");
       if (!hero || !shooter) return 20;
@@ -132,11 +140,12 @@ int main(int argc, char** argv) {
     const auto before = world->GetTime()->GetValue();
     int acknowledged = 0;
     std::set<std::string> observedCommands;
-    if (missionUIAck || missionPartyUIAck) {
+    if (missionWithUIAck) {
       int lastShooterAmmo = shooterAmmoBefore;
       // Diagnostic only: the real mission UI consumes these commands and posts
-      // CCmdInterfaceEvent on completion. We only acknowledge their IDs; this
-      // does not simulate camera motion, unit actions, rendering, or input.
+      // CCmdInterfaceEvent on completion. We acknowledge their IDs but do not
+      // simulate camera motion, rendering, or input; the world still executes
+      // its original scripted unit actions.
       for (int tick = 0; tick < 220; ++tick) {
         world->UpdateWorld(tick * 50, nullptr);
         while (auto* raw = world->GetUICommand()) {
@@ -152,7 +161,7 @@ int main(int argc, char** argv) {
           std::string name;
           if (shooter && shooter->GetCurrentCommandName(&name))
             observedCommands.insert(name);
-          if (missionPartyUIAck && shooter) {
+          if (missionParty && shooter) {
             auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
             const int ammo = weapon ? weapon->GetAmmoQuantity() : -1;
             if (ammo != lastShooterAmmo) {
@@ -167,7 +176,7 @@ int main(int argc, char** argv) {
       std::printf("headless UI IDs acknowledged: %d\n", acknowledged);
       for (const auto& name : observedCommands)
         std::printf("observed shooter executor: %s\n", name.c_str());
-      if (missionPartyUIAck) {
+      if (missionParty) {
         auto* shooter = world->GetUnitServer("pers1");
         auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
         if (!shooter || !hero) return 21;
@@ -202,6 +211,53 @@ int main(int argc, char** argv) {
         Script::AutoBlock stack(*world->GetOwnScript());
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
+      }
+      if (missionPartyShot) {
+        auto* shooter = world->GetUnitServer("pers1");
+        auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+        if (!shooter || !hero) return 24;
+        auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
+        if (!weapon) return 25;
+        const int ammoBeforeShot = weapon->GetAmmoQuantity();
+        const int apBeforeShot = shooter->GetAP();
+        NRPG::SUnitInfo heroBeforeShot{};
+        hero->GetInfo(&heroBeforeShot);
+        const int attackEventsBeforeShot = attackEvents->count;
+        const int bulletEventsBeforeShot = attackEvents->bulletCount;
+        // Use the game's own Lua-exposed to-hit override to make this
+        // headless combat path independent of the process-level RNG seed.
+        shooter->SetScriptToHit(100);
+        shooter->Do(new NWorld::CCmdSetCommand(shooter,
+          new NWorld::CCmdShootObject(hero, 0, NAI::HL_ANY)));
+        shooter->Do(new NWorld::CCmdSetCommand(shooter, new NWorld::CCmdContinue()));
+        bool observedShotExecutor = false;
+        for (int tick = 220; tick < 440; ++tick) {
+          world->UpdateWorld(tick * 50, nullptr);
+          while (auto* raw = world->GetUICommand()) {
+            CObj<NWorld::CUICmd> command(raw);
+            if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+              world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+          }
+          std::string name;
+          if (shooter->GetCurrentCommandName(&name))
+            observedShotExecutor = true;
+          if (!NScript::luaLastError.szError.empty()) return 26;
+        }
+        NRPG::SUnitInfo heroAfterShot{};
+        hero->GetInfo(&heroAfterShot);
+        std::printf("full shot executor observed: %d\n", observedShotExecutor ? 1 : 0);
+        std::printf("full shot ammo: %d -> %d\n", ammoBeforeShot, weapon->GetAmmoQuantity());
+        std::printf("full shot AP: %d -> %d\n", apBeforeShot, shooter->GetAP());
+        std::printf("full shot hero HP: %d -> %d\n", heroBeforeShot.nHP, heroAfterShot.nHP);
+        std::printf("full shot attack events: %d -> %d\n", attackEventsBeforeShot, attackEvents->count);
+        std::printf("full shot bullet events: %d -> %d\n", bulletEventsBeforeShot, attackEvents->bulletCount);
+        if (!observedShotExecutor || shooter->HasCommand() ||
+            weapon->GetAmmoQuantity() != ammoBeforeShot - 1 ||
+            shooter->GetAP() != apBeforeShot - 10 ||
+            heroAfterShot.nHP >= heroBeforeShot.nHP ||
+            attackEvents->count != attackEventsBeforeShot + 1 ||
+            attackEvents->bulletCount != bulletEventsBeforeShot + 1)
+          return 27;
       }
     } else {
       world->UpdateWorld(before + 220 * 50, nullptr);

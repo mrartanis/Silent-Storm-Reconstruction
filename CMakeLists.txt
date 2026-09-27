@@ -1009,12 +1009,17 @@ if(S2_GAME_DIR)
           --mission-party-ui-ack 810)
       set_tests_properties(NativeWorldMission810PartyUIAck PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
+      add_test(NAME NativeWorldMission810PartyShot
+        COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
+          --mission-party-shot 810)
+      set_tests_properties(NativeWorldMission810PartyShot PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldMission810PartyUIAck
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldMission810PartyUIAck
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()

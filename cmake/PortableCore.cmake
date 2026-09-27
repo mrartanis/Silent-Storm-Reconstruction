@@ -1182,6 +1182,11 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
         --mission-party-ui-ack 810)
     set_tests_properties(NativeWorldMission810PartyUIAck PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    add_test(NAME NativeWorldMission810PartyShot
+      COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+        --mission-party-shot 810)
+    set_tests_properties(NativeWorldMission810PartyShot PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
   endif()
 endif()
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests

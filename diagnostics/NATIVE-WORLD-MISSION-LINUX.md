@@ -1,7 +1,8 @@
 # Native mission creation and post-init (stage 2)
 
 `NativeWorldInitProbe` has optional `--mission <variant>`,
-`--mission-ui-ack <variant>`, and `--mission-party-ui-ack <variant>` paths. It loads the
+`--mission-ui-ack <variant>`, `--mission-party-ui-ack <variant>`, and
+`--mission-party-shot <variant>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -10,7 +11,8 @@ units and one 1,016-byte attached Lua script; its startup also runs the
 world's first-segment warm-up, vision, physics, and path-colouring jobs.
 
 The tests are `NativeWorldMission218`, `NativeWorldMission810`,
-`NativeWorldMission810UIAck`, and `NativeWorldMission810PartyUIAck` in both
+`NativeWorldMission810UIAck`, `NativeWorldMission810PartyUIAck`, and
+`NativeWorldMission810PartyShot` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -136,6 +138,22 @@ corrective commit `06ed84a` is
 `G:\SS\lab\builds\stage2-steam-aim-20260927-01`, with `Game.exe` SHA-256
 `7CB5D1766707E39EF511BDA1E203F69DBFA14C585DF96D188EAC823E630699E3`.
 It contains no `fmod.dll`; no live-game smoke of this archive is claimed.
+
+The separate `--mission-party-shot 810` diagnostic continues the same
+headless mission after the scripted aim, then sends the game's normal
+`CCmdShootObject` and `CCmdContinue` to `pers1` against the deployed hero.
+It advances another 220 segments and observes the unit executor, ammunition,
+AP, target HP, `CEventOnAttackAtUnit`, and `CEventOnBullet`. The probe sets
+the game's `nScriptToHit` override (the field used by `UnitSetToHit`) to 100 for this controlled
+shot, so hit versus miss does not depend on the process-level RNG seed;
+damage still varies and is deliberately not byte-for-byte asserted. In five
+Windows x64 runs, each shot finished with ammo 31 to 30, AP 46 to 36, one
+bullet event, one additional attack event, and positive damage. Linux
+x86-64 and ARM64/QEMU reproduced those invariants under ASan/UBSan. This is an actual
+headless attack and bullet path, not a rendered battle or Steam comparison.
+With this gate registered in both builds, Windows x64 rebuilt `Game.exe` and
+passed 132/132 CTest, while Linux x86-64 and ARM64/QEMU passed 109/109 each
+under ASan/UBSan with `halt_on_error=1`.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
