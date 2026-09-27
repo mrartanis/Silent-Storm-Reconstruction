@@ -13,7 +13,10 @@
 #include "../Main/A5Script.h"
 #include "../Main/aiCommander.h"
 #include "../Main/rpgGlobal.h"
+#include "../Main/RPGItem.h"
 #include "../Main/RPGUnit.h"
+#include "../Main/RPGUnitInfo.h"
+#include "../Main/RPGUnitMission.h"
 #include "../Main/wMain.h"
 #include "../Main/wUICommands.h"
 #include "../Main/wUnitServer.h"
@@ -92,6 +95,21 @@ int main(int argc, char** argv) {
       std::printf("headless hero deployed\n");
     }
     world->RunPostInit(post);
+    int heroHPBefore = -1;
+    int shooterAmmoBefore = -1;
+    if (missionPartyUIAck) {
+      auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+      auto* shooter = world->GetUnitServer("pers1");
+      if (!hero || !shooter) return 20;
+      NRPG::SUnitInfo info{};
+      hero->GetInfo(&info);
+      heroHPBefore = info.nHP;
+      auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
+      if (weapon) shooterAmmoBefore = weapon->GetAmmoQuantity();
+      if (shooterAmmoBefore < 0) return 22;
+      std::printf("hero HP before scripted aim: %d\n", heroHPBefore);
+      std::printf("shooter ammo before scripted aim: %d\n", shooterAmmoBefore);
+    }
     if (variant == 810 && world->GetTimeOfDay() != NWorld::TOD_DAY)
       return 11; // The authored SetTimeOfDay(DAY) command actually ran.
     if (!NScript::luaLastError.szError.empty()) return 12;
@@ -99,6 +117,7 @@ int main(int argc, char** argv) {
     int acknowledged = 0;
     std::set<std::string> observedCommands;
     if (missionUIAck || missionPartyUIAck) {
+      int lastShooterAmmo = shooterAmmoBefore;
       // Diagnostic only: the real mission UI consumes these commands and posts
       // CCmdInterfaceEvent on completion. We only acknowledge their IDs; this
       // does not simulate camera motion, unit actions, rendering, or input.
@@ -117,6 +136,15 @@ int main(int argc, char** argv) {
           std::string name;
           if (shooter && shooter->GetCurrentCommandName(&name))
             observedCommands.insert(name);
+          if (missionPartyUIAck && shooter) {
+            auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
+            const int ammo = weapon ? weapon->GetAmmoQuantity() : -1;
+            if (ammo != lastShooterAmmo) {
+              std::printf("shooter ammo changed at tick %d: %d -> %d, executor=%s\n",
+                tick, lastShooterAmmo, ammo, name.empty() ? "none" : name.c_str());
+              lastShooterAmmo = ammo;
+            }
+          }
         }
         if (!NScript::luaLastError.szError.empty()) return 14;
       }
@@ -124,10 +152,28 @@ int main(int argc, char** argv) {
       for (const auto& name : observedCommands)
         std::printf("observed shooter executor: %s\n", name.c_str());
       if (missionPartyUIAck) {
+        auto* shooter = world->GetUnitServer("pers1");
+        auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+        if (!shooter || !hero) return 21;
+        NRPG::SUnitInfo info{};
+        hero->GetInfo(&info);
+        auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
+        const int shooterAmmoAfter = weapon ? weapon->GetAmmoQuantity() : -1;
+        std::string finalName;
+        const bool finalExecutor = shooter && shooter->GetCurrentCommandName(&finalName);
+        std::printf("shooter final command=%d executor=%s\n",
+          shooter && shooter->HasCommand() ? 1 : 0,
+          finalExecutor ? finalName.c_str() : "none");
+        std::printf("hero HP after scripted aim: %d\n", info.nHP);
+        std::printf("shooter ammo after scripted aim: %d\n", shooterAmmoAfter);
         bool prepared = false;
         for (const auto& name : observedCommands)
           prepared |= name.find("CExecQueue") != std::string::npos;
         if (!prepared) return 19;
+        // UnitShootPrepare must finish its aim without firing or consuming a round.
+        if (finalExecutor || shooter->HasCommand() ||
+            info.nHP != heroHPBefore || shooterAmmoAfter != shooterAmmoBefore)
+          return 23;
       }
       if (variant == 810 && acknowledged == 0) return 15;
       if (variant == 810) {

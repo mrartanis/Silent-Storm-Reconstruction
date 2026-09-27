@@ -1522,7 +1522,9 @@ void CExecShootUnit::SelectRay() // false, when it is the last shot
 	// retail SelectRay builds a SINGLE `attack` portion into the member (was the vector Attack); NO CheckBurst
 	// here (moved to the OnBulletGo/Segment pipeline). cover+to-hit+peek inlined from NRPG::AttackObjectRanged.
 	vector<NRPG::CAttackPortion> tmp;
-	CreateAttack( &tmp, pTarget, true, nBulletGone == 0 );   // retail @0x3a49b0: adapt on the shot's first bullet only
+	// Aim-only still needs a ray, but must not consume a round while constructing it.
+	// The actual shot consumes ammo when SelectRay is called with this flag clear.
+	CreateAttack( &tmp, pTarget, !bOnlyPrepareToShoot, nBulletGone == 0 );
 	if ( !tmp.empty() )
 	{
 		attack = tmp[0];

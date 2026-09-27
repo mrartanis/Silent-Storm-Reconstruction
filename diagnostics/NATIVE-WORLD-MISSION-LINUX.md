@@ -104,8 +104,17 @@ aim-and-hold branch for the matching executor flag, but
 through the constructor. Ordinary commands still default to `false`.
 This corrects the command-to-executor state transfer; the headless gate still
 does not observe a completed aim animation or prove visual/Steam parity.
-After this wiring change, Windows x64 rebuilt `Game.exe` and passed 131/131
-CTest. Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
+The next headless observation found a second, independent fault: in map 810
+`pers1` completed the scripted prepare action, but its magazine fell from 32
+to 31 rounds. `CExecShootUnit::SelectRay` built its attack portion with
+`bSpendAmmo=true` even for an aim-only command. It now passes false for that
+case. `NativeWorldMission810PartyUIAck` checks that the script-created queue
+finishes, the hero's HP remains unchanged, and the shooter's ammunition does
+not decrease; on Windows x64 the observed values are HP 137 to 137 and ammo
+32 to 32. This establishes a completed, non-firing prepare action in the
+selected headless scenario, but not visible aim animation or Steam parity.
+With this ammunition gate, Windows x64 rebuilt `Game.exe` and passed 131/131
+CTest; Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
 `halt_on_error=1`. These are build/regression gates, not a live-game shot
 comparison with the Steam executable.
 The clean native-media x64 archive from source commit `c19b144` is
@@ -122,12 +131,13 @@ game's tiny `RPGMerc.cpp` implementation of `CreateMerc` is included in the
 portable RPG target so this is an actual game party, not a fabricated hero.
 
 This is a headless original-world startup, **not** a full Linux game. The
-probe does not create the mission UI, deploy a human party, issue a combat
-command, save/reload the resulting mission, or compare dynamic AI, route,
-battle, and destruction decisions against Steam x86. The variant-810 script
+party mode deploys a hero and exercises one scripted aim-only command, but
+the probe does not create the mission UI, execute a full combat turn,
+save/reload the resulting mission, or compare dynamic AI, route, battle,
+and destruction decisions against Steam x86. The variant-810 script
 waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches
 its later callback declaration. No real UI action, later callback invocation,
-or unit-shot outcome is proved. The absence of Lua errors and these two script
+or actual fired-shot outcome is proved. The absence of Lua errors and these two script
 effects do not prove that every mission binding worked. Those are the next
 stage-2 checks. SDL3/bgfx integration remains in stages
 3-4, and no macOS result is claimed.
