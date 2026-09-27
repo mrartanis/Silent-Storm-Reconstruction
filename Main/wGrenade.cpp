@@ -168,6 +168,11 @@ bool CGrenadeServer::Segment()
 		return true;
 	//
 	CDynamicCast<NAnimation::CASphereSet> pSphereSet( pRealAnimator );
+	// Collision is computed lazily by the physics animator. In a headless world
+	// there is no render visit to refresh it, so advance it before checking the
+	// contact fuse. The dependency graph caches the value for this world frame.
+	if ( !bTimeDelayGrenade )
+		pAnimator.Refresh();
 	bool bCollisionExplode = !bTimeDelayGrenade && pSphereSet->DidCollide();
 	bool bIsTimeToExplode = bTimeDelayGrenade && IsTimeToExplode( pWorld->GetTime()->GetValue() );
 	if ( bIsTimeToExplode || bCollisionExplode )

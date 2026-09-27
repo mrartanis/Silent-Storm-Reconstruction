@@ -6,7 +6,8 @@
 `--mission-party-shot-save <variant>` and
 `--mission-party-shot-slot <variant>`, plus
 `--mission-party-explosion-save <variant> <save-file>` and
-`--mission-party-grenade-save <variant> <save-file>` paths. It loads the
+`--mission-party-grenade-save <variant> <save-file>` and
+`--mission-party-grenade-flight-save <variant> <save-file>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -20,7 +21,8 @@ The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810PartyShotSave` and
 `NativeWorldMission810PartyShotSlot` and
 `NativeWorldMission810PartyExplosionSave` and
-`NativeWorldMission810PartyGrenadeSave` in both
+`NativeWorldMission810PartyGrenadeSave` and
+`NativeWorldMission810PartyGrenadeFlightSave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -353,6 +355,30 @@ The clean native-media x64 archive from `46bf268` is
 SHA-256 is `4DC33EE20E860259BA53D08183F2F450297C3307892C7A67C320803D5FCA484D`.
 It contains no `fmod.dll`. A live-game smoke of this specific archive is
 not claimed.
+
+`--mission-party-grenade-flight-save 810` advances one step further: it calls
+the original `UnitThrowGrenade` path used by the game's Lua command handlers.
+That path creates a transient grenade item, calculates a skill-limited
+ballistic arc and scatter, then spawns `CGrenadeServer` through
+`CWorld::ThrowGrenade`. In the selected map, the contact-fused record 21
+flies from `pers1` toward the building. The test advances 200 segments,
+requires actual live-cell and HP loss, then checks the exact voxel-grid
+round-trip after world save/load. It does not equip an inventory grenade,
+spend action points, or run the player's throw animation.
+
+The first headless attempt spawned the flying object but left it active for
+all 200 segments, with no damage. `CASphereSet::DidCollide()` observes a
+collision only after the lazy physics animator has been refreshed; the
+renderer normally causes such a refresh, but headless world segments did not.
+`CGrenadeServer::Segment` now refreshes its animator before checking a
+contact fuse. Timed fuses retain their existing path. This makes collision
+and detonation part of the simulation tick rather than a side effect of
+rendering. Dynamic parity of the final scatter/damage with Steam is still
+unverified. The new test passed 20/20 Windows x64 repetitions; with it,
+the full Windows matrix passed 137/137 (and `Game.exe` built), Linux
+x86-64 passed 114/114 and Linux ARM64/QEMU passed 114/114 under ASan/UBSan.
+The ARM64 suite took about 378 seconds, with the flight gate taking about
+100 seconds.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions

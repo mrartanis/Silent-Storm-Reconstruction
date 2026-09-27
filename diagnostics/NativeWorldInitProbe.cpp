@@ -11,6 +11,7 @@
 #include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataScript.h"
 #include "../Main/GSceneUtils.h"
+#include "../Main/wUnitAttack.h"
 #include "../Main/A5Script.h"
 #include "../Main/BuildingGrid.h"
 #include "../Main/aiCommander.h"
@@ -56,9 +57,10 @@ int main(int argc, char** argv) {
   const bool missionPartyShotSlot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-slot") == 0;
   const bool missionPartyExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-explosion-save") == 0;
   const bool missionPartyGrenadeSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-save") == 0;
+  const bool missionPartyGrenadeFlightSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-flight-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot ||
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
-    missionPartyGrenadeSave;
+    missionPartyGrenadeSave || missionPartyGrenadeFlightSave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -225,7 +227,7 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyExplosionSave || missionPartyGrenadeSave) {
+      if (missionPartyExplosionSave || missionPartyGrenadeSave || missionPartyGrenadeFlightSave) {
         if (variant != 810) return 45;
         int buildingIndex = -1;
         unsigned long long liveBefore = 0, hpBefore = 0, hashBefore = 0;
@@ -251,13 +253,17 @@ int main(int argc, char** argv) {
         CVec3 epicentre;
         info.pPos->pos.forward.RotateHVector(&epicentre,
           info.pGrid->GetLocalCenterForHarness());
-        if (missionPartyGrenadeSave) {
+        if (missionPartyGrenadeSave || missionPartyGrenadeFlightSave) {
           auto* grenade = NDb::GetRPGGrenade(21); // Retail's scripted blast record.
           auto* thrower = world->GetUnitServer("pers1");
           if (!grenade || !thrower || !world->GetExplosionMasterForHarness()) return 52;
-          std::printf("grenade 21: waves %d, damage %.1f..%.1f, radius %.2f, structure coeff %.2f\n",
+          const CVec3 throwerPosition = thrower->GetPosition().GetCP();
+          std::printf("grenade 21: waves %d, damage %.1f..%.1f, radius %.2f, structure coeff %.2f, max delay %d\n",
             grenade->nWaveNumber, grenade->fWaveDmgMin, grenade->fWaveDmgMax,
-            grenade->fWaveRadius, grenade->fStructureDamageCoeff);
+            grenade->fWaveRadius, grenade->fStructureDamageCoeff, grenade->nMaxDelay);
+          std::printf("thrower %.2f %.2f %.2f, building %.2f %.2f %.2f\n",
+            throwerPosition.x, throwerPosition.y, throwerPosition.z,
+            epicentre.x, epicentre.y, epicentre.z);
           // Hold process entropy fixed for comparison. The blast registry is
           // pointer-hashed, so its iteration/draw assignment can still vary
           // across processes and architectures; retail hashes pointers too.
@@ -266,7 +272,14 @@ int main(int argc, char** argv) {
 #else
           s2_game_random.SeedForHarness(81021);
 #endif
-          world->AddGrenadeExplosion(epicentre, grenade, thrower);
+          const auto miscBefore = world->GetMiscObjects()->size();
+          if (missionPartyGrenadeFlightSave)
+            NWorld::UnitThrowGrenade(thrower, grenade, epicentre);
+          else
+            world->AddGrenadeExplosion(epicentre, grenade, thrower);
+          if (missionPartyGrenadeFlightSave)
+            std::printf("grenade flight objects: %zu -> %zu\n", miscBefore,
+              world->GetMiscObjects()->size());
           for (int tick = 220; tick < 420; ++tick) {
             world->UpdateWorld(tick * 50, nullptr);
             while (auto* raw = world->GetUICommand()) {
@@ -276,16 +289,20 @@ int main(int argc, char** argv) {
             }
             if (!NScript::luaLastError.szError.empty()) return 53;
           }
+          if (missionPartyGrenadeFlightSave)
+            std::printf("grenade flight objects after 200 ticks: %zu\n",
+              world->GetMiscObjects()->size());
         } else {
           world->Explode(epicentre, 1024);
         }
         unsigned long long liveAfter = 0, hpAfter = 0, hashAfter = 0;
         info.pGrid->GetVoxelStatsForHarness(&liveAfter, &hpAfter, &hashAfter);
         std::printf("building %d %s explosion: live %llu -> %llu, HP %llu -> %llu, hash %016llx -> %016llx\n",
-          buildingIndex, missionPartyGrenadeSave ? "grenade" : "world",
+          buildingIndex, missionPartyGrenadeFlightSave ? "grenade flight" :
+            (missionPartyGrenadeSave ? "grenade" : "world"),
           liveBefore, liveAfter, hpBefore, hpAfter, hashBefore, hashAfter);
         if (hpAfter >= hpBefore || liveAfter > liveBefore || hashAfter == hashBefore ||
-            (missionPartyGrenadeSave && liveAfter == liveBefore)) return 47;
+            ((missionPartyGrenadeSave || missionPartyGrenadeFlightSave) && liveAfter == liveBefore)) return 47;
         {
           CFileStream saved;
           saved.OpenWrite(argv[5]);
