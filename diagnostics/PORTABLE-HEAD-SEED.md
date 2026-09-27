@@ -42,3 +42,9 @@ disabled only for QEMU. After changing the test to use explicit failures
 instead of release-disabled `assert`, `NativeHeadSeedTests` was rebuilt and
 rerun successfully on all three targets. No visual face or live-game parity
 is claimed by this arithmetic test.
+
+A clean native-media Windows x64 archive from commit `2a8d0da` is at
+`G:\SS\lab\builds\stage2-head-seed-20260927-01`. Its `Game.exe` SHA-256 is
+`118185CE08581B64EBEA5F8FEEB5EC2C10B2C20AC25DA42C31D4C046F27F59D8`;
+`fmod.dll` is absent. A separate graphical/live-game smoke test of this
+archive was not performed.
