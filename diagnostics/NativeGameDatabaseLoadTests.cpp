@@ -2,6 +2,7 @@
 #include "../FileIO/Streams.h"
 #include "../ADOImport/BasicDB.h"
 #include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataAI.h"
 #include "../DBFormat/DataInterface.h"
 #include "../FileIO/PortableGameDatabase.h"
 
@@ -24,6 +25,18 @@ int main( int argc, char **argv )
 		CFileStream database;
 		database.OpenRead( argv[1] );
 		NDatabase::Serialize( database, CStructureSaver::READ );
+		// The authored walk-step sound is one case where armor type 5 reaches
+		// the retail accessor's sixth float slot. For this original-db record
+		// the adjacent pSound is null, so the x86 instruction reads zero, not R5.
+		NDb::CAISound *walkStep = NDb::GetAISound( 5 );
+		if ( !walkStep || walkStep->bTileTypeIndependent ||
+			IsValid( walkStep->pSound ) ||
+			walkStep->GetRadiusFromAISoundType( 5 ) != 0 )
+			return 15;
+		for ( int type = 0; type != 5; ++type )
+			if ( walkStep->GetRadiusFromAISoundType( type ) !=
+				static_cast<int>( walkStep->vRadius[type] ) )
+				return 16;
 		S2FileIO::PortableGameDatabase decoded;
 		std::string error;
 		if ( !S2FileIO::LoadPortableGameDatabase( argv[1], &decoded, &error ) )

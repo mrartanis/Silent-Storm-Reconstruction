@@ -26,6 +26,9 @@ foreach(root IN LISTS roots)
   if(DEFINED START_VARIANT AND variant_id LESS START_VARIANT)
     continue()
   endif()
+  if(DEFINED END_VARIANT AND variant_id GREATER END_VARIANT)
+    continue()
+  endif()
   execute_process(
     COMMAND ${TEST_EMULATOR} "${WORLD_PROBE}" "${GAME_DB}" "${RESOURCE_DIR}"
       --mission "${variant_id}"

@@ -527,10 +527,42 @@ detection disabled in about 156 seconds.
 The failure was a step sound emitted during unit movement. Armor-provided
 `nAISoundType=5` reached `CAISound::GetRadiusFromAISoundType`, while the
 record has only `R1`–`R5` (`vRadius[0..4]`). The accessor now preserves the
-old mapping for 0–4 and bounds out-of-range values to the nearest authored
-radius, so type 5 uses `R5` instead of adjacent object memory. The focused
+old mapping for 0–4 and returns zero for an out-of-range type, without
+reading adjacent object memory. The focused
 `NativeWorldMission5240` CTest permanently exercises this path on all three
-targets. The exact Steam x86 response to this invalid index has not been
-measured; the bounded fallback is a safety correction, not a Steam-parity
-claim. As with the other startup tests, this sweep does not complete those
+targets. As with the other startup tests, this sweep does not complete those
 missions or compare their dynamic AI decisions with Steam.
+
+Static inspection of the unmodified Steam x86 `Game.exe` (SHA-256
+`4f417593a9f73e2bfde12d83cdbd694ae47eecb92812140d67b8b343e4a95705`)
+found the corresponding accessor at VA `0x80F220`. Its variable-radius
+branch at `0x80F252` executes `fld DWORD PTR [ecx+eax*4+0x14]` without a
+bounds check. At index 5 that addresses the adjacent `pSound` pointer,
+not an authored `R6`. The Gold PDB-located function at VA `0x820520`
+has the same addressing instruction. This establishes the retail binary's
+unchecked lookup. A CDB breakpoint in the restored x64 probe, while
+advancing root 5240, caught `nAISoundType=5` on original-db AISound record
+ID 5 and read a null `pSound` field. The database regression now asserts
+this field is null and the safe type-5 return is zero on Windows x64,
+Linux x86-64 and ARM64. Applying the Steam x86 instruction to that same
+original record therefore yields zero; this is an inference from the
+retail instruction and record data, not a live Steam AI-response measurement.
+
+The clean native-media x64 archive from commit `7ef0211` is
+`G:\SS\lab\builds\stage2-scenario-worlds-20260927-01`; `Game.exe`
+SHA-256 is
+`26143B94C50F31C7893E65CCC8C9C9840EE5C6A7FB71F37140C5818F9E715016`.
+It was built with 16 jobs and has no `fmod.dll`. The isolated
+`stage2-scenario-worlds-smoke-20260927-01` run reached a responsive,
+rendered main menu (capture `evidence/menu-focused.png`); the game closed
+normally, no crash dump appeared, and its `Game.exe` hash matches the
+archive. This is a boot/menu smoke, not a mission gameplay check. This
+archive predates the subsequently corrected zero-radius fallback; retain
+it as evidence for commit `7ef0211`, not as the latest gameplay build.
+
+For the zero-radius revision, Windows x64 passed all 148 non-extended
+tests and the 52-root `NativeScenarioRootWorlds` again (about 106 seconds).
+GCC Linux x86-64 with ASan/UBSan/LSan passed all 123 non-extended tests
+and a single uninterrupted 52-root CTest (about 987 seconds). The
+revised ARM64/QEMU root sweep is running in bounded ranges; do not infer
+its result from the earlier all-root sweep built with the `R5` fallback.

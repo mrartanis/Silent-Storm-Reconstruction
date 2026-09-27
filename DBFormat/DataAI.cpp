@@ -40,12 +40,12 @@ int CAISound::GetRadiusFromAISoundType( int nAISoundType )
 	if ( bTileTypeIndependent )
 		return fRadius;
 	// The authored armor data can use type 5 (seen during movement in
-	// scenario root 5240), but AISounds only stores R1..R5. Preserve the
-	// historical 0..4 lookup and use the last authored radius for overflow.
-	if ( nAISoundType < 0 )
-		return vRadius[0];
-	if ( nAISoundType >= 5 )
-		return vRadius[4];
+	// scenario root 5240), but AISounds only stores R1..R5. The Steam x86
+	// accessor reads the adjacent pSound field for index 5; that field is
+	// null on the observed step-sound record (ID 5), yielding radius zero.
+	// Return that value without reading outside the array on 64-bit builds.
+	if ( nAISoundType < 0 || nAISoundType >= 5 )
+		return 0;
 	return vRadius[ nAISoundType ];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
