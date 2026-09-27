@@ -108,6 +108,11 @@ After this wiring change, Windows x64 rebuilt `Game.exe` and passed 131/131
 CTest. Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
 `halt_on_error=1`. These are build/regression gates, not a live-game shot
 comparison with the Steam executable.
+The clean native-media x64 archive from source commit `c19b144` is
+`G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
+is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
+It contains no `fmod.dll`. No separate live-game smoke or direct Steam
+comparison is claimed for this archive.
 
 This newly exercised path exposed two previously hidden UB cases on Linux:
 `SUnitDeployData` left `bCorpseAlive` and `bCorpseEnemy` indeterminate when
