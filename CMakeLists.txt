@@ -995,12 +995,14 @@ if(S2_GAME_DIR)
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
       set_tests_properties(NativeWorldInitProbe PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
-      foreach(_s2_world_variant IN ITEMS 218 810)
+      # Exercise authored mission routes and a large patrol map in the full
+      # world path as well as the small bootstrap variants.
+      foreach(_s2_world_variant IN ITEMS 218 810 2223 4526)
         add_test(NAME NativeWorldMission${_s2_world_variant}
           COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
             --mission ${_s2_world_variant})
         set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
-          WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
+          WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300)
       endforeach()
       add_test(NAME NativeWorldMission810UIAck
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
@@ -1059,11 +1061,11 @@ if(S2_GAME_DIR)
       set_tests_properties(NativeWorldMission810PartyEngGrenadeInventorySave PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission4526 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission2223 NativeWorldMission4526 NativeWorldMission810UIAck NativeWorldBase5376UIAck NativeWorldMission810PartyUIAck NativeWorldMission810PartyShot NativeWorldMission810PartyShotSave NativeWorldMission810PartyShotSlot NativeWorldMission810PartyExplosionSave NativeWorldMission810PartyGrenadeSave NativeWorldMission810PartyGrenadeFlightSave NativeWorldMission810PartyGrenadeInventorySave NativeWorldMission810PartyEngGrenadeInventorySave
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()

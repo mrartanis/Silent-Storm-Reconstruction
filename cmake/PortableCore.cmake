@@ -1168,12 +1168,18 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}")
     set_tests_properties(NativeWorldInitProbe PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
-    foreach(_s2_world_variant IN ITEMS 218 810)
+    # Include an authored scripted route mission and a large patrol map, not
+    # just the small bootstrap maps. Both variants are present in game.db.
+    foreach(_s2_world_variant IN ITEMS 218 810 2223 4526)
       add_test(NAME NativeWorldMission${_s2_world_variant}
         COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
           --mission ${_s2_world_variant})
       set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
         WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+      if(_s2_world_variant EQUAL 4526)
+        # The 80x96 authored patrol map needs ~260 s under ARM64/QEMU+ASan.
+        set_tests_properties(NativeWorldMission4526 PROPERTIES TIMEOUT 600)
+      endif()
     endforeach()
     add_test(NAME NativeWorldMission810UIAck
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
