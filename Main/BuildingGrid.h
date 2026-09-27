@@ -126,6 +126,10 @@ public:
 	CBuildingSchema* GetSchema() const { return pSchema; }
 	void SetSchema( CBuildingSchema *p ) { pSchema = p; }
 	int  GetHP( const SPoint3 &pt ) const { return const_cast<CBuildingGrid*>(this)->At( pt ); }
+	// Read-only diagnostic view of the serialized voxel payload, without exposing CArray3D internals.
+	void GetVoxelStatsForHarness( unsigned long long *pLive, unsigned long long *pHP,
+		unsigned long long *pHash ) const;
+	CVec3 GetLocalCenterForHarness() const;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -625,6 +625,7 @@ public:
 		NDb::CRPGEngGrenade *pRPGEngGrenade, int nEngSkill, CUnitServer *pUnitServer = 0,
 		CObjectBase *pIgnitionObject = 0, const SPerkMineModifiers *pMods = 0 );
 	IExplosionMaster *GetExplosionMasterForHarness() const { return pExplosionMaster.GetPtr(); }
+	const list< CObj<CBuilding> > &GetBuildingsForHarness() const { return buildings; }
 	void KillObject( CObjectServerBase *pOS );
 	// Retail has NO CWorld pocket methods -- it inlines these two bodies into luaObjectPlaceInPocket
 	// (@0x2e9000) / luaObjectRestoreFromPocket (@0x2e9130), reaching the world through GetPocket()

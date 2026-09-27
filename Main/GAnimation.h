@@ -366,8 +366,8 @@ class CSkeletonAnimator : public CFuncBase<SSkeletonPose>
 public:
 	CDGPtr< CPtrFuncBase<CFileSkeletonInfo> > pSkeleton;
 	CDGPtr< CFuncBase<STime> > pTime;
-	bool bServer;
-	bool bItem;
+	bool bServer = false;
+	bool bItem = false;
 private:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pSeq); f.Add(3,&nBones); f.Add(4,&pSkeleton); f.Add(5,&pTime); f.Add(6,&bServer); f.Add(7,&bItem); return 0; }
 

@@ -98,6 +98,34 @@ bool CBuildingGrid::IsDestroyed( const SPoint3 &pt ) const
 	return const_cast<CBuildingGrid*>( this )->At( pt ) == 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CBuildingGrid::GetVoxelStatsForHarness( unsigned long long *pLive, unsigned long long *pHP,
+	unsigned long long *pHash ) const
+{
+	*pLive = *pHP = 0;
+	*pHash = 1469598103934665603ULL;
+	*pHash = ( *pHash ^ net.GetXSize() ) * 1099511628211ULL;
+	*pHash = ( *pHash ^ net.GetYSize() ) * 1099511628211ULL;
+	*pHash = ( *pHash ^ net.GetZSize() ) * 1099511628211ULL;
+	CArray3D<BYTE> &cells = const_cast<CArray3D<BYTE>&>( net );
+	for ( int z = 0; z < net.GetZSize(); ++z )
+		for ( int y = 0; y < net.GetYSize(); ++y )
+			for ( int x = 0; x < net.GetXSize(); ++x )
+			{
+				const BYTE hp = cells[z][y][x];
+				*pHash = ( *pHash ^ hp ) * 1099511628211ULL;
+				if ( hp != 0 && hp != N_INDESTRUCTIBLE && hp != N_CELLAR )
+				{
+					++*pLive;
+					*pHP += hp;
+				}
+			}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+CVec3 CBuildingGrid::GetLocalCenterForHarness() const
+{
+	return ( ptBoxMin + ptBoxMax ) * 0.5f;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 void CBuildingGrid::UpdatePart( const SPoint3 &pt )
 {
 	for ( int x = -1; x < 2; ++x )

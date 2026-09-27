@@ -4,7 +4,8 @@
 `--mission-ui-ack <variant>`, `--mission-party-ui-ack <variant>`, and
 `--mission-party-shot <variant>`, and
 `--mission-party-shot-save <variant>` and
-`--mission-party-shot-slot <variant>` paths. It loads the
+`--mission-party-shot-slot <variant>`, plus
+`--mission-party-explosion-save <variant> <save-file>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -16,7 +17,8 @@ The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810UIAck`, `NativeWorldMission810PartyUIAck`, and
 `NativeWorldMission810PartyShot`, and
 `NativeWorldMission810PartyShotSave` and
-`NativeWorldMission810PartyShotSlot` in both
+`NativeWorldMission810PartyShotSlot` and
+`NativeWorldMission810PartyExplosionSave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -291,9 +293,31 @@ party mode deploys a hero and exercises one scripted aim-only command, a
 controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip
 followed by ten headless segments and a second controlled shot on the loaded world.
 The alternate slot mode also copies and reloads the world through the active
-`CSaveManager` slot. It does not create the mission UI, execute a full combat
-turn, invoke `CMission::SaveWorld`/`LoadWorld`, or compare dynamic AI, route,
-battle, and destruction decisions against Steam x86. The variant-810 script
+`CSaveManager` slot and exercises one autonomous enemy attack. A separate
+`--mission-party-explosion-save 810` mode invokes the game's `CWorld::Explode`
+at the centre of a generated building, then serializes the world and reads it
+back. The test uses a read-only diagnostic view of the building's voxel grid:
+live destructible cells, their HP sum, and a deterministic hash of *every*
+cell and the grid dimensions. In the selected mission-810 building on Windows
+x64, the explosion changed 108 live cells to 79, HP sum 18838 to 10173, and
+hash `93041fa732f2d5e4` to `8a7e7a9b02af9c19`; the loaded grid had the
+same 79 cells, 10173 HP sum and `8a7e7a9b02af9c19` hash. Linux x86-64 and
+ARM64/QEMU produced the same numbers and hashes under ASan/UBSan. The explosion also
+creates a temporary skeleton animator with no skeleton; ASan/UBSan exposed
+uninitialized serialized `bServer`/`bItem` flags on that path, now initialized
+to false. This calls the world explosion directly, not an inventory grenade,
+rocket trajectory or authored script trigger. It verifies voxel damage and
+its persistence, not equivalence of the blast, stability cascade, FX, or AI
+route changes to Steam.
+With the voxel-hash gate, Windows x64 built `Game.exe` and passed 135/135
+CTest; Linux x86-64 and ARM64/QEMU each passed 112/112 under ASan/UBSan with
+`halt_on_error=1`. Five consecutive Windows runs of the explosion test passed.
+The final ARM64 suite took 297 seconds. This remains a headless world probe,
+not a Linux `Game.exe` or GPU check.
+
+The probe does not create the mission UI, invoke `CMission::SaveWorld`/
+`LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
+against Steam x86. The variant-810 script
 waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches
 its later callback declaration. No real UI action or later callback invocation
 is proved. The absence of Lua errors and these script

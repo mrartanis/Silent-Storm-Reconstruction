@@ -11,6 +11,7 @@
 #include "../DBFormat/DataScript.h"
 #include "../Main/GSceneUtils.h"
 #include "../Main/A5Script.h"
+#include "../Main/BuildingGrid.h"
 #include "../Main/aiCommander.h"
 #include "../Main/aiUnit.h"
 #include "../Main/eventUnit.h"
@@ -21,6 +22,7 @@
 #include "../Main/RPGUnitInfo.h"
 #include "../Main/RPGUnitMission.h"
 #include "../Main/wMain.h"
+#include "../Main/wBuilding.h"
 #include "../Main/wUICommands.h"
 #include "../Main/wUnitCommands.h"
 #include "../Main/wUnitServer.h"
@@ -51,8 +53,9 @@ int main(int argc, char** argv) {
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
   const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
   const bool missionPartyShotSlot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-slot") == 0;
+  const bool missionPartyExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-explosion-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot ||
-    missionPartyShotSave || missionPartyShotSlot;
+    missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -218,6 +221,69 @@ int main(int argc, char** argv) {
         Script::AutoBlock stack(*world->GetOwnScript());
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
+      }
+      if (missionPartyExplosionSave) {
+        if (variant != 810) return 45;
+        int buildingIndex = -1;
+        unsigned long long liveBefore = 0, hpBefore = 0, hashBefore = 0;
+        NWorld::CBuilding* target = nullptr;
+        int candidateIndex = 0;
+        for (const auto& building : world->GetBuildingsForHarness()) {
+          if (building && building->GetInfo().pGrid && building->GetInfo().pPos) {
+            unsigned long long live = 0, hp = 0, hash = 0;
+            building->GetInfo().pGrid->GetVoxelStatsForHarness(&live, &hp, &hash);
+            if (live != 0) {
+              buildingIndex = candidateIndex;
+              liveBefore = live;
+              hpBefore = hp;
+              hashBefore = hash;
+              target = building.GetPtr();
+              break;
+            }
+          }
+          ++candidateIndex;
+        }
+        if (!target) return 46;
+        const auto& info = target->GetInfo();
+        CVec3 epicentre;
+        info.pPos->pos.forward.RotateHVector(&epicentre,
+          info.pGrid->GetLocalCenterForHarness());
+        world->Explode(epicentre, 1024);
+        unsigned long long liveAfter = 0, hpAfter = 0, hashAfter = 0;
+        info.pGrid->GetVoxelStatsForHarness(&liveAfter, &hpAfter, &hashAfter);
+        std::printf("building %d explosion: live %llu -> %llu, HP %llu -> %llu, hash %016llx -> %016llx\n",
+          buildingIndex, liveBefore, liveAfter, hpBefore, hpAfter, hashBefore, hashAfter);
+        if (hpAfter >= hpBefore || liveAfter > liveBefore || hashAfter == hashBefore) return 47;
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame()) return 48;
+        restored->RestoreRuntimeCaches(restored->GetGlobalGame());
+        int restoredIndex = 0;
+        for (const auto& building : restored->GetBuildingsForHarness()) {
+          if (restoredIndex++ != buildingIndex) continue;
+          if (!building || !building->GetInfo().pGrid) return 49;
+          unsigned long long restoredLive = 0, restoredHP = 0, restoredHash = 0;
+          building->GetInfo().pGrid->GetVoxelStatsForHarness(&restoredLive, &restoredHP, &restoredHash);
+          std::printf("restored building %d: live %llu, HP %llu, hash %016llx\n",
+            buildingIndex, restoredLive, restoredHP, restoredHash);
+          if (restoredLive != liveAfter || restoredHP != hpAfter || restoredHash != hashAfter) return 50;
+          break;
+        }
+        if (restoredIndex <= buildingIndex) return 51;
       }
       if (missionPartyShot || missionPartyShotSave || missionPartyShotSlot) {
         auto* shooter = world->GetUnitServer("pers1");
