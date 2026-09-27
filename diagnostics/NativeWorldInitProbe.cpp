@@ -58,9 +58,10 @@ int main(int argc, char** argv) {
   const bool missionPartyExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-explosion-save") == 0;
   const bool missionPartyGrenadeSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-save") == 0;
   const bool missionPartyGrenadeFlightSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-flight-save") == 0;
+  const bool missionPartyGrenadeInventorySave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-inventory-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot ||
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
-    missionPartyGrenadeSave || missionPartyGrenadeFlightSave;
+    missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -227,7 +228,8 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyExplosionSave || missionPartyGrenadeSave || missionPartyGrenadeFlightSave) {
+      if (missionPartyExplosionSave || missionPartyGrenadeSave || missionPartyGrenadeFlightSave ||
+          missionPartyGrenadeInventorySave) {
         if (variant != 810) return 45;
         int buildingIndex = -1;
         unsigned long long liveBefore = 0, hpBefore = 0, hashBefore = 0;
@@ -253,7 +255,7 @@ int main(int argc, char** argv) {
         CVec3 epicentre;
         info.pPos->pos.forward.RotateHVector(&epicentre,
           info.pGrid->GetLocalCenterForHarness());
-        if (missionPartyGrenadeSave || missionPartyGrenadeFlightSave) {
+        if (missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave) {
           auto* grenade = NDb::GetRPGGrenade(21); // Retail's scripted blast record.
           auto* thrower = world->GetUnitServer("pers1");
           if (!grenade || !thrower || !world->GetExplosionMasterForHarness()) return 52;
@@ -273,11 +275,31 @@ int main(int argc, char** argv) {
           s2_game_random.SeedForHarness(81021);
 #endif
           const auto miscBefore = world->GetMiscObjects()->size();
-          if (missionPartyGrenadeFlightSave)
+          int grenadeAPBefore = -1, grenadeAPCost = -1;
+          if (missionPartyGrenadeInventorySave) {
+            auto* inventory = thrower->GetUnitRPG()->GetInventory();
+            CObj<NRPG::IInventoryItem> displaced(inventory->TakeOff(NDb::SLOT_2));
+            CObj<NRPG::IInventoryItem> grenadeItem(NRPG::CreateGrenadeItem(grenade));
+            if (!grenadeItem || !inventory->Equip(NDb::SLOT_2, grenadeItem) ||
+                !inventory->Activate(NDb::SLOT_2)) return 54;
+            grenadeAPBefore = thrower->GetAP();
+            grenadeAPCost = thrower->GetActionAP(NRPG::AC_THROW_GRENADE);
+            std::printf("grenade inventory pre-command: attack allowed %d, action type %d, command %d\n",
+              world->IsAttackAllowed() ? 1 : 0, int(NWorld::GetActionType(thrower)),
+              thrower->HasCommand() ? 1 : 0);
+            thrower->Do(new NWorld::CCmdSetCommand(thrower,
+              new NWorld::CCmdShootTile(epicentre)));
+            thrower->Do(new NWorld::CCmdSetCommand(thrower,
+              new NWorld::CCmdContinue()));
+            std::string commandName;
+            std::printf("grenade inventory throw: AP before %d, active slot %d, command %d, executor %s\n",
+              grenadeAPBefore, inventory->GetActiveSlot(), thrower->HasCommand() ? 1 : 0,
+              thrower->GetCurrentCommandName(&commandName) ? commandName.c_str() : "none");
+          } else if (missionPartyGrenadeFlightSave)
             NWorld::UnitThrowGrenade(thrower, grenade, epicentre);
           else
             world->AddGrenadeExplosion(epicentre, grenade, thrower);
-          if (missionPartyGrenadeFlightSave)
+          if (missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave)
             std::printf("grenade flight objects: %zu -> %zu\n", miscBefore,
               world->GetMiscObjects()->size());
           for (int tick = 220; tick < 420; ++tick) {
@@ -289,20 +311,26 @@ int main(int argc, char** argv) {
             }
             if (!NScript::luaLastError.szError.empty()) return 53;
           }
-          if (missionPartyGrenadeFlightSave)
-            std::printf("grenade flight objects after 200 ticks: %zu\n",
-              world->GetMiscObjects()->size());
+          if (missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave)
+            std::printf("grenade flight objects after 200 ticks: %zu, AP %d, slot2 %d\n",
+              world->GetMiscObjects()->size(), thrower->GetAP(),
+              thrower->GetUnitRPG()->GetInventory()->Get(NDb::SLOT_2) ? 1 : 0);
+          if (missionPartyGrenadeInventorySave &&
+              (thrower->GetAP() != grenadeAPBefore - grenadeAPCost ||
+               thrower->GetUnitRPG()->GetInventory()->Get(NDb::SLOT_2))) return 55;
         } else {
           world->Explode(epicentre, 1024);
         }
         unsigned long long liveAfter = 0, hpAfter = 0, hashAfter = 0;
         info.pGrid->GetVoxelStatsForHarness(&liveAfter, &hpAfter, &hashAfter);
         std::printf("building %d %s explosion: live %llu -> %llu, HP %llu -> %llu, hash %016llx -> %016llx\n",
-          buildingIndex, missionPartyGrenadeFlightSave ? "grenade flight" :
-            (missionPartyGrenadeSave ? "grenade" : "world"),
+          buildingIndex, missionPartyGrenadeInventorySave ? "grenade inventory" :
+            (missionPartyGrenadeFlightSave ? "grenade flight" :
+            (missionPartyGrenadeSave ? "grenade" : "world")),
           liveBefore, liveAfter, hpBefore, hpAfter, hashBefore, hashAfter);
         if (hpAfter >= hpBefore || liveAfter > liveBefore || hashAfter == hashBefore ||
-            ((missionPartyGrenadeSave || missionPartyGrenadeFlightSave) && liveAfter == liveBefore)) return 47;
+            ((missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave) &&
+             liveAfter == liveBefore)) return 47;
         {
           CFileStream saved;
           saved.OpenWrite(argv[5]);

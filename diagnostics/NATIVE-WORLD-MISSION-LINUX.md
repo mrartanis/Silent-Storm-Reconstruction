@@ -7,7 +7,8 @@
 `--mission-party-shot-slot <variant>`, plus
 `--mission-party-explosion-save <variant> <save-file>` and
 `--mission-party-grenade-save <variant> <save-file>` and
-`--mission-party-grenade-flight-save <variant> <save-file>` paths. It loads the
+`--mission-party-grenade-flight-save <variant> <save-file>` and
+`--mission-party-grenade-inventory-save <variant> <save-file>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -22,7 +23,8 @@ The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810PartyShotSlot` and
 `NativeWorldMission810PartyExplosionSave` and
 `NativeWorldMission810PartyGrenadeSave` and
-`NativeWorldMission810PartyGrenadeFlightSave` in both
+`NativeWorldMission810PartyGrenadeFlightSave` and
+`NativeWorldMission810PartyGrenadeInventorySave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -384,6 +386,22 @@ The clean native-media x64 archive from `ec4f587` is
 SHA-256 is `7C70C50B0F8B6A0F33B0744A2E86B5BAD56DB721089ABDAF5E78EE81F770332B`.
 It contains no `fmod.dll`. This archive was not separately smoke-tested in
 the graphical game.
+
+`--mission-party-grenade-inventory-save 810` equips a real grenade item from
+record 21 in the mission shooter's second inventory slot, activates it, and
+issues the normal `CCmdShootTile` followed by `CCmdContinue`. The continue
+command is essential: the first command creates `CExecQueue` but does not
+start its action, exactly as in the existing player-shot gate. The test
+requires the grenade item to leave the slot, 20 AP to be spent, voxel-cell
+and HP loss in the target building, and exact grid restoration after save/load.
+This covers inventory, action executor, ballistic flight, contact fuse,
+explosion and voxel persistence without using the UI. The first diagnostic
+attempt omitted `CCmdContinue`, leaving AP and inventory unchanged; that was
+a harness error, not a game bug. With the complete command sequence, 20/20
+Windows x64 repetitions passed. The full matrices passed Windows x64 138/138
+(with `Game.exe` built) and Linux x86-64 115/115 under ASan/UBSan.
+The visual throw animation, Steam's dynamic damage distribution and other
+grenade types remain outside this gate.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
