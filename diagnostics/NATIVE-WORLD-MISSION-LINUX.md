@@ -410,6 +410,22 @@ SHA-256 is `0C3A128901F03CAC4AA23EA8C440E86684C400B62D58E7E39FA04D3D04E72E43`.
 It contains no `fmod.dll`. A separate graphical smoke of this archive is
 not claimed.
 
+`--mission-party-eng-grenade-inventory-save 810` exercises the distinct
+engineer-grenade record 2 (item 433). The authored shooter has only 15
+engineering, so the isolated test raises that skill to 100 and checks that
+`CanDo` accepts the shortened target; the farther building center is out of
+ballistic range for this item. It equips and throws via the same inventory
+command route, then verifies one item and 20 AP spent, voxel-cell/HP loss in
+the building, and exact damaged-grid restoration after save/load. The first
+rotation produces the game's `TBS_CANCEL_ACTION`, so the test reissues the
+still-unspent action once, just as a player can after an interrupt. The
+precise visibility/trap notice causing the cancellation is not isolated; the
+test does not establish an engineer-grenade-specific cancellation
+bug. Windows x64 passed 20/20 repetitions and the full 139/139 CTest matrix;
+Linux x86-64 and ARM64/QEMU passed 116/116 each; the ARM64 run under
+ASan/UBSan took about 410 seconds. The graphical throw and Steam's dynamic
+outcome remain unverified.
+
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
 against Steam x86. The variant-810 script

@@ -1221,6 +1221,11 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
         --mission-party-grenade-inventory-save 810 "${CMAKE_BINARY_DIR}/world-mission-810-grenade-inventory.sav")
     set_tests_properties(NativeWorldMission810PartyGrenadeInventorySave PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    add_test(NAME NativeWorldMission810PartyEngGrenadeInventorySave
+      COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+        --mission-party-eng-grenade-inventory-save 810 "${CMAKE_BINARY_DIR}/world-mission-810-eng-grenade-inventory.sav")
+    set_tests_properties(NativeWorldMission810PartyEngGrenadeInventorySave PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
   endif()
 endif()
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
