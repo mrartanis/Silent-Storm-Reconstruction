@@ -601,3 +601,64 @@ diagnosis under QEMU, run `RunScenarioRootWorlds.cmake` in the configured
 3791–3842, 3844–4526, 5003–5084, 5112–5175, 5240–5271, 5376–5393,
 5401–5484, 5709–6277 and 6814–7254; they contain all 52 active roots
 from the original `game.db`.
+
+## Root worlds with a deployed party
+
+`NativeScenarioRootPartyWorlds` repeats the 52 active root variants with a
+real `CGlobalPlayer`, `CPlayer`, hero unit and sequence commander. It runs
+220 world updates at 50-ms intervals and acknowledges only UI-action IDs
+that the headless Lua script is waiting for. It checks that world time
+advances and Lua reports no error; it does not simulate rendering, camera
+motion, input, a complete turn, or Steam's tactical decisions. Each root
+still runs in a fresh process. The focused non-extended
+`NativeWorldMission3832PartyUIAck` and
+`NativeWorldMission6814PartyUIAck` protect the first two sanitizer failures.
+Windows x64 passed the 52-root party CTest in 99.76 seconds and all
+149 non-extended tests after the first fix. After both fixes it passed
+150/150 non-extended tests and the 52-root party CTest again (100.30
+seconds). On the final two-fix binary, Linux x86-64 also passed all 52
+party roots under ASan/UBSan/LSan in nine disjoint ranges of the same
+script. The rebuilt Linux x86-64 non-extended suite passed 123/123; the
+new focused 3832 and 6814 modes were run directly because this scratch
+build keeps `game.db` and resources at its root instead of the `res/`
+layout required for their CTest registration. This is complete root
+coverage, not a single serial Linux CTest run.
+
+Linux x86-64 ASan/UBSan found the failure at root 3832:
+`CWeaponItem::IsShootModeSupported` indexed `shootModes[100]`, although
+`CRPGWeapon` has only six shoot-mode flags. The authored Lua script for
+this scenario passes both `100` and `-1` to `UnitSetShootMode` for its
+Rocketeer and Laser units. The accessor now rejects out-of-range modes
+before indexing, leaving all six valid modes unchanged. This makes the
+scripted requests no-ops instead of reads into adjacent object memory;
+it is a safety interpretation, not a measured Steam gameplay comparison.
+The focused 3832 run passed afterward on Linux x86-64 with ASan/UBSan/LSan
+and ARM64/QEMU with ASan/UBSan (LSan disabled).
+
+The first ARM64 sweep of the new party mode also exposed a separate
+UBSan error at root 6814, reproduced on Linux x86-64. Authored Lua calls
+`CreateAndActivateItem` when no old hand item needs moving. Its command
+still copies the default `SItem` source/target records, whose placement
+enum, slot and position were uninitialized. `SItem` now gives these
+inactive fields neutral defaults (`VACUUM`, `-1`, `(-1,-1)`); explicit
+placement constructors continue to override the relevant fields. The
+Windows x64 focused 6814 run passed after this edit. This is an
+initialization fix, not evidence of Steam inventory parity. The focused
+6814 run also passed on Linux x86-64 under ASan/UBSan/LSan and ARM64/QEMU
+under ASan/UBSan (LSan disabled) after the edit.
+The rebuilt ARM64/QEMU non-extended suite passed 123/123 under
+ASan/UBSan with leak detection disabled (376.56 seconds). As on Linux
+x86-64, the two new focused tests were run directly in this scratch
+resource layout rather than registered CTest names.
+The final ARM64/QEMU binary also passed all 52 party-root worlds under
+ASan/UBSan (LSan disabled) in the same nine disjoint ranges, with a
+fresh QEMU process per root. This is full startup-and-220-tick coverage
+of the active roots on ARM64, not a single serial CTest run and not a
+Steam gameplay-parity check.
+
+Run `ctest --test-dir <build> -C RelWithDebInfo --output-on-failure
+-R '^NativeScenarioRootPartyWorlds$'` on Windows, or omit `-C` on a Linux
+build configured against a game directory with `res/Waypoints.res`. The
+same `RunScenarioRootWorlds.cmake` used above accepts `-DPARTY_MODE=ON`
+and the nine disjoint variant ranges for direct headless Linux/ARM64
+diagnosis when the resource files live at the scratch root.

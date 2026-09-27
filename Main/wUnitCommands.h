@@ -423,9 +423,9 @@ struct SItem
 	};
 
 	ZDATA
-	int nSlot;
-	EPlacement eType;
-	CTPoint<int> sPosition;
+	int nSlot = -1;
+	EPlacement eType = VACUUM;
+	CTPoint<int> sPosition = CTPoint<int>( -1, -1 );
 	CPtr<CUnit> pUnit;
 	CPtr<IItem> pWorldItem;
 	CPtr<IPlayer> pPlayer;

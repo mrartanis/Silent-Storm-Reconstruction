@@ -52,6 +52,7 @@ class AttackEventCounter : public CObjectBase {
 int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
+  const bool missionRootParty = argc == 5 && std::strcmp(argv[3], "--mission-root-party") == 0;
   const bool missionBasePartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-base-party-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
@@ -66,7 +67,7 @@ int main(int argc, char** argv) {
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
     missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave ||
     missionPartyEngGrenadeInventorySave;
-  const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck;
+  const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck || missionRootParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
@@ -90,7 +91,7 @@ int main(int argc, char** argv) {
   if (!scriptCount) return 5;
   CObj<NRPG::CGlobalGame> game = (mission || missionWithUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
-  if (missionParty || missionBasePartyUIAck)
+  if (missionParty || missionBasePartyUIAck || missionRootParty)
     game->players.push_back(NRPG::CreateGlobalPlayer());
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
@@ -125,7 +126,7 @@ int main(int argc, char** argv) {
     if (variant == 810) {
       world->SetTimeOfDay(NWorld::TOD_NIGHT);
     }
-    if (missionParty || missionBasePartyUIAck) {
+    if (missionParty || missionBasePartyUIAck || missionRootParty) {
       // CPlayerTracker does this between CreateRandom and RunPostInit in the
       // real mission. Its sequence commander also owns human-unit AI wrappers.
       CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);

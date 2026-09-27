@@ -157,6 +157,11 @@ bool CWeaponItem::SetShootMode( NDb::EShootMode _eShootMode )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CWeaponItem::IsShootModeSupported( NDb::EShootMode eMode ) const
 {
+	// Campaign scripts pass 100 and -1 through UnitSetShootMode (variant 3832).
+	// Neither is one of the six database shoot modes; reject them before indexing
+	// the record so a scripted no-op does not depend on adjacent object memory.
+	if ( int(eMode) < 0 || int(eMode) >= NDb::SM_MAXVALUE )
+		return false;
 	return pDBWeapon->shootModes[eMode];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

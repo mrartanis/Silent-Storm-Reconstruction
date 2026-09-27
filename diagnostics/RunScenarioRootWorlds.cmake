@@ -29,9 +29,14 @@ foreach(root IN LISTS roots)
   if(DEFINED END_VARIANT AND variant_id GREATER END_VARIANT)
     continue()
   endif()
+  if(PARTY_MODE)
+    set(probe_mode --mission-root-party)
+  else()
+    set(probe_mode --mission)
+  endif()
   execute_process(
     COMMAND ${TEST_EMULATOR} "${WORLD_PROBE}" "${GAME_DB}" "${RESOURCE_DIR}"
-      --mission "${variant_id}"
+      ${probe_mode} "${variant_id}"
     RESULT_VARIABLE world_result
     OUTPUT_VARIABLE world_output
     ERROR_VARIABLE world_error
@@ -41,7 +46,11 @@ foreach(root IN LISTS roots)
     message(FATAL_ERROR
       "World startup failed for scenario root ${variant_id} (${world_result}):\n${world_output}\n${world_error}")
   endif()
-  message(STATUS "Scenario root ${variant_id}: world post-init completed")
+  if(PARTY_MODE)
+    message(STATUS "Scenario root ${variant_id}: world post-init and party ticks completed")
+  else()
+    message(STATUS "Scenario root ${variant_id}: world post-init completed")
+  endif()
   math(EXPR tested_count "${tested_count} + 1")
 endforeach()
 
