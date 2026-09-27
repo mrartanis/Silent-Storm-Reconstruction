@@ -23,6 +23,17 @@ ptrace. The original database load logs 69 grouped unresolved-reference
 diagnostics. That remains a separate data/behavior comparison with Steam;
 record-count parity does not establish that every reference is valid.
 
+On 2026-09-27 `NativeGameDatabaseLoadTests` was strengthened to compare the
+ID of every decoded source row against the original typed runtime table, not
+only table sizes. The original `game.db` passed for all 239,310 records in
+all 155 tables on Windows x64, GCC Linux x86-64 and ARM64/QEMU, and Clang
+Linux x86-64. The full Windows suite passed 144/144 and GCC Linux x86-64
+passed 120/120 under ASan/UBSan/LSan. This catches lost or
+mis-keyed records even when table counts match. The 69 groups of unresolved
+references remain: this test does not establish that their field-to-target
+table mapping matches the Steam executable or that every missing reference
+is harmless to gameplay.
+
 On the authorized Linux host, after copying this source tree and the licensed
 `game.db` to `/tmp/s2-matrix-links.zCkO0O/`, run:
 

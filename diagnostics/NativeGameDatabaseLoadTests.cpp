@@ -5,6 +5,7 @@
 #include "../FileIO/PortableGameDatabase.h"
 
 #include <cstdio>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
 
@@ -25,6 +26,7 @@ int main( int argc, char **argv )
 		if ( !S2FileIO::LoadPortableGameDatabase( argv[1], &decoded, &error ) )
 			throw std::runtime_error( error );
 		unsigned int comparedTables = 0;
+		std::size_t comparedIDs = 0;
 		for ( const auto &table : decoded.tables )
 		{
 			CDBTableBase *loaded = NDatabase::GetTable( table.tableId );
@@ -33,6 +35,22 @@ int main( int argc, char **argv )
 				std::fprintf( stderr, "table=%d source=%zu loaded=%zu\n",
 					table.tableId, table.intRows.size(), loaded ? loaded->GetRecordCount() : 0 );
 				return 6;
+			}
+			const auto idIt = std::find( table.intNames.begin(), table.intNames.end(), "ID" );
+			if ( idIt == table.intNames.end() ) return 10;
+			const std::size_t idColumn = idIt - table.intNames.begin();
+			for ( const auto &row : table.intRows )
+			{
+				if ( idColumn >= row.size() ) return 11;
+				const int id = row[idColumn];
+				const CDBRecord *record = loaded->GetDBRecord( id );
+				if ( !record || record->GetRecordID() != id )
+				{
+					std::fprintf( stderr, "table=%d record id=%d missing or mismatched\n",
+						table.tableId, id );
+					return 12;
+				}
+				++comparedIDs;
 			}
 			++comparedTables;
 		}
@@ -69,8 +87,8 @@ int main( int argc, char **argv )
 				++specChecks;
 			}
 		}
-		std::printf( "tables=%u materials=%u spec_checks=%u\n",
-			comparedTables, count, specChecks );
+		std::printf( "tables=%u record_ids=%zu materials=%u spec_checks=%u\n",
+			comparedTables, comparedIDs, count, specChecks );
 		return comparedTables == decoded.tables.size() && count && specChecks == count ? 0 : 4;
 	}
 	catch ( const std::exception &e )

@@ -589,6 +589,10 @@ add_executable(NativeMapDatabaseTests "${root}/diagnostics/NativeMapDatabaseTest
 target_include_directories(NativeMapDatabaseTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapDatabaseTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeMapDatabaseTests PRIVATE Main)
+add_executable(NativeGameDatabaseLoadTests "${root}/diagnostics/NativeGameDatabaseLoadTests.cpp")
+target_include_directories(NativeGameDatabaseLoadTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeGameDatabaseLoadTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeGameDatabaseLoadTests PRIVATE Main s2_portable_database)
 add_executable(NativeMapFlagsTests "${root}/diagnostics/NativeMapFlagsTests.cpp")
 target_include_directories(NativeMapFlagsTests PRIVATE "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeMapFlagsTests PRIVATE "${root}/Main/StdAfx.h")
@@ -1072,6 +1076,8 @@ if(S2_GAME_DIR)
     endif()
     add_test(NAME NativeMapDatabaseTests
       COMMAND NativeMapDatabaseTests "${S2_GAME_DIR}/game.db")
+    add_test(NAME NativeGameDatabaseLoadTests
+      COMMAND NativeGameDatabaseLoadTests "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMissionScriptCorpusTests
       COMMAND NativeMissionScriptCorpusTests "${S2_GAME_DIR}/game.db")
     add_test(NAME NativeMapFlagsTests
