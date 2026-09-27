@@ -12,6 +12,7 @@
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataRPG.h"
+#include "../Misc/RandomGen.h"
 #include "../Script/lua.h"
 
 #include <cstdint>
@@ -48,12 +49,16 @@ static void AddBehaviorWord( std::uint32_t value )
 		behaviorDigest *= UINT64_C(1099511628211);
 	}
 }
-static void AddBehaviorFloat( float value )
+static std::uint32_t FloatBits( float value )
 {
 	std::uint32_t bits = 0;
 	static_assert( sizeof(bits) == sizeof(value), "32-bit game float expected" );
 	std::memcpy( &bits, &value, sizeof(bits) );
-	AddBehaviorWord( bits );
+	return bits;
+}
+static void AddBehaviorFloat( float value )
+{
+	AddBehaviorWord( FloatBits( value ) );
 }
 static void AddBehaviorCommands( const std::vector<NAI::SCommand> &commands )
 {
@@ -81,10 +86,15 @@ static std::size_t AddRoute( const std::vector<CPtr<CMapWaypoint> > &route )
 		AddRouteWord( static_cast<std::uint32_t>( point->commands.size() ) );
 		AddBehaviorWord( point->pName->GetRecordID() );
 		AddBehaviorWord( point->bExists );
-		AddBehaviorFloat( point->pos.ptPos.x );
-		AddBehaviorFloat( point->pos.ptPos.y );
-		AddBehaviorFloat( point->pos.ptPos.z );
-		AddBehaviorWord( point->pos.nFloor );
+		// An unresolved route point carries only its database name. Its
+		// position is not initialized until a matching map waypoint exists.
+		if ( point->bExists )
+		{
+			AddBehaviorFloat( point->pos.ptPos.x );
+			AddBehaviorFloat( point->pos.ptPos.y );
+			AddBehaviorFloat( point->pos.ptPos.z );
+			AddBehaviorWord( point->pos.nFloor );
+		}
 		AddBehaviorCommands( point->commands );
 	}
 	return route.size();
@@ -92,7 +102,9 @@ static std::size_t AddRoute( const std::vector<CPtr<CMapWaypoint> > &route )
 
 int main( int argc, char **argv )
 {
-	if ( argc != 4 && ( argc != 5 || std::strcmp( argv[4], "--print-scripts" ) ) )
+	const bool printScripts = argc == 5 && !std::strcmp( argv[4], "--print-scripts" );
+	const bool deterministic = argc == 5 && !std::strcmp( argv[4], "--deterministic" );
+	if ( argc != 4 && !printScripts && !deterministic )
 		return 2;
 	CFileStream database;
 	database.OpenRead( argv[1] );
@@ -144,6 +156,17 @@ int main( int argc, char **argv )
 		}
 		return shown ? 0 : 6;
 	}
+	// BuildMap has retail clock-seeded auxiliary SRand instances (e.g. item
+	// models and border objects) in addition to its explicit map seed. Freeze
+	// those only for paired architecture probes; the game path is unchanged.
+	if ( deterministic )
+	{
+#if defined(_WIN32)
+		random.SeedForHarness( 123 );
+#else
+		s2_game_random.SeedForHarness( 123 );
+#endif
+	}
 	CObj<NAI::CPathNetwork> network = new NAI::CPathNetwork;
 	SMapInfo map;
 	const bool built = BuildMap( variantID, std::vector<std::string>(),
@@ -155,7 +178,7 @@ int main( int argc, char **argv )
 	for ( const CDBPtr<NDb::CScript> &record : map.scripts )
 	{
 		if ( !record || record->strCode.empty() ) return 7;
-		if ( argc == 5 )
+		if ( printScripts )
 			std::printf( "\nSCRIPT ID %d (%zu bytes)\n%.*s\n", record->GetRecordID(),
 				record->strCode.size(), static_cast<int>( record->strCode.size() ),
 				record->strCode.data() );
@@ -174,6 +197,7 @@ int main( int argc, char **argv )
 			behaviorDigest *= UINT64_C(1099511628211);
 		}
 	}
+	const std::uint64_t scriptBehaviorDigest = behaviorDigest;
 	Add( built );
 	Add( map.terrain.nWidth ); Add( map.terrain.nHeight );
 	if ( map.terrain.nWidth > 0 && map.terrain.nHeight > 0 )
@@ -181,6 +205,7 @@ int main( int argc, char **argv )
 		Add( map.terrain.heightMap[0][0] );
 		Add( map.terrain.typeMap[0][0] );
 	}
+	const std::uint64_t terrainDigest = digest;
 	for ( const SMapBuilding &building : map.buildings )
 	{
 		Add( building.pVariant ? building.pVariant->GetRecordID() : 0 );
@@ -188,6 +213,7 @@ int main( int argc, char **argv )
 		Add( Float2Int( building.mpos.ptPos.x * 1000 ) );
 		Add( Float2Int( building.mpos.ptPos.y * 1000 ) );
 	}
+	const std::uint64_t buildingDigest = digest;
 	Add( static_cast<std::uint32_t>( map.scripts.size() ) );
 	Add( static_cast<std::uint32_t>( map.groups.size() ) );
 	std::size_t unitRoutePoints = 0, groupRoutePoints = 0, routedUnits = 0;
@@ -213,6 +239,8 @@ int main( int argc, char **argv )
 		if ( !unit.route.empty() ) ++routedUnits;
 		unitRoutePoints += AddRoute( unit.route );
 	}
+	const std::uint64_t unitDigest = digest;
+	const std::uint64_t unitBehaviorDigest = behaviorDigest;
 	std::vector<int> groupIDs;
 	for ( const auto &group : map.groups ) groupIDs.push_back( group.first );
 	std::sort( groupIDs.begin(), groupIDs.end() );
@@ -224,6 +252,7 @@ int main( int argc, char **argv )
 		for ( int unitID : map.groups.at( id ).units ) AddBehaviorWord( unitID );
 		groupRoutePoints += AddRoute( map.groups.at( id ).route );
 	}
+	const std::uint64_t groupBehaviorDigest = behaviorDigest;
 	for ( const CObj<CMapWaypoint> &waypoint : map.waypoints )
 	{
 		Add( waypoint->pos.nFloor );
@@ -241,6 +270,8 @@ int main( int argc, char **argv )
 		AddBehaviorWord( waypoint->pos.nFloor );
 		AddBehaviorCommands( waypoint->commands );
 	}
+	const std::uint64_t waypointDigest = digest;
+	const std::uint64_t waypointBehaviorDigest = behaviorDigest;
 	Add( static_cast<std::uint32_t>( map.slots.size() ) );
 	for ( const SClueSlot &slot : map.slots )
 	{
@@ -253,6 +284,7 @@ int main( int argc, char **argv )
 		if ( slot.bPersSlot || slot.bInventorySlot )
 			Add( slot.nUnitID );
 	}
+	const std::uint64_t slotDigest = digest;
 	for ( const SMapElement &item : map.items )
 	{
 		Add( item.pObject ? item.pObject->nParentID : 0 );
@@ -272,6 +304,18 @@ int main( int argc, char **argv )
 		static_cast<unsigned long long>( routeDigest ) );
 	std::printf( "behavior_digest=%016llX\n",
 		static_cast<unsigned long long>( behaviorDigest ) );
+	std::printf( "component_digest terrain=%016llX buildings=%016llX units=%016llX waypoints=%016llX slots=%016llX items=%016llX\n",
+		static_cast<unsigned long long>( terrainDigest ),
+		static_cast<unsigned long long>( buildingDigest ),
+		static_cast<unsigned long long>( unitDigest ),
+		static_cast<unsigned long long>( waypointDigest ),
+		static_cast<unsigned long long>( slotDigest ),
+		static_cast<unsigned long long>( digest ) );
+	std::printf( "behavior_components scripts=%016llX units=%016llX groups=%016llX waypoints=%016llX\n",
+		static_cast<unsigned long long>( scriptBehaviorDigest ),
+		static_cast<unsigned long long>( unitBehaviorDigest ),
+		static_cast<unsigned long long>( groupBehaviorDigest ),
+		static_cast<unsigned long long>( waypointBehaviorDigest ) );
 	if ( variantID == 218 &&
 		( map.buildings.size() != 1 || !map.units.empty() ||
 		  map.items.size() != 21 || !map.waypoints.empty() ||
@@ -298,6 +342,15 @@ int main( int argc, char **argv )
 		  behaviorDigest != UINT64_C(0x12659D562097CF78) ||
 		  digest != UINT64_C(0x29C99EC264C4C6E7) ) )
 		return 4;
+	if ( variantID == 3830 && deterministic &&
+		( map.buildings.size() != 7 || map.units.size() != 26 ||
+		  map.items.size() != 1047 || map.waypoints.size() != 54 ||
+		  map.slots.size() != 5 || map.scripts.size() != 1 || scriptBytes != 111 ||
+		  routedUnits != 10 || unitRoutePoints != 36 || groupRoutePoints != 17 ||
+		  routeDigest != UINT64_C(0xF11ECF559130C3B2) ||
+		  behaviorDigest != UINT64_C(0x04DA549A759E4957) ||
+		  digest != UINT64_C(0x2DD3DDC11A704B89) ) )
+		return 4;
 	if ( variantID == 4526 &&
 		( map.buildings.size() != 7 || map.units.size() != 49 ||
 		  map.items.size() != 1514 || map.waypoints.size() != 24 ||
@@ -305,7 +358,7 @@ int main( int argc, char **argv )
 		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 14 ||
 		  routeDigest != UINT64_C(0xC9FCDC98D9DCD6F3) ||
 		  behaviorDigest != UINT64_C(0x7EAF4F97AD129EED) ||
-		  digest != UINT64_C(0x8C92AD1F7E8B90FA) ) )
+		  digest != UINT64_C(0xA65A2070B18C1067) ) )
 		return 4;
 	return built ? 0 : 3;
 }

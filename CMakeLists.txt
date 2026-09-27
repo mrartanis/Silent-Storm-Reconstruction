@@ -1107,6 +1107,17 @@ if(S2_GAME_DIR)
           add_test(NAME NativeMissionLargeMapProbe
             COMMAND NativeMissionMapProbe "${S2_GAME_DIR}/game.db"
               "${S2_GAME_DIR}/res" 4526)
+          add_test(NAME NativeScenarioPlacement3830
+            COMMAND NativeMissionMapProbe "${S2_GAME_DIR}/game.db"
+              "${S2_GAME_DIR}/res" 3830 --deterministic)
+          add_test(NAME NativeScenarioRootMaps
+            COMMAND "${CMAKE_COMMAND}"
+              "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+              "-DMAP_PROBE=$<TARGET_FILE:NativeMissionMapProbe>"
+              "-DGAME_DB=${S2_GAME_DIR}/game.db"
+              "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
+              -P "${root}/diagnostics/RunScenarioRootMaps.cmake")
+          set_tests_properties(NativeScenarioRootMaps PROPERTIES TIMEOUT 7200 LABELS extended)
         endif()
       endif()
     endif()
@@ -1135,6 +1146,14 @@ if(S2_GAME_DIR)
         set_tests_properties(NativeMissionLargeMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       endif()
+      if(TEST NativeScenarioPlacement3830)
+        set_tests_properties(NativeScenarioPlacement3830 PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      endif()
+      if(TEST NativeScenarioRootMaps)
+        set_tests_properties(NativeScenarioRootMaps PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+      endif()
     else()
       set_tests_properties(NativeMissionScriptCorpusTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
@@ -1146,6 +1165,14 @@ if(S2_GAME_DIR)
       endif()
       if(TEST NativeMissionMapProbe)
         set_tests_properties(NativeMissionMapProbe PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+      if(TEST NativeScenarioRootMaps)
+        set_tests_properties(NativeScenarioRootMaps PROPERTIES ENVIRONMENT_MODIFICATION
+          "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+      endif()
+      if(TEST NativeScenarioPlacement3830)
+        set_tests_properties(NativeScenarioPlacement3830 PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
       if(TEST NativeMissionRouteMapProbe)

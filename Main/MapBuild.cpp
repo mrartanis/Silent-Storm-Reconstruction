@@ -256,7 +256,10 @@ void CMapBuilder::AddBuildingObjects( int *pMinFloor, int *pMaxFloor, SRand *pRa
 		if ( !IsValid( pCP->pObject ) || (pCP->nSizeY == 0 && fr.nSubBlockID != NBuilding::GetPartHashID( 1, 1, 1 )) )
 			continue;
 		//
-		CVec3 ptShift;
+		// No geometry-origin shift for wall fragments or an unrotated solid.
+		// The old default construction left these components uninitialized on
+		// Linux, making otherwise fixed-seed maps depend on stack contents.
+		CVec3 ptShift = VNULL3;
 		if ( bSolids )
 		{
 			switch ( fr.nRotationID )

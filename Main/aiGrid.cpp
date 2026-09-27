@@ -2442,6 +2442,9 @@ void CPathNetwork::CreateLaddersInternal( CLayersGroup *pGroup )
 		ladder.nLocks.resize( ladderNYC.nHeight + 1, 0 );
 		ladder.pointOnUpperHalf.resize( ladderNYC.nHeight + 1, false );
 		ladder.bNeedRecalc = true;
+		// RefreshLadder sets the actual state later, but vector growth copies
+		// this bool immediately. Leaving it uninitialized is UB on Linux.
+		ladder.bConsistent = false;
 
 		CVec3 upper = GetCP( ladder.placeOnBottom );
 		upper.z += ladderNYC.nHeight * F_LADDER_STEP;

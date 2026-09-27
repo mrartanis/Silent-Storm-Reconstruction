@@ -812,6 +812,19 @@ if(S2_ENABLE_MISSION_MAP_PROBE)
           COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
             "${_s2_mission_res_dir}" 4526)
         set_tests_properties(NativeMissionLargeMapProbe PROPERTIES TIMEOUT 300)
+        add_test(NAME NativeScenarioPlacement3830
+          COMMAND NativeMissionMapProbe "${S2_GAME_DB_PATH}"
+            "${_s2_mission_res_dir}" 3830 --deterministic)
+        set_tests_properties(NativeScenarioPlacement3830 PROPERTIES TIMEOUT 300)
+        add_test(NAME NativeScenarioRootMaps
+          COMMAND "${CMAKE_COMMAND}"
+            "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+            "-DMAP_PROBE=$<TARGET_FILE:NativeMissionMapProbe>"
+            "-DGAME_DB=${S2_GAME_DB_PATH}"
+            "-DRESOURCE_DIR=${_s2_mission_res_dir}"
+            "-DTEST_EMULATOR=${CMAKE_CROSSCOMPILING_EMULATOR}"
+            -P "${root}/diagnostics/RunScenarioRootMaps.cmake")
+        set_tests_properties(NativeScenarioRootMaps PROPERTIES TIMEOUT 7200 LABELS extended)
       endif()
     endif()
   endif()

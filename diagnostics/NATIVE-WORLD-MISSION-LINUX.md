@@ -1,5 +1,21 @@
 # Native mission creation and post-init (stage 2)
 
+The expanded parallel GCC Linux x86-64 suite on 2026-09-27 exposed another
+undefined value on authored root missions 3829 and 4526: a newly created
+`CNodesLayer::SLadder` had `bConsistent` uninitialized when vector growth
+copied it. `RefreshLadder` still determines the real state later, but the
+copy must not read an indeterminate `bool`. `CreateLaddersInternal` now sets
+it to `false` before insertion. Focused `NativeWorldMission3829` and
+`NativeWorldMission4526` tests pass again on Windows x64, GCC Linux
+x86-64 under ASan/UBSan/LSan, and ARM64/QEMU under ASan/UBSan with leak
+detection off. The complete post-fix Windows suite passed 148/148. The
+complete post-fix GCC Linux x86-64 suite passed 123/123 under
+ASan/UBSan/LSan, including the 52-root extended map test (458.92 seconds
+for that case). The complete ARM64/QEMU suite passed 122/122 under
+ASan/UBSan with `-LE extended` and leak detection disabled; both authored
+mission cases passed there as well. The all-52-root ARM64 extended case
+remains separate and is not claimed complete.
+
 `NativeWorldInitProbe` has optional `--mission <variant>`,
 `--mission-ui-ack <variant>`, `--mission-base-party-ui-ack <variant>`,
 `--mission-party-ui-ack <variant>`, and

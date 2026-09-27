@@ -63,3 +63,63 @@ The expanded Windows x64 suite passed 146/146 and GCC Linux x86-64 passed
 off; the unchanged full 120-case suite had passed immediately before this
 test-only expansion. The Clang x86-64 graph and mission cases passed under
 ASan/UBSan/LSan as focused checks.
+
+`NativeScenarioRootMaps` is an extended CTest regression for the entire
+authored scenario-root set. The portable CMake driver
+`diagnostics/RunScenarioRootMaps.cmake` obtains the 52 IDs from
+`NativeMapDatabaseTests <game.db> --roots`, then launches a fresh
+`NativeMissionMapProbe` process for each root. Every process invokes the
+original `BuildMap` with seed 123, parses all selected mission scripts with
+the original Lua parser, and must report `built=1`. The probe also freezes
+the game's auxiliary clock-seeded RNGs only in this paired diagnostic mode.
+The driver hashes each
+map's geometry/object summary, route summary, and behavior/script digest
+into one platform-comparable SHA-256 fingerprint. A fresh process avoids
+carrying map-builder state from one mission into the next. This tests map
+construction and script syntax, not `CWorld` post-init, Lua effects, player
+actions, or Steam behavioral parity. It does not claim that all 985 variants
+in the transitive graph are selected in a campaign.
+
+Run it after building both probe targets, with the original `game.db` and
+`.res` paths configured as for the other mission probes:
+
+```
+ctest --test-dir <windows-build> -C RelWithDebInfo -R '^NativeScenarioRootMaps$' --output-on-failure
+ASAN_OPTIONS=detect_leaks=1 UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1 \
+  ctest --test-dir <linux-x64-build> -R '^NativeScenarioRootMaps$' --output-on-failure
+ASAN_OPTIONS=detect_leaks=0 UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1 \
+  ctest --test-dir <linux-arm64-build> -R '^NativeScenarioRootMaps$' --output-on-failure
+```
+
+The first Windows x64 and GCC Linux x86-64 full runs passed 52/52 roots,
+but comparing fingerprints exposed a real Linux nondeterminism in map 3830.
+Item-level tracing found three wall/solid objects with corrupted coordinates.
+`CMapBuilder::AddBuildingObjects` constructed `ptShift` without initializing
+it, then added it to every fragment position even when no rotation-specific
+shift applied. The corrected neutral shift is `(0,0,0)`; it is used for wall
+fragments and unrotated solids. The game path is changed by this fix, not
+just the test. Five repeated Linux x64 map-3830 runs had varied before the
+fix; three repeated post-fix runs gave the same geometry digest
+`2DD3DDC11A704B89`, matching Windows x64 and ARM64/QEMU under ASan/UBSan.
+Map 3840 also matches on all three architectures. The previous fixed
+Windows map-4526 checksum was updated from the former uninitialized-stack
+result to `A65A2070B18C1067`.
+
+The next full comparison isolated a second, probe-only mismatch in root
+5716. Six group-route points have `bExists=0`; their position fields are
+undefined until resolved. The probe now hashes their IDs, existence flags,
+commands and defined values, not the uninitialized positions. Root 5716
+then gave the same geometry and behavior digests on Windows x64, Linux x64
+and ARM64/QEMU.
+
+With both corrections, Windows x64 passed 148/148 CTests, including all
+52 roots in 61.26 seconds. GCC Linux x86-64 passed the extended 52-root
+test under ASan/UBSan/LSan in 494.30 seconds. Both produced the same
+aggregate digest, now asserted by the test:
+`2c281f9de3688e97011ccd069f4eeb2c1f74c7f04bb52df4de955d35286c2629`.
+On ARM64/QEMU the focused map-3830 regression and the updated map-4526
+regression passed under ASan/UBSan; maps 3840 and 5716 produced the same
+geometry, route and behavior digests in direct probes. The ordinary ARM64
+suite passed 122/122 under ASan/UBSan with `-LE extended` (leak detection
+off under QEMU). The entire 52-root ARM64/QEMU extended test is not claimed
+complete.
