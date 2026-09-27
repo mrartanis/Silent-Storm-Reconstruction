@@ -56,6 +56,22 @@ under ASan/UBSan with leak detection disabled; the full run took about
 854 seconds. The UI-byte assertion was added after this full run began;
 the updated ARM64 diagnostic passed separately in 101 seconds.
 
+A clean native-media Windows x64 archive from source commit `ee3ebe5` is at
+`G:\SS\lab\builds\stage2-db-cp1251-20260927-02`. Its `Game.exe` SHA-256 is
+`D5DDB0D590E96503EFCDEE030A1A8D9D0C4869BD842F096666D0022ECFFB7116`;
+`fmod.dll` is absent. The build used `Build-Lab.ps1 -NativeMedia -BuildJobs 16`
+with the configured FFmpeg/miniaudio roots and VS `vcvars64.bat` environment;
+run the script with PowerShell 7 (`pwsh`) in that environment so the final
+`Get-FileHash` step is available. The first attempt using Windows PowerShell
+left an incomplete `...-01` directory and is not an archive gate.
+`New-LabRun.ps1 -SkipIntro -LinkResources` staged the `...-02` archive as
+`G:\SS\lab\runs\stage2-db-cp1251-smoke-20260927-01`. The live process
+opened a responsive `Silent Storm` window, logged `DB-STORAGE: loaded 155
+columnar tables via portable v1` and `NATIVE-MUSIC playing:
+Res\Music\Mainmenu.wav`, and created no crash dump. `CloseMainWindow` then
+closed both Game and debugger. The screen was not visually inspected and no
+mission was played in this smoke run.
+
 On the authorized Linux host, after copying this source tree and the licensed
 `game.db` to `/tmp/s2-matrix-links.zCkO0O/`, run:
 
