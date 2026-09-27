@@ -314,6 +314,13 @@ CTest; Linux x86-64 and ARM64/QEMU each passed 112/112 under ASan/UBSan with
 `halt_on_error=1`. Five consecutive Windows runs of the explosion test passed.
 The final ARM64 suite took 297 seconds. This remains a headless world probe,
 not a Linux `Game.exe` or GPU check.
+The clean Windows x64 native-media archive from source commit `ad3412b` is
+`G:\SS\lab\builds\stage2-voxel-explosion-20260927-01`; its `Game.exe`
+SHA-256 is
+`A4D9623716A2C8C291D17CC3E4189ECFA68C9C33ACC191DD4332DBBF623C6D72`.
+It contains no `fmod.dll`. A live-game smoke of this specific archive is not
+claimed; the headless explosion test uses the same game code but does not
+exercise the UI or GPU.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
