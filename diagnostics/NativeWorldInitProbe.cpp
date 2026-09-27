@@ -13,6 +13,7 @@
 #include "../Main/A5Script.h"
 #include "../Main/rpgGlobal.h"
 #include "../Main/wMain.h"
+#include "../Main/wUICommands.h"
 #include "../Misc/RandomGen.h"
 
 #include <cstdio>
@@ -21,7 +22,8 @@
 
 int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
-  if (argc != 3 && !mission) return 2;
+  const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
+  if (argc != 3 && !mission && !missionUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
   NDatabase::Serialize(database, CStructureSaver::READ);
@@ -42,7 +44,7 @@ int main(int argc, char** argv) {
     ++scriptCount;
   }
   if (!scriptCount) return 5;
-  CObj<NRPG::CGlobalGame> game = mission
+  CObj<NRPG::CGlobalGame> game = (mission || missionUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
@@ -56,7 +58,7 @@ int main(int argc, char** argv) {
       return 7;
   }
   std::printf("world initialized with %d autoload scripts\n", scriptCount);
-  if (mission) {
+  if (mission || missionUIAck) {
     const int variant = std::atoi(argv[4]);
     CObj<NWorld::CPostWorldCreateInfo> post;
     world->CreateRandom(variant, std::vector<std::string>(), true,
@@ -75,7 +77,33 @@ int main(int argc, char** argv) {
       return 11; // The authored SetTimeOfDay(DAY) command actually ran.
     if (!NScript::luaLastError.szError.empty()) return 12;
     const auto before = world->GetTime()->GetValue();
-    world->UpdateWorld(before + 220 * 50, nullptr);
+    int acknowledged = 0;
+    if (missionUIAck) {
+      // Diagnostic only: the real mission UI consumes these commands and posts
+      // CCmdInterfaceEvent on completion. We only acknowledge their IDs; this
+      // does not simulate camera motion, unit actions, rendering, or input.
+      for (int tick = 0; tick < 220; ++tick) {
+        world->UpdateWorld(tick * 50, nullptr);
+        while (auto* raw = world->GetUICommand()) {
+          CObj<NWorld::CUICmd> command(raw);
+          const int id = command->GetID();
+          if (world->GetOwnScript()->IsUIActionIDPresent(id)) {
+            world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(id));
+            ++acknowledged;
+          }
+        }
+        if (!NScript::luaLastError.szError.empty()) return 14;
+      }
+      std::printf("headless UI IDs acknowledged: %d\n", acknowledged);
+      if (variant == 810 && acknowledged == 0) return 15;
+      if (variant == 810) {
+        Script::AutoBlock stack(*world->GetOwnScript());
+        if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
+          return 16; // Defined only after the authored opening sequence.
+      }
+    } else {
+      world->UpdateWorld(before + 220 * 50, nullptr);
+    }
     if (world->GetTime()->GetValue() <= before ||
         !NScript::luaLastError.szError.empty())
       return 13;

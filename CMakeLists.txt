@@ -999,12 +999,17 @@ if(S2_GAME_DIR)
         set_tests_properties(NativeWorldMission${_s2_world_variant} PROPERTIES
           WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       endforeach()
+      add_test(NAME NativeWorldMission810UIAck
+        COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
+          --mission-ui-ack 810)
+      set_tests_properties(NativeWorldMission810UIAck PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810
+        set_tests_properties(NativeWorldInitProbe NativeWorldMission218 NativeWorldMission810 NativeWorldMission810UIAck
           PROPERTIES ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()

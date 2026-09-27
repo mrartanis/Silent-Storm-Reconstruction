@@ -1,6 +1,7 @@
 # Native mission creation and post-init (stage 2)
 
-`NativeWorldInitProbe` has an optional `--mission <variant>` path. It loads the
+`NativeWorldInitProbe` has optional `--mission <variant>` and
+`--mission-ui-ack <variant>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -8,8 +9,9 @@ building map with no units or attached script. Variant 810 adds two authored
 units and one 1,016-byte attached Lua script; its startup also runs the
 world's first-segment warm-up, vision, physics, and path-colouring jobs.
 
-The tests are `NativeWorldMission218` and `NativeWorldMission810` in both the
-Windows and portable CMake builds. Example Linux verification, from a build
+The tests are `NativeWorldMission218`, `NativeWorldMission810`, and
+`NativeWorldMission810UIAck` in both the Windows and portable CMake builds.
+Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
 `S2_SCRIPT_CORPUS_DIR`:
 
@@ -26,10 +28,14 @@ working directory; resource packages remain in the configured resource
 directory. `ASAN_OPTIONS=detect_leaks=0` is the existing QEMU-compatible
 sanitizer setting; UBSan's `halt_on_error=1` is intentional for this gate.
 
-The final packet passed the full CTest matrix on 2026-09-26: Windows x64
+The previous packet passed the full CTest matrix on 2026-09-26: Windows x64
 129/129, Linux x86-64 106/106, and Linux ARM64/QEMU 106/106. Both Linux
 suites used ASan/UBSan, `ASAN_OPTIONS=detect_leaks=0`, and
 `UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1`.
+With the UI-ack gate added on 2026-09-27, the complete matrix passed:
+Windows x64 130/130, Linux x86-64 107/107, and Linux ARM64/QEMU 107/107
+under the same sanitizer settings. This builds only the diagnostic probe on
+Linux, not a Linux game executable.
 
 The first live variant-810 run exposed three previously dormant x64/Linux
 undefined behaviors, now covered by the mission gate and local regressions:
@@ -51,12 +57,25 @@ both map variants advance 220 world segments without a Lua error. For variant
 `SetTimeOfDay(DAY)` changes the world back to DAY during post-init. This is a
 specific observed mission-script effect, not merely successful parsing.
 
+The separate `--mission-ui-ack 810` probe advances one segment at a time and
+drains the original world UI-command queue. For commands whose IDs are still
+tracked by the attached script, it posts the original `CCmdInterfaceEvent`
+through `CWorld::ExecuteCommand`, as the real UI would do when it finishes a
+command. In this diagnostic mode, three IDs were acknowledged on Windows x64.
+The test also requires the authored `OnClickUsable` function to exist after
+220 segments. That function is defined *after* the opening camera/sequence
+waits, so this proves the Lua thread advanced beyond those waits, rather than
+only that the queue was drained. The probe uses `Script::AutoBlock` for this
+global lookup so it does not damage the active Lua stack. It does not execute
+the visual side of a UI command or validate the result of `UnitShootPrepare`.
+
 This is a headless original-world startup, **not** a full Linux game. The
 probe does not create the mission UI, deploy a human party, issue a combat
 command, save/reload the resulting mission, or compare dynamic AI, route,
 battle, and destruction decisions against Steam x86. The variant-810 script
-also waits on sequence/UI actions; the headless probe does not prove that its
-later callbacks or unit-shot command complete. The absence of Lua errors and
-the time-of-day effect do not prove that every mission binding worked.
-Those are the next stage-2 checks. SDL3/bgfx integration remains in stages
+waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches
+its later callback declaration. No real UI action, later callback invocation,
+or unit-shot outcome is proved. The absence of Lua errors and these two script
+effects do not prove that every mission binding worked. Those are the next
+stage-2 checks. SDL3/bgfx integration remains in stages
 3-4, and no macOS result is claimed.
