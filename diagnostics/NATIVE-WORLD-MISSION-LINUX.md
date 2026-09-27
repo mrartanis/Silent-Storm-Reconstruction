@@ -402,6 +402,11 @@ Windows x64 repetitions passed. The full matrices passed Windows x64 138/138
 (with `Game.exe` built) and Linux x86-64 115/115 under ASan/UBSan.
 The visual throw animation, Steam's dynamic damage distribution and other
 grenade types remain outside this gate.
+The clean native-media x64 archive from `d1e5403` is
+`G:\SS\lab\builds\stage2-grenade-inventory-20260927-01`; its `Game.exe`
+SHA-256 is `0C3A128901F03CAC4AA23EA8C440E86684C400B62D58E7E39FA04D3D04E72E43`.
+It contains no `fmod.dll`. A separate graphical smoke of this archive is
+not claimed.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
