@@ -1233,6 +1233,9 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
   endif()
 endif()
+add_executable(NativeHeadSeedTests "${root}/diagnostics/NativeHeadSeedTests.cpp")
+target_compile_features(NativeHeadSeedTests PRIVATE cxx_std_17)
+add_test(NAME NativeHeadSeedTests COMMAND NativeHeadSeedTests)
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
                       NativeMMTreeDataTests NativeSequenceDataTests)
   add_executable(${test} "${root}/diagnostics/${test}.cpp")

@@ -7,6 +7,7 @@
 #endif
 #include "../DBFormat/DataFormat.h"
 #include "RPGUnit.h"
+#include "HeadSeed.h"
 #include "LSHead.h"        // NLSHead::CHeadInfo complete type (SetHead / GetHead)
 #include "RPGItemSet.h"
 #include "A5Script.h"
@@ -463,10 +464,7 @@ void CUnit::SetHead( NDb::CComplexHead *pNewHead )
 		return;
 	pHeadInfo = new NLSHead::CHeadInfo( pNewHead );
 	const std::uintptr_t address = reinterpret_cast<std::uintptr_t>( this );
-	std::uint32_t seed = static_cast<std::uint32_t>( address );
-	#if defined(_M_X64)
-	seed ^= static_cast<std::uint32_t>( address >> 32 );
-	#endif
+	const std::uint32_t seed = FoldHeadSeedAddress( static_cast<std::uint64_t>( address ) );
 	pHeadInfo->SetSeed( SRandomSeed( static_cast<int>( seed ) ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
