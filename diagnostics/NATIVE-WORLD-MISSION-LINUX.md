@@ -122,6 +122,18 @@ The clean native-media x64 archive for this ammunition fix is
 `Game.exe` SHA-256 is
 `B800C1CF07A70A18ADBE5D2AB064EE29D6EA926CB61383FB795BB4CA8CD556BA`.
 There is no `fmod.dll`. Live-game smoke of this archive is not claimed.
+An additional Windows x64 observation of the same headless action shows AP
+46 to 46 and one `CEventOnAttackAtUnit` despite no consumed round. The event
+comes from the current `CExecShoot::OnLabel` -> `CheckShotResult` path when
+aim-only mode ends. Whether the original Steam executable makes the same
+notification has not yet been established, so this is recorded as a parity
+question, not silently removed as a presumed bug. The probe now reports the
+AP and event count for the Linux/ARM64 comparison as well.
+The selected test reports the same AP 46 to 46 and one attack event on Linux
+x86-64 and ARM64/QEMU under ASan/UBSan. Static inspection of the unchanged
+Steam executable confirms that its `CheckShotResult` sends `OnShotAtUnit`
+and the attack event, but does not by itself prove that Steam's aim-only path
+enters `CheckShotResult`. Direct behavioral comparison remains open.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.

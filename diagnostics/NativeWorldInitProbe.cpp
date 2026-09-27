@@ -12,6 +12,7 @@
 #include "../Main/GSceneUtils.h"
 #include "../Main/A5Script.h"
 #include "../Main/aiCommander.h"
+#include "../Main/eventUnit.h"
 #include "../Main/rpgGlobal.h"
 #include "../Main/RPGItem.h"
 #include "../Main/RPGUnit.h"
@@ -26,6 +27,15 @@
 #include <cstdlib>
 #include <cstring>
 #include <set>
+
+namespace {
+class AttackEventCounter : public CObjectBase {
+  OBJECT_BASIC_METHODS(AttackEventCounter);
+ public:
+  void OnAttack(const NWorld::CEventOnAttackAtUnit&) { ++count; }
+  int count = 0;
+};
+}
 
 int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
@@ -97,6 +107,10 @@ int main(int argc, char** argv) {
     world->RunPostInit(post);
     int heroHPBefore = -1;
     int shooterAmmoBefore = -1;
+    int shooterAPBefore = -1;
+    CObj<AttackEventCounter> attackEvents = new AttackEventCounter;
+    NGlobal::CEventRegister<AttackEventCounter, NWorld::CEventOnAttackAtUnit>
+      attackRegistration(attackEvents.GetPtr(), &AttackEventCounter::OnAttack);
     if (missionPartyUIAck) {
       auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
       auto* shooter = world->GetUnitServer("pers1");
@@ -107,8 +121,10 @@ int main(int argc, char** argv) {
       auto* weapon = shooter->GetUnitRPG()->GetWeaponItem();
       if (weapon) shooterAmmoBefore = weapon->GetAmmoQuantity();
       if (shooterAmmoBefore < 0) return 22;
+      shooterAPBefore = shooter->GetAP();
       std::printf("hero HP before scripted aim: %d\n", heroHPBefore);
       std::printf("shooter ammo before scripted aim: %d\n", shooterAmmoBefore);
+      std::printf("shooter AP before scripted aim: %d\n", shooterAPBefore);
     }
     if (variant == 810 && world->GetTimeOfDay() != NWorld::TOD_DAY)
       return 11; // The authored SetTimeOfDay(DAY) command actually ran.
@@ -166,6 +182,8 @@ int main(int argc, char** argv) {
           finalExecutor ? finalName.c_str() : "none");
         std::printf("hero HP after scripted aim: %d\n", info.nHP);
         std::printf("shooter ammo after scripted aim: %d\n", shooterAmmoAfter);
+        std::printf("shooter AP after scripted aim: %d\n", shooter->GetAP());
+        std::printf("attack events during scripted aim: %d\n", attackEvents->count);
         bool prepared = false;
         for (const auto& name : observedCommands)
           prepared |= name.find("CExecQueue") != std::string::npos;
