@@ -710,16 +710,39 @@ ARM64/QEMU also needs `TEST_EMULATOR=/usr/bin/qemu-aarch64-static`,
 Optional `START_VARIANT`/`END_VARIANT` divide the 52 roots into the nine
 disjoint ranges listed above.
 
-The save/resume sweep is **not yet green on Linux**. The x86-64 sanitizer
-run reached root 5247, where reading the saved world exposed a
+The first Linux x86-64 sanitizer sweep reached root 5247, where reading
+the saved world exposed a
 `heap-use-after-free` during process shutdown: `CTEffect::~CTEffect` accesses
 `CEffect ID=1232` after the record has been freed by the database table
 destructor. ARM64/QEMU reproduced this at the same root. A 5247 run without
 save/load and a write-only isolation both passed; reading the world graph
 alone was enough to trigger the failure, before `SerializeShared`, cache
-restoration, or further ticks. The 123/123 non-extended Linux tests and
-123/123 non-extended ARM64 tests passed on the Lua-tail fix, but do not
-cover this case. Resolve the DB-record lifetime/refcount problem and rerun
-the entire 52-root save sweep on both Linux targets before claiming this
-extension portable. This is an own-save/own-load kernel issue for stage 2,
-not a comparison of game decisions with Steam (stage 7).
+restoration, or further ticks. Reference-count tracing showed that the
+restored world failed to acquire one reference to effect 1232, while its
+`CDumbUnitServer` destructor still released that pointer. The culprit was
+`IRenderVisitor::SBoundEffect` in `CDumbUnitServer::attachedEffects`: the
+vector was serialized as raw bytes, including a process-local `CPtr`.
+It now uses an explicit object serializer with `CDBPtr<CEffect>` (DB record
+ID and effect start time), so loading restores the reference. A temporary
+DB-table teardown change only traded the UAF for a leak and was reverted;
+the final patch changes only the bound-effect wire path and a focused test.
+
+On the final patch, root 5247 passes save/load/resume on Linux x86-64 under
+ASan/UBSan/LSan and ARM64/QEMU under ASan/UBSan (LSan disabled). Windows x64
+rebuilt `Game.exe`, passed the new `NativeWorldMission5247PartySave` focused
+CTest, the 52/52 extended sweep, and 151/151 non-extended tests. The full
+Linux x86-64 sweep also passed 52/52 under ASan/UBSan/LSan. ARM64/QEMU
+covered all 52/52 roots under ASan/UBSan (LSan disabled) in nine disjoint
+numeric ranges, each root in a fresh process. Four initial ARM64 process
+launches returned status 1 with empty output while the probe executable
+was being relinked by a concurrent build. After the build finished, roots
+4519, 5247, 5477 and 6102 passed, and their four interrupted range tails
+completed. This is 52-root coverage, not one serial ARM64 CTest invocation;
+do not repeat the sweep while relinking its executable. The rebuilt
+non-extended Linux x86-64 and ARM64/QEMU CTest suites also passed 123/123
+each under their respective sanitizer settings. Existing saves
+containing a nonempty raw `attachedEffects` vector used a process-local
+pointer blob and are not asserted compatible with the new structured field.
+This is an own-save/own-load kernel issue for stage 2, not a comparison of
+game decisions with Steam (stage 7). Steam remains available as an oracle
+for specific uncertain contracts.

@@ -65,11 +65,18 @@ struct IRenderVisitor
 		SBoundMesh( NDb::CModel *_pModel, const char *_pszBindBone ): pModel(_pModel), pszBindBone(_pszBindBone), tBeginEffect(0) {}   // append path leaves pEffect null (retail zero-fills it)
 	};
 	// Release-added render-feed record: a particle effect bound to a unit (scriptParticles).
-	// Serialized raw (DoDataVector) as a member of CDumbUnitServer::attachedEffects; 8 bytes.
+	// Runtime effect binding in CDumbUnitServer::attachedEffects. Persist the DB
+	// record ID rather than a process-local pointer, and restore its refcount.
 	struct SBoundEffect
 	{
-		CPtr<NDb::CEffect> pEffect;
+		CDBPtr<NDb::CEffect> pEffect;
 		STime tBegin;
+		int operator&( CStructureSaver &f )
+		{
+			f.Add( 1, &pEffect );
+			f.Add( 2, &tBegin );
+			return 0;
+		}
 	};
 	virtual NGScene::CLightGroup* MakeGroup() { return 0; }
 	virtual void AddParticleEffect( STime tBegin, NDb::CEffect *pEffect, int nFloor, CFuncBase<SFBTransform> *pPosition, NAnimation::CSkeletonAnimator *pScAnimator = 0 ) {}
