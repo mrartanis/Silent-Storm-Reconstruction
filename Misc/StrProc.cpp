@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 
 #include "StrProc.h"
+#include "StrProcCodePage.h"
 
 #include <unordered_map>
 #include <stack>
@@ -392,6 +393,11 @@ static const wchar_t kCp1251High[128] = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void NStr::ToAscii( std::string *pRes, const std::wstring &szSrc )
 {
+	ToAsciiCodePage( pRes, szSrc, nCodePage );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void NStr::ToAsciiCodePage( std::string *pRes, const std::wstring &szSrc, int codePage )
+{
 #if defined(_WIN32)
 	const int N_STACK_BUFF_SIZE = 1024;
 	char static_buff[N_STACK_BUFF_SIZE];
@@ -401,18 +407,18 @@ void NStr::ToAscii( std::string *pRes, const std::wstring &szSrc )
 		pszBuf = static_buff;
 	else
 		pszBuf = new char[ nBufLeng ];
-	int nRes = WideCharToMultiByte( nCodePage, 0, szSrc.c_str(), szSrc.length(), pszBuf, nBufLeng, 0, 0 );
+	int nRes = WideCharToMultiByte( codePage, 0, szSrc.c_str(), szSrc.length(), pszBuf, nBufLeng, 0, 0 );
 	pszBuf[nRes] = 0;
 	*pRes = pszBuf;
 	if ( nBufLeng >= N_STACK_BUFF_SIZE )
 		delete[] pszBuf;
 #else
-	if ( nCodePage == 65001 )
+	if ( codePage == 65001 )
 	{
 		*pRes = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes( szSrc );
 		return;
 	}
-	if ( nCodePage == 1251 )
+	if ( codePage == 1251 )
 	{
 		pRes->clear();
 		pRes->reserve( szSrc.size() );
@@ -431,7 +437,7 @@ void NStr::ToAscii( std::string *pRes, const std::wstring &szSrc )
 		}
 		return;
 	}
-	const std::string encoding = nCodePage == 65001 ? "UTF-8" : "CP" + std::to_string(nCodePage);
+	const std::string encoding = codePage == 65001 ? "UTF-8" : "CP" + std::to_string(codePage);
 	iconv_t converter = iconv_open( encoding.c_str(), "WCHAR_T" );
 	if ( converter == (iconv_t)-1 )
 		throw std::runtime_error( "unsupported game text code page" );

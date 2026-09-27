@@ -2,18 +2,21 @@
 #include "../FileIO/Streams.h"
 #include "../ADOImport/BasicDB.h"
 #include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataInterface.h"
 #include "../FileIO/PortableGameDatabase.h"
 
 #include <cstdio>
 #include <algorithm>
+#include <cstring>
 #include <exception>
 #include <stdexcept>
 
 int main( int argc, char **argv )
 {
-	if ( argc != 2 )
+	const bool auditNonAscii = argc == 3 && std::strcmp( argv[2], "--nonascii" ) == 0;
+	if ( argc != 2 && !auditNonAscii )
 	{
-		std::fprintf( stderr, "usage: NativeGameDatabaseLoadTests <game.db>\n" );
+		std::fprintf( stderr, "usage: NativeGameDatabaseLoadTests <game.db> [--nonascii]\n" );
 		return 2;
 	}
 	try
@@ -53,7 +56,40 @@ int main( int argc, char **argv )
 				++comparedIDs;
 			}
 			++comparedTables;
+			if ( auditNonAscii )
+			{
+				for ( std::size_t column = 0; column < table.stringNames.size(); ++column )
+				{
+					std::size_t nonAsciiRows = 0;
+					int firstID = 0;
+					unsigned int firstCodePoint = 0;
+					for ( std::size_t row = 0; row < table.stringRows.size(); ++row )
+					{
+						if ( column >= table.stringRows[row].size() ) return 13;
+						for ( wchar_t character : table.stringRows[row][column] )
+							if ( static_cast<unsigned int>(character) > 127 )
+							{
+								if ( !nonAsciiRows )
+								{
+									firstID = table.intRows[row][idColumn];
+									firstCodePoint = static_cast<unsigned int>(character);
+								}
+								++nonAsciiRows;
+								break;
+							}
+					}
+					if ( nonAsciiRows )
+						std::printf( "nonascii table=0x%08X field=%s rows=%zu first_id=%d first_codepoint=U+%04X\n",
+							table.tableId, table.stringNames[column].c_str(), nonAsciiRows,
+							firstID, firstCodePoint );
+				}
+			}
 		}
+		// Baseline UI IDText 2656 contains U+2018, which must import as the
+		// CP1251 byte 0x91 rather than a truncated wide-character byte.
+		auto *controls = NDatabase::GetTable<NDb::CUIControl>();
+		const NDb::CUIControl *control = controls ? controls->GetRecord( 2656 ) : nullptr;
+		if ( !control || control->szID.find( '\x91' ) == std::string::npos ) return 14;
 		CDBTable<NDb::CMaterial> *materials = NDatabase::GetTable<NDb::CMaterial>();
 		if ( !materials )
 			return 3;

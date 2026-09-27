@@ -167,7 +167,7 @@ int main( int argc, char **argv )
 	std::printf( "script_126_db_refs=%zu\n", script126References );
 	// The original baseline corpus is our fixed cross-architecture oracle.
 	return scripts.size() == 113 && empty == 1 && bytes == 355575 &&
-		digest == UINT64_C(0xB5163E4E76664106) && windowReads == 6 &&
+		digest == UINT64_C(0xC2462A66D562BAF6) && windowReads == 6 &&
 		globalReads["ShowObjectives"] == 0 &&
 		windowScriptIDs.size() == 1 && *windowScriptIDs.begin() == 126 &&
 		script126References == 0 ? 0 : 7;

@@ -1,5 +1,6 @@
 #include "../Misc/StdAfx.h"
 #include "../Misc/StrProc.h"
+#include "../Misc/StrProcCodePage.h"
 
 #include <cstdio>
 #include <string>
@@ -20,6 +21,13 @@ int main()
 	{
 		std::fprintf( stderr, "UTF-8 roundtrip failed\n" );
 		return 2;
+	}
+	std::string explicitCp1251;
+	NStr::ToAsciiCodePage( &explicitCp1251, word + L"\u2018", 1251 );
+	if ( explicitCp1251 != cp1251 + "\x91" || NStr::ToAscii( word ) != utf8 )
+	{
+		std::fprintf( stderr, "explicit CP1251 conversion changed the global code page\n" );
+		return 3;
 	}
 	std::puts( "cp1251=6 utf8=12" );
 	return 0;

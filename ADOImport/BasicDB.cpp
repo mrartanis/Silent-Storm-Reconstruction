@@ -8,6 +8,7 @@
 #include "../Misc/BasicFactory.h"
 #include "../FileIO/BasicChunk1.h"
 #include "../FileIO/PortableGameDatabase.h"
+#include "../Misc/StrProcCodePage.h"
 #include <set>
 #include <cstdlib>
 
@@ -911,11 +912,11 @@ bool NDatabase::ImportField( const char *pszFieldName, std::string *pData )
 				pStorageSource->GetCurrentRecordID() );
 			return false;
 		}
-		// narrow strings are stored as wstrings in the columnar storage (ASCII content)
+		// Release game.db stores UTF-16, including Cyrillic in Lua CodeText.
+		// The Russian Steam release runs with Windows-1251; keep its narrow
+		// string bytes independent of the host's locale or UTF-8 filesystem.
 		std::wstring ws = pStorageSource->GetWString( pszFieldName );
-		pData->resize( ws.size() );
-		for ( int i = 0; i < (int)ws.size(); ++i )
-			(*pData)[i] = (char)ws[i];
+		NStr::ToAsciiCodePage( pData, ws, 1251 );
 		return true;
 	}
 #if defined(_WIN32)

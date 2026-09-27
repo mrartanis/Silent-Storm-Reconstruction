@@ -34,6 +34,28 @@ references remain: this test does not establish that their field-to-target
 table mapping matches the Steam executable or that every missing reference
 is harmless to gameplay.
 
+The original database's UTF-16 strings are not all ASCII. An optional
+`NativeGameDatabaseLoadTests <game.db> --nonascii` audit reports counts and
+first code points without printing licensed text. It found Cyrillic in two
+`Scripts.CodeText` rows and non-ASCII characters in two `UIControls.IDText`
+rows. Previously the columnar `std::string` import truncated each wide
+character to one byte. The game-used narrow-string importer now explicitly
+encodes Windows-1251, matching the Windows host's ACP=1251 for this Russian
+Steam data while leaving the process-wide conversion setting unchanged.
+`NativeStrProcTests` checks explicit CP1251 (including U+2018 → 0x91) even
+when the default setting is UTF-8. The database load test additionally checks
+that original UI control 2656 imports that CP1251 byte in its `IDText`.
+The 113-script corpus still parses;
+its byte digest changed from `B5163E4E76664106` (truncated characters) to
+`C2462A66D562BAF6` on both Windows and Linux x86-64. This is a tested
+encoding choice for this original database, not a claim about every regional
+edition. After the change, Windows x64 built `Game.exe` and passed 145/145
+CTest; GCC Linux x86-64 passed 120/120 with ASan/UBSan/LSan; the focused
+Clang script/world checks also passed. GCC Linux ARM64/QEMU passed 120/120
+under ASan/UBSan with leak detection disabled; the full run took about
+854 seconds. The UI-byte assertion was added after this full run began;
+the updated ARM64 diagnostic passed separately in 101 seconds.
+
 On the authorized Linux host, after copying this source tree and the licensed
 `game.db` to `/tmp/s2-matrix-links.zCkO0O/`, run:
 
