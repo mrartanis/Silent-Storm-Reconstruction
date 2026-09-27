@@ -167,16 +167,25 @@ It contains no `fmod.dll`. No separate live-game smoke or direct Steam
 comparison is claimed for this archive.
 
 `--mission-party-shot-save 810` continues the fired-shot scenario and uses
-the game's `CStructureSaver` to write the live `CWorld` object to a memory
-stream, then reads a second `CWorld` under `CSharedHolder`. The regression
+the game's `CFileStream` and `CStructureSaver` to write the live `CWorld`
+object with tag 2 followed by `SerializeShared`, in the same payload order
+as `CMission::SaveWorld`. It reads the file into a second `CWorld` under
+`CSharedHolder` and restores the shared caches. The test's file lives only
+under its build directory, not the baseline game or a user save slot.
+The regression
 compares world time and time of day, the deployed hero's HP, the shooter's
 ammunition and AP, and the presence of the mission's `OnClickUsable` Lua
 function after restoration. Windows x64, Linux x86-64 and ARM64/QEMU pass
 this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
-This is not the whole
-`CMission::SaveWorld`/`LoadWorld` file path: it does not include
-`SerializeShared`, the save manager, the game/UI shell, or continuation of
-the restored world's simulation. It does not prove Steam save compatibility.
+This invokes the production file serializer and shared-cache payload, but
+not `CMission::SaveWorld`/`LoadWorld` themselves: the save manager's active
+slot, the game/UI shell, and continuation of the restored world's simulation
+remain untested. It does not prove Steam save compatibility.
+On Linux this deeper read initially found a null `CBuildInfoLoader` in
+shared cache ID 108: its save/load registration was still owned by the
+renderer-dependent `GBuilding.cpp`. The existing headless `BuildingInfo.cpp`
+now registers the same retail class ID only on non-Windows builds. The
+production Windows registration is unchanged.
 
 This deeper serialization exposed previously hidden uninitialized state in
 `CUnitAnimator::bIdle`, door chest/transparency flags and empty trap data,
@@ -209,8 +218,8 @@ portable RPG target so this is an actual game party, not a fabricated hero.
 
 This is a headless original-world startup, **not** a full Linux game. The
 party mode deploys a hero and exercises one scripted aim-only command, a
-controlled fired shot, and a `CWorld` memory round-trip, but it does not
-create the mission UI, execute a full combat turn, use the complete file-save
+controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip,
+but it does not create the mission UI, execute a full combat turn, use the save-manager
 path, or compare dynamic AI, route, battle, and destruction decisions against
 Steam x86. The variant-810 script
 waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches

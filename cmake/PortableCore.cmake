@@ -1191,7 +1191,7 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
     add_test(NAME NativeWorldMission810PartyShotSave
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
-        --mission-party-shot-save 810)
+        --mission-party-shot-save 810 "${CMAKE_BINARY_DIR}/world-mission-810-shot.sav")
     set_tests_properties(NativeWorldMission810PartyShotSave PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
   endif()

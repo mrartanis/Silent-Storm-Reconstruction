@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
-  const bool missionPartyShotSave = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
+  const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot || missionPartyShotSave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
@@ -261,19 +261,22 @@ int main(int argc, char** argv) {
             attackEvents->bulletCount != bulletEventsBeforeShot + 1)
           return 27;
         if (missionPartyShotSave) {
-          CMemoryStream saved;
           {
+            CFileStream saved;
+            saved.OpenWrite(argv[5]);
             CStructureSaver saver(saved, CStructureSaver::WRITE);
             saver.Add(2, &world);
+            SerializeShared(&saver);
           }
-          std::printf("world save bytes after shot: %d\n", saved.GetSize());
-          saved.SetRMode();
-          saved.Seek(0);
           CObj<NWorld::CWorld> restored;
           {
+            CFileStream saved;
+            saved.OpenRead(argv[5]);
+            std::printf("world save bytes after shot: %d\n", saved.GetSize());
             CSharedHolder shared;
             CStructureSaver saver(saved, CStructureSaver::READ);
             saver.Add(2, &restored);
+            SerializeShared(&saver);
           }
           std::printf("world restored after shot: %d\n", restored ? 1 : 0);
           if (!restored || !restored->GetGlobalGame() ||

@@ -18,6 +18,9 @@
 namespace NGScene {
 CBasicShare<int, NBuilding::CBuildInfoLoader> shareBuildings(108);
 }
+// The Windows registration lives in renderer-owned GBuilding.cpp. The
+// headless world also serializes this game-used shared resource cache.
+REGISTER_SAVELOAD_CLASS_NM( 0x02741132, CBuildInfoLoader, NBuilding );
 #endif
 
 namespace NBuilding

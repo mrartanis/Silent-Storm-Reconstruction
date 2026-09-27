@@ -1016,7 +1016,7 @@ if(S2_GAME_DIR)
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       add_test(NAME NativeWorldMission810PartyShotSave
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
-          --mission-party-shot-save 810)
+          --mission-party-shot-save 810 "${CMAKE_BINARY_DIR}/world-mission-810-shot.sav")
       set_tests_properties(NativeWorldMission810PartyShotSave PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
       if(TARGET s2_bink_compat)
