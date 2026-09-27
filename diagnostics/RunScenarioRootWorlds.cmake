@@ -29,14 +29,21 @@ foreach(root IN LISTS roots)
   if(DEFINED END_VARIANT AND variant_id GREATER END_VARIANT)
     continue()
   endif()
-  if(PARTY_MODE)
+  if(PARTY_SAVE_MODE)
+    if(NOT DEFINED SAVE_DIR OR "${SAVE_DIR}" STREQUAL "")
+      message(FATAL_ERROR "PARTY_SAVE_MODE requires SAVE_DIR")
+    endif()
+    file(MAKE_DIRECTORY "${SAVE_DIR}")
+    set(save_path "${SAVE_DIR}/root-${variant_id}.sav")
+    set(probe_mode --mission-root-party-save)
+  elseif(PARTY_MODE)
     set(probe_mode --mission-root-party)
   else()
     set(probe_mode --mission)
   endif()
   execute_process(
     COMMAND ${TEST_EMULATOR} "${WORLD_PROBE}" "${GAME_DB}" "${RESOURCE_DIR}"
-      ${probe_mode} "${variant_id}"
+      ${probe_mode} "${variant_id}" ${save_path}
     RESULT_VARIABLE world_result
     OUTPUT_VARIABLE world_output
     ERROR_VARIABLE world_error
@@ -46,7 +53,13 @@ foreach(root IN LISTS roots)
     message(FATAL_ERROR
       "World startup failed for scenario root ${variant_id} (${world_result}):\n${world_output}\n${world_error}")
   endif()
-  if(PARTY_MODE)
+  if(PARTY_SAVE_MODE)
+    if(NOT world_output MATCHES "root party save restored and advanced:")
+      message(FATAL_ERROR "Root ${variant_id} did not confirm save round-trip")
+    endif()
+    file(REMOVE "${save_path}")
+    message(STATUS "Scenario root ${variant_id}: party save round-trip and resumed ticks completed")
+  elseif(PARTY_MODE)
     message(STATUS "Scenario root ${variant_id}: world post-init and party ticks completed")
   else()
     message(STATUS "Scenario root ${variant_id}: world post-init completed")

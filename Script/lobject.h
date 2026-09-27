@@ -82,7 +82,7 @@ private:
 public:
 	int operator&( CStructureSaver &f );
 
-	TObject() {}
+	TObject() : ttype(LUA_TNIL) { value.n = 0; }
 	TObject( int type ): ttype( type ) {}
 
 	int GetType() const { return ttype; }
@@ -113,7 +113,7 @@ public:
 	void SetCL( int nClosure ) { ttype = LUA_TFUNCTION; value.nClosure = nClosure; }
 	void SetH( int nHash ) { ttype = LUA_TTABLE; value.nHash = nHash; }
 	void SetCI( int nCI ) { ttype = LUA_TMARK; value.nCallInfo = nCI; }
-	void SetNil() { ttype = LUA_TNIL; }
+	void SetNil() { ttype = LUA_TNIL; value.n = 0; }
 	void SetUData( int nUData ) { ttype = LUA_TUSERDATA; value.nUData = nUData; }
 
 	bool operator==( const TObject& obj ) const

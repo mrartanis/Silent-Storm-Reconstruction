@@ -53,6 +53,8 @@ int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
   const bool missionRootParty = argc == 5 && std::strcmp(argv[3], "--mission-root-party") == 0;
+  const bool missionRootPartySave = argc == 6 &&
+    std::strcmp(argv[3], "--mission-root-party-save") == 0;
   const bool missionBasePartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-base-party-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
@@ -67,7 +69,8 @@ int main(int argc, char** argv) {
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
     missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave ||
     missionPartyEngGrenadeInventorySave;
-  const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck || missionRootParty;
+  const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck ||
+    missionRootParty || missionRootPartySave;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
@@ -91,7 +94,7 @@ int main(int argc, char** argv) {
   if (!scriptCount) return 5;
   CObj<NRPG::CGlobalGame> game = (mission || missionWithUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
-  if (missionParty || missionBasePartyUIAck || missionRootParty)
+  if (missionParty || missionBasePartyUIAck || missionRootParty || missionRootPartySave)
     game->players.push_back(NRPG::CreateGlobalPlayer());
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
@@ -126,7 +129,7 @@ int main(int argc, char** argv) {
     if (variant == 810) {
       world->SetTimeOfDay(NWorld::TOD_NIGHT);
     }
-    if (missionParty || missionBasePartyUIAck || missionRootParty) {
+    if (missionParty || missionBasePartyUIAck || missionRootParty || missionRootPartySave) {
       // CPlayerTracker does this between CreateRandom and RunPostInit in the
       // real mission. Its sequence commander also owns human-unit AI wrappers.
       CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);
@@ -253,6 +256,58 @@ int main(int argc, char** argv) {
         if (baseUnit->CanDo(attack.GetPtr()) != NWorld::UCR_GENERAL_FAILURE)
           return 60;
         std::printf("base attack command rejected before trajectory evaluation\n");
+      }
+      if (missionRootPartySave) {
+        const STime savedTime = world->GetTime()->GetValue();
+        const auto* hero = game->GetHero();
+        if (!hero || !hero->GetPers()) return 61;
+        const int heroID = hero->GetPers()->GetRecordID();
+        auto* originalHero = world->GetUnitServerByPersID(heroID);
+        if (!originalHero) return 61;
+        NRPG::SUnitInfo originalInfo{};
+        originalHero->GetInfo(&originalInfo);
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame() ||
+            !restored->GetGlobalGame()->GetHero() || !restored->GetOwnScript() ||
+            !restored->GetTime() || restored->GetTime()->GetValue() != savedTime ||
+            restored->GetTimeOfDay() != world->GetTimeOfDay())
+          return 62;
+        auto* restoredHero = restored->GetUnitServerByPersID(heroID);
+        if (!restoredHero) return 63;
+        NRPG::SUnitInfo restoredInfo{};
+        restoredHero->GetInfo(&restoredInfo);
+        if (restoredInfo.nHP != originalInfo.nHP) return 64;
+        world = restored;
+        game = world->GetGlobalGame();
+        world->RestoreRuntimeCaches(game.GetPtr());
+        for (int tick = 220; tick < 230; ++tick) {
+          world->UpdateWorld(tick * 50, nullptr);
+          while (auto* raw = world->GetUICommand()) {
+            CObj<NWorld::CUICmd> command(raw);
+            if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+              world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+          }
+          if (!NScript::luaLastError.szError.empty()) return 65;
+        }
+        if (world->GetTime()->GetValue() <= savedTime ||
+            !world->GetUnitServerByPersID(heroID)) return 66;
+        std::printf("root party save restored and advanced: %u -> %u\n",
+          savedTime, world->GetTime()->GetValue());
       }
       if (variant == 810) {
         Script::AutoBlock stack(*world->GetOwnScript());

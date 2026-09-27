@@ -673,3 +673,53 @@ responsive main menu (`evidence/menu.png`); the input helper accepted
 cursor movement, and the window then closed normally with no crash dump.
 The run's executable hash matched the archive. This is a boot/menu
 smoke test, not an in-game tactical or audio-parity result.
+
+## Party-root save and resume sweep
+
+`NativeScenarioRootPartySaveWorlds` extends the 52-root party test: after
+220 world updates it writes the real `CWorld` and `SerializeShared` graph,
+loads it into another `CWorld`, compares time, time of day and hero HP,
+restores runtime caches, then advances ten more world updates while
+acknowledging pending scripted UI IDs. Each root uses a fresh process and
+its own temporary save file under the build directory. The probe does not
+invoke the mission UI or `CMission::SaveWorld`, and these checks do not
+establish Steam gameplay parity (stage 7).
+
+The first Windows x64 sweep failed at root 4522 with `0xc0000409` during
+Lua-thread serialization. CDB showed `lua_AddString` attempting to construct
+a `std::string` from a stale string pointer in a `TObject` stack slot.
+`CLuaThread` serialized its entire reserved stack vector, including slots
+past `top` that are not live VM state and may retain GC-freed strings.
+`TObject` now initializes and clears nil values, and the thread normalizes
+only its unused tail to nil before writing. The active stack and its
+serialization are unchanged. Root 4522 then passed save/load/resume on
+Windows x64 and Linux x86-64 under ASan/UBSan/LSan, and ARM64/QEMU under
+ASan/UBSan with leak detection disabled. The full Windows x64 sweep passed
+52/52, with the non-extended CTest suite at 150/150 after a complete rebuild
+of `Game.exe` and all tests.
+
+Run the full Windows sweep with `ctest --test-dir <build> -C RelWithDebInfo
+--output-on-failure -R '^NativeScenarioRootPartySaveWorlds$'`. On Linux,
+use the same test without `-C` when `S2_GAME_DIR` contains `res/Waypoints.res`.
+In a scratch layout with `game.db` and `Waypoints.res` at its root, call
+`RunScenarioRootWorlds.cmake` from the configured `world-probe-root` with
+`DB_TEST`, `WORLD_PROBE`, `GAME_DB`, `RESOURCE_DIR`, `SAVE_DIR` and
+`PARTY_SAVE_MODE=ON`; `SAVE_DIR` must be a writable build-owned directory.
+ARM64/QEMU also needs `TEST_EMULATOR=/usr/bin/qemu-aarch64-static`,
+`QEMU_LD_PREFIX=/usr/aarch64-linux-gnu` and leak detection disabled.
+Optional `START_VARIANT`/`END_VARIANT` divide the 52 roots into the nine
+disjoint ranges listed above.
+
+The save/resume sweep is **not yet green on Linux**. The x86-64 sanitizer
+run reached root 5247, where reading the saved world exposed a
+`heap-use-after-free` during process shutdown: `CTEffect::~CTEffect` accesses
+`CEffect ID=1232` after the record has been freed by the database table
+destructor. ARM64/QEMU reproduced this at the same root. A 5247 run without
+save/load and a write-only isolation both passed; reading the world graph
+alone was enough to trigger the failure, before `SerializeShared`, cache
+restoration, or further ticks. The 123/123 non-extended Linux tests and
+123/123 non-extended ARM64 tests passed on the Lua-tail fix, but do not
+cover this case. Resolve the DB-record lifetime/refcount problem and rerun
+the entire 52-root save sweep on both Linux targets before claiming this
+extension portable. This is an own-save/own-load kernel issue for stage 2,
+not a comparison of game decisions with Steam (stage 7).

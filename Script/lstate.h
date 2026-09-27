@@ -62,7 +62,18 @@ public:
 	// (lua_startThread), "Thread to have at least one" (lua_executeThreads), the called function
 	// name (NScript::luaCallFunction).
 	string name;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&top); f.Add(3,&Cbase); f.Add(4,&stack); f.Add(5,&executedCalls); f.Add(6,&thisThreadIsSleeping); f.Add(7,&bErrorInThread); f.Add(8,&name); return 0; }
+	ZEND int operator&( CStructureSaver &f )
+	{
+		// The vector includes spare VM slots. A popped slot may still contain a
+		// pointer to a Lua string already reclaimed by GC; it is not live state.
+		if (!f.IsReading() && top >= 0 && top <= stack.size())
+			for (StkId i = top; i < stack.size(); ++i)
+				stack[i].SetNil();
+		f.Add(2,&top); f.Add(3,&Cbase); f.Add(4,&stack);
+		f.Add(5,&executedCalls); f.Add(6,&thisThreadIsSleeping);
+		f.Add(7,&bErrorInThread); f.Add(8,&name);
+		return 0;
+	}
 
 	CLuaThread( const char *szName = "" );   // retail ctor @0x3de050 takes the debug name
 	bool HasValidTop() const { return top >= 0 && top < stack.size(); }
