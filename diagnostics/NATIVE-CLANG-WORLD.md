@@ -57,3 +57,10 @@ ASan/UBSan with LeakSanitizer in its non-PIE configuration; the focused
 118/118 under ASan/UBSan with leak detection disabled for QEMU; the full
 ARM64 run took about 393 seconds. These checks do not assert identical
 fragment scatter or damage against the Steam executable.
+
+A clean native-media Windows x64 archive from commit `298dc40` is at
+`G:\SS\lab\builds\stage2-clang-penetration-20260927-01`. Its `Game.exe`
+SHA-256 is
+`B68D56FB836CA27EBE634D55BF863C55F43366E4D4FB3FDEDD0A195E625789AE`;
+`fmod.dll` is absent. A separate live graphical smoke test of this archive
+was not performed.
