@@ -305,6 +305,24 @@ int main(int argc, char** argv) {
               restoredWeapon->GetAmmoQuantity() != weapon->GetAmmoQuantity() ||
               restoredShooter->GetAP() != shooter->GetAP())
             return 30;
+          const STime restoredTime = restored->GetTime()->GetValue();
+          world = restored;
+          game = world->GetGlobalGame();
+          for (int tick = 440; tick < 450; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 32;
+          }
+          if (world->GetTime()->GetValue() <= restoredTime ||
+              !world->GetUnitServer("pers1") ||
+              !world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID()))
+            return 33;
+          std::printf("restored world advanced: %u -> %u\n",
+            restoredTime, world->GetTime()->GetValue());
         }
       }
     } else {

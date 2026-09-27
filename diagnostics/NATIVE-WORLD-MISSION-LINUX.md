@@ -175,12 +175,16 @@ under its build directory, not the baseline game or a user save slot.
 The regression
 compares world time and time of day, the deployed hero's HP, the shooter's
 ammunition and AP, and the presence of the mission's `OnClickUsable` Lua
-function after restoration. Windows x64, Linux x86-64 and ARM64/QEMU pass
+function after restoration. The probe replaces its original `CWorld` and
+`CGlobalGame` references with the loaded instances, advances ten further
+world segments, and requires time to progress with both units still present
+and no Lua error. Windows x64, Linux x86-64 and ARM64/QEMU pass
 this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
 This invokes the production file serializer and shared-cache payload, but
 not `CMission::SaveWorld`/`LoadWorld` themselves: the save manager's active
-slot, the game/UI shell, and continuation of the restored world's simulation
-remain untested. It does not prove Steam save compatibility.
+slot and game/UI shell remain untested. Ten headless segments do not prove a
+later combat action, route decision, or full-mission continuation. This does
+not prove Steam save compatibility.
 On Linux this deeper read initially found a null `CBuildInfoLoader` in
 shared cache ID 108: its save/load registration was still owned by the
 renderer-dependent `GBuilding.cpp`. The existing headless `BuildingInfo.cpp`
@@ -225,7 +229,8 @@ portable RPG target so this is an actual game party, not a fabricated hero.
 
 This is a headless original-world startup, **not** a full Linux game. The
 party mode deploys a hero and exercises one scripted aim-only command, a
-controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip,
+controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip
+followed by ten headless segments,
 but it does not create the mission UI, execute a full combat turn, use the save-manager
 path, or compare dynamic AI, route, battle, and destruction decisions against
 Steam x86. The variant-810 script
