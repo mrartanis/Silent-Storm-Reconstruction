@@ -192,6 +192,13 @@ with `Game.exe` built, Linux x86-64 110/110, and ARM64/QEMU 110/110. Both
 Linux suites used ASan/UBSan with `halt_on_error=1`; the ARM64 suite took
 about 279 seconds with eight concurrent tests. These counts do not imply
 a complete Linux game executable or a live Steam parity run.
+The clean Windows x64 native-media archive from source commit `0dae7ca` is
+`G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`
+SHA-256 is
+`F7CEDA604823F4D43D97DA623367D3EC7EF7D605A2730890B2FDE854600A6C05`.
+The archive includes the native-media DLLs and no `fmod.dll`. Its build
+metadata names the source commit and records a clean worktree. A separate
+live-game smoke of this archive is not claimed.
 
 This newly exercised path exposed two previously hidden UB cases on Linux:
 `SUnitDeployData` left `bCorpseAlive` and `bCorpseEnemy` indeterminate when
