@@ -1472,9 +1472,11 @@ void CExecShootTile::SelectRay() // false, when it is the last shot
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CExecShootUnit
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CExecShootUnit::CExecShootUnit( CUnitServer *_pUS, NWorld::CUnitServer *_pTarget, NAI::EHitLocation _eHL, int _nExtraAttackAP ):
+CExecShootUnit::CExecShootUnit( CUnitServer *_pUS, NWorld::CUnitServer *_pTarget, NAI::EHitLocation _eHL,
+	int _nExtraAttackAP, bool _bOnlyPrepareToShoot ):
 		CExecShoot( _pUS, _nExtraAttackAP ), pTarget(_pTarget), eHL(_eHL)
 { 
+	bOnlyPrepareToShoot = _bOnlyPrepareToShoot;
 	if ( IsValid( pTarget ) )
 	{
 		if ( eHL == NAI::HL_ANY )

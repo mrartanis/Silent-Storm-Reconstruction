@@ -627,9 +627,11 @@ CCommandExecute* CreateActionExecutor( CUnitServer *pUS, CCmd *pCmd, EUnitComman
 							*pError = UCR_CANT_SEE_TARGET;
 							return 0;
 						}
-						return CreateActionQueueOrReload(pUS, pAttackObject.GetPtr(), new CExecShootUnit(pUS, pUnitTarget, pAttackObject->eHL, pAttackObject->nExtraAttackAP), pError);
+						return CreateActionQueueOrReload(pUS, pAttackObject.GetPtr(), new CExecShootUnit(pUS, pUnitTarget,
+							pAttackObject->eHL, pAttackObject->nExtraAttackAP, pAttackObject->bOnlyPrepareToShoot), pError);
 					case AT_CANNON:
-						return CreateSimpleActionOrReload(pUS, pAttackObject.GetPtr(), new CExecShootUnit(pUS, pUnitTarget, pAttackObject->eHL, pAttackObject->nExtraAttackAP), pError);
+						return CreateSimpleActionOrReload(pUS, pAttackObject.GetPtr(), new CExecShootUnit(pUS, pUnitTarget,
+							pAttackObject->eHL, pAttackObject->nExtraAttackAP, pAttackObject->bOnlyPrepareToShoot), pError);
 					}
 				}
 

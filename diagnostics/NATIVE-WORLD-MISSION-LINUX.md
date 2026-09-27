@@ -96,6 +96,19 @@ therefore reaches the unit execution path in this selected scenario. The
 queue's presence does not prove a completed aim, fired projectile, damage,
 or Steam-equivalent outcome.
 
+Following that path exposed a gameplay wiring defect: the Lua binding sets
+`CCmdShootObject::bOnlyPrepareToShoot`, and `CExecShoot::Start` already has an
+aim-and-hold branch for the matching executor flag, but
+`CreateActionExecutor` discarded the command flag when constructing
+`CExecShootUnit`. The AT_SHOOT/AT_SNIPE and AT_CANNON paths now pass the flag
+through the constructor. Ordinary commands still default to `false`.
+This corrects the command-to-executor state transfer; the headless gate still
+does not observe a completed aim animation or prove visual/Steam parity.
+After this wiring change, Windows x64 rebuilt `Game.exe` and passed 131/131
+CTest. Linux x86-64 and ARM64/QEMU each passed 108/108 under ASan/UBSan with
+`halt_on_error=1`. These are build/regression gates, not a live-game shot
+comparison with the Steam executable.
+
 This newly exercised path exposed two previously hidden UB cases on Linux:
 `SUnitDeployData` left `bCorpseAlive` and `bCorpseEnemy` indeterminate when
 adding a mercenary, and `NAI::CPath` left `bStrafePath` indeterminate before

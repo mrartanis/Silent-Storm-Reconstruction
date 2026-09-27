@@ -107,7 +107,7 @@ protected:
 	bool  bShotInitiated = false;        // retail +0x28 -- a bullet is committed in flight
 	int   nBulletPrepared = 0;           // retail +0x2c
 	int   nBulletGone = 0;               // retail +0x118
-	bool  bOnlyPrepareToShoot = false;   // retail +0x115 -- aim-and-hold selector (dormant: not yet threaded from the cmd)
+	bool  bOnlyPrepareToShoot = false;   // retail +0x115 -- aim-and-hold selector from CCmdShootObject
 	bool  bUpdateVision = true;          // retail +0x120 -- ctor default true
 public:
 	// full retail tag table (CExecShoot::operator& @0x3b0ef0): 1=base, 2=nExtraAP, 3=longBurstSnd,
@@ -182,7 +182,8 @@ private:
 
 public:
 	CExecShootUnit() {}
-	CExecShootUnit( CUnitServer *_pUS, NWorld::CUnitServer *_pTarget, NAI::EHitLocation _eHL, int _nExtraAttackAP );
+	CExecShootUnit( CUnitServer *_pUS, NWorld::CUnitServer *_pTarget, NAI::EHitLocation _eHL,
+		int _nExtraAttackAP, bool _bOnlyPrepareToShoot = false );
 
 	virtual EUnitCommandResult CanDoIt( const NAI::SUnitPosition &from, bool bIgnoreTarget = false ) const;
 	virtual void UpdateCamera();   // BUG 5: retail CExecShootUnit::UpdateCamera @0x3a47c0 -- focus with the shot target
