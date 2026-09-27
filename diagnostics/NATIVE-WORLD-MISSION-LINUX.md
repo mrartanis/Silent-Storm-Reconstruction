@@ -468,7 +468,8 @@ stage-2 checks. SDL3/bgfx integration remains in stages
 3-4, and no macOS result is claimed.
 
 On 2026-09-27 the `--mission` coverage was broadened using actual variant
-metadata from the original `game.db`, not editor-only records. An exploratory
+metadata from the original `game.db`; that selection alone did not prove
+game reachability. An exploratory
 Windows x64 run of 20 variants (2223, 7807, 4526, 901, 7962, 3829, 810,
 895, 3791, 956, 5006, 1393, 1684, 2216, 2258, 2400, 3844, 3833,
 3145, 3845) passed `CreateRandom`, `RunPostInit` and the initial world
@@ -483,3 +484,11 @@ The ARM64/QEMU variant-4526 case took 262 seconds, so its timeout is 600
 seconds; this is a diagnostic-runtime allowance, not a gameplay timeout.
 These tests broaden data and Lua startup coverage, but neither execute all
 4726 template variants nor establish complete campaign/AI parity with Steam.
+The later `NativeMapDatabaseTests --roots` graph shows 4526 is a direct
+scenario root while 2223 is not in that graph. A second direct root, 3829
+(112x112, 35 units, 9 waypoints and a script), is now a permanent
+`NativeWorldMission3829` CTest on Windows x64, GCC Linux x86-64 and
+ARM64/QEMU, and Clang Linux x86-64. The ARM64/QEMU test passed under
+ASan/UBSan in about 270 seconds with a 600-second diagnostic timeout.
+This proves `CreateRandom`, `RunPostInit` and initial world advance for
+that authored root, not completion of its mission or Steam-equivalent AI.

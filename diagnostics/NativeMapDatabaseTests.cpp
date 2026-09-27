@@ -7,10 +7,13 @@
 #endif
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataScenario.h"
 
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
+#include <set>
 #include <vector>
 
 namespace {
@@ -48,9 +51,10 @@ template<class T> void AddRecords( const std::vector<CPtr<T> > &records )
 
 int main( int argc, char **argv )
 {
-	if ( argc != 2 )
+	const bool printRoots = argc == 3 && std::strcmp( argv[2], "--roots" ) == 0;
+	if ( argc != 2 && !printRoots )
 	{
-		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db>\n" );
+		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db> [--roots]\n" );
 		return 2;
 	}
 	try
@@ -110,6 +114,95 @@ int main( int argc, char **argv )
 		}
 		if ( !rootVariants || !rectangles )
 			return 7;
+		auto *zones = NDatabase::GetTable<NDb::CDBScenarioZone>();
+		auto *globalMaps = NDatabase::GetTable<NDb::CGlobalMap>();
+		if ( !zones || !globalMaps ) return 9;
+		std::set<int> activeScenarioIDs;
+		CDBIterator<NDb::CGlobalMap> globalIt( *globalMaps );
+		while ( globalIt.MoveNext() )
+			if ( globalIt.Get()->pScenario )
+				activeScenarioIDs.insert( globalIt.Get()->pScenario->GetRecordID() );
+		std::set<int> scenarioRoots;
+		std::set<int> activeRoots;
+		std::size_t activeZones = 0;
+		std::size_t missingRoots = 0;
+		CDBIterator<NDb::CDBScenarioZone> zoneIt( *zones );
+		while ( zoneIt.MoveNext() )
+		{
+			const bool active = zoneIt.Get()->pScenario &&
+				activeScenarioIDs.count( zoneIt.Get()->pScenario->GetRecordID() );
+			if ( active ) ++activeZones;
+			for ( int id : zoneIt.Get()->templatesIDs )
+			{
+				if ( id <= 0 ) continue;
+				if ( templates->GetDBRecord( id ) )
+				{
+					scenarioRoots.insert( id );
+					if ( active ) activeRoots.insert( id );
+				}
+				else ++missingRoots;
+			}
+		}
+		std::set<int> reachableTemplates;
+		std::set<int> reachableVariants;
+		std::set<int> rootVariantIDs;
+		std::vector<int> pending( scenarioRoots.begin(), scenarioRoots.end() );
+		std::size_t missingChildren = 0;
+		while ( !pending.empty() )
+		{
+			const int id = pending.back();
+			pending.pop_back();
+			if ( !reachableTemplates.insert( id ).second ) continue;
+			auto *map = static_cast<NDb::CTemplate*>( templates->GetDBRecord( id ) );
+			if ( !map ) return 10;
+			for ( const auto &variant : map->variants )
+			{
+				if ( !variant ) return 11;
+				reachableVariants.insert( variant->GetRecordID() );
+				if ( scenarioRoots.count( id ) ) rootVariantIDs.insert( variant->GetRecordID() );
+				for ( const auto &rect : variant->rects )
+				{
+					if ( !rect || !rect->pTemplate )
+					{
+						++missingChildren;
+						continue;
+					}
+					const int childID = rect->pTemplate->GetRecordID();
+					if ( !reachableTemplates.count( childID ) ) pending.push_back( childID );
+				}
+			}
+		}
+		if ( printRoots )
+		{
+			for ( int id : rootVariantIDs )
+				std::printf( "scenario_root_variant=%d\n", id );
+			for ( int id : activeRoots )
+			{
+				auto *map = static_cast<NDb::CTemplate*>( templates->GetDBRecord( id ) );
+				for ( const auto &variant : map->variants )
+					std::printf( "active_root_variant=%d\n", variant->GetRecordID() );
+			}
+			for ( int id : reachableVariants )
+				std::printf( "scenario_reachable_variant=%d\n", id );
+		}
+		std::uint64_t reachDigest = 14695981039346656037ULL;
+		for ( int id : reachableVariants )
+			for ( int byte = 0; byte < 4; ++byte )
+			{
+				reachDigest ^= static_cast<unsigned char>( static_cast<std::uint32_t>(id) >> (byte * 8) );
+				reachDigest *= 1099511628211ULL;
+			}
+		std::printf( "scenario_zones=%zu root_templates=%zu root_variants=%zu reachable_templates=%zu reachable_variants=%zu missing_roots=%zu missing_children=%zu reach_digest=%016llX\n",
+			zones->GetRecordCount(), scenarioRoots.size(), rootVariantIDs.size(),
+			reachableTemplates.size(), reachableVariants.size(), missingRoots,
+			missingChildren, static_cast<unsigned long long>( reachDigest ) );
+		std::printf( "global_maps=%zu active_scenarios=%zu active_zones=%zu active_root_templates=%zu\n",
+			globalMaps->GetRecordCount(), activeScenarioIDs.size(), activeZones, activeRoots.size() );
+		if ( scenarioRoots.empty() || rootVariantIDs.empty() || reachableVariants.empty() ||
+			activeScenarioIDs.size() != 3 || activeZones != zones->GetRecordCount() ||
+			activeRoots != scenarioRoots || missingRoots || missingChildren ||
+			reachDigest != UINT64_C(0xC568A7F7EB837585) )
+			return 12;
 		std::printf( "templates=%zu variants=%zu populated=%u rectangles=%u zero_size=%u digest=%016llX\n",
 			templates->GetRecordCount(), variantIDs.size(), rootVariants, rectangles, zeroSize,
 			static_cast<unsigned long long>( digest ) );

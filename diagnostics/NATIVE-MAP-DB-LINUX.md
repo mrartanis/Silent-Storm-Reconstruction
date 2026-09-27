@@ -42,3 +42,24 @@ ctest --test-dir <linux-build> -R '^NativeMapDatabaseTests$' --output-on-failure
 For cross-ARM64 execution on an x64 Linux host, invoke the target with
 `qemu-aarch64-static -L /usr/aarch64-linux-gnu` and the same database path;
 use `ASAN_OPTIONS=detect_leaks=0` if the ARM target is sanitizer-instrumented.
+
+On 2026-09-27 the test gained a scenario-root graph check. All five
+`GlobalMaps` select three scenarios; all 53 `ScenarioZones` belong to those
+scenarios. Their nonzero `TemplateID1..3` fields name 52 distinct root
+templates/variants. Following every variant's nested rectangle templates
+gives 526 templates and 985 variants, with no missing root or child link;
+the sorted-variant FNV digest is `C568A7F7EB837585`. The check runs on
+Windows x64, GCC Linux x86-64 and ARM64/QEMU, and Clang Linux x86-64 with
+the same counts and digest. Use `NativeMapDatabaseTests <game.db> --roots`
+to print root and closure variant IDs. In particular, variants 3829 and
+4526 are direct authored roots; 218, 810 and 2223 are outside this
+ScenarioZone graph and may belong to other game modes. The closure is an
+upper bound because it includes all variants regardless of runtime flags,
+and it does not prove that every listed variant is selected in play or that
+all game modes originate from `ScenarioZones`.
+The expanded Windows x64 suite passed 146/146 and GCC Linux x86-64 passed
+121/121 under ASan/UBSan/LSan. On ARM64/QEMU, both new graph and
+`NativeWorldMission3829` cases passed under ASan/UBSan with leak detection
+off; the unchanged full 120-case suite had passed immediately before this
+test-only expansion. The Clang x86-64 graph and mission cases passed under
+ASan/UBSan/LSan as focused checks.
