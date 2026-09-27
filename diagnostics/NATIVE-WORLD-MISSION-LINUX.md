@@ -379,6 +379,11 @@ the full Windows matrix passed 137/137 (and `Game.exe` built), Linux
 x86-64 passed 114/114 and Linux ARM64/QEMU passed 114/114 under ASan/UBSan.
 The ARM64 suite took about 378 seconds, with the flight gate taking about
 100 seconds.
+The clean native-media x64 archive from `ec4f587` is
+`G:\SS\lab\builds\stage2-grenade-flight-20260927-01`; its `Game.exe`
+SHA-256 is `7C70C50B0F8B6A0F33B0744A2E86B5BAD56DB721089ABDAF5E78EE81F770332B`.
+It contains no `fmod.dll`. This archive was not separately smoke-tested in
+the graphical game.
 
 The probe does not create the mission UI, invoke `CMission::SaveWorld`/
 `LoadWorld`, or compare dynamic AI, route, battle, and destruction decisions
