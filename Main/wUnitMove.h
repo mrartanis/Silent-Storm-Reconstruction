@@ -17,7 +17,7 @@ namespace NWorld
 class CCommandExecute;
 class CUnitServer;
 class CPathConflictsRemover;
-enum ENeedActiveItem;
+enum ENeedActiveItem : int;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class IExecMove
 {

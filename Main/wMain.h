@@ -95,7 +95,7 @@ class CTerrain;
 struct SInterfaceAck;
 class IPassageObject;
 class CCameraTracker;
-enum EInterfaceEvent;
+enum EInterfaceEvent : int;
 enum ESkipMode : int;
 class CUnitGroup;
 class IMine;

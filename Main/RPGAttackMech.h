@@ -76,6 +76,7 @@ public:
 	void MakeClickOfDeath( const CRay &r );
 };
 float GetAPASubstraction( float fEnter, float fExit, const NDb::CRPGArmor *pArmor );
+bool ApplyAPASubstraction( int *pnK, float fEnter, float fExit, const NDb::CRPGArmor *pArmor );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class IAttackable
 {

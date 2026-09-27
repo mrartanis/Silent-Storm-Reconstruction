@@ -35,7 +35,7 @@ class CTask;
 class IAILogic;   // phase-7 supersede: the unit holds the command-driven IAILogic (was the dev CAILogic:CAIJob)
 class CAIReaction; // the unit's reflex layer (release): chooses the logic each think (release vtbl 0x64 SetReaction)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EHitLocation;
+enum EHitLocation : int;
 struct SPathPlace;
 struct SPosition;
 struct SUnitPosition;

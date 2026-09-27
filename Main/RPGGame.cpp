@@ -451,9 +451,9 @@ void CGame::ProcessMeleeAttackPortion( const CAttackPortion &a, const CRay &ray,
 				// dead Jan03 ancestor (retail has only the free PerformMeleeAttackPortion @0x290f70, and
 			// nothing here calls this): no IWorld in scope -> 0 skips the difficulty multiplier.
 			pAttackCatcher->ProcessAttack( 0, i->nUserID, &tmpAttackPortion, ray.ptDir, pArmor );
-			tmpAttackPortion.nK -= GetAPASubstraction( i->enter.fT, i->exit.fT, pArmor );
+			const bool bPenetrated = ApplyAPASubstraction( &tmpAttackPortion.nK, i->enter.fT, i->exit.fT, pArmor );
 			//sTrail.explosions.push_back( SWound( i->pUserData, ray.Get( i->enter.fT ), -ray.ptDir, pArmor ) );
-			if ( tmpAttackPortion.nK <= 0 )
+			if ( !bPenetrated )
 				return;	// the bullet got stuck, no need to damage anything further
 		}
 	}
@@ -508,8 +508,7 @@ void CGame::ProcessRangedAttackPortion( const CAttackPortion &a, const CRay &ray
 				if ( !tmpAttackPortion.CanDealDmg(pArmor) )
 					return;
 			}
-			tmpAttackPortion.nK -= GetAPASubstraction( i->enter.fT, i->exit.fT, pArmor );
-			if ( tmpAttackPortion.nK <= 0 )
+			if ( !ApplyAPASubstraction( &tmpAttackPortion.nK, i->enter.fT, i->exit.fT, pArmor ) )
 				return;	// the bullet got stuck, no need to damage anything further
 			if ( bDrawExit && i->exit.fT > 0 && i->exit.fT < fMaxRange )
 				pTrails->push_back( STrailPoint( i->nUserID, ray.ptDir, ray.Get( i->exit.fT ), tmpAttackPortion, 0, i->pSrc->pUserData, pArmor, -i->exit.ptNormal, i->pSrc->nFloor ) );

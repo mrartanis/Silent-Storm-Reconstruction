@@ -17,13 +17,13 @@ namespace NDb
 	class CTSound;
 	class CAISound;
 	enum ECritical : int;
-	enum ESlot;
+	enum ESlot : int;
 	class CPanzerklein;
 }
 
 namespace NAI
 {
-	enum EHitLocation;
+	enum EHitLocation : int;
 }
 namespace NRPG
 {

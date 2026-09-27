@@ -12,8 +12,8 @@ const float F_MELEE_DISTANCE = (float)(FP_GRID_STEP * SQRT_2 + 0.01f);
 namespace NAI
 {
 	class IAIMap;
-	enum EPose;
-	enum EHitLocation;
+	enum EPose : int;
+	enum EHitLocation : int;
 }
 namespace NWorld
 {
@@ -33,7 +33,7 @@ namespace NDb
 	struct SAISoundConstants;
 	struct SInterruptsConstants;
 	class CRPGMine;
-	enum ECriticalLocation;
+	enum ECriticalLocation : int;
 	enum ECritical : int;
 }
 namespace NRPG

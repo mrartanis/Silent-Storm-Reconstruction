@@ -8,7 +8,7 @@
 #include "wEActiveItem.h"
 namespace NDb
 {
-	enum EShootMode;
+	enum EShootMode : int;
 }
 namespace NRPG
 {

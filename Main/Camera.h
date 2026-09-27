@@ -20,7 +20,7 @@ namespace NInput
 {
 	struct SEvent;
 }
-enum ECameraType
+enum ECameraType : int
 {
 	CAMERA_PC,
 	CAMERA_MAYA,

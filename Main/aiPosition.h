@@ -230,7 +230,7 @@ struct SUnitPosition
 	int operator&( CStructureSaver &f );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EBlowHeight // Close combat
+enum EBlowHeight : int // Close combat
 {
 	BH_TOP,
 	BH_MIDDLE,

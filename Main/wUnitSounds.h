@@ -5,6 +5,8 @@
 #endif // _MSC_VER > 1000
 
 #include "aiPosition.h"
+#include "RPGUnitMission.h"
+#include "RPGUnit.h"
 #include "rpgCheatConstants.h"
 
 namespace NWorld

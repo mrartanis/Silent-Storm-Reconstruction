@@ -66,7 +66,7 @@ namespace NAI
 	struct SPathPlace;
 	struct SPosition;
 	struct SUnitPosition;
-	enum EPose;
+	enum EPose : int;
 }
 namespace NScenario
 {
@@ -114,7 +114,7 @@ enum EInterfaceActionType : int
 	N_INTERFACE_ACTION_TYPE
 };
 //
-enum EInterfaceEvent
+enum EInterfaceEvent : int
 {
 	IE_ACTION_STARTED = 0,
 	IE_ACTION_FINISHED,

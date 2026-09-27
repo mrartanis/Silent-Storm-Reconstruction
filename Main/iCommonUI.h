@@ -12,7 +12,7 @@ namespace NDb
 	class CSequence;
 	class CAnimation;
 	class CSound;
-	enum ECameraType;
+	enum ECameraType : int;
 }
 namespace NGScene
 {
@@ -406,7 +406,7 @@ class CUnitView: public CWindow
 {
 	OBJECT_BASIC_METHODS(CUnitView);
 public:
-	enum ECameraType
+	enum ECameraType : int
 	{
 		CAMERA_FACEGEN,
 		CAMERA_PORTRAIT

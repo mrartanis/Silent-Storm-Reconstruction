@@ -171,8 +171,7 @@ void PerformMeleeAttackPortion( NWorld::IWorld *pWorld, NAI::IAIMap *pAIMap, con
 		if ( ( !pFilter || pFilter == pUD ) && pCatcher && IsValid( pUD ) )
 			// retail @0x290f70 passes ray.ptDir, NOT the per-hit point ray.Get(i->enter.fT).
 			pCatcher->ProcessAttack( pWorld, i->nUserID, &tmp, ray.ptDir, pArmor );
-		tmp.nK -= GetAPASubstraction( i->enter.fT, i->exit.fT, pArmor );
-		if ( tmp.nK <= 0 )
+		if ( !ApplyAPASubstraction( &tmp.nK, i->enter.fT, i->exit.fT, pArmor ) )
 			return;
 	}
 }
@@ -261,8 +260,7 @@ void TraceLooseRaySegment( NAI::IAIMap *pAIMap, const SAttackRayInfo &rayInfo, v
 				if ( !tmpAttackPortion.CanDealDmg( pArmor ) )
 					return;
 			}
-			tmpAttackPortion.nK -= GetAPASubstraction( i->enter.fT, i->exit.fT, pArmor );
-			if ( tmpAttackPortion.nK <= 0 )
+			if ( !ApplyAPASubstraction( &tmpAttackPortion.nK, i->enter.fT, i->exit.fT, pArmor ) )
 				return;	// bullet stopped by obstacle
 			if ( bDrawExit && i->exit.fT > 0 && i->exit.fT < fRange )
 				pTrail->push_back( STrailPoint( i->nUserID, ray.ptDir, ray.Get( i->exit.fT ), tmpAttackPortion, 0, pUD, pArmor, -i->exit.ptNormal, i->pSrc->nFloor ) );

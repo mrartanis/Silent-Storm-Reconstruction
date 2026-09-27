@@ -191,9 +191,9 @@ namespace NDatabase
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #define REGISTER_DATABASE_CLASS( N, table, name ) NDatabase::AddTable( N, table, \
-(NDatabase::RecordCreateFunc)name::New##name );
++[]() -> CDBRecord* { return static_cast<CDBRecord*>( name::New##name() ); } );
 #define REGISTER_DATABASE_CLASS_TEMPL( N, table, name,className ) NDatabase::AddTable( N, table, \
-(NDatabase::RecordCreateFunc)name::New##className );
++[]() -> CDBRecord* { return static_cast<CDBRecord*>( name::New##className() ); } );
 #define REGISTER_DATABASE_RELATION( table ) NDatabase::AddRelation( table );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

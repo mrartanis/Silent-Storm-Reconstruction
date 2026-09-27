@@ -3,7 +3,7 @@
 //
 namespace NDb
 {
-	enum EDiplomacyState;
+	enum EDiplomacyState : int;
 }
 //
 namespace NRPG

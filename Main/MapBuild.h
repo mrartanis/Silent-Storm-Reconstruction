@@ -26,8 +26,8 @@ namespace NDb
 	class CScript;
 	class CRPGGrenade;
 	enum EScenarioClueType : int;
-	enum EUnitPose;
-	enum EUnitLogic;
+	enum EUnitPose : int;
+	enum EUnitLogic : int;
 	class CAnimation;
 }
 namespace NAI

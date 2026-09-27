@@ -6,7 +6,7 @@ namespace NAI
 	class IAIUnit;
 	struct SPosition;
 	struct SUnitPosition;
-	enum EHitLocation;
+	enum EHitLocation : int;
 }
 
 namespace NDb

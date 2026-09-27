@@ -42,7 +42,7 @@ namespace NAI
 // CRouteCommandLook; CTaskCommandChangeWishPose (0x2305EC00) is the retail wish-pose-only step.
 // CTask itself (0x51812130) is a DEV-ONLY wire id -- retail v1.2 registers nothing on it.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-enum EPose;
+enum EPose : int;
 class IAIUnit;
 class CAICommander;
 class CTaskCommand;

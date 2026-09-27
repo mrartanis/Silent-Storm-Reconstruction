@@ -6,7 +6,7 @@
 
 namespace NWorld
 {
-	enum ETBSEvent;
+	enum ETBSEvent : int;
 	class CWorld;
 	class CPlayer;
 	class CObjectServerBase;
