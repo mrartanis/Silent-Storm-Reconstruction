@@ -178,13 +178,19 @@ ammunition and AP, and the presence of the mission's `OnClickUsable` Lua
 function after restoration. The probe replaces its original `CWorld` and
 `CGlobalGame` references with the loaded instances, advances ten further
 world segments, and requires time to progress with both units still present
-and no Lua error. Windows x64, Linux x86-64 and ARM64/QEMU pass
+and no Lua error. It then gives the restored shooter a second normal
+`CCmdShootObject`/`CCmdContinue` against the restored hero. The regression
+requires a new executor, one spent round, ten spent AP, positive damage,
+and one new attack and bullet event. The selected Windows run observed
+ammo 30 to 29, AP 36 to 26, and hero HP 113 to 85; damage is not fixed
+because it uses the game's RNG. Windows x64, Linux x86-64 and ARM64/QEMU pass
 this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
 This invokes the production file serializer and shared-cache payload, but
 not `CMission::SaveWorld`/`LoadWorld` themselves: the save manager's active
-slot and game/UI shell remain untested. Ten headless segments do not prove a
-later combat action, route decision, or full-mission continuation. This does
-not prove Steam save compatibility.
+slot and game/UI shell remain untested. The second controlled shot proves
+that combat can execute on the newly loaded world, not a route decision,
+full-mission continuation, or Steam-equivalent combat outcome. This does not
+prove Steam save compatibility.
 On Linux this deeper read initially found a null `CBuildInfoLoader` in
 shared cache ID 108: its save/load registration was still owned by the
 renderer-dependent `GBuilding.cpp`. The existing headless `BuildingInfo.cpp`
@@ -211,6 +217,10 @@ with `Game.exe` built, Linux x86-64 110/110, and ARM64/QEMU 110/110. Both
 Linux suites used ASan/UBSan with `halt_on_error=1`; the ARM64 suite took
 about 279 seconds with eight concurrent tests. These counts do not imply
 a complete Linux game executable or a live Steam parity run.
+The extended post-load shot gate passed the complete Windows x64 133/133,
+Linux x86-64 110/110, and ARM64/QEMU 110/110 suites. Both Linux suites used
+ASan/UBSan with `halt_on_error=1`; the ARM64/QEMU suite took about 287 seconds.
+Five additional Windows repetitions of the save/restore/second-shot test passed.
 The preceding memory-stream gate's clean Windows x64 native-media archive
 from source commit `0dae7ca` is
 `G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`
@@ -230,7 +240,7 @@ portable RPG target so this is an actual game party, not a fabricated hero.
 This is a headless original-world startup, **not** a full Linux game. The
 party mode deploys a hero and exercises one scripted aim-only command, a
 controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip
-followed by ten headless segments,
+followed by ten headless segments and a second controlled shot on the loaded world,
 but it does not create the mission UI, execute a full combat turn, use the save-manager
 path, or compare dynamic AI, route, battle, and destruction decisions against
 Steam x86. The variant-810 script

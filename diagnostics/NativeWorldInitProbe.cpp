@@ -323,6 +323,50 @@ int main(int argc, char** argv) {
             return 33;
           std::printf("restored world advanced: %u -> %u\n",
             restoredTime, world->GetTime()->GetValue());
+          auto* postLoadShooter = world->GetUnitServer("pers1");
+          auto* postLoadHero = world->GetUnitServerByPersID(
+            game->GetHero()->GetPers()->GetRecordID());
+          auto* postLoadWeapon = postLoadShooter->GetUnitRPG()->GetWeaponItem();
+          if (!postLoadWeapon) return 34;
+          const int postLoadAmmo = postLoadWeapon->GetAmmoQuantity();
+          const int postLoadAP = postLoadShooter->GetAP();
+          NRPG::SUnitInfo postLoadHeroBefore{};
+          postLoadHero->GetInfo(&postLoadHeroBefore);
+          const int postLoadAttacks = attackEvents->count;
+          const int postLoadBullets = attackEvents->bulletCount;
+          postLoadShooter->SetScriptToHit(100);
+          postLoadShooter->Do(new NWorld::CCmdSetCommand(postLoadShooter,
+            new NWorld::CCmdShootObject(postLoadHero, 0, NAI::HL_ANY)));
+          postLoadShooter->Do(new NWorld::CCmdSetCommand(postLoadShooter,
+            new NWorld::CCmdContinue()));
+          bool observedPostLoadExecutor = false;
+          for (int tick = 450; tick < 670; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            std::string name;
+            if (postLoadShooter->GetCurrentCommandName(&name))
+              observedPostLoadExecutor = true;
+            if (!NScript::luaLastError.szError.empty()) return 35;
+          }
+          NRPG::SUnitInfo postLoadHeroAfter{};
+          postLoadHero->GetInfo(&postLoadHeroAfter);
+          std::printf("post-load shot ammo: %d -> %d; AP: %d -> %d; HP: %d -> %d; attacks: %d -> %d; bullets: %d -> %d\n",
+            postLoadAmmo, postLoadWeapon->GetAmmoQuantity(),
+            postLoadAP, postLoadShooter->GetAP(),
+            postLoadHeroBefore.nHP, postLoadHeroAfter.nHP,
+            postLoadAttacks, attackEvents->count,
+            postLoadBullets, attackEvents->bulletCount);
+          if (!observedPostLoadExecutor || postLoadShooter->HasCommand() ||
+              postLoadWeapon->GetAmmoQuantity() != postLoadAmmo - 1 ||
+              postLoadShooter->GetAP() != postLoadAP - 10 ||
+              postLoadHeroAfter.nHP >= postLoadHeroBefore.nHP ||
+              attackEvents->count != postLoadAttacks + 1 ||
+              attackEvents->bulletCount != postLoadBullets + 1)
+            return 36;
         }
       }
     } else {
