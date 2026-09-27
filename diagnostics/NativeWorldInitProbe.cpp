@@ -8,6 +8,7 @@
 #include "../FileIO/Streams.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataScript.h"
 #include "../Main/GSceneUtils.h"
@@ -51,6 +52,7 @@ class AttackEventCounter : public CObjectBase {
 int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
+  const bool missionBasePartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-base-party-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
   const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
@@ -64,7 +66,7 @@ int main(int argc, char** argv) {
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
     missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave ||
     missionPartyEngGrenadeInventorySave;
-  const bool missionWithUIAck = missionUIAck || missionParty;
+  const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
   database.OpenRead(argv[1]);
@@ -88,7 +90,7 @@ int main(int argc, char** argv) {
   if (!scriptCount) return 5;
   CObj<NRPG::CGlobalGame> game = (mission || missionWithUIAck)
     ? NRPG::CreateGlobalGame() : new NRPG::CGlobalGame;
-  if (missionParty)
+  if (missionParty || missionBasePartyUIAck)
     game->players.push_back(NRPG::CreateGlobalPlayer());
   CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
   if (!world || world->GetGlobalGame() != game.GetPtr()) return 6;
@@ -112,11 +114,18 @@ int main(int argc, char** argv) {
       return 9;
     std::printf("world mission variant %d built\n", variant);
     std::printf("mission scripts queued: %zu\n", post->scripts.size());
-    if (variant == 810) {
+    if (variant == 810 || variant == 5376) {
       if (post->scripts.size() != 1) return 10;
+    }
+    if (variant == 5376) {
+      auto* record = NDb::GetTemplVariant(variant);
+      if (!record || !record->bNoAttack || world->IsAttackAllowed()) return 58;
+      std::printf("base variant 5376: attack prohibited by game.db\n");
+    }
+    if (variant == 810) {
       world->SetTimeOfDay(NWorld::TOD_NIGHT);
     }
-    if (missionParty) {
+    if (missionParty || missionBasePartyUIAck) {
       // CPlayerTracker does this between CreateRandom and RunPostInit in the
       // real mission. Its sequence commander also owns human-unit AI wrappers.
       CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);
@@ -224,7 +233,26 @@ int main(int argc, char** argv) {
             shooterAPAfter != shooterAPBefore || attackEvents->count != 1)
           return 23;
       }
-      if (variant == 810 && acknowledged == 0) return 15;
+      if ((variant == 810 && acknowledged == 0) ||
+          (variant == 5376 && acknowledged != 3)) return 15;
+      if (missionBasePartyUIAck) {
+        std::vector<CPtr<NWorld::CPlayer>> players;
+        world->GetPlayersList(&players);
+        NWorld::CUnitServer* baseUnit = nullptr;
+        for (const auto& player : players) {
+          std::vector<CPtr<NWorld::CUnitServer>> units;
+          player->GetUnits(&units);
+          for (const auto& unit : units)
+            if (unit && unit->CanFight()) { baseUnit = unit.GetPtr(); break; }
+          if (baseUnit) break;
+        }
+        if (!baseUnit) return 59;
+        CObj<NWorld::CCmdShootTile> attack(new NWorld::CCmdShootTile(
+          baseUnit->GetPosition().GetCP()));
+        if (baseUnit->CanDo(attack.GetPtr()) != NWorld::UCR_GENERAL_FAILURE)
+          return 60;
+        std::printf("base attack command rejected before trajectory evaluation\n");
+      }
       if (variant == 810) {
         Script::AutoBlock stack(*world->GetOwnScript());
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
@@ -600,10 +628,13 @@ int main(int argc, char** argv) {
             postLoadHeroBefore.nHP, postLoadHeroAfter.nHP,
             postLoadAttacks, attackEvents->count,
             postLoadBullets, attackEvents->bulletCount);
+          // ScriptToHit=100 fixes the hit roll, not cover penetration. A
+          // completed shot can spend ammo/AP and emit both events while an
+          // intervening object keeps the hero's HP unchanged.
           if (!observedPostLoadExecutor || postLoadShooter->HasCommand() ||
               postLoadWeapon->GetAmmoQuantity() != postLoadAmmo - 1 ||
               postLoadShooter->GetAP() != postLoadAP - 10 ||
-              postLoadHeroAfter.nHP >= postLoadHeroBefore.nHP ||
+              postLoadHeroAfter.nHP > postLoadHeroBefore.nHP ||
               attackEvents->count != postLoadAttacks + 1 ||
               attackEvents->bulletCount != postLoadBullets + 1)
             return 36;

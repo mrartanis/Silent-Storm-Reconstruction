@@ -252,6 +252,10 @@ public:
 	// command is cancelled and any combat logic is dropped outright (StopThinking + clear, churn-bumped).
 	virtual void SetRouteLogic( IAILogic *_pRoute )
 	{
+		// Callers may hand us a freshly-created route with no owner yet. Keep
+		// it alive through the slot swap, and release it if the human/sequence
+		// gate declines installation (observed while loading base 5376).
+		CObj<IAILogic> pRouteHold( _pRoute );
 		if ( !IsValid( pUnitServer ) )
 			return;
 		if ( !IsUnderAIControl() && !IsWorldSequence() )

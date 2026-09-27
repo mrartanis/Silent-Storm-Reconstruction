@@ -1,14 +1,16 @@
 # Native mission creation and post-init (stage 2)
 
 `NativeWorldInitProbe` has optional `--mission <variant>`,
-`--mission-ui-ack <variant>`, `--mission-party-ui-ack <variant>`, and
+`--mission-ui-ack <variant>`, `--mission-base-party-ui-ack <variant>`,
+`--mission-party-ui-ack <variant>`, and
 `--mission-party-shot <variant>`, and
 `--mission-party-shot-save <variant>` and
 `--mission-party-shot-slot <variant>`, plus
 `--mission-party-explosion-save <variant> <save-file>` and
 `--mission-party-grenade-save <variant> <save-file>` and
 `--mission-party-grenade-flight-save <variant> <save-file>` and
-`--mission-party-grenade-inventory-save <variant> <save-file>` paths. It loads the
+`--mission-party-grenade-inventory-save <variant> <save-file>` and
+`--mission-party-eng-grenade-inventory-save <variant> <save-file>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -17,14 +19,16 @@ units and one 1,016-byte attached Lua script; its startup also runs the
 world's first-segment warm-up, vision, physics, and path-colouring jobs.
 
 The tests are `NativeWorldMission218`, `NativeWorldMission810`,
-`NativeWorldMission810UIAck`, `NativeWorldMission810PartyUIAck`, and
+`NativeWorldMission810UIAck`, `NativeWorldBase5376UIAck`,
+`NativeWorldMission810PartyUIAck`, and
 `NativeWorldMission810PartyShot`, and
 `NativeWorldMission810PartyShotSave` and
 `NativeWorldMission810PartyShotSlot` and
 `NativeWorldMission810PartyExplosionSave` and
 `NativeWorldMission810PartyGrenadeSave` and
 `NativeWorldMission810PartyGrenadeFlightSave` and
-`NativeWorldMission810PartyGrenadeInventorySave` in both
+`NativeWorldMission810PartyGrenadeInventorySave` and
+`NativeWorldMission810PartyEngGrenadeInventorySave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -34,7 +38,7 @@ configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
 cmake --build build-x64 --target NativeWorldInitProbe NativeBuildingGridTests NativeHeightNetworkTests -j 16
 ASAN_OPTIONS=detect_leaks=0 UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1 \
   ctest --test-dir build-x64 --output-on-failure \
-  -R 'NativeWorld(Mission|Init)|NativeBuildingGridTests|NativeHeightNetworkTests'
+  -R 'NativeWorld(Mission|Init|Base)|NativeBuildingGridTests|NativeHeightNetworkTests'
 ```
 
 The data package and Lua files must be the same originals used by the other
@@ -96,6 +100,25 @@ waits, so this proves the Lua thread advanced beyond those waits, rather than
 only that the queue was drained. The probe uses `Script::AutoBlock` for this
 global lookup so it does not damage the active Lua stack. It does not execute
 the visual side of a UI command or validate the result of `UnitShootPrepare`.
+
+`--mission-base-party-ui-ack 5376` broadens the live Lua/data coverage from
+the introductory combat map to an authored base. It deploys the hero, advances
+one attached script through three UI-command acknowledgements, checks the
+`CTemplVariant::bNoAttack` value from the original `game.db` against the
+world's combat gate, then asks the hero to shoot a tile. The normal
+`CUnitServer::CanDo` path must reject that command with
+`UCR_GENERAL_FAILURE` before trajectory evaluation. This covers a distinct
+game rule and Lua start sequence; the headless acknowledgements do not
+render the base UI or prove a complete base visit. The test exposed an
+unowned route-logic allocation while setting up the base:
+`CAIUnit::SetRouteLogic` rejected a candidate route, leaving the raw
+new object behind. Holding the candidate through the gate and slot swap
+releases rejected routes without changing accepted routes. Linux x86-64
+passed this test with LeakSanitizer active. Full matrices after the fix:
+Windows x64 140/140 (including a rebuilt `Game.exe`), Linux x86-64 117/117,
+and Linux ARM64/QEMU 117/117 under ASan/UBSan. The ARM64 matrix took about
+460 seconds; the base test took about 143 seconds. Ten extra Windows runs
+each of the base gate and the post-load shot gate passed.
 
 The older 810 probe had no `CGlobalPlayer` or hero. Thus its authored
 `GetHero()` returned nil and `UnitShootPrepare(pers1, nil, ...)` was a no-op;
@@ -190,8 +213,11 @@ function after restoration. The probe replaces its original `CWorld` and
 world segments, and requires time to progress with both units still present
 and no Lua error. It then gives the restored shooter a second normal
 `CCmdShootObject`/`CCmdContinue` against the restored hero. The regression
-requires a new executor, one spent round, ten spent AP, positive damage,
-and one new attack and bullet event. The selected Windows run observed
+requires a new executor, one spent round, ten spent AP, no spontaneous HP
+increase, and one new attack and bullet event. `ScriptToHit=100` fixes the
+hit roll but cannot force a ray to penetrate cover: a valid second shot
+occasionally leaves HP unchanged. The first pre-save shot still requires
+positive damage. The selected Windows run observed
 ammo 30 to 29, AP 36 to 26, and hero HP 113 to 85; damage is not fixed
 because it uses the game's RNG. Windows x64, Linux x86-64 and ARM64/QEMU pass
 this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
