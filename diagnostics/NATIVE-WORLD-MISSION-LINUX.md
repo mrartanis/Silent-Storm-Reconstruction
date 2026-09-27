@@ -154,6 +154,10 @@ headless attack and bullet path, not a rendered battle or Steam comparison.
 With this gate registered in both builds, Windows x64 rebuilt `Game.exe` and
 passed 132/132 CTest, while Linux x86-64 and ARM64/QEMU passed 109/109 each
 under ASan/UBSan with `halt_on_error=1`.
+The clean native-media x64 archive from source commit `2764aef` is
+`G:\SS\lab\builds\stage2-party-shot-20260927-01`; `Game.exe` SHA-256 is
+`22023B3A73F1A19D991788B59B49D087B294463801DE365A2A9943957B5AA46B`.
+It contains no `fmod.dll`. A live-game smoke of this archive is not claimed.
 The clean native-media x64 archive from source commit `c19b144` is
 `G:\SS\lab\builds\stage2-prepare-shot-20260927-01`; its `Game.exe` SHA-256
 is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
