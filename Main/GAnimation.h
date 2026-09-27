@@ -266,14 +266,14 @@ struct SSkeletonState
 {
 	ZDATA
 	//bool bValid;
-	char cIdleBannedFlags;
-	int nAnimFlagsPoseWeapon;
+	char cIdleBannedFlags = 0;
+	int nAnimFlagsPoseWeapon = 0;
 	string szParams;
-	CVec3 pos;
-	float fAngle;
-	bool bCrawl;
+	CVec3 pos = CVec3( 0, 0, 0 );
+	float fAngle = 0.0f;
+	bool bCrawl = false;
 	CPtr<ITerrainFunction> pTerrain;
-	int nAnimFlagsClassSex;
+	int nAnimFlagsClassSex = 0;
 	CDBPtr<NDb::CSide> pSide;
 	CDBPtr<NDb::CAnimation> pIdleAnimation;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&cIdleBannedFlags); f.Add(3,&nAnimFlagsPoseWeapon); f.Add(4,&szParams); f.Add(5,&pos); f.Add(6,&fAngle); f.Add(7,&bCrawl); f.Add(8,&pTerrain); f.Add(9,&nAnimFlagsClassSex); f.Add(10,&pSide); f.Add(11,&pIdleAnimation); return 0; }

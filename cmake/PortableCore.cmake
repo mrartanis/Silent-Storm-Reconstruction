@@ -1141,7 +1141,9 @@ target_link_options(NativeAILogicTests PRIVATE -Wl,--gc-sections
   -Wl,-u,_ZN6NWorld12CDFrozenItem5VisitEPNS_14IRenderVisitorE
   -Wl,-u,_ZN6NWorld6CWorldC1EPN4NRPG11CGlobalGameE)
 add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
-add_executable(NativeWorldInitProbe "${root}/diagnostics/NativeWorldInitProbe.cpp")
+add_executable(NativeWorldInitProbe
+  "${root}/diagnostics/NativeWorldInitProbe.cpp"
+  "${root}/Main/Time.cpp")
 target_include_directories(NativeWorldInitProbe PRIVATE
   "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
 target_link_libraries(NativeWorldInitProbe PRIVATE
@@ -1186,6 +1188,11 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
         --mission-party-shot 810)
     set_tests_properties(NativeWorldMission810PartyShot PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    add_test(NAME NativeWorldMission810PartyShotSave
+      COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+        --mission-party-shot-save 810)
+    set_tests_properties(NativeWorldMission810PartyShotSave PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
   endif()
 endif()

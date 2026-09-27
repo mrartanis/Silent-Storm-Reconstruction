@@ -64,7 +64,7 @@ class CWindowDoor: public CAnimObjectServerBase, public IWindowDoor, public IMin
 		CDBPtr<NDb::CRPGEngGrenade> pEngGrenade;
 		int nEngSkill;
 		ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pGrenade); f.Add(3,&nDC); f.Add(4,&vPos); f.Add(5,&sMineModifiers); f.Add(6,&pEngGrenade); f.Add(7,&nEngSkill); return 0; }
-		SAttachedGrenade() : nEngSkill( 0 ) {}   // sMineModifiers self-defaults {1,1,false}, pEngGrenade -> 0; old saves (tags 2-4) load clean
+		SAttachedGrenade() : nDC( 0 ), vPos( 0, 0, 0 ), nEngSkill( 0 ) {}   // sMineModifiers self-defaults {1,1,false}, pEngGrenade -> 0; old saves (tags 2-4) load clean
 	};
 	ZDATA_(CAnimObjectServerBase)
 	bool bIsOpen;

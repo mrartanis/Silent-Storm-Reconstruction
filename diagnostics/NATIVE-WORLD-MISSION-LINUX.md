@@ -2,7 +2,8 @@
 
 `NativeWorldInitProbe` has optional `--mission <variant>`,
 `--mission-ui-ack <variant>`, `--mission-party-ui-ack <variant>`, and
-`--mission-party-shot <variant>` paths. It loads the
+`--mission-party-shot <variant>`, and
+`--mission-party-shot-save <variant>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -12,7 +13,8 @@ world's first-segment warm-up, vision, physics, and path-colouring jobs.
 
 The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810UIAck`, `NativeWorldMission810PartyUIAck`, and
-`NativeWorldMission810PartyShot` in both
+`NativeWorldMission810PartyShot`, and
+`NativeWorldMission810PartyShotSave` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -164,6 +166,33 @@ is `515177BA2C38C3C34952E2E189492E72E58CC523C80BFCDE0F392CB3B1E40207`.
 It contains no `fmod.dll`. No separate live-game smoke or direct Steam
 comparison is claimed for this archive.
 
+`--mission-party-shot-save 810` continues the fired-shot scenario and uses
+the game's `CStructureSaver` to write the live `CWorld` object to a memory
+stream, then reads a second `CWorld` under `CSharedHolder`. The regression
+compares world time and time of day, the deployed hero's HP, the shooter's
+ammunition and AP, and the presence of the mission's `OnClickUsable` Lua
+function after restoration. Windows x64, Linux x86-64 and ARM64/QEMU pass
+this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
+This is not the whole
+`CMission::SaveWorld`/`LoadWorld` file path: it does not include
+`SerializeShared`, the save manager, the game/UI shell, or continuation of
+the restored world's simulation. It does not prove Steam save compatibility.
+
+This deeper serialization exposed previously hidden uninitialized state in
+`CUnitAnimator::bIdle`, door chest/transparency flags and empty trap data,
+`CColouredWaysCalcer::bPrevStandOnly`, `SSkeletonState`'s scalar fields,
+`SModifiable<bool>::data`, and the default `CVolumeNode::STrackerDescr`
+copied by the list loader. Those fields now have deterministic initial values.
+On Linux, the first restored world lacked its `CCTime` because the original
+`Main/Time.cpp` save/load registration was not linked into the headless
+probe. The probe now compiles that original translation unit. These fixes
+are required for the actual world-save graph, not a new save format.
+After the new gate and fixes, the full matrix passed: Windows x64 133/133
+with `Game.exe` built, Linux x86-64 110/110, and ARM64/QEMU 110/110. Both
+Linux suites used ASan/UBSan with `halt_on_error=1`; the ARM64 suite took
+about 279 seconds with eight concurrent tests. These counts do not imply
+a complete Linux game executable or a live Steam parity run.
+
 This newly exercised path exposed two previously hidden UB cases on Linux:
 `SUnitDeployData` left `bCorpseAlive` and `bCorpseEnemy` indeterminate when
 adding a mercenary, and `NAI::CPath` left `bStrafePath` indeterminate before
@@ -172,13 +201,14 @@ game's tiny `RPGMerc.cpp` implementation of `CreateMerc` is included in the
 portable RPG target so this is an actual game party, not a fabricated hero.
 
 This is a headless original-world startup, **not** a full Linux game. The
-party mode deploys a hero and exercises one scripted aim-only command, but
-the probe does not create the mission UI, execute a full combat turn,
-save/reload the resulting mission, or compare dynamic AI, route, battle,
-and destruction decisions against Steam x86. The variant-810 script
+party mode deploys a hero and exercises one scripted aim-only command, a
+controlled fired shot, and a `CWorld` memory round-trip, but it does not
+create the mission UI, execute a full combat turn, use the complete file-save
+path, or compare dynamic AI, route, battle, and destruction decisions against
+Steam x86. The variant-810 script
 waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches
-its later callback declaration. No real UI action, later callback invocation,
-or actual fired-shot outcome is proved. The absence of Lua errors and these two script
+its later callback declaration. No real UI action or later callback invocation
+is proved. The absence of Lua errors and these script
 effects do not prove that every mission binding worked. Those are the next
 stage-2 checks. SDL3/bgfx integration remains in stages
 3-4, and no macOS result is claimed.

@@ -371,7 +371,7 @@ public:
 		int nMask;
 		bool bInformOnDoorFlip;
 		ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pTracker); f.Add(3,&bound); f.Add(4,&nMask); f.Add(5,&bInformOnDoorFlip); return 0; }
-		STrackerDescr() {}
+		STrackerDescr() : bound(), nMask(0), bInformOnDoorFlip(false) {}
 		STrackerDescr( IAIMapTracker *_p, const SBound &_b, int _nMask, bool _bInform ): 
 			pTracker(_p), bound(_b), nMask(_nMask), bInformOnDoorFlip( _bInform ) {}
 	};

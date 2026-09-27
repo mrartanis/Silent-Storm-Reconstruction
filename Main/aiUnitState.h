@@ -31,7 +31,7 @@ struct SModifiable
 	int  nLock;
 	bool bModified;
 	T    data;
-	SModifiable(): nLock( 0 ), bModified( false ) {}
+	SModifiable(): nLock( 0 ), bModified( false ), data() {}
 	void SetModified() { bModified = true; }
 	// retail @0xb00e0 (bool) / @0xb0150 (SUnitsAndPositions): nLock + flag + payload.
 	int operator&( CStructureSaver &f ) { f.Add( 2, &nLock ); f.Add( 3, &bModified ); f.Add( 4, &data ); return 0; }

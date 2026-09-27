@@ -50,6 +50,8 @@ CWindowDoor::CWindowDoor( CWorld *pWorld, const SObjectPlace &pos, bool bLightMa
 	bIsLocked = false;
 	nKeyID = 0;
 	nLockHardness = 0;
+	bIsChest = false;
+	bIsTransparentIfOpen = false;
 	if ( bOpen )
 	{
 		STime t = pTime->GetValue();

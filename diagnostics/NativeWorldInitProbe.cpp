@@ -23,6 +23,7 @@
 #include "../Main/wUnitCommands.h"
 #include "../Main/wUnitServer.h"
 #include "../Misc/RandomGen.h"
+#include "../Misc/BasicShare.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -45,7 +46,8 @@ int main(int argc, char** argv) {
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
-  const bool missionParty = missionPartyUIAck || missionPartyShot;
+  const bool missionPartyShotSave = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
+  const bool missionParty = missionPartyUIAck || missionPartyShot || missionPartyShotSave;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -212,7 +214,7 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyShot) {
+      if (missionPartyShot || missionPartyShotSave) {
         auto* shooter = world->GetUnitServer("pers1");
         auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
         if (!shooter || !hero) return 24;
@@ -258,6 +260,49 @@ int main(int argc, char** argv) {
             attackEvents->count != attackEventsBeforeShot + 1 ||
             attackEvents->bulletCount != bulletEventsBeforeShot + 1)
           return 27;
+        if (missionPartyShotSave) {
+          CMemoryStream saved;
+          {
+            CStructureSaver saver(saved, CStructureSaver::WRITE);
+            saver.Add(2, &world);
+          }
+          std::printf("world save bytes after shot: %d\n", saved.GetSize());
+          saved.SetRMode();
+          saved.Seek(0);
+          CObj<NWorld::CWorld> restored;
+          {
+            CSharedHolder shared;
+            CStructureSaver saver(saved, CStructureSaver::READ);
+            saver.Add(2, &restored);
+          }
+          std::printf("world restored after shot: %d\n", restored ? 1 : 0);
+          if (!restored || !restored->GetGlobalGame() ||
+              !restored->GetGlobalGame()->GetHero() ||
+              !restored->GetTime() || !restored->GetOwnScript() ||
+              restored->GetTime()->GetValue() != world->GetTime()->GetValue() ||
+              restored->GetTimeOfDay() != world->GetTimeOfDay())
+            return 28;
+          {
+            Script::AutoBlock stack(*restored->GetOwnScript());
+            if (!restored->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
+              return 31;
+          }
+          auto* restoredHero = restored->GetUnitServerByPersID(
+            restored->GetGlobalGame()->GetHero()->GetPers()->GetRecordID());
+          auto* restoredShooter = restored->GetUnitServer("pers1");
+          if (!restoredHero || !restoredShooter || !restoredShooter->GetUnitRPG())
+            return 29;
+          auto* restoredWeapon = restoredShooter->GetUnitRPG()->GetWeaponItem();
+          NRPG::SUnitInfo restoredHeroInfo{};
+          restoredHero->GetInfo(&restoredHeroInfo);
+          std::printf("restored hero HP: %d; shooter ammo: %d; AP: %d\n",
+            restoredHeroInfo.nHP, restoredWeapon ? restoredWeapon->GetAmmoQuantity() : -1,
+            restoredShooter->GetAP());
+          if (!restoredWeapon || restoredHeroInfo.nHP != heroAfterShot.nHP ||
+              restoredWeapon->GetAmmoQuantity() != weapon->GetAmmoQuantity() ||
+              restoredShooter->GetAP() != shooter->GetAP())
+            return 30;
+        }
       }
     } else {
       world->UpdateWorld(before + 220 * 50, nullptr);

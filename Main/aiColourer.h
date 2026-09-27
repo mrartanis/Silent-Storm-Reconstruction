@@ -217,7 +217,7 @@ public:
 	void ForceUpdate() { bMustChange = true; }
 	void CalcBestWays( CPathNetwork *pPathNet, CLayerColorConstraints *pWays, const SZone &src, 
 		const vector<SZone> &dst, const vector<CVec3> &dstCP, bool bStandOnly );
-	CColouredWaysCalcer() : bMustChange( true ) {}
+	CColouredWaysCalcer() : bMustChange( true ), bPrevStandOnly( false ) {}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

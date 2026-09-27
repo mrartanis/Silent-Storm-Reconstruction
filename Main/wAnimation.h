@@ -61,7 +61,7 @@ class CUnitAnimator
 	string szWeaponName;
 	CVec3 hipShift;
 	
-	bool bIdle; 
+	bool bIdle = false;
 	// movement vars
 	bool bWalking;
 	bool bStart;
