@@ -85,6 +85,12 @@ matrix passed 118/118 under ASan/UBSan with leak detection disabled for
 QEMU; it took about 400 seconds. This repeat covers the Steam-formula
 correction, not just the earlier overflow guard.
 
+The clean native-media Windows x64 archive from the corrected source commit
+`4b2c61f` is `G:\SS\lab\builds\stage2-steam-apa-20260927-01`. Its
+`Game.exe` SHA-256 is
+`62563E865FB53C77950C619D2CB3B2D7153E18736A05891C90756BE8162E228C`;
+`fmod.dll` is absent. This newer archive was not separately launched.
+
 A clean native-media Windows x64 archive from commit `298dc40` is at
 `G:\SS\lab\builds\stage2-clang-penetration-20260927-01`. Its `Game.exe`
 SHA-256 is
