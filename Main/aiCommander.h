@@ -200,7 +200,7 @@ public:
 	// CPtr<NWorld::CWorld> deserialize resolves to null (multiple-inheritance base-adjust); re-establish it
 	// (and the embedded SAIState back-refs) from CWorld::CreateRestored before the first Segment runs, so
 	// GenerateCommand()'s GetWorld()->IsSequence() (aiCommander.cpp:889) is safe.
-	void ReconnectWorld( NWorld::CWorld *pW ) { pWorld = pW; state.SetBackRefs( pW, this ); }
+	void ReconnectWorld( NWorld::CWorld *pW );
 	NWorld::CPlayer *GetPlayer() { return pPlayer; }
 	SAIState *GetAIState() { return &state; }
 	const vector< CObj<IAIUnit> > &GetUnitsList() const { return units; }

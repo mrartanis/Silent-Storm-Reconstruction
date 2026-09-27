@@ -1143,7 +1143,8 @@ target_link_options(NativeAILogicTests PRIVATE -Wl,--gc-sections
 add_test(NAME NativeAILogicTests COMMAND NativeAILogicTests)
 add_executable(NativeWorldInitProbe
   "${root}/diagnostics/NativeWorldInitProbe.cpp"
-  "${root}/Main/Time.cpp")
+  "${root}/Main/Time.cpp"
+  "${root}/Main/DiscretePos.cpp")
 target_include_directories(NativeWorldInitProbe PRIVATE
   "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
 target_link_libraries(NativeWorldInitProbe PRIVATE

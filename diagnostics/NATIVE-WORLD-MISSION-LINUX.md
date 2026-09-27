@@ -239,6 +239,32 @@ Five additional Windows repetitions of the slot path passed.
 This integrates the original slot manager and serializer but
 still does not instantiate the renderer-dependent `CMission`, invoke its
 `SaveWorld`/`LoadWorld` methods, or run the game's save UI.
+
+The slot gate now also hands control to the enemy commander after the loaded
+world's second controlled shot, removes the diagnostic forced-hit override,
+and advances the original AI/turn loop until it observes a new bullet event
+and ammunition consumption from the enemy's autonomous shot. The same test
+checks that `CAIUnit::pAIState` points at its owning commander's embedded
+`SAIState` before and after save/load. This pointer is transient and was
+previously null after load: `CAICommander::ReconnectWorld` now reattaches it
+only for that commander's own units while restoring world/state back-references.
+The diagnostic calls `CWorld::RestoreRuntimeCaches`, the production callback
+used by `CMission::OnSnapshotRestored`, after deserialization. This exercises
+an actual AI choice and attack in the restored world; it does not establish
+which target or route Steam would select in the same random state.
+
+The longer AI turn exposed another omitted headless save/load registration:
+building placement objects of class `CFBTransform` (retail ID `0x025a1130`)
+were read as null because `Main/DiscretePos.cpp` was absent from the Linux
+probe. The probe now compiles the original translation unit, preserving its
+Windows registration. It also exposed an indeterminate `SUnitPosition::bRun`
+in an unavailable Panzerklein-terror action's cached `SInfo`; the position
+now defaults that flag to false before the cache copies it. These are
+game-used world/AI paths, not editor features or graphics substitutes.
+After these changes, Windows x64 built `Game.exe` and passed the full 134/134
+CTest suite; Linux x86-64 and ARM64/QEMU each passed 111/111 with ASan/UBSan
+and `halt_on_error=1`. The Windows slot test also passed five consecutive
+repetitions. The ARM64 full suite took 286 seconds.
 The preceding memory-stream gate's clean Windows x64 native-media archive
 from source commit `0dae7ca` is
 `G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`

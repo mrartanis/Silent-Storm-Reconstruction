@@ -213,6 +213,8 @@ struct SUnitPosition
 	SPosition pos;
 	bool bRun;
 
+	SUnitPosition(): bRun( false ) {}
+
 	bool IsValid() const;
 	CVec2 GetCPNoHeight() const { return pos.GetCPNoHeight(); }
 	CVec3 GetCP() const { return pos.GetCP(); }

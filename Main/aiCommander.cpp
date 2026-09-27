@@ -202,6 +202,19 @@ CAICommander::CAICommander( NWorld::CWorld *_pWorld, NWorld::CPlayer *_pPlayer )
 	state.pPlayer = pPlayer;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// CAIUnit::pAIState is a transient raw pointer. The save restores the embedded state and the unit
+// graph, but not that pointer; reconnect only our units so another commander's shared references
+// cannot overwrite their owner's tactical state. Rebuilding the serialized rosters here would also
+// discard saved threat/order information, so leave SAIState::Synchronize to the normal AI pump.
+void CAICommander::ReconnectWorld( NWorld::CWorld *pW )
+{
+	pWorld = pW;
+	state.SetBackRefs( pW, this );
+	for ( vector< CObj<IAIUnit> >::iterator i = units.begin(); i != units.end(); ++i )
+		if ( IsValid( *i ) && IsOwnUnit( *i ) )
+			(*i)->SetAIState( &state );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail CAICommander::SetPlayer @0x33e60: pPlayer + unitsTracker.pPlayer, nothing else.
 void CAICommander::SetPlayer( NWorld::IPlayer *_pPlayer )
 {

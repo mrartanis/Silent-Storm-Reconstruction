@@ -12,6 +12,7 @@
 #include "../Main/GSceneUtils.h"
 #include "../Main/A5Script.h"
 #include "../Main/aiCommander.h"
+#include "../Main/aiUnit.h"
 #include "../Main/eventUnit.h"
 #include "../Main/iSaveManager.h"
 #include "../Main/rpgGlobal.h"
@@ -265,6 +266,14 @@ int main(int argc, char** argv) {
             attackEvents->bulletCount != bulletEventsBeforeShot + 1)
           return 27;
         if (missionPartyShotSave || missionPartyShotSlot) {
+          if (missionPartyShotSlot) {
+            auto* preSaveCommander = dynamic_cast<NAI::CAICommander*>(
+              shooter->GetPlayer()->GetCommander());
+            auto* preSaveAI = preSaveCommander ?
+              preSaveCommander->GetAIUnit(shooter) : nullptr;
+            if (!preSaveAI || preSaveAI->GetAIState() != preSaveCommander->GetAIState())
+              return 42;
+          }
           NMainLoop::CSaveManager* saveManager = nullptr;
           std::wstring slotPath;
           if (missionPartyShotSlot) {
@@ -334,6 +343,13 @@ int main(int argc, char** argv) {
           const STime restoredTime = restored->GetTime()->GetValue();
           world = restored;
           game = world->GetGlobalGame();
+          world->RestoreRuntimeCaches(game.GetPtr());
+          auto* restoredCommander = dynamic_cast<NAI::CAICommander*>(
+            restoredShooter->GetPlayer()->GetCommander());
+          auto* restoredAI = restoredCommander ?
+            restoredCommander->GetAIUnit(restoredShooter) : nullptr;
+          if (!restoredAI || restoredAI->GetAIState() != restoredCommander->GetAIState())
+            return 41;
           for (int tick = 440; tick < 450; ++tick) {
             world->UpdateWorld(tick * 50, nullptr);
             while (auto* raw = world->GetUICommand()) {
@@ -393,6 +409,40 @@ int main(int argc, char** argv) {
               attackEvents->count != postLoadAttacks + 1 ||
               attackEvents->bulletCount != postLoadBullets + 1)
             return 36;
+          if (missionPartyShotSlot) {
+            auto* current = world->GetCurrentPlayer();
+            if (!current || current == postLoadShooter->GetPlayer()) return 39;
+            auto* enemyCommander = dynamic_cast<NAI::CAICommander*>(
+              postLoadShooter->GetPlayer()->GetCommander());
+            if (!enemyCommander || !enemyCommander->HasVisibleEnemies() ||
+                postLoadShooter->IsCheatEnabled(NRPG::CHEAT_NOAI)) return 43;
+            postLoadShooter->SetScriptToHit(-1); // Let the AI use normal hit rules.
+            const int aiAmmoBefore = postLoadWeapon->GetAmmoQuantity();
+            const int aiBulletsBefore = attackEvents->bulletCount;
+            current->GetCommander()->Do(new NWorld::CCmdEndOfTurn());
+            bool observedEnemyTurn = false;
+            bool observedAutonomousBullet = false;
+            for (int tick = 670; tick < 1170; ++tick) {
+              world->UpdateWorld(tick * 50, nullptr);
+              while (auto* raw = world->GetUICommand()) {
+                CObj<NWorld::CUICmd> command(raw);
+                if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                  world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+              }
+              if (world->GetCurrentPlayer() == postLoadShooter->GetPlayer())
+                observedEnemyTurn = true;
+              if (!NScript::luaLastError.szError.empty()) return 40;
+              if (observedEnemyTurn && attackEvents->bulletCount > aiBulletsBefore &&
+                  postLoadWeapon->GetAmmoQuantity() < aiAmmoBefore) {
+                observedAutonomousBullet = true;
+                std::printf("autonomous AI shot at tick %d: ammo %d -> %d, bullets %d -> %d\n",
+                  tick, aiAmmoBefore, postLoadWeapon->GetAmmoQuantity(),
+                  aiBulletsBefore, attackEvents->bulletCount);
+                break;
+              }
+            }
+            if (!observedEnemyTurn || !observedAutonomousBullet) return 44;
+          }
         }
       }
     } else {
