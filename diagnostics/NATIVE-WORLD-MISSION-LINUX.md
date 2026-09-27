@@ -43,6 +43,14 @@ Linux ARM64/QEMU 108/108 under ASan/UBSan with the same halt-on-error options.
 The ARM64 suite took about 196 seconds, with the party mission probe taking
 about 94 seconds. This remains a headless diagnostic Linux build.
 
+The clean Windows x64 native-media archive from source commit `1f99bbd` is
+`G:\SS\lab\builds\stage2-party-command-20260927-01`, built with 16 jobs.
+`Game.exe` SHA-256 is
+`8AFD493648153F033F1E97A9E59D56F6BF5122A54D82154D4CC505A22293DE98`.
+The archive has no `fmod.dll`. No separate live-game smoke is claimed for
+this archive; the Windows `Game.exe` build and 131/131 CTest are the verified
+regressions for this packet.
+
 The first live variant-810 run exposed three previously dormant x64/Linux
 undefined behaviors, now covered by the mission gate and local regressions:
 `SFlipper` moved an uninitialized `bool` during path-network growth;
