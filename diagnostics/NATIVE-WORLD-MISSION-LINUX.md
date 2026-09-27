@@ -3,7 +3,8 @@
 `NativeWorldInitProbe` has optional `--mission <variant>`,
 `--mission-ui-ack <variant>`, `--mission-party-ui-ack <variant>`, and
 `--mission-party-shot <variant>`, and
-`--mission-party-shot-save <variant>` paths. It loads the
+`--mission-party-shot-save <variant>` and
+`--mission-party-shot-slot <variant>` paths. It loads the
 original `game.db` and four autoload scripts, constructs the original `CWorld`
 with an RPG global game, calls `CWorld::CreateRandom` with the original
 `BuildMap`, then calls `CWorld::RunPostInit`. Variant 218 exercises a small
@@ -14,7 +15,8 @@ world's first-segment warm-up, vision, physics, and path-colouring jobs.
 The tests are `NativeWorldMission218`, `NativeWorldMission810`,
 `NativeWorldMission810UIAck`, `NativeWorldMission810PartyUIAck`, and
 `NativeWorldMission810PartyShot`, and
-`NativeWorldMission810PartyShotSave` in both
+`NativeWorldMission810PartyShotSave` and
+`NativeWorldMission810PartyShotSlot` in both
 the Windows and portable CMake builds.
 Example Linux verification, from a build
 configured with `S2_GAME_DB_PATH`, `S2_RESOURCE_PACKAGE_PATH`, and
@@ -187,8 +189,9 @@ because it uses the game's RNG. Windows x64, Linux x86-64 and ARM64/QEMU pass
 this round-trip; both Linux targets use ASan/UBSan with `halt_on_error=1`.
 This invokes the production file serializer and shared-cache payload, but
 not `CMission::SaveWorld`/`LoadWorld` themselves: the save manager's active
-slot and game/UI shell remain untested. The second controlled shot proves
-that combat can execute on the newly loaded world, not a route decision,
+slot and game/UI shell are not involved in this direct-file mode. The second
+controlled shot proves that combat can execute on the newly loaded world,
+not a route decision,
 full-mission continuation, or Steam-equivalent combat outcome. This does not
 prove Steam save compatibility.
 On Linux this deeper read initially found a null `CBuildInfoLoader` in
@@ -221,6 +224,21 @@ The extended post-load shot gate passed the complete Windows x64 133/133,
 Linux x86-64 110/110, and ARM64/QEMU 110/110 suites. Both Linux suites used
 ASan/UBSan with `halt_on_error=1`; the ARM64/QEMU suite took about 287 seconds.
 Five additional Windows repetitions of the save/restore/second-shot test passed.
+
+`--mission-party-shot-slot 810` follows the same mission and combat path,
+but writes the world payload through `CSaveManager::GetSlotFilePathW` in its
+active `temp` slot. It then calls `SaveSlot` to copy that slot, clears the
+active slot, calls `LoadSlot` on the named copy, and reads the restored active
+file before continuing the world and firing the second shot. The test
+requires `S2_USER_DATA_DIR`; CTest sets it to `world-slot-user` inside the
+build tree, so no baseline or real user save directory is touched. The
+Windows x64 targeted gate and complete 134/134 suite passed; Linux x86-64
+and ARM64/QEMU passed their targeted gates and complete 111/111 suites under
+ASan/UBSan with `halt_on_error=1`. The ARM64 suite took about 294 seconds.
+Five additional Windows repetitions of the slot path passed.
+This integrates the original slot manager and serializer but
+still does not instantiate the renderer-dependent `CMission`, invoke its
+`SaveWorld`/`LoadWorld` methods, or run the game's save UI.
 The preceding memory-stream gate's clean Windows x64 native-media archive
 from source commit `0dae7ca` is
 `G:\SS\lab\builds\stage2-party-shot-save-20260927-01`; its `Game.exe`
@@ -240,10 +258,11 @@ portable RPG target so this is an actual game party, not a fabricated hero.
 This is a headless original-world startup, **not** a full Linux game. The
 party mode deploys a hero and exercises one scripted aim-only command, a
 controlled fired shot, and a file-backed `CWorld`/shared-cache round-trip
-followed by ten headless segments and a second controlled shot on the loaded world,
-but it does not create the mission UI, execute a full combat turn, use the save-manager
-path, or compare dynamic AI, route, battle, and destruction decisions against
-Steam x86. The variant-810 script
+followed by ten headless segments and a second controlled shot on the loaded world.
+The alternate slot mode also copies and reloads the world through the active
+`CSaveManager` slot. It does not create the mission UI, execute a full combat
+turn, invoke `CMission::SaveWorld`/`LoadWorld`, or compare dynamic AI, route,
+battle, and destruction decisions against Steam x86. The variant-810 script
 waits on sequence/UI actions: only the diagnostic ID-acknowledged path reaches
 its later callback declaration. No real UI action or later callback invocation
 is proved. The absence of Lua errors and these script

@@ -13,6 +13,7 @@
 #include "../Main/A5Script.h"
 #include "../Main/aiCommander.h"
 #include "../Main/eventUnit.h"
+#include "../Main/iSaveManager.h"
 #include "../Main/rpgGlobal.h"
 #include "../Main/RPGItem.h"
 #include "../Main/RPGUnit.h"
@@ -24,6 +25,7 @@
 #include "../Main/wUnitServer.h"
 #include "../Misc/RandomGen.h"
 #include "../Misc/BasicShare.h"
+#include "../MiscDll/Commands.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -47,7 +49,9 @@ int main(int argc, char** argv) {
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
   const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
-  const bool missionParty = missionPartyUIAck || missionPartyShot || missionPartyShotSave;
+  const bool missionPartyShotSlot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-slot") == 0;
+  const bool missionParty = missionPartyUIAck || missionPartyShot ||
+    missionPartyShotSave || missionPartyShotSlot;
   const bool missionWithUIAck = missionUIAck || missionParty;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
   CFileStream database;
@@ -214,7 +218,7 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyShot || missionPartyShotSave) {
+      if (missionPartyShot || missionPartyShotSave || missionPartyShotSlot) {
         auto* shooter = world->GetUnitServer("pers1");
         auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
         if (!shooter || !hero) return 24;
@@ -260,18 +264,40 @@ int main(int argc, char** argv) {
             attackEvents->count != attackEventsBeforeShot + 1 ||
             attackEvents->bulletCount != bulletEventsBeforeShot + 1)
           return 27;
-        if (missionPartyShotSave) {
+        if (missionPartyShotSave || missionPartyShotSlot) {
+          NMainLoop::CSaveManager* saveManager = nullptr;
+          std::wstring slotPath;
+          if (missionPartyShotSlot) {
+            const char* userRoot = std::getenv("S2_USER_DATA_DIR");
+            if (!userRoot || !*userRoot) return 37;
+            NGlobal::RegisterVar("game_profile", nullptr, nullptr,
+              NGlobal::CValue(std::wstring(L"Stage2Probe")), true);
+            saveManager = NMainLoop::GetSaveManager();
+            saveManager->CreateProfile("Stage2Probe");
+            saveManager->SetActiveProfile("Stage2Probe");
+            saveManager->PrepareSlot(NMainLoop::S_SLOT_ACTIVE);
+            slotPath = saveManager->GetSlotFilePathW(
+              NMainLoop::S_SLOT_ACTIVE, "world-mission-810-shot.sav");
+            if (slotPath.empty()) return 38;
+          }
           {
             CFileStream saved;
-            saved.OpenWrite(argv[5]);
+            if (missionPartyShotSlot) saved.OpenWrite(slotPath.c_str());
+            else saved.OpenWrite(argv[5]);
             CStructureSaver saver(saved, CStructureSaver::WRITE);
             saver.Add(2, &world);
             SerializeShared(&saver);
           }
+          if (missionPartyShotSlot) {
+            saveManager->SaveSlot("ShotRoundtrip");
+            saveManager->ClearSlot(NMainLoop::S_SLOT_ACTIVE);
+            saveManager->LoadSlot("ShotRoundtrip");
+          }
           CObj<NWorld::CWorld> restored;
           {
             CFileStream saved;
-            saved.OpenRead(argv[5]);
+            if (missionPartyShotSlot) saved.OpenRead(slotPath.c_str());
+            else saved.OpenRead(argv[5]);
             std::printf("world save bytes after shot: %d\n", saved.GetSize());
             CSharedHolder shared;
             CStructureSaver saver(saved, CStructureSaver::READ);

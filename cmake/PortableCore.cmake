@@ -1194,6 +1194,12 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
         --mission-party-shot-save 810 "${CMAKE_BINARY_DIR}/world-mission-810-shot.sav")
     set_tests_properties(NativeWorldMission810PartyShotSave PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    add_test(NAME NativeWorldMission810PartyShotSlot
+      COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+        --mission-party-shot-slot 810)
+    set_tests_properties(NativeWorldMission810PartyShotSlot PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300
+      ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/world-slot-user")
   endif()
 endif()
 foreach(test IN ITEMS NativeHeadDataTests NativeFaceGenDataTests
