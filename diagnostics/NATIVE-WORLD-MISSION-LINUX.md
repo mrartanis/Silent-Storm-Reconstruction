@@ -520,9 +520,9 @@ through 5175, then stopped at 5240 on an out-of-bounds AI sound-radius read.
 After the fix, the remaining 25 roots from 5240 through 7254 passed under
 the same sanitizers; its 123 non-extended tests passed after the fix. This
 is full root startup coverage across the two Linux runs, not a single
-uninterrupted post-fix CTest run. The full ARM64 extended sweep has not
-been run; its focused 5240 CTest passed under ASan/UBSan with leak
-detection disabled in about 156 seconds.
+uninterrupted post-fix CTest run. At this first fallback revision the full
+ARM64 sweep had not been run; its focused 5240 CTest passed under
+ASan/UBSan with leak detection disabled in about 156 seconds.
 
 The failure was a step sound emitted during unit movement. Armor-provided
 `nAISoundType=5` reached `CAISound::GetRadiusFromAISoundType`, while the
@@ -564,5 +564,40 @@ For the zero-radius revision, Windows x64 passed all 148 non-extended
 tests and the 52-root `NativeScenarioRootWorlds` again (about 106 seconds).
 GCC Linux x86-64 with ASan/UBSan/LSan passed all 123 non-extended tests
 and a single uninterrupted 52-root CTest (about 987 seconds). The
-revised ARM64/QEMU root sweep is running in bounded ranges; do not infer
-its result from the earlier all-root sweep built with the `R5` fallback.
+revised ARM64/QEMU sweep also passed all 52 roots with ASan/UBSan and leak
+detection disabled. It used the nine disjoint numeric ranges below in
+parallel, each invoking the same script and a fresh QEMU process per root;
+this is complete root coverage on the final zero-radius binary, but not
+a single serial ARM64 CTest invocation. The earlier all-root sweep built
+with the `R5` fallback is not being used as evidence for the final code.
+The permanent `NativeWorldMission5240` ARM64 CTest was also rerun on the
+zero-radius binary and passed in about 155 seconds.
+The full ARM64/QEMU non-extended CTest suite then passed 123/123 under
+ASan/UBSan with leak detection disabled (300.82 seconds); this includes
+the permanent 5240 test and the database accessor regression.
+
+The clean native-media x64 archive of the zero-radius source commit
+`f3435db` is
+`G:\SS\lab\builds\stage2-scenario-worlds-retail-sound-20260927-01`;
+`Game.exe` SHA-256 is
+`A101009861A8FE3F49288008A83F3E1E9CD46890C1595BFC7EA61FDF4146C4BD`.
+It was built with 16 jobs and contains no `fmod.dll`. The isolated
+`stage2-retail-sound-smoke-20260927-01` run reached the rendered,
+responsive main menu (`evidence/menu.png`), then closed normally without
+a crash dump. The run's `Game.exe` hash matched the archive. This verifies
+boot and menu only, not gameplay in root 5240.
+
+Reproduce the complete root startup sweep with
+`ctest --test-dir <build> -C RelWithDebInfo --output-on-failure -R '^NativeScenarioRootWorlds$'`
+on Windows, or omit `-C` on Linux. On cross-compiled ARM64, that CTest
+forwards `CMAKE_CROSSCOMPILING_EMULATOR` into the same script. For parallel
+diagnosis under QEMU, run `RunScenarioRootWorlds.cmake` in the configured
+`world-probe-root` with `DB_TEST`, `WORLD_PROBE`, `GAME_DB`, `RESOURCE_DIR`,
+`TEST_EMULATOR=/usr/bin/qemu-aarch64-static`, and optional
+`START_VARIANT`/`END_VARIANT`. Set
+`QEMU_LD_PREFIX=/usr/aarch64-linux-gnu`,
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1` and
+`UBSAN_OPTIONS=halt_on_error=1`. The disjoint numeric ranges used here are
+3791–3842, 3844–4526, 5003–5084, 5112–5175, 5240–5271, 5376–5393,
+5401–5484, 5709–6277 and 6814–7254; they contain all 52 active roots
+from the original `game.db`.
