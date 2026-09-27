@@ -14,6 +14,7 @@
 #include "rpgGlobal.h"
 #include "RPGUnitInfo.h"
 #include "../Misc/RandomGen.h"
+#include <climits>
 #include <cmath>
 
 #if defined(_WIN32)
@@ -28,11 +29,6 @@ float GetAPASubstraction( float fEnter, float fExit, const NDb::CRPGArmor *pArmo
 {
 	fEnter = Max( fEnter, 0.0f );
 	fExit = Max( fExit, 0.0f );
-	// A non-overlapping exit can precede the entry (for example, a fragment
-	// ray through a voxel shell). It traverses no material; a negative APA
-	// cost would instead add kinetic energy and can overflow the int nK.
-	if ( fExit <= fEnter )
-		return 0.0f;
 	return (fExit - fEnter) * pArmor->pMaterial->fDensity;
 }
 bool ApplyAPASubstraction( int *pnK, float fEnter, float fExit, const NDb::CRPGArmor *pArmor )
@@ -42,12 +38,15 @@ bool ApplyAPASubstraction( int *pnK, float fEnter, float fExit, const NDb::CRPGA
 	const float cost = GetAPASubstraction( fEnter, fExit, pArmor );
 	// Some material intervals end at the ray's 1e10 sentinel. The cost can
 	// exceed int range; the projectile is stopped without converting it to int.
-	if ( !std::isfinite( cost ) || cost >= *pnK )
+	if ( !std::isfinite( cost ) || cost >= *pnK ||
+		( cost < 0.0f &&
+		  static_cast<double>( *pnK ) - static_cast<double>( cost ) >=
+		    static_cast<double>( INT_MAX ) ) )
 	{
 		*pnK = 0;
 		return false;
 	}
-	if ( cost > 0.0f )
+	if ( cost != 0.0f )
 		*pnK -= cost;
 	return *pnK > 0;
 }

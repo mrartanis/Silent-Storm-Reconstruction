@@ -45,11 +45,13 @@ int main()
 	material->fDensity = 2.5f;
 	armor->pMaterial = material;
 	if (!Near(NRPG::GetAPASubstraction(2.0f, 5.0f, armor), 7.5f)) return 9;
-	if (!Near(NRPG::GetAPASubstraction(5.0f, 2.0f, armor), 0.0f)) return 10;
+	if (!Near(NRPG::GetAPASubstraction(5.0f, 2.0f, armor), -7.5f)) return 10;
 	int kinetic = 20;
 	if (!NRPG::ApplyAPASubstraction(&kinetic, 2.0f, 5.0f, armor) || kinetic != 12) return 11;
-	if (!NRPG::ApplyAPASubstraction(&kinetic, 5.0f, 2.0f, armor) || kinetic != 12) return 12;
+	if (!NRPG::ApplyAPASubstraction(&kinetic, 5.0f, 2.0f, armor) || kinetic != 19) return 12;
 	if (NRPG::ApplyAPASubstraction(&kinetic, 2.0f, 1.0e10f, armor) || kinetic != 0) return 13;
+	kinetic = 20;
+	if (NRPG::ApplyAPASubstraction(&kinetic, 1.0e10f, 0.0f, armor) || kinetic != 0) return 14;
 	std::puts("native attack rules: push=0,0.28,1.5 ricochet=0,0,1");
 	return 0;
 }

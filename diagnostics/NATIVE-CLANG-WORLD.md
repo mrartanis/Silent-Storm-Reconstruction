@@ -37,10 +37,31 @@ penetration. Explosion fragments can meet a material interval ending at the
 ray's `1e10` sentinel; with density 1000, the APA cost is about `1e13`, far
 outside `int`. `ApplyAPASubstraction` stops such a projectile before conversion
 and preserves the previous arithmetic for finite costs below kinetic energy.
-It also treats a reversed interval as zero material traversal. The same
-helper now guards all four `nK` deductions in `RPGGame.cpp` and
+The same helper now guards all four `nK` deductions in `RPGGame.cpp` and
 `RPGBullet.cpp`. `NativeAttackRulesTests` covers normal, reversed and
 sentinel-size intervals without licensed resources.
+
+Direct static comparison with the unchanged Steam `Game.exe` (SHA-256
+`4F417593A9F73E2BFDE12D83CDBD694AE47EECB92812140D67B8B343E4A95705`)
+found the `GetAPASubstraction` body at RVA `0x28F5A0`. The same opcode shape
+is named by the RussianGold private PDB at RVA `0x289530`: it computes
+`(max(exit, 0) - max(enter, 0)) * density`, including a negative result for
+a reversed interval. The port therefore retains that float rule exactly;
+only the four integer-energy deductions guard an out-of-range conversion.
+This is direct evidence for the formula, not a live Steam grenade-damage
+comparison. The safety result for an out-of-range cost is a port policy,
+not a measured Steam behavior for that exceptional interval.
+
+The RussianGold `Game.exe` SHA-256 is
+`2F8AD658D1D8B33CDA06270E1BCFC05962B9008C1DE3D09BA26D3AA7C52D329A`.
+To repeat the static comparison, query its matching private PDB with
+`dbh -s:<RussianGold directory> <RussianGold Game.exe> "x *GetAPASubstraction*"`
+(the reported symbol address uses a synthetic image base `0x01000000`).
+Then disassemble Gold at image address `0x689530` and the Steam EXE at
+`0x68F5A0` with a PE-aware `objdump -d --start-address=... --stop-address=...`.
+Both bodies call the same clamp routine twice, subtract entry from exit,
+and multiply by material density. The Steam EXE was copied to a scratch
+directory for this read-only analysis; its installed files were not edited.
 
 The separate whole-build `NativeHeightNetworkTests` link still fails under
 Clang because its diagnostic target does not link the full DB/world graph.
@@ -57,6 +78,12 @@ ASan/UBSan with LeakSanitizer in its non-PIE configuration; the focused
 118/118 under ASan/UBSan with leak detection disabled for QEMU; the full
 ARM64 run took about 393 seconds. These checks do not assert identical
 fragment scatter or damage against the Steam executable.
+After retaining the Steam float formula, Windows x64 passed 141/141 again,
+GCC Linux x86-64 passed 118/118, and the Clang headless-world plus attack
+subset passed 15/15 under ASan/UBSan with LeakSanitizer. ARM64's repeat
+matrix passed 118/118 under ASan/UBSan with leak detection disabled for
+QEMU; it took about 400 seconds. This repeat covers the Steam-formula
+correction, not just the earlier overflow guard.
 
 A clean native-media Windows x64 archive from commit `298dc40` is at
 `G:\SS\lab\builds\stage2-clang-penetration-20260927-01`. Its `Game.exe`
@@ -64,3 +91,15 @@ SHA-256 is
 `B68D56FB836CA27EBE634D55BF863C55F43366E4D4FB3FDEDD0A195E625789AE`;
 `fmod.dll` is absent. A separate live graphical smoke test of this archive
 was not performed.
+
+An isolated smoke of that archive was subsequently run in
+`G:\SS\lab\runs\stage2-clang-penetration-smoke-20260927-01` with linked
+resources and `-SkipIntro`. The `Game.exe` process opened a responsive
+`Silent Storm` window, and its debugger log reached
+`NATIVE-MUSIC playing: Res\Music\Mainmenu.wav`; no crash dump was created.
+The test process was then deliberately stopped. Both screen-copy and
+computer-use captures showed the covering Codex window, not the DirectX
+contents, so this is **not** visual confirmation of the menu or a game-play
+test. The linked baseline resources matched their manifest hashes after the
+run (2451/2451 files); the isolated user-data directory remained inside
+the LabRun.
