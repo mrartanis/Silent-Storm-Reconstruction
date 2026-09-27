@@ -119,6 +119,11 @@ Windows x64 140/140 (including a rebuilt `Game.exe`), Linux x86-64 117/117,
 and Linux ARM64/QEMU 117/117 under ASan/UBSan. The ARM64 matrix took about
 460 seconds; the base test took about 143 seconds. Ten extra Windows runs
 each of the base gate and the post-load shot gate passed.
+The clean native-media x64 archive from source commit `70659eb` is
+`G:\SS\lab\builds\stage2-base-noattack-20260927-01`; its `Game.exe`
+SHA-256 is `5D9371031806CFE719325C8B1F8176E7EC19118412E220B49B45078AF92B2596`.
+It contains no `fmod.dll`. This exact archive has not been separately run
+through a graphical game smoke test.
 
 The older 810 probe had no `CGlobalPlayer` or hero. Thus its authored
 `GetHero()` returned nil and `UnitShootPrepare(pers1, nil, ...)` was a no-op;
