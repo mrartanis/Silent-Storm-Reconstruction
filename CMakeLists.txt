@@ -696,6 +696,18 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
   add_test(NAME NativeAIGeometryResourceTests
     COMMAND NativeAIGeometryResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
 endif()
+add_executable(NativeModelGeometryResourceTests
+  "${root}/diagnostics/NativeModelGeometryResourceTests.cpp")
+target_include_directories(NativeModelGeometryResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeModelGeometryResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeModelGeometryResourceTests PRIVATE Main)
+target_compile_features(NativeModelGeometryResourceTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
+   EXISTS "${S2_GAME_DIR}/res/Geometries.res")
+  add_test(NAME NativeModelGeometryResourceTests
+    COMMAND NativeModelGeometryResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+endif()
 add_executable(NativeAnimationResourceTests
   "${root}/diagnostics/NativeAnimationResourceTests.cpp")
 target_include_directories(NativeAnimationResourceTests PRIVATE

@@ -989,6 +989,23 @@ if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
         "${_s2_ai_geometry_res_dir}")
   endif()
 endif()
+add_executable(NativeModelGeometryResourceTests
+  "${root}/diagnostics/NativeModelGeometryResourceTests.cpp")
+target_link_libraries(NativeModelGeometryResourceTests PRIVATE
+  -Wl,--start-group s2_game_dbformat_records s2_game_database_runtime
+  s2_game_resource_loader s2_game_resource_package s2_game_structure
+  s2_game_streams s2_game_objects s2_portable_structure
+  s2_portable_package s2_game_misc_runtime -Wl,--end-group)
+target_link_options(NativeModelGeometryResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_model_geometry_res_dir
+    "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_model_geometry_res_dir}/Geometries.res")
+    add_test(NAME NativeModelGeometryResourceTests
+      COMMAND NativeModelGeometryResourceTests "${S2_GAME_DB_PATH}"
+        "${_s2_model_geometry_res_dir}")
+  endif()
+endif()
 add_executable(NativeBuildingTerrainResourceTests
   "${root}/diagnostics/NativeBuildingTerrainResourceTests.cpp")
 target_link_libraries(NativeBuildingTerrainResourceTests PRIVATE
