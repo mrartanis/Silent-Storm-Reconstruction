@@ -116,3 +116,33 @@ animated collision pose over time or every `CBind::Recalc` branch.
 With this third resource test registered, the non-`extended` suite passed
 159/159 on Windows x64 Release and 132/132 on Linux GCC x86-64 under
 ASan/UBSan/LSan.
+
+## CPU bind-pose recomputation
+
+`NativeAIBindPoseTests` runs the original `CBind::Recalc` with real
+`AIBinds` inverse matrices and real `Skeletons` bone hierarchies. It
+selects deterministic count-matched pairs: non-scaled bind/skeleton
+2/2 with 42 bones and scaled bind/skeleton 236/50 with five bones.
+These pairs are selected by bone count for a CPU regression; the test
+does not assert that the game associates those two records in a model.
+
+For each pair the test forms a pose from the original skeleton defaults,
+then advances DG frames, changes root/child positions and changes root
+scale alone. It requires parent/global matrices to update after position
+changes; scale-only changes must affect the `bScale` branch and leave the
+static-skeleton-scale branch unchanged. All output matrix components are
+hashed in semantic order. Expected result:
+
+```
+non_scaled_bind=2 skeleton=2 bones=42 scaled_bind=236 skeleton=50 bones=5 digest=AD6A5D46B06FF2AB
+```
+
+Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64 and
+ARM64/QEMU produced this exact value; Linux x86-64 used
+ASan/UBSan/LSan, ARM64/QEMU used ASan/UBSan with LSan disabled. Run
+`NativeAIBindPoseTests <original-res-directory>` or its CTest target.
+This exercises core CPU binding across three frames, not a rendered
+animation, a known real model/skeleton association, or the downstream
+collision response in a mission.
+After registration, the non-`extended` suites passed 160/160 on Windows
+x64 Release and 133/133 on Linux GCC x86-64 under ASan/UBSan/LSan.

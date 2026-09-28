@@ -656,6 +656,18 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/AIBinds.res")
   add_test(NAME NativeAIBindResourceTests
     COMMAND NativeAIBindResourceTests "${S2_GAME_DIR}/res")
 endif()
+add_executable(NativeAIBindPoseTests
+  "${root}/diagnostics/NativeAIBindPoseTests.cpp")
+target_include_directories(NativeAIBindPoseTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAIBindPoseTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAIBindPoseTests PRIVATE Main)
+target_compile_features(NativeAIBindPoseTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/AIBinds.res" AND
+   EXISTS "${S2_GAME_DIR}/res/Skeletons.res")
+  add_test(NAME NativeAIBindPoseTests
+    COMMAND NativeAIBindPoseTests "${S2_GAME_DIR}/res")
+endif()
 add_executable(NativeAIBSPResourceTests
   "${root}/diagnostics/NativeAIBSPResourceTests.cpp")
 target_include_directories(NativeAIBSPResourceTests PRIVATE
