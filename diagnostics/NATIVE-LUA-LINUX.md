@@ -56,12 +56,33 @@ This verifies a Windows game regression boundary, not Linux gameplay.
 typed database, iterates every `NDb::CScript` record in stable ID order, and
 parses every nonempty source with the game's modified Lua VM. The baseline
 contains 113 records, one intentionally empty, and 355,575 bytes of nonempty
-source. The ordered ID/source digest is `B5163E4E76664106` on Windows x64
-and Linux GCC x64/ARM64; the test asserts all four values. This is authored game
+source. The current ordered ID/source digest is `C2462A66D562BAF6` on
+Windows x64 and Linux GCC x64/ARM64; the test asserts it. The earlier
+`B5163E4E76664106` predates the CP1251 import correction documented in
+`NATIVE-GAME-DB-LINUX.md`. This is authored game
 data, not editor-only input. `NativeMissionMapProbe` independently confirms
 that `BuildMap` selects and parses the 1,016-byte and 4,266-byte scripts in
 variants 810 and 4526. `--print-scripts` on that probe displays the selected
 source locally for binding triage; the licensed text is not checked in.
+
+The corpus test now also joins the game's script references to those parsed
+DB records. Across all template variants there are 91 distinct script IDs;
+the 985 potential variants under the shipped scenario roots use 47 (ID-set
+digest `20F53D173CF351DE`). Global maps reference two, chapter maps four,
+and the main menu directly launches DB script 85. The shipped persona and
+UI-container tables have no script links. The union is 97 IDs (digest
+`7697CE69E943ED7E`), with **zero** links to absent or empty script text.
+`CScript::RunScriptByID` reads `CScript::strCode` from `game.db`, so these
+references select database payloads rather than loose files. This is a
+source/link and syntax check, not execution of every authored branch.
+
+The separate four `AutoLoadScripts` DB rows name `scripts/Constants.l`,
+`scripts/TriggersManager.l`, `scripts/Common.l`, and `scripts/Hint.l`
+(stored with Windows separators in the database).
+`NativeWorldInitProbe` resolves, opens, and runs all four through the
+original world-init path on Windows x64 and Linux x86-64/ARM64. The debug
+console's `script_run` can load an arbitrary user-named file; it is not a
+shipped-game resource root or an arbitrary-mod completeness requirement.
 
 Variant 4526 calls `random(29)` to select an enemy patrol branch. The
 original `NScript::luaRandom` implementation now has its own compilation

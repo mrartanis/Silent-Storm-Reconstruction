@@ -191,6 +191,29 @@ commands are in `NATIVE-AI-GEOMETRY-RESOURCES.md`. Do not infer reachability
 from package membership. Dynamic door-state parity belongs to the later
 behavior gate.
 
+## Shipped Lua roots and actual source payload
+
+`NativeMissionScriptCorpusTests` now joins the 47 distinct script IDs from
+the 985 scenario-reachable variants (digest `20F53D173CF351DE`) to the
+original `NDb::CScript` table. Across every variant, not only scenarios,
+91 IDs are referenced; global maps reference two, chapter maps four, and
+the hardcoded main menu launches ID 85. Persona and UI-container DB rows
+have no links. Their union is 97 distinct IDs (digest
+`7697CE69E943ED7E`), and **none** points to absent or empty source. The
+game's `RunScriptByID` loads these texts from `game.db`; no separate file
+selection is involved. All 113 DB script records (one empty) already pass
+the modified Lua parser, with current source digest `C2462A66D562BAF6`.
+
+The other shipped source edge is `CWorld::RunAutoLoadScripts`: four DB rows
+name loose `.l` files. `NativeWorldInitProbe` resolves and executes all four
+on Windows x64, Linux GCC x86-64 and ARM64/QEMU. The new DB-reference join
+and existing world-init test match on those three targets under ASan/UBSan
+on Linux. This closes the *source/selection* substep for these Lua roots,
+not every callback or branch's runtime behavior. See `NATIVE-LUA-LINUX.md`
+and `NATIVE-WORLD-INIT.md` for values and commands. The debug-only
+`script_run` console command and arbitrary external mods are outside this
+base-game data gate.
+
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.
 The authoritative source list for this stage is the committed

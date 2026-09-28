@@ -2,7 +2,8 @@
 
 The stage-2 portable core only needs game-used features. The original
 `game.db` contains 113 `NDb::CScript` records (one empty, 355575 nonempty
-bytes, corpus digest `B5163E4E76664106`).
+bytes, current corpus digest `C2462A66D562BAF6` after the CP1251 import
+correction documented in `NATIVE-GAME-DB-LINUX.md`).
 `NativeMissionScriptCorpusTests` parses them with the modified Lua VM and
 counts `OP_GETGLOBAL` reads. Of 1272 distinct global names, the eight
 window-only API names are read six times total: `CreateWindow` three,

@@ -10,6 +10,7 @@
 #include "../DBFormat/DataInterface.h"
 #include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataScenario.h"
 #include "../Script/lua.h"
 #include "../Script/lstate.h"
 #include "../Script/lopcodes.h"
@@ -17,10 +18,52 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <iterator>
 #include <map>
 #include <set>
 #include <string>
 #include <vector>
+
+static std::uint64_t HashIDs( const std::set<int> &ids )
+{
+	std::uint64_t hash = UINT64_C(14695981039346656037);
+	for ( int id : ids )
+		for ( int byte = 0; byte < 4; ++byte )
+		{
+			hash ^= static_cast<std::uint8_t>( id >> ( byte * 8 ) );
+			hash *= UINT64_C(1099511628211);
+		}
+	return hash;
+}
+
+static std::set<int> ScenarioVariantIDs()
+{
+	auto *zones = NDatabase::GetTable<NDb::CDBScenarioZone>();
+	auto *templates = NDatabase::GetTable<NDb::CTemplate>();
+	if ( !zones || !templates ) throw 1;
+	std::set<int> seenTemplates, variantIDs;
+	std::vector<int> pending;
+	CDBIterator<NDb::CDBScenarioZone> zone( *zones );
+	while ( zone.MoveNext() )
+		for ( int id : zone.Get()->templatesIDs )
+			if ( id > 0 ) pending.push_back( id );
+	while ( !pending.empty() )
+	{
+		int id = pending.back(); pending.pop_back();
+		if ( !seenTemplates.insert( id ).second ) continue;
+		auto *map = static_cast<NDb::CTemplate *>( templates->GetDBRecord( id ) );
+		if ( !map ) throw 2;
+		for ( const auto &variant : map->variants )
+		{
+			if ( !variant ) throw 3;
+			variantIDs.insert( variant->GetRecordID() );
+			for ( const auto &rect : variant->rects )
+				if ( rect && rect->pTemplate )
+					pending.push_back( rect->pTemplate->GetRecordID() );
+		}
+	}
+	return variantIDs;
+}
 
 int main( int argc, char **argv )
 {
@@ -165,10 +208,78 @@ int main( int argc, char **argv )
 					++script126References;
 	}
 	std::printf( "script_126_db_refs=%zu\n", script126References );
+	std::set<int> parsedIDs;
+	for ( const auto *script : scripts )
+		if ( !script->strCode.empty() ) parsedIDs.insert( script->GetRecordID() );
+	std::map<std::string, std::set<int>> linked;
+	linked["persona"]; linked["ui_container"];
+	auto add = [&]( const char *family, const NDb::CScript *script ) {
+		if ( script ) linked[family].insert( script->GetRecordID() );
+	};
+	const auto scenarioVariants = ScenarioVariantIDs();
+	if ( auto *variants = NDatabase::GetTable<NDb::CTemplVariant>() )
+	{
+		CDBIterator<NDb::CTemplVariant> iter( *variants );
+		while ( iter.MoveNext() )
+		{
+			add( "variant_all", iter.Get()->pScript );
+			if ( scenarioVariants.count( iter.Get()->GetRecordID() ) )
+				add( "variant_scenario", iter.Get()->pScript );
+		}
+	}
+	if ( auto *globals = NDatabase::GetTable<NDb::CGlobalMap>() )
+	{
+		CDBIterator<NDb::CGlobalMap> iter( *globals );
+		while ( iter.MoveNext() ) add( "global", iter.Get()->pScript );
+	}
+	if ( auto *chapters = NDatabase::GetTable<NDb::CChapterMap>() )
+	{
+		CDBIterator<NDb::CChapterMap> iter( *chapters );
+		while ( iter.MoveNext() ) add( "chapter", iter.Get()->pScript );
+	}
+	if ( auto *personas = NDatabase::GetTable<NDb::CRPGPers>() )
+	{
+		CDBIterator<NDb::CRPGPers> iter( *personas );
+		while ( iter.MoveNext() )
+			for ( const auto &script : iter.Get()->scripts ) add( "persona", script );
+	}
+	if ( auto *containers = NDatabase::GetTable<NDb::CUIContainer>() )
+	{
+		CDBIterator<NDb::CUIContainer> iter( *containers );
+		while ( iter.MoveNext() ) add( "ui_container", iter.Get()->pScript );
+	}
+	linked["main_menu"].insert( 85 ); // iMainMenu.cpp's shipped hardcoded DB script
+	std::set<int> allLinked;
+	for ( const auto &family : linked )
+	{
+		std::printf( "script_roots family=%s count=%zu digest=%016llX\n",
+			family.first.c_str(), family.second.size(),
+			static_cast<unsigned long long>(HashIDs(family.second)) );
+		allLinked.insert( family.second.begin(), family.second.end() );
+	}
+	std::set<int> unparsed;
+	std::set_difference( allLinked.begin(), allLinked.end(), parsedIDs.begin(), parsedIDs.end(),
+		std::inserter( unparsed, unparsed.end() ) );
+	std::printf( "script_roots scenario_variants=%zu linked=%zu unparsed=%zu linked_digest=%016llX\n",
+		scenarioVariants.size(), allLinked.size(), unparsed.size(),
+		static_cast<unsigned long long>(HashIDs(allLinked)) );
+	for ( int id : unparsed ) std::printf( "script_root_unparsed id=%d\n", id );
 	// The original baseline corpus is our fixed cross-architecture oracle.
 	return scripts.size() == 113 && empty == 1 && bytes == 355575 &&
 		digest == UINT64_C(0xC2462A66D562BAF6) && windowReads == 6 &&
 		globalReads["ShowObjectives"] == 0 &&
 		windowScriptIDs.size() == 1 && *windowScriptIDs.begin() == 126 &&
-		script126References == 0 ? 0 : 7;
+		script126References == 0 && scenarioVariants.size() == 985 &&
+		linked["variant_scenario"].size() == 47 &&
+		HashIDs(linked["variant_scenario"]) == UINT64_C(0x20F53D173CF351DE) &&
+		linked["variant_all"].size() == 91 &&
+		HashIDs(linked["variant_all"]) == UINT64_C(0x90E59C7355171CA1) &&
+		linked["global"].size() == 2 &&
+		HashIDs(linked["global"]) == UINT64_C(0xAE2C4B7421D7D3F4) &&
+		linked["chapter"].size() == 4 &&
+		HashIDs(linked["chapter"]) == UINT64_C(0xCC819302C587EE7B) &&
+		linked["persona"].empty() && linked["ui_container"].empty() &&
+		allLinked.size() == 97 &&
+		HashIDs(allLinked) == UINT64_C(0x7697CE69E943ED7E) &&
+		unparsed.empty() ? 0 : 7;
 }
