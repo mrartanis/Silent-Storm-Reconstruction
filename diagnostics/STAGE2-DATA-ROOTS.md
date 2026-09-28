@@ -214,6 +214,25 @@ and `NATIVE-WORLD-INIT.md` for values and commands. The debug-only
 `script_run` console command and arbitrary external mods are outside this
 base-game data gate.
 
+## Bounded 23-family disposition for stage 2
+
+The preceding joins and existing typed probes give the following working
+disposition. "Covered" means the stated *data/CPU loading* contract, not
+every live mission outcome; the named diagnostics above retain exact scope.
+
+| Disposition | Families | Remaining stage-2 data action |
+|---|---|---|
+| Addressed collision/map/campaign data | `AIBSPTrees`, `AIBinds`, `AIGeometries`, `Buildings`, `Chapters`, `Globals`, `Groups`, `Terrain`, `Units`, `Waypoints` | No new untyped present scenario payload identified. Keep door-234 fallback and absent candidate IDs explicit. |
+| Addressed CPU animation/face/effect data | `Animations`, `Binds`, `Effects`, `Heads`, `Locators`, `Skeletons` | Their corpus/loader tests exist. GPU playback, particles and light output are later stages. |
+| **Open game-used CPU data gap** | `Sequences` | The current live loader/decoder test uses only IDs 6005, 371 and 7552. Join the game's `CSequence` DB IDs to effective resources, strictly decode every present game-linked payload and compare semantic values across targets. |
+| Graphics-stage resource use | `Fonts`, `Geometries`, `LRTextures`, `Lights`, `Textures` | `Geometries` already has a 6,824-record DB-linked CPU audit; 966 package entries lack a DB geometry ID and remain classified only as unlinked package records. Their rendering path, the other four visual families and animated-light WIP belong to the graphics/client stages, not a new stage-2 port. |
+| Stage-1 media path | `Sounds` | Native audio and its manual game check were handled in stage 1; no new stage-2 world-data decoder is established. |
+
+This is a finite next-action list, not a claim that item 2 is closed. After
+`Sequences`, re-evaluate the source graph for any remaining nonvisual loader
+edge before starting the ABI gate. Do not revive deferred particle/light
+rendering merely because their resource packages appear in this inventory.
+
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.
 The authoritative source list for this stage is the committed
