@@ -792,7 +792,7 @@ void CObjectInfoPiecesLoader::RecalcValue( CFileRequest *pRequest )
 	{
 		CFileRequest &req = *pRequest;
 		CStructureSaver saver( *req.GetStream(), CStructureSaver::READ );
-		saver.Add( 4, &pValue->faces );
+		ReadObjectInfoPieces( &saver, pValue );
 	}
 	catch(...)
 	{

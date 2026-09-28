@@ -708,6 +708,18 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
   add_test(NAME NativeModelGeometryResourceTests
     COMMAND NativeModelGeometryResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
 endif()
+add_executable(NativeBuildingPieceResourceTests
+  "${root}/diagnostics/NativeBuildingPieceResourceTests.cpp")
+target_include_directories(NativeBuildingPieceResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeBuildingPieceResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeBuildingPieceResourceTests PRIVATE Main s2_portable_database)
+target_compile_features(NativeBuildingPieceResourceTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
+   EXISTS "${S2_GAME_DIR}/res/Geometries.res")
+  add_test(NAME NativeBuildingPieceResourceTests
+    COMMAND NativeBuildingPieceResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+endif()
 add_executable(NativeAnimationResourceTests
   "${root}/diagnostics/NativeAnimationResourceTests.cpp")
 target_include_directories(NativeAnimationResourceTests PRIVATE

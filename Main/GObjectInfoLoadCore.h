@@ -1,6 +1,7 @@
 #ifndef S2_GOBJECTINFO_LOAD_CORE_H
 #define S2_GOBJECTINFO_LOAD_CORE_H
 
+#include "GGeometry.h"
 #include "GObjectInfo.h"
 #include "GFileSkin.h"
 
@@ -32,6 +33,12 @@ inline void AssignLoadedObjectInfo( CObjectInfo *pRes,
 		ConvertWeights( &data.weights, weights, vertices.size() );
 	ConvertVertices( &data.verts, vertices );
 	pRes->Assign( data );
+}
+
+inline void ReadObjectInfoPieces( CStructureSaver *pSaver,
+	CObjectInfoPieces *pRes )
+{
+	pSaver->Add( 4, &pRes->faces );
 }
 }
 
