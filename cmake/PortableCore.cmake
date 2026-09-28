@@ -730,6 +730,27 @@ target_link_libraries(NativeAnimationPathTests PRIVATE
   s2_game_animation_runtime s2_game_dg s2_game_structure s2_game_objects)
 target_link_options(NativeAnimationPathTests PRIVATE -Wl,--gc-sections)
 add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
+add_executable(NativeAnimationResourceTests
+  "${root}/diagnostics/NativeAnimationResourceTests.cpp")
+target_include_directories(NativeAnimationResourceTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeAnimationResourceTests PRIVATE
+  -Wl,--start-group s2_game_animation_runtime s2_game_basic_share
+  s2_game_resource_loader s2_game_resource_package s2_game_dg
+  s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_package s2_portable_structure s2_game_misc_runtime
+  -Wl,--end-group)
+target_link_options(NativeAnimationResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(S2_ANIMATION_RESOURCE_DIR
+    "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${S2_ANIMATION_RESOURCE_DIR}/Animations.res" AND
+     EXISTS "${S2_ANIMATION_RESOURCE_DIR}/Skeletons.res" AND
+     EXISTS "${S2_ANIMATION_RESOURCE_DIR}/Locators.res")
+    add_test(NAME NativeAnimationResourceTests
+      COMMAND NativeAnimationResourceTests "${S2_ANIMATION_RESOURCE_DIR}")
+  endif()
+endif()
 # Actual world-to-unit command wrapper used by the AI command queue.
 add_library(s2_game_command_bridge STATIC "${root}/Main/wCommandBridge.cpp")
 target_include_directories(s2_game_command_bridge PRIVATE
@@ -1266,6 +1287,20 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
         -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
     set_tests_properties(NativeScenarioRootWorlds PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 14400 LABELS extended)
+    add_test(NAME NativeWorldMission4522PartySave
+      COMMAND "${CMAKE_COMMAND}"
+        "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+        "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+        "-DGAME_DB=${S2_GAME_DB_PATH}"
+        "-DRESOURCE_DIR=${_s2_world_resources}"
+        "-DTEST_EMULATOR=${CMAKE_CROSSCOMPILING_EMULATOR}"
+        "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/4522"
+        -DPARTY_SAVE_MODE=ON
+        -DSTART_VARIANT=4522
+        -DEND_VARIANT=4522
+        -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+    set_tests_properties(NativeWorldMission4522PartySave PROPERTIES
+      WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 900)
     add_test(NAME NativeWorldMission810UIAck
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
         --mission-ui-ack 810)

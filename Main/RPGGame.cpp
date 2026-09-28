@@ -21,6 +21,8 @@
 #include "RPGUnit.h"
 #include "wUnitServer.h"   // NWorld::CUnitServer::GetDiplomacyState -- friendly-fire ally block in cover penetration
 #include "wObject.h"       // NWorld::CCannon::GetCurrentUnit -- resolve a cannon/mech shooter for the ally block
+#include <cmath>
+#include <limits>
 
 #if defined(_WIN32)
 static CRandomGenerator &RPGGameRandom() { return random; }
@@ -337,13 +339,20 @@ int CGame::GetCoverForAIUnit( CVec3 ptFrom, NWorld::CUnit *pIgnore,
 	for ( vector<NRPG::CCoverInfo::SRay>::const_iterator i = pCover->hitRays.begin(); i != pCover->hitRays.end(); ++i )
 		if ( i->isPenetrate )
 			++nPenetrateCount;
+	// No penetrating ray means no cover. The old calculation divided by zero
+	// here and then converted 0 * NaN to int while the AI ranked weapons.
+	if ( pCover->hitRays.empty() || nPenetrateCount == 0 || AttackPortion.nK == 0 )
+		return 0;
 	float fAverageAPA = ( pCover->fSummAPA / float(nPenetrateCount) ) / AttackPortion.nK;
-	if ( !pCover->hitRays.empty() )
-	{
-		nHitCover = (100 * nPenetrateCount) / pCover->hitRays.size();
-		nHitCover = int( nHitCover * fAverageAPA );
-	}
-	return nHitCover;
+	nHitCover = (100 * nPenetrateCount) / pCover->hitRays.size();
+	float fCover = nHitCover * fAverageAPA;
+	if ( !std::isfinite( fCover ) )
+		return 0;
+	if ( fCover >= static_cast<float>((std::numeric_limits<int>::max)()) )
+		return (std::numeric_limits<int>::max)();
+	if ( fCover <= static_cast<float>((std::numeric_limits<int>::min)()) )
+		return (std::numeric_limits<int>::min)();
+	return static_cast<int>( fCover );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // nTargetUserID == -1 means without hit location targeting

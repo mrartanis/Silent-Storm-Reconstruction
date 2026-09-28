@@ -22,6 +22,28 @@ endif()
 if(WIRE_AUDIT_MODE AND NOT PARTY_SAVE_MODE)
   message(FATAL_ERROR "WIRE_AUDIT_MODE requires PARTY_SAVE_MODE")
 endif()
+if(WIRE_AUDIT_MODE)
+  # A package-only lab silently misses shipping loose overrides (including
+  # Animations/960 and two animation IDs absent from Animations.res). Strict
+  # wire claims must use the complete effective base-game resource tree.
+  set(loose_dirs aibsptrees aigeometries animations buildings chapters
+    Cursors Fonts heads Music sounds terrain textures units video)
+  set(loose_patterns)
+  foreach(dir IN LISTS loose_dirs)
+    if(NOT IS_DIRECTORY "${RESOURCE_DIR}/${dir}")
+      message(FATAL_ERROR "Missing shipping loose resource directory: ${RESOURCE_DIR}/${dir}")
+    endif()
+    list(APPEND loose_patterns "${RESOURCE_DIR}/${dir}/*")
+  endforeach()
+  file(GLOB_RECURSE loose_files LIST_DIRECTORIES false ${loose_patterns})
+  list(LENGTH loose_files loose_count)
+  if(NOT loose_count EQUAL 2421 OR
+     NOT EXISTS "${RESOURCE_DIR}/FaceGenHead.gdp" OR
+     NOT EXISTS "${RESOURCE_DIR}/FaceGenHead.mmt")
+    message(FATAL_ERROR
+      "Incomplete shipping loose resource mirror (${loose_count}/2421 files)")
+  endif()
+endif()
 
 set(tested_count 0)
 foreach(root IN LISTS roots)

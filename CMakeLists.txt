@@ -645,6 +645,19 @@ target_precompile_headers(NativeAnimationPathTests PRIVATE "${root}/Main/StdAfx.
 target_link_libraries(NativeAnimationPathTests PRIVATE Main)
 target_compile_features(NativeAnimationPathTests PRIVATE cxx_std_17)
 add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
+add_executable(NativeAnimationResourceTests
+  "${root}/diagnostics/NativeAnimationResourceTests.cpp")
+target_include_directories(NativeAnimationResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAnimationResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAnimationResourceTests PRIVATE Main)
+target_compile_features(NativeAnimationResourceTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/Animations.res" AND
+   EXISTS "${S2_GAME_DIR}/res/Skeletons.res" AND
+   EXISTS "${S2_GAME_DIR}/res/Locators.res")
+  add_test(NAME NativeAnimationResourceTests
+    COMMAND NativeAnimationResourceTests "${S2_GAME_DIR}/res")
+endif()
 add_executable(NativeConsoleConfigTests
   "${root}/diagnostics/NativeConsoleConfigTests.cpp")
 target_include_directories(NativeConsoleConfigTests PRIVATE
@@ -1054,6 +1067,19 @@ if(S2_GAME_DIR)
           -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
       set_tests_properties(NativeScenarioRootPartySaveWorlds PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 10800 LABELS extended)
+      add_test(NAME NativeWorldMission4522PartySave
+        COMMAND "${CMAKE_COMMAND}"
+          "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+          "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+          "-DGAME_DB=${S2_GAME_DIR}/game.db"
+          "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/4522"
+          -DPARTY_SAVE_MODE=ON
+          -DSTART_VARIANT=4522
+          -DEND_VARIANT=4522
+          -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+      set_tests_properties(NativeWorldMission4522PartySave PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300)
       add_test(NAME NativeWorldMission5247PartySave
         COMMAND "${CMAKE_COMMAND}"
           "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
@@ -1157,11 +1183,11 @@ if(S2_GAME_DIR)
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
+        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission4522PartySave NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
           ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
+        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission4522PartySave NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
           ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
