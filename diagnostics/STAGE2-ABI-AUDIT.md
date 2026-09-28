@@ -170,9 +170,11 @@ Direct-stream inventory, classified by actual call edge:
 | `FilesPackage::Open` | Game resource loader. It uses `PortablePackageIndex` to parse the 8-byte signature/offset and index words explicitly, then opens the resolved package for resource payloads. All 23 shipped package families have read coverage in `STAGE2-DATA-ROOTS.md`. | Retain package-index regression; do not infer endian safety from the legacy `SFileInfo` host struct. |
 | `FilesPackage::Update` / `RescanDir` | Windows-only package writer called by tooling, not the game resource read path. | Outside the game-only stage-2 gate. |
 | `CStructureSaver` | `game.db`, resource object streams and save state. | Inspect the remaining non-codec/raw and special-object edges statically, and pair any reached gap with a byte-level test. |
-| `CDataStream::operator<<` / `>>` and direct `Read` / `Write` | Generic host-memory operations exist, but call sites must be classified; template definition alone is not proof of a game wire field. `FilesPackage`'s 4-byte integer reads and `Cruncher`'s 1/4-byte operations are the relevant lower-level format edges. | Audit each reached direct-format caller's width/endian contract. |
+| `CDataStream::operator<<` / `>>` and direct `Read` / `Write` | The generic host-memory operators exist; the only source call sites found for those operators are the Windows-only package-update diagnostic text stream. `FilesPackage`'s 4-byte integer reads and `Cruncher`'s 1/4-byte operations are the relevant lower-level game-format edges. | Explicitly check the reached direct-format words; do not treat the unused generic operator as a safe serializer. |
+| `CICLoad` / `CICSave` / `CSaveManager` | Game save header reads/writes the fixed 256,008-byte little-endian/BGRA format through `PortableSaveHeader`; active-mod names use `CDataStream` string lengths before the compressed object graph. | Header byte vector and original-save probe in `PORTABLE-SAVE-HEADER.md`; string-length and compressor prefix tests below. |
 | `bmpfile.cpp`, `iMain.cpp`, `GTexture.cpp`, `SWTexture.cpp` | Bitmap screenshot output or client-side image/texture loading. | Defer visual formats to the graphics/client stage. |
 | `LSHead.cpp` animator-stream `Write` | Writes an in-memory animation stream, not a new host-struct file header. | Covered by the typed animation resource path; recheck if a direct disk edge appears. |
+| `GBinkPlayer.cpp`, `SoundFormat.cpp` | Media payload byte reads in the Windows client. | Stage-1 native media path; no game-core host structure written here. |
 
 The first direct-stream fix removes native-`int` byte copies from the
 `CDataStream` short/long string-length prefix and both
@@ -187,9 +189,46 @@ passes with ASan/UBSan/LSan and ARM64/QEMU with ASan/UBSan (LSan off).
 The full Windows x64 `Game.exe` also builds. These are byte-contract
 checks, not a claim that all direct-file paths or game states are covered.
 
-The bounded next pass is: (1) complete the direct-stream caller inventory;
-(2) verify original package/database/save field widths and endian handling
-against fixed byte vectors on Windows x64, Linux x86-64 and ARM64; (3)
-record any uncovered dynamic save-state classes explicitly rather than
-calling the 52-root audit exhaustive. Cross-loading x64 saves in the
-Steam client is not a product gate.
+`NRPG::CStore::flagsSet` is the one game call site of the serializer's
+special `std::vector<bool>` blob path. Its count now rejects a negative
+read value and an oversized host vector before narrowing to `int` on
+write. `StructureWireProbe` exercises an eight-flag pattern through the
+actual `CStructureSaver` write/read path without changing its existing
+two-object wire fixture. The bool-vector stream is exactly 30 bytes,
+FNV-1a `671b29bcf33452a7` on diagnostic x86, Windows x64, Linux
+x86-64 and ARM64/QEMU. `StructureWireWrite`/`StructureWireRead` pass
+on diagnostic Windows x86, Windows x64, Linux GCC x86-64 under
+ASan/UBSan/LSan, and ARM64/QEMU under ASan/UBSan. This tests the normal
+game shape and compiles the guarded branch; it does not exhaustively
+fuzz malformed vectors.
+
+Four existing dynamic-world save/restore regressions were rebuilt after
+the direct-stream change: shot with continuing Lua, shot through a
+`CSaveManager` slot, building explosion and inventory-grenade explosion.
+All four pass on Windows x64, Linux GCC x86-64 (ASan/UBSan/LSan) and
+ARM64/QEMU (ASan/UBSan, LSan off). They cover non-initial mission states
+on three targets; neither these four nor the 52 initialization roots
+enumerate every optional runtime object, so the dynamic-state inventory
+remains an explicit 3c task.
+
+Re-run the focused 3c checks from a configured build after rebuilding
+`NativeStreamsTests`, `NativeCruncherTests`, `StructureWireProbe` and
+`NativeWorldInitProbe`:
+
+```text
+ctest --test-dir <build> -C RelWithDebInfo --output-on-failure -R 'NativeStreamsTests|NativeCruncherTests|StructureWire(Write|Read)|NativeWorldMission810Party(ShotSave|ShotSlot|ExplosionSave|GrenadeInventorySave)'
+```
+
+Omit `-C RelWithDebInfo` for single-config Linux builds. The ARM64
+CTest configuration wraps the probe with `qemu-aarch64-static -L
+/usr/aarch64-linux-gnu`; use `ASAN_OPTIONS=detect_leaks=0` there and
+`detect_leaks=1` on Linux x86-64. These commands require the complete
+original `game.db` and effective `res` tree; the byte-only stream and
+structure tests can run without game assets.
+
+The direct-stream caller inventory above is closed for the current source
+boundary. The remaining 3c pass is: (1) correlate the package, database,
+save header and `CStructureSaver` fixed byte vectors with the full input
+set; (2) record dynamic save-state classes not proved by initialization
+of 52 roots, and run targeted state checks where the core can reach them.
+Cross-loading x64 saves in the Steam client is not a product gate.

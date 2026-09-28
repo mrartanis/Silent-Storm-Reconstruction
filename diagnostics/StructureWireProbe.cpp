@@ -2,7 +2,33 @@
 #include "../FileIO/BasicChunk1.h"
 
 #include <cstdio>
+#include <cstdint>
 #include <string>
+#include <vector>
+
+static bool CheckBoolVectorWire() {
+  CMemoryStream stream;
+  std::vector<bool> flags = {true, false, true, true, false, false, true, false};
+  {
+    CStructureSaver saver(stream, CStructureSaver::WRITE);
+    saver.Add(1, &flags);
+  }
+  std::uint64_t hash = UINT64_C(14695981039346656037);
+  const auto* bytes = static_cast<const std::uint8_t*>(stream.GetBuffer());
+  for (int i = 0; i < stream.GetSize(); ++i)
+    hash = (hash ^ bytes[i]) * UINT64_C(1099511628211);
+  std::printf("bool-vector-wire bytes=%d fnv64=%016llx\n", stream.GetSize(),
+              static_cast<unsigned long long>(hash));
+  if (stream.GetSize() != 30 || hash != UINT64_C(0x671b29bcf33452a7))
+    return false;
+  stream.Seek(0);
+  std::vector<bool> restored;
+  {
+    CStructureSaver saver(stream, CStructureSaver::READ);
+    saver.Add(1, &restored);
+  }
+  return restored == flags;
+}
 
 class CWireProbeNode: public CObjectBase
 {
@@ -40,6 +66,7 @@ int main(int argc, char** argv)
   CPtr<CWireProbeNode> alias;
   try
   {
+    if (!CheckBoolVectorWire()) return 5;
     CFileStream file;
     if (mode == "write")
     {

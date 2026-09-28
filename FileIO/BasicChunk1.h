@@ -278,9 +278,13 @@ private:
 			if ( !StartChunk( idChunk, nChunkNumber ) )
 				return;
 			std::vector<bool> &data = *pVec;
-			int nSize = data.size();
+			if ( data.size() > static_cast<std::size_t>((std::numeric_limits<int>::max)()) )
+				throw std::runtime_error( "structure bool vector too large" );
+			int nSize = static_cast<int>(data.size());
 			Add( 1, &nSize );
-			std::vector<unsigned char> bytes( nSize > 0 ? nSize : 0 );
+			if ( nSize < 0 )
+				throw std::runtime_error( "negative structure bool vector size" );
+			std::vector<unsigned char> bytes( static_cast<std::size_t>(nSize) );
 			if ( IsReading() )
 			{
 				if ( nSize > 0 )
