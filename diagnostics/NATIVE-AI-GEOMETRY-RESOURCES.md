@@ -189,3 +189,32 @@ mission; those claims require a separate test.
 After the database-backed association was added, the non-`extended`
 CTest suites passed 160/160 on Windows x64 Release and 133/133 on
 Linux GCC x86-64 under ASan/UBSan/LSan.
+
+## Original clip through the model bind
+
+The same test now intersects database animation records with the
+database-backed model pairs and requires observable root-matrix movement,
+not a mere bit-level rounding difference. The first qualifying pair is
+model 4957, geometry/bind 3087, skeleton 80 (26 bones). Its original
+animation 2556 is loaded through the game's effective `Animations`
+resource path. The original `CAnimation::GetFrame` samples it at three
+times, and the resulting pose drives the original `CBind::Recalc` in
+successive DG frames. Five animation records for this skeleton are
+available in the shipping database/resource intersection.
+
+The CPU result uses a 0.001-unit semantic matrix quantization for the
+cross-architecture digest; raw floating-point matrix bits are not
+claimed equal on ARM64. Expected suffix:
+
+```
+clip_model=4957 clip_bind=3087 clip_skeleton=80 clips=5 clip=2556 clip_digest=EE009C57FEA331F1
+```
+
+For per-bone diagnostic hashes set `S2_TRACE_CLIP=1` before running the
+probe. The test still does not render a skinned model or prove the
+collision response of an animated object in a live mission.
+The final probe passed on Windows x86 (diagnostic), Windows x64,
+Linux GCC/Clang x86-64 under ASan/UBSan/LSan, and ARM64/QEMU under
+ASan/UBSan with leak detection disabled. The non-`extended` CTest
+suites passed 160/160 on Windows x64 Release and 133/133 on Linux GCC
+x86-64 after this extension.

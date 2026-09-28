@@ -7,6 +7,7 @@
 #endif
 #include "../Main/GBind.h"
 #include "../Main/GAnimFormat.h"
+#include "../Main/GAnimation.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataFormat.h"
@@ -19,6 +20,8 @@
 #include <array>
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <cstdlib>
 
 class CProbeSkeletonPose : public CFuncBase<NAnimation::SSkeletonPose>
 {
@@ -66,6 +69,19 @@ static void AddMatrices(const NGScene::SSkeletonMatrices &matrices)
 {
 	Add(static_cast<std::uint32_t>(matrices.size()));
 	for (const auto &matrix : matrices) AddMatrix(matrix);
+}
+static bool AddQuantizedMatrices(const NGScene::SSkeletonMatrices &matrices)
+{
+	Add(static_cast<std::uint32_t>(matrices.size()));
+	for (const auto &matrix : matrices)
+		for (float field : MatrixFields(matrix))
+		{
+			const double scaled = std::round(static_cast<double>(field) * 1000.0);
+			if (!std::isfinite(scaled) || scaled < -2147483648.0 ||
+				scaled > 2147483647.0) return false;
+			Add(static_cast<std::uint32_t>(static_cast<std::int32_t>(scaled)));
+		}
+	return true;
 }
 struct SCandidate
 {
@@ -156,6 +172,78 @@ static bool TestCandidate(const SCandidate &candidate, bool modelBind = false)
 			scaleChanged = true;
 	return scaleChanged == skeletonInfo->bScale;
 }
+static bool TestOriginalClip(const SCandidate &model, NDb::CAnimation *record,
+	std::uint64_t *clipDigest)
+{
+	CObj<NGScene::CFileBind> bindLoader = new NGScene::CFileBind;
+	bindLoader->SetKey(model.bindID);
+	CObj<NAnimation::CFileSkeleton> skeletonLoader = new NAnimation::CFileSkeleton;
+	skeletonLoader->SetKey(model.skeletonID);
+	const auto *skeleton = skeletonLoader->GetValue();
+	if (!skeleton || skeleton->bones.size() != static_cast<std::size_t>(model.bones))
+		return false;
+	CObj<NAnimation::CAnimation> clip =
+		new NAnimation::CAnimation(record, skeletonLoader, 0);
+	const STime length = clip->GetTime();
+	if (length <= 3) return false;
+	CObj<CProbeSkeletonPose> source = new CProbeSkeletonPose;
+	CObj<NGScene::CBind> bind = new NGScene::CBind;
+	bind->pAnimation = source;
+	bind->pBinds = bindLoader;
+	bind->pSkeleton = skeletonLoader;
+	CDGPtr<CFuncBase<NGScene::SSkeletonMatrices>> result(bind);
+	digest = UINT64_C(14695981039346656037);
+	Add(model.modelID); Add(model.bindID); Add(model.skeletonID);
+	Add(record->GetRecordID()); Add(static_cast<std::uint32_t>(length));
+	std::array<float, 16> first = {};
+	bool moved = false;
+	for (int frame = 0; frame < 3; ++frame)
+	{
+		NAnimation::SSkeletonPose pose;
+		for (const auto &bone : skeleton->bones)
+		{
+			NAnimation::SBonePose value;
+			value.nParent = bone.nParent;
+			value.pos = bone.pos;
+			value.rot = bone.rot;
+			value.scale = bone.scale;
+			pose.push_back(value);
+		}
+		const STime time = frame * length / 3;
+		clip->GetFrame(time, &pose);
+		source->Set(pose);
+		MarkNewDGFrame();
+		if (!result.Refresh()) return false;
+		const auto &matrices = result->GetValue();
+		if (matrices.size() != pose.size()) return false;
+		for (const auto &matrix : matrices)
+			for (float field : MatrixFields(matrix))
+				if (!std::isfinite(field)) return false;
+		Add(static_cast<std::uint32_t>(time));
+		if (!AddQuantizedMatrices(matrices)) return false;
+		if (std::getenv("S2_TRACE_CLIP"))
+			for (std::size_t bone = 0; bone < matrices.size(); ++bone)
+			{
+				const auto held = digest;
+				digest = UINT64_C(14695981039346656037);
+				NGScene::SSkeletonMatrices one(1, matrices[bone]);
+				if (!AddQuantizedMatrices(one)) return false;
+				std::printf("clip_trace=%d,%d,%zu,%016llX\n",
+					record->GetRecordID(), frame, bone,
+					static_cast<unsigned long long>(digest));
+				digest = held;
+			}
+		if (frame == 0) first = MatrixFields(matrices[0]);
+		else
+		{
+			const auto current = MatrixFields(matrices[0]);
+			for (std::size_t i = 0; i < current.size(); ++i)
+				if (std::fabs(current[i] - first[i]) > 0.001f) moved = true;
+		}
+	}
+	*clipDigest = digest;
+	return moved;
+}
 int main(int argc, char **argv)
 {
 	if (argc != 3) return 2;
@@ -237,18 +325,66 @@ int main(int argc, char **argv)
 	if (modelCandidates.empty()) return 8;
 	const SCandidate modelPick = modelCandidates.front();
 	if (!TestCandidate(modelPick, true)) return 9;
+	const auto modelDigest = digest;
+	S2FileIO::PortablePackageIndex animations;
+	if (!animations.Open((directory / "Animations.res").string())) return 10;
+	auto *animationTable = NDatabase::GetTable<NDb::CAnimation>();
+	if (!animationTable) return 11;
+	std::map<int, std::vector<int>> clipsBySkeleton;
+	CDBIterator<NDb::CAnimation> animationIt(*animationTable);
+	while (animationIt.MoveNext())
+	{
+		const auto *record = animationIt.Get();
+		if (!record->pSkeleton.GetPtr() || record->fSpeed <= 0)
+			continue;
+		if (NGScene::CResourceFileOpener::DoesExist("Animations", record->GetRecordID()))
+			clipsBySkeleton[record->pSkeleton->GetRecordID()].push_back(record->GetRecordID());
+	}
+	SCandidate clipModelPick;
+	int clipID = -1;
+	std::size_t clipCount = 0;
+	std::uint64_t clipDigest = 0;
+	for (const auto &candidate : modelCandidates)
+	{
+		auto found = clipsBySkeleton.find(candidate.skeletonID);
+		if (found == clipsBySkeleton.end()) continue;
+		auto &clipIDs = found->second;
+		std::sort(clipIDs.begin(), clipIDs.end());
+		for (int id : clipIDs)
+		{
+			if (TestOriginalClip(candidate, animationTable->GetRecord(id), &clipDigest))
+			{
+				clipModelPick = candidate;
+				clipID = id;
+				clipCount = clipIDs.size();
+				break;
+			}
+		}
+		if (clipID >= 0) break;
+	}
+	if (clipID < 0)
+	{
+		std::fprintf(stderr, "no moving clip: models=%zu clip_skeletons=%zu\n",
+			modelCandidates.size(), clipsBySkeleton.size());
+		return 13;
+	}
 	NGScene::CloseAllResources();
-	std::printf("non_scaled_bind=%d skeleton=%d bones=%d scaled_bind=%d skeleton=%d bones=%d ai_digest=%016llX model_pairs=%zu model=%d bind=%d skeleton=%d bones=%d model_digest=%016llX\n",
+	std::printf("non_scaled_bind=%d skeleton=%d bones=%d scaled_bind=%d skeleton=%d bones=%d ai_digest=%016llX model_pairs=%zu model=%d bind=%d skeleton=%d bones=%d model_digest=%016llX clip_model=%d clip_bind=%d clip_skeleton=%d clips=%zu clip=%d clip_digest=%016llX\n",
 		picks[0].bindID, picks[0].skeletonID, picks[0].bones,
 		picks[1].bindID, picks[1].skeletonID, picks[1].bones,
 		static_cast<unsigned long long>(aiDigest), modelCandidates.size(),
 		modelPick.modelID, modelPick.bindID, modelPick.skeletonID, modelPick.bones,
-		static_cast<unsigned long long>(digest));
+		static_cast<unsigned long long>(modelDigest), clipModelPick.modelID,
+		clipModelPick.bindID, clipModelPick.skeletonID, clipCount, clipID,
+		static_cast<unsigned long long>(clipDigest));
 	return picks[0].bindID == 2 && picks[0].skeletonID == 2 &&
 		picks[0].bones == 42 && picks[1].bindID == 236 &&
 		picks[1].skeletonID == 50 && picks[1].bones == 5 &&
 		aiDigest == UINT64_C(0xAD6A5D46B06FF2AB) &&
 		modelCandidates.size() == 110 && modelPick.modelID == 1248 &&
 		modelPick.bindID == 1486 && modelPick.skeletonID == 142 &&
-		modelPick.bones == 9 && digest == UINT64_C(0xEDD325C53B7749A8) ? 0 : 6;
+		modelPick.bones == 9 && modelDigest == UINT64_C(0xEDD325C53B7749A8) &&
+		clipModelPick.modelID == 4957 && clipModelPick.bindID == 3087 &&
+		clipModelPick.skeletonID == 80 && clipCount == 5 &&
+		clipID == 2556 && clipDigest == UINT64_C(0xEE009C57FEA331F1) ? 0 : 6;
 }

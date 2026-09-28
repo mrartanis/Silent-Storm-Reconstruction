@@ -666,9 +666,12 @@ target_compile_features(NativeAIBindPoseTests PRIVATE cxx_std_17)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
    EXISTS "${S2_GAME_DIR}/res/Binds.res" AND
    EXISTS "${S2_GAME_DIR}/res/AIBinds.res" AND
+   EXISTS "${S2_GAME_DIR}/res/Animations.res" AND
    EXISTS "${S2_GAME_DIR}/res/Skeletons.res")
   add_test(NAME NativeAIBindPoseTests
     COMMAND NativeAIBindPoseTests "${S2_GAME_DIR}/res" "${S2_GAME_DIR}/game.db")
+  set_tests_properties(NativeAIBindPoseTests PROPERTIES ENVIRONMENT_MODIFICATION
+    "PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs;PATH=path_list_prepend:${S2_GAME_DIR}")
 endif()
 add_executable(NativeAIBSPResourceTests
   "${root}/diagnostics/NativeAIBSPResourceTests.cpp")
@@ -985,6 +988,10 @@ endif()
 if(TARGET s2_bink_compat)
   set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests NativeHeightLayersTests NativeHeightNetworkTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+  if(TEST NativeAIBindPoseTests)
+    set_tests_properties(NativeAIBindPoseTests PROPERTIES ENVIRONMENT_MODIFICATION
+      "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+  endif()
 endif()
 add_dependencies(Game ls_implibs)   # the lib/def import libs must exist before Game links
 # tools

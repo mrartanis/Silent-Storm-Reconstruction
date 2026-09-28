@@ -947,6 +947,7 @@ if(S2_RESOURCE_PACKAGE_PATH AND S2_GAME_DB_PATH)
     "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
   if(EXISTS "${_s2_ai_pose_res_dir}/Binds.res" AND
      EXISTS "${_s2_ai_pose_res_dir}/AIBinds.res" AND
+     EXISTS "${_s2_ai_pose_res_dir}/Animations.res" AND
      EXISTS "${_s2_ai_pose_res_dir}/Skeletons.res")
     add_test(NAME NativeAIBindPoseTests
       COMMAND NativeAIBindPoseTests "${_s2_ai_pose_res_dir}" "${S2_GAME_DB_PATH}")
@@ -1301,6 +1302,8 @@ foreach(_s2_target IN LISTS _s2_all_targets)
     list(APPEND _s2_portable_archives ${_s2_target})
   endif()
 endforeach()
+target_link_libraries(NativeAIBindPoseTests PRIVATE
+  -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
 add_executable(NativeAILogicTests "${root}/diagnostics/NativeAILogicTests.cpp")
 target_include_directories(NativeAILogicTests PRIVATE
   "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
