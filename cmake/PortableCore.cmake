@@ -939,14 +939,17 @@ target_link_libraries(NativeAIBindPoseTests PRIVATE
   s2_game_transform s2_game_dg s2_game_structure s2_game_streams
   s2_game_objects s2_portable_structure s2_portable_package
   s2_game_misc_runtime -Wl,--end-group)
+target_link_libraries(NativeAIBindPoseTests PRIVATE
+  "-Wl,--whole-archive" s2_game_dbformat_records "-Wl,--no-whole-archive")
 target_link_options(NativeAIBindPoseTests PRIVATE -Wl,--gc-sections)
-if(S2_RESOURCE_PACKAGE_PATH)
+if(S2_RESOURCE_PACKAGE_PATH AND S2_GAME_DB_PATH)
   get_filename_component(_s2_ai_pose_res_dir
     "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
-  if(EXISTS "${_s2_ai_pose_res_dir}/AIBinds.res" AND
+  if(EXISTS "${_s2_ai_pose_res_dir}/Binds.res" AND
+     EXISTS "${_s2_ai_pose_res_dir}/AIBinds.res" AND
      EXISTS "${_s2_ai_pose_res_dir}/Skeletons.res")
     add_test(NAME NativeAIBindPoseTests
-      COMMAND NativeAIBindPoseTests "${_s2_ai_pose_res_dir}")
+      COMMAND NativeAIBindPoseTests "${_s2_ai_pose_res_dir}" "${S2_GAME_DB_PATH}")
   endif()
 endif()
 add_executable(NativeAIBSPResourceTests

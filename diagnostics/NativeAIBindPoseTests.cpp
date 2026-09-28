@@ -8,6 +8,8 @@
 #include "../Main/GBind.h"
 #include "../Main/GAnimFormat.h"
 #include "../FileIO/PortablePackageIndex.h"
+#include "../FileIO/Streams.h"
+#include "../DBFormat/DataFormat.h"
 
 #include <cstdint>
 #include <cstdio>
@@ -15,6 +17,8 @@
 #include <filesystem>
 #include <map>
 #include <array>
+#include <vector>
+#include <algorithm>
 
 class CProbeSkeletonPose : public CFuncBase<NAnimation::SSkeletonPose>
 {
@@ -22,6 +26,12 @@ class CProbeSkeletonPose : public CFuncBase<NAnimation::SSkeletonPose>
 public:
 	void Set(const NAnimation::SSkeletonPose &pose)
 	{ value = pose; Updated(); }
+};
+class CRecordIterator : public CDBIteratorBase
+{
+public:
+	explicit CRecordIterator(const CDBTableBase &table) : CDBIteratorBase(table) {}
+	CDBRecord *Get() const { return CDBIteratorBase::Get(); }
 };
 
 static std::uint64_t digest = UINT64_C(14695981039346656037);
@@ -62,11 +72,25 @@ struct SCandidate
 	int bindID = -1;
 	int skeletonID = -1;
 	int bones = 0;
+	int modelID = 0;
 };
-static bool TestCandidate(const SCandidate &candidate)
+static bool TestCandidate(const SCandidate &candidate, bool modelBind = false)
 {
-	CObj<NGScene::CFileAIBind> bindLoader = new NGScene::CFileAIBind;
-	bindLoader->SetKey(candidate.bindID);
+	CObj<NGScene::CFileAIBind> aiLoader;
+	CObj<NGScene::CFileBind> modelLoader;
+	CPtrFuncBase<NGScene::CFileBindInfo> *bindLoader = nullptr;
+	if (modelBind)
+	{
+		modelLoader = new NGScene::CFileBind;
+		modelLoader->SetKey(candidate.bindID);
+		bindLoader = modelLoader;
+	}
+	else
+	{
+		aiLoader = new NGScene::CFileAIBind;
+		aiLoader->SetKey(candidate.bindID);
+		bindLoader = aiLoader;
+	}
 	CObj<NAnimation::CFileSkeleton> skeletonLoader = new NAnimation::CFileSkeleton;
 	skeletonLoader->SetKey(candidate.skeletonID);
 	CDGPtr<CPtrFuncBase<NGScene::CFileBindInfo>> binds(bindLoader);
@@ -97,6 +121,7 @@ static bool TestCandidate(const SCandidate &candidate)
 	result.Refresh();
 	const auto first = result->GetValue();
 	if (first.size() != pose.size()) return false;
+	if (modelBind) Add(candidate.modelID);
 	Add(candidate.bindID); Add(candidate.skeletonID);
 	Add(skeletonInfo->bScale ? 1 : 0);
 	AddMatrices(first);
@@ -133,11 +158,12 @@ static bool TestCandidate(const SCandidate &candidate)
 }
 int main(int argc, char **argv)
 {
-	if (argc != 2) return 2;
+	if (argc != 3) return 2;
 	const std::filesystem::path directory(argv[1]);
-	S2FileIO::PortablePackageIndex binds, skeletons;
+	S2FileIO::PortablePackageIndex binds, skeletons, modelBinds;
 	if (!binds.Open((directory / "AIBinds.res").string()) ||
-		!skeletons.Open((directory / "Skeletons.res").string())) return 3;
+		!skeletons.Open((directory / "Skeletons.res").string()) ||
+		!modelBinds.Open((directory / "Binds.res").string())) return 3;
 	NGScene::AddResourceDir(directory.string().c_str());
 	std::map<int, int> nonScaled, scaled;
 	for (const auto &entry : skeletons.Entries())
@@ -175,13 +201,54 @@ int main(int argc, char **argv)
 	}
 	if (picks[0].bindID < 0 || picks[1].bindID < 0) return 4;
 	if (!TestCandidate(picks[0]) || !TestCandidate(picks[1])) return 5;
+	const auto aiDigest = digest;
+	digest = UINT64_C(14695981039346656037);
+	CFileStream database;
+	database.OpenRead(argv[2]);
+	NDatabase::Serialize(database, CStructureSaver::READ);
+	auto *models = NDatabase::GetTable(1); // registered "Models"/CRndModel table
+	if (!models) return 7;
+	std::vector<SCandidate> modelCandidates;
+	CRecordIterator modelIt(*models);
+	while (modelIt.MoveNext())
+	{
+		const int modelID = modelIt.Get()->GetRecordID();
+		SRand random;
+		CObj<NDb::CModel> model = NDb::GetModelVariant(modelID, &random);
+		if (!model) continue;
+		if (!model->pGeometry.GetPtr() || !model->pSkeleton.GetPtr()) continue;
+		const int geometryID = model->pGeometry->GetRecordID();
+		const int skeletonID = model->pSkeleton->GetRecordID();
+		if (modelBinds.Entries().find(geometryID) == modelBinds.Entries().end() ||
+			skeletons.Entries().find(skeletonID) == skeletons.Entries().end()) continue;
+		CObj<NGScene::CFileBind> modelLoader = new NGScene::CFileBind;
+		modelLoader->SetKey(geometryID);
+		CObj<NAnimation::CFileSkeleton> skeletonLoader = new NAnimation::CFileSkeleton;
+		skeletonLoader->SetKey(skeletonID);
+		const auto *bindInfo = modelLoader->GetValue();
+		const auto *skeletonInfo = skeletonLoader->GetValue();
+		if (!bindInfo || !skeletonInfo || skeletonInfo->bones.size() < 2 ||
+			bindInfo->invBindPoses.size() != skeletonInfo->bones.size()) continue;
+		modelCandidates.push_back({geometryID, skeletonID,
+			static_cast<int>(skeletonInfo->bones.size()), modelID});
+	}
+	std::sort(modelCandidates.begin(), modelCandidates.end(),
+		[](const SCandidate &a, const SCandidate &b) { return a.modelID < b.modelID; });
+	if (modelCandidates.empty()) return 8;
+	const SCandidate modelPick = modelCandidates.front();
+	if (!TestCandidate(modelPick, true)) return 9;
 	NGScene::CloseAllResources();
-	std::printf("non_scaled_bind=%d skeleton=%d bones=%d scaled_bind=%d skeleton=%d bones=%d digest=%016llX\n",
+	std::printf("non_scaled_bind=%d skeleton=%d bones=%d scaled_bind=%d skeleton=%d bones=%d ai_digest=%016llX model_pairs=%zu model=%d bind=%d skeleton=%d bones=%d model_digest=%016llX\n",
 		picks[0].bindID, picks[0].skeletonID, picks[0].bones,
 		picks[1].bindID, picks[1].skeletonID, picks[1].bones,
+		static_cast<unsigned long long>(aiDigest), modelCandidates.size(),
+		modelPick.modelID, modelPick.bindID, modelPick.skeletonID, modelPick.bones,
 		static_cast<unsigned long long>(digest));
 	return picks[0].bindID == 2 && picks[0].skeletonID == 2 &&
 		picks[0].bones == 42 && picks[1].bindID == 236 &&
 		picks[1].skeletonID == 50 && picks[1].bones == 5 &&
-		digest == UINT64_C(0xAD6A5D46B06FF2AB) ? 0 : 6;
+		aiDigest == UINT64_C(0xAD6A5D46B06FF2AB) &&
+		modelCandidates.size() == 110 && modelPick.modelID == 1248 &&
+		modelPick.bindID == 1486 && modelPick.skeletonID == 142 &&
+		modelPick.bones == 9 && digest == UINT64_C(0xEDD325C53B7749A8) ? 0 : 6;
 }

@@ -142,8 +142,8 @@ bind-pose regression below currently uses `AIBinds`, not `Binds`.
 `AIBinds` inverse matrices and real `Skeletons` bone hierarchies. It
 selects deterministic count-matched pairs: non-scaled bind/skeleton
 2/2 with 42 bones and scaled bind/skeleton 236/50 with five bones.
-These pairs are selected by bone count for a CPU regression; the test
-does not assert that the game associates those two records in a model.
+These two AI pairs are selected by bone count for a CPU regression; the
+test does not assert that the game associates those records in a model.
 
 For each pair the test forms a pose from the original skeleton defaults,
 then advances DG frames, changes root/child positions and changes root
@@ -153,15 +153,39 @@ static-skeleton-scale branch unchanged. All output matrix components are
 hashed in semantic order. Expected result:
 
 ```
-non_scaled_bind=2 skeleton=2 bones=42 scaled_bind=236 skeleton=50 bones=5 digest=AD6A5D46B06FF2AB
+non_scaled_bind=2 skeleton=2 bones=42 scaled_bind=236 skeleton=50 bones=5 ai_digest=AD6A5D46B06FF2AB
 ```
 
 Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64 and
 ARM64/QEMU produced this exact value; Linux x86-64 used
 ASan/UBSan/LSan, ARM64/QEMU used ASan/UBSan with LSan disabled. Run
-`NativeAIBindPoseTests <original-res-directory>` or its CTest target.
+`NativeAIBindPoseTests <original-res-directory> <original-game.db>` or
+its CTest target.
 This exercises core CPU binding across three frames, not a rendered
-animation, a known real model/skeleton association, or the downstream
-collision response in a mission.
+animation or the downstream collision response in a mission.
 After registration, the non-`extended` suites passed 160/160 on Windows
 x64 Release and 133/133 on Linux GCC x86-64 under ASan/UBSan/LSan.
+
+The follow-up also loads the original `game.db` and iterates its registered
+`Models` records. It creates each model through the game's
+`GetModelVariant`, then intersects the selected geometry and skeleton IDs
+with `Binds.res` and `Skeletons.res`. There are 110 candidate model
+records with both resources and matching bone counts. The first by model
+record ID is model 1248, geometry/bind 1486, skeleton 142, nine bones.
+This is the same association used by `CGameView::CreateSkin`; it is not
+an accidental match between independent package indexes. The test runs
+the original `CBind::Recalc` over three DG frames for this pair as well.
+Expected additional output:
+
+```
+model_pairs=110 model=1248 bind=1486 skeleton=142 bones=9 model_digest=EDD325C53B7749A8
+```
+
+Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64 and
+ARM64/QEMU matched exactly; the Linux runs used ASan/UBSan and x86-64
+also LSan. The pose changes remain synthetic, not an original animation
+clip. This still does not exercise GPU skinning or a model inside a live
+mission; those claims require a separate test.
+After the database-backed association was added, the non-`extended`
+CTest suites passed 160/160 on Windows x64 Release and 133/133 on
+Linux GCC x86-64 under ASan/UBSan/LSan.

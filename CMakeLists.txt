@@ -663,10 +663,12 @@ target_include_directories(NativeAIBindPoseTests PRIVATE
 target_precompile_headers(NativeAIBindPoseTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeAIBindPoseTests PRIVATE Main)
 target_compile_features(NativeAIBindPoseTests PRIVATE cxx_std_17)
-if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/AIBinds.res" AND
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
+   EXISTS "${S2_GAME_DIR}/res/Binds.res" AND
+   EXISTS "${S2_GAME_DIR}/res/AIBinds.res" AND
    EXISTS "${S2_GAME_DIR}/res/Skeletons.res")
   add_test(NAME NativeAIBindPoseTests
-    COMMAND NativeAIBindPoseTests "${S2_GAME_DIR}/res")
+    COMMAND NativeAIBindPoseTests "${S2_GAME_DIR}/res" "${S2_GAME_DIR}/game.db")
 endif()
 add_executable(NativeAIBSPResourceTests
   "${root}/diagnostics/NativeAIBSPResourceTests.cpp")
