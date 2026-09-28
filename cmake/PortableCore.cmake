@@ -378,6 +378,16 @@ target_include_directories(s2_game_world_entities PRIVATE
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world_entities PUBLIC cxx_std_17)
 target_compile_options(s2_game_world_entities PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_locks STATIC "${root}/Main/Locks.cpp")
+target_include_directories(s2_game_locks PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_compile_features(s2_game_locks PUBLIC cxx_std_17)
+add_executable(NativeLockTokenTests
+  "${root}/diagnostics/NativeLockTokenTests.cpp")
+target_link_libraries(NativeLockTokenTests PRIVATE
+  -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
+  s2_game_structure s2_game_streams s2_game_objects s2_portable_structure)
+add_test(NAME NativeLockTokenTests COMMAND NativeLockTokenTests)
 add_library(s2_game_world_events STATIC
   "${root}/Main/wAckBase.cpp"
   "${root}/Main/wAck.cpp"
@@ -1380,6 +1390,7 @@ add_executable(NativeWorldInitProbe
 target_include_directories(NativeWorldInitProbe PRIVATE
   "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
 target_link_libraries(NativeWorldInitProbe PRIVATE
+  -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
   -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
 target_link_options(NativeWorldInitProbe PRIVATE -Wl,--gc-sections)
 if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
