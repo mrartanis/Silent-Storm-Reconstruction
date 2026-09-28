@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cstring>
 #include <cstdio>
 #include <set>
 #include <string>
@@ -47,6 +48,78 @@ static void AddTo( std::uint64_t *hash, std::uint32_t value )
 	{
 		*hash ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
 		*hash *= UINT64_C(1099511628211);
+	}
+}
+
+static void AddFloatTo( std::uint64_t *hash, float value )
+{
+	std::uint32_t bits;
+	static_assert( sizeof(bits) == sizeof(value), "float digest requires 32-bit float" );
+	std::memcpy( &bits, &value, sizeof(bits) );
+	AddTo( hash, bits );
+}
+
+static void AddVecTo( std::uint64_t *hash, const CVec2 &value )
+{
+	AddFloatTo( hash, value.x ); AddFloatTo( hash, value.y );
+}
+
+static void AddVecTo( std::uint64_t *hash, const CVec3 &value )
+{
+	AddFloatTo( hash, value.x ); AddFloatTo( hash, value.y ); AddFloatTo( hash, value.z );
+}
+
+template<class T> static void AddGridTo( std::uint64_t *hash, const CArray2D<T> &grid )
+{
+	AddTo( hash, grid.GetXSize() ); AddTo( hash, grid.GetYSize() );
+	for ( int y = 0; y < grid.GetYSize(); ++y )
+		for ( int x = 0; x < grid.GetXSize(); ++x )
+			AddTo( hash, static_cast<std::uint32_t>(grid[y][x]) );
+}
+
+static void AddFragmentsTo( std::uint64_t *hash, const std::vector<NBuilding::SBuildFragment> &fragments )
+{
+	AddTo( hash, static_cast<std::uint32_t>(fragments.size()) );
+	for ( const auto &fragment : fragments )
+	{
+		AddTo( hash, fragment.nConstructionPartID ); AddTo( hash, fragment.nSubBlockID );
+		AddVecTo( hash, fragment.ptPos ); AddTo( hash, fragment.nRotationID );
+		AddTo( hash, fragment.nFragmentID ); AddTo( hash, fragment.nObjectFlags ); AddTo( hash, fragment.nID );
+		AddTo( hash, static_cast<std::uint32_t>(fragment.spots.size()) );
+		for ( int spot : fragment.spots ) AddTo( hash, spot );
+	}
+}
+
+static void AddBuildingGameplayTo( std::uint64_t *hash, const NBuilding::CBuildInfo &value )
+{
+	AddTo( hash, value.nMaxX ); AddTo( hash, value.nMaxY );
+	AddTo( hash, value.nMinFloor ); AddTo( hash, value.nMaxFloor );
+	AddFragmentsTo( hash, value.wallFragments ); AddFragmentsTo( hash, value.solidFragments );
+	AddTo( hash, static_cast<std::uint32_t>(value.roomMap.size()) );
+	for ( const auto &room : value.roomMap ) AddGridTo( hash, room );
+	AddGridTo( hash, value.cellar );
+	AddTo( hash, static_cast<std::uint32_t>(value.ladders.size()) );
+	for ( const auto &ladder : value.ladders )
+	{
+		AddTo( hash, ladder.nID ); AddVecTo( hash, ladder.pos.ptMove );
+		AddTo( hash, ladder.pos.nRotation ); AddTo( hash, ladder.nHeight );
+		AddFloatTo( hash, ladder.fBeginHeight ); AddFloatTo( hash, ladder.fEndHeight );
+		AddTo( hash, ladder.eDir );
+	}
+}
+
+static void AddTerrainGameplayTo( std::uint64_t *hash, const CMETerrainInfo &value )
+{
+	const auto &info = value.info;
+	AddTo( hash, info.nWidth ); AddTo( hash, info.nHeight );
+	AddGridTo( hash, info.typeMap ); AddGridTo( hash, info.heightMap );
+	AddGridTo( hash, value.alphaMap );
+	AddTo( hash, static_cast<std::uint32_t>(info.holes.size()) );
+	for ( const auto &hole : info.holes )
+	{
+		AddTo( hash, hole.nHeight ); AddTo( hash, hole.bVisible );
+		AddTo( hash, static_cast<std::uint32_t>(hole.vPolygon.size()) );
+		for ( const auto &point : hole.vPolygon ) AddVecTo( hash, point );
 	}
 }
 
@@ -86,6 +159,8 @@ static bool CheckScenarioTypedResources()
 	if ( ids.size() != 985 ) return false;
 	std::uint64_t buildingDigest = UINT64_C(14695981039346656037);
 	std::uint64_t terrainDigest = UINT64_C(14695981039346656037);
+	std::uint64_t buildingGameplayDigest = UINT64_C(14695981039346656037);
+	std::uint64_t terrainGameplayDigest = UINT64_C(14695981039346656037);
 	std::size_t buildings = 0, terrains = 0, failed = 0;
 	for ( int id : ids )
 	{
@@ -107,6 +182,8 @@ static bool CheckScenarioTypedResources()
 				AddTo( &buildingDigest, static_cast<std::uint32_t>(value->ladders.size()) );
 				AddTo( &buildingDigest, value->cellar.GetXSize() );
 				AddTo( &buildingDigest, value->cellar.GetYSize() );
+				AddTo( &buildingGameplayDigest, id );
+				AddBuildingGameplayTo( &buildingGameplayDigest, *value );
 				++buildings;
 			}
 			catch ( ... ) { std::fprintf( stderr, "scenario building decode failed id=%d\n", id ); ++failed; }
@@ -127,6 +204,8 @@ static bool CheckScenarioTypedResources()
 				AddTo( &terrainDigest, value->info.typeMap.GetYSize() );
 				AddTo( &terrainDigest, value->alphaMap.GetXSize() );
 				AddTo( &terrainDigest, value->alphaMap.GetYSize() );
+				AddTo( &terrainGameplayDigest, id );
+				AddTerrainGameplayTo( &terrainGameplayDigest, *value );
 				++terrains;
 			}
 			catch ( ... ) { std::fprintf( stderr, "scenario terrain decode failed id=%d\n", id ); ++failed; }
@@ -135,9 +214,13 @@ static bool CheckScenarioTypedResources()
 	std::printf( "scenario_typed variants=%zu buildings=%zu terrain=%zu failed=%zu building_digest=%016llX terrain_digest=%016llX\n",
 		ids.size(), buildings, terrains, failed,
 		static_cast<unsigned long long>(buildingDigest), static_cast<unsigned long long>(terrainDigest) );
+	std::printf( "scenario_gameplay building_digest=%016llX terrain_digest=%016llX\n",
+		static_cast<unsigned long long>(buildingGameplayDigest), static_cast<unsigned long long>(terrainGameplayDigest) );
 	return buildings == 903 && terrains == 371 && failed == 0 &&
 		buildingDigest == UINT64_C(0xA924C3A98CD24D04) &&
-		terrainDigest == UINT64_C(0xA29501ED83DC7587);
+		terrainDigest == UINT64_C(0xA29501ED83DC7587) &&
+		buildingGameplayDigest == UINT64_C(0x753C1218C7FFA7FE) &&
+		terrainGameplayDigest == UINT64_C(0x5928DA62CE81B4F8);
 }
 
 int main( int argc, char **argv )
