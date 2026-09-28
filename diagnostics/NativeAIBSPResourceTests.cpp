@@ -132,6 +132,15 @@ int main(int argc, char **argv)
 			return 5;
 		}
 	}
+	// Door 234 occurs in shipped scenario variants but has no precalculated
+	// BSP resource. The original loader must leave both stage lists empty;
+	// CAIMap::AddFlippingHull then builds the precalc data from the skin.
+	if (ids.count(234) || NGScene::CResourceFileOpener::DoesExist("AIBSPTrees", 234)) return 7;
+	CObj<NAI::CLoadTwoBSPTrees> missingDoor = new NAI::CLoadTwoBSPTrees;
+	missingDoor->SetKey(234);
+	const auto *fallback = missingDoor->GetValue();
+	if (!fallback || !fallback->treesOpen.empty() || !fallback->treesClosed.empty()) return 8;
+	std::printf("missing_door_bsp id=234 fallback=empty_precalc\n");
 	NGScene::CloseAllResources();
 	std::printf("records=%zu loose_files=%zu overrides=%zu loose_only=%zu open_stages=%zu closed_stages=%zu pieces=%zu cells=%zu digest=%016llX\n",
 		records, looseIDs.size(), overrides, looseOnly, openStages,

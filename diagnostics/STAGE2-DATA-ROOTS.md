@@ -179,11 +179,17 @@ records; `NativeAIBSPResourceTests` covers all 193 effective loose door
 collision records. Each existing semantic digest agrees on Windows x64,
 Linux x86-64, ARM64/QEMU and diagnostic x86; details and input hashes are in
 `NATIVE-AI-GEOMETRY-RESOURCES.md`. Thus this group's *present typed payload*
-decode has no newly identified gap. The still-open stage-2 join is the
-concrete gameplay source IDs (especially door IDs) feeding those loaders,
-and whether any of the 61 package-only AI-geometry IDs outside the DB table
-are selected by shipped gameplay. Do not infer reachability from package
-membership. Dynamic door-state parity belongs to the later behavior gate.
+decode has no newly identified gap. The bounded DB join is now implemented
+as the `--collision-roots` mode of `NativeAIGeometryResourceTests`: 61
+package-only AI geometries have no `CAIGeometry` record and no identified
+game source edge; six of 211 AI-bind IDs similarly lack an AI-geometry DB
+record. All 193 BSP IDs correspond to `CDoor` IDs, but door 234 has no BSP
+file and **does** occur in four potential scenario variants. The original
+loader's empty-data fallback is pinned by `NativeAIBSPResourceTests`; the
+door's dynamic collision outcome is not yet claimed. Exact IDs, hashes and
+commands are in `NATIVE-AI-GEOMETRY-RESOURCES.md`. Do not infer reachability
+from package membership. Dynamic door-state parity belongs to the later
+behavior gate.
 
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.

@@ -9,6 +9,10 @@
 #include "../FileIO/PortablePackageIndex.h"
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataGeometry.h"
+#include "../DBFormat/DataFormat.h"
+#include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataObject.h"
+#include "../DBFormat/DataScenario.h"
 
 #include <algorithm>
 #include <charconv>
@@ -104,9 +108,118 @@ static std::set<std::int32_t> EffectiveIDs(const std::filesystem::path &director
 		}
 	return ids;
 }
+static std::uint64_t HashIDs(const std::set<std::int32_t> &ids)
+{
+	std::uint64_t hash = UINT64_C(14695981039346656037);
+	for (std::int32_t id : ids)
+		for (int byte = 0; byte < 4; ++byte)
+		{
+			hash ^= static_cast<std::uint8_t>(id >> (byte * 8));
+			hash *= UINT64_C(1099511628211);
+		}
+	return hash;
+}
+static std::set<int> ScenarioVariantIDs()
+{
+	auto *zones = NDatabase::GetTable<NDb::CDBScenarioZone>();
+	auto *templates = NDatabase::GetTable<NDb::CTemplate>();
+	if (!zones || !templates) throw 1;
+	std::set<int> seenTemplates, variantIDs;
+	std::vector<int> pending;
+	CDBIterator<NDb::CDBScenarioZone> zone(*zones);
+	while (zone.MoveNext())
+		for (int id : zone.Get()->templatesIDs)
+			if (id > 0) pending.push_back(id);
+	while (!pending.empty())
+	{
+		int id = pending.back(); pending.pop_back();
+		if (!seenTemplates.insert(id).second) continue;
+		auto *map = static_cast<NDb::CTemplate *>(templates->GetDBRecord(id));
+		if (!map) throw 2;
+		for (const auto &variant : map->variants)
+		{
+			if (!variant) throw 3;
+			variantIDs.insert(variant->GetRecordID());
+			for (const auto &rect : variant->rects)
+				if (rect && rect->pTemplate)
+					pending.push_back(rect->pTemplate->GetRecordID());
+		}
+	}
+	return variantIDs;
+}
+static int CheckCollisionRoots(const std::filesystem::path &directory,
+	const std::set<std::int32_t> &available,
+	const std::set<std::int32_t> &geometryIDs)
+{
+	S2FileIO::PortablePackageIndex binds, doors;
+	if (!binds.Open((directory / "AIBinds.res").string()) ||
+		!doors.Open((directory / "AIBSPTrees.res").string())) return 8;
+	auto *doorTable = NDatabase::GetTable<NDb::CDoor>();
+	if (!doorTable) return 9;
+	std::set<std::int32_t> doorIDs, bindIDs, treeIDs, extraGeometry;
+	CDBIterator<NDb::CDoor> door(*doorTable);
+	while (door.MoveNext()) doorIDs.insert(door.Get()->GetRecordID());
+	for (const auto &entry : binds.Entries()) bindIDs.insert(entry.first);
+	for (const auto &entry : doors.Entries()) treeIDs.insert(entry.first);
+	std::set_difference(available.begin(), available.end(),
+		geometryIDs.begin(), geometryIDs.end(),
+		std::inserter(extraGeometry, extraGeometry.end()));
+	std::size_t bindsInGeometry = 0, treesInDoor = 0;
+	for (int id : bindIDs) bindsInGeometry += geometryIDs.count(id);
+	for (int id : treeIDs) treesInDoor += doorIDs.count(id);
+	std::set<std::int32_t> extraBinds, doorsWithoutTrees;
+	std::set_difference(bindIDs.begin(), bindIDs.end(),
+		geometryIDs.begin(), geometryIDs.end(),
+		std::inserter(extraBinds, extraBinds.end()));
+	std::set_difference(doorIDs.begin(), doorIDs.end(),
+		treeIDs.begin(), treeIDs.end(),
+		std::inserter(doorsWithoutTrees, doorsWithoutTrees.end()));
+	std::printf("collision_roots ai_geometry_db=%zu available=%zu extra_package=%zu extra_digest=%016llX ai_binds=%zu binds_in_geometry_db=%zu door_db=%zu bsp_trees=%zu trees_in_door_db=%zu door_digest=%016llX\n",
+		geometryIDs.size(), available.size(), extraGeometry.size(),
+		static_cast<unsigned long long>(HashIDs(extraGeometry)), bindIDs.size(),
+		bindsInGeometry, doorIDs.size(), treeIDs.size(), treesInDoor,
+		static_cast<unsigned long long>(HashIDs(doorIDs)));
+	for (int id : extraGeometry)
+		std::printf("collision_extra_ai_geometry id=%d\n", id);
+	for (int id : extraBinds)
+		std::printf("collision_extra_ai_bind id=%d\n", id);
+	std::printf("collision_extra_ai_bind_digest=%016llX\n",
+		static_cast<unsigned long long>(HashIDs(extraBinds)));
+	for (int id : doorsWithoutTrees)
+		std::printf("collision_door_without_bsp id=%d\n", id);
+	const auto scenarioVariants = ScenarioVariantIDs();
+	auto *variants = NDatabase::GetTable<NDb::CTemplVariant>();
+	if (!variants) return 11;
+	std::set<int> missingDoorFinalElements, missingDoorScenarioVariants;
+	CDBIterator<NDb::CTemplVariant> variant(*variants);
+	while (variant.MoveNext())
+		for (const auto &element : variant.Get()->pFinalElements)
+			if (element && element->pObject && element->pObject->pObject &&
+				element->pObject->pObject->pDoor &&
+				element->pObject->pObject->pDoor->GetRecordID() == 234)
+			{
+				missingDoorFinalElements.insert(element->GetRecordID());
+				if (scenarioVariants.count(variant.Get()->GetRecordID()))
+					missingDoorScenarioVariants.insert(variant.Get()->GetRecordID());
+			}
+	std::printf("collision_missing_bsp_door_234 scenario_variants=%zu all_final_elements=%zu scenario_hits=%zu hit_digest=%016llX\n",
+		scenarioVariants.size(), missingDoorFinalElements.size(), missingDoorScenarioVariants.size(),
+		static_cast<unsigned long long>(HashIDs(missingDoorScenarioVariants)));
+	for (int id : missingDoorScenarioVariants)
+		std::printf("collision_missing_bsp_door_234 scenario_variant=%d\n", id);
+	return geometryIDs.size() == 1982 && available.size() == 2043 &&
+		extraGeometry.size() == 61 && HashIDs(extraGeometry) == UINT64_C(0x9D77FA3BE8DF0C85) &&
+		bindIDs.size() == 211 && bindsInGeometry == 205 &&
+		extraBinds.size() == 6 && HashIDs(extraBinds) == UINT64_C(0xAC396197B6ABB244) &&
+		doorIDs.size() == 194 && treeIDs.size() == 193 && treesInDoor == 193 &&
+		HashIDs(doorIDs) == UINT64_C(0x622781497A448A20) &&
+		scenarioVariants.size() == 985 && missingDoorFinalElements.size() == 7 &&
+		missingDoorScenarioVariants.size() == 4 &&
+		HashIDs(missingDoorScenarioVariants) == UINT64_C(0xE5A8E95E5F10ACE1) ? 0 : 10;
+}
 int main(int argc, char **argv)
 {
-	if (argc != 3) return 2;
+	if (argc != 3 && !(argc == 4 && std::strcmp(argv[3], "--collision-roots") == 0)) return 2;
 	CFileStream database;
 	database.OpenRead(argv[1]);
 	NDatabase::Serialize(database, CStructureSaver::READ);
@@ -125,6 +238,7 @@ int main(int argc, char **argv)
 		const int id = geometry.Get()->GetRecordID();
 		if (available.count(id)) ids.insert(id);
 	}
+	if (argc == 4) return CheckCollisionRoots(directory, available, ids);
 	std::size_t geometries = 0, points = 0, triangles = 0, spheres = 0;
 	std::size_t piecesTotal = 0, precalcTotal = 0, gridCells = 0;
 	std::size_t looseOnly = 0, overrides = 0;

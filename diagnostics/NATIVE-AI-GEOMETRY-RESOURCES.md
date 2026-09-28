@@ -82,6 +82,37 @@ Run the registered `NativeAIBSPResourceTests` CTest or directly execute
 This verifies loaded precomputed data, not door collision after an actual
 opening/destruction sequence in a mission. That dynamic path still needs
 its own state-transition regression.
+The optional `NativeAIGeometryResourceTests <game.db> <res> --collision-roots`
+joins source DB IDs to the three collision-resource families. The base game
+has 1,982 AI-geometry DB IDs, all backed by effective resources, plus 61
+package-only AI geometries with no `CAIGeometry` DB record. The latter ID
+set hashes to `9D77FA3BE8DF0C85`; the option prints each ID. The game
+collision call sites use `CAIGeometry::GetRecordID()` or resolve their
+integer through `NDb::GetAIGeometry`, so these 61 have no identified
+base-game source edge. Of 211 packaged AI binds, 205 IDs have an AI-geometry
+DB record; the six extras are `2,23,236,1312,1315,2456`.
+
+The DB contains 194 `CDoor` records, while 193 IDs have effective BSP
+resources. The sole missing ID, `234`, is **not** an unused orphan: seven
+final elements reference it, including four variants (`6971,6972,6973,7407`)
+in the 985-variant scenario closure. `CLoadTwoBSPTrees::Recalc` catches the
+missing file and returns empty open/closed vectors, after which
+`CAIMap::AddFlippingHull`, when invoked for that door, calls
+`CSkinner::CreatePrecalcInfo`. The corpus test
+now pins this empty-loader fallback. This proves the data-loading contract,
+not the resulting dynamic door collision in a running mission.
+
+Windows x64, Linux GCC x86-64/ASan+UBSan and ARM64/QEMU/ASan+UBSan agree on
+the root counts, hashes, door hits and missing-file fallback, with no
+sanitizer diagnostic. The diagnostic mode is invoked directly; the ordinary
+`NativeAIGeometryResourceTests` CTest still covers the full typed corpus.
+On Linux, run `<build>/NativeAIGeometryResourceTests <game.db> <res>
+--collision-roots` (under `qemu-aarch64-static -L /usr/aarch64-linux-gnu`
+for ARM64), then `ctest --test-dir <build> -R '^NativeAIBSPResourceTests$'
+--output-on-failure`. This does not replace a live door-collision test.
+The new DB-ID join has not been repeated in the diagnostic x86 build;
+the earlier typed corpus digests did match x86.
+
 With this second resource test registered, the non-`extended` suite passed
 158/158 on Windows x64 Release and 131/131 on Linux GCC x86-64 under
 ASan/UBSan/LSan.
