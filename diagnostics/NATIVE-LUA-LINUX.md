@@ -145,7 +145,11 @@ cannot create a device even for an older known-good archive.
 numeric constant pool when reading the 113 original `game.db` scripts.
 It asserts 18 pooled numbers and zero integral pooled constants outside
 the signed 32-bit range on Windows x64, Linux x86-64 and ARM64/QEMU.
-This constrains, but does not settle, the live `Script/lobject.h`
+This constrains, but did not by itself settle, the live `Script/lobject.h`
 `ObjectHash` host-`long` question: short numeric literals are encoded in
-instructions and Lua code can compute large keys. The ABI decision and
-remaining check are tracked in `STAGE2-ABI-AUDIT.md`.
+instructions and Lua code can compute large keys. A subsequent focused
+Lua table/save test confirmed a Linux hash difference for such keys;
+`NumberWord` now reproduces the original 32-bit Windows conversion on
+Windows x86/x64, Linux x86-64 and ARM64/QEMU. All five test keys survive
+Lua-state save/load with the same values. The full saved-state bytes are
+not deterministic; see `STAGE2-ABI-AUDIT.md` for the exact boundary.

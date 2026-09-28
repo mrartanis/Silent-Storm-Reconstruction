@@ -1,13 +1,16 @@
 #include "../Script/StdAfx.h"
 #include "../Script/lua.h"
 #include "../Script/Script.h"
+#include "../Script/lobject.h"
 #include "../FileIO/BasicChunk1.h"
 #include "../Misc/RandomGen.h"
 
 #include <cmath>
+#include <cstdint>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
+#include <initializer_list>
 #include <iterator>
 #include <string>
 
@@ -99,6 +102,70 @@ int main(int argc, char** argv) {
   if (restored.DoString("wrapper_result = wrapper_result + 3") != 0) return 15;
   restored.ExecuteThreads();
   if (restored.GetGlobal("wrapper_result").GetNumber() != 42.0) return 16;
+
+  // Numeric Lua table keys exercise ObjectHash's Number -> long cast.
+  // The baseline scripts have no wide integer constants, but runtime
+  // arithmetic or scripts can still create such keys. Save/load must not
+  // alias them or lose the signed-32-bit boundary values.
+  Script numericKeys;
+  const char keySource[] =
+      "keys = {}\n"
+      "keys[2147483647] = 11\n"
+      "keys[2147483648] = 12\n"
+      "keys[-2147483648] = 13\n"
+      "keys[-2147483649] = 14\n"
+      "keys[4294967295] = 15\n"
+      "key_signature = keys[2147483647] + keys[2147483648] * 100 + "
+      "keys[-2147483648] * 10000 + keys[-2147483649] * 1000000 + "
+      "keys[4294967295] * 100000000\n";
+  if (numericKeys.DoString(keySource) != 0) return 19;
+  numericKeys.ExecuteThreads();
+  if (numericKeys.GetGlobal("key_signature").GetNumber() != 1514131211.0) return 20;
+  CMemoryStream numericState;
+  {
+    CStructureSaver saver(numericState, CStructureSaver::WRITE);
+    saver.Add(1, &numericKeys);
+  }
+  if (numericState.GetSize() != 20365) return 23;
+  ObjectHash numericHasher;
+  const unsigned expectedHashes[] = {
+      0x7FFFFFFFu, 0x80000000u, 0x80000000u, 0x80000000u, 0x80000000u,
+      0x7FFFFFFFu, 0x80000000u, 1u, 0xFFFFFFFFu};
+  int hashIndex = 0;
+  for (double value : {2147483647.0, 2147483648.0, -2147483648.0,
+                       -2147483649.0, 4294967295.0, 2147483647.75,
+                       -2147483648.75, 1.9, -1.9}) {
+    TObject key;
+    key.SetN(value);
+#if defined(_WIN32)
+    volatile double retailInput = value;
+    const unsigned retailWord = static_cast<unsigned long>(static_cast<long>(retailInput));
+    if (retailWord != expectedHashes[hashIndex]) return 25;
+#endif
+    if (static_cast<unsigned>(numericHasher(key)) != expectedHashes[hashIndex++])
+      return 24;
+    std::printf("native-lua numeric hash %.17g=%08X\n", value,
+                static_cast<unsigned>(numericHasher(key)));
+  }
+  std::uint64_t numericWireDigest = UINT64_C(14695981039346656037);
+  for (int byte = 0; byte < numericState.GetSize(); ++byte) {
+    numericWireDigest ^= numericState.GetBuffer()[byte];
+    numericWireDigest *= UINT64_C(1099511628211);
+  }
+  numericState.Seek(0);
+  Script restoredKeys;
+  {
+    CStructureSaver saver(numericState, CStructureSaver::READ);
+    saver.Add(1, &restoredKeys);
+  }
+  if (restoredKeys.DoString("key_signature = keys[2147483647] + "
+                            "keys[2147483648] * 100 + keys[-2147483648] * 10000 + "
+                            "keys[-2147483649] * 1000000 + keys[4294967295] * 100000000") != 0) return 21;
+  restoredKeys.ExecuteThreads();
+  if (restoredKeys.GetGlobal("key_signature").GetNumber() != 1514131211.0) return 22;
+  std::printf("native-lua numeric keys 5 signature %.0f saved_bytes %d wire=%016llX\n",
+              restoredKeys.GetGlobal("key_signature").GetNumber(), numericState.GetSize(),
+              static_cast<unsigned long long>(numericWireDigest));
 
   // The authored DB scripts call the game's actual random binding (for
   // example, the patrol branch in mission variant 4526).

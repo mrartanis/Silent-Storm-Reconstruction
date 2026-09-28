@@ -16,7 +16,7 @@ editor-only tools and arbitrary mods are outside this stage.
 | `wCheckTooMuchCorpses.cpp` | Local `unsigned long` copies of `GetDeathTime()` are 64-bit on LP64, but no caller of `CheckTooMuchCorpses` exists in `Main/`; the source itself labels the failsafe unwired. | Not a live stage-2 world path. Reopen if it is connected later. |
 | `Script/lmem.cpp` | `unsigned long` memory-debug counters/header appear inside `_DEBUG`; normal game builds use the other branch. | Not a release-v1 game wire field. Debug configuration remains a separate diagnostic concern. |
 | `Script/lundump.cpp` | `(long)` is used only to validate binary Lua chunk headers, which also encode host `sizeof(size_t)`. Base-game script roots are source text in `game.db` or four loose `.l` files, not binary Lua chunks. | Do not use binary-chunk portability as evidence for the original source-script path; assess only if the base loader can reach such a chunk. |
-| `Script/lobject.h::ObjectHash` | Live Lua table hashing casts `Number` through signed `long`, then returns `int`. On LP64 the intermediate differs from Windows for numbers outside the signed 32-bit range. Pointer/string hashes are also reduced to `int`, but hash collisions alone do not merge unequal table keys. `NativeMissionScriptCorpusTests` now checks the parsed constant pool of all 113 original DB scripts: 18 numeric constants, **zero** integral constants outside signed 32-bit range; the four loose startup scripts also have no 10+-digit decimal literal. | **Open candidate**, not yet a proven gameplay defect. Computed numeric keys are not excluded by a constant scan. Check focused Lua table/save behavior before changing the hash, since hash order can affect iteration and serialized table order. |
+| `Script/lobject.h::ObjectHash` | The live numeric-key hash had a real LP64 difference: the original `Number → signed long → int` returned `80000000` on Windows for both `-2147483649` and `4294967295`, but `7FFFFFFF`/`FFFFFFFF` on Linux. `NumberWord` now explicitly truncates toward zero within signed 32-bit range and returns the MSVC integer-indefinite word `80000000` outside it. The local hash word is explicitly `std::uint32_t`; this is hash compression, not pointer identity storage. | **Repaired and address-tested.** See the focused Lua test and x86 oracle below. |
 | `Main/scriptUI.cpp`, `Main/iCommonUI.cpp`, `Main/GParticles.*` | Additional `unsigned long` locals occur in UI or graphical particle paths. | Client/rendering-stage review; not evidence of a live headless-world ABI defect. Preserve existing code. |
 
 Pointer-width scan in the same first pass found `FileIO/BasicChunk1.cpp`
@@ -44,13 +44,52 @@ rg -n 'uintptr_t|intptr_t|\(int\).*GetPtr|\b(__asm|_asm)\b' Main FileIO Script M
 rg -n 'CheckTooMuchCorpses\(' Main -g '*.cpp' -g '*.h'
 ```
 
-The constant-pool check is a pinned property of the original `game.db`,
-not a whole-program range proof: short literals use `OP_PUSHINT`, scripts
-can compute values, and user/mod scripts are outside this base-game gate.
+`NativeMissionScriptCorpusTests` checks the parsed constant pool of all
+113 original `game.db` scripts: 18 numeric constants and zero integral
+constants outside signed 32-bit range. The four loose startup scripts
+have no 10+-digit decimal literal. This is a pinned property of the
+base data, not a whole-program range proof: short literals use
+`OP_PUSHINT`, scripts can compute values, and user/mod scripts are outside
+this gate.
 
-Next bounded action: prove or dismiss the remaining Lua hash candidate
-using a Windows/Linux/ARM64 focused numeric-key and save/load regression.
-Then continue item 3b (pointer/asm/alignment),
+`NativeLuaRuntimeTests` exercises keys `2147483647`, `2147483648`,
+`-2147483648`, `-2147483649` and `4294967295`. The five hash words are
+`7FFFFFFF,80000000,80000000,80000000,80000000` on diagnostic Windows
+x86, target Windows x64, Linux GCC x86-64 and ARM64/QEMU. On Windows,
+the test separately executes the original volatile `Number → long`
+expression and requires each result to match the explicit implementation.
+Four additional fractional boundary/ordinary numbers check truncation
+toward zero against that same x86/x64 expression.
+It also creates a real Lua table, reads all five keys through a weighted
+signature `1514131211`, saves the `Script` through `CStructureSaver`,
+reloads it and recomputes the same signature. The serialized length is
+20,365 bytes on all four architectures. Linux x86-64 passed under
+ASan/UBSan/LSan and ARM64/QEMU under ASan/UBSan with LSan disabled.
+The new check is an ABI regression, not a claim that any shipped script
+actually uses those large keys.
+
+Reproduce the focused test after building `NativeLuaRuntimeTests` from
+this source on each target:
+
+```text
+<Windows-x64-or-diagnostic-x86-build>/RelWithDebInfo/NativeLuaRuntimeTests.exe
+ASAN_OPTIONS=detect_leaks=1 UBSAN_OPTIONS=halt_on_error=1 <Linux-GCC-x64-build>/NativeLuaRuntimeTests
+ASAN_OPTIONS=detect_leaks=0 UBSAN_OPTIONS=halt_on_error=1 qemu-aarch64-static -L /usr/aarch64-linux-gnu <Linux-GCC-arm64-build>/NativeLuaRuntimeTests
+```
+
+The Windows x86 diagnostic was a fresh `-A Win32` CMake build under
+`G:\SS\lab\build-x86-lua-hash`; it is not a resumed x86 product build.
+
+The FNV digest of the entire saved `Script` state differs across machines
+and even between repeated Windows x64 process launches, despite identical
+length and successful semantic round-trip. Thus this test must **not**
+advertise deterministic whole-file bytes or cross-save compatibility;
+the latter is not a product gate. The difference is not attributed to
+one field without a byte-level investigation.
+
+The live host-`long` numeric hash candidate of 3a is resolved; the other
+listed uses have explicit fixed-width types or are outside this stage's
+live release path. Next bounded action is item 3b (pointer/asm/alignment),
 3c (wire/layout), and 3d (path/case/encoding) in that order. A claim of
 item-3 completion needs the entire category report plus the final matrix,
 not this first pass.

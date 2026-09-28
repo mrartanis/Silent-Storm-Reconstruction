@@ -12,6 +12,9 @@
 #include "lua.h"
 
 #include <assert.h>
+#include <cmath>
+#include <cstdint>
+#include <limits>
 #define LUA_INTERNALERROR(s)	assert(((void)s,0))
 #define LUA_ASSERT(c,s)		ASSERT(c)
 
@@ -222,13 +225,25 @@ struct Closure {
 
 struct ObjectHash
 {
+	// Retail hashes Lua numbers through a signed 32-bit long. On LP64,
+	// host long is 64-bit; reproduce the Windows conversion, including the
+	// integer-indefinite value returned for non-finite/out-of-range inputs.
+	static std::int32_t NumberWord( Number number )
+	{
+		if ( !std::isfinite(number) ) return (std::numeric_limits<std::int32_t>::min)();
+		const Number truncated = std::trunc(number);
+		if ( truncated < static_cast<Number>((std::numeric_limits<std::int32_t>::min)()) ||
+			 truncated > static_cast<Number>((std::numeric_limits<std::int32_t>::max)()) )
+			return (std::numeric_limits<std::int32_t>::min)();
+		return static_cast<std::int32_t>(truncated);
+	}
 	int operator()( const TObject &key ) const
 	{
-		unsigned long h;
+		std::uint32_t h;
 		switch ( key.GetType() ) 
 		{
 			case LUA_TNUMBER:
-				h = (unsigned long)(long)( key.GetN() );
+				h = static_cast<std::uint32_t>(NumberWord(key.GetN()));
 				break;
 			case LUA_TSTRING:
 				{
