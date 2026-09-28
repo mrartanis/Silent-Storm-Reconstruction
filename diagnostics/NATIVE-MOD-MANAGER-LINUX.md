@@ -20,6 +20,22 @@ The baseline and this fixture use ASCII names; non-ASCII Windows code-page
 mod names have not been mapped to a Linux filesystem encoding and are not
 claimed portable by this test.
 
+The historical repository's `Versions/Current/APForInventoryUsage/game.db` is
+only 268 bytes: it is a valid v1 database containing three `RPGAPs` records
+and no `Animations` table or relations. The original base database has 26
+`RPGAPs` records. The earlier full-copy overlay fixture missed this real
+game-used format: the old portable importer required `Animations` on every
+load, so `CModManager` caught the exception and silently skipped the mod DB.
+The runtime importer now has an explicit overlay mode. It preserves existing
+record objects and records absent from a partial mod table, updates the mod's
+named records, and keeps base relations when the overlay supplies none.
+The base database still follows the existing clear-and-rebuild path. The
+append-only reverse-link builder runs for the base load, not again for these
+optional historical mod tables (`RPGAPs` and `DifficultyConstants`), which do not
+change its link-bearing records. Arbitrary mods that edit animation, debris,
+uniform-look, or inventory reverse links need a separate idempotent relink
+path and are not claimed covered here.
+
 `NativeModManagerTests` creates its own scratch directory inside the build,
 copies the original `game.db`, and uses a mod with both a description and a
 complete release-format `game.db`. The mod database is a private copy of the
@@ -38,10 +54,10 @@ portable save-header encoder and the directory name using `CFileStream`'s
 game string format, reads both back, and reactivates the mod from that name.
 The loader retains the original behavior where a mod
 without `game.db` is still activated as a resource directory, but that branch
-is no longer covered by this fixture. This test proves a full mod database
-replaces one game-used value; it does **not** prove partial-table mod database
-merging or UI interaction. The native fixture does not deserialize a game
-world, so it is not a Linux/ARM64 full-save test.
+is no longer covered by this fixture. The two-argument case proves a full mod
+database overrides one game-used value; the optional historical-mod case below
+tests partial-table merging. Neither exercises UI interaction or deserializes
+a game world, so these are not Linux/ARM64 full-save tests.
 
 The focused test, including the database overlay and save-header/name
 round-trip, passed Windows x64, Linux GCC x86-64 with ASan/UBSan/LSan,
@@ -53,6 +69,30 @@ ctest --test-dir <windows-build> -C Release -R ^NativeModManagerTests$ --output-
 ASAN_OPTIONS=detect_leaks=1 ctest --test-dir <linux-x64-build> -R ^NativeModManagerTests$ --output-on-failure
 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir <linux-arm64-build> -R ^NativeModManagerTests$ --output-on-failure
 ```
+
+Pass the original `APForInventoryUsage/game.db` as a third argument to
+`NativeModManagerTests` for the historical partial-mod extension. It asserts
+that all 26 action-cost records remain, that the three mod values are applied,
+that unrelated map/resource data remain intact, and that deactivation
+restores every original AP. This extension passed Windows x64, Linux GCC
+x86-64 with ASan/UBSan/LSan, Linux GCC ARM64/QEMU with ASan/UBSan, and Linux
+Clang x86-64 release. The normal two-argument CTest case still exercises
+the full-copy overlay and save-header/name path.
+
+Focused optional-mod commands (the third argument is the untouched historical
+file, copied into a private fixture by the test):
+
+```text
+<windows-build>/Release/NativeModManagerTests.exe <baseline>/game.db <windows-build>/mod-manager-scratch <historical-repo>/Versions/Current/APForInventoryUsage/game.db
+ASAN_OPTIONS=detect_leaks=1 <linux-x64-build>/NativeModManagerTests <data>/game.db <linux-x64-build>/mod-manager-scratch <data>/mod-ap.db
+ASAN_OPTIONS=detect_leaks=0 qemu-aarch64-static -L /usr/aarch64-linux-gnu <linux-arm64-build>/NativeModManagerTests <data>/game.db <linux-arm64-build>/mod-manager-scratch <data>/mod-ap.db
+```
+
+Scope: the Steam-data baseline used by the stage-2 game tests has no mod
+directories. Six optional historical mods with `description.txt` exist under
+`Versions/Current`, including this AP example. They are useful regression
+fixtures, but optional mod support is not a stage-2 completion gate; this
+change does not claim arbitrary user-created mods or editor export formats.
 
 `S2_GAME_DB_PATH` must point to the original `game.db`; the test never edits
 that source file. It removes only its uniquely named successful fixture under

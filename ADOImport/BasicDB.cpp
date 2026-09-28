@@ -1051,9 +1051,9 @@ typedef std::unordered_map< int, CObj<CDBTableDataStorage> > CStorageHash;
 
 static void ImportReleaseStorage( CStorageHash &storageTables,
 	list<NDatabase::SRelation> &relations, const char *source,
-	std::vector<std::int32_t>* animationRowOrder )
+	std::vector<std::int32_t>* animationRowOrder, bool overlay )
 {
-	if ( animationRowOrder )
+	if ( animationRowOrder && !overlay )
 	{
 		animationRowOrder->clear();
 		const CStorageHash::const_iterator animationTable = storageTables.find( 2 );
@@ -1116,7 +1116,7 @@ static void ImportReleaseStorage( CStorageHash &storageTables,
 		CDBTableDataStorage *pStorage = it->second;
 		if ( !pTable || !pStorage ) continue;
 		pStorageSource = pStorage;
-		pTable->PreCreate( it->first );
+		pTable->PreCreate( it->first, overlay );
 		pStorageSource = 0;
 	}
 	for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
@@ -1136,7 +1136,7 @@ static void ImportReleaseStorage( CStorageHash &storageTables,
 	DebugTrace( "DB-STORAGE: loaded %d columnar tables via %s\n", nTables, source );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
+void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode, bool overlay )
 {
 	CTablesHash &tables = GetTables();
 	NDatabase::bIsDatabaseLoading = true;
@@ -1184,18 +1184,27 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 				storageTables[table.tableId] = storage;
 			}
 			list<SRelation> &relations = GetRelations();
-			relations.clear();
+			if ( !overlay ) relations.clear();
 			for ( const S2FileIO::GameDatabaseRelation &item : decoded.relations )
 			{
-				relations.push_back( SRelation() );
-				SRelation &relation = relations.back();
+				list<SRelation>::iterator existing = relations.end();
+				if ( overlay )
+					for ( list<SRelation>::iterator it = relations.begin(); it != relations.end(); ++it )
+						if ( it->szTable == item.name ) { existing = it; break; }
+				if ( existing == relations.end() )
+				{
+					relations.push_back( SRelation() );
+					existing = --relations.end();
+				}
+				SRelation &relation = *existing;
 				relation.szTable = item.name;
 				relation.nTableLeft = item.leftTableId;
 				relation.nTableRight = item.rightTableId;
+				relation.data.clear();
 				for ( const auto &link : item.links )
 					relation.data.push_back( { link.first, link.second } );
 			}
-			ImportReleaseStorage( storageTables, relations, "portable v1", &animationRowOrder );
+			ImportReleaseStorage( storageTables, relations, "portable v1", &animationRowOrder, overlay );
 		}
 		else
 		{
@@ -1207,7 +1216,7 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 				f.Add( 1, &storageTables );
 				list<SRelation> &relations = GetRelations();
 				f.Add( 2, &relations );
-				ImportReleaseStorage( storageTables, relations, "legacy v1", &animationRowOrder );
+				ImportReleaseStorage( storageTables, relations, "legacy v1", &animationRowOrder, overlay );
 			}
 			else
 				f.Add( 1, &tables );
@@ -1216,28 +1225,31 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 	NDatabase::bIsDatabaseLoading = false;
 			ReportUnresolvedReferences();
 			ReportMissingStorageFields();
-	// v1 columnar load rebuilt the records but not the cross-record links - build them now (the v0
-	// path loads them already-built, so skip it there to avoid double-pushing into pAnimations etc.)
-	if ( bDidColumnarLoad )
+	// The base v1 load needs cross-record links. Partial overlays retain live
+	// objects; the tested optional mod tables have no link-bearing fields, and the
+	// append-only builder must not run again for them.
+	if ( bDidColumnarLoad && !overlay )
 		NDb::BuildMapLinks( false, &animationRowOrder );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CDBTableBase
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 using namespace NDatabase;
-void CDBTableBase::PreCreate( int nTypeID )
+void CDBTableBase::PreCreate( int nTypeID, bool overlay )
 {
-  records.clear();
+  if ( !overlay ) records.clear();
 	if ( pStorageSource )
 	{
 		// runtime load from the serialized columnar storage (release/Steam game.db v1)
 		for ( pStorageSource->MoveFirst(); !pStorageSource->IsEof(); pStorageSource->MoveNext() )
 		{
+			const int nID = pStorageSource->GetInt( "ID" );
+			if ( overlay && records.find( nID ) != records.end() ) continue;
 			CDBRecord *pRes = GetRecordTypes().CreateObject( nTypeID );
 			ASSERT( pRes );
 			if ( !pRes )
 				break;
-			pRes->nID = pStorageSource->GetInt( "ID" );
+			pRes->nID = nID;
 			records[ pRes->nID ] = pRes;
 		}
 		return;

@@ -9,6 +9,7 @@
 #include "../Main/GResource.h"
 #include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataScenario.h"
+#include "../DBFormat/DataMisc.h"
 #include "../FileIO/PortableGameDatabase.h"
 #include "../FileIO/PortableSaveHeader.h"
 
@@ -19,6 +20,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <map>
 #include <stdexcept>
 
 static void AppendI32(std::vector<std::uint8_t>* bytes, std::int32_t value)
@@ -86,6 +88,41 @@ static int StartZoneId()
   return map && IsValid(map->pStartZone) ? map->pStartZone->GetRecordID() : 0;
 }
 
+static std::map<int, int> ActionPoints()
+{
+  std::map<int, int> values;
+  CDBTable<NDb::CRPGAP>* table = NDatabase::GetTable<NDb::CRPGAP>();
+  CDBIterator<NDb::CRPGAP> cursor(*table);
+  while (cursor.MoveNext())
+    values.emplace(cursor.Get()->GetRecordID(), cursor.Get()->nAP);
+  return values;
+}
+
+static std::map<int, int> ModActionPoints(const std::filesystem::path& source)
+{
+  S2FileIO::PortableGameDatabase database;
+  std::string error;
+  if (!S2FileIO::LoadPortableGameDatabase(source.string(), &database, &error))
+    throw std::runtime_error(error);
+  if (database.tables.size() != 1 || database.tables.front().tableId != 0x7e ||
+      !database.relations.empty())
+    throw std::runtime_error("expected shipped partial RPGAP mod");
+  const auto& table = database.tables.front();
+  const auto idName = std::find(table.intNames.begin(), table.intNames.end(), "ID");
+  const auto apName = std::find(table.intNames.begin(), table.intNames.end(), "AP");
+  if (idName == table.intNames.end() || apName == table.intNames.end())
+    throw std::runtime_error("RPGAP mod columns missing");
+  const std::size_t idIndex = static_cast<std::size_t>(idName - table.intNames.begin());
+  const std::size_t apIndex = static_cast<std::size_t>(apName - table.intNames.begin());
+  std::map<int, int> values;
+  for (const auto& row : table.intRows) {
+    if (row.size() != table.intNames.size() ||
+        !values.emplace(row[idIndex], row[apIndex]).second)
+      throw std::runtime_error("invalid RPGAP mod row");
+  }
+  return values;
+}
+
 static std::vector<std::string> RoundTripModSaveHeader(const std::filesystem::path& path)
 {
   S2FileIO::SaveHeaderData header;
@@ -129,9 +166,11 @@ static std::string ReadGlobalMarker()
 
 int main(int argc, char** argv)
 {
-  if (argc != 3) return 2;
+  if (argc != 3 && argc != 4) return 2;
   const std::filesystem::path source = std::filesystem::absolute(argv[1]);
   const std::filesystem::path parent = std::filesystem::absolute(argv[2]);
+  const std::filesystem::path shippedMod = argc == 4 ?
+      std::filesystem::absolute(argv[3]) : std::filesystem::path();
   std::error_code error;
   std::filesystem::create_directories(parent, error);
   if (error) return 3;
@@ -190,6 +229,30 @@ int main(int argc, char** argv)
     if (!result && (CModManager::GetBaseVersion() != 4 ||
         !CModManager::GetActiveMods()->empty() || StartZoneId() != zones.first ||
         ReadGlobalMarker() != "BASE")) result = 19;
+    if (!result && !shippedMod.empty()) {
+      const std::map<int, int> expected = ModActionPoints(shippedMod);
+      const std::map<int, int> base = ActionPoints();
+      if (expected.empty() || base.size() <= expected.size()) result = 20;
+      std::filesystem::create_directory(root / "APMod");
+      std::filesystem::copy_file(shippedMod, root / "APMod" / "game.db");
+      std::ofstream description(root / "APMod" / "description.txt", std::ios::binary);
+      description << "Original action-point mod";
+      description.close();
+      if (!result && !CModManager::Activate(std::vector<std::string>{"apmod"})) result = 21;
+      const std::map<int, int> applied = result ? std::map<int, int>() : ActionPoints();
+      if (!result && applied.size() != base.size()) result = 22;
+      bool changed = false;
+      for (const auto& item : base) {
+        const auto override = expected.find(item.first);
+        const int wanted = override == expected.end() ? item.second : override->second;
+        if (!result && applied.at(item.first) != wanted) result = 23;
+        if (override != expected.end() && item.second != wanted) changed = true;
+      }
+      if (!result && (!changed || StartZoneId() != zones.first ||
+          ReadGlobalMarker() != "BASE")) result = 24;
+      if (!result && !CModManager::Activate(std::vector<SModInfo>{})) result = 25;
+      if (!result && ActionPoints() != base) result = 26;
+    }
     std::filesystem::current_path(oldWorkingDirectory);
   } catch (...) {
     result = 11;

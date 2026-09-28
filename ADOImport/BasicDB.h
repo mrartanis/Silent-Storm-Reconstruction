@@ -16,7 +16,7 @@ namespace NDatabase {
 	void Refresh( int nTableID );
 	template<class T> void Refresh( T *pDest = 0 ) { T *p = 0; Refresh( GetRecordTypes().GetTypeID( p ) );	}
 	// forward-declared here so CDBTableBase can befriend it (full decl is below, after the class)
-	void Serialize( CDataStream &file, CStructureSaver::EMode mode );
+	void Serialize( CDataStream &file, CStructureSaver::EMode mode, bool overlay = false );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CDBTableBase;
@@ -83,7 +83,7 @@ class CDBTableBase
 	void Refresh( int nTypeID );
 public:
 	// Internal two-phase game.db materialization (legacy and portable v1 readers).
-	void PreCreate( int nTypeID );
+	void PreCreate( int nTypeID, bool overlay = false );
 	void Import();
 	CDBRecord* GetDBRecord( int nID );
 	std::size_t GetRecordCount() const { return records.size(); }
@@ -94,7 +94,7 @@ public:
 	}
 	friend void NDatabase::Import();
 	friend void NDatabase::Refresh( int nTableID );
-	friend void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode );
+	friend void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode, bool overlay );
   friend class CDBIteratorBase;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@ namespace NDatabase
 			return pRes;
 		}
 	inline CDBTableBase* GetTableByRecord( CDBRecord *p ) { return GetTable( GetRecordTypes().GetObjectTypeID( p ) ); }
-	void Serialize( CDataStream &file, CStructureSaver::EMode mode );
+	void Serialize( CDataStream &file, CStructureSaver::EMode mode, bool overlay );
 	// release BasicDB.obj @0x3570 -- drop all tables/records/relations, then re-create one empty
 	// table entry per registered descriptor (CModManager::Activate teardown before the DB reload)
 	void ClearDatabaseTables();

@@ -193,7 +193,7 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 				throw std::runtime_error( "mod database not found" );
 			f.OpenRead( resolved.c_str() );
 #endif
-			NDatabase::Serialize( f, CStructureSaver::READ );
+			NDatabase::Serialize( f, CStructureSaver::READ, true );
 		}
 		catch (...)
 		{
@@ -201,10 +201,10 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 		NGScene::AddResourceDir( mods[i].szDirectory.c_str() );
 	}
 	// footer (release @0x6860a8-0x6860c5). The release calls NDb::BuildMapLinks(&status) @0x424150
-	// ONCE here; the dev NDatabase::Serialize already runs NDb::BuildMapLinks(false) after every v1
-	// columnar load (ADOImport\BasicDB.cpp), and BuildMapLinks is append-only (push_back, no clear),
-	// so re-calling it here would duplicate the skeleton-anim / debris / uniform-look / pers-item
-	// links -- intentionally omitted.
+	// ONCE here; the dev NDatabase::Serialize builds links for the base v1 load.
+	// Partial mod overlays retain existing objects and links. The optional
+	// Versions/Current mod tables (DifficultyConstants/RPGAPs) have no reverse-link fields;
+	// rebuilding append-only links for each mod would duplicate them.
 	++nDataBaseVersion;
 	activatedMods = mods;
 	return true;

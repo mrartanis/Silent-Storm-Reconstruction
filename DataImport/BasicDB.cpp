@@ -566,8 +566,9 @@ void NDatabase::ImportField( const char *pszFieldName, CDBRecord **pRef, CDBTabl
 		*pRef = pDestTable->GetDBRecord( nID );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
+void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode, bool overlay )
 {
+	(void)overlay; // editor/dev storage does not use runtime mod overlays
 	CTablesHash &tables = GetTables();
 	NDatabase::bIsDatabaseLoading = true;
 	{
@@ -580,8 +581,9 @@ void NDatabase::Serialize( CDataStream &file, CStructureSaver::EMode mode )
 // CDBTableBase
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 using namespace NDatabase;
-void CDBTableBase::PreCreate( int nTypeID )
+void CDBTableBase::PreCreate( int nTypeID, bool overlay )
 {
+	(void)overlay; // editor import always replaces the table
   records.clear();
 	// iterate through recordset & create records
 	for ( ; !table.IsEof(); table.MoveNext() )
