@@ -95,6 +95,53 @@ verification remains for the stage-2 matrix. Next step within item 2:
 resolve these exact IDs through the game's loose/package precedence and
 compare effective payloads to the corresponding typed tests.
 
+## Base-game effective-file join (item 2b, first six families)
+
+`Compare-Stage2ResourceRoots.ps1` joins the exact IDs above with the
+`PortablePackageProbe --list` indexes and numeric files in each matching
+loose directory. Its precedence is loose file before package, matching
+`CResourceFileOpener`. `-List` emits one `resource_effective` line per
+candidate ID; `-StrictBaseline` checks both the candidate resolution counts
+and the full package-index entry counts. It does not read/decode payloads,
+select a random variant, or apply optional shipped-mod overlays.
+
+Windows x64 against the installed Steam base data:
+
+```text
+resource_resolution family=Buildings candidates=985 package=898 loose_override=5 loose_only=0 missing=82
+resource_resolution family=Terrain candidates=985 package=371 loose_override=0 loose_only=0 missing=614
+resource_resolution family=Waypoints candidates=1357 package=1285 loose_override=0 loose_only=0 missing=72
+resource_resolution family=Units candidates=1117 package=62 loose_override=8 loose_only=0 missing=1047
+resource_resolution family=Groups candidates=97 package=34 loose_override=0 loose_only=0 missing=63
+resource_resolution family=Animations-guard candidates=4 package=4 loose_override=0 loose_only=0 missing=0
+```
+
+There are 4,545 candidate ID edges in these six families. The five
+effective loose building records are IDs 3761, 5123, 5235, 5264 and 5300.
+The 72 absent waypoint IDs are 1768–1837 and 2991–2992; these are
+different from the malformed *present* records 8 and 9. `CWaypointLoader`
+returns without a value on absent input and `CMapBuilder::AddWaypoints`
+skips it. `CUnitAIInfoLoader`/`CUnitGroupAIInfoLoader` similarly return
+without routes for absent records; `CMETerrainLoader` returns without a
+value. The candidate closure is wider than a single actual map selection,
+so these missing counts are data facts, **not yet claims that a normal
+playthrough loses needed waypoints, routes, buildings or terrain**. That
+requires tracing selected variants and loader results in the 52-root runs.
+
+Reproduce without writing into the installed game:
+
+```powershell
+& .\diagnostics\Compare-Stage2ResourceRoots.ps1 `
+  -GameDb 'G:\SteamLibrary\steamapps\common\Silent Storm\game.db' `
+  -ResourceDir 'G:\SteamLibrary\steamapps\common\Silent Storm\res' `
+  -BuildDir 'G:\SS\lab\build-x64-stage2\RelWithDebInfo' `
+  -StrictBaseline
+```
+
+Add `-List` for all ID→effective-source lines. The next item-2 work is to
+compare the *present* ID sets against the typed-test sets, investigate any
+present-but-untyped records, and connect other game-used DB/Lua families.
+
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.
 The authoritative source list for this stage is the committed
