@@ -85,3 +85,34 @@ its own state-transition regression.
 With this second resource test registered, the non-`extended` suite passed
 158/158 on Windows x64 Release and 131/131 on Linux GCC x86-64 under
 ASan/UBSan/LSan.
+
+## Inverse bind poses for animated AI hulls
+
+`CAIMap::AddAnimatedHull` and `AddFlippingHull` attach `CFileAIBind` to
+the skinning path by AI-geometry ID. The original `CFileAIBind` reads
+tag 4 of `AIBinds.res` into inverse bind-pose matrices. The
+`NativeAIBindResourceTests` corpus test strictly reads all indexed IDs,
+calls that original loader, and hashes every float component in semantic
+row/column order rather than hashing the host `SHMatrix` memory layout.
+
+The original package contains 211 IDs and 1577 matrices. There is no
+loose `aibinds` directory in the current shipping resource set. Expected
+output:
+
+```
+records=211 matrices=1577 digest=5E3D53E8692EC077
+```
+
+Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64 and
+ARM64/QEMU produced the same values. Linux x86-64 used ASan/UBSan/LSan;
+ARM64/QEMU used ASan/UBSan with LSan disabled. The original
+`AIBinds.res` SHA-256 is
+`AEBD0611D3290EAB61AB63BB42DE1D57373D20588D3AC01F4AADE8133E33DE79`.
+Run the registered `NativeAIBindResourceTests` CTest or execute
+`NativeAIBindResourceTests <original-res-directory>` directly.
+
+This proves matrix decoding and original-loader construction, not the
+animated collision pose over time or every `CBind::Recalc` branch.
+With this third resource test registered, the non-`extended` suite passed
+159/159 on Windows x64 Release and 132/132 on Linux GCC x86-64 under
+ASan/UBSan/LSan.
