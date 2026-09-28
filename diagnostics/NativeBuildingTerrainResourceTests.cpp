@@ -104,7 +104,6 @@ static void AddBuildingGameplayTo( std::uint64_t *hash, const NBuilding::CBuildI
 		AddTo( hash, ladder.nID ); AddVecTo( hash, ladder.pos.ptMove );
 		AddTo( hash, ladder.pos.nRotation ); AddTo( hash, ladder.nHeight );
 		AddFloatTo( hash, ladder.fBeginHeight ); AddFloatTo( hash, ladder.fEndHeight );
-		AddTo( hash, ladder.eDir );
 	}
 }
 
@@ -219,7 +218,7 @@ static bool CheckScenarioTypedResources()
 	return buildings == 903 && terrains == 371 && failed == 0 &&
 		buildingDigest == UINT64_C(0xA924C3A98CD24D04) &&
 		terrainDigest == UINT64_C(0xA29501ED83DC7587) &&
-		buildingGameplayDigest == UINT64_C(0x753C1218C7FFA7FE) &&
+		buildingGameplayDigest == UINT64_C(0x0CF10374324B7718) &&
 		terrainGameplayDigest == UINT64_C(0x5928DA62CE81B4F8);
 }
 

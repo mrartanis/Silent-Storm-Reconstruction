@@ -63,18 +63,27 @@ terrain-array sizes. Windows x64 `RelWithDebInfo` prints and asserts:
 
 ```text
 scenario_typed variants=985 buildings=903 terrain=371 failed=0 building_digest=A924C3A98CD24D04 terrain_digest=A29501ED83DC7587
-scenario_gameplay building_digest=753C1218C7FFA7FE terrain_digest=5928DA62CE81B4F8
+scenario_gameplay building_digest=0CF10374324B7718 terrain_digest=5928DA62CE81B4F8
 ```
 
 The second regression hashes selected nested gameplay values in stable
 order: building fragment part/sub-block/layer IDs, position, rotation,
 object flags and spot references; room and cellar cells; ladder location,
-height and direction; terrain type/height/alpha cells and hole polygons.
+rotation and height; terrain type/height/alpha cells and hole polygons.
 This catches changed map shape and traversal data even when dimensions and
 object counts remain the same. Float components are hashed by their 32-bit
 representation, not by host struct layout. Visual materials, grass, colors,
 projected spots and ladder transform objects are not claimed by that
 semantic digest; strict decoding still covers the serialized records.
+`SLadder::eDir` is intentionally excluded: the Linux sanitizer exposed
+out-of-range values in multiple scenario ladders, while live map construction in
+`MapBuild.cpp` derives ladder direction from `lad.pos.nRotation` and never
+reads this legacy field. Hashing it as an enum was test-induced undefined
+behavior, not evidence of a runtime failure.
+
+Linux GCC x86-64 and ARM64/QEMU under ASan+UBSan match the Windows x64
+counts and both semantic digests. The addressed tests now emit no sanitizer
+diagnostic (ARM64 run: 133 seconds).
 
 The five loose building overrides are included. The baseline copy's
 `game.db`, `Buildings.res`, `Terrain.res`, and those five files match the
@@ -83,6 +92,6 @@ installed Steam originals by SHA-256. The ordinary Windows x64 CTest
 strict type decoding plus selected gameplay-field regression for the potential
 scenario set, **not** full hashing of every nested material/voxel value,
 not a test that each random variant is selected, and not evidence that
-absent variant IDs should contain a resource. The new branch has not yet
-been run on Linux x86-64, ARM64/QEMU, or diagnostic x86; those comparisons
-remain required before cross-platform closure.
+absent variant IDs should contain a resource. A diagnostic x86 comparison
+has not been repeated for these new fields; this addressed probe is not the
+full stage-2 test matrix.
