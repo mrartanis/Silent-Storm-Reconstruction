@@ -838,3 +838,12 @@ The Linux scratch root keeps `.res` files beside `game.db`, not under
 `res/`; therefore CMake does not register the data-dependent CTest there.
 These direct commands run the same probe mode. ARM64 is emulated, not a
 physical ARM device, and none of these checks render or play a full mission.
+
+The clean Windows x64 native-media archive from source commit `a190ea9`
+is `G:\SS\lab\builds\stage2-scripted-flight-20260928-01`. Its `Game.exe`
+SHA-256 is
+`3E2588D1BFAB39C325A83D3C3FD5493957B60E46931C287B8BDF09FE5411391D`;
+there is no `fmod.dll`. Isolated no-intro LabRun
+`stage2-scripted-flight-smoke-20260928-01` loaded all 155 database tables,
+opened a responsive `Silent Storm` window, and closed normally without a
+crash dump. This is a startup smoke, not a rendered mission or audio check.
