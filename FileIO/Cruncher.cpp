@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "Cruncher.h"
+#include <cstdint>
+#include <limits>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CNetCompressor -- network LZ/range codec (.\release\Cruncher.obj). Reconstructed
 // from the Game.exe decompilation against the real CBitLocker bit IO. The four
@@ -123,7 +125,12 @@ void CNetCompressor::StorePack( CDataStream &src, CDataStream &dst )
 	const unsigned char *pEnd = p + nSize;
 
 	data.LockWrite( dst, ( nSize * 9 ) / 8 + 10 );
-	data.Write( &nSize, 4 );
+	const std::uint32_t wireSize = static_cast<std::uint32_t>(nSize);
+	const std::uint8_t prefix[4] = {
+		static_cast<std::uint8_t>(wireSize), static_cast<std::uint8_t>(wireSize >> 8),
+		static_cast<std::uint8_t>(wireSize >> 16), static_cast<std::uint8_t>(wireSize >> 24)
+	};
+	data.Write( prefix, 4 );
 	for ( ; p < pEnd; ++p )
 	{
 		data.WriteBit( 0 );
@@ -145,7 +152,12 @@ void CNetCompressor::Pack( CDataStream &src, CDataStream &dst )
 	const unsigned char *pEnd = p + nSize;
 
 	data.LockWrite( dst, ( nSize * 9 ) / 8 + 10 );
-	data.Write( &nSize, 4 );
+	const std::uint32_t wireSize = static_cast<std::uint32_t>(nSize);
+	const std::uint8_t prefix[4] = {
+		static_cast<std::uint8_t>(wireSize), static_cast<std::uint8_t>(wireSize >> 8),
+		static_cast<std::uint8_t>(wireSize >> 16), static_cast<std::uint8_t>(wireSize >> 24)
+	};
+	data.Write( prefix, 4 );
 
 	if ( nSize > 0 )
 	{
@@ -312,8 +324,14 @@ void CNetCompressor::Unpack( CDataStream &src, CDataStream &dst )
 	int nRemain = src.GetSize() - src.GetPosition();
 	in.LockRead( src, nRemain );
 
-	int nLeft = 0;
-	in.Read( &nLeft, 4 );
+	std::uint8_t prefix[4] = {};
+	in.Read( prefix, 4 );
+	const std::uint32_t wireSize = std::uint32_t(prefix[0]) |
+		std::uint32_t(prefix[1]) << 8 | std::uint32_t(prefix[2]) << 16 |
+		std::uint32_t(prefix[3]) << 24;
+	if ( wireSize > static_cast<std::uint32_t>((std::numeric_limits<int>::max)()) )
+		throw SFileIOError( "uncompressed size out of range" );
+	int nLeft = static_cast<int>(wireSize);
 	data.LockWrite( dst, nLeft );
 
 	while ( nLeft > 0 )

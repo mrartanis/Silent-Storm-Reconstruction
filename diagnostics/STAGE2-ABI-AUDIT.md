@@ -146,7 +146,50 @@ one field without a byte-level investigation.
 
 The live host-`long` numeric hash candidate of 3a is resolved; the other
 listed uses have explicit fixed-width types or are outside this stage's
-live release path. Next bounded action is item 3b (pointer/asm/alignment),
-3c (wire/layout), and 3d (path/case/encoding) in that order. A claim of
-item-3 completion needs the entire category report plus the final matrix,
-not this first pass.
+live release path. The subsequent 3b pass is recorded above. A claim of
+item-3 completion needs 3c/3d and the final matrix, not this first pass.
+
+## 3c: serialized structures and direct file streams (in progress)
+
+The primary game input and save route is `CStructureSaver`. Its typed
+`StructureFieldCodec` paths encode little-endian scalars and the reached
+game structs explicitly; the fallback raw scalar/array paths report
+`RAW-TYPE` only when reached under `g_bWireAudit`. On the complete resource
+mirror, Linux Clang x86-64 under ASan/UBSan/LSan completed strict party
+save/load/continued-tick audits for all 52 active scenario roots with zero
+raw types and no unexplained wire findings (`RAW-TYPE-AUDIT.md`). This is
+strong coverage of scenario initialization, not an exhaustive enumeration
+of every dynamic save state. Selected older GUI saves also reached zero
+raw types. No source caller of `CStructureSaver::AddRawData` exists in the
+current game tree; this does not prove every direct stream is typed.
+
+Direct-stream inventory, classified by actual call edge:
+
+| Entry point | Game reachability and present contract | 3c action |
+|---|---|---|
+| `FilesPackage::Open` | Game resource loader. It uses `PortablePackageIndex` to parse the 8-byte signature/offset and index words explicitly, then opens the resolved package for resource payloads. All 23 shipped package families have read coverage in `STAGE2-DATA-ROOTS.md`. | Retain package-index regression; do not infer endian safety from the legacy `SFileInfo` host struct. |
+| `FilesPackage::Update` / `RescanDir` | Windows-only package writer called by tooling, not the game resource read path. | Outside the game-only stage-2 gate. |
+| `CStructureSaver` | `game.db`, resource object streams and save state. | Inspect the remaining non-codec/raw and special-object edges statically, and pair any reached gap with a byte-level test. |
+| `CDataStream::operator<<` / `>>` and direct `Read` / `Write` | Generic host-memory operations exist, but call sites must be classified; template definition alone is not proof of a game wire field. `FilesPackage`'s 4-byte integer reads and `Cruncher`'s 1/4-byte operations are the relevant lower-level format edges. | Audit each reached direct-format caller's width/endian contract. |
+| `bmpfile.cpp`, `iMain.cpp`, `GTexture.cpp`, `SWTexture.cpp` | Bitmap screenshot output or client-side image/texture loading. | Defer visual formats to the graphics/client stage. |
+| `LSHead.cpp` animator-stream `Write` | Writes an in-memory animation stream, not a new host-struct file header. | Covered by the typed animation resource path; recheck if a direct disk edge appears. |
+
+The first direct-stream fix removes native-`int` byte copies from the
+`CDataStream` short/long string-length prefix and both
+`CNetCompressor` 4-byte uncompressed-size prefixes. They now decode and
+encode explicit little-endian words; the compressed reader rejects a
+length above `INT_MAX` before allocating output. `NativeStreamsTests`
+pins the exact one-byte and four-byte string prefixes for 5- and
+300-byte strings; `NativeCruncherTests` pins the exact size prefix for
+both packed and stored streams and rejects `0xffffffff`. Diagnostic
+Windows x86 and target Windows x64 pass both tests; Linux GCC x86-64
+passes with ASan/UBSan/LSan and ARM64/QEMU with ASan/UBSan (LSan off).
+The full Windows x64 `Game.exe` also builds. These are byte-contract
+checks, not a claim that all direct-file paths or game states are covered.
+
+The bounded next pass is: (1) complete the direct-stream caller inventory;
+(2) verify original package/database/save field widths and endian handling
+against fixed byte vectors on Windows x64, Linux x86-64 and ARM64; (3)
+record any uncovered dynamic save-state classes explicitly rather than
+calling the 52-root audit exhaustive. Cross-loading x64 saves in the
+Steam client is not a product gate.

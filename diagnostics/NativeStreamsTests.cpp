@@ -16,6 +16,10 @@ int main(int argc, char** argv) {
     CMemoryStream memory;
     memory.WriteString("short");
     memory.WriteString(std::string(300, 'x'));
+    const auto* encoded = static_cast<const std::uint8_t*>(memory.GetBuffer());
+    if (memory.GetSize() != 5 + 1 + 4 + 300 ||
+        encoded[0] != 10 || encoded[6] != 0x59 || encoded[7] != 0x02 ||
+        encoded[8] != 0 || encoded[9] != 0) return 11;
     memory.Seek(0);
     std::string shortText, longText;
     memory.ReadString(shortText);

@@ -2,6 +2,8 @@
 static const char LOCAL_FILE[] = __FILE__;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
+#include <cstdint>
+#include <limits>
 #if !defined(_WIN32)
 #include <codecvt>
 #include <locale>
@@ -32,11 +34,16 @@ void CDataStream::ReadOverflow( void *pDest, unsigned int nSize )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDataStream::ReadString( std::string &res, int nMaxSize )
 {
-	int nSize = 0;
-	Read( &nSize, 1 );
-	if ( nSize & 1 )
-		Read( ((char*)&nSize) + 1, 3 );
-	nSize >>= 1;
+	std::uint8_t prefix[4] = {};
+	Read( prefix, 1 );
+	std::uint32_t encoded = prefix[0];
+	if ( encoded & 1 )
+	{
+		Read( prefix + 1, 3 );
+		encoded |= std::uint32_t(prefix[1]) << 8 |
+			std::uint32_t(prefix[2]) << 16 | std::uint32_t(prefix[3]) << 24;
+	}
+	const int nSize = static_cast<int>( encoded >> 1 );
 	if ( nMaxSize > 0 && nSize > nMaxSize )
 	{
 		throw SFileIOError( "string read error" );
@@ -50,16 +57,22 @@ void CDataStream::ReadString( std::string &res, int nMaxSize )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDataStream::WriteString( const std::string &res )
 {
-	int nSize = res.size(), nVal;
+	if ( res.size() > static_cast<std::size_t>((std::numeric_limits<int>::max)()) )
+		throw SFileIOError( "string too large" );
+	const int nSize = static_cast<int>( res.size() );
 	if ( nSize >= 128 )
 	{
-		nVal = nSize * 2 + 1;
-		Write( &nVal, 4 );
+		const std::uint32_t nVal = static_cast<std::uint32_t>(nSize) * 2u + 1u;
+		const std::uint8_t prefix[4] = {
+			static_cast<std::uint8_t>(nVal), static_cast<std::uint8_t>(nVal >> 8),
+			static_cast<std::uint8_t>(nVal >> 16), static_cast<std::uint8_t>(nVal >> 24)
+		};
+		Write( prefix, 4 );
 	}
 	else
 	{
-		nVal = nSize * 2;
-		Write( &nVal, 1 );
+		const std::uint8_t prefix = static_cast<std::uint8_t>(nSize * 2);
+		Write( &prefix, 1 );
 	}
 	Write( res.data(), nSize );
 }

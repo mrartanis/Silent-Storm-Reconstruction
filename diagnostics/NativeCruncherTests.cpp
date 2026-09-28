@@ -15,6 +15,13 @@ static bool Check(const std::vector<std::uint8_t>& bytes, bool stored) {
   CNetCompressor encoder;
   if (stored) encoder.StorePack(source, packed);
   else encoder.Pack(source, packed);
+  if (packed.GetSize() < 4) return false;
+  const auto* header = static_cast<const std::uint8_t*>(packed.GetBuffer());
+  const std::uint32_t length = static_cast<std::uint32_t>(bytes.size());
+  if (header[0] != static_cast<std::uint8_t>(length) ||
+      header[1] != static_cast<std::uint8_t>(length >> 8) ||
+      header[2] != static_cast<std::uint8_t>(length >> 16) ||
+      header[3] != static_cast<std::uint8_t>(length >> 24)) return false;
   packed.Seek(0);
   CNetCompressor decoder;
   decoder.Unpack(packed, restored);
@@ -22,12 +29,26 @@ static bool Check(const std::vector<std::uint8_t>& bytes, bool stored) {
   return std::memcmp(restored.GetBuffer(), bytes.data(), bytes.size()) == 0;
 }
 
+static bool RejectInvalidLength() {
+  CMemoryStream packed, restored;
+  const std::uint8_t invalid[4] = {0xff, 0xff, 0xff, 0xff};
+  packed.Write(invalid, sizeof(invalid));
+  packed.Seek(0);
+  CNetCompressor decoder;
+  try {
+    decoder.Unpack(packed, restored);
+  } catch (const SFileIOError&) {
+    return true;
+  }
+  return false;
+}
+
 int main(int argc, char** argv) {
   try {
     std::vector<std::uint8_t> sample(4096);
     for (std::size_t i = 0; i < sample.size(); ++i)
       sample[i] = static_cast<std::uint8_t>((i % 71 < 48) ? i % 11 : i * 37);
-    if (!Check(sample, false) || !Check(sample, true)) return 1;
+    if (!Check(sample, false) || !Check(sample, true) || !RejectInvalidLength()) return 1;
     if (argc == 2) {
       std::ifstream input(argv[1], std::ios::binary);
       if (!input) return 2;
