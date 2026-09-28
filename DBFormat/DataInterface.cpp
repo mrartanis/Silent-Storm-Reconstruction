@@ -13,7 +13,9 @@ void CUIControl::Import()
 {
 	ASSERT( 6 == N_CTRL_TEXTURES );
 	ASSERT( 5 == N_CTRL_MODELS );
-  NDatabase::ImportField( "Type", reinterpret_cast<int*>( &type ) );
+	int nType = 0;
+	NDatabase::ImportField( "Type", &nType );
+	type = static_cast<EUIControl>( nType );
 	NDatabase::ImportField( "IDText", &szID );
 	NDatabase::ImportField( "Depth", &nDepth );
 	NDatabase::ImportField( "Color", &nColor );

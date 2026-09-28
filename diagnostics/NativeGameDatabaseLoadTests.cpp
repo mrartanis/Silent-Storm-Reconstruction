@@ -4,6 +4,7 @@
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataAI.h"
 #include "../DBFormat/DataInterface.h"
+#include "../DBFormat/DataLight.h"
 #include "../FileIO/PortableGameDatabase.h"
 
 #include <cstdio>
@@ -11,6 +12,30 @@
 #include <cstring>
 #include <exception>
 #include <stdexcept>
+
+namespace {
+bool ReadIntField(const S2FileIO::GameDatabaseTable& table, std::size_t row,
+                  const char* field, int* value) {
+  const auto it = std::find(table.intNames.begin(), table.intNames.end(), field);
+  if (it == table.intNames.end() || row >= table.intRows.size()) return false;
+  const std::size_t column = it - table.intNames.begin();
+  if (column >= table.intRows[row].size()) return false;
+  *value = table.intRows[row][column];
+  return true;
+}
+
+CVec3 DecodeColorWord(int value) {
+  const std::uint32_t bits = static_cast<std::uint32_t>(value);
+  return CVec3((bits & 0xffu) / 255.0f,
+               ((bits >> 8) & 0xffu) / 255.0f,
+               ((bits >> 16) & 0xffu) / 255.0f);
+}
+
+bool SameColor(const CVec3& actual, const CVec3& expected) {
+  return actual.x == expected.x && actual.y == expected.y &&
+         actual.z == expected.z;
+}
+}
 
 int main( int argc, char **argv )
 {
@@ -43,6 +68,11 @@ int main( int argc, char **argv )
 			throw std::runtime_error( error );
 		unsigned int comparedTables = 0;
 		std::size_t comparedIDs = 0;
+		std::size_t textureColorChecks = 0, uiTypeChecks = 0, ambientColorChecks = 0;
+		auto *textures = NDatabase::GetTable<NDb::CTexture>();
+		auto *controls = NDatabase::GetTable<NDb::CUIControl>();
+		auto *ambientLights = NDatabase::GetTable<NDb::CAmbientLight>();
+		if (!textures || !controls || !ambientLights) return 24;
 		for ( const auto &table : decoded.tables )
 		{
 			CDBTableBase *loaded = NDatabase::GetTable( table.tableId );
@@ -67,6 +97,56 @@ int main( int argc, char **argv )
 					return 12;
 				}
 				++comparedIDs;
+			}
+			if (table.tableId == 3 || table.tableId == 29 || table.tableId == 43)
+			{
+				for (std::size_t row = 0; row < table.intRows.size(); ++row)
+				{
+					int id = 0, value = 0;
+					if (!ReadIntField(table, row, "ID", &id)) return 17;
+					if (table.tableId == 3)
+					{
+						const auto *texture = textures->GetRecord(id);
+						if (!texture || !ReadIntField(table, row, "AverageColor", &value) ||
+							texture->dwAverageColor != static_cast<DWORD>(value)) return 18;
+						++textureColorChecks;
+					}
+					else if (table.tableId == 43)
+					{
+						const auto *control = controls->GetRecord(id);
+						if (!control || !ReadIntField(table, row, "Type", &value) ||
+							static_cast<int>(control->type) != value) return 19;
+						++uiTypeChecks;
+					}
+					else
+					{
+						const auto *light = ambientLights->GetRecord(id);
+						if (!light) return 20;
+						struct ColorField { const char *name; const CVec3 *actual; };
+						const ColorField colors[] = {
+							{"AmbientColor", &light->vAmbientColor},
+							{"GlossColor", &light->vGlossColor},
+							{"FogColor", &light->vFogColor},
+							{"VapourColor", &light->vVapourColor},
+							{"BackLightColor", &light->vBackColor},
+							{"GroundAmbientColor", &light->vGroundAmbientColor},
+							{"ShadowColor", &light->vShadowColor},
+						};
+						for (const auto& color : colors)
+						{
+							if (!ReadIntField(table, row, color.name, &value) ||
+								!SameColor(*color.actual, DecodeColorWord(value))) return 21;
+							++ambientColorChecks;
+						}
+						int ambient = 0, direct = 0;
+						if (!ReadIntField(table, row, "AmbientColor", &ambient) ||
+							!ReadIntField(table, row, "LightColor", &direct)) return 22;
+						CVec3 lightColor = DecodeColorWord(direct) - DecodeColorWord(ambient);
+						lightColor.Maximize(VNULL3);
+						if (!SameColor(light->vLightColor, lightColor)) return 23;
+						++ambientColorChecks;
+					}
+				}
 			}
 			++comparedTables;
 			if ( auditNonAscii )
@@ -100,7 +180,6 @@ int main( int argc, char **argv )
 		}
 		// Baseline UI IDText 2656 contains U+2018, which must import as the
 		// CP1251 byte 0x91 rather than a truncated wide-character byte.
-		auto *controls = NDatabase::GetTable<NDb::CUIControl>();
 		const NDb::CUIControl *control = controls ? controls->GetRecord( 2656 ) : nullptr;
 		if ( !control || control->szID.find( '\x91' ) == std::string::npos ) return 14;
 		CDBTable<NDb::CMaterial> *materials = NDatabase::GetTable<NDb::CMaterial>();
@@ -136,9 +215,11 @@ int main( int argc, char **argv )
 				++specChecks;
 			}
 		}
-		std::printf( "tables=%u record_ids=%zu materials=%u spec_checks=%u\n",
-			comparedTables, comparedIDs, count, specChecks );
-		return comparedTables == decoded.tables.size() && count && specChecks == count ? 0 : 4;
+		std::printf( "tables=%u record_ids=%zu materials=%u spec_checks=%u texture_colors=%zu ui_types=%zu ambient_colors=%zu\n",
+			comparedTables, comparedIDs, count, specChecks,
+			textureColorChecks, uiTypeChecks, ambientColorChecks );
+		return comparedTables == decoded.tables.size() && count && specChecks == count &&
+			textureColorChecks && uiTypeChecks && ambientColorChecks ? 0 : 4;
 	}
 	catch ( const std::exception &e )
 	{

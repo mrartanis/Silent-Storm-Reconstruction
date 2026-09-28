@@ -971,7 +971,9 @@ void CTexture::Import()
 		usage = TEXTURE_USAGE_TRANSPARENT;
 	else
 		usage = TEXTURE_USAGE_ORDINARY;
-	NDatabase::ImportField( "AverageColor", (int*)&dwAverageColor );
+	int nAverageColor = 0;
+	NDatabase::ImportField( "AverageColor", &nAverageColor );
+	dwAverageColor = static_cast<DWORD>( nAverageColor );
 	string szFormat;
 	NDatabase::ImportField( "Format", &szFormat );
 	bIsDXT = szFormat.substr( 0, 3 ) == "dxt";
@@ -1219,23 +1221,23 @@ void CSpot::Import()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAmbientLight::Import()
 {
-	DWORD dwColor;
-	NDatabase::ImportField( "AmbientColor", (int*)&dwColor );
-	vAmbientColor = GetColor( dwColor );
-	NDatabase::ImportField( "LightColor", (int*)&dwColor );
-	vLightColor = GetColor( dwColor );
+	int nColor = 0;
+	NDatabase::ImportField( "AmbientColor", &nColor );
+	vAmbientColor = GetColor( static_cast<DWORD>( nColor ) );
+	NDatabase::ImportField( "LightColor", &nColor );
+	vLightColor = GetColor( static_cast<DWORD>( nColor ) );
 	vLightColor -= vAmbientColor;
 	vLightColor.Maximize( VNULL3 );
-	NDatabase::ImportField( "GlossColor", (int*)&dwColor );
-	vGlossColor = GetColor( dwColor );
-	NDatabase::ImportField( "FogColor", (int*)&dwColor );
-	vFogColor = GetColor( dwColor );
-	NDatabase::ImportField( "VapourColor", (int*)&dwColor );
-	vVapourColor = GetColor( dwColor );
-	NDatabase::ImportField( "BackLightColor", (int*)&dwColor );
-	vBackColor = GetColor( dwColor );
-	NDatabase::ImportField( "GroundAmbientColor", (int*)&dwColor );
-	vGroundAmbientColor = GetColor( dwColor );
+	NDatabase::ImportField( "GlossColor", &nColor );
+	vGlossColor = GetColor( static_cast<DWORD>( nColor ) );
+	NDatabase::ImportField( "FogColor", &nColor );
+	vFogColor = GetColor( static_cast<DWORD>( nColor ) );
+	NDatabase::ImportField( "VapourColor", &nColor );
+	vVapourColor = GetColor( static_cast<DWORD>( nColor ) );
+	NDatabase::ImportField( "BackLightColor", &nColor );
+	vBackColor = GetColor( static_cast<DWORD>( nColor ) );
+	NDatabase::ImportField( "GroundAmbientColor", &nColor );
+	vGroundAmbientColor = GetColor( static_cast<DWORD>( nColor ) );
 	
 	NDatabase::ImportField( "Pitch", &fPitch );
 	NDatabase::ImportField( "Yaw", &fYaw );
@@ -1249,8 +1251,8 @@ void CAmbientLight::Import()
 	NDatabase::ImportField( "VapourStartHeight", &fVapourStartHeight );
 	NDatabase::ImportField( "BlurStrength", &fBlurStrength );
 	NDatabase::ImportField( "SkyID", &pSky );
-	NDatabase::ImportField( "ShadowColor", (int*)&dwColor );
-	vShadowColor = GetColor( dwColor );
+	NDatabase::ImportField( "ShadowColor", &nColor );
+	vShadowColor = GetColor( static_cast<DWORD>( nColor ) );
 	NDatabase::ImportField( "UseInGame", &bInGameUse );
 	NDatabase::ImportField( "GForce2LightID", &pGF2Light );
 

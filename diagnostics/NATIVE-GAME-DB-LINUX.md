@@ -117,6 +117,25 @@ ARM64. Other code pages fall back to `iconv`, whose modules may not exist in
 the ARM64 test sysroot; code-page call sites in the remaining game runtime
 still need auditing.
 
+Stage-2 follow-up: the original game-used `Textures.AverageColor`,
+`AmbientLights` color fields, and `UIControls.Type` were imported by passing
+`DWORD*` or enum pointers as `int*`. The importer writes synchronously, so
+these paths now read into a real `int` and explicitly convert to the stored
+type. This removes a strict-aliasing assumption without changing the signed
+32-bit database word, the color-channel order, or the UI enum values.
+`NativeGameDatabaseLoadTests` compares the loaded values against the source
+columns for all 5,801 texture colors, 1,917 UI types, and 1,056 ambient-light
+color values (including the ambient-subtracted direct-light value). The
+checks passed on Windows x64, Linux GCC x86-64 with ASan/UBSan/LSan, Linux
+GCC ARM64/QEMU with ASan/UBSan, and Linux Clang release. These are typed
+import checks for the shipped `game.db`, not visual-lighting or UI-rendering
+parity tests.
+After relinking the headless world probe against the changed database
+library, mission root 5247 also completed scripted start, save/load, hero
+turn, end-turn transfer, and a second save/load on Linux GCC x86-64 and
+ARM64/QEMU. This checks one mission continuation with the updated importer;
+it is not a Steam behavioral comparison or a Linux graphical-game launch.
+
 Clean Windows x64 native-media archive
 `G:\SS\lab\builds\stage2-native-game-db-20260925-01` was produced from
 source commit `3e044c2`. A new linked-resource LabRun
