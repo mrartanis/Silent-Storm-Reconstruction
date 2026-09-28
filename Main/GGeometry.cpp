@@ -1,8 +1,14 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "GGeometry.h"
 #include "Bound.h"
-#include "..\Misc\StrProc.h"
-#include "..\MiscDll\Commands.h"
+#include "../Misc/StrProc.h"
+#include "../MiscDll/Commands.h"
 #include "GGeometryUtil.h"
 
 namespace NGfx
@@ -307,7 +313,12 @@ void CObjectInfo::Assign( const SData &data )
 		data.geometry.GetTriangles( &tris );
 		CTriVertexCacheOptimizer vxOptimize;
 		vector<WORD> vxReorder;
+#if defined(_WIN32)
 		vxOptimize.Optimize( &tris, &vxReorder, NGfx::nVCacheSize );
+#else
+		// The headless core uses the renderer's original pre-device default.
+		vxOptimize.Optimize( &tris, &vxReorder, 10 );
+#endif
 		FilterTrinagles( &tris, vxReorder );
 		optimizedData.geometry.SetTriangles( tris );
 		optimizedData.verts.resize( data.verts.size() );

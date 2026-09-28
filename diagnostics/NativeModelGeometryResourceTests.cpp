@@ -7,6 +7,7 @@
 #endif
 #include "../Main/GResource.h"
 #include "../Main/PortableMeshCodecs.h"
+#include "../Main/GObjectInfoLoadCore.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataGeometry.h"
@@ -18,6 +19,21 @@
 #include <exception>
 
 static std::uint64_t digest = UINT64_C(14695981039346656037);
+static std::uint64_t objectDigest = UINT64_C(14695981039346656037);
+static void AddObject(std::uint32_t value)
+{
+	for (int byte = 0; byte < 4; ++byte)
+	{
+		objectDigest ^= static_cast<std::uint8_t>(value >> (byte * 8));
+		objectDigest *= UINT64_C(1099511628211);
+	}
+}
+static void AddObjectFloat(float value)
+{
+	std::uint32_t bits;
+	std::memcpy(&bits, &value, sizeof(bits));
+	AddObject(bits);
+}
 static void Add(std::uint32_t value)
 {
 	for (int byte = 0; byte < 4; ++byte)
@@ -50,7 +66,8 @@ int main(int argc, char **argv)
 	NGScene::AddResourceDir(directory.string().c_str());
 	std::size_t records = 0, verticesTotal = 0, indicesTotal = 0;
 	std::size_t polygonsTotal = 0, weightsTotal = 0, skipped = 0;
-	std::size_t invalidIndices = 0, invalidWeights = 0;
+	std::size_t invalidIndices = 0, invalidWeights = 0, assembled = 0;
+	std::size_t weightedAssembled = 0;
 	for (const auto &entry : index.Entries())
 	{
 		const int id = entry.first;
@@ -97,6 +114,47 @@ int main(int argc, char **argv)
 					static_cast<std::size_t>(weight.nVertex) >= vertices.size())
 					++invalidWeights;
 			}
+			if (id == 1 || geometryID == 1486 || geometryID == 3087)
+			{
+				NGScene::SPolygonIndices polygonsData;
+				polygonsData.indices = indices;
+				polygonsData.polys = polygons;
+				CPtr<NGScene::CObjectInfo> object = new NGScene::CObjectInfo;
+				NGScene::AssignLoadedObjectInfo(object, vertices, weights, polygonsData);
+				AddObject(static_cast<std::uint32_t>(id));
+				AddObject(static_cast<std::uint32_t>(object->GetTrisCount()));
+				AddObject(static_cast<std::uint32_t>(object->GetPositions().size()));
+				AddObject(static_cast<std::uint32_t>(object->GetVertices().size()));
+				AddObject(static_cast<std::uint32_t>(object->GetWeights().size()));
+				for (const auto &position : object->GetPositions())
+				{
+					AddObjectFloat(position.x);
+					AddObjectFloat(position.y);
+					AddObjectFloat(position.z);
+				}
+				for (WORD positionIndex : object->GetPositionIndices()) AddObject(positionIndex);
+				for (const auto &vertex : object->GetVertices())
+				{
+					AddObject(static_cast<std::uint16_t>(vertex.tex.nU));
+					AddObject(static_cast<std::uint16_t>(vertex.tex.nV));
+					for (const auto *basis : {&vertex.normal, &vertex.texU, &vertex.texV})
+					{
+						AddObject(basis->x); AddObject(basis->y);
+						AddObject(basis->z); AddObject(basis->w);
+					}
+				}
+				for (const auto &weight : object->GetWeights())
+					for (int bone = 0; bone < 4; ++bone)
+					{
+						AddObjectFloat(weight.fWeights[bone]);
+						AddObject(weight.nWeights[bone]);
+						AddObject(weight.cBoneIndices[bone]);
+					}
+				for (WORD index : object->GetGeometry().indices) AddObject(index);
+				for (WORD polygon : object->GetGeometry().polys) AddObject(polygon);
+				++assembled;
+				if (!weights.empty()) ++weightedAssembled;
+			}
 			++records;
 			verticesTotal += vertices.size();
 			indicesTotal += indices.size();
@@ -116,13 +174,16 @@ int main(int argc, char **argv)
 		}
 	}
 	NGScene::CloseAllResources();
-	std::printf("records=%zu skipped=%zu vertices=%zu indices=%zu polygons=%zu weights=%zu invalid_indices=%zu invalid_weights=%zu digest=%016llX\n",
+	std::printf("records=%zu skipped=%zu vertices=%zu indices=%zu polygons=%zu weights=%zu invalid_indices=%zu invalid_weights=%zu digest=%016llX assembled=%zu weighted=%zu object_digest=%016llX\n",
 		records, skipped, verticesTotal, indicesTotal, polygonsTotal,
 		weightsTotal, invalidIndices, invalidWeights,
-		static_cast<unsigned long long>(digest));
+		static_cast<unsigned long long>(digest), assembled, weightedAssembled,
+		static_cast<unsigned long long>(objectDigest));
 	return records == 6824 && skipped == 966 &&
 		verticesTotal == 980946 && indicesTotal == 1994631 &&
 		polygonsTotal == 620259 && weightsTotal == 361772 &&
-		invalidIndices == 0 && invalidWeights == 0 &&
-		digest == UINT64_C(0xC7F41DAD5636E94A) ? 0 : 6;
+		invalidIndices == 0 && invalidWeights == 0 && assembled == 3 &&
+		weightedAssembled >= 1 &&
+		digest == UINT64_C(0xC7F41DAD5636E94A) &&
+		objectDigest == UINT64_C(0xC421973B117E0717) ? 0 : 6;
 }

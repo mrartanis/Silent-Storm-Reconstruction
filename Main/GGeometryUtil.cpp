@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "GGeometryUtil.h"
 
 /*#include <d3dx8.h>
@@ -35,9 +41,11 @@ void CVertexCacheOptimizer::MeasureEfficiency( const vector<CQuad> &quads )
 			++nTotal;
 		}
 	}
+#if defined(_WIN32)
 	char szBuf[1024];
 	sprintf( szBuf, "vcache efficiency %g\n", 1.0f - nMisses / (float)(nTotal) );
 	OutputDebugString( szBuf );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int CVertexCacheOptimizer::SearchBest( const vector<CQuad> &quads )
@@ -235,9 +243,11 @@ void CTriVertexCacheOptimizer::MeasureEfficiency( const vector<STriangle> &tris 
 		cache.Push( q.i3 );
 		nTotal += 3;
 	}
+#if defined(_WIN32)
 	char szBuf[1024];
 	sprintf( szBuf, "vertices per triangle = %g\n", 3 * nMisses / (float)(nTotal) );
 	OutputDebugString( szBuf );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CTriVertexCacheOptimizer::OutputVertex( int n )

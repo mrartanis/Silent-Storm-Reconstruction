@@ -7,6 +7,7 @@
 #include "GObjectInfo.h"
 #include "GPixelFormat.h"
 #include "GFileSkin.h"
+#include "GObjectInfoLoadCore.h"
 #include "PortableMeshCodecs.h"
 #include "aiObject.h"
 #include "aiObjectLoader.h"
@@ -640,25 +641,6 @@ static void AddFaces( SFacesVector *pRes, const SPolygonIndices &src )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void ConvertVertices( vector<SVertex> *pRes, const vector<SLoadVertex> &_src )
-{
-	pRes->resize( _src.size() );
-	for ( int k = 0; k < _src.size(); ++k )
-	{
-		NGScene::SVertex &dst = (*pRes)[k];
-		const SLoadVertex &src = _src[k];
-		dst.pos = src.pos;
-		// release SVertex stores normal/texU/texV packed (SCompactVector). Release's
-		// SLoadVertex (PDB, 32B) is ALREADY compact so release copies verbatim; this
-		// tree's SLoadVertex still carries raw CVec3s (dev resource-file format), so
-		// pack at this load boundary -- same packed values either way.
-		NGfx::CalcCompactVector( &dst.normal, src.normal );
-		dst.tex = src.tex;
-		NGfx::CalcCompactVector( &dst.texU, src.texU );
-		NGfx::CalcCompactVector( &dst.texV, src.texV );
-	}
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 static void Assign( CObjectInfo *pRes, const SFacesVector &src )
 {
 	CObjectInfo::SData objData;
@@ -682,16 +664,13 @@ void CObjectInfoLoader::RecalcValue( CFileRequest *pRequest )
 	pValue = new CObjectInfo;
 	try
 	{
-		NGScene::CObjectInfo::SData objData;
+		SPolygonIndices geometry;
 		CStructureSaver saver( *req.GetStream(), CStructureSaver::READ );
 		saver.Add( 1, &vertices );
-		saver.Add( 2, &objData.geometry.indices );
-		saver.Add( 3, &objData.geometry.polys );
+		saver.Add( 2, &geometry.indices );
+		saver.Add( 3, &geometry.polys );
 		saver.Add( 5, &wghts );
-		if ( !vertices.empty() )
-			ConvertWeights( &objData.weights, wghts, vertices.size() );
-		ConvertVertices( &objData.verts, vertices );
-		pValue->Assign( objData );
+		AssignLoadedObjectInfo( pValue, vertices, wghts, geometry );
 	}
 	catch(...)
 	{
