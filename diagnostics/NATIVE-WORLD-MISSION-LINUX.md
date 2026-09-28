@@ -755,3 +755,17 @@ the archive has no `fmod.dll`. An isolated no-intro LabRun
 `stage2-party-save-smoke-20260928-01` loaded the 155 portable DB tables,
 rendered the main menu, and exited through the window close request without
 a crash dump. This is a launch smoke, not mission or audio validation.
+
+The game-world `deploySpots` vector (save tag 26) previously used a raw
+12-byte `SWorldDeploySpot` element. Its three fields are now explicitly
+encoded as a packed `SPathPlace` word and two signed 32-bit little-endian
+integers, preserving the original blob shape. `NativeWorldInitProbe`
+checks the exact bytes, malformed length, and field equality after saving
+and restoring each party world. Root 5247 contains one actual deployment
+spot; Windows x64, Linux x86-64 under ASan/UBSan/LSan, and ARM64/QEMU
+under ASan/UBSan all restored it unchanged. The full Windows x64 52-root
+save sweep passed with this check, as did 151/151 non-extended tests and
+the rebuilt `Game.exe`. The full Linux x86-64 sweep then completed all
+52/52 roots under ASan/UBSan/LSan with this check; ARM64/QEMU passed the
+focused nonempty root 5247, not a repeat of the full 52-root sweep. This verifies the
+world's deployment data, not post-load player placement or Steam parity.

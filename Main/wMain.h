@@ -626,6 +626,7 @@ public:
 		CObjectBase *pIgnitionObject = 0, const SPerkMineModifiers *pMods = 0 );
 	IExplosionMaster *GetExplosionMasterForHarness() const { return pExplosionMaster.GetPtr(); }
 	const list< CObj<CBuilding> > &GetBuildingsForHarness() const { return buildings; }
+	const vector<SWorldDeploySpot> &GetDeploySpotsForHarness() const { return deploySpots; }
 	void KillObject( CObjectServerBase *pOS );
 	// Retail has NO CWorld pocket methods -- it inlines these two bodies into luaObjectPlaceInPocket
 	// (@0x2e9000) / luaObjectRestoreFromPocket (@0x2e9130), reaching the world through GetPocket()
@@ -694,5 +695,32 @@ public:
 extern CWorld *pCurrentWorld;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////
+static_assert(sizeof(NWorld::CWorld::SWorldDeploySpot) == 12,
+              "world deployment spot wire size");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NWorld::CWorld::SWorldDeploySpot, void> {
+  using Spot = NWorld::CWorld::SWorldDeploySpot;
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 12;
+  static bool Decode(const std::uint8_t* source, std::size_t length, Spot* value) {
+    if (!source || !value || length != kWireSize) return false;
+    Spot decoded;
+    if (!StructureFieldCodec<NAI::SPathPlace>::Decode(source, 4, &decoded.p) ||
+        !DecodeStructureScalar(source + 4, 4, &decoded.nID) ||
+        !DecodeStructureScalar(source + 8, 4, &decoded.nPlayer)) return false;
+    *value = decoded;
+    return true;
+  }
+  static bool Encode(const Spot& value, std::uint8_t* destination,
+                     std::size_t length) {
+    return destination && length == kWireSize &&
+      StructureFieldCodec<NAI::SPathPlace>::Encode(value.p, destination, 4) &&
+      EncodeStructureScalar(value.nID, destination + 4, 4) &&
+      EncodeStructureScalar(value.nPlayer, destination + 8, 4);
+  }
+};
+} // namespace S2FileIO
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

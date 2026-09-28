@@ -36,7 +36,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cstddef>
 #include <set>
+
+static_assert(offsetof(NWorld::CWorld::SWorldDeploySpot, nID) == 4 &&
+              offsetof(NWorld::CWorld::SWorldDeploySpot, nPlayer) == 8,
+              "world deployment spot field offsets");
 
 namespace {
 class AttackEventCounter : public CObjectBase {
@@ -72,6 +77,21 @@ int main(int argc, char** argv) {
   const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck ||
     missionRootParty || missionRootPartySave;
   if (argc != 3 && !mission && !missionWithUIAck) return 2;
+  using Deploy = S2FileIO::StructureFieldCodec<NWorld::CWorld::SWorldDeploySpot>;
+  NWorld::CWorld::SWorldDeploySpot spot(
+    NAI::SPathPlace::FromBits(0x89abcdefu), -3, 0x12345678), decodedSpot;
+  std::uint8_t spotWire[12] = {};
+  const std::uint8_t expectedSpot[12] = {
+    0xef, 0xcd, 0xab, 0x89, 0xfd, 0xff, 0xff, 0xff,
+    0x78, 0x56, 0x34, 0x12};
+  if (!Deploy::kPortable || Deploy::kWireSize != 12 ||
+      !Deploy::Encode(spot, spotWire, sizeof(spotWire)) ||
+      std::memcmp(spotWire, expectedSpot, sizeof(spotWire)) != 0 ||
+      !Deploy::Decode(spotWire, sizeof(spotWire), &decodedSpot) ||
+      decodedSpot.p.GetBits() != spot.p.GetBits() ||
+      decodedSpot.nID != spot.nID || decodedSpot.nPlayer != spot.nPlayer ||
+      Deploy::Decode(spotWire, 11, &decodedSpot) ||
+      Deploy::Encode(spot, spotWire, 11)) return 67;
   CFileStream database;
   database.OpenRead(argv[1]);
   NDatabase::Serialize(database, CStructureSaver::READ);
@@ -266,6 +286,7 @@ int main(int argc, char** argv) {
         if (!originalHero) return 61;
         NRPG::SUnitInfo originalInfo{};
         originalHero->GetInfo(&originalInfo);
+        const auto originalSpots = world->GetDeploySpotsForHarness();
         {
           CFileStream saved;
           saved.OpenWrite(argv[5]);
@@ -287,6 +308,16 @@ int main(int argc, char** argv) {
             !restored->GetTime() || restored->GetTime()->GetValue() != savedTime ||
             restored->GetTimeOfDay() != world->GetTimeOfDay())
           return 62;
+        const auto& restoredSpots = restored->GetDeploySpotsForHarness();
+        if (restoredSpots.size() != originalSpots.size()) return 68;
+        for (std::size_t i = 0; i < originalSpots.size(); ++i) {
+          const auto& beforeSpot = originalSpots[i];
+          const auto& afterSpot = restoredSpots[i];
+          if (afterSpot.p.GetBits() != beforeSpot.p.GetBits() ||
+              afterSpot.nID != beforeSpot.nID ||
+              afterSpot.nPlayer != beforeSpot.nPlayer) return 68;
+        }
+        std::printf("root party deployment spots restored: %zu\n", originalSpots.size());
         auto* restoredHero = restored->GetUnitServerByPersID(heroID);
         if (!restoredHero) return 63;
         NRPG::SUnitInfo restoredInfo{};
