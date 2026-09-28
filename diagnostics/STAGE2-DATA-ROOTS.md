@@ -142,6 +142,29 @@ Add `-List` for all ID→effective-source lines. The next item-2 work is to
 compare the *present* ID sets against the typed-test sets, investigate any
 present-but-untyped records, and connect other game-used DB/Lua families.
 
+## Typed coverage of these six families (item 2c, in progress)
+
+`NativeWaypointResourceTests` strictly checks every present package
+waypoint except the recorded malformed 8/9, neither of which is in this
+scenario candidate set. `NativeAIRouteResourceTests` checks all 169
+`Units.res` and 42 `Groups.res` records; the 62+8 unit and 34 group
+candidate records are subsets. `NativeAnimationResourceTests` covers
+the effective animation corpus, including all four guard-animation IDs.
+These claims concern present typed payloads, not whether every candidate
+missing route/waypoint is desirable gameplay data.
+
+The old `NativeBuildingTerrainResourceTests` selected eight nontrivial
+building/terrain IDs, **none** in the 985-variant scenario closure. That
+was a real coverage gap. The test now walks the scenario template graph
+and strictly decodes all 903 present effective `Buildings` records and
+371 present `Terrain` records, including the five loose building overrides.
+It asserts summary-field hashes
+`A924C3A98CD24D04`/`A29501ED83DC7587` on Windows x64; see
+`NATIVE-BUILDING-TERRAIN-LINUX.md` for the exact tested fields and limits.
+Linux/ARM64 and x86 oracle comparison for this new branch are pending.
+The larger graph still lacks ID joins for several other game-used resource
+families, and nested field equivalence has not been claimed here.
+
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.
 The authoritative source list for this stage is the committed

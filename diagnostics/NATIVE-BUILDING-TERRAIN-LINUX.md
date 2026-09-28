@@ -49,3 +49,29 @@ see `NATIVE-MISSION-BUILD-LINUX.md` for its narrow coverage and the next
 mission gate. The Windows game smoke for this batch is postponed until
 a D3D device can be created in the current desktop session; an unchanged
 earlier archive also failed at `NGfx::ResetDevice` before loading a save.
+
+## Scenario-reachable typed-resource follow-up (2026-09-28)
+
+The earlier eight nontrivial IDs (`218,491,505,687,751,770,792,810`)
+do **not** occur in the 985-variant closure of the 52 shipped scenario
+roots. `NativeBuildingTerrainResourceTests` now additionally walks those
+scenario DB roots, uses the game's effective resource lookup (loose before
+package), and strictly deserializes every **present** `CBuildInfo` and
+`CMETerrainInfo` in that closure. It checks dimensions/floor order and
+hashes IDs, dimensions, fragment/spot/ladder counts, cellar sizes and
+terrain-array sizes. Windows x64 `RelWithDebInfo` prints and asserts:
+
+```text
+scenario_typed variants=985 buildings=903 terrain=371 failed=0 building_digest=A924C3A98CD24D04 terrain_digest=A29501ED83DC7587
+```
+
+The five loose building overrides are included. The baseline copy's
+`game.db`, `Buildings.res`, `Terrain.res`, and those five files match the
+installed Steam originals by SHA-256. The ordinary Windows x64 CTest
+`NativeBuildingTerrainResourceTests` passed after this addition. This is
+strict type decoding plus a summary-field regression for the potential
+scenario set, **not** full hashing of every nested material/voxel value,
+not a test that each random variant is selected, and not evidence that
+absent variant IDs should contain a resource. The new branch has not yet
+been run on Linux x86-64, ARM64/QEMU, or diagnostic x86; those comparisons
+remain required before cross-platform closure.

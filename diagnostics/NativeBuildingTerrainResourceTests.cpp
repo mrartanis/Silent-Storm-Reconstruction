@@ -8,6 +8,7 @@
 #include "../FileIO/Streams.h"
 #include "../FileIO/PortablePackageIndex.h"
 #include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataScenario.h"
 #include "../Main/BuildingInfo.h"
 #include "../Main/BuildingGrid.h"
 #include "../Main/MakeBuilding.h"
@@ -21,6 +22,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -37,6 +39,105 @@ static void Add( std::uint32_t value )
 		digest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
 		digest *= UINT64_C(1099511628211);
 	}
+}
+
+static void AddTo( std::uint64_t *hash, std::uint32_t value )
+{
+	for ( int byte = 0; byte < 4; ++byte )
+	{
+		*hash ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
+		*hash *= UINT64_C(1099511628211);
+	}
+}
+
+static std::set<int> ScenarioVariantIDs()
+{
+	std::set<int> templatesSeen, variantsSeen;
+	auto *zones = NDatabase::GetTable<NDb::CDBScenarioZone>();
+	auto *templates = NDatabase::GetTable<NDb::CTemplate>();
+	if ( !zones || !templates ) throw 1;
+	std::vector<int> pending;
+	CDBIterator<NDb::CDBScenarioZone> zone( *zones );
+	while ( zone.MoveNext() )
+		for ( int id : zone.Get()->templatesIDs )
+			if ( id > 0 ) pending.push_back( id );
+	while ( !pending.empty() )
+	{
+		const int id = pending.back();
+		pending.pop_back();
+		if ( !templatesSeen.insert( id ).second ) continue;
+		auto *map = static_cast<NDb::CTemplate*>( templates->GetDBRecord( id ) );
+		if ( !map ) throw 2;
+		for ( const auto &variant : map->variants )
+		{
+			if ( !variant ) throw 3;
+			variantsSeen.insert( variant->GetRecordID() );
+			for ( const auto &rect : variant->rects )
+				if ( rect && rect->pTemplate )
+					pending.push_back( rect->pTemplate->GetRecordID() );
+		}
+	}
+	return variantsSeen;
+}
+
+static bool CheckScenarioTypedResources()
+{
+	const auto ids = ScenarioVariantIDs();
+	if ( ids.size() != 985 ) return false;
+	std::uint64_t buildingDigest = UINT64_C(14695981039346656037);
+	std::uint64_t terrainDigest = UINT64_C(14695981039346656037);
+	std::size_t buildings = 0, terrains = 0, failed = 0;
+	for ( int id : ids )
+	{
+		if ( NGScene::CResourceFileOpener::DoesExist( "Buildings", id ) )
+		{
+			try
+			{
+				NGScene::CResourceOpener file( "Buildings", id );
+				CObj<NBuilding::CBuildInfo> value = new NBuilding::CBuildInfo;
+				value->operator&( *file.operator->() );
+				if ( value->nMaxX < 0 || value->nMaxY < 0 ||
+					value->nMinFloor > value->nMaxFloor ) return false;
+				AddTo( &buildingDigest, id );
+				AddTo( &buildingDigest, value->nMaxX ); AddTo( &buildingDigest, value->nMaxY );
+				AddTo( &buildingDigest, value->nMinFloor ); AddTo( &buildingDigest, value->nMaxFloor );
+				AddTo( &buildingDigest, static_cast<std::uint32_t>(value->wallFragments.size()) );
+				AddTo( &buildingDigest, static_cast<std::uint32_t>(value->solidFragments.size()) );
+				AddTo( &buildingDigest, static_cast<std::uint32_t>(value->spots.size()) );
+				AddTo( &buildingDigest, static_cast<std::uint32_t>(value->ladders.size()) );
+				AddTo( &buildingDigest, value->cellar.GetXSize() );
+				AddTo( &buildingDigest, value->cellar.GetYSize() );
+				++buildings;
+			}
+			catch ( ... ) { std::fprintf( stderr, "scenario building decode failed id=%d\n", id ); ++failed; }
+		}
+		if ( NGScene::CResourceFileOpener::DoesExist( "Terrain", id ) )
+		{
+			try
+			{
+				NGScene::CResourceOpener file( "Terrain", id );
+				CObj<CMETerrainInfo> value = new CMETerrainInfo;
+				value->operator&( *file.operator->() );
+				if ( value->info.nWidth < 0 || value->info.nHeight < 0 ) return false;
+				AddTo( &terrainDigest, id );
+				AddTo( &terrainDigest, value->info.nWidth ); AddTo( &terrainDigest, value->info.nHeight );
+				AddTo( &terrainDigest, value->info.heightMap.GetXSize() );
+				AddTo( &terrainDigest, value->info.heightMap.GetYSize() );
+				AddTo( &terrainDigest, value->info.typeMap.GetXSize() );
+				AddTo( &terrainDigest, value->info.typeMap.GetYSize() );
+				AddTo( &terrainDigest, value->alphaMap.GetXSize() );
+				AddTo( &terrainDigest, value->alphaMap.GetYSize() );
+				++terrains;
+			}
+			catch ( ... ) { std::fprintf( stderr, "scenario terrain decode failed id=%d\n", id ); ++failed; }
+		}
+	}
+	std::printf( "scenario_typed variants=%zu buildings=%zu terrain=%zu failed=%zu building_digest=%016llX terrain_digest=%016llX\n",
+		ids.size(), buildings, terrains, failed,
+		static_cast<unsigned long long>(buildingDigest), static_cast<unsigned long long>(terrainDigest) );
+	return buildings == 903 && terrains == 371 && failed == 0 &&
+		buildingDigest == UINT64_C(0xA924C3A98CD24D04) &&
+		terrainDigest == UINT64_C(0xA29501ED83DC7587);
 }
 
 int main( int argc, char **argv )
@@ -151,6 +252,7 @@ int main( int argc, char **argv )
 		for ( std::size_t i = 0; i < checkedIDs.size(); ++i )
 			std::printf( "%s%d", i ? "," : "", checkedIDs[i] );
 		std::printf( "\n" );
+		if ( !CheckScenarioTypedResources() ) return 12;
 		NGScene::CloseAllResources();
 		return 0;
 	}
