@@ -117,6 +117,25 @@ With this third resource test registered, the non-`extended` suite passed
 159/159 on Windows x64 Release and 132/132 on Linux GCC x86-64 under
 ASan/UBSan/LSan.
 
+The same original `CBind` path is used by rendered models through
+`GView.cpp`: `shareBinds` loads inverse poses by geometry ID from
+`Binds.res`, while AI hulls use `AIBinds.res`. The resource test now also
+strictly reads every `Binds.res` ID, constructs the original `CFileBind`
+loader, compares every loaded matrix field bit-for-bit with the direct
+serializer read, and hashes the matrices in semantic field order. There
+is no shipping loose `binds` directory. Expected combined output:
+
+```
+ai_records=211 ai_matrices=1577 ai_digest=5E3D53E8692EC077 model_records=396 model_matrices=7188 model_digest=49A7E7CBF80CB004
+```
+
+Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64, and ARM64/QEMU
+agreed exactly. Linux x86-64 ran under ASan/UBSan/LSan; ARM64/QEMU ran
+under ASan/UBSan with leak checking disabled. This is corpus decoding of
+model inverse poses, not proof that each ID is used by a shipped model,
+nor a tested model/skeleton association or rendered animation. The CPU
+bind-pose regression below currently uses `AIBinds`, not `Binds`.
+
 ## CPU bind-pose recomputation
 
 `NativeAIBindPoseTests` runs the original `CBind::Recalc` with real
