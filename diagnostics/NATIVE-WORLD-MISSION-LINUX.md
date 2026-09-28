@@ -769,3 +769,13 @@ the rebuilt `Game.exe`. The full Linux x86-64 sweep then completed all
 52/52 roots under ASan/UBSan/LSan with this check; ARM64/QEMU passed the
 focused nonempty root 5247, not a repeat of the full 52-root sweep. This verifies the
 world's deployment data, not post-load player placement or Steam parity.
+
+Clean native-media Windows x64 archive `stage2-deploy-spots-20260928-01`
+contains commit `38eea1b`; `Game.exe` SHA-256 is
+`F8D7D7746F3FF8AAA527D004183608ECC6EBE08D68084D32D04F976A8C517928`.
+No `fmod.dll` is packaged. Its no-intro LabRun opened a responsive
+`Silent Storm` window and exited on `CloseMainWindow` without a dump. The
+window capture was obscured by another application, so this run does not
+independently prove visual menu rendering. The original `game.db`,
+`AIGeometries.res`, `Buildings.res`, `Terrain.res`, and `Waypoints.res`
+still match the baseline SHA-256 manifest.
