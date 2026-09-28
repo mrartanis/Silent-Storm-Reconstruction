@@ -159,11 +159,31 @@ was a real coverage gap. The test now walks the scenario template graph
 and strictly decodes all 903 present effective `Buildings` records and
 371 present `Terrain` records, including the five loose building overrides.
 It asserts summary-field hashes
-`A924C3A98CD24D04`/`A29501ED83DC7587` on Windows x64; see
-`NATIVE-BUILDING-TERRAIN-LINUX.md` for the exact tested fields and limits.
-Linux/ARM64 and x86 oracle comparison for this new branch are pending.
+`A924C3A98CD24D04`/`A29501ED83DC7587` and selected nested gameplay
+hashes `0CF10374324B7718`/`5928DA62CE81B4F8` on Windows x64,
+Linux GCC x86-64 and ARM64/QEMU; see `NATIVE-BUILDING-TERRAIN-LINUX.md`
+for the exact tested fields and limits. Diagnostic x86 has not been
+repeated for the new fields.
 The larger graph still lacks ID joins for several other game-used resource
 families, and nested field equivalence has not been claimed here.
+
+## Next bounded join: collision-resource families
+
+The next nonvisual family group is `AIGeometries`, `AIBinds`, and
+`AIBSPTrees`, because `CAIMap` uses them for static, animated, and
+flipping/door collision hulls. Existing typed evidence is unusually broad:
+`NativeAIGeometryResourceTests` covers all 1,982 effective records named by
+the game's AI-geometry DB table (1,974 loose overrides plus eight package
+records); `NativeAIBindResourceTests` covers all 211 packaged inverse-pose
+records; `NativeAIBSPResourceTests` covers all 193 effective loose door
+collision records. Each existing semantic digest agrees on Windows x64,
+Linux x86-64, ARM64/QEMU and diagnostic x86; details and input hashes are in
+`NATIVE-AI-GEOMETRY-RESOURCES.md`. Thus this group's *present typed payload*
+decode has no newly identified gap. The still-open stage-2 join is the
+concrete gameplay source IDs (especially door IDs) feeding those loaders,
+and whether any of the 61 package-only AI-geometry IDs outside the DB table
+are selected by shipped gameplay. Do not infer reachability from package
+membership. Dynamic door-state parity belongs to the later behavior gate.
 
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.
