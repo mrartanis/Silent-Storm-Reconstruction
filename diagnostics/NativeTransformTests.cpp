@@ -17,6 +17,26 @@ bool Near(float actual, float expected) {
 }
 
 int main() {
+  SHMatrix identity;
+  identity._11 = identity._12 = identity._13 = identity._14 = -5.0f;
+  identity._21 = identity._22 = identity._23 = identity._24 = -5.0f;
+  identity._31 = identity._32 = identity._33 = identity._34 = -5.0f;
+  identity._41 = identity._42 = identity._43 = identity._44 = -5.0f;
+  Identity(&identity);
+  const float expectedIdentity[16] = {
+      1.0f, 0.0f, 0.0f, 0.0f,
+      0.0f, 1.0f, 0.0f, 0.0f,
+      0.0f, 0.0f, 1.0f, 0.0f,
+      0.0f, 0.0f, 0.0f, 1.0f};
+  const float actualIdentity[16] = {
+      identity._11, identity._12, identity._13, identity._14,
+      identity._21, identity._22, identity._23, identity._24,
+      identity._31, identity._32, identity._33, identity._34,
+      identity._41, identity._42, identity._43, identity._44};
+  for (int i = 0; i != 16; ++i)
+    if (GameFloatBits(actualIdentity[i]) != GameFloatBits(expectedIdentity[i]))
+      return 14;
+
   const SFBTransform translation = MakeTransform(CVec3(3.0f, 4.0f, 5.0f));
   if (!Near(translation.forward._14, 3.0f) ||
       !Near(translation.forward._24, 4.0f) ||

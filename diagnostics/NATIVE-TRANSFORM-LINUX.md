@@ -38,6 +38,13 @@ flip. This keeps the original bit-level rotation contract without depending
 on MSVC aliasing behavior. It does not change the editor-only read sites or
 claim a rendering comparison with Steam.
 
+A subsequent pass removes the last `DWORD*` store from `Identity(SHMatrix*)`:
+all sixteen float cells are assigned directly before setting the diagonal.
+`NativeTransformTests` first fills every cell with nonzero values, then
+requires the exact 32-bit identity words. This checks the complete matrix
+on Windows x64, Linux GCC x86-64 and ARM64/QEMU, and Linux Clang release;
+it is still a CPU transform test, not a GPU rendering comparison.
+
 On the current Windows host:
 
 ```powershell

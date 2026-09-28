@@ -625,7 +625,10 @@ inline DWORD SPlane::CheckPointUnderPlane( const CVec3 &pt ) const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 inline void Identity( SHMatrix *pRes )
 {
-	MemSetDWord( reinterpret_cast<DWORD*>(pRes), 0, 16 );
+	pRes->_11 = pRes->_12 = pRes->_13 = pRes->_14 = 0.0f;
+	pRes->_21 = pRes->_22 = pRes->_23 = pRes->_24 = 0.0f;
+	pRes->_31 = pRes->_32 = pRes->_33 = pRes->_34 = 0.0f;
+	pRes->_41 = pRes->_42 = pRes->_43 = pRes->_44 = 0.0f;
 	pRes->_11 = pRes->_22 = pRes->_33 = pRes->_44 = 1.0f;
 }
 // allow &m == p

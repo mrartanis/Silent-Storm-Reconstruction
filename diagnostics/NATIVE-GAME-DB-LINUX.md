@@ -130,6 +130,11 @@ checks passed on Windows x64, Linux GCC x86-64 with ASan/UBSan/LSan, Linux
 GCC ARM64/QEMU with ASan/UBSan, and Linux Clang release. These are typed
 import checks for the shipped `game.db`, not visual-lighting or UI-rendering
 parity tests.
+The shared `GetColor(DWORD)` conversion now extracts the three color bytes
+with integer shifts instead of reading an inactive union member. The
+independent source-column checks above cover every shipped ambient-light
+color through this conversion on all four tested compiler/architecture
+configurations, including the ambient-subtracted direct-light value.
 After relinking the headless world probe against the changed database
 library, mission root 5247 also completed scripted start, save/load, hero
 turn, end-turn transfer, and a second save/load on Linux GCC x86-64 and

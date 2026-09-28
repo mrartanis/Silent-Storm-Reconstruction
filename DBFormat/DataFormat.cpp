@@ -38,19 +38,11 @@ static void ErrOut( const string &str, int nID )
 #endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-union UColor
-{
-	DWORD dwColor;
-	struct 
-	{
-		BYTE cR, cG, cB;
-	};
-};
 CVec3 GetColor( DWORD dwColor )
 {
-	UColor c;
-	c.dwColor = dwColor;
-	return CVec3( c.cR / 255.0f, c.cG / 255.0f, c.cB / 255.0f );
+	return CVec3( ( dwColor & 0xffu ) / 255.0f,
+		( ( dwColor >> 8 ) & 0xffu ) / 255.0f,
+		( ( dwColor >> 16 ) & 0xffu ) / 255.0f );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // This is a suitable option if it has no attributes at all or if it has all the attributes in vInputParams and no other flags.

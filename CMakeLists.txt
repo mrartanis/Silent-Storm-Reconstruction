@@ -1038,7 +1038,7 @@ if(S2_GAME_DIR)
           "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
           "-DGAME_DB=${S2_GAME_DIR}/game.db"
           "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
-          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves"
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/all"
           -DPARTY_SAVE_MODE=ON
           -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
       set_tests_properties(NativeScenarioRootPartySaveWorlds PROPERTIES
@@ -1049,7 +1049,7 @@ if(S2_GAME_DIR)
           "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
           "-DGAME_DB=${S2_GAME_DIR}/game.db"
           "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
-          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves"
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/5247"
           -DPARTY_SAVE_MODE=ON
           -DSTART_VARIANT=5247
           -DEND_VARIANT=5247
@@ -1062,7 +1062,7 @@ if(S2_GAME_DIR)
           "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
           "-DGAME_DB=${S2_GAME_DIR}/game.db"
           "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
-          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves"
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/5247-turn"
           -DPARTY_SAVE_MODE=ON
           -DTURN_MODE=ON
           -DSTART_VARIANT=5247

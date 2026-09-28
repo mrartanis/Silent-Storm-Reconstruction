@@ -849,3 +849,12 @@ there is no `fmod.dll`. Isolated no-intro LabRun
 `stage2-scripted-flight-smoke-20260928-01` loaded all 155 database tables,
 opened a responsive `Silent Storm` window, and closed normally without a
 crash dump. This is a startup smoke, not a rendered mission or audio check.
+
+The two focused root-5247 save tests and the extended all-root save suite
+used to share the same `root-5247.sav` path in a parallel CTest run. The
+focused save and save/turn tests could fail together under `-j 16` even
+though each passed alone. Their CMake registrations now assign distinct
+scratch save directories (`all`, `5247`, and `5247-turn`). The two focused
+tests passed concurrently under `-j 2`, followed by the ordinary Windows
+x64 suite at 152/152 under `-j 16`. This fixes test isolation; it is not a
+change to game save behavior or evidence of Steam save compatibility.
