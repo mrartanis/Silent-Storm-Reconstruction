@@ -1056,6 +1056,20 @@ if(S2_GAME_DIR)
           -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
       set_tests_properties(NativeWorldMission5247PartySave PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300)
+      add_test(NAME NativeWorldMission5247PartySaveTurn
+        COMMAND "${CMAKE_COMMAND}"
+          "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+          "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+          "-DGAME_DB=${S2_GAME_DIR}/game.db"
+          "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves"
+          -DPARTY_SAVE_MODE=ON
+          -DTURN_MODE=ON
+          -DSTART_VARIANT=5247
+          -DEND_VARIANT=5247
+          -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+      set_tests_properties(NativeWorldMission5247PartySaveTurn PROPERTIES
+        WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300)
       add_test(NAME NativeWorldMission3832PartyUIAck
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
           --mission-root-party 3832)
@@ -1132,11 +1146,11 @@ if(S2_GAME_DIR)
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()
       if(TARGET s2_bink_compat)
-        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave PROPERTIES
+        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
           ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
       else()
-        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave PROPERTIES
+        set_tests_properties(NativeScenarioRootPartySaveWorlds NativeWorldMission5247PartySave NativeWorldMission5247PartySaveTurn PROPERTIES
           ENVIRONMENT_MODIFICATION
           "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
       endif()

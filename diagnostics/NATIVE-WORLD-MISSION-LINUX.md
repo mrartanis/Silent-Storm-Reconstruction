@@ -787,3 +787,54 @@ Clang `NativeMapDatabaseTests` root-discovery binary was rebuilt first;
 an older copy lacked `--roots` and returned usage status 2, which was a
 stale test executable rather than a world failure. This Clang run is not
 sanitizer evidence; GCC x86-64 supplied the ASan/UBSan/LSan sweep above.
+
+## Scripted flight, turn transition, and a second save
+
+`NativeWorldMission5247PartySaveTurn` extends the focused party-world save
+test. At tick 50, while `BOSS` stands at the airborne `fw2` waypoint, it
+delivers `TBS_GRID_INFO_UPDATED` and requires the unit to remain alive at
+the same position. It then lets the original Lua sequence finish, performs
+the first world save/load, waits for the hero's turn, issues the ordinary
+`CCmdEndOfTurn`, observes another player and an advancing turn ID, and
+round-trips a second save after 80 more world updates. The two save files
+are created by this build and do not test cross-version save compatibility.
+
+This found an ARM64/QEMU failure that the initial 220-tick save sweep did
+not detect. A delayed grid update arrived while `BOSS` occupied a final/3D
+fly place. Such places have no ground-grid lock area, but
+`CUnitServer::OnTBSEvent(TBS_GRID_INFO_UPDATED)` passed the encoded flight
+altitude as a tile layer to `IsPassable`; the false result invoked
+`ForcedMove`, which found no landing tile and killed the unit (`VP=-4095`).
+The corpse then re-snapped away from `fw2`, leaving the Lua waypoint wait
+and sequence unfinished. The handler now skips the ground-grid reseat for
+final/3D places. This is a game-core correctness fix, independent of Steam
+behavior parity and of the later SDL/bgfx integration.
+
+On the corrected source, Windows x64 passed the focused test and its
+152/152 non-extended CTest suite. Linux x86-64 passed the focused direct
+probe and 123/123 non-extended tests under ASan/UBSan/LSan. ARM64/QEMU
+passed the same focused probe under ASan/UBSan (LSan disabled). Linux
+x86-64 Clang release also built and passed the focused probe; the host has
+GCC 11 C++ headers/libraries but Clang defaults to a missing GCC 12
+toolchain, so its build needs `CPLUS_INCLUDE_PATH` pointing at the GCC 11
+headers and `LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11`.
+
+On Windows with `S2_GAME_DIR` configured, run
+`ctest --test-dir <build> -C RelWithDebInfo -R '^NativeWorldMission5247PartySaveTurn$' --output-on-failure`.
+In the Linux scratch layout (current working directory contains `game.db`,
+`scripts/`, and the original `.res` files), run:
+
+```sh
+ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+  <build-x64>/NativeWorldInitProbe ./game.db . \
+  --mission-root-party-save-turn 5247 <build-x64>/turn-5247.sav
+ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+  QEMU_LD_PREFIX=/usr/aarch64-linux-gnu /usr/bin/qemu-aarch64-static \
+  <build-arm64>/NativeWorldInitProbe ./game.db . \
+  --mission-root-party-save-turn 5247 <build-arm64>/turn-5247.sav
+```
+
+The Linux scratch root keeps `.res` files beside `game.db`, not under
+`res/`; therefore CMake does not register the data-dependent CTest there.
+These direct commands run the same probe mode. ARM64 is emulated, not a
+physical ARM device, and none of these checks render or play a full mission.

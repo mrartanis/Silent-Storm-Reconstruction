@@ -828,7 +828,10 @@ void CUnitServer::OnTBSEvent( ETBSEvent event )
 			// retail @0x3c2a90 case 10: a locker unit re-seats on the changed grid -- release the lock,
 			// force-move off a now-impassable tile; otherwise fall/snap when the ground height under the
 			// SAME place drifted (> 0.01), store the new height/place, and re-lock.
-			if ( IsLocker() )
+			// A final/3D fly place has no ground-grid lock area. Treating its
+			// altitude field as a tile layer makes IsPassable fail and can kill
+			// a scripted flyer when a deferred grid update arrives mid-sequence.
+			if ( IsLocker() && !GetPosition().pos.p.IsFinal() )
 			{
 				NAI::IPathNetwork *pNet = GetWorld()->GetPathNetwork();
 				pNet->Unlock( this );

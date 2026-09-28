@@ -16,6 +16,7 @@
 #include "../Main/A5Script.h"
 #include "../Main/BuildingGrid.h"
 #include "../Main/aiCommander.h"
+#include "../Main/aiRoute.h"
 #include "../Main/aiUnit.h"
 #include "../Main/eventUnit.h"
 #include "../Main/iSaveManager.h"
@@ -58,8 +59,11 @@ int main(int argc, char** argv) {
   const bool mission = argc == 5 && std::strcmp(argv[3], "--mission") == 0;
   const bool missionUIAck = argc == 5 && std::strcmp(argv[3], "--mission-ui-ack") == 0;
   const bool missionRootParty = argc == 5 && std::strcmp(argv[3], "--mission-root-party") == 0;
+  const bool missionRootPartySaveTurn = argc == 6 &&
+    std::strcmp(argv[3], "--mission-root-party-save-turn") == 0;
   const bool missionRootPartySave = argc == 6 &&
-    std::strcmp(argv[3], "--mission-root-party-save") == 0;
+    (std::strcmp(argv[3], "--mission-root-party-save") == 0 ||
+     missionRootPartySaveTurn);
   const bool missionBasePartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-base-party-ui-ack") == 0;
   const bool missionPartyUIAck = argc == 5 && std::strcmp(argv[3], "--mission-party-ui-ack") == 0;
   const bool missionPartyShot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot") == 0;
@@ -207,6 +211,17 @@ int main(int argc, char** argv) {
             ++acknowledged;
           }
         }
+        if (missionRootPartySaveTurn && tick == 50) {
+          auto* boss = world->GetUnitServer("BOSS");
+          if (!boss || !boss->CanFight() ||
+              !boss->GetPosition().pos.p.IsFinal()) return 78;
+          const CVec3 before = boss->GetPosition().GetCP();
+          boss->OnTBSEvent(NWorld::TBS_GRID_INFO_UPDATED);
+          if (!boss->CanFight() ||
+              fabs(boss->GetPosition().GetCP() - before) > 0.001f)
+            return 79;
+          std::printf("scripted flyer survived grid update at fw2\n");
+        }
         if (variant == 810) {
           auto* shooter = world->GetUnitServer("pers1");
           std::string name;
@@ -339,6 +354,137 @@ int main(int argc, char** argv) {
             !world->GetUnitServerByPersID(heroID)) return 66;
         std::printf("root party save restored and advanced: %u -> %u\n",
           savedTime, world->GetTime()->GetValue());
+        std::printf("root party post-load control: realtime=%d sequence=%d current=%d hero_turn=%d turn_id=%d\n",
+          world->IsRealTime() ? 1 : 0, world->IsSequence() ? 1 : 0,
+          world->GetCurrentPlayer() ? 1 : 0,
+          world->GetCurrentPlayer() == restoredHero->GetPlayer() ? 1 : 0,
+          world->GetTurnID());
+        if (missionRootPartySaveTurn) {
+          if (variant != 5247) return 69;
+          auto* heroPlayer = restoredHero->GetPlayer();
+          int readyTick = 230;
+          int waitAcknowledged = 0;
+          while (readyTick < 2030 &&
+                 (world->IsSequence() || world->GetCurrentPlayer() != heroPlayer)) {
+            world->UpdateWorld(readyTick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID())) {
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+                ++waitAcknowledged;
+              }
+            }
+            if (!NScript::luaLastError.szError.empty()) return 77;
+            if (readyTick % 200 == 0)
+              std::printf("root party waiting for hero turn: tick=%d sequence=%d current=%d turn_id=%d ui_ack=%d\n",
+                readyTick, world->IsSequence() ? 1 : 0,
+                world->GetCurrentPlayer() ? 1 : 0, world->GetTurnID(),
+                waitAcknowledged);
+            ++readyTick;
+          }
+          if (world->IsSequence() || world->GetCurrentPlayer() != heroPlayer) {
+            std::printf("root party hero turn unavailable: tick=%d sequence=%d current=%d turn_id=%d ui_ack=%d\n",
+              readyTick, world->IsSequence() ? 1 : 0,
+              world->GetCurrentPlayer() ? 1 : 0, world->GetTurnID(),
+              waitAcknowledged);
+            for (const char* waypointName : {"fw2", "B33"}) {
+              auto* waypoint = world->GetWaypoint(waypointName);
+              if (waypoint)
+                std::printf("root party waypoint %s: %.2f %.2f %.2f\n",
+                  waypointName, waypoint->ptPos.x, waypoint->ptPos.y,
+                  waypoint->ptPos.z);
+            }
+            std::vector<CPtr<NWorld::CPlayer>> players;
+            world->GetPlayersList(&players);
+            for (const auto& player : players) {
+              std::vector<CPtr<NWorld::CUnitServer>> units;
+              player->GetUnits(&units);
+              for (const auto& unit : units) {
+                std::string name, command;
+                world->GetUnitName(unit.GetPtr(), &name);
+                unit->GetCurrentCommandName(&command);
+                const CVec3 position = unit->GetPosition().GetCP();
+                std::printf("root party unit %s: %.2f %.2f %.2f command=%s\n",
+                  name.c_str(), position.x, position.y, position.z,
+                  command.empty() ? "none" : command.c_str());
+              }
+            }
+            return 69;
+          }
+          std::printf("root party hero turn ready at tick %d\n", readyTick);
+          const int turnBefore = world->GetTurnID();
+          heroPlayer->GetCommander()->Do(new NWorld::CCmdEndOfTurn());
+          bool sawOtherPlayer = false;
+          int transferTick = -1;
+          for (int tick = readyTick; tick < readyTick + 400; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            auto* current = world->GetCurrentPlayer();
+            if (current && current != heroPlayer) sawOtherPlayer = true;
+            if (!NScript::luaLastError.szError.empty()) return 70;
+            if (sawOtherPlayer && world->GetTurnID() > turnBefore) {
+              transferTick = tick;
+              break;
+            }
+          }
+          std::printf("root party post-load end turn: %d -> %d, other_player=%d\n",
+            turnBefore, world->GetTurnID(), sawOtherPlayer ? 1 : 0);
+          if (world->GetTurnID() <= turnBefore || !sawOtherPlayer || transferTick < 0)
+            return 71;
+          for (int tick = transferTick + 1; tick <= transferTick + 80; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 72;
+          }
+          const STime secondSavedTime = world->GetTime()->GetValue();
+          const int secondSavedTurn = world->GetTurnID();
+          if (!world->GetUnitServerByPersID(heroID)) return 73;
+          {
+            CFileStream saved;
+            saved.OpenWrite(argv[5]);
+            CStructureSaver saver(saved, CStructureSaver::WRITE);
+            saver.Add(2, &world);
+            SerializeShared(&saver);
+          }
+          CObj<NWorld::CWorld> secondRestored;
+          {
+            CFileStream saved;
+            saved.OpenRead(argv[5]);
+            CSharedHolder shared;
+            CStructureSaver saver(saved, CStructureSaver::READ);
+            saver.Add(2, &secondRestored);
+            SerializeShared(&saver);
+          }
+          if (!secondRestored || !secondRestored->GetGlobalGame() ||
+              !secondRestored->GetOwnScript() || !secondRestored->GetTime() ||
+              secondRestored->GetTime()->GetValue() != secondSavedTime ||
+              secondRestored->GetTurnID() != secondSavedTurn ||
+              !secondRestored->GetUnitServerByPersID(heroID)) return 74;
+          world = secondRestored;
+          game = world->GetGlobalGame();
+          world->RestoreRuntimeCaches(game.GetPtr());
+          for (int tick = transferTick + 81; tick <= transferTick + 90; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 75;
+          }
+          if (world->GetTime()->GetValue() <= secondSavedTime ||
+              !world->GetUnitServerByPersID(heroID)) return 76;
+          std::printf("root party second save after end turn restored and advanced: %u -> %u, turn_id=%d\n",
+            secondSavedTime, world->GetTime()->GetValue(), world->GetTurnID());
+        }
       }
       if (variant == 810) {
         Script::AutoBlock stack(*world->GetOwnScript());
