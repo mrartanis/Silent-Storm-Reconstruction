@@ -66,14 +66,6 @@ int CUnitArea::operator&( CStructureSaver &f )
 // (NOT a real hash -- the release hash_map<ulong,int> hashes it again; it is the map key.)
 // MISSING in the a5dll -- the old port keyed on raw GetData(), which kept those extra bits and fragmented the
 // set so an in-area tile queried with a different direction wrongly missed the gate.
-static inline unsigned long AreaHash( const SPathPlace &p )
-{
-	unsigned h = (unsigned)p.GetPose();
-	h = ( h << 8 ) | (unsigned)p.GetLayer();
-	h = ( h << 8 ) | (unsigned)p.GetY();
-	h = ( h << 8 ) | (unsigned)p.GetX();
-	return (unsigned long)h;
-}
 bool CUnitArea::Prepare()                                                    // @0x74880
 {
 	// @0x74880 -- the release does NOT clear `places` on the early-outs below: the clear happens only
@@ -116,7 +108,7 @@ bool CUnitArea::Prepare()                                                    // 
 			continue;
 		if ( (*i).GetPose() == CM_INACTIVE || (*i).GetPose() == CM_LAY )
 			continue;
-		places[ AreaHash( *i ) ] = 1;
+		places[ UnitAreaPlaceKey( *i ) ] = 1;
 	}
 	return !places.empty();
 }
@@ -127,7 +119,7 @@ bool CUnitArea::IsInArea( const SPathPlace &p ) const                        // 
 	// operator& tag 6, so a live area is never empty). Key on the normalized GetHash (pose|layer|y|x),
 	// NOT raw GetData(): the release hashes the same normalized key, so a tile queried with a different
 	// direction/moving bit still matches its area entry.
-	return places.find( AreaHash( p ) ) != places.end();
+	return places.find( UnitAreaPlaceKey( p ) ) != places.end();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Local path-AP accumulator - sums the move AP along a path (GetMoveActionType per step -> GetActionAP).

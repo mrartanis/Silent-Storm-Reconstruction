@@ -190,7 +190,7 @@ public:
 	// tDeathTime tag 35 -- the earlier "non-serialized parity surface" note was decomp-disproven,
 	// W3 serialization convergence 2026-07-13). Retail seeds nClueCount=1 from the ctor's trailing
 	// bool (@0x3c3cc0); nothing writes tDeathTime yet (the corpse-timestamp writer is still unported).
-	unsigned long tDeathTime = 0;	// retail +0x228 (tag 35): tick the unit became a corpse
+	STime tDeathTime = 0;	// retail 32-bit tick (tag 35); unsigned long is 64-bit on Linux
 	int nClueCount = 0;				// retail +0x1e4 (tag 24): number of quest clues carried
 	// retail CUnitServer::SetHandItem @0x387b30 (wPlayer.obj): copy the SItem into sHandItem, then
 	// pin the item alive via pHandItemHolder = sHandItem.pItem (a plain CObj swap). LIVE: called by
@@ -198,7 +198,7 @@ public:
 	// CExecLoadWeapon::LoadClip (@0x3949a0) to clear a consumed in-hand clip.
 	void SetHandItem( const SItem &item ) { sHandItem = item; pHandItemHolder = sHandItem.pItem.GetPtr(); }
 	const SItem& GetHandItem() const { return sHandItem; }
-	unsigned long GetDeathTime() const { return tDeathTime; }
+	STime GetDeathTime() const { return tDeathTime; }
 	bool IsClueUnit() const { return nClueCount > 0; }	// retail CUnitServer::IsClueUnit @0x3c6900 (setg: > 0)
 	// retail CUnitServer::CanBlowUp @0x3c0420 (unit vtbl+0x28): a unit may be gibbed unless it is
 	// a quest-clue corpse (CUnit vtbl+0x14 IsClueUnit), wears a live PK shell (vtbl+0x34

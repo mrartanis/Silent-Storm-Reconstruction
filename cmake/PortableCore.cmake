@@ -388,6 +388,16 @@ target_link_libraries(NativeLockTokenTests PRIVATE
   -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
   s2_game_structure s2_game_streams s2_game_objects s2_portable_structure)
 add_test(NAME NativeLockTokenTests COMMAND NativeLockTokenTests)
+add_executable(NativeUnitAreaWireTests
+  "${root}/diagnostics/NativeUnitAreaWireTests.cpp")
+target_link_libraries(NativeUnitAreaWireTests PRIVATE
+  s2_game_structure s2_game_streams s2_game_objects s2_portable_structure)
+add_test(NAME NativeUnitAreaWireTests COMMAND NativeUnitAreaWireTests)
+add_executable(NativeUnitDeathTimeWireTests
+  "${root}/diagnostics/NativeUnitDeathTimeWireTests.cpp")
+target_link_libraries(NativeUnitDeathTimeWireTests PRIVATE
+  s2_game_structure s2_game_streams s2_game_objects s2_portable_structure)
+add_test(NAME NativeUnitDeathTimeWireTests COMMAND NativeUnitDeathTimeWireTests)
 add_library(s2_game_world_events STATIC
   "${root}/Main/wAckBase.cpp"
   "${root}/Main/wAck.cpp"

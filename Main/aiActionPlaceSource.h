@@ -31,6 +31,17 @@ struct SAIState;
 class IAIUnit;
 class CAIAction;
 class CAIFireArmsWeapon;
+// Retail serializes CUnitArea's hash-map keys as 32-bit unsigned long.
+// On LP64 hosts unsigned long is 64-bit, so keep the on-disk key explicit.
+using CUnitAreaPlaceKey = DWORD;
+static_assert( sizeof(CUnitAreaPlaceKey) == 4, "unit-area place key must be one word" );
+inline CUnitAreaPlaceKey UnitAreaPlaceKey( const SPathPlace &p )
+{
+	CUnitAreaPlaceKey key = p.GetPose();
+	key = ( key << 8 ) | p.GetLayer();
+	key = ( key << 8 ) | p.GetY();
+	return ( key << 8 ) | p.GetX();
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CUnitArea - the set of grid places reachable within nAPRadius AP from a centre place. A combat logic
 // bound to an area (via CAIAttackPlaceSource::pArea) only considers places inside it, so a unit "holds"
@@ -47,7 +58,7 @@ class CUnitArea: public CObjectBase
 	SPathPlace                place;        // centre
 	int                       nAPRadius;
 	int                       wishPose;     // EPose the flood assumes (stored for fidelity)
-	unordered_map<unsigned long, int> places; // in-area set keyed on GetHash (release hash_map<ulong,int> @+0x1c, tag 6)
+	unordered_map<CUnitAreaPlaceKey, int> places; // in-area set keyed on GetHash (release hash_map<ulong,int> @+0x1c, tag 6)
 	ZEND int operator&( CStructureSaver &f );
 public:
 	CUnitArea(): nAPRadius( 0 ), wishPose( 0 ) {}
