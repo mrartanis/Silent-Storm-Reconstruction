@@ -743,6 +743,20 @@ target_precompile_headers(NativeLockTokenTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeLockTokenTests PRIVATE Main)
 target_compile_features(NativeLockTokenTests PRIVATE cxx_std_17)
 add_test(NAME NativeLockTokenTests COMMAND NativeLockTokenTests)
+add_executable(NativeParticleRuntimeResourceTests
+  "${root}/diagnostics/NativeParticleRuntimeResourceTests.cpp")
+target_include_directories(NativeParticleRuntimeResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeParticleRuntimeResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeParticleRuntimeResourceTests PRIVATE
+  Main s2_portable_package)
+target_compile_features(NativeParticleRuntimeResourceTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/Effects.res")
+  add_test(NAME NativeParticleRuntimeResourceTests
+    COMMAND NativeParticleRuntimeResourceTests "${S2_GAME_DIR}/res/Effects.res")
+  set_tests_properties(NativeParticleRuntimeResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+    "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+endif()
 add_executable(NativeAnimationResourceTests
   "${root}/diagnostics/NativeAnimationResourceTests.cpp")
 target_include_directories(NativeAnimationResourceTests PRIVATE

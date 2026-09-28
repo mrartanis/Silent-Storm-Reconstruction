@@ -4,7 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "DG.h"
+#include "DG.H"
 #include "GResource.h"
 #include "../FileIO/PortableLightKeyWire.h"
 #include <vector>
