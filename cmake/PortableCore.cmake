@@ -413,10 +413,12 @@ add_library(s2_game_scene_data STATIC
   "${root}/Main/GGeometry.cpp"
   "${root}/Main/GGeometryCore.cpp"
   "${root}/Main/GGeometryUtil.cpp"
+  "${root}/Main/GObjectInfo.cpp"
   "${root}/Main/aiTerrain.cpp"
   "${root}/Main/GBind.cpp"
   "${root}/Main/GMesh.cpp")
 target_include_directories(s2_game_scene_data PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include"
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat"
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
   "${root}/third_party/lifestudio/include")
@@ -1024,6 +1026,27 @@ if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
     add_test(NAME NativeBuildingPieceResourceTests
       COMMAND NativeBuildingPieceResourceTests "${S2_GAME_DB_PATH}"
         "${_s2_building_piece_res_dir}")
+  endif()
+endif()
+add_executable(NativeBuildingClipperTests
+  "${root}/diagnostics/NativeBuildingClipperTests.cpp")
+target_link_libraries(NativeBuildingClipperTests PRIVATE
+  -Wl,--start-group s2_portable_database s2_game_scene_data
+  s2_game_animation_runtime s2_game_ai_geometry_loader s2_game_ai_collision
+  s2_game_building_clip s2_game_make_building s2_game_building_internal
+  s2_game_building_info s2_game_building_grid s2_game_resource_loader
+  s2_game_resource_package s2_game_basic_share s2_game_transform s2_game_dg
+  s2_game_dbformat_records s2_game_database_runtime s2_game_structure
+  s2_game_streams s2_game_objects s2_portable_structure s2_portable_package
+  s2_game_misc_runtime -Wl,--end-group)
+target_link_options(NativeBuildingClipperTests PRIVATE -Wl,--gc-sections)
+if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_building_clipper_res_dir
+    "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_building_clipper_res_dir}/Geometries.res")
+    add_test(NAME NativeBuildingClipperTests
+      COMMAND NativeBuildingClipperTests "${S2_GAME_DB_PATH}"
+        "${_s2_building_clipper_res_dir}")
   endif()
 endif()
 add_executable(NativeBuildingTerrainResourceTests

@@ -1,7 +1,13 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
-#include "DG.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
+#include "DG.H"
 #include "GGeometry.h"
-#include "..\Misc\BasicShare.h"
+#include "../Misc/BasicShare.h"
 #include "Grid.h"
 #include "GScene.h"
 #include "GObjectInfo.h"
@@ -11,6 +17,7 @@
 #include "PortableMeshCodecs.h"
 #include "aiObject.h"
 #include "aiObjectLoader.h"
+#include <cstring>
 
 inline bool operator==( const SPlane &a, const SPlane &b ) { return a.n == b.n && a.d == b.d; }
 namespace NAI
@@ -578,7 +585,12 @@ static void OptimizeVertices( SFacesVector *pRes, const SFacesVector &src )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SPlaneHash
 {
-	int operator()( const SPlane &a ) const { return SVec3Hash()( a.n ) ^ ((int*)&a.d)[0]; }
+	int operator()( const SPlane &a ) const
+	{
+		int bits;
+		std::memcpy( &bits, &a.d, sizeof(bits) );
+		return SVec3Hash()( a.n ) ^ bits;
+	}
 };
 static void SeparateOnPerPlaneFaces(unordered_map<SPlane, SPolygonIndices, SPlaneHash> *pRes, const SFacesVector &src )
 {

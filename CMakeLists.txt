@@ -720,6 +720,20 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
   add_test(NAME NativeBuildingPieceResourceTests
     COMMAND NativeBuildingPieceResourceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
 endif()
+add_executable(NativeBuildingClipperTests
+  "${root}/diagnostics/NativeBuildingClipperTests.cpp")
+target_include_directories(NativeBuildingClipperTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeBuildingClipperTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeBuildingClipperTests PRIVATE Main s2_portable_database)
+target_compile_features(NativeBuildingClipperTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db" AND
+   EXISTS "${S2_GAME_DIR}/res/Geometries.res")
+  add_test(NAME NativeBuildingClipperTests
+    COMMAND NativeBuildingClipperTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+  set_tests_properties(NativeBuildingClipperTests PROPERTIES ENVIRONMENT_MODIFICATION
+    "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+endif()
 add_executable(NativeAnimationResourceTests
   "${root}/diagnostics/NativeAnimationResourceTests.cpp")
 target_include_directories(NativeAnimationResourceTests PRIVATE
@@ -1012,6 +1026,10 @@ endif()
 if(TARGET s2_bink_compat)
   set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests NativeHeightLayersTests NativeHeightNetworkTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+  if(TEST NativeBuildingClipperTests)
+    set_tests_properties(NativeBuildingClipperTests PROPERTIES ENVIRONMENT_MODIFICATION
+      "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+  endif()
   if(TEST NativeAIBindPoseTests)
     set_tests_properties(NativeAIBindPoseTests PROPERTIES ENVIRONMENT_MODIFICATION
       "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
