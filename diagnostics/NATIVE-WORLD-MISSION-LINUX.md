@@ -813,7 +813,9 @@ behavior parity and of the later SDL/bgfx integration.
 On the corrected source, Windows x64 passed the focused test and its
 152/152 non-extended CTest suite. Linux x86-64 passed the focused direct
 probe and 123/123 non-extended tests under ASan/UBSan/LSan. ARM64/QEMU
-passed the same focused probe under ASan/UBSan (LSan disabled). Linux
+passed the focused probe and 123/123 non-extended tests under ASan/UBSan
+(LSan disabled). All three general suites were rerun after relinking their
+test executables against the changed unit-server code. Linux
 x86-64 Clang release also built and passed the focused probe; the host has
 GCC 11 C++ headers/libraries but Clang defaults to a missing GCC 12
 toolchain, so its build needs `CPLUS_INCLUDE_PATH` pointing at the GCC 11
