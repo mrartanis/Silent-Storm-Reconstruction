@@ -21,23 +21,31 @@ mod names have not been mapped to a Linux filesystem encoding and are not
 claimed portable by this test.
 
 `NativeModManagerTests` creates its own scratch directory inside the build,
-copies the original `game.db`, and uses a description-only mod. It verifies
+copies the original `game.db`, and uses a mod with both a description and a
+complete release-format `game.db`. The mod database is a private copy of the
+original with one `GlobalMaps` `StartZoneID` changed to another existing zone;
+the test validates the patched database with the portable decoder before
+activation. It verifies
 discovery, mixed-case selection, successful base reload, active-mod/version
 state, rejection of an unavailable mod *before* clearing the live database,
-and reactivation with no mods. Separate loose resource markers at the same
+and reactivation with no mods. It checks that the changed zone is visible
+while the mod is active and that the original zone returns after deactivation.
+Separate loose resource markers at the same
 `Globals/3` ID prove that an active mod overrides base resources, that a
 failed preflight leaves the override active, and that deactivation restores
-the base resource. The test deliberately covers the original behavior where
-a mod without `game.db` is still activated as a resource directory. It does
-**not** prove merging an authored mod `game.db`, UI interaction, or
-round-tripping a save that names a mod. Those remain separate tests before
-claiming full mod support on Linux.
+the base resource. The loader retains the original behavior where a mod
+without `game.db` is still activated as a resource directory, but that branch
+is no longer covered by this fixture. This test proves a full mod database
+replaces one game-used value; it does **not** prove partial-table mod database
+merging, UI interaction, or round-tripping a save that names a mod. Those
+remain separate tests before claiming full mod support on Linux.
 
-The focused test passed Windows x64, Linux GCC x86-64 with ASan/UBSan/LSan,
-Linux GCC ARM64/QEMU with ASan/UBSan, and Linux Clang x86-64 release. Run:
+The focused test, including the database overlay, passed Windows x64, Linux
+GCC x86-64 with ASan/UBSan/LSan, Linux GCC ARM64/QEMU with ASan/UBSan
+(298.76 seconds under QEMU), and Linux Clang x86-64 release. Run:
 
 ```text
-ctest --test-dir <windows-build> -C RelWithDebInfo -R ^NativeModManagerTests$ --output-on-failure
+ctest --test-dir <windows-build> -C Release -R ^NativeModManagerTests$ --output-on-failure
 ASAN_OPTIONS=detect_leaks=1 ctest --test-dir <linux-x64-build> -R ^NativeModManagerTests$ --output-on-failure
 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir <linux-arm64-build> -R ^NativeModManagerTests$ --output-on-failure
 ```
