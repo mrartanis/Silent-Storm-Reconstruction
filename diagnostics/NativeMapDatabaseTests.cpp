@@ -7,6 +7,8 @@
 #endif
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataAI.h"
+#include "../DBFormat/DataAnimation.h"
 #include "../DBFormat/DataScenario.h"
 #include "../DBFormat/DataRPG.h"
 
@@ -48,15 +50,37 @@ template<class T> void AddRecords( const std::vector<CPtr<T> > &records )
 	for ( int id : ids )
 		Add( static_cast<std::uint32_t>( id ) );
 }
+
+std::uint64_t PrintResourceRoots( const char *family, const std::set<int> &ids,
+	bool printSummary, bool printIDs )
+{
+	std::uint64_t hash = UINT64_C(14695981039346656037);
+	for ( int id : ids )
+	{
+		if ( printIDs )
+			std::printf( "resource_root family=%s id=%d\n", family, id );
+		for ( int byte = 0; byte < 4; ++byte )
+		{
+			hash ^= static_cast<unsigned char>( static_cast<std::uint32_t>(id) >> (byte * 8) );
+			hash *= UINT64_C(1099511628211);
+		}
+	}
+	if ( printSummary )
+		std::printf( "resource_roots family=%s count=%zu digest=%016llX\n",
+			family, ids.size(), static_cast<unsigned long long>( hash ) );
+	return hash;
+}
 }
 
 int main( int argc, char **argv )
 {
 	const bool printRoots = argc == 3 && std::strcmp( argv[2], "--roots" ) == 0;
 	const bool printCampaignIDs = argc == 3 && std::strcmp( argv[2], "--campaign-ids" ) == 0;
-	if ( argc != 2 && !printRoots && !printCampaignIDs )
+	const bool printResourceRoots = argc == 3 && std::strcmp( argv[2], "--resource-roots" ) == 0;
+	const bool printResourceRootIDs = argc == 3 && std::strcmp( argv[2], "--resource-root-ids" ) == 0;
+	if ( argc != 2 && !printRoots && !printCampaignIDs && !printResourceRoots && !printResourceRootIDs )
 	{
-		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db> [--roots|--campaign-ids]\n" );
+		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db> [--roots|--campaign-ids|--resource-roots|--resource-root-ids]\n" );
 		return 2;
 	}
 	try
@@ -214,6 +238,51 @@ int main( int argc, char **argv )
 			}
 			for ( int id : reachableVariants )
 				std::printf( "scenario_reachable_variant=%d\n", id );
+		}
+		// Keep the root assertions in the ordinary CTest path; the optional
+		// flags only control diagnostic printing.
+		{
+			// This is a potential scenario-template closure. Runtime random
+			// variant selection may use only a subset in a given session.
+			std::set<int> buildingIDs( reachableVariants.begin(), reachableVariants.end() );
+			std::set<int> terrainIDs( reachableVariants.begin(), reachableVariants.end() );
+			std::set<int> waypointIDs, unitIDs, groupIDs, guardAnimationIDs, scriptIDs;
+			for ( int id : reachableVariants )
+			{
+				const auto *variant = variants->GetRecord( id );
+				if ( !variant ) return 16;
+				if ( variant->pScript ) scriptIDs.insert( ID( variant->pScript ) );
+				for ( const auto &waypoint : variant->waypoints )
+					if ( waypoint ) waypointIDs.insert( ID( waypoint ) );
+				for ( const auto &unit : variant->pUnits )
+				{
+					if ( !unit ) continue;
+					unitIDs.insert( ID( unit ) );
+					if ( unit->pGroup ) groupIDs.insert( ID( unit->pGroup ) );
+					if ( unit->pGuardAnimation ) guardAnimationIDs.insert( ID( unit->pGuardAnimation ) );
+				}
+			}
+			const bool listIDs = printResourceRootIDs;
+			const bool summary = printResourceRoots || printResourceRootIDs;
+			const auto buildingHash = PrintResourceRoots( "Buildings", buildingIDs, summary, listIDs );
+			const auto terrainHash = PrintResourceRoots( "Terrain", terrainIDs, summary, listIDs );
+			const auto waypointHash = PrintResourceRoots( "Waypoints", waypointIDs, summary, listIDs );
+			const auto unitHash = PrintResourceRoots( "Units", unitIDs, summary, listIDs );
+			const auto groupHash = PrintResourceRoots( "Groups", groupIDs, summary, listIDs );
+			const auto guardAnimationHash = PrintResourceRoots( "Animations-guard", guardAnimationIDs, summary, listIDs );
+			const auto scriptHash = PrintResourceRoots( "Lua-variant", scriptIDs, summary, listIDs );
+			if ( buildingIDs.size() != 985 || terrainIDs.size() != 985 ||
+				waypointIDs.size() != 1357 || unitIDs.size() != 1117 ||
+				groupIDs.size() != 97 || guardAnimationIDs.size() != 4 ||
+				scriptIDs.size() != 47 ||
+				buildingHash != UINT64_C(0xC568A7F7EB837585) ||
+				terrainHash != UINT64_C(0xC568A7F7EB837585) ||
+				waypointHash != UINT64_C(0x4347512C8B8B7C62) ||
+				unitHash != UINT64_C(0xF03726B7CCC79175) ||
+				groupHash != UINT64_C(0xB3B458E2B8360B13) ||
+				guardAnimationHash != UINT64_C(0x830893280521BE14) ||
+				scriptHash != UINT64_C(0x20F53D173CF351DE) )
+				return 17;
 		}
 		std::uint64_t reachDigest = 14695981039346656037ULL;
 		for ( int id : reachableVariants )
