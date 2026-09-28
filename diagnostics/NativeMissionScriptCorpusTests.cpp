@@ -16,9 +16,11 @@
 #include "../Script/lopcodes.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <cstdio>
 #include <iterator>
+#include <limits>
 #include <map>
 #include <set>
 #include <string>
@@ -84,6 +86,7 @@ int main( int argc, char **argv )
 	std::uint64_t digest = UINT64_C(14695981039346656037);
 	std::size_t bytes = 0;
 	std::size_t empty = 0;
+	std::size_t numericConstants = 0, wideIntegerConstants = 0;
 	std::map<std::string, std::size_t> globalReads;
 	std::set<int> windowScriptIDs;
 	for ( const NDb::CScript *script : scripts )
@@ -108,6 +111,18 @@ int main( int argc, char **argv )
 		{
 			Proto *proto = state->protos[protoIndex];
 			if ( !proto ) continue;
+			for ( Number number : proto->numbers )
+			{
+				++numericConstants;
+				if ( std::isfinite(number) && std::trunc(number) == number &&
+					(number < static_cast<Number>((std::numeric_limits<std::int32_t>::min)()) ||
+					 number > static_cast<Number>((std::numeric_limits<std::int32_t>::max)())) )
+				{
+					++wideIntegerConstants;
+					std::printf( "lua_wide_integer script=%d value=%.17g\n",
+						script->GetRecordID(), static_cast<double>(number) );
+				}
+			}
 			for ( Instruction instruction : proto->code )
 			{
 				if ( GET_OPCODE(instruction) != OP_GETGLOBAL ) continue;
@@ -147,6 +162,8 @@ int main( int argc, char **argv )
 	}
 	std::printf( "scripts=%zu empty=%zu bytes=%zu digest=%016llX\n",
 		scripts.size(), empty, bytes, static_cast<unsigned long long>( digest ) );
+	std::printf( "lua_numeric_constants=%zu wide_integer_constants=%zu\n",
+		numericConstants, wideIntegerConstants );
 	static const char *windowGlobals[] = {
 		"CreateWindow", "GetWindow", "windowGetProperty", "windowSetProperty",
 		"ButtonGetState", "ButtonCreateState", "GetCursorPos", "GetUITime" };
@@ -266,6 +283,7 @@ int main( int argc, char **argv )
 	for ( int id : unparsed ) std::printf( "script_root_unparsed id=%d\n", id );
 	// The original baseline corpus is our fixed cross-architecture oracle.
 	return scripts.size() == 113 && empty == 1 && bytes == 355575 &&
+		numericConstants == 18 && wideIntegerConstants == 0 &&
 		digest == UINT64_C(0xC2462A66D562BAF6) && windowReads == 6 &&
 		globalReads["ShowObjectives"] == 0 &&
 		windowScriptIDs.size() == 1 && *windowScriptIDs.begin() == 126 &&

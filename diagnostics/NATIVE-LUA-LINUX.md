@@ -138,3 +138,14 @@ from source commit `bc7e00aa74e21cf895ba56c2574238fcc7916f05`.
 It contains no FMOD DLL and has no `fmod.dll` or `FSOUND_` import. The
 archive has not passed an in-game smoke: the current remote D3D session
 cannot create a device even for an older known-good archive.
+
+# Stage-2 ABI follow-up (2026-09-28)
+
+`NativeMissionScriptCorpusTests` now also inspects each parsed prototype's
+numeric constant pool when reading the 113 original `game.db` scripts.
+It asserts 18 pooled numbers and zero integral pooled constants outside
+the signed 32-bit range on Windows x64, Linux x86-64 and ARM64/QEMU.
+This constrains, but does not settle, the live `Script/lobject.h`
+`ObjectHash` host-`long` question: short numeric literals are encoded in
+instructions and Lua code can compute large keys. The ABI decision and
+remaining check are tracked in `STAGE2-ABI-AUDIT.md`.
