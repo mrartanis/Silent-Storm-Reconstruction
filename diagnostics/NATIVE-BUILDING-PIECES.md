@@ -23,11 +23,24 @@ Expected output:
 ```
 construction_rows=885 geometry_ids=814 entries=2928 nonempty=2926 parts=28188 vertices=853549 indices=1049304 polygons=294617 digest=288D6D988119C2E5
 empty_ids=629,856
+unlinked_package_entries=966
 ```
 
-Diagnostic Windows x86, target Windows x64, Linux GCC/Clang x86-64,
-and ARM64/QEMU matched. GCC x86-64 used ASan/UBSan/LSan; ARM64/QEMU
-used ASan/UBSan with leak checking disabled. The two empty entries are
+The test now also checks the source-side DB join: every one of the 814
+construction geometry IDs is a row in the shipped `Geometries` DB table
+(ID 10). The 966 package entries whose low 16-bit geometry ID has no
+such row cannot be selected by `CBuilding::Build`: its wall/solid key is
+formed from the resolved `pGeometry` DB pointer. This is a reachability
+claim for this game path, **not** a claim that the extra package bytes are
+editor-only or decoded. `CGameView`'s model path likewise takes a
+`CGeometry` DB pointer; its separate typed audit is in
+`NATIVE-MODEL-GEOMETRY-RESOURCES.md`.
+
+The original semantic digest matched diagnostic Windows x86, target
+Windows x64, Linux GCC/Clang x86-64, and ARM64/QEMU. The added DB-row
+and 966-unlinked assertions passed Windows x64, Linux GCC x86-64 under
+ASan/UBSan, and ARM64/QEMU under ASan/UBSan (LSan off); this new
+assertion has not been repeated with x86 or Clang. The two empty entries are
 preserved as data, not assumed to be errors or editor-only records.
 The complete Windows x64 suite passed 166/166 tests; the ordinary Linux
 GCC x86-64 suite passed 135/135 tests after this registration.
@@ -41,5 +54,5 @@ reference only.
 This verifies the typed data consumed by the loader, not the asynchronous
 lazy-request path, `CWallObjectInfoClipper`/`CSolidObjectInfoClipper`, GPU
 geometry, or rendering in a mission. Those remain separate integration
-checks. The other 966 geometry-package IDs not mapped to `CGeometry` in
-`game.db` remain unclassified.
+checks. The 966 extra package entries remain of unknown provenance but
+have no identified base-game path through these two geometry loaders.

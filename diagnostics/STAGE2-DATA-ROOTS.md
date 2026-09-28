@@ -1,11 +1,12 @@
-# Stage-2 shipped-resource roots (item 2a, in progress)
+# Stage-2 shipped-resource roots (item 2 evidence ledger)
 
 Scope: the base Steam game. Shipped mods are optional and arbitrary
 external mods are not a gate. This ledger identifies **source-code entry edges** into the
-23 base `.res` families. It does not yet enumerate every ID selected from
-`game.db`/Lua, prove that every family is reached in normal play, or equate
-byte-level package coverage with typed coverage. Stage-2 closeout item 2
-requires those later joins.
+23 base `.res` families. This is a bounded graph of source loader edges and
+effective base-game data, not a claim that every ID is selected in a
+playthrough or that byte-level package coverage implies typed coverage.
+The 2026-09-28 final review below states which stage-2 data paths are
+covered and which visual/client paths are deferred.
 
 The input baseline is `G:\SteamLibrary\steamapps\common\Silent Storm\res`.
 `PORTABLE-RESOURCE-CORPUS.md` records all 23 packages (57,880 indexed
@@ -24,7 +25,7 @@ the graph and means a `.res`-only scan can select the wrong payload.
 | `Chapters` | `iChapterMap.cpp` global chapter ID → `shareChapterInfo` → `CChapterInfoLoader` | `NativeCampaignMapResourceTests` proves the normal side 1/2 reachable subset |
 | `Effects` | `GView.cpp` DB particle effect ID → `shareParticles` → `CParticlesLoader` | `NativeParticleRuntimeResourceTests` covers CPU keys; GPU particles deferred |
 | `Fonts` | `GLocale.cpp` DB font ID → `shareFonts` → `CFileFont` | client text display; no stage-2 world decoder requirement established |
-| `Geometries` | `GView.cpp` DB model/part key → `shareObjInfo`; `GObjectInfo.cpp` → `CObjectInfoLoader` | `NativeModelGeometryResourceTests` decodes all 6,824 DB-linked package parts; 966 other entries remain unclassified, rendering later |
+| `Geometries` | `GView.cpp` DB model/part key → `shareObjInfo`; `GBuilding.cpp` DB wall/solid key → `shareWallClippers`/`shareSolidClippers` → `CObjectInfoPiecesLoader` | `NativeModelGeometryResourceTests` decodes 6,824 DB-linked model parts; `NativeBuildingPieceResourceTests` decodes 2,928 construction-piece records and proves all 814 construction geometry IDs have DB rows. The 966 other package IDs have no DB geometry row and no identified base-game key path; rendering later. |
 | `Globals` | `iGlobalMap.cpp` campaign map ID → `shareGlobalInfo` → `CGlobalInfoLoader` | `NativeCampaignMapResourceTests`; normal side 1/2 IDs 3/4 strict |
 | `Groups` | `MapBuild.cpp` group ID → `shareUnitGroups` → `CUnitGroupAIInfoLoader` | `NativeAIRouteResourceTests`; route waypoint-name references |
 | `Heads` | `LSHeadPortable.cpp` DB head ID → `shareHeads` → `HeadResourceData.cpp` | `NativeHeadResourceTests`; game-used CPU face data, display later |
@@ -224,7 +225,7 @@ every live mission outcome; the named diagnostics above retain exact scope.
 |---|---|---|
 | Addressed collision/map/campaign data | `AIBSPTrees`, `AIBinds`, `AIGeometries`, `Buildings`, `Chapters`, `Globals`, `Groups`, `Terrain`, `Units`, `Waypoints` | No new untyped present scenario payload identified. Keep door-234 fallback and absent candidate IDs explicit. |
 | Addressed CPU animation/face/effect data | `Animations`, `Binds`, `Effects`, `Heads`, `Locators`, `Sequences`, `Skeletons` | Their corpus/loader tests exist. GPU playback, particles and light output are later stages. |
-| Graphics-stage resource use | `Fonts`, `Geometries`, `LRTextures`, `Lights`, `Textures` | `Geometries` already has a 6,824-record DB-linked CPU audit; 966 package entries lack a DB geometry ID and remain classified only as unlinked package records. Their rendering path, the other four visual families and animated-light WIP belong to the graphics/client stages, not a new stage-2 port. |
+| Graphics-stage resource use | `Fonts`, `Geometries`, `LRTextures`, `Lights`, `Textures` | Both identified `Geometries` CPU shapes are audited: 6,824 DB-linked model parts and 2,928 construction-piece records (overlapping ID sets). Its 966 package entries without a `CGeometry` DB row have no identified base-game loader key. Display, the other four visual families and animated-light WIP belong to graphics/client stages. |
 | Stage-1 media path | `Sounds` | Native audio and its manual game check were handled in stage 1; no new stage-2 world-data decoder is established. |
 
 The sequence gap is now addressed by `NativeHeadSequenceRuntimeTests`'s
@@ -239,11 +240,45 @@ are all backed. Two package IDs (6006/6007) have no DB row. See
 sampled-frame oracle. These are limits of the original content, not missing
 target-platform files to synthesize.
 
-The 23-family inventory now has no *identified* untyped present nonvisual
-base-game CPU payload. This is not yet a formal close of item 2: re-check
-the source graph and evidence family by family, then move to the ABI gate.
-Do not revive deferred particle/light rendering merely because their
-resource packages appear in this inventory.
+## Final item-2 source-edge and effective-file review (2026-09-28)
+
+The static source audit checked `CResourceOpener`, `CResourceFileOpener`,
+`CFileRequest`, share definitions and their `Get` callers in the committed
+Windows game and portable source lists. It found the second `Geometries`
+shape through building clippers, omitted from the first ledger. The
+`NativeBuildingPieceResourceTests` DB-row assertion closes that omission:
+Windows x64, Linux GCC x86-64 (ASan/UBSan) and ARM64/QEMU (ASan/UBSan)
+all report `construction_rows=885 geometry_ids=814 entries=2928
+digest=288D6D988119C2E5 unlinked_package_entries=966`. The separate
+model test covers the other game key shape. The 966 entries are *not*
+labelled editor-only; they are unreachable through either identified
+base-game `Geometries` loader because both keys originate in
+`CGeometry` DB pointers. A newly discovered non-DB source edge would
+reopen this conclusion.
+
+Effective selection was checked against the base install, not merely the
+23 package indexes. Numeric loose directories exist for
+`AIBSPTrees`, `AIGeometries`, `Animations`, `Buildings`, `Chapters`,
+`Heads`, `Terrain`, `Units`, `Textures`, `Sounds` and `Fonts`; the game
+chooses loose before package. The nonvisual typed tests above use the
+game opener with that precedence. `Animations` has two loose-only IDs
+(2628/2629); `Buildings` and `Terrain` each have loose-only 8021 outside
+the 985-variant scenario closure. The `Fonts`, `Textures` and `Sounds`
+loose-only files belong to the client graphics or already checked stage-1
+media paths. Families without a loose directory resolve to their package.
+The 23-family row table, DB/Lua ID joins above and each linked diagnostic
+are the coverage register; raw package count alone is never a pass.
+
+Within the agreed stage-2 boundary, no present, game-reachable
+nonvisual CPU resource type remains without a typed decoder/test on the
+three target architectures. Explicit original-content exceptions remain:
+door 234's absent BSP with a checked empty-loader result, missing
+optional scenario candidates, 445 selectable voice sequences without a
+file, and non-normal-menu campaign records with other shapes. These are
+not silently counted as decoded. Dynamic collision/mission parity is
+stage 7; display, lighting and particles as imagery are stages 3–4.
+This closes the *data-coverage* item, not stage 2 as a whole; the next
+gate is the ABI/file-contract audit.
 
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.

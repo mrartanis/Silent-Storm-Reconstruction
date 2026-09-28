@@ -64,16 +64,32 @@ int main(int argc, char **argv)
 		}
 	}
 	if (!constructionRows || geometryIDs.empty()) return 5;
+	// CBuilding::Build obtains each wall/solid geometry through its DB pointer.
+	// This is a separate Geometries.res loader from CGameView's model path,
+	// but it cannot reach package IDs whose low 16 bits lack a CGeometry row.
+	std::unordered_set<int> runtimeGeometries;
+	for (const auto &table : database.tables)
+	{
+		if (table.tableId != 10) continue; // Geometries
+		const int idColumn = Column(table.intNames, "ID");
+		if (idColumn < 0) return 12;
+		for (const auto &row : table.intRows)
+			runtimeGeometries.insert(row[idColumn]);
+	}
+	if (runtimeGeometries.empty()) return 12;
+	for (int geometryID : geometryIDs)
+		if (!runtimeGeometries.count(geometryID)) return 13;
 	const std::filesystem::path resourceDir(argv[2]);
 	S2FileIO::PortablePackageIndex index;
 	if (!index.Open((resourceDir / "Geometries.res").string())) return 6;
 	NGScene::AddResourceDir(resourceDir.string().c_str());
-	std::size_t entries = 0, nonempty = 0, parts = 0;
+	std::size_t entries = 0, nonempty = 0, parts = 0, unlinked = 0;
 	std::size_t vertices = 0, indices = 0, polygons = 0;
 	std::vector<int> emptyIDs;
 	for (const auto &entry : index.Entries())
 	{
 		const int id = entry.first;
+		if (!runtimeGeometries.count(id & 0xffff)) ++unlinked;
 		if (!geometryIDs.count(id & 0xffff)) continue;
 		try
 		{
@@ -140,8 +156,9 @@ int main(int argc, char **argv)
 	for (std::size_t i = 0; i < emptyIDs.size(); ++i)
 		std::printf("%s%d", i ? "," : "", emptyIDs[i]);
 	std::printf("\n");
+	std::printf("unlinked_package_entries=%zu\n", unlinked);
 	return constructionRows == 885 && geometryIDs.size() == 814 &&
 		entries == 2928 && nonempty == 2926 && parts == 28188 &&
 		vertices == 853549 && indices == 1049304 && polygons == 294617 &&
-		digest == UINT64_C(0x288D6D988119C2E5) ? 0 : 11;
+		unlinked == 966 && digest == UINT64_C(0x288D6D988119C2E5) ? 0 : 11;
 }

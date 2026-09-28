@@ -24,8 +24,11 @@ records=6824 skipped=966 vertices=980946 indices=1994631 polygons=620259 weights
 ```
 
 The package contains 7790 entries; 966 do not map to a `CGeometry`
-record by lower-16-bit ID. They are not classified as editor-only or
-unneeded without tracing their callers. Conversely, a database geometry
+record by lower-16-bit ID. The separate building-piece loader was traced:
+it also builds its key from a `CGeometry` DB pointer, and its test confirms
+all 814 construction geometry IDs have DB rows. Thus those 966 entries
+cannot be selected by either identified base-game geometry loader; their
+provenance is unknown, not asserted editor-only. Conversely, a database geometry
 record is not proof that its model appears in normal play. The original
 corpus audit decodes all DB-linked records; the subsequent CPU assembly
 check below constructs `CObjectInfo` for three examples. Neither test
@@ -73,5 +76,5 @@ ran under ASan/UBSan without LSan. The ordinary Linux GCC suite passed
 134/134, and the complete Windows x64 suite passed 165/165 after all
 targets were built. This checks three real records, not every
 runtime-reachable model, lazy-request scheduling, GPU skinning, clipping
-of building pieces, or display in a mission. The 966 unclassified package
-IDs remain unclassified.
+of building pieces, or display in a mission. The 966 extra package IDs
+remain undecoded, with no identified base-game loader path.
