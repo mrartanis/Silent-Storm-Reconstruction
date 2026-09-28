@@ -6,6 +6,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
+#include <cstring>
 #include "PortableFloat2Int.h"
 #if !defined(_WIN32)
 #include <cstdint>
@@ -42,9 +43,26 @@ const float FP_EPSILON = 1e-12f;
 const float FP_EPSILON2 = 1e-24f;
 // size of the static array
 #define ARRAY_SIZE( a ) ( sizeof( a ) / sizeof( (a)[0] ) )
-// access float as DWORD
-#define FP_BITS( fp ) ( *reinterpret_cast<DWORD*>( &(fp) ) )
-#define FP_BITS_CONST( fp ) ( *reinterpret_cast<const DWORD*>( &(fp) ) )
+// Access the IEEE-754 word without aliasing a float through a DWORD pointer.
+inline DWORD GameFloatBits( float value )
+{
+	static_assert( sizeof(DWORD) == sizeof(float), "float word size" );
+	DWORD bits;
+	std::memcpy( &bits, &value, sizeof(bits) );
+	return bits;
+}
+inline float GameFloatFromBits( DWORD bits )
+{
+	float value;
+	std::memcpy( &value, &bits, sizeof(value) );
+	return value;
+}
+inline void FlipFloatSign( float *value )
+{
+	*value = GameFloatFromBits( GameFloatBits( *value ) ^ 0x80000000u );
+}
+#define FP_BITS( fp ) GameFloatBits( fp )
+#define FP_BITS_CONST( fp ) GameFloatBits( fp )
 // clear MSb
 #define FP_ABS_BITS( fp ) ( FP_BITS( fp ) & 0x7FFFFFFF )
 #define FP_ABS_BITS_CONST( fp ) ( FP_BITS_CONST( fp ) & 0x7FFFFFFF )
@@ -196,7 +214,10 @@ inline void Zero( TYPE &val )
 template <class TYPE_OUT, class TYPE_IN>
 inline TYPE_OUT bit_cast( const TYPE_IN &val, TYPE_OUT *pMSVC6suck = 0 )
 {
-	return *reinterpret_cast<const TYPE_OUT*>( &val );
+	static_assert( sizeof(TYPE_OUT) == sizeof(TYPE_IN), "bit_cast size mismatch" );
+	TYPE_OUT result;
+	std::memcpy( &result, &val, sizeof(result) );
+	return result;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // square and triple functions

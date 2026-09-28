@@ -83,15 +83,15 @@ inline void SDiscretePos::MoveAndRotate( CVec3 *p ) const
 	{
 		case SDiscretePos::TURN_90:
 			swap( p->x, p->y );
-			FP_BITS( p->x ) ^= 0x80000000;
+			FlipFloatSign( &p->x );
 			break;
 		case SDiscretePos::TURN_180:
-			FP_BITS( p->x ) ^= 0x80000000;
-			FP_BITS( p->y ) ^= 0x80000000;
+			FlipFloatSign( &p->x );
+			FlipFloatSign( &p->y );
 			break;
 		case SDiscretePos::TURN_270:
 			swap( p->x, p->y );
-			FP_BITS( p->y ) ^= 0x80000000;
+			FlipFloatSign( &p->y );
 			break;
 		case SDiscretePos::FLIP:
 			break;

@@ -4,6 +4,7 @@
 #include "../FileIO/HeadlessPlatform.h"
 #include "../Misc/Geom.h"
 #endif
+#include "../Misc/Tools.h"
 #include "../Main/Transform.h"
 
 #include <cmath>
@@ -71,6 +72,19 @@ int main() {
       !Near(cover.y1, -0.570194125f) ||
       !Near(cover.y2, -0.0365372747f) ||
       cover.x1 >= cover.x2 || cover.y1 >= cover.y2) return 8;
+
+  float signedZero = GameFloatFromBits(0x80000000u);
+  if (GameFloatBits(signedZero) != 0x80000000u ||
+      FP_SIGN_BIT_CONST(signedZero) != 0x80000000u) return 9;
+  FlipFloatSign(&signedZero);
+  if (GameFloatBits(signedZero) != 0u) return 10;
+  const DWORD nanPayload = 0x7fc12345u;
+  float payload = GameFloatFromBits(nanPayload);
+  if (bit_cast<DWORD>(payload) != nanPayload) return 11;
+  FlipFloatSign(&payload);
+  if (GameFloatBits(payload) != (nanPayload ^ 0x80000000u)) return 12;
+  FlipFloatSign(&payload);
+  if (GameFloatBits(payload) != nanPayload) return 13;
 
   std::printf("rotated=%.9g,%.9g,%.9g radius2=%.9g cover=%.9g,%.9g,%.9g,%.9g\n",
               rotated.x, rotated.y, rotated.z,

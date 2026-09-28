@@ -28,6 +28,16 @@ The recovered x86 game is useful for this focused comparison; the original
 Steam executable remains the gameplay reference. This deterministic unit
 test is not a camera/frame comparison against Steam.
 
+The stage-2 follow-up removes strict-aliasing undefined behavior from the
+game-used IEEE-754 word helpers in `Misc/Tools.h`. `FP_BITS` is now a read-only
+word conversion via `std::memcpy`; the four sign-bit writes in
+`SDiscretePos::MoveAndRotate` use `FlipFloatSign` instead. The generic
+`bit_cast` likewise copies bytes and requires equal sizes. The regression
+checks exact `-0.0` and quiet-NaN payload bits, including a reversible sign
+flip. This keeps the original bit-level rotation contract without depending
+on MSVC aliasing behavior. It does not change the editor-only read sites or
+claim a rendering comparison with Steam.
+
 On the current Windows host:
 
 ```powershell
