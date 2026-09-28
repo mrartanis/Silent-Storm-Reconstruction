@@ -94,6 +94,18 @@ directories. Six optional historical mods with `description.txt` exist under
 fixtures, but optional mod support is not a stage-2 completion gate; this
 change does not claim arbitrary user-created mods or editor export formats.
 
+After the partial-overlay fix, the complete Windows x64 Release CTest suite
+passed 158/158 and the complete Linux GCC x86-64 suite passed 127/127 under
+ASan/UBSan/LSan. Clean native-media Windows x64 archive
+`G:\SS\lab\builds\stage2-optional-partial-mod-20260928-01` contains code
+`ed0649b` and `Game.exe` SHA-256
+`B69B5B69E72BEAAA02D35D60597B614BA468639FFE0BB93868F96D5419A237D1`;
+it has no `fmod.dll`. Isolated LabRun
+`G:\SS\lab\runs\stage2-optional-partial-mod-smoke-20260928-01` loaded all
+155 database tables, opened a responsive `Silent Storm` window, accepted
+the harness `quit` command, and exited without a crash dump. This was a
+base-game startup smoke, not a live mod UI or mod gameplay check.
+
 `S2_GAME_DB_PATH` must point to the original `game.db`; the test never edits
 that source file. It removes only its uniquely named successful fixture under
 the configured build scratch directory and retains a failed fixture for
