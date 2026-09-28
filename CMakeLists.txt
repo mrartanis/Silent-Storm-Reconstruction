@@ -761,6 +761,11 @@ target_include_directories(NativeCampaignMapResourceTests PRIVATE "${CMAKE_BINAR
 target_precompile_headers(NativeCampaignMapResourceTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeCampaignMapResourceTests PRIVATE Main)
 target_compile_features(NativeCampaignMapResourceTests PRIVATE cxx_std_17)
+add_executable(NativeModManagerTests "${root}/diagnostics/NativeModManagerTests.cpp")
+target_include_directories(NativeModManagerTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeModManagerTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeModManagerTests PRIVATE Main)
+target_compile_features(NativeModManagerTests PRIVATE cxx_std_17)
 add_executable(NativeHeadResourceTests "${root}/diagnostics/NativeHeadResourceTests.cpp")
 target_include_directories(NativeHeadResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeHeadResourceTests PRIVATE "${root}/Main/StdAfx.h")
@@ -1290,6 +1295,10 @@ if(S2_GAME_DIR)
       add_test(NAME NativeCampaignMapResourceTests
         COMMAND NativeCampaignMapResourceTests
           "${S2_GAME_DIR}/res/Chapters.res" "${S2_GAME_DIR}/res/Globals.res")
+    endif()
+    if(EXISTS "${S2_GAME_DIR}/game.db")
+      add_test(NAME NativeModManagerTests COMMAND NativeModManagerTests
+        "${S2_GAME_DIR}/game.db" "${CMAKE_BINARY_DIR}/mod-manager-scratch")
     endif()
     if(TARGET s2_bink_compat)
       set_tests_properties(NativeResourceOpenerTests NativeWaypointResourceTests PROPERTIES ENVIRONMENT_MODIFICATION

@@ -943,6 +943,28 @@ target_link_libraries(s2_game_resource_loader PUBLIC
   s2_game_resource_package s2_game_dg s2_game_structure)
 target_compile_features(s2_game_resource_loader PUBLIC cxx_std_17)
 target_compile_options(s2_game_resource_loader PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_mod_manager STATIC "${root}/Main/ModManager.cpp")
+target_include_directories(s2_game_mod_manager PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/ADOImport")
+target_link_libraries(s2_game_mod_manager PUBLIC
+  s2_game_database_runtime s2_game_resource_loader s2_game_dg)
+target_compile_features(s2_game_mod_manager PUBLIC cxx_std_17)
+target_compile_options(s2_game_mod_manager PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeModManagerTests "${root}/diagnostics/NativeModManagerTests.cpp")
+target_include_directories(NativeModManagerTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat")
+target_link_libraries(NativeModManagerTests PRIVATE
+  -Wl,--whole-archive s2_game_dbformat_records -Wl,--no-whole-archive
+  -Wl,--start-group s2_game_mod_manager s2_game_resource_loader
+  s2_game_resource_package s2_game_dg s2_game_database_runtime
+  s2_game_misc_runtime s2_game_structure s2_game_streams s2_game_objects
+  s2_portable_database s2_portable_package s2_portable_structure
+  -Wl,--end-group)
+target_link_options(NativeModManagerTests PRIVATE -Wl,--gc-sections)
+if(S2_GAME_DB_PATH)
+  add_test(NAME NativeModManagerTests COMMAND NativeModManagerTests
+    "${S2_GAME_DB_PATH}" "${CMAKE_BINARY_DIR}/mod-manager-scratch")
+endif()
 add_library(s2_game_campaign_map_data STATIC
   "${root}/Main/ChapterInfo.cpp"
   "${root}/Main/GlobalInfo.cpp")

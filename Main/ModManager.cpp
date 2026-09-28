@@ -1,8 +1,24 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#include "../FileIO/PortablePackageIndex.h"
+#include <cstdio>
+#include <filesystem>
+#include <fstream>
+#include <iterator>
+#include <stdexcept>
+#endif
 #include "ModManager.h"
+#if defined(_WIN32)
 #include "DG.h"						// ClearHoldQueue
+#else
+#include "DG.H"
+#endif
 #include "GResource.h"				// NGScene::{CloseAllResources,ClearResourceDirs,AddResourceDir}
-#include "..\ADOImport\BasicDB.h"	// NDatabase::{ClearDatabaseTables,Serialize} + CFileStream (via BasicChunk1.h)
+#include "../ADOImport/BasicDB.h"	// NDatabase::{ClearDatabaseTables,Serialize} + CFileStream (via BasicChunk1.h)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CModManager -- mod enumeration / activation. Reconstructed from
 // .\release\ModManager.obj (Game.exe). All methods are static; state is file-scope.
@@ -20,6 +36,7 @@ static vector<SModInfo> activatedMods;
 static void GetModInfo( vector<SModInfo> *pMods, const string &szDir )
 {
 	string szPath = szDir + "\\description.txt";
+#if defined(_WIN32)
 	HANDLE hFile = CreateFileA( szPath.c_str(), GENERIC_READ, FILE_SHARE_READ,
 	                            0, OPEN_EXISTING, 0, 0 );
 	if ( hFile == INVALID_HANDLE_VALUE )
@@ -45,6 +62,18 @@ static void GetModInfo( vector<SModInfo> *pMods, const string &szDir )
 	pMods->push_back( info );     // deep-copies both strings
 	CloseHandle( hFile );
 	delete[] pBuffer;
+#else
+	string resolved;
+	if ( !S2FileIO::ResolveGameResourcePath( szPath, &resolved ) )
+		return;
+	std::ifstream file( resolved, std::ios::binary );
+	if ( !file ) return;
+	string name{ std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>() };
+	SModInfo info;
+	info.szDirectory = szDir;
+	info.szName = name.c_str();
+	pMods->push_back( info );
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CModManager::GetBaseVersion @0x285b70
@@ -63,6 +92,7 @@ vector<SModInfo> *CModManager::GetActiveMods()
 void CModManager::GetAvailableMods( vector<SModInfo> *pMods )
 {
 	pMods->clear();
+#if defined(_WIN32)
 	WIN32_FIND_DATAA findData;
 	HANDLE hFind = FindFirstFileA( ".\\*", &findData );
 	if ( hFind == INVALID_HANDLE_VALUE )
@@ -77,6 +107,15 @@ void CModManager::GetAvailableMods( vector<SModInfo> *pMods )
 	}
 	while ( FindNextFileA( hFind, &findData ) );
 	FindClose( hFind );
+#else
+	std::error_code error;
+	for ( std::filesystem::directory_iterator it( ".", error ), end;
+		!error && it != end; it.increment(error) )
+	{
+		if ( it->is_directory(error) && !error )
+			GetModInfo( pMods, it->path().filename().string() );
+	}
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CModManager::Activate(vector<SModInfo>&) @0x285e60 -- re-activate the DB for a chosen mod set.
@@ -98,11 +137,19 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 	for ( size_t i = 0; i < mods.size(); ++i )
 	{
 		string szPath = mods[i].szDirectory + "\\description.txt";
+#if defined(_WIN32)
 		HANDLE hFile = CreateFileA( szPath.c_str(), GENERIC_READ, FILE_SHARE_READ,
 		                            0, OPEN_EXISTING, 0, 0 );
 		if ( hFile == INVALID_HANDLE_VALUE )
 			return false;
 		CloseHandle( hFile );
+#else
+		string resolved;
+		std::error_code error;
+		if ( !S2FileIO::ResolveGameResourcePath( szPath, &resolved ) ||
+			!std::filesystem::is_regular_file( resolved, error ) || error )
+			return false;
+#endif
 	}
 	// teardown (release @0x685f2c-0x685f3b)
 	ClearHoldQueue();							// release @0xd7c50
@@ -121,7 +168,11 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 	}
 	catch (...)
 	{
+#if defined(_WIN32)
 		MessageBox( 0, "File game.db not found", "Error", MB_OK );
+#else
+		std::fputs( "File game.db not found\n", stderr );
+#endif
 		return false;
 	}
 	NGScene::AddResourceDir( ".\\res" );		// release @0x685fb1: literal ".\res"
@@ -133,7 +184,15 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 		try
 		{
 			CFileStream f;
+#if defined(_WIN32)
 			f.OpenRead( ( mods[i].szDirectory + "\\game.db" ).c_str() );
+#else
+			string resolved;
+			if ( !S2FileIO::ResolveGameResourcePath(
+				mods[i].szDirectory + "\\game.db", &resolved ) )
+				throw std::runtime_error( "mod database not found" );
+			f.OpenRead( resolved.c_str() );
+#endif
 			NDatabase::Serialize( f, CStructureSaver::READ );
 		}
 		catch (...)
