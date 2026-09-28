@@ -223,15 +223,27 @@ every live mission outcome; the named diagnostics above retain exact scope.
 | Disposition | Families | Remaining stage-2 data action |
 |---|---|---|
 | Addressed collision/map/campaign data | `AIBSPTrees`, `AIBinds`, `AIGeometries`, `Buildings`, `Chapters`, `Globals`, `Groups`, `Terrain`, `Units`, `Waypoints` | No new untyped present scenario payload identified. Keep door-234 fallback and absent candidate IDs explicit. |
-| Addressed CPU animation/face/effect data | `Animations`, `Binds`, `Effects`, `Heads`, `Locators`, `Skeletons` | Their corpus/loader tests exist. GPU playback, particles and light output are later stages. |
-| **Open game-used CPU data gap** | `Sequences` | The current live loader/decoder test uses only IDs 6005, 371 and 7552. Join the game's `CSequence` DB IDs to effective resources, strictly decode every present game-linked payload and compare semantic values across targets. |
+| Addressed CPU animation/face/effect data | `Animations`, `Binds`, `Effects`, `Heads`, `Locators`, `Sequences`, `Skeletons` | Their corpus/loader tests exist. GPU playback, particles and light output are later stages. |
 | Graphics-stage resource use | `Fonts`, `Geometries`, `LRTextures`, `Lights`, `Textures` | `Geometries` already has a 6,824-record DB-linked CPU audit; 966 package entries lack a DB geometry ID and remain classified only as unlinked package records. Their rendering path, the other four visual families and animated-light WIP belong to the graphics/client stages, not a new stage-2 port. |
 | Stage-1 media path | `Sounds` | Native audio and its manual game check were handled in stage 1; no new stage-2 world-data decoder is established. |
 
-This is a finite next-action list, not a claim that item 2 is closed. After
-`Sequences`, re-evaluate the source graph for any remaining nonvisual loader
-edge before starting the ABI gate. Do not revive deferred particle/light
-rendering merely because their resource packages appear in this inventory.
+The sequence gap is now addressed by `NativeHeadSequenceRuntimeTests`'s
+optional full DB-linked mode. All 6,780 present `CSequence` payloads pass
+strict envelope/track decoding and the game's lazy loader on Windows x64,
+Linux x86-64 and ARM64/QEMU, with identical 14,204,108-byte semantic/wire
+digest `7F4692A1FFEBAD64`. The source DB also contains 1,579 sequence IDs
+without files; 445 are selectable voice-animation links, and the loader
+returns no sequence for each rather than crashing. Expression and idle IDs
+are all backed. Two package IDs (6006/6007) have no DB row. See
+`NATIVE-HEAD-RESOURCES-LINUX.md` for precise values and the separate x86
+sampled-frame oracle. These are limits of the original content, not missing
+target-platform files to synthesize.
+
+The 23-family inventory now has no *identified* untyped present nonvisual
+base-game CPU payload. This is not yet a formal close of item 2: re-check
+the source graph and evidence family by family, then move to the ABI gate.
+Do not revive deferred particle/light rendering merely because their
+resource packages appear in this inventory.
 
 Reproduce the static edge inventory with `rg` over `Main/` for
 `CResourceOpener`, `CFileRequest`, `share*.Get`, and the 23 package names.

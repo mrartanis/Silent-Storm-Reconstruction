@@ -129,3 +129,44 @@ source commit `e57ee88`:
 There is no `fmod.dll` file or `fmod.dll`/`FSOUND_` import. No live-game
 smoke is claimed for this archive; the in-process lazy-loader test is
 the direct game-code check for this package.
+
+## Game-linked sequence corpus follow-up (2026-09-28)
+
+The original three-ID `NativeHeadSequenceRuntimeTests` remains a quick
+blink/speech/expression playback regression. Its optional fourth argument,
+`<game.db>`, now runs the bounded source-to-payload audit:
+
+```text
+NativeHeadSequenceRuntimeTests <Sequences.res> <tree.mma> <game.db>
+```
+
+The game's `CSequence` table contains 8,359 IDs. Of these, 6,780 have an
+effective `Sequences` resource and all 6,780 pass strict envelope/track
+decoding and the actual `CHeadSequenceLoader`/`ISequencer` load. The test
+hashes sorted IDs, semantic duration/track counts, and all selected stream
+bytes: 14,204,108 bytes, 41,859 tracks, digest `7F4692A1FFEBAD64`. No
+loose `res/Sequences` override directory exists in this base install.
+`Sequences.res` has 6,782 entries: only 6006 and 6007 lack a DB record.
+
+The other 1,579 DB IDs lack payloads in the original package (ID-set digest
+`BAE8D088A791CBD7`). This is not a cross-platform read failure. The
+game's `CDBAckInfo::GetVoice` can select 5,978 distinct sequence IDs;
+445 of those lack a file (digest `368EA235718A571C`). All 445 are exercised
+through the game's lazy loader and return no sequence instead of crashing.
+The ten facial-expression IDs and three ambient-idle IDs all have files.
+An absent voice sequence can therefore mean no lip animation for that
+authored phrase; the test does not claim that the missing content exists or
+that every such phrase is observed in a mission.
+
+Windows x64, Linux GCC x86-64 and ARM64/QEMU under ASan+UBSan match these
+counts and digests, with no sanitizer diagnostic. The ordinary three-ID
+CTest also passes on all three after this change. The
+earlier x86-versus-x64 [face corpus](FACE-PARITY.md) exported these 6,780
+game sequences from the reconstructed x86 loader and compared sampled
+vertex results on one saved head; it is a separate behavioral oracle, not
+an x86 run of this new resource-hash test. The input `Sequences.res`,
+`game.db`, and `tree.mma` SHA-256 values are respectively
+`52C2C7133766AD42B46B9EC8C74874CC4CA9895562C25673C08529CB1EABBACB`,
+`314D7AA9E6339F0E6826BF2A0C71FDAD992AEC1D6074A2ED763A6F6FA62D62DF`,
+and `F711562E7532667E94F2F0AE01672C574F969585B5658D760494D519A56C5E12`.
+This is CPU data/loading coverage, not a render or every-frame parity claim.
