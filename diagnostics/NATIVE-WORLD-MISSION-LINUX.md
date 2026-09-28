@@ -779,3 +779,11 @@ window capture was obscured by another application, so this run does not
 independently prove visual menu rendering. The original `game.db`,
 `AIGeometries.res`, `Buildings.res`, `Terrain.res`, and `Waypoints.res`
 still match the baseline SHA-256 manifest.
+
+An additional Linux x86-64 Clang release build of the current
+`NativeWorldInitProbe` completed and passed the same 52/52 party-world
+save/load/resume sweep, including the deployment-spot comparison. The
+Clang `NativeMapDatabaseTests` root-discovery binary was rebuilt first;
+an older copy lacked `--roots` and returned usage status 2, which was a
+stale test executable rather than a world failure. This Clang run is not
+sanitizer evidence; GCC x86-64 supplied the ASan/UBSan/LSan sweep above.
