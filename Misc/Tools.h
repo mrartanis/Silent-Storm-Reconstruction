@@ -6,6 +6,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
+#include <cmath>
 #include <cstring>
 #include "PortableFloat2Int.h"
 #if !defined(_WIN32)
@@ -627,7 +628,9 @@ inline const float Min<float>( const float a, const float b )
 	}
 	return fpRet;
 	#else
-	return b < a ? b : a;
+	// x87 fcomp sets C0 on unordered operands as well as b < a;
+	// the asm then copies the original bits of b (including NaN payload).
+	return (std::isunordered(a, b) || b < a) ? b : a;
 	#endif
 }
 // returns minimum of two float values
@@ -654,7 +657,9 @@ inline const float Max<float>( const float a, const float b )
 	}
 	return fpRet;
 	#else
-	return a > b ? a : b;
+	// x87 fcomp selects a for equal operands (including signed zero),
+	// and b for unordered operands. Keep that bitwise selection on LP64.
+	return (std::isunordered(a, b) || a < b) ? b : a;
 	#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

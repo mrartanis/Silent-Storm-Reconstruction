@@ -24,8 +24,9 @@ so this is source-formula parity, not a direct Steam runtime trace.
 Because changing a hash can change unordered-map iteration order,
 this patch alone does not establish parity of damage ordering or chain
 reactions with the Steam x86 game. The current focused test is about
-pointer-width correctness; a live explosion/damage comparison is still
-required by stage 2. No claim about a Linux mission follows from this.
+pointer-width correctness; full dynamic Steam parity of explosions and
+damage ordering is the stage-7 gate, not a stage-2 ABI requirement.
+No claim about a Linux mission follows from this focused test.
 
 `NativeExplosionVoxelRendererTests` adds a narrower gameplay-path check:
 the original `CExplVoxelRenderer` rasterizes four triangles into a voxel

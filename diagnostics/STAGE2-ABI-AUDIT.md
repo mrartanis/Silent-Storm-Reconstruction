@@ -31,8 +31,65 @@ the completed pointer/structure/file audit of 3b–3d.
 The visible x86 assembly in `Misc/Tools.h` and `Main/Bound.h` is guarded
 by `_M_IX86` and has C++ alternatives for x64/ARM64. Assembly in
 `2DSceneSW`, `GCombiner`, `GfxBuffers` and `SWTexture` is renderer/client
-work outside this headless-world gate. The final source-list audit still
-has to ensure no other reachable unguarded assembly remains.
+work outside this headless-world gate. The final source-list finding is
+recorded in 3b below.
+
+## 3b: pointers, x86 scalar assembly and alignment (closed for the current source boundary)
+
+The game-used `SVoxelObjectHash` previously narrowed an object pointer
+through `int`. It now hashes the full `uintptr_t` and has a high-half
+collision regression (`NATIVE-VOXEL-HASH-LINUX.md`). `Main/RPGUnit.cpp`
+folds a full-width address explicitly into a 32-bit head seed, with
+`NativeHeadSeedTests`; that fold is a game rule, not an accidental cast.
+`Script/lsaver.cpp` keeps function pointers in `uintptr_t` maps while the
+file contains registered string IDs, not addresses. `FileIO/BasicChunk1.cpp`
+uses `uintptr_t` only to detect whether a write source aliases its own
+buffer; it retains the size/bounds check before forming an offset.
+The raw `(int)pMaterial.GetPtr()` in `GSceneInternal.h` is in a commented
+class. `iMission.cpp`'s `CSound* → CObjectBase*` cast is in the Windows
+client command layer, not in the portable world; its inheritance
+assumption belongs to a later client audit.
+
+The first typed-dereference scan found `Script/lstate.cpp`'s `*(int*)ud`:
+its only caller passes `&stacksize` from `lua_open`, an aligned local
+`int`. Byte-buffer casts in `PortableStructureChunks`,
+`PortableGameDatabase`, and `Misc/StrProc` use `char`/`uint8_t` views,
+not misaligned multi-byte loads. Raw float/int aliases in `GMatShare`,
+`MemObject`, `GParticleInfo`, `GTransparent` and D3D buffer code belong
+to deferred scene/renderer files per `STAGE2-SOURCE-BOUNDARY.md`; they
+are **not** declared safe, merely outside this headless-core gate.
+
+The assembly-backed `Misc/Tools.h` scalar `Min<float>`/`Max<float>`
+proved a live portability difference. Diagnostic Windows x86 selects
+the *first* input's bits for equal operands (`-0/+0` included), while
+the old x64 fallback of `Max<float>` selected the second; x86 x87
+`fcomp` also selects the second operand on an unordered comparison,
+while the old `Min<float>` fallback selected the first. The C++ branch
+now reproduces the x86 selection. `PortableFloat2IntTests` pins five
+ordered input pairs, including both zero orders, both NaN positions and
+ordinary `2/1`, by exact IEEE-754 bits. All five pass on diagnostic
+Windows x86, Windows x64, Linux GCC x86-64 (ASan/UBSan/LSan) and
+ARM64/QEMU (ASan/UBSan, LSan off). Its pre-existing conversion tests
+also cover current rounding modes and edge/NaN behavior; no naked x86
+assembly is required on x64/ARM64. The remaining `select_*` assembly
+helpers and `MemSetDWord` have no game caller found by source search;
+MMX-bound helpers are called by renderer/particle files only.
+
+The final source-list pass found no other unguarded x86 assembly in the
+portable game targets: the remaining hits are commented helpers,
+`2DSceneSW`, `SWTexture`, `GfxBuffers`, `GCombiner`, `GSceneParticles`,
+and `Bound` render/particle paths. `GetCPUID`, `Sign` and `Float2Int`
+are architecture-guarded. The `luaMakeCallParamsVector` format `f`
+branch has a pre-existing invalid `va_arg(..., float)` (varargs promote
+to `double`), but every game call found uses only `i`, `p`, `s` or an
+empty format; it is recorded as latent, not claimed as a reached game
+failure. A future game use of `f` must repair and test that branch.
+
+This is a scoped source/call-edge audit and address test, not the final
+ABI matrix. Reproduce the new scalar check by building and running
+`PortableFloat2IntTests` on each target; its `float_minmax` lines show
+both input and result words. Next is item 3c (wire/layout), followed by
+3d (paths/encoding).
 
 ### Reproduce this bounded source pass
 

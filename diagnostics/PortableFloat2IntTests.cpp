@@ -1,9 +1,17 @@
 #include "../Misc/PortableFloat2Int.h"
+#if defined(_WIN32)
+#define NOMINMAX
+#include <windows.h>
+#else
+#include "../FileIO/HeadlessPlatform.h"
+#endif
+#include "../Misc/Tools.h"
 
 #include <cfenv>
 #include <cmath>
 #include <cstdint>
 #include <limits>
+#include <cstdio>
 
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
 #include <xmmintrin.h>
@@ -52,5 +60,21 @@ int main() {
       S2Math::Float2IntWithCurrentRounding(std::numeric_limits<float>::quiet_NaN()) !=
           std::numeric_limits<std::int32_t>::min())
     return 6;
+  const std::uint32_t scalarPairs[][4] = {
+      {0x80000000u, 0x00000000u, 0x80000000u, 0x80000000u}, // -0, +0
+      {0x00000000u, 0x80000000u, 0x00000000u, 0x00000000u}, // +0, -0
+      {0x7FC12345u, 0x3F800000u, 0x3F800000u, 0x3F800000u}, // NaN, 1
+      {0x3F800000u, 0x7FC12345u, 0x7FC12345u, 0x7FC12345u}, // 1, NaN
+      {0x40000000u, 0x3F800000u, 0x3F800000u, 0x40000000u}, // 2, 1
+  };
+  for (const auto& pair : scalarPairs) {
+    volatile float first = GameFloatFromBits(pair[0]);
+    volatile float second = GameFloatFromBits(pair[1]);
+    const std::uint32_t minimum = GameFloatBits(Min<float>(first, second));
+    const std::uint32_t maximum = GameFloatBits(Max<float>(first, second));
+    std::printf("float_minmax a=%08X b=%08X min=%08X max=%08X\n",
+                pair[0], pair[1], minimum, maximum);
+    if (minimum != pair[2] || maximum != pair[3]) return 8;
+  }
   return 0;
 }
