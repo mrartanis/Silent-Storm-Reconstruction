@@ -14,6 +14,7 @@
 #include <cstring>
 #include <exception>
 #include <filesystem>
+#include <set>
 
 static std::uint64_t digest = 14695981039346656037ULL;
 static void Add(std::uint32_t value)
@@ -51,7 +52,8 @@ int main(int argc, char** argv)
   if (chapters.Entries().empty() || globals.Entries().empty()) return 4;
   NGScene::AddResourceDir(std::filesystem::path(argv[1]).parent_path().string().c_str());
   unsigned int chapterSectors = 0, globalSectors = 0;
-  unsigned int chapterData = 0, chapterImages = 0, globalPartial = 0;
+  unsigned int chapterData = 0, chapterOther = 0, globalPartial = 0;
+  std::set<int> decodedChapters, playableChapters;
   const char* kind = "Chapters";
   int resourceID = -1;
   const char* phase = "raw";
@@ -60,10 +62,11 @@ int main(int argc, char** argv)
     for (const auto& entry : chapters.Entries()) {
       resourceID = entry.first;
       resourceLength = entry.second.length;
-      // The seven large low-numbered entries are chapter-map image payloads,
-      // not CChapterInfo records. Their typed parser fails at scalar tag 2/3.
+      // Seven large low-numbered entries do not have the CChapterInfo field
+      // shape. Keep their raw-package coverage separate from typed records;
+      // the normal campaign maps below must not reference one of these IDs.
       if (entry.second.length > 100000) {
-        ++chapterImages;
+        ++chapterOther;
         continue;
       }
       phase = "strict";
@@ -73,6 +76,7 @@ int main(int argc, char** argv)
         strict->operator&(*raw.operator->());
       }
       ++chapterData;
+      decodedChapters.insert(entry.first);
       phase = "loader";
       CObj<CChapterInfoLoader> loader = new CChapterInfoLoader;
       loader->SetKey(entry.first);
@@ -117,6 +121,9 @@ int main(int argc, char** argv)
       loader->SetKey(entry.first);
       CGlobalInfo* global = loader->GetValue();
       if (!global) return 6;
+      if (entry.first == 3 || entry.first == 4)
+        for (const auto& sector : global->sectorsSet)
+          if (sector.nTemplate > 0) playableChapters.insert(sector.nTemplate);
       if (entry.first == 2 && (global->nMapID != 523 ||
           global->sectorsSet.size() != 2)) return 8;
       Add(static_cast<std::uint32_t>(entry.first));
@@ -138,12 +145,18 @@ int main(int argc, char** argv)
       kind, resourceID, resourceLength, phase);
     return 7;
   }
+  for (int id : playableChapters)
+    if (!decodedChapters.count(id)) {
+      std::fprintf(stderr, "playable chapter %d has no strictly decoded description\n", id);
+      return 10;
+    }
   NGScene::CloseAllResources();
-  std::printf("chapters=%u chapter_images=%u chapter_sectors=%u globals=%zu partial_globals=%u global_sectors=%u digest=%016llX\n",
-    chapterData, chapterImages, chapterSectors,
+  std::printf("chapters=%u playable_chapters=%zu other_chapter_entries=%u chapter_sectors=%u globals=%zu partial_globals=%u global_sectors=%u digest=%016llX\n",
+    chapterData, playableChapters.size(), chapterOther, chapterSectors,
     globals.Entries().size(), globalPartial, globalSectors,
     static_cast<unsigned long long>(digest));
-  if (chapterData != 20 || chapterImages != 7 || globalPartial != 1 ||
+  if (chapterData != 20 || playableChapters.size() != 14 ||
+      chapterOther != 7 || globalPartial != 1 ||
       chapterSectors != 176 || globalSectors != 19 ||
       digest != UINT64_C(0x4833295F6BB75174)) return 9;
   return 0;

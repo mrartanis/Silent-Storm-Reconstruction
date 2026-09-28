@@ -8,6 +8,7 @@
 #include "../FileIO/Streams.h"
 #include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataScenario.h"
+#include "../DBFormat/DataRPG.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -52,9 +53,10 @@ template<class T> void AddRecords( const std::vector<CPtr<T> > &records )
 int main( int argc, char **argv )
 {
 	const bool printRoots = argc == 3 && std::strcmp( argv[2], "--roots" ) == 0;
-	if ( argc != 2 && !printRoots )
+	const bool printCampaignIDs = argc == 3 && std::strcmp( argv[2], "--campaign-ids" ) == 0;
+	if ( argc != 2 && !printRoots && !printCampaignIDs )
 	{
-		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db> [--roots]\n" );
+		std::fprintf( stderr, "usage: NativeMapDatabaseTests <game.db> [--roots|--campaign-ids]\n" );
 		return 2;
 	}
 	try
@@ -120,8 +122,36 @@ int main( int argc, char **argv )
 		std::set<int> activeScenarioIDs;
 		CDBIterator<NDb::CGlobalMap> globalIt( *globalMaps );
 		while ( globalIt.MoveNext() )
+		{
+			if ( printCampaignIDs )
+				std::printf( "global_map_id=%d scenario=%d start_zone=%d base_zone=%d\n",
+					globalIt.Get()->GetRecordID(), ID(globalIt.Get()->pScenario),
+					ID(globalIt.Get()->pStartZone), ID(globalIt.Get()->pBaseZone) );
 			if ( globalIt.Get()->pScenario )
 				activeScenarioIDs.insert( globalIt.Get()->pScenario->GetRecordID() );
+		}
+		if ( printCampaignIDs )
+		{
+			auto *sides = NDatabase::GetTable<NDb::CSide>();
+			if ( !sides ) return 14;
+			CDBIterator<NDb::CSide> sideIt( *sides );
+			while ( sideIt.MoveNext() )
+				std::printf( "side_id=%d global_map_id=%d\n",
+					sideIt.Get()->GetRecordID(), sideIt.Get()->nGlobalMapID );
+			auto *chapterMaps = NDatabase::GetTable<NDb::CChapterMap>();
+			if ( !chapterMaps ) return 13;
+			CDBIterator<NDb::CChapterMap> chapterIt( *chapterMaps );
+			while ( chapterIt.MoveNext() )
+				std::printf( "chapter_map_id=%d\n", chapterIt.Get()->GetRecordID() );
+		}
+		// The shipped side menu offers only the Axis and Allies (DB IDs 1/2).
+		// Both must lead to authored global-map records, independently of the
+		// extra side rows and debug command that can request arbitrary IDs.
+		NDb::CSide *axis = NDb::GetDBSide( 1 );
+		NDb::CSide *allies = NDb::GetDBSide( 2 );
+		if ( !axis || !allies || axis->nGlobalMapID != 3 ||
+			allies->nGlobalMapID != 4 || !NDb::GetGlobalMap( 3 ) ||
+			!NDb::GetGlobalMap( 4 ) ) return 15;
 		std::set<int> scenarioRoots;
 		std::set<int> activeRoots;
 		std::size_t activeZones = 0;
