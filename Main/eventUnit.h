@@ -1,7 +1,7 @@
 #ifndef __EVENT_UNIT_H__
 #define __EVENT_UNIT_H__
 //
-#include "..\Misc\Geom.h"          // CRay / CVec3 (by-value event-payload members)
+#include "../Misc/Geom.h"          // CRay / CVec3 (by-value event-payload members)
 //
 namespace NRPG { class IInventoryItem; }   // CEventOnItemGiven payload (fwd -- CPtr needs only a decl here)
 //

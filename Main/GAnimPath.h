@@ -5,6 +5,7 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "GAnimBase.h"
+#include "../FileIO/GeometryWire.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NAnimation
 {
@@ -13,12 +14,14 @@ namespace NAnimation
 class CPathInterpolator: public CObjectBase
 {
 	OBJECT_BASIC_METHODS(CPathInterpolator);
+public:
 	struct SPathPoint
 	{
 		float fT;
 		CVec3 ptPos;
 		float fAngle; // direction angle
 	};
+private:
 	vector<SPathPoint> points;
 	struct SInterpolate
 	{
@@ -139,5 +142,31 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace
+static_assert(sizeof(NAnimation::CPathInterpolator::SPathPoint) == 20 &&
+              offsetof(NAnimation::CPathInterpolator::SPathPoint, fT) == 0 &&
+              offsetof(NAnimation::CPathInterpolator::SPathPoint, ptPos) == 4 &&
+              offsetof(NAnimation::CPathInterpolator::SPathPoint, fAngle) == 16,
+              "game animation path point wire fields");
+namespace S2FileIO {
+template<>
+struct StructureFieldCodec<NAnimation::CPathInterpolator::SPathPoint, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 20;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAnimation::CPathInterpolator::SPathPoint* value) {
+    return source && value && length == kWireSize &&
+      DecodeStructureScalar(source, 4, &value->fT) &&
+      StructureFieldCodec<CVec3>::Decode(source + 4, 12, &value->ptPos) &&
+      DecodeStructureScalar(source + 16, 4, &value->fAngle);
+  }
+  static bool Encode(const NAnimation::CPathInterpolator::SPathPoint& value,
+                     std::uint8_t* destination, std::size_t length) {
+    return destination && length == kWireSize &&
+      EncodeStructureScalar(value.fT, destination, 4) &&
+      StructureFieldCodec<CVec3>::Encode(value.ptPos, destination + 4, 12) &&
+      EncodeStructureScalar(value.fAngle, destination + 16, 4);
+  }
+};
+} // namespace S2FileIO
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

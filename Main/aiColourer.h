@@ -232,7 +232,32 @@ static_assert(sizeof(NAI::SDistanceInfo) == 32 &&
               "AI zone distance wire layout");
 static_assert(sizeof(NAI::SNeighbour) == 8 && sizeof(NAI::SLocalColorInfo) == 4,
               "game colour network wire sizes");
+static_assert(sizeof(CTRect<unsigned char>) == 4 &&
+              offsetof(CTRect<unsigned char>, left) == 0 &&
+              offsetof(CTRect<unsigned char>, top) == 1 &&
+              offsetof(CTRect<unsigned char>, right) == 2 &&
+              offsetof(CTRect<unsigned char>, bottom) == 3,
+              "game colour rectangle wire fields");
 namespace S2FileIO {
+template<>
+struct StructureFieldCodec<CTRect<unsigned char>, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 4;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     CTRect<unsigned char>* value) {
+    if (!source || !value || length != kWireSize) return false;
+    value->left = source[0]; value->top = source[1];
+    value->right = source[2]; value->bottom = source[3];
+    return true;
+  }
+  static bool Encode(const CTRect<unsigned char>& value,
+                     std::uint8_t* destination, std::size_t length) {
+    if (!destination || length != kWireSize) return false;
+    destination[0] = value.left; destination[1] = value.top;
+    destination[2] = value.right; destination[3] = value.bottom;
+    return true;
+  }
+};
 template<>
 struct StructureFieldCodec<NAI::SNeighbour, void> {
   static constexpr bool kPortable = true;

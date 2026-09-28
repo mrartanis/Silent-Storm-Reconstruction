@@ -910,7 +910,7 @@ static void AddNodeHP( CBuildingGrid *pGrid, const SBuildFragment &fr, int nHash
 		{
 			float fHP = 2.0f * pArmor->pMaterial->nVP * ipiece->second.fVolume; //!
 	//		ASSERT(fHP > 1);
-			if ( !std::isnan( fHP ) )
+			if ( std::isfinite( fHP ) )
 			{
 #ifdef _DEBUG
 				fTotalHP += fHP;
@@ -923,7 +923,12 @@ static void AddNodeHP( CBuildingGrid *pGrid, const SBuildFragment &fr, int nHash
 	//			ASSERT(0);
 				fHP = 10;
 			}
-			pGrid->AddHP( pt, ceil( fHP ) );
+			// AddHP takes a byte. Preserve the original low-byte result without
+			// an undefined floating-point-to-byte conversion (e.g. 635 -> 123).
+			double fByteHP = std::fmod( std::ceil( static_cast<double>( fHP ) ), 256.0 );
+			if ( fByteHP < 0.0 )
+				fByteHP += 256.0;
+			pGrid->AddHP( pt, static_cast<BYTE>( fByteHP ) );
 		}
 		else
 			pGrid->SetIndestructible( pt );

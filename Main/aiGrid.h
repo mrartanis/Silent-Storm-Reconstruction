@@ -545,6 +545,16 @@ public:
 
 static_assert(sizeof(NAI::STile) == 16 && sizeof(NAI::CNodesLayer::SLink) == 8,
               "game AI tile and link wire sizes");
+static_assert(sizeof(NAI::CNodesLayer::SLadderTransition) == 3 &&
+              offsetof(NAI::CNodesLayer::SLadderTransition, bUpper) == 0 &&
+              offsetof(NAI::CNodesLayer::SLadderTransition, nLadder) == 1 &&
+              offsetof(NAI::CNodesLayer::SLadderTransition, nLayerGroup) == 2,
+              "game ladder transition wire fields");
+static_assert(sizeof(NAI::CLayersGroup::SIgnoreRect) == 24 &&
+              offsetof(NAI::CLayersGroup::SIgnoreRect, ptOrigin) == 0 &&
+              offsetof(NAI::CLayersGroup::SIgnoreRect, ptXDir) == 8 &&
+              offsetof(NAI::CLayersGroup::SIgnoreRect, ptSize) == 16,
+              "game ignored rectangle wire fields");
 namespace S2FileIO {
 template<>
 struct StructureFieldCodec<NAI::STile, void> {
@@ -601,6 +611,48 @@ struct StructureFieldCodec<NAI::CNodesLayer::SLink, void> {
                      std::uint8_t* destination, std::size_t length) {
     return EncodeAILink(AILinkFields{value.dst.GetBits(), value.nHeight},
                         destination, length);
+  }
+};
+template<>
+struct StructureFieldCodec<NAI::CNodesLayer::SLadderTransition, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 3;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::CNodesLayer::SLadderTransition* value) {
+    if (!source || !value || length != kWireSize) return false;
+    value->bUpper = source[0] != 0;
+    std::memcpy(&value->nLadder, source + 1, 1);
+    std::memcpy(&value->nLayerGroup, source + 2, 1);
+    return true;
+  }
+  static bool Encode(const NAI::CNodesLayer::SLadderTransition& value,
+                     std::uint8_t* destination, std::size_t length) {
+    if (!destination || length != kWireSize) return false;
+    destination[0] = value.bUpper ? 1 : 0;
+    std::memcpy(destination + 1, &value.nLadder, 1);
+    std::memcpy(destination + 2, &value.nLayerGroup, 1);
+    return true;
+  }
+};
+template<>
+struct StructureFieldCodec<NAI::CLayersGroup::SIgnoreRect, void> {
+  static constexpr bool kPortable = true;
+  static constexpr std::size_t kWireSize = 24;
+  static bool Decode(const std::uint8_t* source, std::size_t length,
+                     NAI::CLayersGroup::SIgnoreRect* value) {
+    if (!value) return false;
+    float fields[6];
+    if (!DecodeStructureFloatFields(source, length, fields, 6)) return false;
+    value->ptOrigin = CVec2(fields[0], fields[1]);
+    value->ptXDir = CVec2(fields[2], fields[3]);
+    value->ptSize = CVec2(fields[4], fields[5]);
+    return true;
+  }
+  static bool Encode(const NAI::CLayersGroup::SIgnoreRect& value,
+                     std::uint8_t* destination, std::size_t length) {
+    const float fields[6] = {value.ptOrigin.x, value.ptOrigin.y,
+      value.ptXDir.x, value.ptXDir.y, value.ptSize.x, value.ptSize.y};
+    return EncodeStructureFloatFields(fields, 6, destination, length);
   }
 };
 } // namespace S2FileIO

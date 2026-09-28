@@ -703,6 +703,22 @@ void CStructureSaver::Start( bool bRead )
 						FinishChunk();
 					}
 				}
+				else if ( g_bWireAudit )
+				{
+					// A deliberately invalid 0xffffffff object-table tombstone
+					// has no live reader. Its body is intentionally skipped; do not
+					// attribute that body to the preceding object's type. Keep other
+					// unregistered classes visible as UNREAD findings.
+					for ( const auto &record : objectRecords )
+					{
+						if ( record.wireId == wireID && !record.valid &&
+							 record.typeId == static_cast<std::uint32_t>(-1) )
+						{
+							NWireAudit::frames.back().consumed[1] = 1;
+							break;
+						}
+					}
+				}
 				FinishChunk();
 			}
 		}

@@ -310,6 +310,11 @@ int main(int argc, char** argv) {
           SerializeShared(&saver);
         }
         CObj<NWorld::CWorld> restored;
+        const bool auditWorldWire = std::getenv("S2_WORLD_WIRE_AUDIT") != nullptr;
+        if (auditWorldWire) {
+          std::remove("_wireaudit.log");
+          g_bWireAudit = true;
+        }
         {
           CFileStream saved;
           saved.OpenRead(argv[5]);
@@ -318,6 +323,7 @@ int main(int argc, char** argv) {
           saver.Add(2, &restored);
           SerializeShared(&saver);
         }
+        if (auditWorldWire) g_bWireAudit = false;
         if (!restored || !restored->GetGlobalGame() ||
             !restored->GetGlobalGame()->GetHero() || !restored->GetOwnScript() ||
             !restored->GetTime() || restored->GetTime()->GetValue() != savedTime ||

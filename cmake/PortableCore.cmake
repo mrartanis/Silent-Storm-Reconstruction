@@ -192,6 +192,18 @@ target_include_directories(s2_game_ai_grid PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc" "${root}/DBFormat" "${root}/ADOImport")
 target_compile_features(s2_game_ai_grid PUBLIC cxx_std_17)
 target_compile_options(s2_game_ai_grid PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeAITileWireTests
+  "${root}/diagnostics/NativeAITileWireTests.cpp")
+target_include_directories(NativeAITileWireTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_compile_features(NativeAITileWireTests PRIVATE cxx_std_17)
+add_test(NAME NativeAITileWireTests COMMAND NativeAITileWireTests)
+add_executable(NativeAIDistanceWireTests
+  "${root}/diagnostics/NativeAIDistanceWireTests.cpp")
+target_include_directories(NativeAIDistanceWireTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_compile_features(NativeAIDistanceWireTests PRIVATE cxx_std_17)
+add_test(NAME NativeAIDistanceWireTests COMMAND NativeAIDistanceWireTests)
 add_library(s2_game_ai_position STATIC "${root}/Main/aiPosition.cpp")
 target_include_directories(s2_game_ai_position PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc")

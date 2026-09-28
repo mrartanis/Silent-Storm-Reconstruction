@@ -1,4 +1,10 @@
+#if defined(_WIN32)
 #include "../Main/StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "../Main/aiColourer.h"
 
 #include <cstdint>
@@ -6,6 +12,18 @@
 #include <limits>
 
 int main() {
+  using RectCodec = S2FileIO::StructureFieldCodec<CTRect<unsigned char>>;
+  if (!RectCodec::kPortable || RectCodec::kWireSize != 4) return 3;
+  CTRect<unsigned char> rect(1, 2, 253, 254), decodedRect;
+  std::uint8_t rectWire[4] = {};
+  const std::uint8_t expectedRect[4] = {1, 2, 253, 254};
+  if (!RectCodec::Encode(rect, rectWire, sizeof(rectWire)) ||
+      std::memcmp(rectWire, expectedRect, sizeof(rectWire)) != 0 ||
+      !RectCodec::Decode(rectWire, sizeof(rectWire), &decodedRect) ||
+      decodedRect.left != rect.left || decodedRect.top != rect.top ||
+      decodedRect.right != rect.right || decodedRect.bottom != rect.bottom ||
+      RectCodec::Decode(rectWire, 3, &decodedRect) ||
+      RectCodec::Encode(rect, rectWire, 3)) return 3;
   using Codec = S2FileIO::StructureFieldCodec<NAI::SDistanceInfo>;
   if (!Codec::kPortable || Codec::kWireSize != 32) return 1;
   NAI::SDistanceInfo value, decoded;

@@ -9,6 +9,7 @@
 
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 
 static bool Near(float a, float b)
 {
@@ -17,6 +18,23 @@ static bool Near(float a, float b)
 
 int main()
 {
+	using PathPoint = NAnimation::CPathInterpolator::SPathPoint;
+	using PathPointCodec = S2FileIO::StructureFieldCodec<PathPoint>;
+	if (!PathPointCodec::kPortable || PathPointCodec::kWireSize != 20) return 3;
+	PathPoint wirePoint{1.0f, CVec3(2.0f, 3.0f, 4.0f), -0.0f};
+	const std::uint8_t expectedPoint[20] = {
+		0, 0, 0x80, 0x3f, 0, 0, 0, 0x40, 0, 0, 0x40, 0x40,
+		0, 0, 0x80, 0x40, 0, 0, 0, 0x80};
+	std::uint8_t pointBytes[20] = {};
+	PathPoint decodedPoint{};
+	if (!PathPointCodec::Encode(wirePoint, pointBytes, sizeof(pointBytes)) ||
+		std::memcmp(pointBytes, expectedPoint, sizeof(pointBytes)) != 0 ||
+		!PathPointCodec::Decode(pointBytes, sizeof(pointBytes), &decodedPoint) ||
+		decodedPoint.fT != 1.0f || decodedPoint.ptPos.x != 2.0f ||
+		decodedPoint.ptPos.y != 3.0f || decodedPoint.ptPos.z != 4.0f ||
+		!std::signbit(decodedPoint.fAngle) ||
+		PathPointCodec::Decode(pointBytes, 19, &decodedPoint) ||
+		PathPointCodec::Encode(wirePoint, pointBytes, 19)) return 3;
 	std::vector<CVec3> straight{CVec3(0, 0, 0), CVec3(2, 0, 0)};
 	CObj<NAnimation::CPathInterpolator> path =
 		new NAnimation::CPathInterpolator(straight);

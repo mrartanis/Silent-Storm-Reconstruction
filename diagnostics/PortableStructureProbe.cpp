@@ -9,13 +9,22 @@
 #include <vector>
 
 int main(int argc, char** argv) {
-  if (argc < 2 || argc > 5) return 2;
+  if (argc < 2 || argc > 7) return 2;
   bool showObjects = false, showNested = false, showShape = false;
+  bool showInvalidBodies = false;
+  std::uint32_t requestedType = 0;
   for (int i = 2; i < argc; ++i) {
     const std::string option(argv[i]);
     if (option == "--objects") showObjects = true;
     else if (option == "--nested") showNested = true;
     else if (option == "--shape") { showShape = true; showNested = true; }
+    else if (option == "--invalid-bodies") {
+      showInvalidBodies = showShape = showNested = true;
+    }
+    else if (option == "--type" && i + 1 < argc) {
+      requestedType = static_cast<std::uint32_t>(std::stoul(argv[++i], nullptr, 0));
+      showShape = showNested = true;
+    }
     else return 2;
   }
   std::vector<S2FileIO::StructureChunk> chunks;
@@ -27,6 +36,7 @@ int main(int argc, char** argv) {
   std::ifstream file(argv[1], std::ios::binary);
   std::vector<char> buffer(65536);
   std::map<std::uint32_t, std::uint32_t> typesByWireId;
+  std::map<std::uint32_t, bool> validByWireId;
   for (const auto& chunk : chunks) {
     file.seekg(static_cast<std::streamoff>(chunk.payloadOffset));
     std::uint32_t remaining = chunk.length;
@@ -57,6 +67,7 @@ int main(int argc, char** argv) {
         for (const auto& record : records) {
           wireIds.insert(record.wireId);
           typesByWireId[record.wireId] = record.typeId;
+          validByWireId[record.wireId] = record.valid;
           if (record.valid) ++valid;
         }
         if (showObjects)
@@ -88,12 +99,17 @@ int main(int argc, char** argv) {
         std::printf("object-bodies %zu matched %zu unique-ids %zu types %zu\n",
             bodies.size(), matched, bodyIds.size(), types.size());
         if (showShape) {
-          for (std::size_t i = 0; i < bodies.size() && i < 3; ++i) {
+          for (std::size_t i = 0; i < bodies.size(); ++i) {
             const auto& body = bodies[i];
+            const auto type = typesByWireId[body.wireId];
+            if (requestedType ? type != requestedType :
+                (showInvalidBodies ? validByWireId[body.wireId] : i >= 3)) continue;
             const auto* payload = bytes.data() + body.bodyOffset;
             std::size_t at = 0;
-            std::printf("body %zu wire %08x type %08x fields", i, body.wireId,
-                typesByWireId[body.wireId]);
+            std::printf("body %zu wire %08x type %08x", i, body.wireId, type);
+            if (showInvalidBodies || requestedType)
+              std::printf(" valid %d", validByWireId[body.wireId] ? 1 : 0);
+            std::printf(" fields");
             while (at < body.bodyLength) {
               S2FileIO::StructureChunk field;
               if (!S2FileIO::DecodeStructureChunkAt(payload, body.bodyLength, at, &field))
