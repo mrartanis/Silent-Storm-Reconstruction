@@ -10,6 +10,7 @@
 #include "../DBFormat/DataMap.h"
 #include "../DBFormat/DataScenario.h"
 #include "../FileIO/PortableGameDatabase.h"
+#include "../FileIO/PortableSaveHeader.h"
 
 #include <chrono>
 #include <algorithm>
@@ -85,6 +86,38 @@ static int StartZoneId()
   return map && IsValid(map->pStartZone) ? map->pStartZone->GetRecordID() : 0;
 }
 
+static std::vector<std::string> RoundTripModSaveHeader(const std::filesystem::path& path)
+{
+  S2FileIO::SaveHeaderData header;
+  header.magic = 0x828ca022;
+  header.activeMods = static_cast<std::int32_t>(CModManager::GetActiveMods()->size());
+  header.screenshot.resize(S2FileIO::kSaveScreenshotPixels);
+  std::vector<std::uint8_t> wire(S2FileIO::kSaveHeaderWireSize);
+  if (!S2FileIO::EncodeSaveHeader(header, wire.data(), wire.size()))
+    throw std::runtime_error("cannot encode mod save header");
+  {
+    CFileStream output;
+    output.OpenWrite(path.string().c_str());
+    output.Write(wire.data(), static_cast<unsigned int>(wire.size()));
+    for (const auto& mod : *CModManager::GetActiveMods())
+      output.WriteString(mod.szDirectory);
+  }
+  {
+    CFileStream input;
+    input.OpenRead(path.string().c_str());
+    input.Read(wire.data(), static_cast<unsigned int>(wire.size()));
+    S2FileIO::SaveHeaderData decoded;
+    if (!S2FileIO::DecodeSaveHeader(wire.data(), wire.size(), &decoded) ||
+        decoded.magic != header.magic || decoded.activeMods != header.activeMods)
+      throw std::runtime_error("cannot decode mod save header");
+    std::vector<std::string> directories(decoded.activeMods);
+    for (auto& directory : directories) input.ReadString(directory);
+    if (input.GetPosition() != input.GetSize())
+      throw std::runtime_error("mod save header has trailing bytes");
+    return directories;
+  }
+}
+
 static std::string ReadGlobalMarker()
 {
   NGScene::CResourceFileOpener resource("Globals", 3);
@@ -132,6 +165,9 @@ int main(int argc, char** argv)
         CModManager::GetActiveMods()->front().szDirectory != "mYmOd" ||
         !NDb::GetGlobalMap(3) || StartZoneId() != zones.second)) result = 7;
     if (!result && ReadGlobalMarker() != "MOD-OVERRIDE") result = 13;
+    const std::vector<std::string> savedMods = result ? std::vector<std::string>() :
+        RoundTripModSaveHeader(root / "modded-save-header.bin");
+    if (!result && (savedMods.size() != 1 || savedMods.front() != "mYmOd")) result = 15;
     NDb::CGlobalMap* originalMap = result ? nullptr : NDb::GetGlobalMap(3);
     if (!result) {
       const SModInfo missing = {"missing", "NoSuchMod"};
@@ -146,6 +182,14 @@ int main(int argc, char** argv)
         !CModManager::GetActiveMods()->empty() || !NDb::GetGlobalMap(3) ||
         StartZoneId() != zones.first)) result = 10;
     if (!result && ReadGlobalMarker() != "BASE") result = 14;
+    if (!result && !CModManager::Activate(savedMods)) result = 16;
+    if (!result && (CModManager::GetBaseVersion() != 3 ||
+        CModManager::GetActiveMods()->size() != 1 ||
+        StartZoneId() != zones.second || ReadGlobalMarker() != "MOD-OVERRIDE")) result = 17;
+    if (!result && !CModManager::Activate(std::vector<SModInfo>{})) result = 18;
+    if (!result && (CModManager::GetBaseVersion() != 4 ||
+        !CModManager::GetActiveMods()->empty() || StartZoneId() != zones.first ||
+        ReadGlobalMarker() != "BASE")) result = 19;
     std::filesystem::current_path(oldWorkingDirectory);
   } catch (...) {
     result = 11;
