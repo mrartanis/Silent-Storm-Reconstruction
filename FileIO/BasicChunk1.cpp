@@ -369,7 +369,9 @@ void CStructureSaver::DataChunk( const chunk_id idChunk, void *pData, int nSize,
 			if ( nSize < 0 || !S2FileIO::CopyStructureField(
 				data.GetBuffer() + res.nStart, static_cast<std::size_t>(res.nLength),
 				pData, static_cast<std::size_t>(nSize) ) )
-				throw std::runtime_error( "structure field size mismatch" );
+				throw std::runtime_error( "structure field size mismatch: tag=" +
+					std::to_string(idChunk) + " wire=" + std::to_string(res.nLength) +
+					" memory=" + std::to_string(nSize) );
 		}
 		else
 		{

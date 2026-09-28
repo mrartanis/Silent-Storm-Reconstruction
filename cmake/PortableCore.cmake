@@ -943,6 +943,33 @@ target_link_libraries(s2_game_resource_loader PUBLIC
   s2_game_resource_package s2_game_dg s2_game_structure)
 target_compile_features(s2_game_resource_loader PUBLIC cxx_std_17)
 target_compile_options(s2_game_resource_loader PRIVATE -ffunction-sections -fdata-sections)
+add_library(s2_game_campaign_map_data STATIC
+  "${root}/Main/ChapterInfo.cpp"
+  "${root}/Main/GlobalInfo.cpp")
+target_include_directories(s2_game_campaign_map_data PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(s2_game_campaign_map_data PUBLIC s2_game_resource_loader)
+target_compile_features(s2_game_campaign_map_data PUBLIC cxx_std_17)
+target_compile_options(s2_game_campaign_map_data PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeCampaignMapResourceTests
+  "${root}/diagnostics/NativeCampaignMapResourceTests.cpp")
+target_include_directories(NativeCampaignMapResourceTests PRIVATE
+  "${root}/Main" "${root}/FileIO" "${root}/Misc")
+target_link_libraries(NativeCampaignMapResourceTests PRIVATE
+  -Wl,--start-group s2_game_campaign_map_data s2_game_resource_loader
+  s2_game_resource_package s2_game_dg s2_game_structure s2_game_streams
+  s2_game_objects s2_portable_package s2_portable_structure
+  s2_game_misc_runtime -Wl,--end-group)
+target_link_options(NativeCampaignMapResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_campaign_resource_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_campaign_resource_dir}/Chapters.res" AND
+     EXISTS "${_s2_campaign_resource_dir}/Globals.res")
+    add_test(NAME NativeCampaignMapResourceTests COMMAND NativeCampaignMapResourceTests
+      "${_s2_campaign_resource_dir}/Chapters.res"
+      "${_s2_campaign_resource_dir}/Globals.res")
+  endif()
+endif()
 add_executable(NativeResourceOpenerTests
   "${root}/diagnostics/NativeResourceOpenerTests.cpp")
 target_link_libraries(NativeResourceOpenerTests PRIVATE

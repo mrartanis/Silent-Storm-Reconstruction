@@ -1,4 +1,11 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+static void OutputDebugString(const char *message) { std::fputs(message, stderr); }
+#endif
 #include "GlobalInfo.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CChapterInfo

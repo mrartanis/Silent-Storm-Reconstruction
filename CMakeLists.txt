@@ -755,6 +755,12 @@ target_include_directories(NativeWaypointResourceTests PRIVATE "${CMAKE_BINARY_D
 target_precompile_headers(NativeWaypointResourceTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeWaypointResourceTests PRIVATE Main)
 target_compile_features(NativeWaypointResourceTests PRIVATE cxx_std_17)
+add_executable(NativeCampaignMapResourceTests
+  "${root}/diagnostics/NativeCampaignMapResourceTests.cpp")
+target_include_directories(NativeCampaignMapResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeCampaignMapResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeCampaignMapResourceTests PRIVATE Main)
+target_compile_features(NativeCampaignMapResourceTests PRIVATE cxx_std_17)
 add_executable(NativeHeadResourceTests "${root}/diagnostics/NativeHeadResourceTests.cpp")
 target_include_directories(NativeHeadResourceTests PRIVATE "${CMAKE_BINARY_DIR}/rc_compat")
 target_precompile_headers(NativeHeadResourceTests PRIVATE "${root}/Main/StdAfx.h")
@@ -1279,6 +1285,12 @@ if(S2_GAME_DIR)
         "${CMAKE_BINARY_DIR}/resource-opener-fixture")
     add_test(NAME NativeWaypointResourceTests
       COMMAND NativeWaypointResourceTests "${S2_GAME_DIR}/res/Waypoints.res")
+    if(EXISTS "${S2_GAME_DIR}/res/Chapters.res" AND
+       EXISTS "${S2_GAME_DIR}/res/Globals.res")
+      add_test(NAME NativeCampaignMapResourceTests
+        COMMAND NativeCampaignMapResourceTests
+          "${S2_GAME_DIR}/res/Chapters.res" "${S2_GAME_DIR}/res/Globals.res")
+    endif()
     if(TARGET s2_bink_compat)
       set_tests_properties(NativeResourceOpenerTests NativeWaypointResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
         "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
