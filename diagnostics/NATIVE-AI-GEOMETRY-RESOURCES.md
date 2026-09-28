@@ -1,5 +1,7 @@
 # Effective AI collision geometry resources (stage 2)
 
+## Geometry used to construct AI hulls
+
 `NativeAIGeometryResourceTests` selects `CAIGeometry` IDs from the original
 `game.db`, intersects them with the effective `AIGeometries` resource set,
 and reads every selected ID through the game's `CResourceOpener` and
@@ -51,3 +53,35 @@ After this test was added, the non-`extended` CTest suite passed 157/157
 on Windows x64 Release and 130/130 on Linux GCC x86-64 under
 ASan/UBSan/LSan. The earlier 52-root strict world audit is a separate,
 long-running gate; this resource test does not replace it.
+
+## Precomputed open/closed door collision
+
+`CAIMap::AddFlippingHull` obtains `AIBSPTrees` by the door ID and selects
+an open or closed precalculated collision set for the current destruction
+stage. `NativeAIBSPResourceTests` enumerates the effective package and
+loose IDs, strictly deserializes original tags 3 and 4, calls the original
+`CLoadTwoBSPTrees` loader, and hashes every stage's sorted piece IDs,
+grid cells, collision bounds and extents. This is an original game path,
+not a request to port an editor facility.
+
+All 193 package IDs are overridden by 193 shipping loose files. Expected
+output:
+
+```
+records=193 loose_files=193 overrides=193 loose_only=0 open_stages=965 closed_stages=965 pieces=1006 cells=265169 digest=4D794836A2553C87
+```
+
+Windows x86 diagnostic, Windows x64, Linux GCC/Clang x86-64 and
+ARM64/QEMU produced the same values. Linux x86-64 used ASan/UBSan/LSan;
+ARM64/QEMU used ASan/UBSan with LSan disabled. The original
+`AIBSPTrees.res` SHA-256 is
+`5570A6E383879E3739735D4CA69F84293EED1FE0D1AE4FBF9B41D025C877DD56`.
+Run the registered `NativeAIBSPResourceTests` CTest or directly execute
+`NativeAIBSPResourceTests <original-res-directory>`.
+
+This verifies loaded precomputed data, not door collision after an actual
+opening/destruction sequence in a mission. That dynamic path still needs
+its own state-transition regression.
+With this second resource test registered, the non-`extended` suite passed
+158/158 on Windows x64 Release and 131/131 on Linux GCC x86-64 under
+ASan/UBSan/LSan.

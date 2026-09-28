@@ -645,6 +645,17 @@ target_precompile_headers(NativeAnimationPathTests PRIVATE "${root}/Main/StdAfx.
 target_link_libraries(NativeAnimationPathTests PRIVATE Main)
 target_compile_features(NativeAnimationPathTests PRIVATE cxx_std_17)
 add_test(NAME NativeAnimationPathTests COMMAND NativeAnimationPathTests)
+add_executable(NativeAIBSPResourceTests
+  "${root}/diagnostics/NativeAIBSPResourceTests.cpp")
+target_include_directories(NativeAIBSPResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAIBSPResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAIBSPResourceTests PRIVATE Main)
+target_compile_features(NativeAIBSPResourceTests PRIVATE cxx_std_17)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/AIBSPTrees.res")
+  add_test(NAME NativeAIBSPResourceTests
+    COMMAND NativeAIBSPResourceTests "${S2_GAME_DIR}/res")
+endif()
 add_executable(NativeAIGeometryResourceTests
   "${root}/diagnostics/NativeAIGeometryResourceTests.cpp")
 target_include_directories(NativeAIGeometryResourceTests PRIVATE

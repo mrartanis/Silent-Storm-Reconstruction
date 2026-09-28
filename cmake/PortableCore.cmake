@@ -914,6 +914,23 @@ target_link_libraries(s2_game_map_terrain PUBLIC
   s2_game_resource_loader s2_game_dbformat_records s2_game_basic_share)
 target_compile_features(s2_game_map_terrain PUBLIC cxx_std_17)
 target_compile_options(s2_game_map_terrain PRIVATE -ffunction-sections -fdata-sections)
+add_executable(NativeAIBSPResourceTests
+  "${root}/diagnostics/NativeAIBSPResourceTests.cpp")
+target_link_libraries(NativeAIBSPResourceTests PRIVATE
+  -Wl,--start-group s2_game_ai_geometry_loader s2_game_ai_collision
+  s2_game_resource_loader s2_game_resource_package s2_game_basic_share
+  s2_game_transform s2_game_dg s2_game_structure s2_game_streams
+  s2_game_objects s2_portable_structure s2_portable_package
+  s2_game_misc_runtime -Wl,--end-group)
+target_link_options(NativeAIBSPResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_ai_bsp_res_dir
+    "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_ai_bsp_res_dir}/AIBSPTrees.res")
+    add_test(NAME NativeAIBSPResourceTests
+      COMMAND NativeAIBSPResourceTests "${_s2_ai_bsp_res_dir}")
+  endif()
+endif()
 add_executable(NativeAIGeometryResourceTests
   "${root}/diagnostics/NativeAIGeometryResourceTests.cpp")
 target_link_libraries(NativeAIGeometryResourceTests PRIVATE
