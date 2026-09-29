@@ -40,6 +40,8 @@ add_executable(PortablePackageIndexTests "${root}/diagnostics/PortablePackageInd
 target_link_libraries(PortablePackageIndexTests PRIVATE s2_portable_package)
 target_compile_features(PortablePackageIndexTests PRIVATE cxx_std_17)
 enable_testing()
+option(S2_ENABLE_DEFERRED_LIGHT_TEST
+  "Register unfinished animated-light resource test (stage 4)" OFF)
 set(S2_SCRIPT_CORPUS_DIR "" CACHE PATH "Directory containing the original autoload .l scripts")
 function(s2_add_lua_corpus_test)
   if(NOT S2_SCRIPT_CORPUS_DIR)
@@ -767,6 +769,20 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/Effects.res")
   set_tests_properties(NativeParticleRuntimeResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
 endif()
+if(S2_ENABLE_DEFERRED_LIGHT_TEST AND S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/res/Lights.res")
+  add_test(NAME NativeAnimatedLightResourceTests
+    COMMAND NativeAnimatedLightResourceTests "${S2_GAME_DIR}/res/Lights.res")
+  set_tests_properties(NativeAnimatedLightResourceTests PROPERTIES ENVIRONMENT_MODIFICATION
+    "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
+endif()
+add_executable(NativeAnimatedLightResourceTests
+  "${root}/diagnostics/NativeAnimatedLightResourceTests.cpp")
+target_include_directories(NativeAnimatedLightResourceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeAnimatedLightResourceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeAnimatedLightResourceTests PRIVATE
+  Main s2_portable_package)
+target_compile_features(NativeAnimatedLightResourceTests PRIVATE cxx_std_17)
 add_executable(NativeAnimationResourceTests
   "${root}/diagnostics/NativeAnimationResourceTests.cpp")
 target_include_directories(NativeAnimationResourceTests PRIVATE

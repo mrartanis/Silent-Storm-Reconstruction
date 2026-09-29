@@ -4,10 +4,11 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "DG.h"
+#include "DG.H"
 #include "A5Time.h"
 #include "GParticleFormat.h"
 #include "GResource.h"
+#include "../DBFormat/DataFormat.h"
 namespace NDb
 {
 	class CLightInstance;

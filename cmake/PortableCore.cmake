@@ -433,6 +433,7 @@ add_library(s2_game_scene_data STATIC
   "${root}/Main/GGeometry.cpp"
   "${root}/Main/GGeometryCore.cpp"
   "${root}/Main/GGeometryUtil.cpp"
+  "${root}/Main/GAnimLight.cpp"
   "${root}/Main/GObjectInfo.cpp"
   "${root}/Main/GParticleFormat.cpp"
   "${root}/Main/aiTerrain.cpp"
@@ -1416,6 +1417,20 @@ if(S2_RESOURCE_PACKAGE_PATH)
     add_test(NAME NativeParticleRuntimeResourceTests
       COMMAND NativeParticleRuntimeResourceTests
         "${_s2_effect_resource_dir}/Effects.res")
+  endif()
+endif()
+add_executable(NativeAnimatedLightResourceTests
+  "${root}/diagnostics/NativeAnimatedLightResourceTests.cpp")
+target_link_libraries(NativeAnimatedLightResourceTests PRIVATE
+  -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
+target_link_options(NativeAnimatedLightResourceTests PRIVATE -Wl,--gc-sections)
+if(S2_ENABLE_DEFERRED_LIGHT_TEST AND S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_light_resource_dir
+    "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  if(EXISTS "${_s2_light_resource_dir}/Lights.res")
+    add_test(NAME NativeAnimatedLightResourceTests
+      COMMAND NativeAnimatedLightResourceTests
+        "${_s2_light_resource_dir}/Lights.res")
   endif()
 endif()
 if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND

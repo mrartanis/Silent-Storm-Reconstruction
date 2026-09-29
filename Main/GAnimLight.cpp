@@ -1,7 +1,13 @@
+#if defined(_WIN32)
 #include "StdAfx.h"
+#else
+#include "../FileIO/StdAfx.h"
+#include "../FileIO/BasicChunk1.h"
+#include "../Misc/Geom.h"
+#endif
 #include "Transform.h"
 #include "GAnimLight.h"
-#include "..\DBFormat\DataFormat.h"
+#include "../DBFormat/DataFormat.h"
 #include "GScene.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
