@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <algorithm>
+#include <array>
 #include <vector>
 
 static std::uint64_t digest = UINT64_C(14695981039346656037);
@@ -285,16 +286,26 @@ int main( int argc, char **argv )
 			Add( slot.nUnitID );
 	}
 	const std::uint64_t slotDigest = digest;
+	// Item insertion order is not a game-visible contract and differs when the
+	// same map is built on 32/64-bit and ARM targets.  Hash stable gameplay
+	// values in canonical order: x/y at centimetre precision and z at map-unit
+	// precision (sub-unit z is FPU noise from floor placement, not a wire field).
+	std::vector<std::array<std::uint32_t, 8>> itemKeys;
+	itemKeys.reserve( map.items.size() );
 	for ( const SMapElement &item : map.items )
-	{
-		Add( item.pObject ? item.pObject->nParentID : 0 );
-		Add( item.pos.nFloor );
-		Add( Float2Int( item.pos.ptPos.x * 1000 ) );
-		Add( Float2Int( item.pos.ptPos.y * 1000 ) );
-		Add( Float2Int( item.pos.ptPos.z * 1000 ) );
-		Add( item.nRelFloor );
-		Add( item.bOpen ); Add( item.bBorder );
-	}
+		itemKeys.push_back( {
+			static_cast<std::uint32_t>( item.pObject ? item.pObject->nParentID : 0 ),
+			static_cast<std::uint32_t>( item.pos.nFloor ),
+			static_cast<std::uint32_t>( Float2Int( item.pos.ptPos.x * 100 ) ),
+			static_cast<std::uint32_t>( Float2Int( item.pos.ptPos.y * 100 ) ),
+			static_cast<std::uint32_t>( Float2Int( item.pos.ptPos.z ) ),
+			static_cast<std::uint32_t>( item.nRelFloor ),
+			static_cast<std::uint32_t>( item.bOpen ),
+			static_cast<std::uint32_t>( item.bBorder ) } );
+	std::sort( itemKeys.begin(), itemKeys.end() );
+	for ( const auto &item : itemKeys )
+		for ( std::uint32_t value : item )
+			Add( value );
 	std::printf( "built=%d buildings=%zu units=%zu items=%zu waypoints=%zu slots=%zu scripts=%zu script_bytes=%zu digest=%016llX\n",
 		built, map.buildings.size(), map.units.size(), map.items.size(),
 		map.waypoints.size(), map.slots.size(), map.scripts.size(), scriptBytes,
@@ -323,7 +334,7 @@ int main( int argc, char **argv )
 		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 0 ||
 		  routeDigest != UINT64_C(0xCBF29CE484222325) ||
 		  behaviorDigest != UINT64_C(0xCBF29CE484222325) ||
-		  digest != UINT64_C(0x751202F4B6E394E0) ) )
+		  digest != UINT64_C(0xFA16CE1A15846F5F) ) )
 		return 4;
 	if ( variantID == 810 &&
 		( map.buildings.size() != 1 || map.units.size() != 2 ||
@@ -332,7 +343,7 @@ int main( int argc, char **argv )
 		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 0 ||
 		  routeDigest != UINT64_C(0xC3F6B0B1E282EE0F) ||
 		  behaviorDigest != UINT64_C(0x1150A6A5921D1F4D) ||
-		  digest != UINT64_C(0x558E222D9ED26DA6) ) )
+		  digest != UINT64_C(0xDB8A643EE32FFCAF) ) )
 		return 4;
 	if ( variantID == 2400 &&
 		( map.buildings.size() != 1 || map.units.size() != 5 ||
@@ -340,7 +351,7 @@ int main( int argc, char **argv )
 		  routedUnits != 5 || unitRoutePoints != 10 || groupRoutePoints != 0 ||
 		  routeDigest != UINT64_C(0xBDADCF3CD005A847) ||
 		  behaviorDigest != UINT64_C(0x12659D562097CF78) ||
-		  digest != UINT64_C(0x29C99EC264C4C6E7) ) )
+		  digest != UINT64_C(0x4A5F2EBCB7C6CA9F) ) )
 		return 4;
 	if ( variantID == 3830 && deterministic &&
 		( map.buildings.size() != 7 || map.units.size() != 26 ||
@@ -349,7 +360,7 @@ int main( int argc, char **argv )
 		  routedUnits != 10 || unitRoutePoints != 36 || groupRoutePoints != 17 ||
 		  routeDigest != UINT64_C(0xF11ECF559130C3B2) ||
 		  behaviorDigest != UINT64_C(0x04DA549A759E4957) ||
-		  digest != UINT64_C(0x2DD3DDC11A704B89) ) )
+		  digest != UINT64_C(0xE1FBA16F1FFAF877) ) )
 		return 4;
 	if ( variantID == 4526 &&
 		( map.buildings.size() != 7 || map.units.size() != 49 ||
@@ -358,7 +369,7 @@ int main( int argc, char **argv )
 		  routedUnits != 0 || unitRoutePoints != 0 || groupRoutePoints != 14 ||
 		  routeDigest != UINT64_C(0xC9FCDC98D9DCD6F3) ||
 		  behaviorDigest != UINT64_C(0x7EAF4F97AD129EED) ||
-		  digest != UINT64_C(0xA65A2070B18C1067) ) )
+		  digest != UINT64_C(0xC26EF134D7A3DAA8) ) )
 		return 4;
 	return built ? 0 : 3;
 }

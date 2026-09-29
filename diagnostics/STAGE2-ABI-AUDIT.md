@@ -1,10 +1,12 @@
-# Stage-2 ABI and file-contract audit (item 3, open)
+# Stage-2 ABI and file-contract audit (item 3, closed in agreed scope)
 
 Scope is the game-used CPU/source boundary in `STAGE2-SOURCE-BOUNDARY.md`
 and the shipped-resource graph in `STAGE2-DATA-ROOTS.md`. This is a
 category-by-category audit, not a claim that a text search or green CTest
 alone establishes ABI portability. Visual output, renderer internals,
 editor-only tools and arbitrary mods are outside this stage.
+Stage 2 was accepted as closed on 2026-09-29; dated "next check" notes
+below record the order of the audit and do not reopen its agreed scope.
 
 ## 3a: game words and host `long` (first pass, 2026-09-28)
 
@@ -149,7 +151,7 @@ listed uses have explicit fixed-width types or are outside this stage's
 live release path. The subsequent 3b pass is recorded above. A claim of
 item-3 completion needs 3c/3d and the final matrix, not this first pass.
 
-## 3c: serialized structures and direct file streams (in progress)
+## 3c: serialized structures and direct file streams (closed for current source boundary)
 
 The primary game input and save route is `CStructureSaver`. Its typed
 `StructureFieldCodec` paths encode little-endian scalars and the reached
@@ -169,7 +171,7 @@ Direct-stream inventory, classified by actual call edge:
 |---|---|---|
 | `FilesPackage::Open` | Game resource loader. It uses `PortablePackageIndex` to parse the 8-byte signature/offset and index words explicitly, then opens the resolved package for resource payloads. All 23 shipped package families have read coverage in `STAGE2-DATA-ROOTS.md`. | Retain package-index regression; do not infer endian safety from the legacy `SFileInfo` host struct. |
 | `FilesPackage::Update` / `RescanDir` | Windows-only package writer called by tooling, not the game resource read path. | Outside the game-only stage-2 gate. |
-| `CStructureSaver` | `game.db`, resource object streams and save state. | Inspect the remaining non-codec/raw and special-object edges statically, and pair any reached gap with a byte-level test. |
+| `CStructureSaver` | `game.db`, resource object streams and save state. | Reached raw/special-object edges were inspected with strict 52-root and targeted dynamic-state tests below; any newly reached raw type needs a new address test. |
 | `CDataStream::operator<<` / `>>` and direct `Read` / `Write` | The generic host-memory operators exist; the only source call sites found for those operators are the Windows-only package-update diagnostic text stream. `FilesPackage`'s 4-byte integer reads and `Cruncher`'s 1/4-byte operations are the relevant lower-level game-format edges. | Explicitly check the reached direct-format words; do not treat the unused generic operator as a safe serializer. |
 | `CICLoad` / `CICSave` / `CSaveManager` | Game save header reads/writes the fixed 256,008-byte little-endian/BGRA format through `PortableSaveHeader`; active-mod names use `CDataStream` string lengths before the compressed object graph. | Header byte vector and original-save probe in `PORTABLE-SAVE-HEADER.md`; string-length and compressor prefix tests below. |
 | `bmpfile.cpp`, `iMain.cpp`, `GTexture.cpp`, `SWTexture.cpp` | Bitmap screenshot output or client-side image/texture loading. | Defer visual formats to the graphics/client stage. |
@@ -227,8 +229,22 @@ original `game.db` and effective `res` tree; the byte-only stream and
 structure tests can run without game assets.
 
 The direct-stream caller inventory above is closed for the current source
-boundary. The remaining 3c pass is: (1) correlate the package, database,
-save header and `CStructureSaver` fixed byte vectors with the full input
-set; (2) record dynamic save-state classes not proved by initialization
-of 52 roots, and run targeted state checks where the core can reach them.
+boundary. The fixed byte vectors for package, database, save header and
+`CStructureSaver` are correlated with the full input set; dynamic save-state
+classes not proved by initialization of 52 roots are recorded in the census
+below and covered by targeted checks where the core can reach them.
+The first four-save type census and its explicit CPU/client split are in
+`STAGE2-SAVE-TYPE-INVENTORY.md`. Its comparison with six raw headless
+save fixtures shows the active voxel-grid/tracker classes are **not**
+present in the current post-explosion saves; the active-wave save and
+mounted-weapon state regressions now pass on diagnostic x86, Windows x64,
+Linux x86-64 and ARM64/QEMU (Linux under sanitizers). The observed
+retreat/critical/Lua-position states now also have targeted runtime
+save/load/continue checks on diagnostic x86, Windows x64, Linux x86-64
+and ARM64/QEMU; their wire field shapes match across all four targets.
+The remaining `CAAdder`, `CARandom` and `CABoneFilter` records are
+presentation-animation graph data; their wire shapes match, while runtime
+playback belongs to the deferred graphics stage. The current 3c game-core
+slice is therefore closed for the documented source boundary; it does not
+claim cross-loading GUI saves or visual animation playback.
 Cross-loading x64 saves in the Steam client is not a product gate.

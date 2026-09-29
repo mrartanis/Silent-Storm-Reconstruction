@@ -11,12 +11,14 @@
 int main(int argc, char** argv) {
   if (argc < 2 || argc > 7) return 2;
   bool showObjects = false, showNested = false, showShape = false;
+  bool showTypeList = false;
   bool showInvalidBodies = false;
   std::uint32_t requestedType = 0;
   for (int i = 2; i < argc; ++i) {
     const std::string option(argv[i]);
     if (option == "--objects") showObjects = true;
     else if (option == "--nested") showNested = true;
+    else if (option == "--type-list") { showTypeList = true; showNested = true; }
     else if (option == "--shape") { showShape = true; showNested = true; }
     else if (option == "--invalid-bodies") {
       showInvalidBodies = showShape = showNested = true;
@@ -98,6 +100,22 @@ int main(int argc, char** argv) {
         }
         std::printf("object-bodies %zu matched %zu unique-ids %zu types %zu\n",
             bodies.size(), matched, bodyIds.size(), types.size());
+        if (showTypeList) {
+          std::map<std::uint32_t, std::size_t> counts;
+          std::size_t invalid = 0;
+          for (const auto& body : bodies) {
+            const auto found = typesByWireId.find(body.wireId);
+            if (found == typesByWireId.end() || !validByWireId[body.wireId]) {
+              ++invalid;
+              continue;
+            }
+            ++counts[found->second];
+          }
+          for (const auto& item : counts)
+            std::printf("type=%x count=%zu\n", item.first, item.second);
+          std::printf("type-list types=%zu bodies=%zu invalid=%zu\n",
+              counts.size(), bodies.size(), invalid);
+        }
         if (showShape) {
           for (std::size_t i = 0; i < bodies.size(); ++i) {
             const auto& body = bodies[i];

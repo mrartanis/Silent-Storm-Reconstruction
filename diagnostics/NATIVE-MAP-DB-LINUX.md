@@ -112,7 +112,8 @@ commands and defined values, not the uninitialized positions. Root 5716
 then gave the same geometry and behavior digests on Windows x64, Linux x64
 and ARM64/QEMU.
 
-With both corrections, Windows x64 passed 148/148 CTests, including all
+With both corrections (before the later item-coordinate normalization),
+Windows x64 passed 148/148 CTests, including all
 52 roots in 61.26 seconds. GCC Linux x86-64 passed the extended 52-root
 test under ASan/UBSan/LSan in 494.30 seconds. Both produced the same
 aggregate digest, now asserted by the test:
@@ -123,3 +124,21 @@ geometry, route and behavior digests in direct probes. The ordinary ARM64
 suite passed 122/122 under ASan/UBSan with `-LE extended` (leak detection
 off under QEMU). The entire 52-root ARM64/QEMU extended test is not claimed
 complete.
+
+On 2026-09-29 the final ARM64/QEMU 52-root sweep was rerun after the
+cross-architecture comparison exposed item-only floating-point noise in
+roots 4517, 4518, 5003 and 5429. The probe now canonicalizes item tuples
+before hashing (stable parent/floor/flags, x/y at centimetre precision and
+z at map-unit precision); this preserves gameplay-relevant placement while
+excluding sub-unit floor FPU noise and insertion order. The x64 baseline
+was regenerated as
+`c79a9c158d3f64204b1529ae576f4b74e59388dd7f9531ad725f2994dcf3894d`, and
+ARM64/QEMU then completed all 52/52 roots under ASan/UBSan (LSan disabled)
+with that exact digest.
+
+The Linux Clang x86-64 `NativeMissionMapProbe` was rebuilt from the same
+source revision and the complete `NativeScenarioRootMaps` test was rerun;
+all 52/52 roots passed in 89.80 seconds with the same
+`c79a9c158d3f64204b1529ae576f4b74e59388dd7f9531ad725f2994dcf3894d`
+aggregate digest. An earlier differing result came from the stale probe
+binary, not from an architecture mismatch.

@@ -16,20 +16,30 @@
 #include "../Main/A5Script.h"
 #include "../Main/BuildingGrid.h"
 #include "../Main/aiCommander.h"
+#include "../Main/aiCombatLogic.h"
+#include "../Main/aiMisc.h"
 #include "../Main/aiRoute.h"
 #include "../Main/aiUnit.h"
 #include "../Main/eventUnit.h"
 #include "../Main/iSaveManager.h"
 #include "../Main/rpgGlobal.h"
 #include "../Main/RPGItem.h"
+#include "../Main/RPGItemSet.h"
+#include "../Main/RPGCritical.h"
+#include "../Main/RPGAllCriticals.h"
 #include "../Main/RPGUnit.h"
 #include "../Main/RPGUnitInfo.h"
 #include "../Main/RPGUnitMission.h"
 #include "../Main/wMain.h"
 #include "../Main/wBuilding.h"
+#include "../Main/wExplTracker.h"
+#include "../Main/wObject.h"
 #include "../Main/wUICommands.h"
 #include "../Main/wUnitCommands.h"
 #include "../Main/wUnitServer.h"
+#include "../Main/wUnitStates.h"
+#include "../Main/scriptCommon.h"
+#include "../Main/scriptPosition.h"
 #include "../Misc/RandomGen.h"
 #include "../Misc/BasicShare.h"
 #include "../MiscDll/Commands.h"
@@ -70,12 +80,18 @@ int main(int argc, char** argv) {
   const bool missionPartyShotSave = argc == 6 && std::strcmp(argv[3], "--mission-party-shot-save") == 0;
   const bool missionPartyShotSlot = argc == 5 && std::strcmp(argv[3], "--mission-party-shot-slot") == 0;
   const bool missionPartyExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-explosion-save") == 0;
+  const bool missionPartyActiveExplosionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-active-explosion-save") == 0;
+  const bool missionPartyCannonSave = argc == 6 && std::strcmp(argv[3], "--mission-party-cannon-save") == 0;
+  const bool missionPartyRetreatSave = argc == 6 && std::strcmp(argv[3], "--mission-party-retreat-save") == 0;
+  const bool missionPartyCriticalSave = argc == 6 && std::strcmp(argv[3], "--mission-party-critical-save") == 0;
+  const bool missionPartyLuaPositionSave = argc == 6 && std::strcmp(argv[3], "--mission-party-lua-position-save") == 0;
   const bool missionPartyGrenadeSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-save") == 0;
   const bool missionPartyGrenadeFlightSave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-flight-save") == 0;
   const bool missionPartyGrenadeInventorySave = argc == 6 && std::strcmp(argv[3], "--mission-party-grenade-inventory-save") == 0;
   const bool missionPartyEngGrenadeInventorySave = argc == 6 && std::strcmp(argv[3], "--mission-party-eng-grenade-inventory-save") == 0;
   const bool missionParty = missionPartyUIAck || missionPartyShot ||
     missionPartyShotSave || missionPartyShotSlot || missionPartyExplosionSave ||
+    missionPartyActiveExplosionSave || missionPartyCannonSave || missionPartyRetreatSave || missionPartyCriticalSave || missionPartyLuaPositionSave ||
     missionPartyGrenadeSave || missionPartyGrenadeFlightSave || missionPartyGrenadeInventorySave ||
     missionPartyEngGrenadeInventorySave;
   const bool missionWithUIAck = missionUIAck || missionParty || missionBasePartyUIAck ||
@@ -497,7 +513,163 @@ int main(int argc, char** argv) {
         if (!world->GetOwnScript()->GetGlobal("OnClickUsable").IsFunction())
           return 16; // Defined only after the authored opening sequence.
       }
-      if (missionPartyExplosionSave || missionPartyGrenadeSave || missionPartyGrenadeFlightSave ||
+      if (missionPartyCannonSave) {
+        if (variant != 810) return 90;
+        std::vector<NWorld::CCannon*> cannons;
+        world->GetCannons(&cannons);
+        auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+        NWorld::CCannon* cannon = nullptr;
+        for (auto* candidate : cannons)
+          if (candidate && !candidate->IsBroken() && !candidate->IsOccupied() &&
+              candidate->GetItem()) { cannon = candidate; break; }
+        if (!hero || !cannon) return 91;
+        auto* cannonItem = dynamic_cast<NRPG::CWeaponItem*>(cannon->GetItem());
+        if (!cannonItem) return 92;
+        // Exercise the persistent object graph without simulating UI approach
+        // movement or animation, which belong to the client/graphics stages.
+        hero->GetUnitRPG()->SetCannonItem(cannonItem);
+        cannon->SetCurrentUnit(hero);
+        hero->SetState(new NWorld::CUnitStateUsingCannon(hero, cannon));
+        if (hero->GetState() != NWorld::CUnit::ST_MACHINE_GUN) return 93;
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame()) return 94;
+        restored->RestoreRuntimeCaches(restored->GetGlobalGame());
+        auto* restoredHero = restored->GetUnitServerByPersID(
+          game->GetHero()->GetPers()->GetRecordID());
+        std::vector<NWorld::CCannon*> restoredCannons;
+        restored->GetCannons(&restoredCannons);
+        if (!restoredHero || restoredHero->GetState() != NWorld::CUnit::ST_MACHINE_GUN ||
+            restoredCannons.size() != cannons.size()) return 95;
+        bool linked = false;
+        for (auto* candidate : restoredCannons)
+          if (candidate && candidate->GetCurrentUnit() == restoredHero &&
+              restoredHero->GetUnitRPG()->GetCannonItem() == candidate->GetItem())
+            linked = true;
+        if (!linked) return 96;
+        std::printf("mounted-weapon state restored: cannons=%zu linked=1\n",
+          restoredCannons.size());
+        return 0;
+      }
+      if (missionPartyRetreatSave) {
+        if (variant != 810) return 97;
+        auto* shooter = world->GetUnitServer("pers1");
+        auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+        NAI::IAIUnit* aiUnit = NAI::GetAIUnit(shooter);
+        if (!shooter || !hero || !aiUnit) return 98;
+        const NAI::SPathPlace retreatPlace = hero->GetPosition().pos.p;
+        CObj<NAI::IAILogic> retreat = NAI::CreateAIRetreatLogic(aiUnit, retreatPlace);
+        if (!retreat || !dynamic_cast<NAI::CAIRetreatLogic*>(retreat.GetPtr())) return 99;
+        aiUnit->SetLogic(retreat);
+        if (aiUnit->GetLogic() != retreat.GetPtr()) return 100;
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame()) return 101;
+        restored->RestoreRuntimeCaches(restored->GetGlobalGame());
+        auto* restoredShooter = restored->GetUnitServer("pers1");
+        NAI::IAIUnit* restoredAI = NAI::GetAIUnit(restoredShooter);
+        auto* restoredRetreat = restoredAI ? restoredAI->GetLogic() : nullptr;
+        if (!restoredRetreat || !dynamic_cast<NAI::CAIRetreatLogic*>(restoredRetreat)) return 102;
+        std::printf("retreat logic restored: type=52443105\n");
+        return 0;
+      }
+      if (missionPartyCriticalSave) {
+        if (variant != 810) return 103;
+        auto* hero = world->GetUnitServerByPersID(game->GetHero()->GetPers()->GetRecordID());
+        if (!hero || !hero->GetUnitRPG()) return 104;
+        // C_AP_REDUCTION is the live AP-penalty critical and constructs CAPCritical.
+        hero->GetUnitRPG()->ApplyCritical(
+          NRPG::SCritical(NDb::CL_ANY, NDb::C_AP_REDUCTION, 3, 2.0f));
+        NRPG::CCritical* applied = nullptr;
+        if (!hero->GetUnitRPG()->HasCritical(NDb::C_AP_REDUCTION, &applied) || !applied ||
+            dynamic_cast<NRPG::CAPCritical*>(applied) == nullptr) return 105;
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame()) return 106;
+        restored->RestoreRuntimeCaches(restored->GetGlobalGame());
+        auto* restoredHero = restored->GetUnitServerByPersID(
+          game->GetHero()->GetPers()->GetRecordID());
+        NRPG::CCritical* restoredCritical = nullptr;
+        if (!restoredHero || !restoredHero->GetUnitRPG()->HasCritical(
+              NDb::C_AP_REDUCTION, &restoredCritical) || !restoredCritical ||
+            dynamic_cast<NRPG::CAPCritical*>(restoredCritical) == nullptr) return 107;
+        std::printf("critical state restored: type=a0812160\n");
+        return 0;
+      }
+      if (missionPartyLuaPositionSave) {
+        if (variant != 810) return 108;
+        CObj<NScript::CLUAObjectPosition> position =
+          new NScript::CLUAObjectPosition(CVec3(1.25f, -2.5f, 3.75f));
+        {
+          CFileStream saved;
+          saved.OpenWrite(argv[5]);
+          CStructureSaver saver(saved, CStructureSaver::WRITE);
+          saver.Add(2, &world);
+          saver.Add(3, &position);
+          SerializeShared(&saver);
+        }
+        CObj<NWorld::CWorld> restored;
+        CObj<NScript::CLUAObjectPosition> restoredPosition;
+        {
+          CFileStream saved;
+          saved.OpenRead(argv[5]);
+          CSharedHolder shared;
+          CStructureSaver saver(saved, CStructureSaver::READ);
+          saver.Add(2, &restored);
+          saver.Add(3, &restoredPosition);
+          SerializeShared(&saver);
+        }
+        if (!restored || !restored->GetGlobalGame() || !restoredPosition ||
+            fabs(restoredPosition->ptPos.x - 1.25f) > 0.0001f ||
+            fabs(restoredPosition->ptPos.y + 2.5f) > 0.0001f ||
+            fabs(restoredPosition->ptPos.z - 3.75f) > 0.0001f) return 109;
+        std::printf("Lua position restored: type=52122170\n");
+        return 0;
+      }
+      if (missionPartyExplosionSave || missionPartyActiveExplosionSave ||
+          missionPartyGrenadeSave || missionPartyGrenadeFlightSave ||
           missionPartyGrenadeInventorySave || missionPartyEngGrenadeInventorySave) {
         if (variant != 810) return 45;
         int buildingIndex = -1;
@@ -524,6 +696,78 @@ int main(int argc, char** argv) {
         CVec3 epicentre;
         info.pPos->pos.forward.RotateHVector(&epicentre,
           info.pGrid->GetLocalCenterForHarness());
+        if (missionPartyActiveExplosionSave) {
+          auto* grenade = NDb::GetRPGGrenade(21);
+          auto* thrower = world->GetUnitServer("pers1");
+          auto* master = static_cast<NWorld::CExplosionMaster*>(
+            world->GetExplosionMasterForHarness());
+          if (!grenade || !thrower || !master) return 80;
+          for (int i = 0; i < 4; ++i)
+            world->AddGrenadeExplosion(epicentre, grenade, thrower);
+          int savedTick = -1;
+          for (int tick = 220; tick < 250; ++tick) {
+            world->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = world->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (world->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                world->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 81;
+            for (const auto& tracker : master->explosions)
+              if (tracker && tracker->HasWavefrontForHarness()) savedTick = tick;
+            if (savedTick >= 0) break;
+          }
+          if (savedTick < 0 || !master->pSpace || master->explosions.empty()) return 82;
+          const auto activeCount = master->explosions.size();
+          std::printf("active explosion at tick %d: trackers=%zu queued=%zu state=%d\n",
+            savedTick, activeCount, master->toBeStarted.size(), int(master->state));
+          {
+            CFileStream saved;
+            saved.OpenWrite(argv[5]);
+            CStructureSaver saver(saved, CStructureSaver::WRITE);
+            saver.Add(2, &world);
+            SerializeShared(&saver);
+          }
+          CObj<NWorld::CWorld> restored;
+          {
+            CFileStream saved;
+            saved.OpenRead(argv[5]);
+            CSharedHolder shared;
+            CStructureSaver saver(saved, CStructureSaver::READ);
+            saver.Add(2, &restored);
+            SerializeShared(&saver);
+          }
+          if (!restored || !restored->GetGlobalGame()) return 83;
+          restored->RestoreRuntimeCaches(restored->GetGlobalGame());
+          auto* restoredMaster = static_cast<NWorld::CExplosionMaster*>(
+            restored->GetExplosionMasterForHarness());
+          if (!restoredMaster || !restoredMaster->pSpace ||
+              restoredMaster->explosions.size() != activeCount) return 84;
+          for (int tick = savedTick + 1; tick < savedTick + 400; ++tick) {
+            restored->UpdateWorld(tick * 50, nullptr);
+            while (auto* raw = restored->GetUICommand()) {
+              CObj<NWorld::CUICmd> command(raw);
+              if (restored->GetOwnScript()->IsUIActionIDPresent(command->GetID()))
+                restored->ExecuteCommand(new NWorld::CCmdInterfaceEvent(command->GetID()));
+            }
+            if (!NScript::luaLastError.szError.empty()) return 85;
+            if (restoredMaster->state == NWorld::CExplosionMaster::S_IDLE) break;
+          }
+          if (restoredMaster->state != NWorld::CExplosionMaster::S_IDLE ||
+              !restoredMaster->explosions.empty()) return 86;
+          int restoredIndex = 0;
+          for (const auto& building : restored->GetBuildingsForHarness()) {
+            if (restoredIndex++ != buildingIndex) continue;
+            if (!building || !building->GetInfo().pGrid) return 87;
+            unsigned long long live = 0, hp = 0, hash = 0;
+            building->GetInfo().pGrid->GetVoxelStatsForHarness(&live, &hp, &hash);
+            std::printf("restored active explosion settled: live=%llu hp=%llu hash=%016llx\n",
+              live, hp, hash);
+            if (hp >= hpBefore || hash == hashBefore) return 88;
+            return 0;
+          }
+          return 89;
+        }
         if (missionPartyGrenadeSave || missionPartyGrenadeFlightSave ||
             missionPartyGrenadeInventorySave || missionPartyEngGrenadeInventorySave) {
           auto* grenade = missionPartyEngGrenadeInventorySave ? nullptr : NDb::GetRPGGrenade(21);

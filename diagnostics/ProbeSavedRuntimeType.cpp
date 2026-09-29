@@ -83,12 +83,13 @@ bool PrintFields(const std::uint8_t* bytes, std::size_t size, int depth) {
 
 int main(int argc, char** argv) {
   if (argc != 3) {
-    std::cerr << "usage: ProbeSavedRuntimeType <game.sav> <type-id-hex>\n";
+    std::cerr << "usage: ProbeSavedRuntimeType <game.sav> <type-id-hex|--list-types>\n";
     return 2;
   }
+  const bool listTypes = std::string(argv[2]) == "--list-types";
   char* end = nullptr;
-  const unsigned long requested = std::strtoul(argv[2], &end, 16);
-  if (!end || end == argv[2] || *end || requested > UINT32_MAX) return 2;
+  const unsigned long requested = listTypes ? 0 : std::strtoul(argv[2], &end, 16);
+  if (!listTypes && (!end || end == argv[2] || *end || requested > UINT32_MAX)) return 2;
   std::ifstream file(argv[1], std::ios::binary);
   const std::vector<std::uint8_t> save((std::istreambuf_iterator<char>(file)),
                                        std::istreambuf_iterator<char>());
@@ -114,7 +115,27 @@ int main(int argc, char** argv) {
       !S2FileIO::IndexStructureObjectBodies(data + bodies.payloadOffset, bodies.length, &objects))
     return 3;
   std::map<std::uint32_t, std::uint32_t> types;
-  for (const auto& record : records) types[record.wireId] = record.typeId;
+  std::map<std::uint32_t, bool> valid;
+  for (const auto& record : records) {
+    types[record.wireId] = record.typeId;
+    valid[record.wireId] = record.valid;
+  }
+  if (listTypes) {
+    std::map<std::uint32_t, std::size_t> counts;
+    std::size_t unmatched = 0, invalid = 0;
+    for (const auto& object : objects) {
+      const auto found = types.find(object.wireId);
+      if (found == types.end()) { ++unmatched; continue; }
+      if (!valid[object.wireId]) { ++invalid; continue; }
+      ++counts[found->second];
+    }
+    for (const auto& item : counts)
+      std::cout << "type=" << std::hex << item.first << std::dec
+                << " count=" << item.second << "\n";
+    std::cout << "types=" << counts.size() << " bodies=" << objects.size()
+              << " invalid=" << invalid << " unmatched=" << unmatched << "\n";
+    return unmatched ? 3 : 0;
+  }
   unsigned matches = 0;
   const std::uint8_t* payload = data + bodies.payloadOffset;
   for (const auto& object : objects) {

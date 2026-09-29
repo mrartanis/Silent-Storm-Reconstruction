@@ -53,7 +53,7 @@ endforeach()
 
 string(SHA256 scenario_root_digest "${all_summaries}")
 message(STATUS "Built all ${root_count} active scenario root variants; digest=${scenario_root_digest}")
-set(expected_digest "2c281f9de3688e97011ccd069f4eeb2c1f74c7f04bb52df4de955d35286c2629")
+set(expected_digest "c79a9c158d3f64204b1529ae576f4b74e59388dd7f9531ad725f2994dcf3894d")
 if(NOT scenario_root_digest STREQUAL expected_digest)
   message(FATAL_ERROR "Scenario-root map digest differs from Windows/Linux x64 baseline: ${scenario_root_digest}")
 endif()
