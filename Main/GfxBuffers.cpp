@@ -64,7 +64,7 @@ void FreeLinearBuffers()
 	bWasLinearBufferLock = false;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void RealSetVertexStream( IDirect3DVertexBuffer9 *pBuf, int nStride );
+static void RealSetVertexStream( BgfxBuffer *pBuf, int nStride );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const int N_MAX_PRESENTS_IN_QUEUE = 4;
 template<class TDXBuffer, class TUserObject>
@@ -412,8 +412,8 @@ class CSysTexture: public CObjectBase
 	OBJECT_BASIC_METHODS(CSysTexture);
 	bool bBusy;
 public:
-	NWin32Helper::com_ptr<IDirect3DSurface9> pSurface;
-	NWin32Helper::com_ptr<IDirect3DTexture9> pTexture;
+	NWin32Helper::com_ptr<BgfxSurface> pSurface;
+	NWin32Helper::com_ptr<BgfxTexture> pTexture;
 	//
 	CSysTexture() { bBusy = false; }
 	CSysTexture( D3DFORMAT _format )
@@ -477,14 +477,14 @@ CSysTexture* CSurfaceRing::GetTexture()
 // class responsible for texture updates
 class CTextureLocker: public I2DBufferLock
 {
-	NWin32Helper::com_ptr<IDirect3DSurface9> pObj;
+	NWin32Helper::com_ptr<BgfxSurface> pObj;
 	EAccess access;
 	CPtr<CSysTexture> pLocker;
 	D3DLOCKED_RECT buf;
 	CTRect<int> rect;
 public:
 	// rect is specified for level 0
-	CTextureLocker( IDirect3DSurface9 *_pObj, const CTRect<int> &_rect, EAccess _access, D3DFORMAT format );
+	CTextureLocker( BgfxSurface *_pObj, const CTRect<int> &_rect, EAccess _access, D3DFORMAT format );
 	~CTextureLocker();
 	virtual void* GetBuffer() { return buf.pBits; }
 	virtual int GetStride() { return buf.Pitch; }
@@ -497,12 +497,12 @@ struct SD3DFormatHash
 typedef unordered_map<D3DFORMAT, CPtr<CSurfaceRing>, SD3DFormatHash > CFormatRingMap;
 static CFormatRingMap sysTextures;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CTextureLocker::CTextureLocker( IDirect3DSurface9 *_pObj, const CTRect<int> &_rect, EAccess _access, D3DFORMAT format )
+CTextureLocker::CTextureLocker( BgfxSurface *_pObj, const CTRect<int> &_rect, EAccess _access, D3DFORMAT format )
 : pObj(_pObj), rect(_rect), access( _access )
 {
 	static int nShitBuffer[1024];
 	HRESULT hr;
-	NWin32Helper::com_ptr<IDirect3DSurface9> pTempBuf;
+	NWin32Helper::com_ptr<BgfxSurface> pTempBuf;
 	//
 	DWORD dwLockFlags = 0;//D3DLOCK_NO_DIRTY_UPDATE;
 	CTRect<int> lockRect;
@@ -547,7 +547,7 @@ CTextureLocker::CTextureLocker( IDirect3DSurface9 *_pObj, const CTRect<int> &_re
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CTextureLocker::~CTextureLocker()
 {
-	NWin32Helper::com_ptr<IDirect3DSurface9> pTempBuf;
+	NWin32Helper::com_ptr<BgfxSurface> pTempBuf;
 	if ( access == INPLACE || access == INPLACE_READONLY )
 	{
 		pTempBuf = pObj;
@@ -588,7 +588,7 @@ CTexture::CTexture(CTB* _pTB, EWrap _wrap) : pTB(_pTB), nFrameUsed(0), wrap(_wra
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 I2DBufferLock* CTexture::Lock( int nLevel, EAccess access ) 
 {
-	NWin32Helper::com_ptr<IDirect3DSurface9> pSurface;
+	NWin32Helper::com_ptr<BgfxSurface> pSurface;
 	pTB->obj->GetSurfaceLevel( nLevel, pSurface.GetAddr() );
 	CTRect<int> rect = region;
 	rect.x1 >>= nLevel;
@@ -598,7 +598,7 @@ I2DBufferLock* CTexture::Lock( int nLevel, EAccess access )
 	return new CTextureLocker( pSurface, rect, access, pTB->GetFormat() ); 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void GetSurface( CTexture *pTexture, int nLevel, NWin32Helper::com_ptr<IDirect3DSurface9> *pRes )
+void GetSurface( CTexture *pTexture, int nLevel, NWin32Helper::com_ptr<BgfxSurface> *pRes )
 {
 	ASSERT( IsValid( pTexture ) );
 	pTexture->Touch();
@@ -616,7 +616,7 @@ class CCubeTB : public CObjectBase
 	int nSize, nMipLevels;
 	D3DFORMAT format;
 public:
-	NWin32Helper::com_ptr<IDirect3DCubeTexture9> obj;
+	NWin32Helper::com_ptr<BgfxTexture> obj;
 	//
 	CCubeTB() {}
 	CCubeTB( int _nSize, int _nMipLevels, D3DFORMAT _format, ETextureUsage usage )
@@ -675,14 +675,14 @@ inline D3DCUBEMAP_FACES GetD3DFace( EFace face )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 I2DBufferLock* CCubeTexture::Lock( EFace face, int nLevel, EAccess access ) 
 {
-	NWin32Helper::com_ptr<IDirect3DSurface9> pSurface;
+	NWin32Helper::com_ptr<BgfxSurface> pSurface;
 	pTB->obj->GetCubeMapSurface( GetD3DFace( face ), nLevel, pSurface.GetAddr() );
 	int nSize = pTB->GetSize();
 	CTRect<int> rect( 0, 0, nSize >> nLevel, nSize >> nLevel );
 	return new CTextureLocker( pSurface, rect, access, pTB->GetFormat() ); 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void GetSurface( CCubeTexture *pTexture, EFace face, int nLevel, NWin32Helper::com_ptr<IDirect3DSurface9> *pRes )
+void GetSurface( CCubeTexture *pTexture, EFace face, int nLevel, NWin32Helper::com_ptr<BgfxSurface> *pRes )
 {
 	ASSERT( IsValid( pTexture ) );
 	pTexture->Touch();
@@ -1181,7 +1181,7 @@ typedef unordered_map<SGeometryType, CObj<CGeometryBuffer>,SGeometryTypeHash > C
 static CGeometryCacheHash geometries;
 static CDynamicTrisIndices32 dynamicTris32;
 static CDynamicTrisIndices16 dynamicTris16;
-static NWin32Helper::com_ptr<IDirect3DVertexBuffer9> pCurrentVB;
+static NWin32Helper::com_ptr<BgfxBuffer> pCurrentVB;
 static CObj<CTexture> pLinearBufferMRU;
 int nCurrentFrame = NCache::N_START_RU;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1432,7 +1432,7 @@ CCubeTexture* MakeCubeTexture( int nSize, int nMipLevels, int nPixelID, ETexture
 	return pRes;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void RealSetVertexStream( IDirect3DVertexBuffer9 *pBuf, int nStride )
+static void RealSetVertexStream( BgfxBuffer *pBuf, int nStride )
 {
 	if ( pCurrentVB != pBuf )
 	{
@@ -1568,7 +1568,7 @@ void DrawLineStrip( CGeometry *pGeom )
 /*void CopyTexture( NGfx::CTexture *_pTarget, NGfx::CTexture *_pSrc )
 {
 // GetRenderTargetData()
-	NWin32Helper::com_ptr<IDirect3DSurface9> pSrc, pDst;
+	NWin32Helper::com_ptr<BgfxSurface> pSrc, pDst;
 	GetSurface( _pTarget, 0, &pDst );
 	GetSurface( _pSrc, 0, &pSrc );
 	HRESULT hr = pDevice->CopyRects( pSrc, 0, 0, pDst, 0 );

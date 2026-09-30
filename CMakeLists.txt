@@ -47,7 +47,7 @@ target_link_libraries(PortablePackageIndexTests PRIVATE s2_portable_package)
 target_compile_features(PortablePackageIndexTests PRIVATE cxx_std_17)
 enable_testing()
 option(S2_ENABLE_DEFERRED_LIGHT_TEST
-  "Register unfinished animated-light resource test (stage 4)" OFF)
+  "Register animated-light resource regression" ON)
 set(S2_SCRIPT_CORPUS_DIR "" CACHE PATH "Directory containing the original autoload .l scripts")
 function(s2_add_lua_corpus_test)
   if(NOT S2_SCRIPT_CORPUS_DIR)
@@ -224,7 +224,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 add_compile_options(/Zm300 /FS $<$<COMPILE_LANGUAGE:CXX>:/EHsc> /wd4996)  # no /MP: ADOImport uses #import
 add_compile_definitions(
   WIN32 _WINDOWS externA5=extern
-  $<$<CONFIG:Debug>:_DEBUG FAST_DEBUG>
+  $<$<CONFIG:Debug>:_DEBUG> $<$<CONFIG:Debug>:FAST_DEBUG>
   $<$<NOT:$<CONFIG:Debug>>:NDEBUG>)
 
 # The engine's .rc files #include "afxres.h" (an MFC header), but the engine isn't
@@ -426,6 +426,9 @@ target_link_libraries(NativeHeadDataTests PRIVATE lifestudio_native_data)
 # compiled an explicit list; several dirs also hold dead alternative .cpp, so we never
 # glob). Defines <Project>_SRC, paths relative to the project directory.
 include("${root}/sources.cmake")
+include("${root}/cmake/Bgfx.cmake")
+list(REMOVE_ITEM Main_SRC "Gfx.cpp")
+list(APPEND Main_SRC "GfxBgfx.cpp" "BgfxBackend.cpp")
 
 function(s2_module name type)
   cmake_parse_arguments(M "" "" "LINK;DEFINES;WHOLE" ${ARGN})
@@ -517,8 +520,19 @@ add_test(NAME NativeLuaRuntimeTests COMMAND NativeLuaRuntimeTests)
 s2_add_lua_corpus_test()
 s2_module(DBFormat  lib LINK ADOImport FileIO Misc)
 s2_module(Main      lib LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
-                            lifestudio_shim bink_shim d3d9 dxguid s2_portable_user_paths
+                            lifestudio_shim bink_shim bgfx s2_portable_user_paths
                             s2_portable_effects)
+add_dependencies(Main S2BgfxShaders)
+target_include_directories(Main PRIVATE "${CMAKE_BINARY_DIR}/bgfx-generated")
+add_executable(BgfxRendererTests "${root}/diagnostics/BgfxRendererTests.cpp")
+target_link_libraries(BgfxRendererTests PRIVATE Main s2_platform)
+target_compile_features(BgfxRendererTests PRIVATE cxx_std_17)
+target_compile_definitions(BgfxRendererTests PRIVATE _HAS_STD_BYTE=0 _HAS_AUTO_PTR_ETC=1)
+add_custom_command(TARGET BgfxRendererTests POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:BgfxRendererTests>")
+add_test(NAME BgfxRendererTests COMMAND BgfxRendererTests)
+add_test(NAME BgfxRuntimeImportTests COMMAND "${Python3_EXECUTABLE}"
+  "${root}/diagnostics/CheckBgfxImports.py" "$<TARGET_FILE:Game>")
 add_executable(NativeCombinerCoreTests
   "${root}/diagnostics/NativeCombinerCoreTests.cpp")
 target_include_directories(NativeCombinerCoreTests PRIVATE
@@ -1037,7 +1051,7 @@ add_test(NAME NativeExplosionPerkWireTests COMMAND NativeExplosionPerkWireTests)
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
                           fmod_shim lifestudio_shim bink_shim
-                          dxguid odbc32 odbccp32 d3d9 user32 Gdi32 s2_platform)
+                          odbc32 odbccp32 user32 Gdi32 s2_platform)
 add_custom_command(TARGET Game POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:Game>")
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)

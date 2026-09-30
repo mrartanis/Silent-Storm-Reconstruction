@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "..\Misc\Win32Helper.h"
 #include "GPixelFormat.h"
+#include "BgfxBackend.h"
 namespace NGfx
 {
 	class CGeometry;
 	class CTexture;
 	class CCubeTexture;
 	enum EFace : int;
-	externA5 NWin32Helper::com_ptr<IDirect3D9> pD3D;
-	externA5 NWin32Helper::com_ptr<IDirect3DDevice9> pDevice;
+	externA5 NWin32Helper::com_ptr<BgfxDevice> pDevice;
 	externA5 int nCurrentFrame;
 	externA5 bool bHardwareVP, bHardwarePixelShaders, bHardwarePixelShaders14;
 	externA5 bool bTnLDevice;
@@ -157,8 +157,8 @@ void DestroyManagedBuffers();
 HRESULT InitRender();
 bool InitZBuffer( D3DFORMAT format );
 void DoneZBuffer();
-void GetSurface( CTexture *pTexture, int nLevel, NWin32Helper::com_ptr<IDirect3DSurface9> *pRes );
-void GetSurface( CCubeTexture *pTexture, EFace face, int nLevel, NWin32Helper::com_ptr<IDirect3DSurface9> *pRes );
+void GetSurface( CTexture *pTexture, int nLevel, NWin32Helper::com_ptr<BgfxSurface> *pRes );
+void GetSurface( CCubeTexture *pTexture, EFace face, int nLevel, NWin32Helper::com_ptr<BgfxSurface> *pRes );
 bool IsWrapped( CTexture *pTex );
 void DoneRender();
 CTexture* MakeRenderTarget( int nXSize, int nYSize, int nPixelID );

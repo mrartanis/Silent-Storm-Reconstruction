@@ -244,7 +244,7 @@ class CTB : public CObjectBase
 {
 	OBJECT_BASIC_METHODS(CTB);
 public:
-	NWin32Helper::com_ptr<IDirect3DTexture9> obj;
+	NWin32Helper::com_ptr<BgfxTexture> obj;
 	//
 	CTB() {}
 	CTB(int _nXSize, int _nYSize, int _nLevels, D3DFORMAT _format, ETextureUsage usage);

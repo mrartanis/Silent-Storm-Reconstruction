@@ -91,13 +91,13 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // large vertex buffer
-class CVB: public CRBase<IDirect3DVertexBuffer9>
+class CVB: public CRBase<BgfxBuffer>
 {
 	OBJECT_NOCOPY_METHODS( CVB );
 public:
 	CVB() {}
 	// size in bytes
-	CVB( int _nSize, ETrueBufferUsage eUsage ): CRBase<IDirect3DVertexBuffer9>(_nSize)
+	CVB( int _nSize, ETrueBufferUsage eUsage ): CRBase<BgfxBuffer>(_nSize)
 	{
 		HRESULT hRes = pDevice->CreateVertexBuffer(
 			nSize, 
@@ -117,7 +117,7 @@ class CIBFast: public CObjectBase
 {
 	OBJECT_NOCOPY_METHODS( CIBFast );
 public:
-	NWin32Helper::com_ptr< IDirect3DIndexBuffer9 > obj;
+	NWin32Helper::com_ptr< BgfxBuffer > obj;
 	unsigned char *pLocked;
 
 	CIBFast() {}

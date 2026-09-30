@@ -26,7 +26,7 @@ struct SRenderParam
 	void Set( const T &_a ) { if ( _a == value ) return; value = _a; Apply( _a ); }
 	void DoApply() { Apply( value ); }
 };
-typedef unordered_map<int, NWin32Helper::com_ptr<IDirect3DSurface9> > CDepthHash;
+typedef unordered_map<int, NWin32Helper::com_ptr<BgfxSurface> > CDepthHash;
 
 const int N_MAX_REGISTERS =	5;
 static int nScreenRegisters;
@@ -38,15 +38,15 @@ static SRenderParam<EColorWriteMask> colorMode( COLORWRITE_ALL );
 static SRenderParam<EDepthMode> depthMode( DEPTH_NORMAL );
 static SRenderParam<ECullMode> cullMode( CULL_CW );
 static SRenderParam<SFBTransform> transformMode = SRenderParam<SFBTransform>( SFBTransform() );
-static NWin32Helper::com_ptr<IDirect3DSurface9> pScreenColor, pScreenDepth, pRegisterDepth;
+static NWin32Helper::com_ptr<BgfxSurface> pScreenColor, pScreenDepth, pRegisterDepth;
 static CDepthHash sharedZBuffers;
 static CMObj<CTexture> pRegisters[N_MAX_REGISTERS];
 static CTPoint<int> ptRegisterBufferSize, ptScreenSize;
 //static bool bUseSeparateZBuffer;
 static bool bLastUsedAddressMode[8], bPointAddress[8];
-static NWin32Helper::com_ptr<IDirect3DPixelShader9> pixelShaders[200];
-static NWin32Helper::com_ptr<IDirect3DVertexShader9> vertexShaders[200];
-static NWin32Helper::com_ptr<IDirect3DVertexDeclaration9> vertexDeclarations[200];
+static NWin32Helper::com_ptr<BgfxShader> pixelShaders[200];
+static NWin32Helper::com_ptr<BgfxShader> vertexShaders[200];
+static NWin32Helper::com_ptr<BgfxDeclaration> vertexDeclarations[200];
 //static unordered_map<int, CVertexShader> vxShaders;
 //static unordered_map<int, CVertexDeclaration> vxDeclarations;
 static int nLastUsedVShader, nLastUsedVDeclaration;
@@ -600,8 +600,8 @@ static void SetTexturePointFilter( int n, bool bPoint )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static NWin32Helper::com_ptr<IDirect3DSurface9> pCurrentRTTB, pCurrentRTZB;
-static void SetRT( IDirect3DSurface9 *pTB, IDirect3DSurface9 *pZB )
+static NWin32Helper::com_ptr<BgfxSurface> pCurrentRTTB, pCurrentRTZB;
+static void SetRT( BgfxSurface *pTB, BgfxSurface *pZB )
 {
 	ASSERT( pTB && pZB );
 	// short cut
@@ -751,7 +751,7 @@ void CRenderContext::SetRegister( int _nRegister )
 		ApplyRenderTarget();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void SetRT( IDirect3DSurface9 *pTB, int nSize )
+static void SetRT( BgfxSurface *pTB, int nSize )
 {
 	CDepthHash::iterator i = sharedZBuffers.find( nSize );
 	if ( i == sharedZBuffers.end() )
@@ -784,7 +784,7 @@ void CRenderContext::ApplyRenderTarget() const
 	case RTM_TEXTURE:
 		if ( IsValid( pTarget ) )
 		{
-			NWin32Helper::com_ptr<IDirect3DSurface9> pTB;
+			NWin32Helper::com_ptr<BgfxSurface> pTB;
 			GetSurface( pTarget, nMipLevel, &pTB );
 			//D3DSURFACE_DESC ddsd;
 			//pTB->GetDesc( &ddsd );
@@ -796,7 +796,7 @@ void CRenderContext::ApplyRenderTarget() const
 		break;
 	case RTM_REGISTERS:
 		{
-			NWin32Helper::com_ptr<IDirect3DSurface9> pTB;
+			NWin32Helper::com_ptr<BgfxSurface> pTB;
 			GetSurface( pRegisters[nRegister], 0, &pTB );
 			SetRT( pTB, pRegisterDepth );
 		}
@@ -804,7 +804,7 @@ void CRenderContext::ApplyRenderTarget() const
 	case RTM_CUBETEXTURE:
 		if ( IsValid( pCubeTarget ) )
 		{
-			NWin32Helper::com_ptr<IDirect3DSurface9> pTB;
+			NWin32Helper::com_ptr<BgfxSurface> pTB;
 			GetSurface( pCubeTarget, (EFace)nRegister, nMipLevel, &pTB );
 			//D3DSURFACE_DESC ddsd;
 			//pTB->GetDesc( &ddsd );
@@ -1180,7 +1180,7 @@ bool InitZBuffer( D3DFORMAT format )
 	// ritual nVidia doesn't work without
 	for ( int k = 0; k < nScreenRegisters; ++ k )
 	{
-		NWin32Helper::com_ptr<IDirect3DSurface9> pTB;
+		NWin32Helper::com_ptr<BgfxSurface> pTB;
 		GetSurface( pRegisters[k], 0, &pTB );
 		SetRT( pTB, pRegisterDepth );
 		hr = pDevice->Clear( 0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, 0, 1, 0 );

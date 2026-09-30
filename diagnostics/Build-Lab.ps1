@@ -9,7 +9,11 @@ param(
  [switch]$NativeMedia,
  [string]$FFmpegRoot,
  [string]$MiniaudioIncludeDir,
- [string]$SDL3Root='G:\SS\lab\tools\sdl3-3.4.16\SDL3-3.4.16'
+ [string]$SDL3Root='G:\SS\lab\tools\sdl3-3.4.16\SDL3-3.4.16',
+ [string]$BgfxCMakeRoot='G:\SS\lab\tools\bgfx.cmake-v1.161.9510-579',
+ [string]$BgfxRoot='G:\SS\lab\tools\bgfx-source\bgfx-81d81fba72c42d348c589514c774bbfe01e110fa',
+ [string]$BimgRoot='G:\SS\lab\tools\bimg-source\bimg-87aaad3ac882e741889fdd4263224e5d12c26f99',
+ [string]$BxRoot='G:\SS\lab\tools\bx-source\bx-25315498841259323e18f549d1ad9d9aba6632cc'
 )
 $ErrorActionPreference='Stop'
 $env:UCRTContentRoot='C:\Program Files (x86)\Windows Kits\10\'
@@ -34,7 +38,7 @@ Set-Content -LiteralPath "$archive\git-status.txt" -Value '' -NoNewline
 Set-Content -LiteralPath "$archive\source.patch" -Value '' -NoNewline
 & $cmake --version | Set-Content "$archive\cmake-version.txt"
 $build=if($BuildDirectory){[IO.Path]::GetFullPath($BuildDirectory)}else{Join-Path $LabRoot $(if($Architecture -eq 'x64'){'build-x64'}else{'build-x86'})}
-$configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline","-DSDL3_DIR=$SDL3Root\cmake")
+$configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline","-DSDL3_DIR=$SDL3Root\cmake","-DS2_BGFX_CMAKE_ROOT=$BgfxCMakeRoot","-DS2_BGFX_DIR=$BgfxRoot","-DS2_BIMG_DIR=$BimgRoot","-DS2_BX_DIR=$BxRoot")
 if($NativeMedia){
  $configureArgs+=@('-DS2_BUILD_MEDIA_PROBE=ON','-DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON','-DS2_ENABLE_NATIVE_MUSIC=ON','-DS2_ENABLE_NATIVE_SFX=ON','-DS2_ENABLE_NATIVE_VIDEO=ON',"-DS2_FFMPEG_ROOT=$FFmpegRoot","-DS2_MINIAUDIO_INCLUDE_DIR=$MiniaudioIncludeDir")
 }
@@ -60,7 +64,7 @@ if($Architecture -eq 'x64'){
 }
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
-[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;BuildDirectory=$build;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
+[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;Graphics='bgfx';BgfxRoot=$BgfxRoot;BimgRoot=$BimgRoot;BxRoot=$BxRoot;BgfxCMakeRoot=$BgfxCMakeRoot;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;BuildDirectory=$build;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
 Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 Write-Output "Archived build: $archive"
 

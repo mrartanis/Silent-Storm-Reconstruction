@@ -741,7 +741,7 @@ static int RunGame( const char *lpCmdLine )
 	if ( !NGfx::Init3D( static_cast<HWND>( S2Platform::NativeWindow() ) ) )
 	{
 		ASSERT(0); // DX8 not found
-		S2Platform::Error( "Failed to initialize the Direct3D9 renderer" );
+		S2Platform::Error( "Failed to initialize the bgfx renderer" );
 		return 1;
 	}
 	lifetime.graphics = true;
