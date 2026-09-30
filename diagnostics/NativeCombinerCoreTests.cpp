@@ -7,11 +7,40 @@
 #endif
 #include "../FileIO/BasicChunk1.h"
 #include "../Main/GCombiner.h"
+#include "../Main/GCompactVectorTransform.h"
 
 #include <cstdint>
 #include <cstdio>
 
 namespace {
+bool CheckPackedBasis() {
+  // Explicit MMX fixtures: identity, 90-degree yaw, 90-degree pitch.
+  const NGfx::SCompactTransformer transforms[] = {
+    {{2048, 2048, 2048, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}},
+    {{2048, 0, 0, 0}, {0, 0, -2048, 0}, {0, 2048, 0, 0}},
+    {{0, 2048, 0, 0}, {-2048, 0, 0, 0}, {0, 0, 2048, 0}}
+  };
+  const CVec3 bases[] = {CVec3(1,0,0), CVec3(0,1,0), CVec3(0,0,1)};
+  const CVec3 expected[][3] = {
+    {CVec3(1,0,0), CVec3(0,1,0), CVec3(0,0,1)},
+    {CVec3(0,1,0), CVec3(-1,0,0), CVec3(0,0,1)},
+    {CVec3(0,0,-1), CVec3(0,1,0), CVec3(1,0,0)}
+  };
+  for (int matrix = 0; matrix < 3; ++matrix) {
+    for (int basis = 0; basis < 3; ++basis) {
+      NGfx::SCompactVector packed{};
+      NGfx::CalcCompactVector(&packed, bases[basis]);
+      const CVec3 actual = NGScene::TransformCompactVector(&packed, &transforms[matrix]);
+      if (fabs2(actual - expected[matrix][basis]) > 1e-8f) {
+        std::printf("packed basis mismatch matrix=%d basis=%d got=(%.6f,%.6f,%.6f)\n",
+          matrix, basis, actual.x, actual.y, actual.z);
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 class CTestPart : public NGScene::IPart {
   OBJECT_NOCOPY_METHODS(CTestPart);
   std::uintptr_t sortValue;
@@ -33,6 +62,7 @@ std::uint64_t Digest(CMemoryStream& stream) {
 } // namespace
 
 int main() {
+  if (!CheckPackedBasis()) return 7;
   NGScene::SStaticTrackers trackers;
   CObj<NGScene::CPerMaterialCombiner> combiner =
     new NGScene::CPerMaterialCombiner(&trackers);

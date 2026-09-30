@@ -4,6 +4,7 @@
 #include "GfxRender.h"
 #include "GScene.h"
 #include "GCombiner.h"
+#include "GCompactVectorTransform.h"
 #include "Bound.h"
 
 typedef NGfx::SGeomVecFull SGfxVertex;
@@ -292,15 +293,6 @@ static void MMXTransformVector3( NGfx::SCompactVector *pRes, const NGfx::SCompac
 	}
 }
 #else
-static CVec3 TransformCompactVector( const NGfx::SCompactVector *pSrc, const NGfx::SCompactTransformer *pTrans )
-{
-	const CVec3 src = NGfx::GetVector( *pSrc );
-	const float scale = 1.0f / 2048.0f;
-	return CVec3(
-		( src.x * pTrans->a.nX + src.y * pTrans->b.nX + src.z * pTrans->c.nX ) * scale,
-		( src.x * pTrans->a.nY + src.y * pTrans->b.nY + src.z * pTrans->c.nY ) * scale,
-		( src.x * pTrans->a.nZ + src.y * pTrans->b.nZ + src.z * pTrans->c.nZ ) * scale );
-}
 static void StoreCompactVector( NGfx::SCompactVector *pRes, CVec3 value )
 {
 	Normalize( &value );
