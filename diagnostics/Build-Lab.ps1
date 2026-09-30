@@ -8,7 +8,8 @@ param(
  [ValidateRange(1,64)][int]$BuildJobs=[Math]::Min([Environment]::ProcessorCount,12),
  [switch]$NativeMedia,
  [string]$FFmpegRoot,
- [string]$MiniaudioIncludeDir
+ [string]$MiniaudioIncludeDir,
+ [string]$SDL3Root='G:\SS\lab\tools\sdl3-3.4.16\SDL3-3.4.16'
 )
 $ErrorActionPreference='Stop'
 $env:UCRTContentRoot='C:\Program Files (x86)\Windows Kits\10\'
@@ -33,7 +34,7 @@ Set-Content -LiteralPath "$archive\git-status.txt" -Value '' -NoNewline
 Set-Content -LiteralPath "$archive\source.patch" -Value '' -NoNewline
 & $cmake --version | Set-Content "$archive\cmake-version.txt"
 $build=if($BuildDirectory){[IO.Path]::GetFullPath($BuildDirectory)}else{Join-Path $LabRoot $(if($Architecture -eq 'x64'){'build-x64'}else{'build-x86'})}
-$configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline")
+$configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline","-DSDL3_DIR=$SDL3Root\cmake")
 if($NativeMedia){
  $configureArgs+=@('-DS2_BUILD_MEDIA_PROBE=ON','-DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON','-DS2_ENABLE_NATIVE_MUSIC=ON','-DS2_ENABLE_NATIVE_SFX=ON','-DS2_ENABLE_NATIVE_VIDEO=ON',"-DS2_FFMPEG_ROOT=$FFmpegRoot","-DS2_MINIAUDIO_INCLUDE_DIR=$MiniaudioIncludeDir")
 }
@@ -44,7 +45,7 @@ $targets=@('Game','zlib')
 if($NativeMedia){$targets+='s2_bink_compat'}
 & $cmake --build $build --config RelWithDebInfo --target @targets --parallel $BuildJobs -- /v:minimal 2>&1 | Tee-Object "$archive\build.log"
 if($LASTEXITCODE){throw 'Build failed'}
-foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){
+foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb','SDL3.dll'){
  Copy-Item -LiteralPath "$build\RelWithDebInfo\$file" -Destination $archive
 }
 if($Architecture -eq 'x64'){

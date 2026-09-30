@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "iMain.h"
 #include "GView.h"
 #include "Gfx.h"
@@ -179,7 +180,7 @@ bool IInterfaceBase::CanRender()
 {
 	if ( bAppIsActive && NGScene::Is3DActive() )
 		return true;
-	Sleep( 10 );
+	S2Platform::Delay( 10 );
 	return false;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

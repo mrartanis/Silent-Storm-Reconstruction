@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "G2DView.h"
 #include "Transform.h"
 #include "GSceneUtils.h"
@@ -327,10 +328,10 @@ CInterface::CInterface():
 	sDoubleClickTime( 0 ), sLastLButtonDownTime( 0 ), sLastRButtonDownTime( 0 ), sLastLButtonClickPoint( 0, 0 ), sCursorPoint( 0, 0 ), sLastTime( 0 ), bShowFPSStats( false ),
 	bToolTipSet( false ), fMouseWheelDelta( 0 ), bOwnSoundScene( false )		// retail default ctor @0x31cbd0 zeroes the time/point scalars + flags
 {
-	// retail default ctor @0x31cbd0 tail: sDoubleClickTime = GetDoubleClickTime(). These members
+	// retail default ctor @0x31cbd0 tail: sDoubleClickTime = S2Platform::DoubleClickMilliseconds(). These members
 	// became retail-parity FORMAT HOLES in W3 (dev tags 2/3/4/8/9/19 dropped from operator&), so
 	// the deserialization path must seed them here -- they no longer arrive from the save.
-	sDoubleClickTime = GetDoubleClickTime();
+	sDoubleClickTime = S2Platform::DoubleClickMilliseconds();
 	// dev-only "Work in progress" overlay (no retail counterpart; retail tag-19 hole). Drawn
 	// unconditionally each frame -- a loaded CInterface crashed on the NULL CTextDraw.
 	pNonPublicDemo = new CTextDraw( SPoint( 0, 32 ), SPoint( 1024, 768 ), L"<font size=18pt face=Courier><right>Work in progress" );
@@ -365,7 +366,7 @@ CInterface::CInterface( ICursor* _pCursor, NSound::ISoundScene *_pSound ):
 	pCursor = _pCursor;
 	pConsole = new CConsole( SWindowInfo( this, SPoint( 0, 0 ), SPoint( 0, 0 ), "console", STYLE_ENABLED | STYLE_TOPMOST ) );
 	NUI::LoadTemplate( pConsole, NDb::GetUIContainer( 42 ) );
-	sDoubleClickTime = GetDoubleClickTime();
+	sDoubleClickTime = S2Platform::DoubleClickMilliseconds();
 
 	// retail @0x31dbd0 tail: sDefaultCursor = SCursorInfo( NDb::GetUICursor(2) ) -- the UICursors RECORD.
 	sDefaultCursor = SCursorInfo( NDb::GetUICursor( N_DEFAULT_CURSOR ) );
@@ -490,7 +491,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 		// retail @0x31c090 step 4: the synthetic DBLCLK also needs the two clicks within 5.0px.
 		// Time-only gating forged a DBLCLK from panel-button click + world click -- the reset
 		// default state ran CStateMove::OnLButtonDblClk, so a look/attack click became a move.
-		if ( GetTickCount() - sLastLButtonDownTime < sDoubleClickTime )
+		if ( S2Platform::Milliseconds() - sLastLButtonDownTime < sDoubleClickTime )
 		{
 			int nDX = sLastLButtonClickPoint.x - sPoint.x;
 			int nDY = sLastLButtonClickPoint.y - sPoint.y;
@@ -498,7 +499,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 				bRet |= ProcessMessage( SEvent( EVENT_LBUTTONDBLCLK, sPoint.x, sPoint.y ) );
 		}
 
-		sLastLButtonDownTime = GetTickCount();
+		sLastLButtonDownTime = S2Platform::Milliseconds();
 		sLastLButtonClickPoint = sPoint;
 	}
 	if ( cmdLButtonDown.ProcessEvent( eEvent ) )
@@ -523,7 +524,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 	}
 	if ( NInput::GetKeyForMessage( eEvent.mMessage, &nVirtualKey ) )
 		bRet |= ProcessMessage( SEvent( EVENT_CHAR, nVirtualKey ) );
-	// Raw Windows message-derived keys (auto-repeating via the OS WM_KEYDOWN/WM_CHAR stream).
+	// SDL keys and text retain the original UI event contracts.
 	// CT_WIN_CHAR carries a translated wide char, CT_WIN_KEY a virtual-key code.
 	// (CInterface::ProcessEvent @0x31c090 steps 9-10 -> EVENT_WINCHAR / EVENT_WINKEY.)
 	if ( eEvent.mMessage.cType == NInput::CT_WIN_CHAR )

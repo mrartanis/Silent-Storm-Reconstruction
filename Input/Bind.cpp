@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <dinput.h>
+#include "../Game/Platform.h"
 #include "..\Misc\basic2.h"
 #include "..\Misc\StrProc.h"
 #include "..\MiscDll\Commands.h"
@@ -288,7 +288,7 @@ void PostEvent( const string &szEvent )
 		eEvent.commands.push_back( &(iTemp->second) );
 
 	eEvent.mMessage.cType = CT_UNKNOWN;
-	eEvent.mMessage.tTime = GetTickCount();
+	eEvent.mMessage.tTime = S2Platform::Milliseconds();
 	eEvent.mMessage.bState = false;
 	eEvent.mMessage.nAction = -1;
 

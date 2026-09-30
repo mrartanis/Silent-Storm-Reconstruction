@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "GSceneUtils.h"
 #include "RectLayout.h"
 #include "GView.h"
@@ -230,7 +231,7 @@ bool CConsole::ProcessMessage( const SEvent &sEvent )
 			return true;
 		break;
 	case EVENT_CHAR:
-		// Swallow the still-active DirectInput edge key so PgUp/PgDn/Up/Down/Tab don't double-fire:
+		// Swallow the physical key edge so PgUp/PgDn/Up/Down/Tab don't double-fire:
 		// navigation now rides the auto-repeating EVENT_WINKEY stream. (CConsole::ProcessMessage @0xd2440.)
 		return true;
 	case EVENT_NOTIFY:
@@ -285,14 +286,14 @@ void CConsole::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
 	if ( eMode == CON_NONE )
 	{
-		sLastTime = GetTickCount();
+		sLastTime = S2Platform::Milliseconds();
 		CWindow::Draw( sTime, pView );
 		return;
 	}
 
 	if ( eMode == CON_SLIDEUP )
 	{
-		fWeight -= (float)( GetTickCount() - sLastTime ) / CONSOLE_SPEED;
+		fWeight -= (float)( S2Platform::Milliseconds() - sLastTime ) / CONSOLE_SPEED;
 		if ( fWeight < 0 )
 		{
 			eMode = CON_NONE;
@@ -302,7 +303,7 @@ void CConsole::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	}
 	else if ( eMode == CON_SLIDEDOWN )
 	{
-		fWeight += (float)( GetTickCount() - sLastTime ) / CONSOLE_SPEED;
+		fWeight += (float)( S2Platform::Milliseconds() - sLastTime ) / CONSOLE_SPEED;
 		if ( fWeight > 1 )
 		{
 			eMode = CON_NONE;
@@ -310,7 +311,7 @@ void CConsole::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		}
 	}
 
-	sLastTime = GetTickCount();
+	sLastTime = S2Platform::Milliseconds();
 	SetPosition( SPoint( GetPosition().x, GetSize().y * ( fWeight - 1 ) ) );
 
 	CWindow::Draw( sTime, pView );

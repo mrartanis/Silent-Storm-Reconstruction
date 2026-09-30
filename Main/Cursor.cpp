@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "Gfx.h"
 #include "GSceneUtils.h"
 #include "G2DView.h"
@@ -93,8 +94,8 @@ CCursor::CCursor( bool _bShow ):
 
 	pTimer = sTimer.GetTime();
 
-	DWORD pdwParams[3];
-	SystemParametersInfo( SPI_GETMOUSE, 0, pdwParams, 0 );
+	int pdwParams[3];
+	S2Platform::MouseAcceleration( &pdwParams[0], &pdwParams[1], &pdwParams[2] );
 
 	fThreshold1 = pdwParams[0];
 	fThreshold2 = pdwParams[1];
@@ -148,7 +149,7 @@ float CCursor::AccelerateAxis( float fDelta, const STime &sDelta )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CCursor::Update()
 {
-	sTimer.Advance( true, GetTickCount() );
+	sTimer.Advance( true, S2Platform::Milliseconds() );
 	pTimer.Refresh();
 	STime sDelta = pTimer->GetValue() - sLastUpdateTime;
 	sLastUpdateTime = pTimer->GetValue();
@@ -234,8 +235,9 @@ public:
 void CEditorCursor::ProcessEvent( const NInput::SEvent &eEvent )
 {
 	POINT sPoint;
-	GetCursorPos( &sPoint );
-	ScreenToClient( NGfx::GetHWND(), &sPoint );
+	float x = 0, y = 0;
+	S2Platform::CursorPosition( &x, &y );
+	sPoint.x = static_cast<LONG>(x); sPoint.y = static_cast<LONG>(y);
 
 	CVec2 scrSize = NGfx::GetScreenRect();
 	vCursorPos.x = sPoint.x;

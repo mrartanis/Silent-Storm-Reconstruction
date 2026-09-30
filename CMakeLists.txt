@@ -18,6 +18,12 @@ if(MSVC)
 endif()
 
 set(root "${CMAKE_CURRENT_SOURCE_DIR}")
+if(MSVC)
+  find_package(SDL3 3.4.16 EXACT CONFIG REQUIRED)
+  add_library(s2_platform STATIC "${root}/Game/Platform.cpp")
+  target_link_libraries(s2_platform PUBLIC SDL3::SDL3)
+  target_compile_features(s2_platform PRIVATE cxx_std_17)
+endif()
 include("${root}/cmake/MediaProbe.cmake")
 add_library(s2_portable_package STATIC "${root}/FileIO/PortablePackageIndex.cpp")
 target_include_directories(s2_portable_package PUBLIC "${root}/FileIO")
@@ -486,7 +492,18 @@ s2_module(Image     lib LINK zlib libpng squish)
 s2_module(ADOImport lib LINK FileIO Misc DEFINES ADOIMPORT_EXPORTS)
 target_link_libraries(ADOImport PRIVATE s2_portable_database)
 s2_module(FModSound lib LINK FileIO Misc fmod_shim)
-s2_module(Input     lib LINK FileIO MiscDll Misc dxguid dinput8)
+s2_module(Input     lib LINK FileIO MiscDll Misc s2_platform)
+add_executable(SDLPlatformInputTests "${root}/diagnostics/SDLPlatformInputTests.cpp")
+target_precompile_headers(SDLPlatformInputTests PRIVATE "${root}/Input/StdAfx.h")
+target_link_libraries(SDLPlatformInputTests PRIVATE Input s2_platform)
+add_custom_command(TARGET SDLPlatformInputTests POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:SDLPlatformInputTests>")
+add_test(NAME SDLPlatformInputTests COMMAND SDLPlatformInputTests)
+add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
+  add_test(NAME SDLInputConfiguration
+    COMMAND SDLPlatformInputTests --bindings "${S2_GAME_DIR}/cfg/input.cfg")
+endif()
 s2_module(Script    lib LINK FileIO Input MiscDll Misc)
 add_executable(NativeStreamsTests "${root}/diagnostics/NativeStreamsTests.cpp")
 target_link_libraries(NativeStreamsTests PRIVATE FileIO)
@@ -1020,7 +1037,9 @@ add_test(NAME NativeExplosionPerkWireTests COMMAND NativeExplosionPerkWireTests)
 s2_module(Game win32 WHOLE Main
                      LINK ADOImport DBFormat FileIO FModSound Input MiscDll Misc Script
                           fmod_shim lifestudio_shim bink_shim
-                          dxguid dinput8 odbc32 odbccp32 d3d9 user32 Gdi32)
+                          dxguid odbc32 odbccp32 d3d9 user32 Gdi32 s2_platform)
+add_custom_command(TARGET Game POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:Game>")
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   # The default x64 configuration still uses link-only media stubs. Native
   # FFmpeg/miniaudio targets below enable game audio/video when requested.

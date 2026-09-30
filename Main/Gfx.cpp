@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include <D3D9.h>
 #include "..\Misc\HPTimer.h"
 #include "..\Misc\2DArray.h"
@@ -147,11 +148,7 @@ static HRESULT ResetDevice()
 		}
 	}
 	bGammaIsSet = false;
-	SetWindowPos( 
-		hWnd, 
-		HWND_NOTOPMOST, 
-		0, 0, pp.BackBufferWidth, pp.BackBufferHeight, 
-		SWP_SHOWWINDOW );
+
 	if ( bTnLDevice )
 		rtInfo.Clear();
 	if ( hr == D3D_OK )
@@ -283,7 +280,9 @@ static D3DFORMAT GetZBufferFormat( D3DFORMAT rTarget )
 static void GetBackBufferSize()
 {
   RECT windowPos;
-  GetClientRect( pp.hDeviceWindow, &windowPos );
+  int width = 0, height = 0;
+	S2Platform::Size( &width, &height );
+	windowPos.right = width; windowPos.bottom = height;
   pp.BackBufferWidth = windowPos.right;
   pp.BackBufferHeight = windowPos.bottom;
 }
@@ -291,9 +290,11 @@ static void GetBackBufferSize()
 void CheckBackBufferSize()
 {
 	RECT windowPos;
-	GetClientRect( pp.hDeviceWindow, &windowPos );
+	int width = 0, height = 0;
+	S2Platform::Size( &width, &height );
+	windowPos.right = width; windowPos.bottom = height;
 
-	if ( !IsWindowVisible( pp.hDeviceWindow ) )
+	if ( !S2Platform::Active() )
 		return;
 	if ( windowPos.bottom == 0 || windowPos.right == 0 )
 		return;
@@ -478,6 +479,8 @@ static bool InitD3D()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SetMode( const SVideoMode &m, const SRenderTargetsInfo &_rtInfo )
 {
+	if ( !S2Platform::SetMode( m.nXSize, m.nYSize, m.fullScreen == FULL_SCREEN ) )
+		return false;
 	if ( !FillPresent( m ) )
 		return false;
 	rtInfo = _rtInfo;

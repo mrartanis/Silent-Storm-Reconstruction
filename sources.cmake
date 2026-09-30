@@ -52,7 +52,7 @@ set(FModSound_SRC
 
 set(Input_SRC
   "Bind.cpp"
-  "Input.cpp"
+  "SDLInput.cpp"
   "StdAfx.cpp"
 )
 
@@ -441,13 +441,11 @@ set(Main_SRC
   "wUnitServer.cpp"
   "wUnitStates.cpp"
   "wVision.cpp"
-  "WinInputConv.cpp"
 )
 
 set(Game_SRC
   "Main.cpp"
   "StdAfx.cpp"
-  "WinFrame.cpp"
   "Game.rc"
 )
 

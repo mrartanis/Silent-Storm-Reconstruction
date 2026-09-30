@@ -9,8 +9,13 @@ https://github.com/nival/Silent-Storm
 получение behaviour-equivalent версии Silent Storm v1.2, путём анализа
 .pdb файлов версии v1.1 (RussianPatch1) и декомпиляции v1.2.
 
-Текущий статус: игра собирается и запускается на файлах Steam версии,
-но склонна к зависаниям, вылетам и в целом далека от релизной.
+Текущий статус на 2026-09-30: Windows x64 запускает игру с SDL3-окном,
+клавиатурой и мышью, сохраняя D3D9-изображение. Согласованный Windows-объём
+этапа 3 проверен: 170/170 тестов, меню, консоль и учебная миссия.
+Linux-запуск игры и совместные Windows/Linux-проверки выполняются на этапе 4
+с bgfx. Вся кампания, полный паритет со Steam и macOS пока не проверены.
+Команды и ограничения — в
+[отчёте этапа 3](diagnostics/SDL3-PLATFORM-WINDOWS.md).
 
 Контрольная база этапа 0 для выбранных Windows/x86-сценариев зафиксирована в
 [STAGE0-BASELINE.md](STAGE0-BASELINE.md); подробный журнал —
@@ -41,7 +46,8 @@ https://github.com/nival/Silent-Storm
 - **Windows** с **Visual Studio 2022** (нужен компонент "Разработка классических
   приложений на C++", MSVC v143, Windows SDK 10) или новее. Проверено на VS 2026.
 - **CMake 3.21+**
-- Сборка **только Win32 / x86**.
+- Целевая игровая сборка — **Windows x64**.
+- **SDL3 3.4.16**: пакет разработки с `cmake/SDL3Config.cmake` и `SDL3.dll`.
 - *Необязательно:* **DirectX SDK June 2010** (https://www.microsoft.com/en-us/download/details.aspx?id=6812) - нужен
   только для сборки инструмента `ShaderCompiler`; если его нет, инструмент
   пропускается автоматически.
@@ -49,8 +55,11 @@ https://github.com/nival/Silent-Storm
 ### Сборка
 Запустите **`build.bat`** или выполните в терминале из папки репозитория:
 
+Для `build.bat` и `build-debug.bat` предварительно задайте переменную окружения
+`SDL3_DIR`, указывающую на каталог `cmake` пакета SDL3 3.4.16.
+
 ```
-cmake -S . -B build -A Win32
+cmake -S . -B build -A x64 -DSDL3_DIR=G:/SS/lab/tools/sdl3-3.4.16/SDL3-3.4.16/cmake
 cmake --build build --config Release
 ```
 
@@ -65,8 +74,15 @@ CMake попытается подсунуть вашу папку с игрой 
 `E:/SteamLibrary/steamapps/common/Silent Storm`
 
 ### Запуск игры
-Поместите Game.exe в папку с игрой (пример: `E:/SteamLibrary/steamapps/common/Silent Storm`). 
-Запустите Game.exe.
+Создайте отдельную копию игровых данных и положите туда `Game.exe`, `SDL3.dll`
+и остальные DLL своей сборки. Оригинальную установку сохраняйте неизменной.
+Рабочий каталог должен содержать `game.db`, `cfg` и полный `res`.
+Для лаборатории используйте `diagnostics/New-LabRun.ps1` и `Start-LabRun.ps1`.
+
+Окно, клавиатура и мышь основной игры переведены на SDL3. Этап 3 проверяется
+на Windows с существующим D3D9-изображением; запуск и тесты Linux вместе с
+переносом рендерера отнесены к этапу 4. Результаты и команды:
+[SDL3-PLATFORM-WINDOWS.md](diagnostics/SDL3-PLATFORM-WINDOWS.md).
 
 ### Примечания
 - импортируемые проприетарные библиотеки fmod / Bink / LifeStudio **генерируются во время сборки** из

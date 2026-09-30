@@ -1,10 +1,12 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-typedef DWORD STime;
+#include <cstdint>
+class CDataStream;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NInput
 {
+typedef std::uint32_t STime;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	enum EPOVAxis
 	{
@@ -20,11 +22,9 @@ namespace NInput
 		CT_TIME,
 		CT_LIMAXIS,
 		CT_UNKNOWN,
-		// Win32 message-derived control types (retail carries these at 0/1 and shifts
-		// the rest down; we APPEND them instead so the existing CT_* ordinals -- read
-		// symbolically throughout the DirectInput path and never serialized -- stay put.
-		// See AddWinMessage: CT_WIN_CHAR carries a translated WM_CHAR wide char, CT_WIN_KEY
-		// a WM_KEYDOWN virtual-key. The numeric value is immaterial (all uses are symbolic).
+		// Historical UI event names retained for compatibility. SDL text supplies
+		// CT_WIN_CHAR; SDL key-down/repeat supplies CT_WIN_KEY in the UI's virtual-key
+		// numbering. Physical CT_KEY edges remain separate from text and repeat.
 		CT_WIN_CHAR,
 		CT_WIN_KEY
 	};
@@ -40,15 +40,13 @@ namespace NInput
 		STime tTime;
 	};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool InitInput( HWND hWnd, bool bNonExclusiveMode = false, int nSampleBufferSize = -1 );
+	bool InitInput( bool bNonExclusiveMode = false, int nSampleBufferSize = -1 );
 	bool DoneInput();
 
 	void PumpMessages( bool bFocus );
 	bool GetMessage( SMessage *pMsg );
-	// Push a synthesised Win32-message-derived input onto the NInput queue (the
-	// Win32->NInput bridge that gives held keys OS auto-repeat). @0x3ccb00.
+	// Compatibility hook for synthesized UI events; the game uses SDL events.
 	void AddWinMessage( EControlType cType, int nParam );
-	bool GetCharForKey( int nVirtualKey, WCHAR *pwcChar );
 	bool GetKeyForMessage( const SMessage &mMsg, int *pnVirtualKey );
 		
 	int GetControlID( const string &sCommand );

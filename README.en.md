@@ -9,8 +9,13 @@ This repository contains ongoing work on the source code, with the ultimate goal
 producing a behaviour-equivalent version of Silent Storm v1.2 by analyzing the
 .pdb files of version v1.1 (RussianPatch1) and decompiling v1.2.
 
-Current status: the game builds and runs using the Steam version's files, but it
-is prone to freezes and crashes, and is generally far from release-ready.
+Status as of 2026-09-30: the Windows x64 game uses SDL3 for its window, keyboard
+and mouse while retaining D3D9 rendering. The agreed Windows scope of stage 3
+passed 170/170 tests and live menu, console and tutorial mission checks.
+Linux game launch and joint Windows/Linux validation will accompany bgfx in
+stage 4. The full campaign, complete Steam behaviour parity and macOS remain
+unverified. See the [stage 3 report](diagnostics/SDL3-PLATFORM-WINDOWS.md)
+for commands and limitations.
 
 <div align="center">
   <table>
@@ -36,7 +41,8 @@ is prone to freezes and crashes, and is generally far from release-ready.
 - **Windows** with **Visual Studio 2022** (requires the "Desktop development with
   C++" workload, MSVC v143, Windows SDK 10) or newer. Tested with VS 2026.
 - **CMake 3.21+**
-- Build is **Win32 / x86 only**.
+- The target game build is **Windows x64**.
+- **SDL3 3.4.16**: development package containing `cmake/SDL3Config.cmake` and `SDL3.dll`.
 - *Optional:* **DirectX SDK June 2010** (https://www.microsoft.com/en-us/download/details.aspx?id=6812) - only
   needed to build the `ShaderCompiler` tool; if it's not installed, the tool is
   skipped automatically.
@@ -44,8 +50,11 @@ is prone to freezes and crashes, and is generally far from release-ready.
 ### Building
 Run **`build.bat`**, or execute the following in a terminal from the repository folder:
 
+For `build.bat` and `build-debug.bat`, first set the `SDL3_DIR` environment
+variable to the SDL3 3.4.16 package's `cmake` directory.
+
 ```
-cmake -S . -B build -A Win32
+cmake -S . -B build -A x64 -DSDL3_DIR=G:/SS/lab/tools/sdl3-3.4.16/SDL3-3.4.16/cmake
 cmake --build build --config Release
 ```
 
@@ -60,8 +69,15 @@ automatically; if that fails, you'll need to set it manually: right-click the
 `E:/SteamLibrary/steamapps/common/Silent Storm`
 
 ### Running the game
-Place Game.exe into the game folder (example: `E:/SteamLibrary/steamapps/common/Silent Storm`).
-Run Game.exe.
+Use a separate copy of the game data, with `Game.exe`, `SDL3.dll` and the other
+DLLs from your build. Preserve the original installation. The working directory
+must contain `game.db`, `cfg` and the complete `res` directory. Laboratory runs
+use `diagnostics/New-LabRun.ps1` and `Start-LabRun.ps1`.
+
+The main game now uses SDL3 for its window, keyboard and mouse. Stage 3 is
+validated on Windows with the existing D3D9 renderer; Linux launch and testing
+will accompany the renderer migration in stage 4. Commands and evidence:
+[SDL3-PLATFORM-WINDOWS.md](diagnostics/SDL3-PLATFORM-WINDOWS.md).
 
 ### Notes
 - The imported proprietary libraries fmod / Bink / LifeStudio are **generated at

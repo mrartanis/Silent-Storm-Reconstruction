@@ -36,9 +36,9 @@ const int
 	EVENT_TEMPLATELOADCOMPLETE	= 0x00000005 | EVENT_FLAG_NOTIFY,
 	EVENT_NOTIFY								= 0x00000006 | EVENT_FLAG_PARENTNOTIFY,
 // Keyboard
-	EVENT_WINCHAR								= 0x00000020 | EVENT_FLAG_ACTIVE,	// WM_CHAR-derived translated wide char (nVal = WCHAR); OS auto-repeats
-	EVENT_WINKEY								= 0x00000021 | EVENT_FLAG_ACTIVE,	// WM_KEYDOWN-derived virtual key (nVal = VK_*); OS auto-repeats
-	EVENT_CHAR									= 0x00000022 | EVENT_FLAG_ACTIVE,	// DirectInput edge-only virtual key (nVal = VK_*)
+	EVENT_WINCHAR								= 0x00000020 | EVENT_FLAG_ACTIVE,	// SDL text, wide character; historical event ID
+	EVENT_WINKEY								= 0x00000021 | EVENT_FLAG_ACTIVE,	// SDL key-down/repeat, historical VK numbering
+	EVENT_CHAR									= 0x00000022 | EVENT_FLAG_ACTIVE,	// Physical edge-only key, historical VK numbering
 // Mouse
 	EVENT_MOUSEMOVE							= 0x00000030 | EVENT_FLAG_HITTEST, 	// Updates cursor & tooltip etc
 	EVENT_LBUTTONUP							= 0x00000031 | EVENT_FLAG_HITTEST | EVENT_FLAG_ACTIVE,

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "GSceneUtils.h"
 #include "GScene.h"
 #include "GView.h"
@@ -972,7 +973,7 @@ void CGameView::Draw( CTransformStack *pTS, CTransformStack *pClipTS, NGfx::CRen
 	//for ( list<CPtr<CGrassTracker> >::iterator i = grassTrackers.begin(); i != grassTrackers.end(); ++i )
 	//	(*i)->Update();
 	nodes.clear();
-	fog.fTime = GetTickCount() / 1024.0f;
+	fog.fTime = S2Platform::Milliseconds() / 1024.0f;
 	SGroupSelect mask( GetFloorMask( nCutFloor ), GetParticlesRequireFlag( bShowParticles ) );
 	// retail @0x186e40: fog/HSR are NOT per-view state -- they are derived EVERY draw from the
 	// SERIALIZED bFastMode (tag 29) vs the config globals. This is what keeps a DESERIALIZED

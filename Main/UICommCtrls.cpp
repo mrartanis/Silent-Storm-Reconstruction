@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "Gfx.h"
 #include "GfxBuffers.h"
 #include "G2DView.h"
@@ -89,12 +90,9 @@ void CEdit::SetCursorPosition( int nPos )
 bool CEdit::ProcessMessage( const SEvent &sEvent )
 {
 	// CEdit::ProcessMessage @0x314720. Three keyboard events drive the edit:
-	//   EVENT_CHAR   (0x2000022): the still-active DirectInput edge key -- swallowed, so
-	//                             editing does not double-fire against the WM stream.
-	//   EVENT_WINKEY (0x2000021): navigation / structural editing (WM_KEYDOWN virtual keys,
-	//                             OS auto-repeated).
-	//   EVENT_WINCHAR(0x2000020): printable-character insertion (WM_CHAR-derived, already
-	//                             codepage->unicode translated -- nVal holds the WCHAR).
+	//   EVENT_CHAR   (0x2000022): physical key edges, swallowed to avoid duplicate editing.
+	//   EVENT_WINKEY (0x2000021): SDL key-down/repeat in historical virtual-key numbering.
+	//   EVENT_WINCHAR(0x2000020): SDL text converted to the UI's wide-character encoding.
 	if ( sEvent.nEvent == EVENT_CHAR )
 		return true;
 
@@ -141,47 +139,21 @@ bool CEdit::ProcessMessage( const SEvent &sEvent )
 			SendMessage( GetParent(), SEvent( EVENT_NOTIFY, GetWindowID() ) );
 			return true;
 		case 'V':
-			// dev QoL (not retail): Ctrl+V pastes the clipboard text at the cursor. The chord's
-			// WM_CHAR control char (0x16) is dropped by the iswprint filter below, so only this
-			// handler acts. Pasted chars pass the SAME per-char filters as typing; line breaks and
-			// tabs become spaces; the nSize cap is honored.
-			if ( GetKeyState( VK_CONTROL ) & 0x8000 )
+			if ( S2Platform::ControlPressed() )
 			{
-				if ( OpenClipboard( 0 ) )
+				wstring clipboard = S2Platform::ClipboardText(), wsPaste;
+				for ( wchar_t character : clipboard )
 				{
-					HANDLE hData = GetClipboardData( CF_UNICODETEXT );
-					if ( hData )
-					{
-						const WCHAR *pwcData = (const WCHAR*)GlobalLock( hData );
-						if ( pwcData )
-						{
-							wstring wsPaste;
-							for ( const WCHAR *pwc = pwcData; *pwc; ++pwc )
-							{
-								WCHAR wcChar = ( *pwc == L'\r' || *pwc == L'\n' || *pwc == L'\t' ) ? L' ' : *pwc;
-								if ( ( eMode == NUMERIC ) && ( !iswdigit( wcChar ) ) )
-									continue;
-								if ( ( eMode == FILENAME ) && ( ( wcChar <= 0x1d ) || ( wcschr( L".<>\\/|\"*^:?", wcChar ) != NULL ) ) )
-									continue;
-								if ( !iswprint( wcChar ) )
-									continue;
-								wsPaste.append( 1, wcChar );
-							}
-							GlobalUnlock( hData );
-							if ( !wsPaste.empty() && wsText.length() < nSize )
-							{
-								if ( wsText.length() + wsPaste.length() > nSize )
-									wsPaste.resize( nSize - wsText.length() );
-								wstring wsTempString;
-								wsTempString.append( wsText.substr( 0, nCursor ) );
-								wsTempString.append( wsPaste );
-								wsTempString.append( wsText.substr( nCursor, wsText.length() ) );
-								wsText = wsTempString;
-								nCursor += wsPaste.length();
-							}
-						}
-					}
-					CloseClipboard();
+					wchar_t wcChar = ( character == L'\r' || character == L'\n' || character == L'\t' ) ? L' ' : character;
+					if ( eMode == NUMERIC && !iswdigit( wcChar ) ) continue;
+					if ( eMode == FILENAME && ( wcChar <= 0x1d || wcschr( L".<>\\/|\"*^:?", wcChar ) ) ) continue;
+					if ( iswprint( wcChar ) ) wsPaste.append( 1, wcChar );
+				}
+				if ( !wsPaste.empty() && wsText.length() < nSize )
+				{
+					if ( wsText.length() + wsPaste.length() > nSize ) wsPaste.resize( nSize - wsText.length() );
+					wsText.insert( nCursor, wsPaste );
+					nCursor += wsPaste.length();
 				}
 				return true;
 			}
@@ -194,8 +166,7 @@ bool CEdit::ProcessMessage( const SEvent &sEvent )
 		if ( !IsActive() )
 			return false;
 
-		// nVal already holds the translated WCHAR (the WM_CHAR run was widened upstream by
-		// SWinToInputMessageConverter), unlike Jan03's in-place NInput::GetCharForKey.
+		// SDL text input was decoded upstream; nVal carries one UTF-16 code unit.
 		WCHAR wcChar = (WCHAR)sEvent.nVal;
 		do
 		{
@@ -234,9 +205,9 @@ void CEdit::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	if ( wsTemp != pTextString->GetValue() )
 		pTextString->Set( wsTemp );
 
-	if ( GetTickCount() - sFlashTime > 500 )
+	if ( S2Platform::Milliseconds() - sFlashTime > 500 )
 	{
-		sFlashTime = GetTickCount();
+		sFlashTime = S2Platform::Milliseconds();
 		bCursorVisible = !bCursorVisible;
 	}
 	if ( !IsActive() )

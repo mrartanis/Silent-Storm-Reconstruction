@@ -455,6 +455,7 @@ void ReleaseFileRequestHolder()
 void RunResourceLoadingThread()
 {
 #if defined(_WIN32)
+	if ( hLoaderThread ) return;
 	DWORD dwThread;
 	hLoaderThread = CreateThread( 0, 102400, LoaderThread, 0, 0, &dwThread );
 #else
@@ -463,10 +464,8 @@ void RunResourceLoadingThread()
 #endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-struct SKillLoaderThread
+void StopResourceLoadingThread()
 {
-	~SKillLoaderThread()
-	{
 #if defined(_WIN32)
 		if ( hLoaderThread )
 #else
@@ -480,11 +479,20 @@ struct SKillLoaderThread
 			}
 #if defined(_WIN32)
 			WaitForSingleObject( hLoaderThread, INFINITE );
+			CloseHandle( hLoaderThread );
+			hLoaderThread = 0;
 #else
 			loaderThread.join();
 #endif
+			NWin32Helper::CCriticalSectionLock l( reqQueue );
+			requests.clear();
+			holdRequests.clear();
+			bIsFileReading.store(false);
 		}
-	}
+}
+struct SKillLoaderThread
+{
+	~SKillLoaderThread() { StopResourceLoadingThread(); }
 } killLoaderThread;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

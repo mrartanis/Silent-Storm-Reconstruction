@@ -25,6 +25,7 @@ if($LinkResources){
  New-Item -ItemType Junction -Path $resLink -Target $resSource | Out-Null
 }
 foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){Copy-Item "$archive\$file" "$run\game"}
+if(Test-Path -LiteralPath "$archive\SDL3.dll"){Copy-Item "$archive\SDL3.dll" "$run\game"}
 if($buildMetadata.Architecture -eq 'x64'){
  foreach($file in 'binkw32.dll'){Copy-Item "$archive\$file" "$run\game"}
  if($buildMetadata.NativeSFX){

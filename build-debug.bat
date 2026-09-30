@@ -12,7 +12,12 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
-cmake -S "%~dp0." -B "%~dp0build" -A Win32 || (pause & exit /b 1)
+if not defined SDL3_DIR (
+    echo [ERROR] Set SDL3_DIR to the cmake directory of SDL3 3.4.16.
+    pause
+    exit /b 1
+)
+cmake -S "%~dp0." -B "%~dp0build" -A x64 "-DSDL3_DIR=%SDL3_DIR%" || (pause & exit /b 1)
 cmake --build "%~dp0build" --config RelWithDebInfo || (pause & exit /b 1)
 echo.
 echo [OK] Build finished. Open  build\A5.sln  in Visual Studio and press F5 to debug.

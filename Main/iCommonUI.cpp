@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "GSceneUtils.h"
 #include "Transform.h"
 #include "DiscretePos.h"
@@ -728,7 +729,7 @@ void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	pView->CreateDynamicClearRects( sLayout, s2DPosition, s2DWindow, 1.0f );
 	pView->Flush();
 
-	sTimer.Advance( true, GetTickCount() );
+	sTimer.Advance( true, S2Platform::Milliseconds() );
 	pInventoryUnit->Update( fAngle );   // retail @0x1bf070 passes this->fAngle (tag 4; 0 for non-spinning hosts)
 
 	CVec2 vPos( sPosition.x + GetSize().x / 2, sPosition.y + GetSize().y / 2 );

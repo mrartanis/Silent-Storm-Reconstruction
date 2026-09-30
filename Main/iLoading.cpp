@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "iLoading.h"
 #include "..\DBFormat\DataFormat.h"   // NDb::GetUITexture / NDb::GetUIContainer
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ void SetLoadingImage( NDb::CUITexture *pTexture )
 // push the progress to the loading window, step + draw the interface (time 0), and flip.
 void ShowLoadingScreen( int nProgress )
 {
-	DWORD dwNow = GetTickCount();
+	DWORD dwNow = S2Platform::Milliseconds();
 	int nDelta = (int)( dwNow - dwPrevLoadingScreen );
 	if ( nDelta < 0 )
 		nDelta = -nDelta;

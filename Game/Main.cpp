@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "..\Main\GInit.h"
-#include "WinFrame.h"
+#include "Platform.h"
 #include "..\Main\iMain.h"
 #include "..\Input\Bind.h"
 #include "..\ADOImport\BasicDB.h"
@@ -17,7 +17,7 @@
 #include "..\Misc\PortableClockSeed.h" // 32-bit millisecond seed without Win32 clock dependency
 #include "..\Main\iSaveManager.h" // CRAP, to start from mission
 #include "..\Main\Sound.h"
-#include "..\Main\WinInputConv.h" // Win32->NInput bridge: replays WM_KEYDOWN/WM_CHAR (OS auto-repeat)
+
 #include "..\FileIO\BasicChunk1.h"  // [HARNESS] g_bSaveLoadDiag / SaveLoadDiag
 #include "..\FileIO\WindowsSaveNames.h"
 #include "..\MiscDll\LogStream.h"   // [HARNESS] g_bHarnessLog (console-log tee)
@@ -481,8 +481,9 @@ static void HarnessCameraStatus()
 	ICamera::SCameraPos pos;
 	pCamera->GetPlacement( &pos );
 	const CVec2 &cursor = pCursor->GetPos();
-	SaveLoadDiag( "[harness] camerastatus cursor=(%.3f,%.3f) anchor=(%.6f,%.6f,%.6f)\n",
-		cursor.x, cursor.y, pos.ptAnchor.x, pos.ptAnchor.y, pos.ptAnchor.z );
+	SaveLoadDiag( "[harness] camerastatus cursor=(%.3f,%.3f) anchor=(%.6f,%.6f,%.6f) yaw=%.6f pitch=%.6f rod=%.6f frozen=%d\n",
+		cursor.x, cursor.y, pos.ptAnchor.x, pos.ptAnchor.y, pos.ptAnchor.z,
+		pos.fYaw, pos.fPitch, pos.fRod, pCamera->IsCameraFrozen() ? 1 : 0 );
 }
 
 // ============================================================================================
@@ -683,8 +684,24 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
+// Subsystems unwind in dependency order on normal exit and every startup error.
+struct GameLifetime {
+ bool graphics = false, sound = false, input = false, interface = false;
+ ~GameLifetime() {
+  NGScene::StopResourceLoadingThread();
+  if (interface) NMainLoop::DoneInterface();
+  if (sound) NSound::DoneSound();
+  if (graphics) NGfx::Done3D();
+  if (input) NInput::DoneInput();
+  S2Platform::Done();
+ }
+};
+static int RunGame( const char *lpCmdLine )
 {
+	vector<string> szParams;
+	NStr::SplitStringWithMultipleBrackets( lpCmdLine, szParams, ' ' );
+	S2Platform::SetErrorDialogs( find( szParams.begin(), szParams.end(), "-harness" ) == szParams.end()
+		&& find( szParams.begin(), szParams.end(), "-loadslot" ) == szParams.end() );
 #ifdef _DEBUG
   int tmpFlag = _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG );
 	//tmpFlag |= _CRTDBG_LEAK_CHECK_DF;// | _CRTDBG_CHECK_ALWAYS_DF;
@@ -695,6 +712,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	srand( static_cast<unsigned int>( S2Random::ClockSeed32() ) );
 #endif // _DEBUG
 	NGScene::AddResourceDir( ".\\res" );
+	GameLifetime lifetime;
 	NGScene::RunResourceLoadingThread();
   // load game database
 	try
@@ -706,8 +724,8 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	catch (...)
 	{
 		ASSERT( 0 ); // game.db not found
-		MessageBox( 0, "File game.db not found", "Error", MB_OK );
-		return 0;
+		S2Platform::Error( "Cannot read game.db; check the game data directory" );
+		return 1;
 	}
 
 	// NOTE: no explicit NDb::BuildMapLinks() here (it is APPEND-ONLY -- calling it twice duplicates
@@ -718,39 +736,40 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	// is a serialized member). The unconditional call that used to sit here double-pushed on both.
 
 	// init subsystems
-	if ( !NWinFrame::InitApplication( hInstance, "Silent Storm", "Silent Storm" ) )
-		return 0;
-	if ( !NGfx::Init3D( NWinFrame::GetWnd() ) )
+	if ( !S2Platform::Init( "Silent Storm" ) )
+		return 1;
+	if ( !NGfx::Init3D( static_cast<HWND>( S2Platform::NativeWindow() ) ) )
 	{
 		ASSERT(0); // DX8 not found
-		MessageBox( 0, "Failed to initialize Direct3D8", "Error", MB_OK );
-		return 0;
+		S2Platform::Error( "Failed to initialize the Direct3D9 renderer" );
+		return 1;
 	}
+	lifetime.graphics = true;
 	#if !defined(S2_X64_MEDIA_STUBS) || defined(S2_NATIVE_MUSIC)
-	if ( !NSound::InitSound( NWinFrame::GetWnd() ) )
+	if ( !NSound::InitSound( static_cast<HWND>( S2Platform::NativeWindow() ) ) )
 	{
 		ASSERT(0); // FMod not found
-		MessageBox( 0, "Failed to initialize FMod", "Error", MB_OK );
-		return 0;
+		S2Platform::Error( "Failed to initialize FMod" );
+		return 1;
 	}
+	lifetime.sound = true;
 	#else
 	OutputDebugStringA( "x64 core: FMOD unavailable; sound disabled until miniaudio backend\n" );
 	#endif
-	if ( !NInput::InitInput( NWinFrame::GetWnd() ) )
+	if ( !NInput::InitInput() )
 	{
-		ASSERT(0); // DX8input not found
-		MessageBox( 0, "Failed to initialize DirectInput8", "Error", MB_OK );
-		return 0;
+		ASSERT(0); // SDL input initialization failed
+		S2Platform::Error( "Failed to initialize SDL keyboard and mouse" );
+		return 1;
 	}
 
+	lifetime.input = true;
 	// Load config & process params
 	NGlobal::LoadConfig( ".\\cfg\\autoexec.cfg" );
 
-	vector<string> szParams;
 	bool bDoLoad = false;
 	bool bHarnessActive = false;
 	string szLoadSlot;
-	NStr::SplitStringWithMultipleBrackets( lpCmdLine, szParams, ' ' );
 	string szCfg( "start.cfg" );
 	for ( int i = 0; i < szParams.size(); ++i )
 	{
@@ -853,15 +872,15 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	if ( !NGScene::SetModeFromConfig() )
 	{
 		ASSERT(0); // no mode found
-		MessageBox( 0, "Failed to set display mode", "Error", MB_OK );
-		return 0;
+		S2Platform::Error( "Failed to set display mode" );
+		return 1;
 	}
 	//
 	if ( !NSound::SetModeFromConfig() )
 	{
 		ASSERT(0);
-		MessageBox( 0, "Failed to set sound mode", "Error", MB_OK );
-		return 0;
+		S2Platform::Error( "Failed to set sound mode" );
+		return 1;
 	}
 	//
 	// Build the loading-screen UI once at boot, BEFORE the first interface command is queued. Mirrors
@@ -871,6 +890,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	// of a black screen. Paired with NGame::TermLoadingScreen() in NMainLoop::DoneInterface (called at shutdown
 	// below). Safe: this CInterface is never pushed onto NMainLoop::interfaces; it is only Step+Drawn inside
 	// ShowLoadingScreen, so ShowWindow(SHOW) here does not overlay the menu queued just below.
+	lifetime.interface = true;
 	NGame::InitLoadingScreen();
 	if ( bDoLoad )
 		NMainLoop::Command( new NMainLoop::CICLoad( szLoadSlot.empty() ? NMainLoop::GetQuickSaveSlot( true ) : szLoadSlot ) );
@@ -878,42 +898,37 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		NMainLoop::Command( new CICInterMission( szCfg ) );
 	if ( g_bHarnessLog )
 		SetUnhandledExceptionFilter( HarnessCrashFilter );   // [HARNESS] symbolic backtrace on post-load AV
-	SWinToInputMessageConverter sWinInputConv;
+
 	for (;;)
 	{
-		NWinFrame::PumpMessages();
-		bool bActive = NWinFrame::IsAppActive();
+		S2Platform::PumpEvents();
+		bool bActive = S2Platform::Active();
 		// A hidden debugger leaves the window inactive. The ordinary harness still
 		// preserves retail pause-on-background behavior; this explicit test mode
 		// advances mission/input frames exactly as a focused window would.
 		bool bStepActive = bActive || ( g_bHarnessLog && bHarnessActive );
-		NInput::PumpMessages( bStepActive );
-		// Re-emit the coalesced Win32 keyboard stream (WM_KEYDOWN/WM_CHAR, OS auto-repeated)
-		// as NInput messages, exactly as the retail main loop does (WinMain @0x9810: right
-		// after NInput::PumpMessages, before StepApp) -- this is what gives held keys repeat.
-		sWinInputConv.Do();
-		if ( NWinFrame::IsExit() )
+		NInput::PumpMessages( bActive );
+
+		if ( S2Platform::Exiting() )
 			break;
 		if ( !NMainLoop::StepApp( bStepActive, bActive ) )
 			break;
-		// retail WinMain @0x9810 calls this every frame right here (@0x40a70b, immediately after
-		// StepApp): it re-derives the RDTSC->seconds scale against a rolling QPC window. Dev only ever
-		// calibrated once, in the HPTimer static ctor, so fProcFreq1 was frozen at whatever clock the
-		// CPU happened to be running at during boot -- everything on NHPTimer (the sound mixer's
-		// timing, the window-message stamps) then drifts as SpeedStep/turbo move the TSC ratio.
-		// Self-throttling: only recalibrates once the 50ms reference window has elapsed.
-		NHPTimer::UpdateHPTimerFrequency();
+
 		if ( g_bHarnessLog && !HarnessPoll() )   // [HARNESS] frame-polled command channel
 			break;
 		if ( !bStepActive )
-			Sleep( 40 );
+			S2Platform::Delay( 40 );
 	}
 	//
 	NGlobal::SaveConfig( ".\\cfg\\config.cfg" );
-	NMainLoop::DoneInterface();
-	NGfx::Done3D();
-	NInput::DoneInput();
-	NSound::DoneSound();
+
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR commandLine, int)
+{
+ try { return RunGame(commandLine); }
+ catch (const std::exception& error) { S2Platform::Error(error.what()); return 1; }
+ catch (...) { S2Platform::Error("Game initialization or update failed"); return 1; }
+}

@@ -186,6 +186,7 @@ void AddResourceDir( const char *pszName );
 void ClearResourceDirs();	// release @0x157950 -- drop all resource dirs (CModManager::Activate)
 void CloseAllResources();
 void RunResourceLoadingThread();
+void StopResourceLoadingThread();
 void ReleaseFileRequestHolder();
 void AddFileRequest( CFileRequest *pReq );
 bool HasFileRequestsInFly();
