@@ -146,8 +146,8 @@ public:
 				const wstring &wsParam = paramsSet[nTemp + 2];
 				if ( wsID.compare( L"size" ) == 0  )
 				{
-					WCHAR wsString[128];
-					int nParams = swscanf( wsParam.c_str(), L"%d%2s", &sState.sFont.nSize, wsString );
+					wchar_t wsString[128] = {};
+					int nParams = swscanf( wsParam.c_str(), L"%d%2ls", &sState.sFont.nSize, wsString );
 
 					if ( nParams > 1 )
 					{
@@ -164,7 +164,7 @@ public:
 				else if ( wsID.compare( L"face" ) == 0  )
 					sState.sFont.szName = NStr::ToAscii( wsParam );
 				else if ( wsID.compare( L"outlinesize" ) == 0  )
-					sState.nOutlineBorder = _wtol( wsParam.c_str() );
+					sState.nOutlineBorder = std::wcstol( wsParam.c_str(), nullptr, 10 );
 				else if ( wsID.compare( L"outlinecolor" ) == 0  )
 					sState.sOutlineColor = StringToColor( wsParam );
 				else if ( wsID.compare( L"forcefontsize" ) == 0 )
@@ -204,7 +204,7 @@ public:
 				if ( paramsSet[nTemp + 1].compare( L"=" ) != 0 )
 					break;
 				if ( paramsSet[nTemp].compare( L"size" ) == 0 )
-					sState.nMinFontSize = _wtol( paramsSet[nTemp + 2].c_str() );   // retail VA 0x723fd9
+					sState.nMinFontSize = std::wcstol( paramsSet[nTemp + 2].c_str(), nullptr, 10 );   // retail VA 0x723fd9
 				nTemp += 3;
 			}
 		}
@@ -267,13 +267,13 @@ public:
 						eAlign = SState::HORALIGN_WRAP_RIGHT;
 				}
 				else if ( wsID.compare( L"id" ) == 0  )
-					pTexture = NDb::GetUITexture( _wtol( wsParam.c_str() ) );
+					pTexture = NDb::GetUITexture( std::wcstol( wsParam.c_str(), nullptr, 10 ) );
 				else if ( wsID.compare( L"width" ) == 0  )
-					nWidth = _wtol( wsParam.c_str() );
+					nWidth = std::wcstol( wsParam.c_str(), nullptr, 10 );
 				else if ( wsID.compare( L"height" ) == 0  )
-					nHeight = _wtol( wsParam.c_str() );
+					nHeight = std::wcstol( wsParam.c_str(), nullptr, 10 );
 				else if ( wsID.compare( L"border" ) == 0  )
-					nBorder = _wtol( wsParam.c_str() );
+					nBorder = std::wcstol( wsParam.c_str(), nullptr, 10 );
 
 				nTemp += 3;
 			}

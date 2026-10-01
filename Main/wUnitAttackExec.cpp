@@ -394,20 +394,20 @@ void UnitThrowGrenade( CUnitServer *pUS, NDb::CRPGGrenade *pGrenade, const CVec3
 	// executor member, so use a local SRand, the dev's local-rng idiom elsewhere in this file).
 	SRand random;
 	int nToHit = pToHitCalcer->GetToHit();
-	int nRandom = random.Get( 100 );
+	int nRandom = GlobalGameRandom().Get( 100 );
 	if ( nRandom > nToHit )
 	{
 		float fD = 0.2f * fabs( grenadeParams.vel );
-		grenadeParams.vel.x += random.GetFloat( -fD, +fD );
-		grenadeParams.vel.y += random.GetFloat( -fD, +fD );
-		grenadeParams.vel.z += random.GetFloat( -fD, +fD );
+		grenadeParams.vel.x += GlobalGameRandom().GetFloat( -fD, +fD );
+		grenadeParams.vel.y += GlobalGameRandom().GetFloat( -fD, +fD );
+		grenadeParams.vel.z += GlobalGameRandom().GetFloat( -fD, +fD );
 	}
 	grenadeParams.fT = Clamp( grenadeParams.fT, 0.f, float( pGrenade->nMaxDelay ) );
 	grenadeParams.fT = pGrenade->nMaxDelay - grenadeParams.fT;
-	nRandom = random.Get( 100 );
+	nRandom = GlobalGameRandom().Get( 100 );
 	if ( nRandom >= 99 || nRandom >= pToHitCalcer->GetSkill() )
 	{
-		grenadeParams.fT *= random.GetFloat( 0.5f, 2.f );
+		grenadeParams.fT *= GlobalGameRandom().GetFloat( 0.5f, 2.f );
 		grenadeParams.fT = Clamp( grenadeParams.fT, 0.f, float( pGrenade->nMaxDelay ) * 0.75f );
 	}
 

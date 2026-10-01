@@ -1,4 +1,7 @@
 #include "FFmpegDecoder.h"
+#if !defined(_WIN32)
+#include "../FileIO/PortableGamePath.h"
+#endif
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -122,7 +125,12 @@ bool FFmpegDecoder::Open(const std::string& path, StreamType type,
 {
   Close();
   std::unique_ptr<Impl> candidate(new Impl);
-  int result = avformat_open_input(&candidate->format, path.c_str(), nullptr, nullptr);
+#if defined(_WIN32)
+  const std::string& nativePath = path;
+#else
+  const std::string nativePath = S2FileIO::ResolveGamePath(path.c_str());
+#endif
+  int result = avformat_open_input(&candidate->format, nativePath.c_str(), nullptr, nullptr);
   if (result < 0) {
     if (error) *error = ErrorText(result);
     return false;

@@ -50,6 +50,24 @@ int main( int argc, char **argv )
 		CFileStream database;
 		database.OpenRead( argv[1] );
 		NDatabase::Serialize( database, CStructureSaver::READ );
+        // UI tile sizes must be derived after the referenced textures are loaded.
+        // libstdc++ and MSVC enumerate the database table hash in different orders.
+        auto* uiTextures = NDatabase::GetTable<NDb::CUITexture>();
+        if (!uiTextures) return 32;
+        CDBIterator<NDb::CUITexture> uiTexture(*uiTextures);
+        int sizedImages = 0;
+        while (uiTexture.MoveNext()) {
+          const auto* image = uiTexture.Get();
+          const auto* texture = image->pTextures[NDb::UIM_1024x768].GetPtr();
+          if (!texture) continue;
+          if (image->nWidth != texture->nWidth || image->nHeight != texture->nHeight) {
+            std::fprintf(stderr, "UI image %d size %dx%d differs from texture %dx%d\n",
+              image->GetRecordID(), image->nWidth, image->nHeight, texture->nWidth, texture->nHeight);
+            return 33;
+          }
+          if (image->nWidth > 0 && image->nHeight > 0) ++sizedImages;
+        }
+        if (!sizedImages) return 34;
 		// The authored walk-step sound is one case where armor type 5 reaches
 		// the retail accessor's sixth float slot. For this original-db record
 		// the adjacent pSound is null, so the x86 instruction reads zero, not R5.

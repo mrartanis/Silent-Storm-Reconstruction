@@ -1,6 +1,7 @@
 #include "Platform.h"
 #include <SDL3/SDL.h>
 #include <cstdio>
+#include <clocale>
 #include <deque>
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -25,6 +26,14 @@ bool S2Platform::Init(const char* title, int width, int height, bool hidden)
 {
   Done();
   exiting = false;
+#if !defined(_WIN32)
+  // Wide-character UI classification must recognize Cyrillic even when the
+  // launcher has no LANG. Leave the numeric locale unchanged for game data.
+  if (!std::setlocale(LC_CTYPE, "C.UTF-8")) {
+    S2Platform::Error("Unicode character locale C.UTF-8 is unavailable");
+    return false;
+  }
+#endif
   SDL_SetHint(SDL_HINT_MOUSE_AUTO_CAPTURE, "0");
   if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
     InitError("SDL_Init");
@@ -68,7 +77,26 @@ void* S2Platform::NativeWindow()
   return window ? SDL_GetPointerProperty(SDL_GetWindowProperties(window),
       SDL_PROP_WINDOW_WIN32_HWND_POINTER, nullptr) : nullptr;
 #else
+  if (!window) return nullptr;
+  const auto properties = SDL_GetWindowProperties(window);
+  if (SDL_strcmp(SDL_GetCurrentVideoDriver(), "wayland") == 0)
+    return SDL_GetPointerProperty(properties, SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER, nullptr);
+  return reinterpret_cast<void*>(static_cast<std::uintptr_t>(SDL_GetNumberProperty(
+      properties, SDL_PROP_WINDOW_X11_WINDOW_NUMBER, 0)));
+#endif
+}
+
+void* S2Platform::NativeDisplay()
+{
+#if defined(_WIN32)
   return nullptr;
+#else
+  if (!window) return nullptr;
+  const auto properties = SDL_GetWindowProperties(window);
+  return SDL_GetPointerProperty(properties,
+      SDL_strcmp(SDL_GetCurrentVideoDriver(), "wayland") == 0
+          ? SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER : SDL_PROP_WINDOW_X11_DISPLAY_POINTER,
+      nullptr);
 #endif
 }
 
@@ -156,7 +184,7 @@ void S2Platform::Size(int* width, int* height)
 bool S2Platform::SetMode(int width, int height, bool fullscreen)
 {
   return window && SDL_SetWindowFullscreen(window, fullscreen) &&
-      (fullscreen || SDL_SetWindowSize(window, width, height));
+      (fullscreen || SDL_SetWindowSize(window, width, height)) && SDL_SyncWindow(window);
 }
 void S2Platform::CursorPosition(float* x, float* y) { SDL_GetMouseState(x, y); }
 void S2Platform::CaptureMouse(bool capture)
@@ -204,3 +232,8 @@ void S2Platform::MouseAcceleration(int* threshold1, int* threshold2, int* accele
 }
 std::uint32_t S2Platform::Milliseconds() { return static_cast<std::uint32_t>(SDL_GetTicks()); }
 void S2Platform::Delay(std::uint32_t milliseconds) { SDL_Delay(milliseconds); }
+
+std::uint64_t S2Platform::PhysicalMemoryBytes() {
+  const int megabytes = SDL_GetSystemRAM();
+  return megabytes > 0 ? std::uint64_t(megabytes) * 1024 * 1024 : 0;
+}

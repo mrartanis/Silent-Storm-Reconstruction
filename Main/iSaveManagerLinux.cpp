@@ -3,6 +3,9 @@
 #include "../FileIO/BasicChunk1.h"
 #include "../Misc/Geom.h"
 #include "iSaveManager.h"
+#if defined(S2_FULL_GAME)
+#include "Interface.h"
+#endif
 #include "../FileIO/Streams.h"
 #include "../FileIO/LinuxUserData.h"
 #include "../FileIO/PortableSaveHeader.h"
@@ -324,5 +327,29 @@ void GetSlotTime(const string& slot, wstring* time, int* dateKey, int* timeKey) 
       std::wcsftime(clock, 64, L"%H:%M:%S", &local))
     *time = wstring(date) + L"<tab>" + clock;
 }
+#if defined(S2_FULL_GAME)
+string GetQuickSaveSlot( bool bLoad )
+{
+	// Retail v1.2 0x637a70: save to the older slot, load the newer one.
+	string first = S2FileIO::EncodeLinuxProfileConfig( NUI::GetDBString( 20241 ) );
+	string second = S2FileIO::EncodeLinuxProfileConfig( NUI::GetDBString( 20242 ) );
+	int firstDate = 0, firstTime = 0, secondDate = 0, secondTime = 0;
+	wstring time;
+	GetSlotTime( first, &time, &firstDate, &firstTime );
+	GetSlotTime( second, &time, &secondDate, &secondTime );
+	bool bFirstNewer = firstDate != secondDate ? firstDate > secondDate : firstTime > secondTime;
+	return ( bLoad ? bFirstNewer : !bFirstNewer ) ? first : second;
+}
+
+bool IsValidCustomName(const string& encoded) {
+  std::wstring name;
+  if (!S2FileIO::DecodeLinuxProfileConfig(encoded, &name) ||
+      !S2FileIO::IsSafeSaveComponent(name)) return false;
+  for (int id = 20241; id <= 20244; ++id)
+    if (name == NUI::GetDBString(id)) return false;
+  return true;
+}
+
+#endif
 } // namespace NMainLoop
 #endif

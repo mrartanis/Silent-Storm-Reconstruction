@@ -22,10 +22,12 @@ static int sprintf_s(char (&buffer)[N], const char* format, Args... args)
 {
 	return std::snprintf(buffer, N, format, args...);
 }
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString(const char* message)
 {
 	std::fputs(message, stderr);
 }
+#endif
 #endif
 #include "aiLocker.h"
 #include "aiJob.h"

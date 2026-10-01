@@ -84,7 +84,7 @@ bool CText::GetVal( const wstring &szID, wstring *pVal )
 void CText::SetVal( const wstring &szID, int nVal )
 {
 	WCHAR wsBuffer[128];
-	swprintf( wsBuffer, L"%d", nVal );
+	swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"%d", nVal );
 	valuesMap[szID] = wsBuffer;
 
 	SetUpdated();
@@ -93,7 +93,7 @@ void CText::SetVal( const wstring &szID, int nVal )
 void CText::SetVal( const wstring &szID, float fVal )
 {
 	WCHAR wsBuffer[256];
-	swprintf( wsBuffer, L"%.2f", fVal );
+	swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"%.2f", fVal );
 	valuesMap[szID] = wsBuffer;
 
 	SetUpdated();

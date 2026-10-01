@@ -138,16 +138,16 @@ void CStandardParticleEffect::AddParticles( IParticleOutput *pRender )
 	if ( !pParticles )
 		return;
 
-	const SParticleOrientationInfo &or = pRender->GetOrientationInfo();
+	const SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();
 	vector<STransparentTexturePlace> texturePlaces( textures.size() );
 	vector<char> texValid( textures.size() );
 	InitTexturePlaces( &texturePlaces, &texValid, textures );
 	// Retail 0x541472: repeat around the camera's intersection with the z=0 plane.
-	CVec3 wrapCenter = or.vBasic[3];
-	if ( vWrap.x != 0 && or.vBasic[2].z != 0 )
+	CVec3 wrapCenter = orientation.vBasic[3];
+	if ( vWrap.x != 0 && orientation.vBasic[2].z != 0 )
 	{
-		wrapCenter.x -= wrapCenter.z / or.vBasic[2].z * or.vBasic[2].x;
-		wrapCenter.y -= wrapCenter.z / or.vBasic[2].z * or.vBasic[2].y;
+		wrapCenter.x -= wrapCenter.z / orientation.vBasic[2].z * orientation.vBasic[2].x;
+		wrapCenter.y -= wrapCenter.z / orientation.vBasic[2].z * orientation.vBasic[2].y;
 	}
 
 	int nCycleEnd = int( fEndCycle * pParticles->fFrameRate );
@@ -229,9 +229,9 @@ void CStandardParticleEffect::AddParticles( IParticleOutput *pRender )
 				float x = fTPivotX + xx * fTScaleXX + yy * fTScaleYX;\
 				float y = fTPivotY + xx * fTScaleXY + yy * fTScaleYY;\
 				float fDZ = fRandomShifts[ nRnd ] * fZShiftScale;\
-				vPos[N].x = pos.x + x * or.vBasic[0].x + y * or.vBasic[1].x + fDZ * or.vBasic[2].x;\
-				vPos[N].y = pos.y + x * or.vBasic[0].y + y * or.vBasic[1].y + fDZ * or.vBasic[2].y;\
-				vPos[N].z = pos.z + x * or.vBasic[0].z + y * or.vBasic[1].z + fDZ * or.vBasic[2].z;\
+				vPos[N].x = pos.x + x * orientation.vBasic[0].x + y * orientation.vBasic[1].x + fDZ * orientation.vBasic[2].x;\
+				vPos[N].y = pos.y + x * orientation.vBasic[0].y + y * orientation.vBasic[1].y + fDZ * orientation.vBasic[2].y;\
+				vPos[N].z = pos.z + x * orientation.vBasic[0].z + y * orientation.vBasic[1].z + fDZ * orientation.vBasic[2].z;\
 				nRnd = ( nRnd + nRndStep ) & 7;\
 				}
 				ONE_VERTEX( 0, -1 , -1 )
@@ -239,7 +239,7 @@ void CStandardParticleEffect::AddParticles( IParticleOutput *pRender )
 				ONE_VERTEX( 2,  1 ,  1 )
 				ONE_VERTEX( 3, -1 ,  1 )
 #undef ONE_VERTEX
-				pRender->AddParticle( vPos, dwColor, texturePlaces[nSprite], pos * or.vDepth );
+				pRender->AddParticle( vPos, dwColor, texturePlaces[nSprite], pos * orientation.vDepth );
 			}
 		}
 	}
@@ -249,7 +249,7 @@ void CStandardParticleEffect::AddParticles( IParticleOutput *pRender )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CGrassParticleEffect::AddParticles( IParticleOutput *pRender )
 {
-	const SParticleOrientationInfo &or = pRender->GetOrientationInfo();
+	const SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();
 	vector<STransparentTexturePlace> texturePlaces( textures.size() );
 	if ( nGrassSize )
 	{
@@ -287,20 +287,20 @@ void CGrassParticleEffect::AddParticles( IParticleOutput *pRender )
 		v[2] = fHalfScale * CVec2( - fXPivot + 1, - fYPivot + 1 );
 		v[3] = fHalfScale * CVec2( - fXPivot - 1, - fYPivot + 1 );
 
-		CVec3 dir = pos - or.vBasic[3];
-		float fCamDist = dir * or.vBasic[2];
+		CVec3 dir = pos - orientation.vBasic[3];
+		float fCamDist = dir * orientation.vBasic[2];
 		CVec3 vPos[4];
 		for ( int i = 0; i < 4; ++i )
 		{
 			float x = v[i].x * scale.x, y = v[i].y * scale.y;
 			float xrot = fCos * x - fSin * y;
 			float yrot = fSin * x + fCos * y;
-			vPos[i] = dir + xrot * or.vBasic[0] + yrot * or.vBasic[1];
+			vPos[i] = dir + xrot * orientation.vBasic[0] + yrot * orientation.vBasic[1];
 			vPos[i] *= (fCamDist - yrot) / fCamDist;
-			vPos[i] += or.vBasic[3];
+			vPos[i] += orientation.vBasic[3];
 		}
 		DWORD dwColor = colors[nParticle].color | 0xff000000; // set alpha to 1
-		pRender->AddParticle( vPos, dwColor, texturePlaces[nSprite], pos * or.vDepth );
+		pRender->AddParticle( vPos, dwColor, texturePlaces[nSprite], pos * orientation.vDepth );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,7 +313,7 @@ void CExplosionParticleEffect::AddParticles( IParticleOutput *pRender )
 	pInfo.Refresh();
 	if ( !pInfo->GetValue() )
 		return;
-	const SParticleOrientationInfo &or = pRender->GetOrientationInfo();
+	const SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();
 	vector<STransparentTexturePlace> texturePlaces( textures.size() );
 	InitTexturePlaces( &texturePlaces, textures );
 	const SParticle &part = pInfo->GetValue()->particles[0];
@@ -352,9 +352,9 @@ void CExplosionParticleEffect::AddParticles( IParticleOutput *pRender )
 			float x = v[i].x * scale.x, y = v[i].y * scale.y;
 			float xrot = fCos * x - fSin * y;
 			float yrot = fSin * x + fCos * y;
-			vPos[i] = pos + xrot * or.vBasic[0] + yrot * or.vBasic[1] + fRandomShifts[ nRnd ] * or.vBasic[2];
+			vPos[i] = pos + xrot * orientation.vBasic[0] + yrot * orientation.vBasic[1] + fRandomShifts[ nRnd ] * orientation.vBasic[2];
 		}
-		pRender->AddParticle( vPos, dwColor, texturePlaces[sprite], pos * or.vDepth );
+		pRender->AddParticle( vPos, dwColor, texturePlaces[sprite], pos * orientation.vDepth );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,15 +364,15 @@ void CRainParticleEffect::AddParticles( IParticleOutput *pRender )
 {
 	const float FP_DROP_W = 0.033f;		// streak half-width
 	const float FP_DROP_H = 1.75f;		// streak length along the fall direction
-	const SParticleOrientationInfo &or = pRender->GetOrientationInfo();
+	const SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();
 	vector<STransparentTexturePlace> texturePlaces( textures.size() );
 	vector<char> texValid( textures.size() );
 	InitTexturePlaces( &texturePlaces, &texValid, textures );
 	for ( int nParticle = 0; nParticle < positions.size(); ++nParticle )
 	{
 		const CVec3 &pos = positions[nParticle];
-		CVec3 dif = pos - or.vBasic[3];				// pos - camera
-		if ( dif * or.vDepth < 0 )					// cull: keep only drops in front of the camera
+		CVec3 dif = pos - orientation.vBasic[3];				// pos - camera
+		if ( dif * orientation.vDepth < 0 )					// cull: keep only drops in front of the camera
 		{
 			const CVec3 &dir = directions[nParticle];
 			// screen-perpendicular width vector = ( dif.y, -dif.x, 0 ), length FP_DROP_W
@@ -390,7 +390,7 @@ void CRainParticleEffect::AddParticles( IParticleOutput *pRender )
 			vPos[3].z = pos.z + dir.z * FP_DROP_H;
 			int nSprite = faces[nParticle];			// signed-char sprite index
 			if ( texValid[nSprite] )
-				pRender->AddParticle( vPos, 0xffffffff, texturePlaces[nSprite], pos * or.vDepth );
+				pRender->AddParticle( vPos, 0xffffffff, texturePlaces[nSprite], pos * orientation.vDepth );
 		}
 	}
 }

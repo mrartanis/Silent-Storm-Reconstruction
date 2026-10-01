@@ -1,5 +1,10 @@
 #ifndef __WIN32HELPER_H__
 #define __WIN32HELPER_H__
+#if !defined(_WIN32)
+#include <mutex>
+#include <condition_variable>
+#include <dlfcn.h>
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if _MSC_VER > 1000
 #pragma once
@@ -7,6 +12,31 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NWin32Helper
 {
+#if !defined(_WIN32)
+class CEvent {
+  std::mutex mutex;
+  std::condition_variable ready;
+  bool signaled, manual;
+public:
+  explicit CEvent(bool initial = false, bool manualReset = true): signaled(initial), manual(manualReset) {}
+  bool Set() { std::lock_guard<std::mutex> lock(mutex); signaled = true; ready.notify_all(); return true; }
+  bool Pulse() { return Set(); }
+  bool Reset() { std::lock_guard<std::mutex> lock(mutex); signaled = false; return true; }
+  void Wait() { std::unique_lock<std::mutex> lock(mutex); ready.wait(lock, [this] { return signaled; }); if (!manual) signaled = false; }
+  bool IsSet() { std::lock_guard<std::mutex> lock(mutex); return signaled; }
+};
+class CCriticalSection {
+  std::recursive_mutex mutex;
+  friend class CCriticalSectionLock;
+};
+class CCriticalSectionLock {
+  std::unique_lock<std::recursive_mutex> lock;
+public:
+  explicit CCriticalSectionLock(CCriticalSection& section): lock(section.mutex) {}
+  void Enter() { lock.lock(); }
+  void Leave() { if (lock.owns_lock()) lock.unlock(); }
+};
+#else
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CEvent
 {
@@ -48,6 +78,7 @@ public:
 	void Enter() { lock.Enter(); bInsideCriticalSection = true; }
 	void Leave() { if ( bInsideCriticalSection ) lock.Leave(); bInsideCriticalSection = false; }
 };
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <class T>
 class com_ptr
@@ -70,6 +101,7 @@ public:
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CDLLHandle
 {
+#if defined(_WIN32)
 	HMODULE handle;												// DLL handle
 	std::string szName;										// file name
 	// disable copying...
@@ -100,6 +132,18 @@ public:
 	const std::string& GetModuleName() const { return szName; }
 	operator HMODULE() const { return handle; }
 	operator const char*() const { return szName.c_str(); }
+#else
+  void* handle;
+  std::string szName;
+public:
+  explicit CDLLHandle(const char* name): handle(dlopen(name, RTLD_NOW)), szName(name) {}
+  explicit CDLLHandle(const std::string& name): CDLLHandle(name.c_str()) {}
+  ~CDLLHandle() { if (handle) dlclose(handle); }
+  bool IsLoaded() const { return handle != nullptr; }
+  template<class T> T GetProcAddress(const char* name, T) { return handle ? reinterpret_cast<T>(dlsym(handle, name)) : nullptr; }
+  void* GetHMdule() const { return handle; }
+  const std::string& GetModuleName() const { return szName; }
+#endif
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

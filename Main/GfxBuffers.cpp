@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include <D3D9.h>
+#include "GfxLegacyTokens.h"
 #include "Gfx.h"
 #include "GfxBuffers.h"
 #include "..\MiscDll\Commands.h"
@@ -131,7 +131,7 @@ public:
 		//NCache::MRU_TYPE nBestMRU = NCache::MRU_LAST;
 		NCache::CFibElement el;
 		el.nSize = NCache::GetMajorFib( nSize );
-		CCache::SCachePlace best;
+		typename CCache::SCachePlace best;
 		if ( !pCache->GetPlace( el, &best ) )
 		{
 			ASSERT( 0 );
@@ -190,14 +190,14 @@ public:
 	void DrawRU( CTexture *pTarget )
 	{
 		CTextureLock<SPixel8888> tl( pTarget, 0, INPLACE );
-		vector<CCache::SStatePlace> places;
+		vector<typename CCache::SStatePlace> places;
 		pCache->GetState( &places );
 		for ( int y = 0; y < tl.GetYSize(); ++y )
 			for ( int x = 0; x < tl.GetXSize(); ++x )
 				tl[y][x] = SPixel8888( 255,255,255 );
 		for ( int k = 0; k < places.size(); ++k )
 		{
-			const CCache::SStatePlace &p = places[k];
+			const typename CCache::SStatePlace &p = places[k];
 			SPixel8888 color;
 			if ( p.pUser )
 			{
@@ -295,15 +295,7 @@ class CTriListWrapperHandle
 	list<CMObj<CTriListWrapper> > wrappers;
 public:
 	template<class T>
-	CTriListWrapper* NewWrapper( T *pThis, int nTris )
-	{
-		if ( ( (++nSlowCheck) & 0xff ) == 0 && !wrappers.empty() )
-			EraseInvalidRefs( &wrappers );
-		ASSERT( nTris <= pThis->GetSize() );
-		CTriListWrapper *pRes = new CTriListWrapper( pThis, nTris ); 
-		wrappers.push_back( pRes ); 
-		return pRes;  
-	}
+	CTriListWrapper* NewWrapper( T *pThis, int nTris );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CTriListCore: public ILinearBuffer, public CTriList, public CTriListWrapperHandle
@@ -379,6 +371,16 @@ public:
 	virtual CTriListWrapper* CreateWrapper( int nTris ) { return dynamic_cast<CTriListCore*>(pParent.GetPtr())->CreateWrapper( nTris ); }
 	virtual void DrawPrimitive( int nVBStart, int nMinIndex, int nMaxIndex ) { ASSERT(0); }//dynamic_cast<CTriListCore16*>(pParent.GetPtr())->RealDrawPrimitive( nVBStart, nMinIndex, nMaxIndex, nTris ); }
 };
+template<class T>
+CTriListWrapper* CTriListWrapperHandle::NewWrapper( T *pThis, int nTris )
+{
+	if ( ( (++nSlowCheck) & 0xff ) == 0 && !wrappers.empty() )
+		EraseInvalidRefs( &wrappers );
+	ASSERT( nTris <= pThis->GetSize() );
+	CTriListWrapper *pRes = new CTriListWrapper( pThis, nTris );
+	wrappers.push_back( pRes );
+	return pRes;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEXTURES support classes
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -733,7 +735,7 @@ public:
 		NCache::CQuadTreeElement elem;
 		elem.nXSize = GetMSB( nXSize - 1 ) + 1;
 		elem.nYSize = GetMSB( nYSize - 1 ) + 1;
-		CCache::SCachePlace place;
+		typename CCache::SCachePlace place;
 		if ( !pCache->GetPlace( elem, &place ) )
 			return 0;
 		CTexture *pRes = new CTexture( pBuffer, CLAMP );
@@ -748,14 +750,14 @@ public:
 	void DrawRU()
 	{
 		CTextureLock<SPixel8888> tl( pTexture, 0, INPLACE );
-		vector<CCache::SStatePlace> places;
+		vector<typename CCache::SStatePlace> places;
 		pCache->GetState( &places );
 		for ( int y = 0; y < tl.GetYSize(); ++y )
 			for ( int x = 0; x < tl.GetXSize(); ++x )
 				tl[y][x] = SPixel8888( 255,255,255 );
 		for ( int k = 0; k < places.size(); ++k )
 		{
-			const CCache::SStatePlace &p = places[k];
+			const typename CCache::SStatePlace &p = places[k];
 			SPixel8888 color;
 			if ( p.pUser )
 			{
@@ -802,7 +804,7 @@ public:
 	void Clear() { textures.clear(); }
 	void Walk()
 	{
-		for ( list<STex>::iterator i = textures.begin(); i != textures.end(); ++i )
+		for ( typename list<STex>::iterator i = textures.begin(); i != textures.end(); ++i )
 		{
 			ASSERT( IsValid( i->pTB ) );
 			if ( !IsValid( i->pTexture ) )
@@ -814,7 +816,7 @@ public:
 		// pick best
 		NCache::MRU_TYPE nBest = nCurrentFrame - 1; //MRU_LAST;
 		STex *pBest = 0;
-		for ( list<STex>::iterator i = textures.begin(); i != textures.end(); ++i )
+		for ( typename list<STex>::iterator i = textures.begin(); i != textures.end(); ++i )
 		{
 			if ( !IsValid( i->pTexture ) )
 			{

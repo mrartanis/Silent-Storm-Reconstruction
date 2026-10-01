@@ -1,4 +1,4 @@
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
 #include "StdAfx.h"
 #else
 #include "../FileIO/StdAfx.h"
@@ -18,7 +18,7 @@
 #if !defined(_WIN32)
 #include "../FileIO/PortablePackageIndex.h"
 #endif
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
 #include "scriptUI.h"		// Windows window-UI Lua bindings and tag methods
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ Script::SRegFunction pLuaPtrTagFuncList[] = { {0,0} };
 static void SharedInit( Script *scr )
 {
 	scr->Register( pRegList );
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
 	scr->Register( pUIRegList );
 #endif
 	int nTag = 0;
@@ -38,7 +38,7 @@ static void SharedInit( Script *scr )
 	ASSERT( nTag == tagLuaCPtr );
 	nTag = scr->RegisterNewTag( pLuaPtrTagFuncList );
 	ASSERT( nTag == tagLuaCObj );
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
 	// script-UI bridge: a third user tag for NUI::CWindow userdata. The built-in type tags are 0..5
 	// (LUA_TUSERDATA..LUA_TFUNCTION), tagLuaCPtr/tagLuaCObj are 6/7, so this third RegisterNewTag yields
 	// 8 == tagLuaWindow -- byte-identical to retail's window tag. Like the CPtr/CObj tags it carries no

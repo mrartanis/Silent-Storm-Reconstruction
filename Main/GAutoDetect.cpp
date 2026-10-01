@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "GAutoDetect.h"
 #include "..\MiscDll\Commands.h"   // NGlobal::GetVar / SetVar / CValue
 #include "..\Misc\HPTimer.h"       // NHPTimer::GetClockRate
@@ -86,9 +87,8 @@ static SCfgValue *fsaaConfig[4] = { fsaaLow, fsaaMed, fsaaHigh, fsaaVHigh };
 // True when the machine has at most 256 MB of physical RAM.
 bool IsLowRAM()
 {
-	MEMORYSTATUS ms;
-	GlobalMemoryStatus( &ms );
-	return ms.dwTotalPhys <= 0x10000000;
+	const std::uint64_t totalMemory = S2Platform::PhysicalMemoryBytes();
+	return totalMemory <= 0x10000000;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // FindCfgMode  @0xf69b0
@@ -143,10 +143,9 @@ void SetSpeedMode( EConfigValue mode )
 {
 	ApplyCfgValues( speedConfig, mode, CV_CUSTOM );
 
-	MEMORYSTATUS ms;
-	GlobalMemoryStatus( &ms );
+	const std::uint64_t totalMemory = S2Platform::PhysicalMemoryBytes();
 	int nHSR = 0;
-	if ( ms.dwTotalPhys > 0x10000000 )           // > 256 MB
+	if ( totalMemory > 0x10000000 )           // > 256 MB
 	{
 		if ( mode != CV_VHIGH )
 			nHSR = ( NHPTimer::GetClockRate() > 1.2e9 ) ? 2 : 1;

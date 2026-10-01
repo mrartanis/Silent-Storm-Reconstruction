@@ -1,5 +1,6 @@
 #include "StdAfx.h"
-#include <D3D9.h>
+#include "../Game/Platform.h"
+#include "GfxLegacyTokens.h"
 #include "GfxRender.h"
 #include "GfxInternal.h"
 #include "GfxBuffers.h"
@@ -264,7 +265,7 @@ static void SetVertexShader( CGeometry *pVB, const SVShader &shader )
 // render modes application
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const SFBTransform &trans )
+void Apply( const SFBTransform &trans )
 {
 	if ( bTnLDevice )
 	{
@@ -294,7 +295,7 @@ static void Apply( const SFBTransform &trans )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const EWireframe &wireFrame )
+void Apply( const EWireframe &wireFrame )
 {
 	if ( wireFrame )
 		ApplyRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
@@ -303,7 +304,7 @@ static void Apply( const EWireframe &wireFrame )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const EAlphaCombineMode &alphaMode )
+void Apply( const EAlphaCombineMode &alphaMode )
 {
 	switch ( alphaMode )
 	{
@@ -354,7 +355,7 @@ static void Apply( const EAlphaCombineMode &alphaMode )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const SStencilMode &m )
+void Apply( const SStencilMode &m )
 {
 	switch ( m.mode )
 	{
@@ -489,7 +490,7 @@ static void Apply( const SStencilMode &m )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const EDepthMode &depth )
+void Apply( const EDepthMode &depth )
 {
 	switch ( depth )
 	{
@@ -532,7 +533,7 @@ static void Apply( const EDepthMode &depth )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const ECullMode &cull )
+void Apply( const ECullMode &cull )
 {
   switch ( cull )
   {
@@ -549,7 +550,7 @@ static void Apply( const ECullMode &cull )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
-static void Apply( const EColorWriteMask &colorMode )
+void Apply( const EColorWriteMask &colorMode )
 {
 	DWORD dwFlags = 
 		(( colorMode & COLORWRITE_RED ) ? D3DCOLORWRITEENABLE_RED : 0) |
@@ -999,7 +1000,7 @@ static void DoValidateDevice( int nPID, int nVID )
 	char szBuf[1024];
 	sprintf( szBuf, "D3D validate device failed ps = %d,  vs = %d", nPID, nVID );
 	if ( D3D_OK != hr )
-		MessageBox( 0, szBuf, 0, MB_OK );
+		S2Platform::Error( szBuf );
 	ASSERT( D3D_OK == hr && dwPasses == 1 );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1124,7 +1125,7 @@ static bool AddZBuffer( D3DFORMAT format, int nSize )
 		HRESULT hr;
 		hr = pDevice->CreateDepthStencilSurface( nSize, nSize, format, D3DMULTISAMPLE_NONE, 0,
 			TRUE, sharedZBuffers[ nSize ].GetAddr(), 0 );
-		if FAILED(hr)
+		if ( FAILED(hr) )
 			return false;
 	}
 	return true;
@@ -1156,7 +1157,7 @@ bool InitZBuffer( D3DFORMAT format )
 		ptRegisterBufferSize = CTPoint<int>( nXSize, nYSize );
 		hr = pDevice->CreateDepthStencilSurface( nXSize, nYSize, format, D3DMULTISAMPLE_NONE, 0,
 			FALSE, pRegisterDepth.GetAddr(), 0 );
-		if FAILED(hr)
+		if ( FAILED(hr) )
 			return false;
 		ASSERT( nScreenRegisters <= N_MAX_REGISTERS );
 		for ( int k = 0; k < nScreenRegisters; ++k )

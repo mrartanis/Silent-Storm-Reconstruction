@@ -10,27 +10,10 @@
 #include <filesystem>
 #include <mutex>
 #include <thread>
-namespace NWin32Helper {
-class CCriticalSection {
-	std::recursive_mutex mutex;
-	friend class CCriticalSectionLock;
-};
-class CCriticalSectionLock {
-	std::unique_lock<std::recursive_mutex> lock;
-public:
-	explicit CCriticalSectionLock(CCriticalSection &section): lock(section.mutex) {}
-};
-class CEvent {
-	std::mutex mutex;
-	std::condition_variable ready;
-	bool signaled = false;
-public:
-	void Set() { std::lock_guard<std::mutex> lock(mutex); signaled = true; ready.notify_all(); }
-	void Reset() { std::lock_guard<std::mutex> lock(mutex); signaled = false; }
-	void Wait() { std::unique_lock<std::mutex> lock(mutex); ready.wait(lock, [this] { return signaled; }); }
-};
-}
+#include "../Misc/Win32Helper.h"
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString(const char *message) { std::fputs(message, stderr); }
+#endif
 #endif
 #include "GResource.h"
 #include "../FileIO/PortablePackageIndex.h"

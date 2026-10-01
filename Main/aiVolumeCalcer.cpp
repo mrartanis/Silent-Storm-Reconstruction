@@ -594,7 +594,7 @@ void VolumeCalcerTest( int nID )
 
 	CPtr<NAI::CLoadGeometryInfo> pGInfo = new NAI::CLoadGeometryInfo;
 	pGInfo->SetKey( nID );
-	CDGPtr<CPtrFuncBase<NAI::CGeometryInfo> > pFunc = pGInfo;
+	CDGPtr<CPtrFuncBase<NAI::CGeometryInfo> > pFunc = pGInfo.GetPtr();
 	pFunc.Refresh();
 	NAI::CGeometryInfo *pInfo = pFunc->GetValue();
 	float fVal = NAI::CalculateObjectVolume( *pInfo );

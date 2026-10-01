@@ -507,7 +507,11 @@ void CWindow::Update( const STime &sTime, NGScene::I2DGameView *pView )
 		if ( u >= 0x7f000000 )
 			continue;
 		#endif
+#if defined(_WIN32)
 		if ( IsBadReadPtr( pChild, sizeof(void*) ) || IsBadReadPtr( *(void**)pChild, sizeof(void*) ) || !IsValid( listChildren[i] ) )
+#else
+		if ( !IsValid( listChildren[i] ) )
+#endif
 			continue;
 		pChild->Update( sTime, pView );
 	}

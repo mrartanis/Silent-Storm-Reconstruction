@@ -5,6 +5,7 @@
 #include "GfxShadersDescr.h"
 #include "GameShaders.h"
 #include "../Misc/Win32Helper.h"
+#include "../Game/Platform.h"
 #undef min
 #undef max
 #include <array>
@@ -168,8 +169,8 @@ HRESULT BgfxBuffer::Lock(unsigned offset,unsigned size,void** out,DWORD) {
 }
 HRESULT BgfxBuffer::Unlock() { return S_OK; }
 BgfxDeclaration::BgfxDeclaration(const D3DVERTEXELEMENT9* elements) {
-  layout.begin(bgfx::RendererType::Direct3D11);
-  gpuLayout.begin(bgfx::RendererType::Direct3D11);
+  layout.begin();
+  gpuLayout.begin();
   unsigned offset=0;
   for (const D3DVERTEXELEMENT9* e=elements;e->Stream!=0xff;++e) {
     if (e->Stream!=0 || e->Offset<offset) throw std::runtime_error("Unsupported vertex stream");
@@ -341,10 +342,16 @@ BgfxDevice::BgfxDevice() : impl(new Impl) {}
 bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
   if(!window || !w || !h || activeEpoch) return false;
   bgfx::Init init;
-  init.type=bgfx::RendererType::Direct3D11;init.swapChain.nwh=window;
+#if defined(_WIN32)
+  init.type=bgfx::RendererType::Direct3D11;
+#else
+  init.type=bgfx::RendererType::Vulkan;
+  init.swapChain.ndt=S2Platform::NativeDisplay();
+#endif
+  init.swapChain.nwh=window;
   init.swapChain.width=w;init.swapChain.height=h;init.reset=BGFX_RESET_NONE;
   init.limits.maxTransientVbSize=64*1024*1024;init.limits.maxTransientIbSize=16*1024*1024;
-  if(!bgfx::init(init)) { impl->Fail("Cannot initialize bgfx Direct3D11");return false; }
+  if(!bgfx::init(init)) { impl->Fail("Cannot initialize bgfx renderer");return false; }
   activeEpoch=++nextEpoch;impl->initialized=true;
   try {
     impl->uVertex=bgfx::createUniform("u_vertexRegisters",bgfx::UniformType::Vec4,96);
@@ -353,7 +360,7 @@ bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
     impl->uProjection=bgfx::createUniform("u_projectionFlags",bgfx::UniformType::Vec4,2);
     impl->uPresent=bgfx::createUniform("u_present",bgfx::UniformType::Vec4);
     impl->uRaster=bgfx::createUniform("u_rasterOffset",bgfx::UniformType::Vec4);
-    for(unsigned i=0;i<8;++i) {char name[16];sprintf_s(name,"s%u",i);impl->samplers[i]=bgfx::createUniform(name,bgfx::UniformType::Sampler);}
+    for(unsigned i=0;i<8;++i) {char name[16];std::snprintf(name,sizeof(name),"s%u",i);impl->samplers[i]=bgfx::createUniform(name,bgfx::UniformType::Sampler);}
     impl->presentProgram=bgfx::createProgram(impl->Shader(0,true),impl->Shader(0,false),false);
     if(!bgfx::isValid(impl->presentProgram))throw std::runtime_error("Cannot link presentation shaders");
     fprintf(stderr,"Game renderer: bgfx %s, GPU %04x:%04x\n",bgfx::getRendererName(bgfx::getRendererType()),bgfx::getCaps()->vendorId,bgfx::getCaps()->deviceId);

@@ -212,9 +212,9 @@ static void MakeCursorString( IMission *pMission, const SActionInfo &sInfo, wstr
 		{
 			WCHAR wsAP[64];
 			if ( sInfo.nMinAP != sInfo.nMaxAP )
-				swprintf( wsAP, L"%d-%d", sInfo.nMinAP, sInfo.nMaxAP );
+				swprintf( wsAP, sizeof(wsAP) / sizeof(wsAP[0]), L"%d-%d", sInfo.nMinAP, sInfo.nMaxAP );
 			else
-				swprintf( wsAP, L"%d", sInfo.nMinAP );
+				swprintf( wsAP, sizeof(wsAP) / sizeof(wsAP[0]), L"%d", sInfo.nMinAP );
 			*pRes += wsAP;
 		}
 		else
@@ -432,7 +432,7 @@ static void MakeUnitStateToolTip( IMission *pMission, NWorld::CUnit *pUnit, NUI:
 		else
 		{
 			WCHAR wsHP[64];
-			swprintf( wsHP, L"%d/%d", info.nUnitHP, info.nMaxUnitHP );
+			swprintf( wsHP, sizeof(wsHP) / sizeof(wsHP[0]), L"%d/%d", info.nUnitHP, info.nMaxUnitHP );
 			wsText += wsHP;
 		}
 	}
@@ -445,7 +445,7 @@ static void MakeUnitStateToolTip( IMission *pMission, NWorld::CUnit *pUnit, NUI:
 		else
 		{
 			WCHAR wsHP[64];
-			swprintf( wsHP, L"%d/%d", info.nPKHP, info.nMaxPKHP );
+			swprintf( wsHP, sizeof(wsHP) / sizeof(wsHP[0]), L"%d/%d", info.nPKHP, info.nMaxPKHP );
 			wsText += wsHP;
 		}
 	}
@@ -1064,9 +1064,9 @@ void CStateAttack::UpdateCursorInfo()
 			wsText += NUI::GetDBString( 19809 );                   // "<br>ToHit: " (localized label)
 			WCHAR wsToHit[32];
 			if ( unitsSet.size() == 1 )
-				swprintf( wsToHit, L"%d%%", nMin );
+				swprintf( wsToHit, sizeof(wsToHit) / sizeof(wsToHit[0]), L"%d%%", nMin );
 			else
-				swprintf( wsToHit, L"%d-%d%%", nMin, nMax );
+				swprintf( wsToHit, sizeof(wsToHit) / sizeof(wsToHit[0]), L"%d-%d%%", nMin, nMax );
 			wsText += wsToHit;
 			sCursorInfo.wsText = wsText;
 		}

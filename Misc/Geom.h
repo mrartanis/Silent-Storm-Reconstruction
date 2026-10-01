@@ -2,7 +2,7 @@
 #define __GEOM_H__
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <math.h>
-#include "tools.h"
+#include "Tools.h"
 #include "PortableVectorHash.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma pack( 4 )
@@ -227,7 +227,7 @@ inline bool Normalize( CVec4 *pVec ) { float fLeng = fabs2(*pVec); if ( fLeng !=
 struct SPlane
 {
 public:
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
   union
   {
     struct 
@@ -246,7 +246,7 @@ public:
 #endif
 public:
   SPlane( const CVec3 &ptNormale, const float fDist ) : n( ptNormale ), d( fDist ) {  }
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
   SPlane( const CVec4 &pt ) : vec4( pt ) {  }
 #else
   SPlane( const CVec4 &pt ) : n( pt.x, pt.y, pt.z ), d( pt.w ) {  }
@@ -293,7 +293,7 @@ public :
 			float zx, zy, zz, zw;
 			float wx, wy, wz, ww;
 		};
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
 		struct  
 		{
 			CVec4 x, y, z, w;
@@ -341,7 +341,7 @@ private:
     {
       float x, y, z, w;
     };
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(S2_FULL_GAME)
     struct
     {
       CVec3 n;

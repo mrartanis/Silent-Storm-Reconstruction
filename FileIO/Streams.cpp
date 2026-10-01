@@ -1,3 +1,6 @@
+#if !defined(_WIN32)
+#include "PortableGamePath.h"
+#endif
 #include "StdAfx.h"
 static const char LOCAL_FILE[] = __FILE__;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,7 +424,12 @@ void CFileStream::Open( const char *pszFName, const char *pszMode, int _nFlags )
 	CloseFile();
 	//SetOk();
 	nFlags = _nFlags; 
-	pFile = fopen( pszFName, pszMode ); 
+	#if defined(_WIN32)
+	pFile = fopen( pszFName, pszMode );
+#else
+  const std::string nativePath = pszMode[0] == 'r' ? S2FileIO::ResolveGamePath(pszFName) : std::string(pszFName);
+  pFile = fopen(nativePath.c_str(), pszMode);
+#endif
 	if ( pFile )
 	{
 		fseek( pFile, 0, SEEK_END );

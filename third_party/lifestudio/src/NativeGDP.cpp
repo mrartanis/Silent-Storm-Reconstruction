@@ -1,6 +1,12 @@
 #include "LifeStudioHeadAPIGDP.h"
+#if defined(_WIN32)
 #include <Windows.h>
 #include <objidl.h>
+#else
+#include <gsf/gsf.h>
+#include <mutex>
+#include "../../../FileIO/PortableGamePath.h"
+#endif
 #include <algorithm>
 #include <climits>
 #include <cstdint>
@@ -11,6 +17,8 @@
 
 namespace
 {
+#if defined(_WIN32)
+using GDPStorage = IStorage;
 std::wstring Wide(const char *name)
 {
   if (!name || !*name) return {};
@@ -35,7 +43,7 @@ std::string Narrow(const wchar_t *name)
   return result;
 }
 
-std::vector<std::string> Children(IStorage *storage, DWORD type)
+std::vector<std::string> Children(GDPStorage *storage, DWORD type)
 {
   std::vector<std::string> result;
   if (!storage) return result;
@@ -53,7 +61,7 @@ std::vector<std::string> Children(IStorage *storage, DWORD type)
   return result;
 }
 
-bool StreamSize(IStorage *storage, const char *name, std::uint32_t *size)
+bool StreamSize(GDPStorage *storage, const char *name, std::uint32_t *size)
 {
   if (!storage || !size) return false;
   const std::wstring wide = Wide(name);
@@ -69,7 +77,7 @@ bool StreamSize(IStorage *storage, const char *name, std::uint32_t *size)
   return true;
 }
 
-bool ReadStream(IStorage *storage, const char *name, char *buffer, std::uint32_t size)
+bool ReadStream(GDPStorage *storage, const char *name, char *buffer, std::uint32_t size)
 {
   if (!storage || !buffer) return false;
   const std::wstring wide = Wide(name);
@@ -83,7 +91,59 @@ bool ReadStream(IStorage *storage, const char *name, char *buffer, std::uint32_t
   return SUCCEEDED(status) && read == size;
 }
 
-std::vector<std::string> DataList(IStorage *storage)
+void ReleaseStorage(GDPStorage* storage) { if (storage) storage->Release(); }
+GDPStorage* OpenChild(GDPStorage* storage, const char* name) {
+  const std::wstring wide = Wide(name);
+  GDPStorage* child = nullptr;
+  if (FAILED(storage->OpenStorage(wide.c_str(), nullptr,
+      STGM_READ | STGM_SHARE_EXCLUSIVE, nullptr, 0, &child))) return nullptr;
+  return child;
+}
+#else
+using GDPStorage = GsfInfile;
+constexpr unsigned STGTY_STORAGE = 1, STGTY_STREAM = 2;
+void ReleaseStorage(GDPStorage* storage) { if (storage) g_object_unref(storage); }
+GDPStorage* OpenChild(GDPStorage* storage, const char* name) {
+  GsfInput* input = gsf_infile_child_by_name(storage, name);
+  if (!input) return nullptr;
+  if (!GSF_IS_INFILE(input)) { g_object_unref(input); return nullptr; }
+  return GSF_INFILE(input);
+}
+std::vector<std::string> Children(GDPStorage* storage, unsigned type) {
+  std::vector<std::string> result;
+  for (int i = 0; i < gsf_infile_num_children(storage); ++i) {
+    GsfInput* child = gsf_infile_child_by_index(storage, i);
+    const bool isStorage = child && GSF_IS_INFILE(child) && gsf_infile_num_children(GSF_INFILE(child)) >= 0;
+    if (child && isStorage == (type == STGTY_STORAGE))
+      result.emplace_back(gsf_infile_name_by_index(storage, i));
+    if (child) g_object_unref(child);
+  }
+  std::sort(result.begin(), result.end());
+  return result;
+}
+bool StreamSize(GDPStorage* storage, const char* name, std::uint32_t* size) {
+  if (!storage || !name || !size) return false;
+  GsfInput* stream = gsf_infile_child_by_name(storage, name);
+  if (!stream) return false;
+  const gsf_off_t length = gsf_input_size(stream);
+  g_object_unref(stream);
+  if (length < 0 || length > UINT32_MAX) return false;
+  *size = static_cast<std::uint32_t>(length);
+  return true;
+}
+bool ReadStream(GDPStorage* storage, const char* name, char* buffer, std::uint32_t size) {
+  if (!storage || !name || (!buffer && size)) return false;
+  GsfInput* stream = gsf_infile_child_by_name(storage, name);
+  if (!stream) return false;
+  const guint8* bytes = size ? gsf_input_read(stream, size, nullptr) : nullptr;
+  const bool ok = !size || bytes;
+  if (size && bytes) std::memcpy(buffer, bytes, size);
+  g_object_unref(stream);
+  return ok;
+}
+#endif
+
+std::vector<std::string> DataList(GDPStorage *storage)
 {
   std::uint32_t length = 0;
   if (!StreamSize(storage, "Morph.txt", &length) || length == 0 || length > 1000000)
@@ -115,13 +175,13 @@ std::vector<std::string> DataList(IStorage *storage)
 
 class NativeGDPObject final : public LifeStudioHeadAPI::IGDPObject
 {
-  IStorage *storage;
+  GDPStorage *storage;
   std::vector<std::string> data;
   std::vector<std::string> children;
 public:
-  explicit NativeGDPObject(IStorage *value): storage(value),
+  explicit NativeGDPObject(GDPStorage *value): storage(value),
       data(DataList(value)), children(Children(value, STGTY_STORAGE)) {}
-  ~NativeGDPObject() { if (storage) storage->Release(); }
+  ~NativeGDPObject() { ReleaseStorage(storage); }
 
   int Size(const char *name) override
   {
@@ -143,14 +203,7 @@ public:
     char header[12]{};
     std::uint32_t size = 0;
     if (!StreamSize(storage, "object_A.mld", &size) || size < sizeof(header)) return 0;
-    const std::wstring wide = Wide("object_A.mld");
-    IStream *stream = nullptr;
-    if (FAILED(storage->OpenStream(wide.c_str(), nullptr,
-               STGM_READ | STGM_SHARE_EXCLUSIVE, 0, &stream))) return 0;
-    ULONG read = 0;
-    const HRESULT status = stream->Read(header, sizeof(header), &read);
-    stream->Release();
-    if (FAILED(status) || read != sizeof(header)) return 0;
+    if (!ReadStream(storage, "object_A.mld", header, sizeof(header))) return 0;
     std::uint32_t count;
     std::memcpy(&count, header + 8, 4);
     return count <= 1000000 ? int(count) : 0;
@@ -196,10 +249,8 @@ public:
   LifeStudioHeadAPI::IGDPObject *SubObject(int index) override
   {
     if (index < 0 || std::size_t(index) >= children.size()) return nullptr;
-    const std::wstring wide = Wide(children[index].c_str());
-    IStorage *child = nullptr;
-    if (FAILED(storage->OpenStorage(wide.c_str(), nullptr,
-               STGM_READ | STGM_SHARE_EXCLUSIVE, nullptr, 0, &child))) return nullptr;
+    GDPStorage* child = OpenChild(storage, children[index].c_str());
+    if (!child) return nullptr;
     return new NativeGDPObject(child);
   }
   void Destroy() override { delete this; }
@@ -207,11 +258,11 @@ public:
 
 class NativeGDPFile final : public LifeStudioHeadAPI::IGDPFile
 {
-  IStorage *root;
+  GDPStorage *root;
   std::vector<std::string> objects;
 public:
-  explicit NativeGDPFile(IStorage *value): root(value), objects(Children(value, STGTY_STORAGE)) {}
-  ~NativeGDPFile() { if (root) root->Release(); }
+  explicit NativeGDPFile(GDPStorage *value): root(value), objects(Children(value, STGTY_STORAGE)) {}
+  ~NativeGDPFile() { ReleaseStorage(root); }
   int ObjectsCount() const override { return int(objects.size()); }
   const char *ObjectName(int index) const override
   {
@@ -220,10 +271,8 @@ public:
   LifeStudioHeadAPI::IGDPObject *Object(int index) override
   {
     if (index < 0 || std::size_t(index) >= objects.size()) return nullptr;
-    const std::wstring wide = Wide(objects[index].c_str());
-    IStorage *storage = nullptr;
-    if (FAILED(root->OpenStorage(wide.c_str(), nullptr,
-               STGM_READ | STGM_SHARE_EXCLUSIVE, nullptr, 0, &storage))) return nullptr;
+    GDPStorage* storage = OpenChild(root, objects[index].c_str());
+    if (!storage) return nullptr;
     return new NativeGDPObject(storage);
   }
   void Destroy() override { delete this; }
@@ -234,11 +283,22 @@ namespace LifeStudioHeadAPI
 {
 IGDPFile *__stdcall IGDPFile::Create(const char *filename)
 {
+#if defined(_WIN32)
   const std::wstring wide = Wide(filename);
   if (wide.empty()) return nullptr;
-  IStorage *storage = nullptr;
+  GDPStorage *storage = nullptr;
   if (FAILED(StgOpenStorage(wide.c_str(), nullptr,
       STGM_READ | STGM_SHARE_DENY_WRITE, nullptr, 0, &storage))) return nullptr;
+#else
+  static std::once_flag initialized;
+  std::call_once(initialized, [] { gsf_init(); });
+  const std::string path = S2FileIO::ResolveGamePath(filename);
+  GsfInput* input = gsf_input_stdio_new(path.c_str(), nullptr);
+  if (!input) return nullptr;
+  GDPStorage* storage = gsf_infile_msole_new(input, nullptr);
+  g_object_unref(input);
+  if (!storage) return nullptr;
+#endif
   return new NativeGDPFile(storage);
 }
 }

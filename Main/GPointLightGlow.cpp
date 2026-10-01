@@ -24,17 +24,17 @@ void CPointGlowEffect::AddParticles( IParticleOutput *pRender )
 {
 	pParent->CalcSize();
 
-	const SParticleOrientationInfo &or = pRender->GetOrientationInfo();
+	const SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();
 	CVec3 vRes[4];
-	float fLeng = ( vPos - or.vBasic[3] ) * or.vBasic[2];
+	float fLeng = ( vPos - orientation.vBasic[3] ) * orientation.vBasic[2];
 	if ( fLeng <= F_NEAR_CLIP )
 		return;
 	// Retail 0x5471f8 / v1.2 0x5472d8: build the billboard at the light,
 	// not on the camera's near plane. Perspective supplies the distance scaling.
-	vRes[0] = vPos - or.vBasic[0] * fSize - or.vBasic[1] * fSize;
-	vRes[1] = vPos + or.vBasic[0] * fSize - or.vBasic[1] * fSize;
-	vRes[2] = vPos + or.vBasic[0] * fSize + or.vBasic[1] * fSize;
-	vRes[3] = vPos - or.vBasic[0] * fSize + or.vBasic[1] * fSize;
+	vRes[0] = vPos - orientation.vBasic[0] * fSize - orientation.vBasic[1] * fSize;
+	vRes[1] = vPos + orientation.vBasic[0] * fSize - orientation.vBasic[1] * fSize;
+	vRes[2] = vPos + orientation.vBasic[0] * fSize + orientation.vBasic[1] * fSize;
+	vRes[3] = vPos - orientation.vBasic[0] * fSize + orientation.vBasic[1] * fSize;
 	CDGPtr<CPtrFuncBase<NGfx::CTexture> > pTex( textures[0] );
 	if ( !IsValid( pTex ) )
 		return;
@@ -82,9 +82,9 @@ void CPointGlowAnimator::CalcSize()
 		else
 			bIsVisible = true;
 		if ( bShortInterval )
-			tNextCheck = tCur + random.Get( 80, 150 );
+			tNextCheck = tCur + GlobalGameRandom().Get( 80, 150 );
 		else
-			tNextCheck = tCur + random.Get( 500, 1000 );
+			tNextCheck = tCur + GlobalGameRandom().Get( 500, 1000 );
 	}
 	float fDeltaT = Max( 0.0f, ((float)tCur - tPrev)/1024.0f );
 	if ( bIsVisible )

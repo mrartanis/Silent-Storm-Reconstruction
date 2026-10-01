@@ -1119,14 +1119,20 @@ static void ImportReleaseStorage( CStorageHash &storageTables,
 		pTable->PreCreate( it->first, overlay );
 		pStorageSource = 0;
 	}
-	for ( CStorageHash::iterator it = storageTables.begin(); it != storageTables.end(); ++it )
+	// UITextures::Import derives tile dimensions from Texture records. Import
+    // textures first, independently of the host's unordered_map iteration order.
+    std::vector<int> importOrder;
+    if (storageTables.find(3) != storageTables.end()) importOrder.push_back(3);
+    for (const auto& item : storageTables)
+        if (item.first != 3) importOrder.push_back(item.first);
+    for (const int tableId : importOrder)
 	{
-		CDBTableBase *pTable = NDatabase::GetTable( it->first );
-		CDBTableDataStorage *pStorage = it->second;
+		CDBTableBase *pTable = NDatabase::GetTable( tableId );
+		CDBTableDataStorage *pStorage = storageTables.at(tableId);
 		if ( !pTable || !pStorage ) continue;
 		pStorageSource = pStorage;
 		SStorageDiagnostics diagnostics;
-		BeginStorageDiagnostics( it->first, pStorage, &diagnostics );
+		BeginStorageDiagnostics( tableId, pStorage, &diagnostics );
 		pTable->Import();
 		pStorageDiagnostics = 0;
 		ReportUnusedStorageFields( pStorage, diagnostics );

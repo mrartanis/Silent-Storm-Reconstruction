@@ -179,13 +179,16 @@ def translate(tokens, cube_mask=0):
     count = 96 if vertex else 8
     prefix = f'uniform float4 {uniform}[{count}];\n' + VARYING
     if vertex:
-        prefix += ('uniform float4 u_rasterOffset;\nstruct Input { float3 position : POSITION; float4 normal : NORMAL; '
-                   'float2 tex0 : TEXCOORD0; float2 tex1 : TEXCOORD1; float4 color : COLOR0; '
-                   'float4 tangent : TANGENT; float4 binormal : BITANGENT; };\n'
-                   'Varying main(Input i) { Varying o = (Varying)0; '
-                   'float4 v0=float4(i.position,1), v1=i.normal, v2=i.color, '
-                   'v3=float4(i.tex0,0,1), v6=float4(i.tex1,0,1), '
-                   'v4=i.tangent, v5=i.binormal;\n')
+        # SPIR-V reflection maps these exact names to bgfx vertex attributes.
+        # Struct inputs become "i.position" and lose the bgfx attribute mapping.
+        prefix += ('uniform float4 u_rasterOffset;\n'
+                   'Varying main(float3 a_position : POSITION, float4 a_normal : NORMAL, '
+                   'float2 a_texcoord0 : TEXCOORD0, float2 a_texcoord1 : TEXCOORD1, '
+                   'float4 a_color0 : COLOR0, float4 a_tangent : TANGENT, '
+                   'float4 a_bitangent : BITANGENT) { Varying o = (Varying)0; '
+                   'float4 v0=float4(a_position,1), v1=a_normal, v2=a_color0, '
+                   'v3=float4(a_texcoord0,0,1), v6=float4(a_texcoord1,0,1), '
+                   'v4=a_tangent, v5=a_bitangent;\n')
     else:
         prefix += 'uniform float4 u_alphaTest;\nuniform float4 u_projectionFlags[2];\n'
         for stage in sorted(samplers):
@@ -230,10 +233,10 @@ def compile_all(args):
             hlsl, _ = translate(tokens, mask)
             jobs.append((name, number, mask, hlsl, name.startswith('vs')))
     # Present from a linear BGRA render target; apply the configured game gamma.
-    present_vs = (VARYING + 'Varying main(float3 p:POSITION,float2 uv:TEXCOORD0) {'
-                  ' Varying o=(Varying)0;o.position=float4(p,1);o.tex0=float4(uv,0,1);return o;}')
-    present_fs = (VARYING + 'uniform float4 u_present; Texture2D<float4> s0Texture:register(t0);'
-                  'SamplerState s0Sampler:register(s0);float4 main(Varying i):SV_TARGET {'
+    present_vs = (VARYING + 'Varying main(float3 a_position:POSITION,float2 a_texcoord0:TEXCOORD0) {'
+                  ' Varying o=(Varying)0;o.position=float4(a_position,1);o.tex0=float4(a_texcoord0,0,1);return o;}')
+    present_fs = (VARYING + 'uniform float4 u_present;\nTexture2D<float4> s0Texture:register(t0);\n'
+                  'SamplerState s0Sampler:register(s0);\nfloat4 main(Varying i):SV_TARGET {'
                   'float4 c=s0Texture.Sample(s0Sampler,i.tex0.xy);'
                   'return float4(pow(max(c.rgb,0),u_present.xxx),c.a);}')
     jobs += [('vsPresent', 0, 0, present_vs, True), ('psPresent', 0, 0, present_fs, False)]
@@ -245,8 +248,8 @@ def compile_all(args):
         binary_path = out.parent / (stem + '.bin')
         source_path.write_text(hlsl)
         cmd = [args.shaderc, '-f', str(source_path), '-o', str(binary_path),
-               '--type', 'vertex' if vertex else 'fragment', '--platform', 'windows',
-               '-p', 's_5_0', '--raw', '-O', '3']
+               '--type', 'vertex' if vertex else 'fragment', '--platform', args.platform,
+               '-p', args.profile, '--raw', '-O', '3']
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode:
             raise RuntimeError(stem + '\n' + result.stdout + result.stderr)
@@ -272,4 +275,6 @@ if __name__ == '__main__':
     parser.add_argument('--source', required=True)
     parser.add_argument('--shaderc', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--platform', default='windows')
+    parser.add_argument('--profile', default='s_5_0')
     compile_all(parser.parse_args())

@@ -29,10 +29,12 @@
 #include "aiMap.h"
 #if !defined(_WIN32)
 #include <cstdio>
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString( const char *message )
 {
 	std::fputs( message, stderr );
 }
+#endif
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

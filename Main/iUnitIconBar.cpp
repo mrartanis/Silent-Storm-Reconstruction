@@ -507,7 +507,7 @@ void CWeaponModeIconBarSet::Update()
 	{
 		NDb::EShootMode eMode;
 
-		CHAR* pszID;
+		const char* pszID;
 		int nIcon;
 		int nDisabledIcon;
 		int nToolTipID;
@@ -589,7 +589,7 @@ void CGrenadeModeIconBarSet::Update()
 	{
 		int nMode;
 
-		CHAR* pszID;
+		const char* pszID;
 		int nIcon;
 		int nDisabledIcon;
 		int nToolTipID;

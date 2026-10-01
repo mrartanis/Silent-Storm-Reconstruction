@@ -23,6 +23,7 @@ using namespace std;
 
 #include "../FileIO/BasicChunk1.h"
 
+#if !defined(S2_FULL_GAME)
 inline void OutputDebugString(const char* message) { std::fputs(message, stderr); }
 inline void DebugTrace(const char* format, ...) {
   va_list args;
@@ -30,3 +31,5 @@ inline void DebugTrace(const char* format, ...) {
   std::vfprintf(stderr, format, args);
   va_end(args);
 }
+
+#endif

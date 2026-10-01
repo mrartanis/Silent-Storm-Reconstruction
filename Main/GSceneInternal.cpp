@@ -1438,7 +1438,7 @@ void CGScene::MakeRenderList( CTransformStack *pTS, SSceneFragmentGroupInfo *pTa
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T> void PrecacheMaterialsForSet( const T &s )
 {
-	for ( T::const_iterator i = s.begin(); i != s.end(); ++i )
+	for ( typename T::const_iterator i = s.begin(); i != s.end(); ++i )
 	{
 		if ( IsValid( *i ) )
 			(*i)->GetMaterial()->Precache();
@@ -1872,7 +1872,7 @@ void CGScene::RefreshParticleLMTarget()
 template<class T>
 inline bool IsAllLoaded( const T &stuff )
 {
-	for ( T::const_iterator i = stuff.begin(); i != stuff.end(); ++i )
+	for ( typename T::const_iterator i = stuff.begin(); i != stuff.end(); ++i )
 	{
 		if ( IsValid(*i) && !(*i)->HasLoadedObjectInfo() )
 			return false;

@@ -19,7 +19,9 @@
 #include "aiDoorCollider.h"
 #include "../MiscDll/LogStream.h"
 #if !defined(_WIN32)
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString(const char* message) { std::fputs(message, stderr); }
+#endif
 #endif
 namespace NAI
 {

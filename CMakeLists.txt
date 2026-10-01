@@ -1,7 +1,7 @@
 # ============================================================================
 #  Silent Storm engine -- CMake build
 #
-#  Windows x64 game; optional legacy x86 oracle; portable core on Linux/macOS
+#  Windows/Linux game; optional legacy x86 oracle; portable core on Linux/macOS
 #  Configure with:            cmake -S . -B build -A x64
 #  Build with:                cmake --build build --config Release
 #
@@ -190,6 +190,10 @@ target_compile_features(PortableVoxelObjectHashTests PRIVATE cxx_std_17)
 add_test(NAME PortableVoxelObjectHashTests COMMAND PortableVoxelObjectHashTests)
 if(NOT MSVC)
   include("${root}/cmake/PortableCore.cmake")
+  option(S2_BUILD_GAME "Build the SDL3/bgfx game on Linux" OFF)
+  if(S2_BUILD_GAME)
+    include("${root}/cmake/LinuxGame.cmake")
+  endif()
   return()
 endif()
 add_executable(NativeRandParityTests "${root}/diagnostics/NativeRandParityTests.cpp")

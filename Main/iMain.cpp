@@ -1,6 +1,14 @@
 #include "StdAfx.h"
 #include "../Game/Platform.h"
 #include "iMain.h"
+#if !defined(_WIN32)
+#include "../FileIO/LinuxUserData.h"
+#include <filesystem>
+#include <array>
+#include <ctime>
+#include <codecvt>
+#include <locale>
+#endif
 #include "GView.h"
 #include "Gfx.h"
 #include "SWTexture.h"
@@ -78,6 +86,37 @@ void ShowSplash( NDb::CUIContainer *pUI, const CArray2D<NGfx::SPixel8888> &sScre
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool MakeScreenShot()
 {
+#if !defined(_WIN32)
+  const std::string& root = S2FileIO::LinuxUserDataRoot();
+  if (root.empty()) return false;
+  const std::filesystem::path directory = std::filesystem::u8path(root) / "screenshots";
+  std::error_code error;
+  std::filesystem::create_directories(directory, error);
+  if (error || std::filesystem::is_symlink(directory)) return false;
+  const std::time_t now = std::time(nullptr);
+  std::tm local{};
+  localtime_r(&now, &local);
+  char name[80];
+  std::strftime(name, sizeof(name), "ScrnShot_%d%m%y_%H%M%S.bmp", &local);
+  try {
+    CArray2D<NGfx::SPixel8888> data;
+    NGfx::MakeScreenShot(&data, true);
+    std::array<unsigned char, 54> header{};
+    const auto word = [&](unsigned offset, std::uint32_t value, unsigned bytes) {
+      for (unsigned i = 0; i < bytes; ++i) header[offset+i] = static_cast<unsigned char>(value >> (8*i));
+    };
+    word(0, 0x4d42, 2); word(2, 54 + data.GetXSize()*data.GetYSize()*4, 4);
+    word(10, 54, 4); word(14, 40, 4); word(18, data.GetXSize(), 4);
+    word(22, data.GetYSize(), 4); word(26, 1, 2); word(28, 32, 2);
+    CFileStream file;
+    file.OpenWrite((directory/name).u8string().c_str());
+    file.Write(header.data(), header.size());
+    for (int y = data.GetYSize()-1; y >= 0; --y)
+      file.Write(&data[y][0], data.GetXSize()*4);
+    return true;
+  } catch (...) { return false; }
+#else
+
 	const wstring directory = S2FileIO::WindowsScreenshotDirectory();
 	if ( directory.empty() ) return false;
 
@@ -124,6 +163,8 @@ bool MakeScreenShot()
 	}
 
 	return true;
+
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CInterfaceCommand
@@ -358,8 +399,16 @@ void CICSaveFile::Exec()
 	pSaveManager->PrepareSlot( S_SLOT_ACTIVE );
 	const wstring szPath = pSaveManager->GetSlotFilePathW( S_SLOT_ACTIVE, szName );
 	// retail @0x1f6a80: clear + delete the stale snapshot before writing
+#if defined(_WIN32)
 	::SetFileAttributesW( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
 	::DeleteFileW( szPath.c_str() );
+#else
+  if (!szPath.empty()) {
+    std::error_code error;
+    const auto path = std::filesystem::u8path(std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(szPath));
+    std::filesystem::remove(path, error);
+  }
+#endif
 
 #ifndef _DEBUG
 	try

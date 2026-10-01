@@ -148,7 +148,7 @@ void CStatChange::SetValue( int _nValue )
 	nValue = _nValue;
 
 	WCHAR wsText[256];
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", nValue );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", nValue );
 	pText->SetText( wsText );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -717,7 +717,7 @@ void CCharGenUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		NRPG::CUnit* pUnit = pMerc;
 
 		WCHAR wsText[256];
-		swprintf( wsText, L"<font face=Courier size=16pt><color=black><center>%d", pPoints->GetValue() );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><color=black><center>%d", pPoints->GetValue() );
 		pPointsText->SetText( wsText );
 
 		pUnit->Skills( NDb::ST_STR ).SetNewBaseValue( pStrength->GetValue() );
@@ -755,32 +755,32 @@ void CCharGenUI::Generate()
 	pDexteriry->SetValue( (int)pUnit->Skills( NDb::ST_DEX ) );
 	pIntelligence->SetValue( (int)pUnit->Skills( NDb::ST_INT ) );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_IC ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_IC ) );
 	pEvasion->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_AP ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_AP ) );
 	pActionPoints->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_VP ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_VP ) );
 	pVitalityPoints->SetText( wsText );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STEALTH ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STEALTH ) );
 	pHide->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SPOT ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SPOT ) );
 	pSpot->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_BURST ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_BURST ) );
 	pBurst->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MELEE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MELEE ) );
 	pMelee->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SNIPE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SNIPE ) );
 	pSnipe->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MEDICINE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MEDICINE ) );
 	pMedicine->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SHOOTING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SHOOTING ) );
 	pShooting->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_THROWING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_THROWING ) );
 	pThrowing->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INTERRUPT ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INTERRUPT ) );
 	pInterrupt->SetText( wsText );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_ENGINEERING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_ENGINEERING ) );
 	pEngineering->SetText( wsText );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

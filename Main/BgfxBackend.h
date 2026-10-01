@@ -1,5 +1,5 @@
 #pragma once
-#include <d3d9.h> // Historical data/state tokens only; no D3D9 device or runtime.
+#include "GfxLegacyTokens.h" // Historical data/state tokens only; no D3D9 device or runtime.
 #include <bgfx/bgfx.h>
 #include <atomic>
 #include <memory>

@@ -33,10 +33,11 @@
 #include "..\Main\RPGGlobal.h"      // [HARNESS] saved merc list
 #include "..\Main\RPGUnit.h"        // [HARNESS] per-merc committed head
 #include "..\DBFormat\DataRPG.h"    // [HARNESS] nationality preview template
+#if defined(_WIN32)
 #include <dbghelp.h>                 // [HARNESS] post-load crash backtrace (SymFromAddr / StackWalk64)
 #include <cmath>
 #pragma comment(lib, "dbghelp.lib")
-namespace NMainLoop { bool MakeScreenShot(); }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // [HARNESS] Unhandled-exception filter: on a post-load AV (the "silent close"), log a symbolic
 // backtrace to _saveload.log so the driver can map the fault to a function. Installed only in harness
@@ -104,6 +105,8 @@ static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 	return EXCEPTION_EXECUTE_HANDLER;   // terminate cleanly after logging
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#endif
+namespace NMainLoop { bool MakeScreenShot(); }
 //void DumpMemoryStats() {}
 
 // Install a real DB-backed custom head on the first merc of a loaded mission.
@@ -419,7 +422,7 @@ static void HarnessExplodeSave( const string &command, bool bPerk = false )
 		return;
 	}
 	char blast[256];
-	sprintf_s( blast, "explode %d %.9g %.9g %.9g", grenadeId, x, y, z );
+	std::snprintf( blast, sizeof(blast), "explode %d %.9g %.9g %.9g", grenadeId, x, y, z );
 	NWorld::SPerkMineModifiers mods;
 	mods.fStructureDmgModifier = structure;
 	mods.fAEDmgModifier = area;
@@ -670,7 +673,7 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		bool bConsole = strncmp( pEnd, " console ", 9 ) == 0;
 		if ( pSeed != pEnd && ( *pEnd == 0 || bConsole ) )
 		{
-			random.SeedForHarness( static_cast<unsigned int>( nSeed ) );
+			GlobalGameRandom().SeedForHarness( static_cast<unsigned int>( nSeed ) );
 			srand( static_cast<unsigned int>( nSeed ) );
 			SaveLoadDiag( "[harness] rng seeded: %lu\n", nSeed );
 			if ( bConsole )
@@ -896,8 +899,10 @@ static int RunGame( const char *lpCmdLine )
 		NMainLoop::Command( new NMainLoop::CICLoad( szLoadSlot.empty() ? NMainLoop::GetQuickSaveSlot( true ) : szLoadSlot ) );
 	else
 		NMainLoop::Command( new CICInterMission( szCfg ) );
+#if defined(_WIN32)
 	if ( g_bHarnessLog )
-		SetUnhandledExceptionFilter( HarnessCrashFilter );   // [HARNESS] symbolic backtrace on post-load AV
+		SetUnhandledExceptionFilter( HarnessCrashFilter );
+#endif   // [HARNESS] symbolic backtrace on post-load AV
 
 	for (;;)
 	{
@@ -926,8 +931,17 @@ static int RunGame( const char *lpCmdLine )
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#if defined(_WIN32)
 int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR commandLine, int)
+#else
+int main(int argc, char** argv)
+#endif
 {
+#if !defined(_WIN32)
+ std::string arguments;
+ for (int i = 1; i < argc; ++i) { if (i > 1) arguments += " "; arguments += argv[i]; }
+ const char* commandLine = arguments.c_str();
+#endif
  try { return RunGame(commandLine); }
  catch (const std::exception& error) { S2Platform::Error(error.what()); return 1; }
  catch (...) { S2Platform::Error("Game initialization or update failed"); return 1; }

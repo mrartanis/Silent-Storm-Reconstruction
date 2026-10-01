@@ -10,7 +10,8 @@ namespace S2Platform {
 bool Init(const char* title, int width = 1024, int height = 768, bool hidden = false);
 void Done();
 SDL_Window* Window();
-void* NativeWindow(); // Compatibility adapter for legacy Windows graphics/media.
+void* NativeWindow(); // Native window/surface supplied to the graphics backend.
+void* NativeDisplay();
 void PumpEvents();
 struct InputEvent {
   SDL_Event event{};
@@ -30,6 +31,7 @@ std::uint32_t DoubleClickMilliseconds();
 void MouseAcceleration(int* threshold1, int* threshold2, int* acceleration);
 void Error(const char* message);
 void SetErrorDialogs(bool enabled); // Unattended diagnostics keep errors in stderr.
+std::uint64_t PhysicalMemoryBytes();
 std::uint32_t Milliseconds();
 void Delay(std::uint32_t milliseconds);
 }

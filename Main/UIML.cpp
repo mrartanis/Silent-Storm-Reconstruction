@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <cwctype>
 #include "RectLayout.h"
 #include "G2DView.h"
 #include "FontFormat.h"

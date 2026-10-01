@@ -9,7 +9,9 @@
 #include "aiWaypoint.h"
 #include "../Misc/BasicShare.h"
 #if !defined(_WIN32)
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString( const char *message ) { std::fputs( message, stderr ); }
+#endif
 #endif
 CBasicShare<int, NAI::CWaypointLoader> shareWaypoints(133);
 CBasicShare<int, NAI::CUnitAIInfoLoader> shareUnits(134);

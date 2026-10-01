@@ -4,7 +4,9 @@
 #include "../FileIO/StdAfx.h"
 #include "../FileIO/BasicChunk1.h"
 #include "../Misc/Geom.h"
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString(const char *message) { std::fputs(message, stderr); }
+#endif
 #endif
 #include "GlobalInfo.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////

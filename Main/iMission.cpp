@@ -1,4 +1,9 @@
 #include "StdAfx.h"
+#if !defined(_WIN32)
+#include <filesystem>
+#include <codecvt>
+#include <locale>
+#endif
 #include "ScreenShot.h"
 #include "wInterface.h"
 #include "wMain.h"			// NWorld::CWorld::GetOwnScript -- wire the script-UI bridge to the mission HUD
@@ -194,7 +199,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 		// calculate the difficulty of the random encounter
 		int nDelta = 0;
 		for ( int i = 0; i < 10; ++i )
-			nDelta += random.Get( 0, Max( 1, 2 * pGlobalGame->pDifficulty->nREDifficulty ) );
+			nDelta += GlobalGameRandom().Get( 0, Max( 1, 2 * pGlobalGame->pDifficulty->nREDifficulty ) );
 		nDelta /= 10; nDelta -= pGlobalGame->pDifficulty->nREDifficulty;
 		nMobsLevel = pGlobalGame->nCurrentChapterDifficulty + nDelta;
 	}
@@ -292,7 +297,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 	for ( int nTemp = 0; nTemp < pGlobalGame->players.size(); nTemp++ )
 	{
 		WCHAR wsString[1024];
-		swprintf( wsString, L"Player %d", nTemp );
+		swprintf( wsString, sizeof(wsString) / sizeof(wsString[0]), L"Player %d", nTemp );
 		playersSet[nTemp] = new CPlayerTracker( this, pGlobalGame->players[nTemp], wsString );
 		// retail @0x200690: stamp the variant's inclusive cut-floor range on each tracker's OWN
 		// camera right after creation (tracker vtbl+0x18 GetCamera -> camera vtbl+0x3c
@@ -2676,8 +2681,14 @@ void CMission::SaveWorld( const string &szFile )
 		const wstring szPath = pSaveManager->GetSlotFilePathW( NMainLoop::S_SLOT_ACTIVE, szFile );
 		// retail @0x1a4040: clear + delete any stale zone save before writing (a read-only or
 		// leftover file must not survive and be loaded as the zone's world on the next entry)
-		::SetFileAttributesW( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
-		::DeleteFileW( szPath.c_str() );
+#if defined(_WIN32)
+        ::SetFileAttributesW( szPath.c_str(), FILE_ATTRIBUTE_NORMAL );
+        ::DeleteFileW( szPath.c_str() );
+#else
+        std::error_code error;
+        std::filesystem::remove(std::filesystem::u8path(
+          std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(szPath)), error);
+#endif
 
 		CFileStream sFile;
 		sFile.OpenWrite( szPath.c_str() );
@@ -3245,7 +3256,7 @@ static void CommandSummonUnit( const string &szID, const vector<wstring> &params
 	if (pMission)
 	{
 		// retail @0x20b5f0: bad/unknown pers ID -> console error, no spawn (unguarded CreateMerc(0) crashed)
-		CPtr<NDb::CRPGPers> pPers = NDb::GetPers( _wtol( paramsSet[0].c_str() ) );
+		CPtr<NDb::CRPGPers> pPers = NDb::GetPers( std::wcstol( paramsSet[0].c_str(), nullptr, 10 ) );
 		if ( !IsValid( pPers ) )
 		{
 			csSystem << CC_RED << "ERROR: Invalid ID" << endl;
@@ -3260,7 +3271,7 @@ static void CommandUnsummonUnit( const string &szID, const vector<wstring> &para
 	if ( paramsSet.size() < 1 )
 		return;
 	//
-	int nTemp = _wtol( paramsSet[0].c_str() );
+	int nTemp = std::wcstol( paramsSet[0].c_str(), nullptr, 10 );
 	//
 	CObjectBase *pObject = (CObjectBase *)pContext;
 	CDynamicCast<CMission> pMission(pObject);
@@ -3279,7 +3290,7 @@ static void CommandGetItem( const string &szID, const vector<wstring> &paramsSet
 	if ( paramsSet.size() < 1 )
 		return;
 	//
-	int nID = _wtol( paramsSet[0].c_str() );
+	int nID = std::wcstol( paramsSet[0].c_str(), nullptr, 10 );
 	//
 	CObjectBase *pBase = (CObjectBase*)pContext;
 	IMission *pMission = dynamic_cast<IMission*>( pBase );
@@ -3427,7 +3438,7 @@ static void CommandStartScenarioZone( const string &szID, const vector<wstring> 
 	else
 		pGlobalGame->players.push_back( NRPG::CreateGlobalPlayer( perses ) );
 	//
-	CPtr<NScenario::CScenarioTracker> pScenario = pGlobalGame->pScenarioTracker;
+	CPtr<NScenario::CScenarioTracker> pScenario = pGlobalGame->pScenarioTracker.GetPtr();
 	string szScenarioName = NStr::ToAscii( paramsSet[ 0 ] );
 	pScenario->CreateScenario( szScenarioName );
 	CDBPtr<NDb::CSide> pSide = NScenario::GetSideForScenario( pScenario );

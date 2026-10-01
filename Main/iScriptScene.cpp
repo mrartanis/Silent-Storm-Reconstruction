@@ -201,7 +201,7 @@ static void StartScriptScene( const string &szID, const vector<wstring> &paramsS
 		return;
 	}
 
-	NMainLoop::Command( new CICScriptScene( _wtol( paramsSet[0].c_str() ) ) );
+	NMainLoop::Command( new CICScriptScene( std::wcstol( paramsSet[0].c_str(), nullptr, 10 ) ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace NGame

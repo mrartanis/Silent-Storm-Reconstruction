@@ -22,12 +22,12 @@ static CLSPtr<LifeStudioHeadAPI::IMMTree> pLSTree;
 // bytes stay outside Git; normal game runs have no extra I/O or changed logic.
 static void ExportFaceFixture( const char *kind, int id, int part, CMemoryStream &stream )
 {
-	char directory[1024];
-	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
-	if ( length == 0 || length >= sizeof(directory) || stream.GetSize() <= 0 )
+	const char* directory = std::getenv( "S2_FACE_FIXTURE_DIR" );
+	const size_t length = directory ? std::strlen(directory) : 0;
+	if ( length == 0 || length >= 1024 || stream.GetSize() <= 0 )
 		return;
 	char path[1200];
-	_snprintf_s( path, sizeof(path), _TRUNCATE, "%s\\%s-%d-%d.bin", directory, kind, id, part );
+	std::snprintf( path, sizeof(path), "%s/%s-%d-%d.bin", directory, kind, id, part );
 	FILE *out = fopen( path, "wb" );
 	if ( !out )
 		return;
@@ -37,9 +37,9 @@ static void ExportFaceFixture( const char *kind, int id, int part, CMemoryStream
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int ExportAllFaceSequenceFixtures()
 {
-	char directory[1024];
-	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
-	if ( length == 0 || length >= sizeof(directory) )
+	const char* directory = std::getenv( "S2_FACE_FIXTURE_DIR" );
+	const size_t length = directory ? std::strlen(directory) : 0;
+	if ( length == 0 || length >= 1024 )
 		return 0;
 	CDBTable<NDb::CSequence> *pTable = NDatabase::GetTable<NDb::CSequence>();
 	if ( !pTable )
@@ -76,9 +76,9 @@ int ExportAllFaceSequenceFixtures()
 // an animator, and it never runs unless the opt-in fixture directory is set.
 int ExportAllFaceHeadFixtures()
 {
-	char directory[1024];
-	DWORD length = GetEnvironmentVariableA( "S2_FACE_FIXTURE_DIR", directory, sizeof(directory) );
-	if ( length == 0 || length >= sizeof(directory) )
+	const char* directory = std::getenv( "S2_FACE_FIXTURE_DIR" );
+	const size_t length = directory ? std::strlen(directory) : 0;
+	if ( length == 0 || length >= 1024 )
 		return 0;
 	CDBTable<NDb::CHead> *pTable = NDatabase::GetTable<NDb::CHead>();
 	if ( !pTable )

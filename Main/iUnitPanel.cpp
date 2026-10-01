@@ -150,7 +150,7 @@ void CUnitTab::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 
 	WCHAR wsText[256];
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", sUnitInfo.nAP );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", sUnitInfo.nAP );
 	pAP->SetText( wsText );
 	pAP->SetStyle( STYLE_VISIBLE, !pMission->IsRealTime() );
 
@@ -926,7 +926,7 @@ void CInfoPanelSlot::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		pReload->Set( pRPGClipItem->GetDBItem() );
 
 		WCHAR wsBuffer[256];
-		swprintf( wsBuffer, L"<color=FFB4997C><font face=Impact size=36pt outlinesize=2 outlinecolor=FF513E2B><left>%d/%d", pRPGClipItem->GetIncQuantity(), pRPGClipItem->GetMaxIncQuantity() );
+		swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<color=FFB4997C><font face=Impact size=36pt outlinesize=2 outlinecolor=FF513E2B><left>%d/%d", pRPGClipItem->GetIncQuantity(), pRPGClipItem->GetMaxIncQuantity() );
 		pAmmo->SetText( wsBuffer );
 		pAmmo->SetStyle( STYLE_VISIBLE, true );
 	}

@@ -741,11 +741,11 @@ struct SPartTransformer : public T
 		switch ( p->GetTransformType() )
 		{
 		case TT_NONE:
-			CopyTransform( pObjInfo->GetPositions(), &srcVerts[0], pObjInfo->GetPositionIndices(), 
+			this->CopyTransform( pObjInfo->GetPositions(), &srcVerts[0], pObjInfo->GetPositionIndices(),
 				pRes );
 			break;
 		case TT_SIMPLE:
-			SimpleTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(), 
+			this->SimpleTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(),
 				p->GetSimplePos(), pRes );
 			break;
 		case TT_SIMPLE_DISCRETE:
@@ -753,16 +753,16 @@ struct SPartTransformer : public T
 				const SDiscretePos& dPos = p->GetDiscretePos();
 				SFBTransform transform;
 				dPos.MakeMatrix( &transform );
-				SimpleDiscreteTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(), 
+				this->SimpleDiscreteTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(),
 					dPos.GetTransform()->pos.forward, transform.backward, dPos, pRes );
 			}
 			break;
 		case TT_SINGLE_SKIN:
 			if ( T::PASS_MMX_BLENDS )
-				SingleSkinTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(), 
+				this->SingleSkinTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(),
 					&(pObjInfo->GetWeights()[0]), p->GetAnimation(), p->GetMMXAnimation(), pRes );
 			else
-				SingleSkinTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(), 
+				this->SingleSkinTransform( pObjInfo->GetPositions(), transformed, &srcVerts[0], pObjInfo->GetPositionIndices(),
 					&(pObjInfo->GetWeights()[0]), p->GetAnimation(), *(vector<NGfx::SCompactTransformer>*)0, pRes );
 			break;
 		default:
@@ -843,7 +843,7 @@ struct SGfxTnLTransformer : public SPartTransformer<TTrans>
 	}
 	void Transform( IPart *p, const vector<CVec3> &transformed )
 	{
-		nVert += DoTransform( p, &geom[nVert], transformed );
+		nVert += this->DoTransform( p, &geom[nVert], transformed );
 		ASSERT( nVert <= geom.GetSize() );
 	}
 };

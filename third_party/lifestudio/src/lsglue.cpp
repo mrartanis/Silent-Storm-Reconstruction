@@ -12,10 +12,12 @@ namespace LifeStudioHeadAPI
 // it from Init() (and discard the returned pointer), so this minimal import
 // declaration is all that is needed; the import library synthesized from
 // def/LifeStudioHeadAPI.def resolves it to the DLL at link time.
+#if defined(_M_IX86)
 struct IOptions
 {
   static __declspec(dllimport) IOptions *__stdcall Create(void *p, unsigned int a, unsigned int b);
 };
+#endif
 
 // The host curve-evaluation callback the DLL invokes during morphing.
 //   ctrl layout:  [0] int  keyCount

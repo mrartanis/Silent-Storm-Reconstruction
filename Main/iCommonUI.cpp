@@ -979,9 +979,9 @@ void CShowItemModel::Set( NGScene::IGameView *pView, NWorld::CUnit *_pUnit, NRPG
 			WCHAR wsBuf[128];
 			switch ( i )
 			{
-			case NDb::SM_Snap:       swprintf( wsBuf, L"%s%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP ); wsSuffix = wsBuf; break;
-			case NDb::SM_Aimed:      swprintf( wsBuf, L"%s%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP + sInfo.nTargetingAP ); wsSuffix = wsBuf; break;
-			case NDb::SM_ShortBurst: swprintf( wsBuf, L"%s%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP + sInfo.nRoF / 3 ); wsSuffix = wsBuf; break;
+			case NDb::SM_Snap:       swprintf( wsBuf, sizeof(wsBuf) / sizeof(wsBuf[0]), L"%ls%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP ); wsSuffix = wsBuf; break;
+			case NDb::SM_Aimed:      swprintf( wsBuf, sizeof(wsBuf) / sizeof(wsBuf[0]), L"%ls%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP + sInfo.nTargetingAP ); wsSuffix = wsBuf; break;
+			case NDb::SM_ShortBurst: swprintf( wsBuf, sizeof(wsBuf) / sizeof(wsBuf[0]), L"%ls%d", GetDBString( 20710 ).c_str(), sInfo.nShotAP + sInfo.nRoF / 3 ); wsSuffix = wsBuf; break;
 			case NDb::SM_Careful:
 			case NDb::SM_LongBurst:  wsSuffix = GetDBString( 17856 ); break;
 			case NDb::SM_Snipe:      wsSuffix = GetDBString( 19810 ); break;
@@ -994,7 +994,7 @@ void CShowItemModel::Set( NGScene::IGameView *pView, NWorld::CUnit *_pUnit, NRPG
 		if ( pW->nRoF / 6 != 0 )
 		{
 			WCHAR wsBuf[128];
-			swprintf( wsBuf, L"%s%d", GetDBString( 20711 ).c_str(), pW->nRoF / 6 );
+			swprintf( wsBuf, sizeof(wsBuf) / sizeof(wsBuf[0]), L"%ls%d", GetDBString( 20711 ).c_str(), pW->nRoF / 6 );
 			pToolTip->SetVal( L"brof", wsBuf );
 		}
 		if ( IsValid( pInner ) )

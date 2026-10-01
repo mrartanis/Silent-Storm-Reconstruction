@@ -256,9 +256,9 @@ void CItemText::GenerateText()
 		wsName = itemsList.front().pInvItem->GetDBItem()->pName->szStr;
 	wchar_t wsText[512];
 	if ( itemsList.size() > 1 )
-		swprintf( wsText, L"<font face=Courier size=16pt><color=white>%s x %d", wsName.c_str(), (int)itemsList.size() );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><color=white>%ls x %d", wsName.c_str(), (int)itemsList.size() );
 	else
-		swprintf( wsText, L"<font face=Courier size=16pt><color=white>%s", wsName.c_str() );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><color=white>%ls", wsName.c_str() );
 	pText = new CTextDraw( SPoint( 0, 0 ), SPoint( -1, -1 ), wsText );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -989,9 +989,9 @@ void CHitTracker::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	// retail CHitText colour packing @0x6117c0: a PK hit fades the ORANGE R=243(f3),G=191(bf),B=0
 	// channels; a normal hit keeps the dev damage colour.
 	if ( bPK )
-		swprintf( wsText, L"<color=%.2x%.2x%.2x00>%d", nAlpha, int( ( 1 - fWeight ) * 243 ), int( ( 1 - fWeight ) * 191 ), nHitValue );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<color=%.2x%.2x%.2x00>%d", nAlpha, int( ( 1 - fWeight ) * 243 ), int( ( 1 - fWeight ) * 191 ), nHitValue );
 	else
-		swprintf( wsText, L"<color=%.2xff0000>%d", nAlpha, nHitValue );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<color=%.2xff0000>%d", nAlpha, nHitValue );
 
 	SetPosition( sPosition );
 	SetText( wsText );
@@ -1341,8 +1341,8 @@ static float ProjectOverlayIconPos( const CVec3 &vAnchor, CTransformStack &sTS, 
 			fAngle += 360;
 	}
 
-	vScreenPos.x = max( min( vScreenPos.x, sViewRect.x2 ), sViewRect.x1 );
-	vScreenPos.y = max( min( vScreenPos.y, sViewRect.y2 ), sViewRect.y1 );
+	vScreenPos.x = max( min( vScreenPos.x, float(sViewRect.x2) ), float(sViewRect.x1) );
+	vScreenPos.y = max( min( vScreenPos.y, float(sViewRect.y2) ), float(sViewRect.y1) );
 	*pIconPos = vScreenPos;
 	return fAngle;
 }
@@ -1726,8 +1726,8 @@ void CMissionUI::UpdateEnemies()
 		}
 
 		const NUI::SPoint &sSize = pIcon->GetSize();
-		vScreenPos.x = max( min( vScreenPos.x, sViewRect.x2 ), sViewRect.x1 );
-		vScreenPos.y = max( min( vScreenPos.y, sViewRect.y2 ), sViewRect.y1 );
+		vScreenPos.x = max( min( vScreenPos.x, float(sViewRect.x2) ), float(sViewRect.x1) );
+		vScreenPos.y = max( min( vScreenPos.y, float(sViewRect.y2) ), float(sViewRect.y1) );
 
 		pIcon->Set( pEnemy, bVisible, fAngle );
 		SPoint sIconPos;	// icon is a CLIENT-window child now -- convert the 1024x768 screen point
@@ -1820,8 +1820,8 @@ void CMissionUI::UpdateClues()
 				fAngle += 360;
 		}
 
-		vScreenPos.x = max( min( vScreenPos.x, sViewRect.x2 ), sViewRect.x1 );
-		vScreenPos.y = max( min( vScreenPos.y, sViewRect.y2 ), sViewRect.y1 );
+		vScreenPos.x = max( min( vScreenPos.x, float(sViewRect.x2) ), float(sViewRect.x1) );
+		vScreenPos.y = max( min( vScreenPos.y, float(sViewRect.y2) ), float(sViewRect.y1) );
 
 		pIcon->Set( pMarker, pHeard, fAngle );
 		SPoint sIconPos;	// icon is a CLIENT-window child now -- convert the 1024x768 screen point

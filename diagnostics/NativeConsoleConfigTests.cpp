@@ -57,6 +57,13 @@ int main()
 	if (std::fabs(NGlobal::GetVar("native_console_test").GetFloat() - 3.25f) > 0.001f ||
 		NGlobal::GetVar("game_profile").GetString() != L"\u0422\u0435\u0441\u0442")
 		return 4;
+	// A missing optional config must not parse an uninitialized stream buffer.
+	const auto missing = path.parent_path() / "missing-startup-regression.cfg";
+	if (std::filesystem::exists(missing)) return 7;
+	NGlobal::LoadConfig(missing.string());
+	if (std::fabs(NGlobal::GetVar("native_console_test").GetFloat() - 3.25f) > 0.001f ||
+		NGlobal::GetVar("game_profile").GetString() != L"\u0422\u0435\u0441\u0442")
+		return 8;
 	std::puts("native console config: passed");
 	return 0;
 }

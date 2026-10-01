@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include <D3D9.h>
+#include "GfxLegacyTokens.h"
 #include "GfxEffects.h"
 #include "GfxRender.h"
 #include "GfxShaders.h"

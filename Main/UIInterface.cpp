@@ -623,10 +623,10 @@ void CInterface::UpdateFPSText()
 		float fFPS = 1 / sStats.fFrameTime;
 		WCHAR wszBuf[1024];
 		if ( sStats.bGeometryThrashing )
-			swprintf( wszBuf, L"\n\n<font face=Courier size=16><left>FPS = %4.1f\n<color=red>Scene tris = %d<color=white>\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB", 
+			swprintf( wszBuf, sizeof(wszBuf) / sizeof(wszBuf[0]), L"\n\n<font face=Courier size=16><left>FPS = %4.1f\n<color=red>Scene tris = %d<color=white>\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB",
 				fFPS, sStats.nSceneTris, sStats.nVertices, sStats.nTris, sStats.nParticles, sStats.nLitParticles, NGScene::CalcTouchedTextureSize() / 1000000.0f );
 		else
-			swprintf( wszBuf, L"\n\n<font face=Courier size=16><left>FPS = %4.1f\nScene tris = %d\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB", 
+			swprintf( wszBuf, sizeof(wszBuf) / sizeof(wszBuf[0]), L"\n\n<font face=Courier size=16><left>FPS = %4.1f\nScene tris = %d\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB",
 				fFPS, sStats.nSceneTris, sStats.nVertices, sStats.nTris, sStats.nParticles, sStats.nLitParticles, NGScene::CalcTouchedTextureSize() / 1000000.0f );
 		if ( sStats.b2DTexturesThrashing )
 			wcscat( wszBuf, L"\n<color=red>2D texture cache thrashing<color=white>" );

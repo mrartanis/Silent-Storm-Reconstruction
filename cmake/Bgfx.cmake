@@ -1,4 +1,5 @@
-# The Windows game renders exclusively through the pinned bgfx backend.
+# The game renders exclusively through the pinned bgfx backend.
+set(S2_BGFX_SHADERC "" CACHE FILEPATH "Host shaderc executable for cross-compilation")
 set(S2_BGFX_CMAKE_ROOT "" CACHE PATH "Pinned bgfx.cmake checkout")
 set(S2_BGFX_DIR "${S2_BGFX_CMAKE_ROOT}/bgfx" CACHE PATH "Pinned bgfx source")
 set(S2_BIMG_DIR "${S2_BGFX_CMAKE_ROOT}/bimg" CACHE PATH "Pinned bimg source")
@@ -11,7 +12,21 @@ endforeach()
 set(BGFX_DIR "${S2_BGFX_DIR}" CACHE PATH "" FORCE)
 set(BIMG_DIR "${S2_BIMG_DIR}" CACHE PATH "" FORCE)
 set(BX_DIR "${S2_BX_DIR}" CACHE PATH "" FORCE)
-set(BGFX_BUILD_TOOLS ON CACHE BOOL "" FORCE)
+if(S2_BGFX_SHADERC)
+  if(NOT EXISTS "${S2_BGFX_SHADERC}")
+    message(FATAL_ERROR "S2_BGFX_SHADERC must name an existing host shaderc executable")
+  endif()
+  set(BGFX_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+  set(_s2_shaderc "${S2_BGFX_SHADERC}")
+  set(_s2_shaderc_dependency "${S2_BGFX_SHADERC}")
+else()
+  if(CMAKE_CROSSCOMPILING)
+    message(FATAL_ERROR "Cross-compilation requires S2_BGFX_SHADERC built for the host")
+  endif()
+  set(BGFX_BUILD_TOOLS ON CACHE BOOL "" FORCE)
+  set(_s2_shaderc "$<TARGET_FILE:shaderc>")
+  set(_s2_shaderc_dependency shaderc)
+endif()
 set(BGFX_BUILD_TOOLS_BIN2C OFF CACHE BOOL "" FORCE)
 set(BGFX_BUILD_TOOLS_GEOMETRY OFF CACHE BOOL "" FORCE)
 set(BGFX_BUILD_TOOLS_TEXTURE OFF CACHE BOOL "" FORCE)
@@ -30,15 +45,24 @@ target_compile_definitions(bgfx PUBLIC BGFX_CONFIG_MAX_VIEWS=2048)
 # Do not let third-party headers inherit the engine's historical /Gr convention.
 foreach(bgfxTarget IN ITEMS bgfx bx bimg bimg_decode bimg_encode shaderc fcpp glslang glsl-optimizer spirv-opt spirv-cross)
   if(TARGET ${bgfxTarget})
-    target_compile_options(${bgfxTarget} PRIVATE /Gd)
+    if(MSVC)
+      target_compile_options(${bgfxTarget} PRIVATE /Gd)
+    endif()
   endif()
 endforeach()
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
+if(WIN32)
+  set(_s2_shader_platform windows)
+  set(_s2_shader_profile s_5_0)
+else()
+  set(_s2_shader_platform linux)
+  set(_s2_shader_profile spirv)
+endif()
 set(S2_BGFX_SHADER_HEADER "${CMAKE_BINARY_DIR}/bgfx-generated/GameShaders.h")
 add_custom_command(OUTPUT "${S2_BGFX_SHADER_HEADER}"
   COMMAND "${Python3_EXECUTABLE}" "${root}/diagnostics/CompileBgfxShaders.py"
-          --source "${root}/Main/GfxShaders.cpp" --shaderc "$<TARGET_FILE:shaderc>"
-          --output "${S2_BGFX_SHADER_HEADER}"
-  DEPENDS shaderc "${root}/Main/GfxShaders.cpp" "${root}/diagnostics/CompileBgfxShaders.py"
+          --source "${root}/Main/GfxShaders.cpp" --shaderc "${_s2_shaderc}"
+          --output "${S2_BGFX_SHADER_HEADER}" --platform "${_s2_shader_platform}" --profile "${_s2_shader_profile}"
+  DEPENDS ${_s2_shaderc_dependency} "${root}/Main/GfxShaders.cpp" "${root}/diagnostics/CompileBgfxShaders.py"
   VERBATIM)
 add_custom_target(S2BgfxShaders DEPENDS "${S2_BGFX_SHADER_HEADER}")

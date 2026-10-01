@@ -85,7 +85,7 @@ static void GenerateRandomSphereVector( CVec3 *pRes )
 {
 	for(;;)
 	{
-		CVec3 v( random.GetFloat(-1,1), random.GetFloat(-1,1), random.GetFloat(-1,1) );
+		CVec3 v( GlobalGameRandom().GetFloat(-1,1), GlobalGameRandom().GetFloat(-1,1), GlobalGameRandom().GetFloat(-1,1) );
 		float f = fabs2( v );
 		if ( f == 0 || f > 1 )
 			continue;
@@ -100,7 +100,7 @@ void CLightState::AddRay( const CVec3 &vFrom, const CVec3 &vDir, const CVec3 &_v
 {
 	if ( !IsValid(pVis) )
 		return;
-	if ( random.GetFloat( 0, 1 ) < 0.3f ) // absorbtion
+	if ( GlobalGameRandom().GetFloat( 0, 1 ) < 0.3f ) // absorbtion
 		return;
 	CRay r;
 	r.ptOrigin = vFrom;
@@ -147,7 +147,7 @@ void CLightState::AddParallel( bool bDoRender, const SSphere &_bound, const CVec
 		return;
 	CVec3 vCenter = _bound.ptCenter;
 	float fWidth = _bound.fRadius * 2;
-	float fTest = random.GetFloat( 0, F_POINT_STRENGTH );
+	float fTest = GlobalGameRandom().GetFloat( 0, F_POINT_STRENGTH );
 	float fStrength = fWidth * fWidth;
 	while ( fabs2( vColor ) > 0.1f )
 	{
@@ -182,7 +182,7 @@ void CLightState::AddPoint( bool bDoRender, const CVec3 &vCenter, float fRadius,
 		points.push_back( SPointLight( _vColor, vCenter, fRadius ) );
 	if ( !pVis )
 		return;
-	float fTest = random.GetFloat( 0, F_POINT_STRENGTH );
+	float fTest = GlobalGameRandom().GetFloat( 0, F_POINT_STRENGTH );
 	float fStrength = sqr( fRadius ) / sqr( F_POINT_RADIUS ) * F_POINT_STRENGTH;
 	CVec3 vColor(_vColor);
 	while ( fabs2( vColor ) > 0.1f )

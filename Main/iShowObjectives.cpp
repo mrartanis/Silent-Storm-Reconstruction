@@ -316,7 +316,7 @@ bool CTaskLine::ProcessMessage( const SEvent &sEvent )
 			{
 				WCHAR wsBuffer[ 1024 ];
 				NDb::CString *pStr = task.pString;
-				swprintf( wsBuffer, L"%d. %s", nNumber, IsValid( pStr ) ? GetDBString( pStr ).c_str() : L"" );
+				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"%d. %ls", nNumber, IsValid( pStr ) ? GetDBString( pStr ).c_str() : L"" );
 				pDescription->SetText( wsBuffer );
 			}
 
@@ -421,7 +421,7 @@ bool CShowObjectivesUI::ProcessMessage( const SEvent &sEvent )
 				for ( int t = 0; t < tasks.size(); ++t )
 				{
 					WCHAR wsNumber[32];
-					swprintf( wsNumber, L"%d. ", nTask );
+					swprintf( wsNumber, sizeof(wsNumber) / sizeof(wsNumber[0]), L"%d. ", nTask );
 					wstring wsText = wsNumber;
 					if ( IsValid( tasks[t].pString ) )
 						wsText += GetDBString( tasks[t].pString );

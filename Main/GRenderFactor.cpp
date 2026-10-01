@@ -286,7 +286,7 @@ static void Enlarge( CArray2D<float> *pRes, const CArray2D<float> &src, float fA
 	for ( int y = 0; y < nSize*2; ++y )
 	{
 		for ( int x = 0; x < nSize*2; ++x )
-			(*pRes)[y][x] += random.GetFloat( -1, 1 ) * fAmpl;
+			(*pRes)[y][x] += GlobalGameRandom().GetFloat( -1, 1 ) * fAmpl;
 	}
 }
 static void GeneratePinkNoise( CArray2D<float> *pRes, float fDecay )

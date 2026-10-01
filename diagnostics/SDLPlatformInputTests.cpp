@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cmath>
 #include <fstream>
+#include <cwctype>
 
 namespace {
 int failures = 0;
@@ -64,7 +65,9 @@ int main(int argc, char** argv)
     S2Platform::Done(); return failures ? 1 : 0;
   }
   if (!S2Platform::Init("Silent Storm SDL input tests", 640, 480, true)) return 1;
-  Check(S2Platform::NativeWindow() != nullptr, "SDL Windows native adapter");
+  Check(S2Platform::NativeWindow() != nullptr, "SDL native window adapter");
+  Check(std::iswgraph(0x416) && std::iswalnum(0x416) && std::iswprint(0x416),
+        "Cyrillic UI classification without a launcher locale");
   Check(NInput::InitInput(true), "initialize SDL input");
   S2Platform::PumpEvents(); Drain();
   WindowEvent(SDL_EVENT_WINDOW_FOCUS_GAINED); Pump(); Drain();
@@ -112,8 +115,13 @@ int main(int argc, char** argv)
   text.text.windowID = SDL_GetWindowID(S2Platform::Window());
   text.text.text = "a\xD0\x96\xF0\x9F\x98\x80";
   Send(text); Pump(); messages = Drain();
+#if defined(_WIN32)
   Check(messages.size() == 4 && messages[0].nParam == 'a' && messages[1].nParam == 0x416 &&
         messages[2].nParam == 0xd83d && messages[3].nParam == 0xde00, "Unicode text and UTF-16 surrogate pair");
+#else
+  Check(messages.size() == 3 && messages[0].nParam == 'a' && messages[1].nParam == 0x416 &&
+        messages[2].nParam == 0x1f600, "Unicode text and full scalar for 32-bit wchar_t");
+#endif
   for (const auto& message : messages) Check(message.cType == NInput::CT_WIN_CHAR, "text is not a physical key");
 
   SDL_Event motion{}; motion.type = SDL_EVENT_MOUSE_MOTION;

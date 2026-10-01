@@ -304,63 +304,63 @@ void CUnitCharacterPanel::Generate()
 	WCHAR wsText[256];
 	NRPG::CUnit *pUnit = pMerc;
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%s", pUnit->GetName().c_str() );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%ls", pUnit->GetName().c_str() );
 	pName->SetText( wsText );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_LEVEL ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_LEVEL ) );
 	pLevel->SetText( wsText );
 	pLevelBar->SetValue( pUnit->Skills( NDb::ST_LEVEL ).GetProgress() );
 	if ( pUnit->GetPers()->pClass )
 		pClass->SetImage( pUnit->GetPers()->pClass->pIcon );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STR ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STR ) );
 	pStrength->SetText( wsText );
 	pStrengthBar->SetValue( pUnit->Skills( NDb::ST_STR ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_DEX ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_DEX ) );
 	pDexterity->SetText( wsText );
 	pDexterityBar->SetValue( pUnit->Skills( NDb::ST_DEX ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INT ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INT ) );
 	pIntelligence->SetText( wsText );
 	pIntelligenceBar->SetValue( pUnit->Skills( NDb::ST_INT ).GetProgress() );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_IC ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_IC ) );
 	pEvasion->SetText( wsText );
 	pEvasionBar->SetValue( pUnit->Skills( NDb::ST_IC ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_AP ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_AP ) );
 	pActionPoints->SetText( wsText );
 	pActionPointsBar->SetValue( pUnit->Skills( NDb::ST_AP ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_VP ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_VP ) );
 	pVitalityPoints->SetText( wsText );
 	pVitalityPointsBar->SetValue( pUnit->Skills( NDb::ST_VP ).GetProgress() );
 
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STEALTH ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_STEALTH ) );
 	pHide->SetText( wsText );
 	pHideBar->SetValue( pUnit->Skills( NDb::ST_STEALTH ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SPOT ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SPOT ) );
 	pSpot->SetText( wsText );
 	pSpotBar->SetValue( pUnit->Skills( NDb::ST_SPOT ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_BURST ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_BURST ) );
 	pBurst->SetText( wsText );
 	pBurstBar->SetValue( pUnit->Skills( NDb::ST_BURST ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MELEE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MELEE ) );
 	pMelee->SetText( wsText );
 	pMeleeBar->SetValue( pUnit->Skills( NDb::ST_MELEE ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SNIPE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SNIPE ) );
 	pSnipe->SetText( wsText );
 	pSnipeBar->SetValue( pUnit->Skills( NDb::ST_SNIPE ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MEDICINE ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_MEDICINE ) );
 	pMedicine->SetText( wsText );
 	pMedicineBar->SetValue( pUnit->Skills( NDb::ST_MEDICINE ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SHOOTING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_SHOOTING ) );
 	pShooting->SetText( wsText );
 	pShootingBar->SetValue( pUnit->Skills( NDb::ST_SHOOTING ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_THROWING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_THROWING ) );
 	pThrowing->SetText( wsText );
 	pThrowingBar->SetValue( pUnit->Skills( NDb::ST_THROWING ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INTERRUPT ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_INTERRUPT ) );
 	pInterrupt->SetText( wsText );
 	pInterruptBar->SetValue( pUnit->Skills( NDb::ST_INTERRUPT ).GetProgress() );
-	swprintf( wsText, L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_ENGINEERING ) );
+	swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=Courier size=16pt><center>%d", (int)pUnit->Skills( NDb::ST_ENGINEERING ) );
 	pEngineering->SetText( wsText );
 	pEngineeringBar->SetValue( pUnit->Skills( NDb::ST_ENGINEERING ).GetProgress() );
 }
@@ -406,7 +406,7 @@ bool CUnitInventoryPanelItem::ProcessMessage( const SEvent &sEvent )
 		{
 			pText = GetUIWindow<CText>( this, "text" );
 			WCHAR wsBuffer[256];
-			swprintf( wsBuffer, L"x%d", nCount );
+			swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"x%d", nCount );
 			pText->SetText( wsBuffer );
 
 			break;
@@ -1115,7 +1115,7 @@ void CTeamMngUI::Set( NRPG::CUnit *_pMerc, EPanel _ePanel )
 
 	for( int nTemp = 0; nTemp < unitsStateSet.size(); nTemp++ )
 	{
-		CPtr<CUnitPortraitState> pState = unitsStateSet[nTemp];
+		CPtr<CUnitPortraitState> pState = unitsStateSet[nTemp].GetPtr();
 
 		if( pState->GetMerc() == pMerc )
 			pState->SetSelected( true );
@@ -1174,7 +1174,7 @@ bool CTeamMngUI::ProcessMessage( const SEvent &sEvent )
 
 			for( int nTemp = 0; nTemp < unitsStateSet.size(); nTemp++ )
 			{
-				CPtr<CUnitPortraitState> pState = unitsStateSet[nTemp];
+				CPtr<CUnitPortraitState> pState = unitsStateSet[nTemp].GetPtr();
 
 				if ( pState->GetWindowID() != sEvent.szID )
 					continue;

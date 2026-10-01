@@ -272,6 +272,7 @@ void LoadConfig( const string &szFileName )
 	catch(...)
 	{
 		csSystem << "Can't open " << szFileName << endl;
+		return;
 	}
 
 	vector<string> cmdsSet;

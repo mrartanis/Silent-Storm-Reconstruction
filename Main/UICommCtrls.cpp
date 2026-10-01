@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <cwctype>
 #include "../Game/Platform.h"
 #include "Gfx.h"
 #include "GfxBuffers.h"
@@ -1603,7 +1604,7 @@ float CProgressBar::GetValue()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CProgressBar::SetValue( float _fValue )
 {
-	fValue = min( max( _fValue, 0 ), 1 );
+	fValue = min( max( _fValue, 0.0f ), 1.0f );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CProgressBar::ProcessMessage( const SEvent &sEvent )

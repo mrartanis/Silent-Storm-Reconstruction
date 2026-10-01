@@ -5,6 +5,7 @@
 #endif // _MSC_VER > 1000
 
 #include "GRenderCore.h"
+#include "GRenderExecute.h"
 #include "Transform.h"
 #include "GShadowVolume.h"
 namespace NGfx

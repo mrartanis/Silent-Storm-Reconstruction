@@ -96,7 +96,7 @@ void CComplexSlider::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	if ( IsValid( pText ) )
 	{
 		WCHAR wsBuffer[256];
-		swprintf( wsBuffer, L"<font face=Courier size=18pt><center>%d", GetValue() );
+		swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<font face=Courier size=18pt><center>%d", GetValue() );
 		pText->SetText( GetDBString( 4404 ) + wsBuffer );
 	}
 	if ( IsValid( pProgress ) && GetMaxValue() != 0 )
@@ -364,7 +364,7 @@ static int GetCurrentResolution()
 static void SetCurrentResolution( int nMode )
 {
 	WCHAR wsMode[64];
-	swprintf( wsMode, L"%dx%d", ( nMode >> 12 ) & 0xfff, nMode & 0xfff );
+	swprintf( wsMode, sizeof(wsMode) / sizeof(wsMode[0]), L"%dx%d", ( nMode >> 12 ) & 0xfff, nMode & 0xfff );
 	NGlobal::SetVar( "gfx_resolution", wstring( wsMode ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -550,7 +550,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 				if ( GetNextPow2( nLevel ) != nLevel )
 					continue;
 				WCHAR wsBuffer[64];
-				swprintf( wsBuffer, L"<right>x%d", nLevel );
+				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>x%d", nLevel );
 				pAnisotropicLevel->AddItem( nLevel, CComplexComboBox::SInfo( wsBuffer ), ( nLevel == NGfx::GetMaxAnisotropicLevel() ) ? 173 : 172 );
 			}
 
@@ -577,7 +577,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 					nTemplate = 173;
 
 				WCHAR wsBuffer[1024];
-				swprintf( wsBuffer, L"<right>%dx%dx32", iTemp->nXSize, iTemp->nYSize );
+				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>%dx%dx32", iTemp->nXSize, iTemp->nYSize );
 				pResolution->AddItem( EncodeVideoModeID( iTemp->nXSize, iTemp->nYSize ), NUI::CComplexComboBox::SInfo( wsBuffer ), nTemplate );
 			}
 

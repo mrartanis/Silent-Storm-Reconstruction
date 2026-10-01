@@ -8,6 +8,9 @@
 #include "NativeMMTreeData.h"
 #include "NativeMMTreeRuntime.h"
 #include "NativeSequenceData.h"
+#if !defined(_WIN32)
+#include "../../../FileIO/PortableGamePath.h"
+#endif
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -26,7 +29,11 @@ namespace
 std::vector<char> ReadFile(const char *path)
 {
   if (!path) return {};
+#if defined(_WIN32)
   std::ifstream file(path, std::ios::binary);
+#else
+  std::ifstream file(S2FileIO::ResolveGamePath(path), std::ios::binary);
+#endif
   if (!file) return {};
   return std::vector<char>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
 }

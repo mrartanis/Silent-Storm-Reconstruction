@@ -1475,6 +1475,24 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
         -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
     set_tests_properties(NativeScenarioRootWorlds PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 14400 LABELS extended)
+    foreach(_s2_root_mode IN ITEMS Party PartySave)
+      set(_s2_root_mode_args -DPARTY_MODE=ON)
+      if(_s2_root_mode STREQUAL PartySave)
+        set(_s2_root_mode_args -DPARTY_SAVE_MODE=ON
+          "-DSAVE_DIR=${CMAKE_BINARY_DIR}/_root_party_saves/all")
+      endif()
+      add_test(NAME NativeScenarioRoot${_s2_root_mode}Worlds
+        COMMAND "${CMAKE_COMMAND}"
+          "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"
+          "-DWORLD_PROBE=$<TARGET_FILE:NativeWorldInitProbe>"
+          "-DGAME_DB=${S2_GAME_DB_PATH}"
+          "-DRESOURCE_DIR=${_s2_world_resources}"
+          "-DTEST_EMULATOR=${CMAKE_CROSSCOMPILING_EMULATOR}"
+          ${_s2_root_mode_args}
+          -P "${root}/diagnostics/RunScenarioRootWorlds.cmake")
+      set_tests_properties(NativeScenarioRoot${_s2_root_mode}Worlds PROPERTIES
+        WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 14400 LABELS extended)
+    endforeach()
     add_test(NAME NativeWorldMission4522PartySave
       COMMAND "${CMAKE_COMMAND}"
         "-DDB_TEST=$<TARGET_FILE:NativeMapDatabaseTests>"

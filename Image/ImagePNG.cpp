@@ -2,6 +2,9 @@
 #include "ImagePNG.h"
 #include <png.h>   // libpng
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static png_colorp GetPNGPalette(png_structp png, png_infop info) {
+ png_colorp palette = 0; int count = 0; png_get_PLTE(png, info, &palette, &count); return palette;
+}
 enum EBMMTypes
 {
 	BMM_NO_TYPE,
@@ -20,12 +23,12 @@ bool NImage::RecognizeFormatPNG( CDataStream *pStream )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void PNGReadFunction( png_structp png_ptr, png_bytep data, png_size_t length )
 {
-	CDataStream *pStream = reinterpret_cast<CDataStream*>( png_ptr->io_ptr );
+	CDataStream *pStream = reinterpret_cast<CDataStream*>( png_get_io_ptr( png_ptr ) );
 	pStream->Read( data, length );
 }
 void PNGWriteFunction( png_structp png_ptr, png_bytep data, png_size_t length )
 {
-	CDataStream *pStream = reinterpret_cast<CDataStream*>( png_ptr->io_ptr );
+	CDataStream *pStream = reinterpret_cast<CDataStream*>( png_get_io_ptr( png_ptr ) );
 	pStream->Write( data, length );
 }
 void PNGFlushFunction( png_structp png_ptr )
@@ -42,11 +45,11 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 	if ( png == 0 )
 		return false;
 	//
-  if ( setjmp(png->jmpbuf) )
+  if ( setjmp(png_jmpbuf( png )) )
 	{
     if ( info )
 		{
-		  for ( png_uint_32 i=0; i<info->height; i++ )
+		  for ( png_uint_32 i=0; i<png_get_image_height( png, info ); i++ )
 			{
     		if ( row_pointers[i] )
 					free( row_pointers[i] );
@@ -64,8 +67,8 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
   //png_init_io( png, file );
 	png_read_info( png, info );
 	//
-	DWORD dwWidth = info->width;
-	DWORD dwHeight = info->height;
+	DWORD dwWidth = png_get_image_width( png, info );
+	DWORD dwHeight = png_get_image_height( png, info );
 	std::vector<DWORD> image( dwWidth * dwHeight );
 
 //	if ( info->valid & PNG_INFO_gAMA )
@@ -79,31 +82,31 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 	// expand grayscale images to the full 8 bits
 	// expand images with transparency to full alpha channels
 	// I'm going to ignore lineart and just expand it to 8 bits
-	if ( ( info->color_type == PNG_COLOR_TYPE_PALETTE && info->bit_depth < 8 ) ||
-		   ( info->color_type == PNG_COLOR_TYPE_GRAY && info->bit_depth < 8 ) ||
-		   ( info->valid & PNG_INFO_tRNS ) )
+	if ( ( png_get_color_type( png, info ) == PNG_COLOR_TYPE_PALETTE && png_get_bit_depth( png, info ) < 8 ) ||
+		   ( png_get_color_type( png, info ) == PNG_COLOR_TYPE_GRAY && png_get_bit_depth( png, info ) < 8 ) ||
+		   ( png_get_valid( png, info, PNG_INFO_tRNS ) & PNG_INFO_tRNS ) )
 		png_set_expand( png );
 
 	int nNumPasses = 1;
-	if ( info->interlace_type )
+	if ( png_get_interlace_type( png, info ) )
 		nNumPasses = png_set_interlace_handling( png );
 
-//	if ( info->bit_depth == 16 )
+//	if ( png_get_bit_depth( png, info ) == 16 )
 //		png_set_swap( png );
 
 	png_read_update_info( png, info );
 	// determine type
 	int bmtype = BMM_NO_TYPE;
-	if ( info->bit_depth != 1 )
+	if ( png_get_bit_depth( png, info ) != 1 )
 	{
-		switch( info->color_type )
+		switch( png_get_color_type( png, info ) )
 		{
 			case PNG_COLOR_TYPE_PALETTE:
 				bmtype = BMM_PALETTED;
 				break;
 			case PNG_COLOR_TYPE_RGB:
 			case PNG_COLOR_TYPE_RGB_ALPHA:
-				switch( info->bit_depth )
+				switch( png_get_bit_depth( png, info ) )
 				{
 					case 2:
 					case 4:
@@ -117,7 +120,7 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 				break;
 			case PNG_COLOR_TYPE_GRAY_ALPHA:
 			case PNG_COLOR_TYPE_GRAY:
-				switch( info->bit_depth )
+				switch( png_get_bit_depth( png, info ) )
 				{
 					case 2:
 					case 4:
@@ -137,9 +140,9 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 		return false;
 	}
 	//
-	row_pointers = (png_bytep*)malloc( info->height * sizeof(png_bytep) );
-	for ( png_uint_32 i=0; i<info->height; i++ )
-		row_pointers[i] = (png_bytep)malloc( info->rowbytes );
+	row_pointers = (png_bytep*)malloc( png_get_image_height( png, info ) * sizeof(png_bytep) );
+	for ( png_uint_32 i=0; i<png_get_image_height( png, info ); i++ )
+		row_pointers[i] = (png_bytep)malloc( png_get_rowbytes( png, info ) );
 	// now read the image
 	png_read_image( png, row_pointers );
 	// decompress image to the ARGB format
@@ -147,17 +150,17 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 	{
 		case BMM_PALETTED:
 			{
-				if ( info->bit_depth == 8 )
+				if ( png_get_bit_depth( png, info ) == 8 )
 				{
-					for ( png_uint_32 iy=0; iy<info->height; iy++ )
+					for ( png_uint_32 iy=0; iy<png_get_image_height( png, info ); iy++ )
 					{
-						for ( png_uint_32 ix=0; ix<info->width; ix++  )
+						for ( png_uint_32 ix=0; ix<png_get_image_width( png, info ); ix++  )
 						{
 							DWORD dwColor = 0xFF000000 |
-															( DWORD(png->palette[row_pointers[iy][ix]].red) << 16 ) |
-															( DWORD(png->palette[row_pointers[iy][ix]].green) << 8 ) |
-															( DWORD(png->palette[row_pointers[iy][ix]].blue) );
-							image[iy*info->width + ix] = dwColor;
+															( DWORD(GetPNGPalette( png, info )[row_pointers[iy][ix]].red) << 16 ) |
+															( DWORD(GetPNGPalette( png, info )[row_pointers[iy][ix]].green) << 8 ) |
+															( DWORD(GetPNGPalette( png, info )[row_pointers[iy][ix]].blue) );
+							image[iy*png_get_image_width( png, info ) + ix] = dwColor;
 						}
 					}
 				}
@@ -166,15 +169,15 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 		case BMM_TRUE_32:
 			{
 				DWORD r, g, b, a;
-				for ( png_uint_32 iy = 0; iy < info->height; iy++ )
+				for ( png_uint_32 iy = 0; iy < png_get_image_height( png, info ); iy++ )
 				{
-					for ( png_uint_32 ix = 0; ix < info->rowbytes; )
+					for ( png_uint_32 ix = 0; ix < png_get_rowbytes( png, info ); )
 					{
 						r = row_pointers[iy][ix++];
 						g = row_pointers[iy][ix++];
 						b = row_pointers[iy][ix++];
-						a = ( info->channels == 4 ? row_pointers[iy][ix++] : 255 );
-						image[iy*info->width + (ix/info->channels - 1)] = (a << 24) | (r << 16) | (g << 8) | b;
+						a = ( png_get_channels( png, info ) == 4 ? row_pointers[iy][ix++] : 255 );
+						image[iy*png_get_image_width( png, info ) + (ix/png_get_channels( png, info ) - 1)] = (a << 24) | (r << 16) | (g << 8) | b;
 					}
 				}
 			}
@@ -182,13 +185,13 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 		case BMM_GRAY_8:
 			{
 				DWORD color, alpha;
-				for ( png_uint_32 iy = 0; iy < info->height; iy++ )
+				for ( png_uint_32 iy = 0; iy < png_get_image_height( png, info ); iy++ )
 				{
-					for ( png_uint_32 ix = 0; ix < info->rowbytes;  )
+					for ( png_uint_32 ix = 0; ix < png_get_rowbytes( png, info );  )
 					{
 						color = row_pointers[iy][ix++];
-						alpha = info->channels == 2 ? row_pointers[iy][ix++] : 255;
-						image[iy*info->width + (ix/info->channels - 1)] = (alpha << 24) | (color << 16) | (color << 8) | color;
+						alpha = png_get_channels( png, info ) == 2 ? row_pointers[iy][ix++] : 255;
+						image[iy*png_get_image_width( png, info ) + (ix/png_get_channels( png, info ) - 1)] = (alpha << 24) | (color << 16) | (color << 8) | color;
 					}
 				}
 			}
@@ -197,7 +200,7 @@ bool NImage::LoadImagePNG( CDataStream *pStream, CImage *pRes )
 
 	png_read_end( png, info );
 
-	for ( png_uint_32 i=0; i<info->height; i++ )
+	for ( png_uint_32 i=0; i<png_get_image_height( png, info ); i++ )
 		free( row_pointers[i] );
 	free( row_pointers );
   png_destroy_read_struct( &png, &info, 0 );

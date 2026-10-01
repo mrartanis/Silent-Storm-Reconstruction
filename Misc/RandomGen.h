@@ -112,5 +112,12 @@ extern CRandomGenerator random;
 // POSIX libc exports random(); the game-owned generator needs a distinct symbol.
 extern CRandomGenerator s2_game_random;
 #endif
+inline CRandomGenerator& GlobalGameRandom() {
+#if defined(_WIN32)
+  return random;
+#else
+  return s2_game_random;
+#endif
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <stdexcept>
 #include "lsaver.h"
 #include "lstring.h"
 //////////////////////////////////////////////////////////////////////////
@@ -20,7 +21,7 @@ static void lua_GetID( CLuaFuncID *pID, lua_CFunction func )
 {
 	CLuaFunctionKey nFunc = reinterpret_cast<CLuaFunctionKey>( func );
 	CLuaFuncToIDMap::iterator i = luaFuncToIDMap.find( nFunc );
-	ASSERT( i != luaFuncToIDMap.end() );  // unregistered lua C function!
+	if (i == luaFuncToIDMap.end()) throw std::runtime_error("Unregistered Lua function in save");
 	*pID = i->second;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -28,14 +29,14 @@ static void lua_GetID( CLuaFuncID *pID, lua_Hook func )
 {
 	CLuaFunctionKey nFunc = reinterpret_cast<CLuaFunctionKey>( func );
 	CLuaFuncToIDMap::iterator i = luaFuncToIDMap.find( nFunc );
-	ASSERT( i != luaFuncToIDMap.end() );  // unregistered lua C function!
+	if (i == luaFuncToIDMap.end()) throw std::runtime_error("Unregistered Lua function in save");
 	*pID = i->second;
 }
 //////////////////////////////////////////////////////////////////////////
 static lua_CFunction lua_GetFunc( const CLuaFuncID& id )
 { 
 	CLuaIDToFuncMap::iterator i = luaIDToFuncMap.find( id );
-	ASSERT( i != luaIDToFuncMap.end() );  // unregistered lua C function!
+	if (i == luaIDToFuncMap.end()) throw std::runtime_error("Unknown saved Lua function: " + id);
 	CLuaFunctionKey nFunc = i->second;
 	return reinterpret_cast<lua_CFunction>(nFunc);
 }
@@ -43,7 +44,7 @@ static lua_CFunction lua_GetFunc( const CLuaFuncID& id )
 static lua_Hook lua_GetHook( const CLuaFuncID& id )
 {
 	CLuaIDToFuncMap::iterator i = luaIDToFuncMap.find( id );
-	ASSERT( i != luaIDToFuncMap.end() );  // unregistered lua C function!
+	if (i == luaIDToFuncMap.end()) throw std::runtime_error("Unknown saved Lua function: " + id);
 	CLuaFunctionKey nFunc = i->second;
 	return reinterpret_cast<lua_Hook>(nFunc);
 }

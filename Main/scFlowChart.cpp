@@ -21,10 +21,12 @@
 static_assert( sizeof(DWORD) == sizeof(std::uint32_t), "scenario signatures require 32-bit words" );
 #if !defined(_WIN32)
 #include <cstdio>
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString( const char *message )
 {
 	std::fputs( message, stderr );
 }
+#endif
 #endif
 #if defined(_WIN32)
 static CRandomGenerator &FlowChartRandom() { return random; }

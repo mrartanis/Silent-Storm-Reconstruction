@@ -11,7 +11,7 @@
 #include "../DBFormat/DataMap.h"
 #include "Grid.h"
 #include "../Misc/2Darray.h"
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(S2_FULL_GAME)
 #include "../Misc/BasicShare.h"
 // On Windows this game-used share is owned by GBuilding.cpp, whose renderer is
 // not part of the headless core. Keep the same ID and loader on Linux.

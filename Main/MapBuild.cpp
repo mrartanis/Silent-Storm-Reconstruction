@@ -27,7 +27,9 @@
 #include "../DBFormat/DataAI.h"
 #include "aiGrid.h"
 #if !defined(_WIN32)
+#if !defined(S2_FULL_GAME)
 static void OutputDebugString( const char *message ) { std::fputs( message, stderr ); }
+#endif
 #endif
 
 const float WALL_HEIGHT = 2.5f;  // floor height

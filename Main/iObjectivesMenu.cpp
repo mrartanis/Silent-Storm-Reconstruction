@@ -118,7 +118,7 @@ void CObjectivesUI::GenerateList()
 				wsName = GetDBString( pGoal->GetDBGoal()->pName );
 
 			WCHAR wsBuffer[ 1024 ];
-			swprintf( wsBuffer, L"<font face=Courier size=18pt>%s%s", GetStateMark( pGoal->GetState() ).c_str(), wsName.c_str() );
+			swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<font face=Courier size=18pt>%ls%ls", GetStateMark( pGoal->GetState() ).c_str(), wsName.c_str() );
 			AddRow( wsBuffer, &nCount );
 
 			// the goal's tasks, indented under it
@@ -133,7 +133,7 @@ void CObjectivesUI::GenerateList()
 				if ( IsValid( pTask->GetDBTask() ) && IsValid( pTask->GetDBTask()->pDescription ) )
 					wsTask = GetDBString( pTask->GetDBTask()->pDescription );
 
-				swprintf( wsBuffer, L"<font face=Courier size=18pt>\t%s%s", GetStateMark( pTask->GetState() ).c_str(), wsTask.c_str() );
+				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<font face=Courier size=18pt>\t%ls%ls", GetStateMark( pTask->GetState() ).c_str(), wsTask.c_str() );
 				AddRow( wsBuffer, &nCount );
 			}
 		}

@@ -119,7 +119,7 @@ static CTerrainTexturesCache cache256( 70, 256 );
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static CObj<NGfx::CTexture> pGreenTexture, pDefaultBump;
-static NGfx::CTexture* GetGenericBuffer( CObj<NGfx::CTexture> *pBuf, NGfx::SPixel8888 &color )
+static NGfx::CTexture* GetGenericBuffer( CObj<NGfx::CTexture> *pBuf, const NGfx::SPixel8888 &color )
 {
 	if ( IsValid(*pBuf) )
 		return *pBuf;

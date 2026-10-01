@@ -238,9 +238,9 @@ void CAIViewer::VerifyVoxelTracer()
 	int nResolution = 10;
 	CVec3 vCenter;// = CVec3( 1, 1, 2 );
 	GetPointUnderCursor( &vCenter );
-	vCenter.x += random.GetFloat( -0.1f, 0.1f );
-	vCenter.y += random.GetFloat( -0.1f, 0.1f );
-	vCenter.z += random.GetFloat( -0.1f, 0.1f );
+	vCenter.x += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
+	vCenter.y += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
+	vCenter.z += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
 	NAI::CExplVoxelRenderer renderer;
 	NAI::CExplVoxelRenderer::CObjectsHash objects;
 	int nObjectIndex = 0;
@@ -280,9 +280,9 @@ void CAIViewer::VerifyVoxelVision()
 	float fWidth = F_STEP * nResolution;//0.5f;
 	CVec3 vCenter;// = CVec3( 1, 1, 2 );
 	GetPointUnderCursor( &vCenter );
-	vCenter.x += random.GetFloat( -0.1f, 0.1f );
-	vCenter.y += random.GetFloat( -0.1f, 0.1f );
-	vCenter.z += random.GetFloat( -0.1f, 0.1f );
+	vCenter.x += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
+	vCenter.y += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
+	vCenter.z += GlobalGameRandom().GetFloat( -0.1f, 0.1f );
 	NAI::CVisionVoxelRenderer renderer;
 	renderer.Init( vCenter, fWidth, nResolution, NWorld::TS_VISION_SOLID );
 	pAIMap->TraceVisionGrid( &renderer, NWorld::TS_VISION );

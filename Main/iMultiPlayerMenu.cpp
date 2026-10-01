@@ -214,7 +214,7 @@ void CMultiPlayerUI::ChangeTechLevel( int nDelta )
 	if ( IsValid( pTechLevel ) )
 	{
 		WCHAR wsText[256];
-		swprintf( wsText, L"<font face=CourierBold size=20pt><color=white><center>%d", nTechLevel );
+		swprintf( wsText, sizeof(wsText) / sizeof(wsText[0]), L"<font face=CourierBold size=20pt><color=white><center>%d", nTechLevel );
 		pTechLevel->SetText( wsText );
 	}
 }
@@ -258,7 +258,7 @@ bool CMultiPlayerUI::ProcessMessage( const SEvent &sEvent )
 					char szID[16] = "player0";
 					szID[6] = (char)( '0' + i );           // four slots -> single digit
 					WCHAR wsName[64];
-					swprintf( wsName, L"Player #%d", i + 1 );
+					swprintf( wsName, sizeof(wsName) / sizeof(wsName[0]), L"Player #%d", i + 1 );
 					CObj<CPlayerLine> pLine = new CPlayerLine( sEvent.pLoader->GetControl( szID ), wsName, pGame->players[i] );
 					playerLines.push_back( pLine );
 				}

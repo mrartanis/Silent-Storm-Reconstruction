@@ -1,10 +1,12 @@
 #include "StdAfx.h"
 #include <fmod.h>
 #include <fmod_errors.h>
+#if defined(_WIN32)
 #include <mmsystem.h>                // WAVEFORMATEX et al. -- StdAfx's windows.h is WIN32_LEAN_AND_MEAN, so dsound.h needs this first
 #undef PlaySound                     // mmsystem.h #defines PlaySound -> would mangle NFMSound::PlaySound (declared in FMSound.h below)
 #include <dsound.h>                  // NFMSound::GetSpeakerType: DirectSoundCreate + IDirectSound::GetSpeakerConfig
 #pragma comment( lib, "dsound.lib" )  // self-contained -- no vcxproj edit (DirectSound device-config query)
+#endif
 #include "FMSound.h"
 #include "..\Misc\HPTimer.h"
 #if defined(S2_NATIVE_MUSIC)
@@ -894,6 +896,10 @@ void SetSpeakerType( ESpeakerType speaker )
 // it would change live sound init, so deferred. dsound.lib is pulled in via the #pragma in this TU's includes.
 ESpeakerType GetSpeakerType()
 {
+#if !defined(_WIN32)
+ return SOUND_SM_STEREO;
+#else
+
 	IDirectSound *pDS = 0;
 	if ( FAILED( DirectSoundCreate( 0, &pDS, 0 ) ) )
 		return SOUND_SM_STEREO;                       // no device -> stereo
@@ -917,6 +923,7 @@ ESpeakerType GetSpeakerType()
 	}
 	pDS->Release();
 	return result;
+#endif
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void Update( const SListener &listener )
