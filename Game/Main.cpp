@@ -15,6 +15,7 @@
 #include "..\Main\GResource.h" // CRAP for lack of anything better, there should actually be version support
 #include "..\Main\iInterMission.h" // CRAP, to start from mission
 #include "../Main/iOptionsMenu.h"
+#include "../Main/iHeroMenu.h"
 #include "..\Main\iLoading.h"      // NGame::InitLoadingScreen / TermLoadingScreen -- loading-screen UI built once at boot
 #include "..\Misc\HPTimer.h"       // NHPTimer::UpdateHPTimerFrequency -- the per-frame TSC recalibration
 #include "..\Misc\RandomGen.h"     // [HARNESS] deterministic ISAAC seed for paired architecture tests
@@ -589,6 +590,8 @@ static void HarnessProjectPoint(const string& command) {
 }
 static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
   if (!IsValid(window) || !window->GetStyle(NUI::STYLE_VISIBLE) || depth > 8) return;
+  const string heroSelection = NUI::HeroSelectionForDiagnostics(window);
+  if (!heroSelection.empty()) SaveLoadDiag("%s", heroSelection.c_str());
   NUI::SPoint pos;
   NUI::SRect clip;
   if (window->ClientToScreen(&pos,&clip)) {

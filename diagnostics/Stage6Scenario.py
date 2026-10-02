@@ -209,6 +209,22 @@ def run_step(step):
             assert leader_inventory(before_text)==leader_inventory(after_text),('leader inventory changed',leader)
         assert not any(int(row['item'])==options['item'] and row['place']=='hand'
                        for row in records(after_text,'bug-item')),('transfer left item on cursor',options)
+    elif 'hero_selection' in step:
+        options=step['hero_selection']
+        metrics=records(command('displaystatus'),'display')
+        screen=next(row['pixels'] for row in metrics if 'pixels' in row)
+        width,height=map(int,screen.split('x'))
+        # Authored points lie on the rendered figures, independent of button bounds
+        # and UI scale. Clicking the reported control bounds would hide this bug.
+        x,y=options['scene_point']
+        projection_scale=height/768
+        input_action('click',width/2+(x-512)*projection_scale,y*projection_scale)
+        tree=command('displaytree')
+        selected=records(tree,'hero-selection')
+        assert len(selected)==1,('hero menu selection unavailable',tree)
+        assert int(selected[0]['pers'])==options['pers'],('wrong hero selected',options,selected)
+        assert int(selected[0]['nationality'])==options['nationality'],('wrong nationality',options,selected)
+        assert re.search(r'id=play .*enabled=1',tree),('next must be enabled',tree)
     elif 'command' in step: print(command(step['command']),flush=True)
     elif 'click_world' in step:
         options=step['click_world']

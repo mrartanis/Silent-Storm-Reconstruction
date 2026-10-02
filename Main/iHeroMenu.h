@@ -5,6 +5,11 @@
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "iMain.h"
+namespace NUI
+{
+	class CWindow;
+	string HeroSelectionForDiagnostics( CWindow* window );
+}
 namespace NDb
 {
 	class CSide;

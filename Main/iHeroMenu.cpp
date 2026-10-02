@@ -18,6 +18,7 @@
 #include "iRenderWorld.h"
 #include "iCommonUI.h"
 #include "iDesktopWindow.h"
+#include "DisplayLayout.h"
 #include "iGlobalMap.h"
 #include "..\Misc\StrProc.h"
 #include "..\MiscDll\Commands.h"
@@ -58,7 +59,33 @@ public:
 	CScriptButton( const SWindowInfo &sInfo, NGame::CRenderBaseInterface *pInterface, NDb::CString *pToolTip );
 
 	void Draw( const STime &sTime, NGScene::I2DGameView *pView );
+	const SPoint& GetPosition() const override;
+	const SPoint& GetSize() const override;
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// These invisible buttons cover authored 3D figures. Hor+ keeps their vertical
+// projection fixed, independently of the user's UI scale and edge anchors.
+static SRect HeroPortraitRect( const SPoint& position, const SPoint& size )
+{
+	const auto& display = S2Platform::Display();
+	const float scale = display.pixelHeight / 768.0f;
+	const float offset = (display.pixelWidth - 1024.0f * scale) * 0.5f;
+	const auto x = [&](int value) { return int(std::lround((offset + value * scale) / display.uiScale)); };
+	const auto y = [&](int value) { return int(std::lround(value * scale / display.uiScale)); };
+	return SRect(x(position.x), y(position.y), x(position.x + size.x), y(position.y + size.y));
+}
+const SPoint& CScriptButton::GetPosition() const
+{
+	const SRect rect = HeroPortraitRect(GetAuthoredPosition(), GetAuthoredSize());
+	sLayoutPosition = SPoint(rect.x1, rect.y1);
+	return sLayoutPosition;
+}
+const SPoint& CScriptButton::GetSize() const
+{
+	const SRect rect = HeroPortraitRect(GetAuthoredPosition(), GetAuthoredSize());
+	sLayoutSize = SPoint(rect.Width(), rect.Height());
+	return sLayoutSize;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CScriptButton::CScriptButton( const SWindowInfo &sInfo, NGame::CRenderBaseInterface *_pInterface ):
 	CButton( sInfo ), pInterface( _pInterface ), bHoverNotify( false )
@@ -245,6 +272,19 @@ void CHeroMenuUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
 	pPlay->SetStyle( STYLE_ENABLED, IsValid( pSelectedPers ) );
 	CDesktopWindow::Draw( sTime, pView );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+string HeroSelectionForDiagnostics( CWindow* window )
+{
+	auto* menu = dynamic_cast<CHeroMenuUI*>(window);
+	if (!menu) return string();
+	NDb::CRPGPers* pers = menu->GetPers();
+	NDb::CNationality* nationality = menu->GetNationality();
+	char state[160];
+	snprintf(state, sizeof(state), "[hero-selection] pers=%d nationality=%d\n",
+		IsValid(pers) ? pers->GetRecordID() : -1,
+		IsValid(nationality) ? nationality->GetRecordID() : -1);
+	return state;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // NAMESPACE
