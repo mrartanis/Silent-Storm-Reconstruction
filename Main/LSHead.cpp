@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "LSHead.h"
 #include "GResource.h"
 #include "HeadResourceData.h"
@@ -269,6 +270,7 @@ void CHeadAnimator::SetHeadTransformInfo( CHeadTransformInfo *p )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CHeadAnimator::NeedUpdate()
 {
+	if (S2Perf::Get().freezeFaces && IsValid(pValue)) return false;
 	// release @0x264e40: headChanged | (timeChanged & !bDeathMask), with a bare time tick suppressed
 	// when there is nothing to animate (no playing sequences AND idle mode off) -- a quiescent head
 	// stops recomputing; the CIdleHead token flipping eIdleType back on re-awakens it.
@@ -364,6 +366,7 @@ void CHeadAnimator::SetIdleType( EIdleType e )
 // (the CreateLSHead CMSRNode) places it, exactly like retail.
 void CHeadAnimator::Recalc()
 {
+	S2Perf::Scope perf(S2Perf::Head);
 	CHeadMeshInfo *pMesh = pHead->GetValue();
 	if ( !pMesh )
 		return;   // dev CFaceGenMeshHolder can publish null on a failed rebake (retail's blocking loader cannot); pValue stays null -> the RefreshObjectInfo wait re-Recalcs
@@ -836,6 +839,7 @@ void CHeadTransformInfo::SetMMTension( const string &name, float value )
 // flag; when true the DG bumps our version and the mesh/texture transformers re-bake.
 bool CHeadTransformInfo::NeedUpdate()
 {
+	if (S2Perf::Get().freezeFaces && !bTensionUpdated) return false;
 	bool bTimeChanged = IsValid( pTime ) ? pTime.Refresh() : false;
 	return bTimeChanged | bTensionUpdated;
 }
@@ -847,6 +851,7 @@ bool CHeadTransformInfo::NeedUpdate()
 // the mesh IAnimators instead -- see the LSHead.h banner.)
 void CHeadTransformInfo::Recalc()
 {
+	S2Perf::Scope perf(S2Perf::Morph);
 	// retail @0x660000: drive the per-instance transformer from the slider tensions, then Generate() the
 	// morphed GDP geometry into value.pAnimator (which CHeadAnimator::Recalc renders).
 	if ( !bMorphBuilt )
@@ -1112,6 +1117,7 @@ bool CHeadTextureTransformer::NeedUpdate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CHeadTextureTransformer::Recalc()
 {
+	S2Perf::Scope perf(S2Perf::Texture);
 	if ( !IsValid( pTransformInfo ) )
 		return;
 	LifeStudioHeadAPI::IAnimator *pW = pTransformInfo->GetTexWeightSource();

@@ -115,7 +115,15 @@ void MakeScreenShot(CArray2D<SPixel8888>* output, bool correctGamma) {
   std::vector<unsigned char> pixels;
   unsigned width = 0, height = 0;
   if (pDevice) pDevice->Screenshot(&pixels, &width, &height);
-  output->SetSizes(width ? width : 1, height ? height : 1);
+  // A save thumbnail bilinearly samples neighbouring pixels. A renderer
+  // failure must produce an initialized image with valid neighbours, not 1x1.
+  if(!width || !height || pixels.size()<size_t(width)*height*4) {
+    output->SetSizes(Max(2,videoMode.nXSize),Max(2,videoMode.nYSize));
+    for(int y=0;y<output->GetYSize();++y)for(int x=0;x<output->GetXSize();++x)
+      (*output)[y][x]=SPixel8888(0,0,0,255);
+    return;
+  }
+  output->SetSizes(width,height);
   for (unsigned y = 0; y < height; ++y) memcpy(&(*output)[y][0], pixels.data() + y * width * 4, width * 4);
   if (correctGamma && gammaEnabled) {
     float gamma = Max(0.1f, NGlobal::GetVar("gfx_gamma", 1).GetFloat());

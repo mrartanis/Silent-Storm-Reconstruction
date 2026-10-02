@@ -230,7 +230,7 @@ public:
 		}
 	}
 
-	unsigned char* Lock() { pDX->Lock( dwNextLockFlags ); dwNextLockFlags = dwLockFlags; return pDX->pLocked; }
+	unsigned char* Lock(int start, int count) { pDX->Lock(dwNextLockFlags); dwNextLockFlags=dwLockFlags; pDX->obj->MarkWritten(start*nStride,count*nStride); return pDX->pLocked; }
 	void Unlock() { pDX->Unlock(); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,7 +255,7 @@ public:
 	virtual void* Lock()
 	{
 		++nLocked;
-		return pBuffer->Lock() + pBuffer->GetStride() * nStart;
+		return pBuffer->Lock(nStart,nBufSize) + pBuffer->GetStride() * nStart;
 	}
 	virtual void Unlock() { if ( nLocked == 0 ) return; --nLocked; pBuffer->Unlock(); }
 };
@@ -996,6 +996,7 @@ public:
 				nToDraw = Min( nBuf - nLast, nTris );
 			}
 			pDynamicTrisBuffer->Lock( dwFlags );
+			pDynamicTrisBuffer->obj->MarkWritten(nLast*sizeof(S32Triangle),nToDraw*sizeof(S32Triangle));
 			S32Triangle *pTri = (S32Triangle*)pDynamicTrisBuffer->pLocked;
 			pTri += nLast;
 			ReallyFastShiftingTransfer( (const unsigned short*)&pSrcTris[ nSrcStart ], (int*)pTri, nToDraw * 3, nVBStart );
@@ -1059,7 +1060,8 @@ public:
 				break;
 			}
 		}
-		nLast = ( nLast + 1 ) & ~1;
+		// 32-bit indices already align every triangle. Keep adjacent draw ranges
+		// contiguous so the backend can combine unchanged materials and state.
 		if ( nBuf - nLast < N_MIN_BATCH_SIZE )
 			nLast = nBuf;
 		nMaxVBIndex = 0;
@@ -1123,6 +1125,7 @@ public:
 				nToDraw = Min( nBuf - nLast, nTris );
 			}
 			pDynamicTrisBuffer->Lock( dwFlags );
+			pDynamicTrisBuffer->obj->MarkWritten(nLast*sizeof(S3DTriangle),nToDraw*sizeof(S3DTriangle));
 			S3DTriangle *pTri = (S3DTriangle*)pDynamicTrisBuffer->pLocked;
 			pTri += nLast;
 			// fill tris from source

@@ -1,3 +1,4 @@
+#include "../../../diagnostics/FrameProfiler.h"
 // Partial native x64 LifeStudio bridge. Original streams and macro-muscle
 // effects run without the x86 DLL; local-X/Y/Z bone channels are decoded,
 // but full vertex parity remains incomplete.
@@ -197,6 +198,7 @@ public:
   bool FillUnused() const { return fillUnused; }
   bool Process(float *output, int step)
   {
+    S2Perf::Scope perf(S2Perf::FaceProcess);
     if (!loaded || !output || step < 3 || step > 1024)
       return false;
     int neckParent = -1;
@@ -505,6 +507,7 @@ public:
   void MultMacroMuscle(IMacroMuscle *, float) {}
   void ComputePhysics()
   {
+    S2Perf::Scope perf(S2Perf::FacePhysics);
     if (!loaded) return;
     for (std::size_t i = 0; i < head.bones.size(); ++i)
       for (int axis = 0; axis < 3; ++axis)
@@ -653,6 +656,7 @@ public:
   IAnimator *OutputAnimator() const { return output; }
   void Generate()
   {
+    S2Perf::Scope perf(S2Perf::FaceGenerate);
     if (!loaded || !computed || !output || !rootMacro ||
         !rootMacro->root || !rootMacro->bytes || rootMacro->bytes->empty()) return;
     ClearUserItems();
@@ -683,12 +687,16 @@ public:
     for (const auto &slider : sliders)
       controls.emplace_back(slider.first->name, slider.second);
     std::vector<float> weights;
+    { S2Perf::Scope phase(S2Perf::FaceSelect);
     if (!NativeLifeStudio::SelectGameFaceGenWeights(
             rootMacro->bytes->data(), rootMacro->bytes->size(),
             *rootMacro->root, controls, &weights)) return;
+    }
     NativeLifeStudio::HeadData animationBase, morphBase, generated;
+    { S2Perf::Scope phase(S2Perf::FaceBlend);
     if (!NativeLifeStudio::BlendFaceGenAnimationHead(faceGen, weights, &animationBase) ||
         !NativeLifeStudio::BlendFaceGenMorphHead(faceGen, weights, &morphBase)) return;
+    }
     AnimatorStub morph;
     if (!morph.AssignHead(morphBase)) return;
     for (const auto &slider : sliders)
@@ -700,9 +708,11 @@ public:
     for (std::size_t vertex = 0; vertex < processed.size(); ++vertex)
       for (int axis = 0; axis < 3; ++axis)
         processed[vertex][axis] = positions[vertex * 3 + axis];
+    { S2Perf::Scope phase(S2Perf::FaceCompose);
     if (!NativeLifeStudio::ComposeFaceGenOutputHead(
             animationBase, morphBase, processed, &generated)) return;
     output->AssignHead(generated);
+    }
   }
 };
 
@@ -823,6 +833,7 @@ public:
   int EnumerateSounds(int, SOUND_TIME_CB, void *) { return 0; }
   void RenderMacroMuscles(IAnimator *animator, int time)
   {
+    S2Perf::Scope perf(S2Perf::FaceSequence);
     if (!loaded || !tree || !animator || time < 0 ||
         static_cast<std::uint32_t>(time) >= header.duration)
       return;

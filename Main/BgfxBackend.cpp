@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #undef for
 #include "BgfxBackend.h"
 #include "GfxShaders.h"
@@ -14,10 +15,16 @@
 #include <limits>
 #include <stdexcept>
 #include <cstdio>
+#include <cstdlib>
+#include <tuple>
+#include <set>
+#include <functional>
 
 namespace NGfx {
 namespace {
 unsigned activeEpoch = 0, nextEpoch = 0;
+uint64_t geometryFrame = 1;
+std::function<void()> drawBarrier;
 uint32_t DisplayResetFlags() {
   uint32_t flags = BGFX_RESET_NONE;
   if (NGlobal::GetVar("gfx_vsync", 1).GetInt()) flags |= BGFX_RESET_VSYNC;
@@ -169,13 +176,185 @@ HRESULT BgfxTexture::GetCubeMapSurface(D3DCUBEMAP_FACES face,unsigned level,Bgfx
   if (!out || !storage->cube || unsigned(face)>=6 || level>=storage->levels) return E_INVALIDARG;
   *out=new BgfxSurface(storage,level,face);return S_OK;
 }
-BgfxBuffer::BgfxBuffer(unsigned size,bool wide) : bytes(size),index32(wide) {}
-HRESULT BgfxBuffer::Lock(unsigned offset,unsigned size,void** out,DWORD) {
-  if (!out || offset>bytes.size() || (size && size>bytes.size()-offset)) return E_INVALIDARG;
-  *out=bytes.data()+offset; return S_OK;
+// Immutable draw contents over mutable legacy pools. Updates to bgfx dynamic
+// buffers execute before draws, so overlapping writes within a frame must rename
+// the GPU bank rather than change data already referenced by an earlier draw.
+namespace {
+constexpr unsigned DirtyPage=256, VertexBlock=128, IndexBlock=256;
+struct GPUBlock {
+  uint64_t version=0, frame=0;
+  unsigned usedFirst=UINT32_MAX, usedEnd=0;
+  bool pending=false;
+};
+struct VertexBank;
+struct IndexBank;
+std::set<VertexBank*> vertexBanks;
+std::set<IndexBank*> indexBanks;
+struct VertexBank {
+  unsigned epoch=0, stride=0, offset=0, count=0;
+  bgfx::DynamicVertexBufferHandle handle=BGFX_INVALID_HANDLE;
+  std::vector<GPUBlock> blocks;
+  std::vector<unsigned char> shadow;
+  NWin32Helper::com_ptr<BgfxDeclaration> declaration;
+  VertexBank() { vertexBanks.insert(this); }
+  void Flush() {
+    if(epoch!=activeEpoch || !bgfx::isValid(handle))return;
+    S2Perf::Scope perf(S2Perf::GPUUpload);
+    for(unsigned i=0;i<blocks.size();) {
+      if(!blocks[i].pending) {++i;continue;}
+      unsigned first=i*VertexBlock;
+      do {blocks[i++].pending=false;}while(i<blocks.size() && blocks[i].pending);
+      unsigned end=std::min(i*VertexBlock,count),size=(end-first)*declaration->gpuLayout.getStride();
+      const auto* memory=bgfx::alloc(size);
+      declaration->CopyVertices(memory->data,shadow.data()+first*stride,end-first);
+      bgfx::update(handle,first,memory);
+      if(S2Perf::Get().file) {++S2Perf::Get().gpuVBUpdates;S2Perf::Get().gpuUploadBytes+=size;}
+    }
+  }
+  ~VertexBank() { if(epoch==activeEpoch && drawBarrier)drawBarrier();Flush();vertexBanks.erase(this);if(epoch && epoch==activeEpoch && bgfx::isValid(handle))bgfx::destroy(handle); }
+};
+struct IndexBank {
+  unsigned epoch=0,stride=0,count=0;
+  bgfx::DynamicIndexBufferHandle handle=BGFX_INVALID_HANDLE;
+  std::vector<GPUBlock> blocks;
+  std::vector<unsigned char> shadow;
+  IndexBank() { indexBanks.insert(this); }
+  void Flush() {
+    if(epoch!=activeEpoch || !bgfx::isValid(handle))return;
+    S2Perf::Scope perf(S2Perf::GPUUpload);
+    for(unsigned i=0;i<blocks.size();) {
+      if(!blocks[i].pending) {++i;continue;}
+      unsigned first=i*IndexBlock;
+      do {blocks[i++].pending=false;}while(i<blocks.size() && blocks[i].pending);
+      unsigned end=std::min(i*IndexBlock,count),size=(end-first)*stride;
+      bgfx::update(handle,first,bgfx::copy(shadow.data()+first*stride,size));
+      if(S2Perf::Get().file) {++S2Perf::Get().gpuIBUpdates;S2Perf::Get().gpuUploadBytes+=size;}
+    }
+  }
+  ~IndexBank() { if(epoch==activeEpoch && drawBarrier)drawBarrier();Flush();indexBanks.erase(this);if(epoch && epoch==activeEpoch && bgfx::isValid(handle))bgfx::destroy(handle); }
+};
+void FlushGeometry() {
+  for(auto* bank:vertexBanks)bank->Flush();
+  for(auto* bank:indexBanks)bank->Flush();
 }
-HRESULT BgfxBuffer::Unlock() { return S_OK; }
+void Used(GPUBlock& block,unsigned first,unsigned end) {
+  if(block.frame!=geometryFrame) { block.frame=geometryFrame;block.usedFirst=first;block.usedEnd=end; }
+  else { block.usedFirst=std::min(block.usedFirst,first);block.usedEnd=std::max(block.usedEnd,end); }
+}
+}
+struct BgfxBuffer::GPUStorage {
+  unsigned epoch=0;
+  std::map<std::tuple<uint64_t,unsigned,unsigned>,std::unique_ptr<VertexBank>> vertices;
+  std::unique_ptr<IndexBank> indices;
+};
+BgfxBuffer::BgfxBuffer(unsigned size,bool wide)
+  :gpu(new GPUStorage),versions((size+DirtyPage-1)/DirtyPage,1),bytes(size),index32(wide) {}
+BgfxBuffer::~BgfxBuffer() = default;
+uint64_t BgfxBuffer::Version(unsigned first,unsigned end) const {
+  uint64_t result=0;
+  for(unsigned p=first/DirtyPage;p<(end+DirtyPage-1)/DirtyPage;++p)result=std::max(result,versions[p]);
+  return result;
+}
+HRESULT BgfxBuffer::Lock(unsigned offset,unsigned size,void** out,DWORD flags) {
+  if(!out || locked || offset>bytes.size() || (size && size>bytes.size()-offset))return E_INVALIDARG;
+  lockOffset=offset;lockSize=size?size:unsigned(bytes.size())-offset;
+  locked=true;trackedWrite=false;readOnly=(flags&D3DLOCK_READONLY)!=0;
+  *out=bytes.data()+offset;return S_OK;
+}
+void BgfxBuffer::MarkWritten(unsigned offset,unsigned size) {
+  if(!locked || readOnly || offset<lockOffset || offset>lockOffset+lockSize || size>lockOffset+lockSize-offset)
+    throw std::runtime_error("Invalid tracked geometry write");
+  trackedWrite=true;
+  if(!size)return;
+  ++writeVersion;
+  for(unsigned p=offset/DirtyPage;p<(offset+size+DirtyPage-1)/DirtyPage;++p)versions[p]=writeVersion;
+}
+HRESULT BgfxBuffer::Unlock() {
+  if(!locked)return E_INVALIDARG;
+  if(!readOnly && !trackedWrite)MarkWritten(lockOffset,lockSize);
+  locked=false;return S_OK;
+}
+bgfx::DynamicVertexBufferHandle BgfxBuffer::VertexGPU(const BgfxDeclaration& d,unsigned offset,
+                                                    unsigned stride,unsigned first,unsigned count) {
+  S2Perf::Scope perf(S2Perf::GPUUpload);
+  if(!activeEpoch || locked || !stride || stride!=d.layout.getStride() || offset>bytes.size() ||
+     uint64_t(first)+count>(bytes.size()-offset)/stride)throw std::runtime_error("Invalid GPU vertex range");
+  if(gpu->epoch!=activeEpoch) { gpu.reset(new GPUStorage);gpu->epoch=activeEpoch; }
+  auto key=std::make_tuple(d.identity,offset,stride);auto& entry=gpu->vertices[key];
+  if(!entry) {
+    entry.reset(new VertexBank);entry->epoch=activeEpoch;entry->offset=offset;entry->stride=stride;
+    entry->declaration=const_cast<BgfxDeclaration*>(&d);
+    entry->count=unsigned((bytes.size()-offset)/stride);
+    entry->blocks.resize((entry->count+VertexBlock-1)/VertexBlock);
+    entry->shadow.resize(entry->count*stride);
+  }
+  auto& bank=*entry;
+  auto rename=[&]() {
+    if(bgfx::isValid(bank.handle)) {if(drawBarrier)drawBarrier();bank.Flush();bgfx::destroy(bank.handle);}
+    bank.handle=bgfx::createDynamicVertexBuffer(bank.count,d.gpuLayout);
+    if(!bgfx::isValid(bank.handle))throw std::runtime_error("GPU vertex buffer allocation failed");
+    std::fill(bank.blocks.begin(),bank.blocks.end(),GPUBlock{});
+    if(S2Perf::Get().file)++S2Perf::Get().gpuRenames;
+  };
+  if(!bgfx::isValid(bank.handle))rename();
+  const unsigned end=first+count, lastBlock=(end+VertexBlock-1)/VertexBlock;
+  for(unsigned i=first/VertexBlock;i<lastBlock;++i) {
+    const auto& block=bank.blocks[i];
+    unsigned begin=i*VertexBlock, finish=std::min(begin+VertexBlock,bank.count);
+    if(block.frame==geometryFrame && block.version!=Version(offset+begin*stride,offset+finish*stride) &&
+       std::memcmp(bytes.data()+offset+block.usedFirst*stride,bank.shadow.data()+block.usedFirst*stride,
+                   (block.usedEnd-block.usedFirst)*stride)!=0) { rename();break; }
+  }
+  for(unsigned i=first/VertexBlock;i<lastBlock;++i) {
+    auto& block=bank.blocks[i];unsigned begin=i*VertexBlock, finish=std::min(begin+VertexBlock,bank.count);
+    uint64_t version=Version(offset+begin*stride,offset+finish*stride);
+    if(block.version!=version) {
+      std::memcpy(bank.shadow.data()+begin*stride,bytes.data()+offset+begin*stride,(finish-begin)*stride);
+      block.version=version;block.pending=true;
+    }
+    Used(block,std::max(first,begin),std::min(end,finish));
+  }
+  return bank.handle;
+}
+bgfx::DynamicIndexBufferHandle BgfxBuffer::IndexGPU(unsigned first,unsigned count) {
+  S2Perf::Scope perf(S2Perf::GPUUpload);
+  const unsigned stride=index32?4:2, capacity=unsigned(bytes.size()/stride), end=first+count;
+  if(!activeEpoch || locked || uint64_t(first)+count>capacity)throw std::runtime_error("Invalid GPU index range");
+  if(gpu->epoch!=activeEpoch) { gpu.reset(new GPUStorage);gpu->epoch=activeEpoch; }
+  if(!gpu->indices) {
+    gpu->indices.reset(new IndexBank);gpu->indices->epoch=activeEpoch;
+    gpu->indices->stride=stride;gpu->indices->count=capacity;
+    gpu->indices->blocks.resize((capacity+IndexBlock-1)/IndexBlock);gpu->indices->shadow.resize(bytes.size());
+  }
+  auto& bank=*gpu->indices;
+  auto rename=[&]() {
+    if(bgfx::isValid(bank.handle)) {if(drawBarrier)drawBarrier();bank.Flush();bgfx::destroy(bank.handle);}
+    bank.handle=bgfx::createDynamicIndexBuffer(capacity,index32?BGFX_BUFFER_INDEX32:BGFX_BUFFER_NONE);
+    if(!bgfx::isValid(bank.handle))throw std::runtime_error("GPU index buffer allocation failed");
+    std::fill(bank.blocks.begin(),bank.blocks.end(),GPUBlock{});
+    if(S2Perf::Get().file)++S2Perf::Get().gpuRenames;
+  };
+  if(!bgfx::isValid(bank.handle))rename();
+  const unsigned lastBlock=(end+IndexBlock-1)/IndexBlock;
+  for(unsigned i=first/IndexBlock;i<lastBlock;++i) {
+    const auto& block=bank.blocks[i];unsigned begin=i*IndexBlock,finish=std::min(begin+IndexBlock,capacity);
+    if(block.frame==geometryFrame && block.version!=Version(begin*stride,finish*stride) &&
+       std::memcmp(bytes.data()+block.usedFirst*stride,bank.shadow.data()+block.usedFirst*stride,
+                   (block.usedEnd-block.usedFirst)*stride)!=0) { rename();break; }
+  }
+  for(unsigned i=first/IndexBlock;i<lastBlock;++i) {
+    auto& block=bank.blocks[i];unsigned begin=i*IndexBlock,finish=std::min(begin+IndexBlock,capacity);
+    uint64_t version=Version(begin*stride,finish*stride);
+    if(block.version!=version) {
+      unsigned size=(finish-begin)*stride;
+      std::memcpy(bank.shadow.data()+begin*stride,bytes.data()+begin*stride,size);block.version=version;block.pending=true;
+    }
+    Used(block,std::max(first,begin),std::min(end,finish));
+  }
+  return bank.handle;
+}
 BgfxDeclaration::BgfxDeclaration(const D3DVERTEXELEMENT9* elements) {
+  static std::atomic<uint64_t> nextIdentity{0}; identity=++nextIdentity;
   layout.begin();
   gpuLayout.begin();
   unsigned offset=0;
@@ -203,26 +382,51 @@ BgfxDeclaration::BgfxDeclaration(const D3DVERTEXELEMENT9* elements) {
   }
   layout.end();
   gpuLayout.end();
+  for(unsigned a=0;a<bgfx::Attrib::Count;++a) {
+    const auto attr=bgfx::Attrib::Enum(a); if(!layout.has(attr))continue;
+    uint8_t n; bgfx::AttribType::Enum type; bool normalized,asInt;
+    layout.decode(attr,n,type,normalized,asInt);
+    attributes.push_back({layout.getOffset(attr),gpuLayout.getOffset(attr),n,type});
+  }
 }
 void BgfxDeclaration::CopyVertices(void* output,const void* input,unsigned count) const {
-  memset(output,0,count*gpuLayout.getStride());
-  for(unsigned vertex=0;vertex<count;++vertex) for(unsigned a=0;a<bgfx::Attrib::Count;++a) {
-    auto attr=bgfx::Attrib::Enum(a);
-    if(!layout.has(attr))continue;
-    float value[4]={0,0,0,1};bgfx::vertexUnpack(value,attr,layout,input,vertex);
-    uint8_t components;bgfx::AttribType::Enum type;bool normalized,asInteger;
-    layout.decode(attr,components,type,normalized,asInteger);
-    if(type==bgfx::AttribType::Int16) {
-      const auto* packed=reinterpret_cast<const int16_t*>(static_cast<const unsigned char*>(input)+vertex*layout.getStride()+layout.getOffset(attr));
-      for(unsigned component=0;component<components;++component)value[component]=float(packed[component]);
+  S2Perf::Scope perf(S2Perf::VertexPack);
+  if(S2Perf::Get().file) { S2Perf::Get().packedVertices+=count; S2Perf::Get().packedBytes+=count*gpuLayout.getStride(); }
+  auto* dst=static_cast<unsigned char*>(output);
+  const auto* src=static_cast<const unsigned char*>(input);
+  // Every destination attribute is a tightly packed float tuple; no holes.
+  for(unsigned vertex=0;vertex<count;++vertex) {
+    for(const auto& attr:attributes) {
+      const auto* packed=src+attr.input; auto* unpacked=dst+attr.output;
+      if(attr.type==bgfx::AttribType::Float) std::memcpy(unpacked,packed,attr.components*4);
+      else {
+        float value[4];
+        if(attr.type==bgfx::AttribType::Int16) {
+          for(unsigned c=0;c<attr.components;++c) { int16_t n;std::memcpy(&n,packed+c*2,2);value[c]=float(n); }
+        } else {
+          for(unsigned c=0;c<attr.components;++c)value[c]=float(packed[c])*1.0f/255.0f;
+          std::swap(value[0],value[2]);
+        }
+        std::memcpy(unpacked,value,attr.components*4);
+      }
     }
-    if(type==bgfx::AttribType::Uint8)std::swap(value[0],value[2]);
-    bgfx::vertexPack(value,false,attr,gpuLayout,output,vertex);
+    src+=layout.getStride();dst+=gpuLayout.getStride();
   }
 }
 
 struct BgfxDevice::Impl {
   bool initialized=false,healthy=true;
+  bool persistentGeometry=std::getenv("S2_GEOMETRY_TRANSIENT")==nullptr;
+  bool batchGeometry=std::getenv("S2_GEOMETRY_NO_BATCH")==nullptr;
+  struct PendingDraw {
+    bool valid=false,indexed=false;
+    bgfx::DynamicVertexBufferHandle vb=BGFX_INVALID_HANDLE;
+    bgfx::DynamicIndexBufferHandle ib=BGFX_INVALID_HANDLE;
+    unsigned vertexStart=0,vertexCount=0,indexStart=0,indexCount=0;
+    D3DPRIMITIVETYPE primitive=D3DPT_TRIANGLELIST;
+    bgfx::ViewId view=0;
+    bgfx::ProgramHandle program=BGFX_INVALID_HANDLE;
+  } pending;
   unsigned width=0,height=0;
   uint32_t resetFlags=0;
   bgfx::ViewId nextView=0,currentView=0;
@@ -239,8 +443,13 @@ struct BgfxDevice::Impl {
   DWORD sampler[8][16]{};
   std::map<uint64_t,bgfx::ShaderHandle> shaders;
   std::map<uint64_t,bgfx::ProgramHandle> programs;
-  std::vector<bgfx::FrameBufferHandle> frameBuffers;
-  std::vector<NWin32Helper::com_ptr<BgfxSurface>> frameSurfaces;
+  using TargetKey=std::tuple<unsigned,unsigned,unsigned,unsigned,unsigned,unsigned>;
+  struct Target {
+    bgfx::FrameBufferHandle handle=BGFX_INVALID_HANDLE;
+    NWin32Helper::com_ptr<BgfxSurface> color,depth;
+    uint64_t used=0;
+  };
+  std::map<TargetKey,Target> targets;
   bgfx::UniformHandle uVertex=BGFX_INVALID_HANDLE,uPixel=BGFX_INVALID_HANDLE,uAlpha=BGFX_INVALID_HANDLE;
   bgfx::UniformHandle uProjection=BGFX_INVALID_HANDLE,uPresent=BGFX_INVALID_HANDLE;
   bgfx::UniformHandle uRaster=BGFX_INVALID_HANDLE;
@@ -257,7 +466,8 @@ struct BgfxDevice::Impl {
       stage[D3DSAMP_MAGFILTER]=stage[D3DSAMP_MINFILTER]=stage[D3DSAMP_MIPFILTER]=D3DTEXF_LINEAR; }
   }
   HRESULT Fail(const char* message) {
-    healthy=false;fprintf(stderr,"bgfx game renderer: %s\n",message);OutputDebugStringA(message);return E_FAIL;
+    if(healthy) {fprintf(stderr,"bgfx game renderer: %s (views=%u, cached targets=%zu)\n",message,nextView,targets.size());OutputDebugStringA(message);}
+    pending.valid=false;healthy=false;return E_FAIL;
   }
   bgfx::ShaderHandle Shader(int id,bool vertex,int mask=0) {
     unsigned available=0;
@@ -282,18 +492,33 @@ struct BgfxDevice::Impl {
     if(!bgfx::isValid(handle)) throw std::runtime_error("bgfx game shader link failed");
     programs[key]=handle;return handle;
   }
+  bgfx::FrameBufferHandle Frame(BgfxSurface* c,BgfxSurface* d=nullptr) {
+    TargetKey key=std::make_tuple(c->storage->handle.idx,c->face,c->level,
+      d?unsigned(d->storage->handle.idx):unsigned(UINT16_MAX),d?d->face:0,d?d->level:0);
+    auto found=targets.find(key);
+    if(found==targets.end()) {
+      bgfx::Attachment attachments[2];
+      attachments[0].init(c->storage->handle,bgfx::Access::Write,c->face,1,c->level,0);
+      if(d)attachments[1].init(d->storage->handle,bgfx::Access::Write,d->face,1,d->level,0);
+      auto handle=bgfx::createFrameBuffer(d?2:1,attachments,false);
+      if(!bgfx::isValid(handle))throw std::runtime_error("bgfx render target creation failed");
+      Target target;target.handle=handle;target.color=c;target.depth=d;
+      found=targets.emplace(key,std::move(target)).first;
+      if(S2Perf::Get().file)++S2Perf::Get().framebufferCreates;
+    }
+    found->second.used=geometryFrame;return found->second.handle;
+  }
+  void ClearTargets() {
+    for(const auto& target:targets)bgfx::destroy(target.second.handle);
+    targets.clear();
+  }
   bgfx::ViewId View() {
     if(!viewDirty) return currentView;
     if(nextView>=2045) throw std::runtime_error("Game exceeded ordered render-pass limit");
     if(!color || !depth) throw std::runtime_error("Render pass without color/depth surface");
     currentView=nextView++;
-    const auto& c=*color->storage;const auto& d=*depth->storage;
-    bgfx::Attachment attachments[2];
-    attachments[0].init(c.handle,bgfx::Access::Write,color->face,1,color->level,0);
-    attachments[1].init(d.handle,bgfx::Access::Write,depth->face,1,depth->level,0);
-    auto frame=bgfx::createFrameBuffer(2,attachments,false);
-    if(!bgfx::isValid(frame)) throw std::runtime_error("bgfx render target creation failed");
-    frameBuffers.push_back(frame);frameSurfaces.push_back(color);frameSurfaces.push_back(depth);
+    const auto& c=*color->storage;
+    auto frame=Frame(color,depth);
     bgfx::setViewFrameBuffer(currentView,frame);
     bgfx::setViewRect(currentView,0,0,c.Width(color->level),c.Height(color->level));
     bgfx::setViewMode(currentView,bgfx::ViewMode::Sequential);
@@ -302,8 +527,42 @@ struct BgfxDevice::Impl {
     return currentView;
   }
   void EndFrame() {
-    for(auto frame:frameBuffers) bgfx::destroy(frame);
-    frameBuffers.clear();frameSurfaces.clear();nextView=0;viewDirty=true;viewUsed=false;
+    // View IDs encode ordering; an attachment set needs just one framebuffer.
+    // Retire targets absent from this frame so old scenes do not stay pinned.
+    for(auto it=targets.begin();it!=targets.end();) {
+      if(it->second.used!=geometryFrame) {bgfx::destroy(it->second.handle);it=targets.erase(it);}
+      else ++it;
+    }
+    ++geometryFrame;
+    nextView=0;viewDirty=true;viewUsed=false;
+  }
+  void FlushDraw() {
+    if(!pending.valid)return;
+    bgfx::setVertexBuffer(0,pending.vb,pending.vertexStart,pending.vertexCount);
+    if(pending.indexed)bgfx::setIndexBuffer(pending.ib,pending.indexStart,pending.indexCount);
+    Apply(pending.primitive);bgfx::submit(pending.view,pending.program);
+    pending.valid=false;
+  }
+  void QueueDraw(bgfx::DynamicVertexBufferHandle vb,unsigned first,unsigned count,
+                 D3DPRIMITIVETYPE primitive,bgfx::DynamicIndexBufferHandle ib=BGFX_INVALID_HANDLE,
+                 unsigned indexStart=0,unsigned indexCount=0) {
+    if(primitive!=D3DPT_TRIANGLELIST && primitive!=D3DPT_LINELIST && primitive!=D3DPT_LINESTRIP)
+      throw std::runtime_error("Unsupported game primitive");
+    auto view=View();auto program=Program();bool indexed=bgfx::isValid(ib);
+    bool compatible=pending.valid && pending.indexed==indexed && pending.vb.idx==vb.idx &&
+      pending.primitive==primitive && primitive!=D3DPT_LINESTRIP && pending.view==view && pending.program.idx==program.idx;
+    if(indexed)compatible=compatible && pending.ib.idx==ib.idx && pending.vertexStart==first &&
+      pending.indexStart+pending.indexCount==indexStart;
+    else compatible=compatible && pending.vertexStart+pending.vertexCount==first;
+    if(batchGeometry && compatible) {
+      pending.vertexCount=indexed?std::max(pending.vertexCount,count):pending.vertexCount+count;
+      pending.indexCount+=indexCount;
+      if(S2Perf::Get().file)++S2Perf::Get().drawMerges;
+    } else {
+      FlushDraw();pending={true,indexed,vb,ib,first,count,indexStart,indexCount,primitive,view,program};
+    }
+    viewUsed=true;
+    if(!batchGeometry)FlushDraw();
   }
   void DrawPresentation(bgfx::ViewId view, bgfx::FrameBufferHandle target, bgfx::TextureHandle source, float gamma, bool antialias) {
     struct Vertex {float x,y,z,u,v;};
@@ -382,6 +641,15 @@ bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
   init.swapChain.nwh=window;
   init.swapChain.width=w;init.swapChain.height=h;init.reset=DisplayResetFlags();
   init.limits.maxTransientVbSize=64*1024*1024;init.limits.maxTransientIbSize=16*1024*1024;
+  // Explicit diagnostic override for wide-view stress captures. Default stays 64/16 MiB.
+  if(const char* budget=std::getenv("S2_PERF_TRANSIENT_MB")) {
+    char* end=nullptr; const long mb=std::strtol(budget,&end,10);
+    if(end && !*end && mb>=64 && mb<=512) {
+      init.limits.maxTransientVbSize=unsigned(mb)*1024*1024;
+      init.limits.maxTransientIbSize=unsigned(mb/4)*1024*1024;
+      std::fprintf(stderr,"Diagnostic transient budget: %ld/%ld MiB\n",mb,mb/4);
+    }
+  }
   if(!bgfx::init(init)) { impl->Fail("Cannot initialize bgfx renderer");return false; }
   activeEpoch=++nextEpoch;impl->initialized=true;
   try {
@@ -395,12 +663,15 @@ bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
     impl->presentProgram=bgfx::createProgram(impl->Shader(0,true),impl->Shader(0,false),false);
     if(!bgfx::isValid(impl->presentProgram))throw std::runtime_error("Cannot link presentation shaders");
     fprintf(stderr,"Game renderer: bgfx %s, GPU %04x:%04x\n",bgfx::getRendererName(bgfx::getRendererType()),bgfx::getCaps()->vendorId,bgfx::getCaps()->deviceId);
-    return Resize(w,h);
+    drawBarrier=[this]() {impl->FlushDraw();};return Resize(w,h);
   }catch(const std::exception& e){impl->Fail(e.what());return false;}
 }
 BgfxDevice::~BgfxDevice() {
   if(!impl->initialized)return;
+  impl->FlushDraw();
+  FlushGeometry();
   impl->EndFrame();
+  impl->ClearTargets();
   impl->vertices=0;impl->indices=0;impl->declaration=0;impl->vertexShader=0;impl->pixelShader=0;
   for(auto& t:impl->textures)t=0;
   impl->color=0;impl->depth=0;impl->screenColor=0;impl->screenDepth=0;impl->antialiasedScene=0;
@@ -409,12 +680,12 @@ BgfxDevice::~BgfxDevice() {
   for(auto s:impl->shaders)bgfx::destroy(s.second);
   for(auto uniform:{impl->uVertex,impl->uPixel,impl->uAlpha,impl->uProjection,impl->uPresent,impl->uRaster})if(bgfx::isValid(uniform))bgfx::destroy(uniform);
   for(auto s:impl->samplers)if(bgfx::isValid(s))bgfx::destroy(s);
-  bgfx::shutdown();activeEpoch=0;
+  drawBarrier=nullptr;bgfx::shutdown();activeEpoch=0;
 }
 bool BgfxDevice::Resize(unsigned w,unsigned h) {
   if(!impl->initialized || !w || !h || w>16384 || h>16384)return false;
   try {
-    impl->EndFrame();bgfx::SwapChain swapChain;swapChain.width=w;swapChain.height=h;
+    impl->FlushDraw();FlushGeometry();impl->EndFrame();impl->ClearTargets();bgfx::SwapChain swapChain;swapChain.width=w;swapChain.height=h;
     impl->resetFlags=DisplayResetFlags();
     bgfx::reset(impl->resetFlags,&swapChain);
     impl->width=w;impl->height=h;
@@ -430,30 +701,40 @@ unsigned BgfxDevice::PresentationResetFlags() const {return impl->resetFlags;}
 void BgfxDevice::ApplySceneAntialiasing() {
   if(!Healthy() || NGlobal::GetVar("gfx_antialiasing",0).GetInt()!=1)return;
   try {
+    impl->FlushDraw();
     if(impl->nextView+2>2045)throw std::runtime_error("Scene antialiasing exceeded ordered render-pass limit");
     if(!impl->antialiasedScene)
       impl->antialiasedScene.Create(new BgfxSurface(std::make_shared<BgfxTextureStorage>(
         impl->width,impl->height,1,D3DFMT_A8R8G8B8,false,false,true)));
-    auto makeFrame=[this](bgfx::TextureHandle texture) {
-      auto frame=bgfx::createFrameBuffer(1,&texture,false);
-      if(!bgfx::isValid(frame))throw std::runtime_error("Scene antialiasing target creation failed");
-      impl->frameBuffers.push_back(frame);return frame;
-    };
     // Filter into a separate target, then copy back with point sampling. Keep
     // the original screen surface/depth and legacy render-target caches intact.
     // The following UI passes receive later view IDs and never enter FXAA.
-    impl->DrawPresentation(impl->nextView++,makeFrame(impl->antialiasedScene->storage->handle),
+    impl->DrawPresentation(impl->nextView++,impl->Frame(impl->antialiasedScene),
       impl->screenColor->storage->handle,1.0f,true);
-    impl->DrawPresentation(impl->nextView++,makeFrame(impl->screenColor->storage->handle),
+    impl->DrawPresentation(impl->nextView++,impl->Frame(impl->screenColor),
       impl->antialiasedScene->storage->handle,1.0f,false);
     impl->viewDirty=true;
   }catch(const std::exception& e){impl->Fail(e.what());}
 }
 void BgfxDevice::Present(float gamma) {
+  S2Perf::Scope perf(S2Perf::Present);
   if(!Healthy())return;
   try {
+    impl->FlushDraw();
     impl->DrawPresentation(2047,BGFX_INVALID_HANDLE,impl->screenColor->storage->handle,gamma,false);
-    bgfx::frame();impl->EndFrame();
+    if(S2Perf::Get().file) S2Perf::Get().views=impl->nextView;
+    FlushGeometry();bgfx::frame();impl->EndFrame();
+    if(S2Perf::Get().file) {
+      auto& p=S2Perf::Get(); const auto* s=bgfx::getStats(); ++p.presents;
+      p.width=impl->width; p.height=impl->height;
+      if(s) {
+        p.gpu=s->gpuTimerFreq>0 ? 1000.0*(s->gpuTimeEnd-s->gpuTimeBegin)/s->gpuTimerFreq : -1;
+        p.render=s->cpuTimerFreq>0 ? 1000.0*(s->cpuTimeEnd-s->cpuTimeBegin)/s->cpuTimerFreq : -1;
+        p.waitRender=s->cpuTimerFreq>0 ? 1000.0*s->waitRender/s->cpuTimerFreq : -1;
+        p.waitSubmit=s->cpuTimerFreq>0 ? 1000.0*s->waitSubmit/s->cpuTimerFreq : -1;
+        p.draws=s->numDraw; p.gpuFrame=s->gpuFrameNum;
+      }
+    }
     // Finish the old frame before changing swap-chain/sampler state. Keep all
     // scene targets alive: these two switches need no resource recreation.
     uint32_t flags=DisplayResetFlags();
@@ -465,6 +746,7 @@ void BgfxDevice::Present(float gamma) {
 }
 void BgfxDevice::Screenshot(std::vector<unsigned char>* pixels,unsigned* width,unsigned* height) {
   if(!Healthy())return;
+  impl->FlushDraw();
   *width=impl->width;*height=impl->height;pixels->resize(*width**height*4);
   auto readback=bgfx::createTexture2D(*width,*height,false,1,bgfx::TextureFormat::BGRA8,BGFX_TEXTURE_BLIT_DST|BGFX_TEXTURE_READ_BACK);
   // The screen already contains the filtered scene and unfiltered interface.
@@ -473,7 +755,7 @@ void BgfxDevice::Screenshot(std::vector<unsigned char>* pixels,unsigned* width,u
   destination.init(readback);source.init(impl->screenColor->storage->handle);
   bgfx::blit(2046,destination,source);
   uint32_t ready=bgfx::read(destination,pixels->data());
-  uint32_t frame=bgfx::frame();impl->EndFrame();while(frame<ready)frame=bgfx::frame();
+  FlushGeometry();uint32_t frame=bgfx::frame();impl->EndFrame();while(frame<ready)frame=bgfx::frame();
   bgfx::destroy(readback);
 }
 HRESULT BgfxDevice::CreateTexture(unsigned w,unsigned h,unsigned levels,DWORD usage,D3DFORMAT format,D3DPOOL pool,BgfxTexture** out,HANDLE*) {
@@ -516,22 +798,24 @@ HRESULT BgfxDevice::CreatePixelShader(const DWORD* tokens,BgfxShader** out) {
 }
 HRESULT BgfxDevice::SetStreamSource(unsigned stream,BgfxBuffer* buffer,unsigned offset,unsigned stride) {if(stream)return E_INVALIDARG;impl->vertices=buffer;impl->vertexOffset=offset;impl->stride=stride;return S_OK;}
 HRESULT BgfxDevice::SetIndices(BgfxBuffer* buffer){impl->indices=buffer;return S_OK;}
-HRESULT BgfxDevice::SetTexture(unsigned stage,BgfxTexture* texture){if(stage>=8)return E_INVALIDARG;impl->textures[stage]=texture;return S_OK;}
+HRESULT BgfxDevice::SetTexture(unsigned stage,BgfxTexture* texture){if(stage>=8)return E_INVALIDARG;if(impl->textures[stage]!=texture){impl->FlushDraw();impl->textures[stage]=texture;}return S_OK;}
 HRESULT BgfxDevice::SetVertexDeclaration(BgfxDeclaration* declaration){impl->declaration=declaration;return S_OK;}
-HRESULT BgfxDevice::SetVertexShader(BgfxShader* shader){impl->vertexShader=shader;return S_OK;}
-HRESULT BgfxDevice::SetPixelShader(BgfxShader* shader){impl->pixelShader=shader;return S_OK;}
-HRESULT BgfxDevice::SetVertexShaderConstantF(unsigned start,const float* data,unsigned count){if(!data || start>96 || count>96-start)return E_INVALIDARG;memcpy(impl->vertexConstants[start],data,count*16);return S_OK;}
-HRESULT BgfxDevice::SetPixelShaderConstantF(unsigned start,const float* data,unsigned count){if(!data || start>8 || count>8-start)return E_INVALIDARG;memcpy(impl->pixelConstants[start],data,count*16);return S_OK;}
-HRESULT BgfxDevice::SetRenderState(D3DRENDERSTATETYPE state,DWORD value){if(unsigned(state)>=impl->states.size())return E_INVALIDARG;impl->states[state]=value;if(state==D3DRS_FILLMODE)bgfx::setDebug(value==D3DFILL_WIREFRAME?BGFX_DEBUG_WIREFRAME:BGFX_DEBUG_NONE);return S_OK;}
-HRESULT BgfxDevice::SetSamplerState(unsigned stage,D3DSAMPLERSTATETYPE state,DWORD value){if(stage>=8 || unsigned(state)>=16)return E_INVALIDARG;impl->sampler[stage][state]=value;return S_OK;}
-HRESULT BgfxDevice::SetTextureStageState(unsigned stage,D3DTEXTURESTAGESTATETYPE state,DWORD value){if(stage>=8)return E_INVALIDARG;if(state==D3DTSS_TEXTURETRANSFORMFLAGS)impl->projection[stage]=(value&D3DTTFF_PROJECTED)?1.0f:0.0f;return S_OK;}
-HRESULT BgfxDevice::SetRenderTarget(unsigned slot,BgfxSurface* surface){if(slot || !surface)return E_INVALIDARG;if(impl->color!=surface){impl->color=surface;impl->viewDirty=true;}return S_OK;}
-HRESULT BgfxDevice::SetDepthStencilSurface(BgfxSurface* surface){if(!surface)return E_INVALIDARG;if(impl->depth!=surface){impl->depth=surface;impl->viewDirty=true;}return S_OK;}
+HRESULT BgfxDevice::SetVertexShader(BgfxShader* shader){if(impl->vertexShader!=shader){impl->FlushDraw();impl->vertexShader=shader;}return S_OK;}
+HRESULT BgfxDevice::SetPixelShader(BgfxShader* shader){if(impl->pixelShader!=shader){impl->FlushDraw();impl->pixelShader=shader;}return S_OK;}
+HRESULT BgfxDevice::SetVertexShaderConstantF(unsigned start,const float* data,unsigned count){if(!data || start>96 || count>96-start)return E_INVALIDARG;if(memcmp(impl->vertexConstants[start],data,count*16)){impl->FlushDraw();memcpy(impl->vertexConstants[start],data,count*16);}return S_OK;}
+HRESULT BgfxDevice::SetPixelShaderConstantF(unsigned start,const float* data,unsigned count){if(!data || start>8 || count>8-start)return E_INVALIDARG;if(memcmp(impl->pixelConstants[start],data,count*16)){impl->FlushDraw();memcpy(impl->pixelConstants[start],data,count*16);}return S_OK;}
+HRESULT BgfxDevice::SetRenderState(D3DRENDERSTATETYPE state,DWORD value){if(unsigned(state)>=impl->states.size())return E_INVALIDARG;if(impl->states[state]!=value){impl->FlushDraw();impl->states[state]=value;if(state==D3DRS_FILLMODE)bgfx::setDebug(value==D3DFILL_WIREFRAME?BGFX_DEBUG_WIREFRAME:BGFX_DEBUG_NONE);}return S_OK;}
+HRESULT BgfxDevice::SetSamplerState(unsigned stage,D3DSAMPLERSTATETYPE state,DWORD value){if(stage>=8 || unsigned(state)>=16)return E_INVALIDARG;if(impl->sampler[stage][state]!=value){impl->FlushDraw();impl->sampler[stage][state]=value;}return S_OK;}
+HRESULT BgfxDevice::SetTextureStageState(unsigned stage,D3DTEXTURESTAGESTATETYPE state,DWORD value){if(stage>=8)return E_INVALIDARG;if(state==D3DTSS_TEXTURETRANSFORMFLAGS){float projected=(value&D3DTTFF_PROJECTED)?1.0f:0.0f;if(impl->projection[stage]!=projected){impl->FlushDraw();impl->projection[stage]=projected;}}return S_OK;}
+HRESULT BgfxDevice::SetRenderTarget(unsigned slot,BgfxSurface* surface){if(slot || !surface)return E_INVALIDARG;if(impl->color!=surface){impl->FlushDraw();impl->color=surface;impl->viewDirty=true;}return S_OK;}
+HRESULT BgfxDevice::SetDepthStencilSurface(BgfxSurface* surface){if(!surface)return E_INVALIDARG;if(impl->depth!=surface){impl->FlushDraw();impl->depth=surface;impl->viewDirty=true;}return S_OK;}
 HRESULT BgfxDevice::GetRenderTarget(unsigned slot,BgfxSurface** out){if(slot || !out)return E_INVALIDARG;*out=impl->screenColor;if(*out)(*out)->AddRef();return S_OK;}
 HRESULT BgfxDevice::GetDepthStencilSurface(BgfxSurface** out){if(!out)return E_INVALIDARG;*out=impl->screenDepth;if(*out)(*out)->AddRef();return S_OK;}
 HRESULT BgfxDevice::Clear(DWORD count,const D3DRECT*,DWORD flags,D3DCOLOR color,float z,DWORD stencil) {
+  if(!Healthy())return E_FAIL;
   if(count)return E_NOTIMPL;
   try{
+    impl->FlushDraw();
     if(impl->viewUsed)impl->viewDirty=true;
     auto view=impl->View();uint16_t clear=0;
     if(flags&D3DCLEAR_TARGET)clear|=BGFX_CLEAR_COLOR;if(flags&D3DCLEAR_ZBUFFER)clear|=BGFX_CLEAR_DEPTH;if(flags&D3DCLEAR_STENCIL)clear|=BGFX_CLEAR_STENCIL;
@@ -539,19 +823,40 @@ HRESULT BgfxDevice::Clear(DWORD count,const D3DRECT*,DWORD flags,D3DCOLOR color,
   }catch(const std::exception& e){return impl->Fail(e.what());}
 }
 HRESULT BgfxDevice::DrawIndexedPrimitive(D3DPRIMITIVETYPE primitive,int base,unsigned,unsigned,unsigned start,unsigned count) {
+  S2Perf::Scope perf(S2Perf::Submit);
+  if(!Healthy())return E_FAIL;
   if(!count)return S_OK;
   try{
     if(!impl->vertices || !impl->indices || !impl->declaration)throw std::runtime_error("Draw with missing vertex/index data");
     unsigned num=primitive==D3DPT_TRIANGLELIST?count*3:primitive==D3DPT_LINELIST?count*2:count+1;
     unsigned indexSize=impl->indices->index32?4:2;
     if(uint64_t(start+uint64_t(num))*indexSize>impl->indices->bytes.size())throw std::runtime_error("Game index buffer bounds violation");
-    std::vector<uint32_t> source(num);uint32_t low=UINT32_MAX,high=0;
+    std::vector<uint32_t> source; if(!impl->persistentGeometry || base<0)source.resize(num);uint32_t low=UINT32_MAX,high=0;
     for(unsigned i=0;i<num;++i){uint32_t index=0;memcpy(&index,impl->indices->bytes.data()+uint64_t(start+i)*indexSize,indexSize);int64_t effective=int64_t(index)+base;
       if(effective<0 || effective>UINT32_MAX)throw std::runtime_error("Invalid game base vertex");
-      source[i]=uint32_t(effective);low=std::min(low,source[i]);high=std::max(high,source[i]);}
+      if(!source.empty())source[i]=uint32_t(effective);low=std::min(low,uint32_t(effective));high=std::max(high,uint32_t(effective));}
     unsigned vertices=high-low+1;const auto& layout=impl->declaration->gpuLayout;
     if(impl->declaration->layout.getStride()!=impl->stride || uint64_t(high+uint64_t(1))*impl->stride+impl->vertexOffset>impl->vertices->bytes.size())throw std::runtime_error("Game vertex buffer bounds violation");
+    if(impl->persistentGeometry) {
+      auto vb=impl->vertices->VertexGPU(*impl->declaration,impl->vertexOffset,impl->stride,low,vertices);
+      if(base>=0) {
+        auto ib=impl->indices->IndexGPU(start,num);
+        impl->QueueDraw(vb,unsigned(base),high-unsigned(base)+1,primitive,ib,start,num);return S_OK;
+      } else {
+        impl->FlushDraw();
+        // bgfx has no negative base-vertex binding. Keep the old normalized
+        // index representation for this uncommon case, reusing GPU vertices.
+        const bool wide=vertices>65536;
+        if(bgfx::getAvailTransientIndexBuffer(num,wide)<num)throw std::runtime_error("Transient index budget exhausted");
+        bgfx::TransientIndexBuffer ib;bgfx::allocTransientIndexBuffer(&ib,num,wide);
+        for(unsigned i=0;i<num;++i) { uint32_t value=source[i]-low;memcpy(ib.data+i*(wide?4:2),&value,wide?4:2); }
+        bgfx::setVertexBuffer(0,vb,low,vertices);bgfx::setIndexBuffer(&ib);
+      }
+      impl->Apply(primitive);auto program=impl->Program();auto view=impl->View();
+      bgfx::submit(view,program);impl->viewUsed=true;return S_OK;
+    }
     bool wide=vertices>65536;
+    impl->FlushDraw();
     if(bgfx::getAvailTransientVertexBuffer(vertices,layout)<vertices || bgfx::getAvailTransientIndexBuffer(num,wide)<num)throw std::runtime_error("Transient game geometry budget exhausted");
     bgfx::TransientVertexBuffer vb;bgfx::TransientIndexBuffer ib;bgfx::allocTransientVertexBuffer(&vb,vertices,layout);bgfx::allocTransientIndexBuffer(&ib,num,wide);
     impl->declaration->CopyVertices(vb.data,impl->vertices->bytes.data()+impl->vertexOffset+uint64_t(low)*impl->stride,vertices);
@@ -561,11 +866,18 @@ HRESULT BgfxDevice::DrawIndexedPrimitive(D3DPRIMITIVETYPE primitive,int base,uns
   }catch(const std::exception& e){return impl->Fail(e.what());}
 }
 HRESULT BgfxDevice::DrawPrimitive(D3DPRIMITIVETYPE primitive,unsigned start,unsigned count) {
+  S2Perf::Scope perf(S2Perf::Submit);
+  if(!Healthy())return E_FAIL;
   if(!count)return S_OK;
   try{
     unsigned num=primitive==D3DPT_LINESTRIP?count+1:primitive==D3DPT_LINELIST?count*2:count*3;
     if(!impl->vertices || !impl->declaration || uint64_t(start+uint64_t(num))*impl->stride+impl->vertexOffset>impl->vertices->bytes.size())throw std::runtime_error("Invalid game nonindexed draw");
     const auto& layout=impl->declaration->gpuLayout;
+    if(impl->persistentGeometry) {
+      auto vb=impl->vertices->VertexGPU(*impl->declaration,impl->vertexOffset,impl->stride,start,num);
+      impl->QueueDraw(vb,start,num,primitive);return S_OK;
+    }
+    impl->FlushDraw();
     if(bgfx::getAvailTransientVertexBuffer(num,layout)<num)throw std::runtime_error("Transient geometry budget exhausted");
     bgfx::TransientVertexBuffer vb;bgfx::allocTransientVertexBuffer(&vb,num,layout);impl->declaration->CopyVertices(vb.data,impl->vertices->bytes.data()+impl->vertexOffset+uint64_t(start)*impl->stride,num);
     bgfx::setVertexBuffer(0,&vb);impl->Apply(primitive);auto program=impl->Program();auto view=impl->View();bgfx::submit(view,program);impl->viewUsed=true;return S_OK;

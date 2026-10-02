@@ -9,6 +9,7 @@
 #include <cstdio>
 #include "../Main/VectorFonts.h"
 #include "../Main/GfxUtils.h"
+#include "../Main/SWTexture.h"
 #include "../Main/Interface.h"
 #include "../Main/UICommCtrls.h"
 #include "../Main/GInit.h"
@@ -16,6 +17,7 @@
 #include "../Main/DisplayLayout.h"
 #include "../FileIO/Streams.h"
 #include <SDL3/SDL.h>
+#include "FrameProfiler.h"
 
 namespace {
 CObj<NGfx::CGeometry> Quad(float left,float top,float right,float bottom,float z);
@@ -120,6 +122,129 @@ bool Color(const CArray2D<NGfx::SPixel8888>& image,int x,int y,int r,int g,int b
   const auto& pixel=image[y][x];
   if(abs(int(pixel.r)-r)<=3 && abs(int(pixel.g)-g)<=3 && abs(int(pixel.b)-b)<=3)return true;
   fprintf(stderr,"Pixel %d,%d expected %d,%d,%d got %d,%d,%d\n",x,y,r,g,b,pixel.r,pixel.g,pixel.b);return false;
+}
+int RunGeometry() {
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 70;
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);context.SetDepth(NGfx::DEPTH_NONE);
+  context.SetVertexShader(vsConstLight);context.SetPixelShader(psDiffuse);
+  auto initial=Quad(-1,1,1,-1,.5f);Draw(context,initial);NGfx::Flip(); // apply legacy context state
+  const D3DVERTEXELEMENT9 elements[]={{0,0,D3DDECLTYPE_FLOAT3,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_POSITION,0},D3DDECL_END()};
+  NGfx::BgfxDeclaration declaration(elements);
+  NGfx::BgfxBuffer vertices(256*sizeof(CVec3)),indices(512*sizeof(uint16_t)),wideIndices(512*sizeof(uint32_t),true);
+  struct Unbind {
+    ~Unbind() {
+      if(NGfx::pDevice) {NGfx::pDevice->SetStreamSource(0,nullptr,0,0);NGfx::pDevice->SetVertexDeclaration(nullptr);NGfx::pDevice->SetIndices(nullptr);}S2Perf::Stop();
+    }
+  } unbind;
+  void* data=nullptr;
+  auto writeQuad=[&](float left,float right) {
+    vertices.Lock(0,4*sizeof(CVec3),&data,0);
+    const CVec3 quad[]={CVec3(left,1,0.5f),CVec3(right,1,0.5f),CVec3(right,-1,0.5f),CVec3(left,-1,0.5f)};
+    memcpy(data,quad,sizeof(quad));vertices.Unlock();
+  };
+  writeQuad(-1,0);
+  indices.Lock(0,0,&data,0);const uint16_t order[]={0,1,2,0,2,3};memcpy(data,order,sizeof(order));indices.Unlock();
+  auto& perf=S2Perf::Get();perf.file=std::tmpfile();if(!perf.file)return 71;S2Perf::Begin();
+  auto first=vertices.VertexGPU(declaration,0,sizeof(CVec3),0,4);
+  vertices.VertexGPU(declaration,0,sizeof(CVec3),0,4);
+  NGfx::Flip();
+  vertices.Lock(0,0,&data,D3DLOCK_READONLY);vertices.Unlock();vertices.VertexGPU(declaration,0,sizeof(CVec3),0,4);
+  NGfx::Flip();
+  if(perf.gpuVBUpdates!=1)return 72; // unchanged and readonly maps do not upload
+  vertices.VertexGPU(declaration,0,sizeof(CVec3),0,4);
+  vertices.Lock(0,0,&data,0);vertices.MarkWritten(8*sizeof(CVec3),sizeof(CVec3));
+  static_cast<CVec3*>(data)[8]=CVec3(0,0,0);vertices.Unlock();
+  auto disjoint=vertices.VertexGPU(declaration,0,sizeof(CVec3),8,1);
+  if(first.idx!=disjoint.idx || perf.gpuRenames!=1)return 73; // same packed block, separate allocation
+  context.ClearBuffers(0xff000000);
+  NGfx::pDevice->SetStreamSource(0,&vertices,0,sizeof(CVec3));NGfx::pDevice->SetVertexDeclaration(&declaration);NGfx::pDevice->SetIndices(&indices);
+  context.SetVSConst(16,CVec4(1,0,0,1));NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,4,0,2);
+  writeQuad(0,1);context.SetVSConst(16,CVec4(0,1,0,1));NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,4,0,2);
+  if(perf.gpuRenames!=3)return 74; // one initial VB, one initial IB, one renamed VB
+  CArray2D<NGfx::SPixel8888> image;NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 75;
+  // Index overwrite also preserves an earlier draw. Negative base uses the
+  // normalized fallback; positive base and 32-bit indices bind the GPU bank.
+  vertices.Lock(0,0,&data,0);
+  const CVec3 quads[]={CVec3(-1,1,.5f),CVec3(0,1,.5f),CVec3(0,-1,.5f),CVec3(-1,-1,.5f),
+                      CVec3(0,1,.5f),CVec3(1,1,.5f),CVec3(1,-1,.5f),CVec3(0,-1,.5f)};
+  memcpy(data,quads,sizeof(quads));vertices.Unlock();
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(1,0,0,1));
+  NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,4,0,2);
+  indices.Lock(0,sizeof(order),&data,0);for(unsigned i=0;i<6;++i)static_cast<uint16_t*>(data)[i]=order[i]+4;indices.Unlock();
+  context.SetVSConst(16,CVec4(0,1,0,1));NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,8,0,2);
+  NGfx::MakeScreenShot(&image,false);if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 76;
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(0,0,1,1));
+  NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,-4,0,4,0,2);
+  wideIndices.Lock(0,0,&data,0);for(unsigned i=0;i<6;++i)static_cast<uint32_t*>(data)[i]=order[i];wideIndices.Unlock();
+  NGfx::pDevice->SetIndices(&wideIndices);NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,4,0,4,0,2);
+  NGfx::MakeScreenShot(&image,false);if(!Color(image,32,64,0,0,255) || !Color(image,96,64,0,0,255))return 77;
+  // Adjacent indexed draws merge only across identical state. Repeated writes
+  // of the same constants must not introduce a false barrier.
+  wideIndices.Lock(0,0,&data,0);for(unsigned i=0;i<6;++i){static_cast<uint32_t*>(data)[i]=order[i];static_cast<uint32_t*>(data)[6+i]=order[i]+4;}wideIndices.Unlock();
+  context.ClearBuffers(0xff000000);unsigned merges=perf.drawMerges;
+  NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,4,0,2);
+  context.SetVSConst(16,CVec4(0,0,1,1));
+  NGfx::pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,8,6,2);
+  if(perf.drawMerges!=merges+1)return 79;
+  NGfx::MakeScreenShot(&image,false);if(!Color(image,32,64,0,0,255) || !Color(image,96,64,0,0,255))return 80;
+  vertices.Lock(0,0,&data,0);
+  for(unsigned i=0;i<6;++i){static_cast<CVec3*>(data)[i]=quads[order[i]];static_cast<CVec3*>(data)[6+i]=quads[order[i]+4];}vertices.Unlock();
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(1,0,0,1));merges=perf.drawMerges;
+  NGfx::pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,0,1);NGfx::pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,3,1);
+  context.SetVSConst(16,CVec4(0,1,0,1)); // flush before changing the color
+  NGfx::pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,6,1);NGfx::pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,9,1);
+  if(perf.drawMerges!=merges+2)return 81;
+  NGfx::MakeScreenShot(&image,false);if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 82;
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(1,1,0,1));
+  NGfx::pDevice->SetStreamSource(0,&vertices,6*sizeof(CVec3),sizeof(CVec3));
+  NGfx::pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,0,2);
+  NGfx::MakeScreenShot(&image,false);if(!Color(image,32,64,0,0,0) || !Color(image,96,64,255,255,0))return 85;
+  // Stack resources must be unbound before their final owner goes away.
+  NGfx::pDevice->SetStreamSource(0,nullptr,0,0);NGfx::pDevice->SetVertexDeclaration(nullptr);NGfx::pDevice->SetIndices(nullptr);
+  // Existing CPU buffers can outlive a renderer instance. Rebuild their GPU
+  // banks against the new epoch, never destroy a recycled handle from the old one.
+  NGfx::Done3D();
+  if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow())) ||
+     !NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 83;
+  S2Perf::Begin();vertices.VertexGPU(declaration,0,sizeof(CVec3),0,12);wideIndices.IndexGPU(0,12);
+  NGfx::Flip();if(perf.gpuVBUpdates!=1 || perf.gpuIBUpdates!=1)return 84;
+  S2Perf::Stop();
+  std::printf("Geometry: unchanged/readonly reuse, disjoint pooled writes, same-frame VB/IB overwrite, 16/32-bit indices, signed base vertex, indexed/nonindexed batching, constant barriers, stream offset and device epoch passed\n");
+  return NGfx::pDevice->Healthy()?0:78;
+}
+int RunPassStress() {
+  NGfx::SRenderTargetsInfo targets;targets.nRegisters=1;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 90;
+  CObj<NGfx::CTexture> a=NGfx::MakeTexture(16,16,1,NGfx::SPixel8888::ID,NGfx::TARGET,NGfx::CLAMP);
+  CObj<NGfx::CTexture> b=NGfx::MakeTexture(16,16,1,NGfx::SPixel8888::ID,NGfx::TARGET,NGfx::CLAMP);
+  NGfx::CRenderContext context;
+  auto& perf=S2Perf::Get();perf.file=std::tmpfile();if(!perf.file)return 91;
+  struct StopCapture {~StopCapture(){S2Perf::Stop();}} stop;
+  NGlobal::SetVar("gfx_antialiasing",1);
+  for(unsigned frame=0;frame<8;++frame) {
+    S2Perf::Begin();
+    for(unsigned pass=0;pass<700;++pass) {
+      context.SetTextureRT(pass&1?a.GetPtr():b.GetPtr());context.ClearBuffers(0xffff0000);
+      context.SetScreenRT();context.ClearBuffers(0xff0000ff);
+      if(!NGfx::pDevice->Healthy())return 92;
+    }
+    NGfx::ApplySceneAntialiasing();NGfx::Flip();
+    if(!NGfx::pDevice->Healthy() || perf.framebufferCreates>(frame==0?5u:0u))return 93;
+  }
+  CArray2D<NGfx::SPixel8888> image;NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,64,64,0,0,255))return 94;
+  // A failed renderer still allows the save path to build its thumbnail.
+  DWORD unknownShader[]={0xffffffff,0};NGfx::BgfxShader* shader=nullptr;
+  if(NGfx::pDevice->CreateVertexShader(unknownShader,&shader)!=E_FAIL || shader)return 95;
+  NGfx::MakeScreenShot(&image,false);
+  if(image.GetXSize()!=128 || image.GetYSize()!=128 || !Color(image,64,64,0,0,0))return 96;
+  CDGPtr<NGScene::CBilinearTexture> thumbnail=new NGScene::CBilinearTexture(image,320,200);
+  thumbnail.Refresh();auto* data=thumbnail->GetValue();
+  if(!data || !Color(data->mips.front(),319,199,0,0,0))return 97;
+  std::printf("Pass stress: 1402 ordered views x 8 frames use five persistent framebuffer attachment sets; final pixels exact; failed-renderer save thumbnail passed\n");
+  return 0;
 }
 int RunDisplay() {
   NGfx::SRenderTargetsInfo targets; targets.nRegisters=1;
@@ -355,6 +480,8 @@ int main(int argc,char** argv) {
   if(!S2Platform::Init("Silent Storm bgfx regression",128,128,true))return 1;
   if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow()))) {S2Platform::Done();return 2;}
   int result=argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
+             argc>1 && std::string(argv[1])=="--geometry" ? RunGeometry() :
+             argc>1 && std::string(argv[1])=="--passes" ? RunPassStress() :
              argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() : Run();
   NGfx::Done3D();S2Platform::Done();
   if(result)fprintf(stderr,"bgfx regression failure code=%d\n",result);

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "Gfx.h"
 #include "Transform.h"
 #include "GView.h"
@@ -445,13 +446,13 @@ void CMissionBase::RenderFrame( int nMode, bool bAdvanceTime, ICamera *pCamera, 
 			drawInfo.vSize = CVec2( rScreen.x2 - rScreen.x1, rScreen.y2 - rScreen.y1 );
 			drawInfo.bUseDefaultClearColor = true;
 			drawInfo.vClearColor = CVec3(0.25f,0.25f,0.25f); // not used due to using default clear color
-			pScene->Draw( drawInfo );
+			{ S2Perf::Scope perf(S2Perf::Scene); pScene->Draw( drawInfo ); }
 			NGfx::ApplySceneAntialiasing();
 		}
 	}
 
 	if ( !bHideInterface && !bSpecialHideInterface && ( nMode & N_RENDERMODE_2D ) )
-		pInterface->Draw( GetUITime() );	// retail @0x1a19f0: the always-running UI counter, not the raw clock
+		{ S2Perf::Scope perf(S2Perf::UI); pInterface->Draw( GetUITime() ); }	// retail @0x1a19f0: the always-running UI counter, not the raw clock
 
 	float fFrameTime = NGScene::GetFrameTime();
 	static float fMinFrameTime = 1, fMaxFrameTime = 1e-4f, fElapsed = 0;

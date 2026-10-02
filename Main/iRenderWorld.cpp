@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "Gfx.h"
 #include "Transform.h"
 #include "GView.h"
@@ -154,11 +155,11 @@ void CRenderBaseInterface::RenderFrame( const STime &sTime, ICamera *pCamera )
 		drawInfo.vSize = CVec2( rScreen.x2 - rScreen.x1, rScreen.y2 - rScreen.y1 );
 		drawInfo.bUseDefaultClearColor = true;
 		drawInfo.vClearColor = CVec3(0.25f,0.25f,0.25f); // not used due to using default clear color
-		pScene->Draw( drawInfo );
+		{ S2Perf::Scope perf(S2Perf::Scene); pScene->Draw( drawInfo ); }
 		NGfx::ApplySceneAntialiasing();
 	}
 
-	pInterface->Draw( sTime );
+	{ S2Perf::Scope perf(S2Perf::UI); pInterface->Draw( sTime ); }
 
 	NGScene::Flip();
 }

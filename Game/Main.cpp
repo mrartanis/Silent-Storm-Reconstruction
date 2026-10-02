@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "..\Main\GInit.h"
 #include "../Main/DisplayOptions.h"
 #include "../Main/Interface.h"
@@ -46,7 +47,8 @@
 #include "..\Main\Camera.h"         // [HARNESS] verify the unattended camera remains stationary
 #include "..\Main\wMain.h"          // [HARNESS] direct, DB-backed grenade blast in a loaded world
 #include "..\Main\wExplTracker.h"   // [HARNESS] explosion scheduler state for save/load probes
-#include "..\Main\iAdvFaceGen.h"    // [HARNESS] real advanced editor interface command
+#include "..\Main\iAdvFaceGen.h"
+#include "..\Main\iFaceGen.h"    // [HARNESS] real advanced editor interface command
 #include "..\Main\RPGGlobal.h"      // [HARNESS] saved merc list
 #include "..\Main\RPGUnit.h"        // [HARNESS] per-merc committed head
 #include "..\DBFormat\DataRPG.h"    // [HARNESS] nationality preview template
@@ -142,7 +144,7 @@ static NRPG::CUnit* HarnessFaceGenMerc()
 	return 0;
 }
 
-static bool HarnessOpenFaceGenEditor()
+static bool HarnessOpenFaceGenEditor(bool basic = false)
 {
 	NGame::IMission *pMission = dynamic_cast<NGame::IMission*>( NMainLoop::GetCurrentInterfaceForHarness() );
 	NRPG::CUnit *pMerc = HarnessFaceGenMerc();
@@ -167,7 +169,8 @@ static bool HarnessOpenFaceGenEditor()
 	}
 	if ( !pNationality )
 		return false;
-	NMainLoop::Command( new NGame::CICAdvFaceGen( pPlayer->pSide, pNationality, 0, pMerc ) );
+	if(basic) NMainLoop::Command( new NGame::CICFaceGen( pPlayer->pSide, pNationality, 0, pMerc ) );
+	else NMainLoop::Command( new NGame::CICAdvFaceGen( pPlayer->pSide, pNationality, 0, pMerc ) );
 	return true;
 }
 
@@ -705,7 +708,46 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	SaveLoadDiag( "[harness] cmd: %s\n", sCmd.c_str() );
 	if ( sCmd == "quit" )
 		return false;
-	else if ( sCmd.compare( 0, 8, "console " ) == 0 )
+	else if ( sCmd.compare( 0, 5, "perf " ) == 0 ) {
+        char tag[81] = {}; int frames = 0;
+        bool ok = sscanf(sCmd.c_str(), "perf %80s %d", tag, &frames)==2 && S2Perf::Start(tag,frames);
+        SaveLoadDiag("[harness] perf started=%d tag=%s frames=%d\n",ok?1:0,tag,frames);
+    }
+    else if ( sCmd == "perfstatus" )
+        SaveLoadDiag("[harness] perf remaining=%d freeze_faces=%d\n",S2Perf::Get().remaining,S2Perf::Get().freezeFaces?1:0);
+    else if ( sCmd == "perffaces 0" || sCmd == "perffaces 1" ) {
+        S2Perf::Get().freezeFaces = sCmd == "perffaces 0";
+        SaveLoadDiag("[harness] perf freeze_faces=%d\n",S2Perf::Get().freezeFaces?1:0);
+    }
+    else if(sCmd=="perfcamera 0" || sCmd=="perfcamera 1") {
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetCamera()) {
+            const bool freeze=sCmd=="perfcamera 1";
+            if(mission->GetCamera()->IsCameraFrozen()!=freeze)mission->GetCamera()->FreezeCamera(freeze);
+            SaveLoadDiag("[harness] perf camera frozen=%d\n",mission->GetCamera()->IsCameraFrozen()?1:0);
+        } else SaveLoadDiag("[harness] perf camera rejected\n");
+    }
+    else if ( sCmd.compare(0,8,"perfpan ")==0 ) {
+        CVec3 delta;auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetCamera() && sscanf(sCmd.c_str(),"perfpan %f %f %f",&delta.x,&delta.y,&delta.z)==3 &&
+           std::isfinite(delta.x) && std::isfinite(delta.y) && std::isfinite(delta.z) && fabs(delta.x)<=256 && fabs(delta.y)<=256 && fabs(delta.z)<=256) {
+            ICamera::SCameraPos pos;mission->GetCamera()->GetPlacement(&pos);
+            if(!mission->GetCamera()->IsCameraFrozen())mission->GetCamera()->FreezeCamera(true);
+            pos.ptAnchor+=delta;mission->GetCamera()->SetPlacement(pos);
+            SaveLoadDiag("[harness] perf pan=%.3f,%.3f,%.3f\n",delta.x,delta.y,delta.z);
+        } else SaveLoadDiag("[harness] perf pan rejected\n");
+    }
+    else if ( sCmd.compare(0,9,"perfzoom ")==0 ) {
+        float rod=0;
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetCamera() && sscanf(sCmd.c_str(),"perfzoom %f",&rod)==1 && std::isfinite(rod) && rod>=5 && rod<=150) {
+            ICamera::SCameraPos pos; mission->GetCamera()->GetPlacement(&pos);
+            if(!mission->GetCamera()->IsCameraFrozen()) mission->GetCamera()->FreezeCamera(true);
+            pos.fRod=rod; mission->GetCamera()->SetPlacement(pos);
+            SaveLoadDiag("[harness] perf zoom=%.3f\n",rod);
+        } else SaveLoadDiag("[harness] perf zoom rejected\n");
+    }
+    else if ( sCmd.compare( 0, 8, "console " ) == 0 )
 		ProcessCommand( NStr::ToUnicode( sCmd.substr( 8 ) ) );
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
 	{
@@ -845,6 +887,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	}
 	else if ( sCmd == "facegenstatus" )
 		HarnessFaceGenStatus( "query" );
+	else if ( sCmd == "perfbasicfacegen" )
+        SaveLoadDiag("[harness] basic facegen queued=%d\n",HarnessOpenFaceGenEditor(true)?1:0);
 	else if ( sCmd == "facegeneditor" )
 		SaveLoadDiag( "[harness] facegen editor queued=%d\n", HarnessOpenFaceGenEditor() ? 1 : 0 );
 	else if ( sCmd.compare( 0, 12, "facegenedit " ) == 0 )
@@ -1107,6 +1151,7 @@ static int RunGame( const char *lpCmdLine )
 	int lastWindowHeight = S2Platform::Display().windowHeight;
 	for (;;)
 	{
+		S2Perf::Begin();
 		S2Platform::PumpEvents();
 		S2Platform::UpdateDisplay( NGlobal::GetVar( "ui_scale", 0 ).GetFloat() );
 		const auto& currentDisplay = S2Platform::Display();
@@ -1130,12 +1175,14 @@ static int RunGame( const char *lpCmdLine )
 		if ( !NMainLoop::StepApp( bStepActive, bActive ) )
 			break;
 
+		S2Perf::End();
 		if ( g_bHarnessLog && !HarnessPoll() )   // [HARNESS] frame-polled command channel
 			break;
 		if ( !bStepActive )
 			S2Platform::Delay( 40 );
 	}
 	//
+	S2Perf::Stop();
 	NGScene::RevertDisplayChange();
 	NGlobal::SaveConfig( ".\\cfg\\config.cfg" );
 

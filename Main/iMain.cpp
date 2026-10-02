@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "../Game/Platform.h"
 #include "VectorFonts.h"
 #include "DisplayOptions.h"
@@ -537,6 +538,7 @@ static bool ProcessInterfaceCmds()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool StepApp( bool bActive, bool bSetGamma, bool bInput )
 {
+	S2Perf::Scope perf(S2Perf::App);
 	NGScene::PollDisplayChange();
 	S2Platform::UpdateDisplay(NGlobal::GetVar("ui_scale", 0).GetFloat());
 	NGfx::CheckBackBufferSize();
@@ -548,6 +550,7 @@ bool StepApp( bool bActive, bool bSetGamma, bool bInput )
 
 	if ( bInput )
 	{
+		S2Perf::Scope perf(S2Perf::Events);
 		// commands processing
 		NInput::SEvent event;
 		while ( NInput::GetEvent( &event ) )
@@ -567,7 +570,7 @@ bool StepApp( bool bActive, bool bSetGamma, bool bInput )
 	if ( bActive )
 		NGScene::LoadPrecached();
 
-	interfaces.back()->Step();
+	{ S2Perf::Scope perf(S2Perf::Interface); interfaces.back()->Step(); }
 	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

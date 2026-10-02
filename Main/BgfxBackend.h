@@ -32,13 +32,27 @@ public:
   HRESULT GetSurfaceLevel(unsigned, BgfxSurface**);
   HRESULT GetCubeMapSurface(D3DCUBEMAP_FACES, unsigned, BgfxSurface**);
 };
+class BgfxDeclaration;
 class BgfxBuffer : public BgfxResource {
+  struct GPUStorage;
+  std::unique_ptr<GPUStorage> gpu;
+  std::vector<uint64_t> versions;
+  uint64_t writeVersion = 1;
+  unsigned lockOffset = 0, lockSize = 0;
+  bool locked = false, trackedWrite = false, readOnly = false;
+  uint64_t Version(unsigned first, unsigned end) const;
 public:
   std::vector<unsigned char> bytes;
   bool index32 = false;
   explicit BgfxBuffer(unsigned size, bool wide = false);
+  ~BgfxBuffer();
   HRESULT Lock(unsigned offset, unsigned size, void** output, DWORD flags);
   HRESULT Unlock();
+  // A pooled buffer maps once but its elements know their exact written ranges.
+  void MarkWritten(unsigned offset, unsigned size);
+  bgfx::DynamicVertexBufferHandle VertexGPU(const BgfxDeclaration&, unsigned offset,
+                                           unsigned stride, unsigned first, unsigned count);
+  bgfx::DynamicIndexBufferHandle IndexGPU(unsigned first, unsigned count);
 };
 class BgfxShader : public BgfxResource {
 public:
@@ -48,6 +62,9 @@ public:
 };
 class BgfxDeclaration : public BgfxResource {
 public:
+  struct Attribute { unsigned input, output, components; bgfx::AttribType::Enum type; };
+  std::vector<Attribute> attributes;
+  uint64_t identity;
   bgfx::VertexLayout layout;
   bgfx::VertexLayout gpuLayout;
   explicit BgfxDeclaration(const D3DVERTEXELEMENT9*);

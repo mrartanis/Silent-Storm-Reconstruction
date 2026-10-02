@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "wInterface.h"
 #include "wHeightLayers.h"
 #include "Grid.h"
@@ -1514,6 +1515,7 @@ void CRenderGame::FastUpdate( STime currentTime )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CRenderGame::UpdateViewWorld( bool bAdvanceTime, STime currentTime, NWorld::IPlayer *pViewFrom, bool bShowAllUnits )
 {
+	S2Perf::Scope perf(S2Perf::World);
 	timer.Advance( bAdvanceTime, currentTime );
 
 	pHeadsController->Advance( currentTime );
