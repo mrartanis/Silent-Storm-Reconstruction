@@ -589,7 +589,7 @@ static void SetTexturePointFilter( int n, bool bPoint )
 				nUseAnisotropy = GetMaxAnisotropicLevel();
 			pDevice->SetSamplerState( n, D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC );//D3DTEXF_LINEAR );
 			pDevice->SetSamplerState( n, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC );// D3DTEXF_LINEAR );
-			pDevice->SetSamplerState( n, D3DSAMP_MIPFILTER, D3DTEXF_NONE );//D3DTEXF_LINEAR );//D3DTEXF_POINT );
+			pDevice->SetSamplerState( n, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR );
 			pDevice->SetSamplerState( n, D3DSAMP_MAXANISOTROPY, nUseAnisotropy );
 		}
 		else

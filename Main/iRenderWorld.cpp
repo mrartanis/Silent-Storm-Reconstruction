@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "Gfx.h"
 #include "Transform.h"
 #include "GView.h"
 #include "G2DView.h"
@@ -154,6 +155,7 @@ void CRenderBaseInterface::RenderFrame( const STime &sTime, ICamera *pCamera )
 		drawInfo.bUseDefaultClearColor = true;
 		drawInfo.vClearColor = CVec3(0.25f,0.25f,0.25f); // not used due to using default clear color
 		pScene->Draw( drawInfo );
+		NGfx::ApplySceneAntialiasing();
 	}
 
 	pInterface->Draw( sTime );

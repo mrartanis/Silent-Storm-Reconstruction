@@ -62,6 +62,8 @@ public:
   bool Init(HWND, unsigned width, unsigned height);
   bool Resize(unsigned width, unsigned height);
   bool Healthy() const;
+  unsigned PresentationResetFlags() const; // Diagnostics of the state actually applied to bgfx.
+  void ApplySceneAntialiasing(); // Finish the 3D scene before drawing any interface.
   void Present(float gamma);
   void Screenshot(std::vector<unsigned char>*, unsigned*, unsigned*);
   HRESULT CreateTexture(unsigned, unsigned, unsigned, DWORD, D3DFORMAT, D3DPOOL, BgfxTexture**, HANDLE*);

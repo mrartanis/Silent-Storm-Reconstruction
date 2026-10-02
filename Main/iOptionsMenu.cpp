@@ -374,24 +374,36 @@ static void SetCurrentResolution( int nMode )
 	NGlobal::SetVar( "gfx_resolution", wstring( wsMode ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// The shared 4-preset item block every quality combo gets (retail inlines it per combo,
-// @0x625d54/@0x626150/@0x626540/@0x626f73) + the hidden CUSTOM row (selectable, never listed).
-// bAscending: the speed axis lists best-visuals id 0 first; the other axes best id 3 first.
-////////////////////////////////////////////////////////////////////////////////////////////////////
-static void AddQualityItems( CComplexComboBox *pCombo, bool bAscending )
+// The modern renderer exposes six settings. Reuse the shipped combo artwork,
+// but replace the obsolete quality controls and labels without editing game.db.
+static const wchar_t* VideoText(const wchar_t* english, const wchar_t* russian)
 {
-	const int nFirst = bAscending ? 0 : 3, nStep = bAscending ? 1 : -1;
-	pCombo->AddItem( nFirst, CComplexComboBox::SInfo( NUI::GetDBString( 17267 ) ), 171 );
-	pCombo->AddItem( nFirst + nStep, CComplexComboBox::SInfo( NUI::GetDBString( 4412 ) ), 172 );
-	pCombo->AddItem( nFirst + 2 * nStep, CComplexComboBox::SInfo( NUI::GetDBString( 17266 ) ), 172 );
-	pCombo->AddItem( nFirst + 3 * nStep, CComplexComboBox::SInfo( NUI::GetDBString( 4411 ) ), 173 );
-	pCombo->AddHiddenItem( NGScene::CV_CUSTOM, CComplexComboBox::SInfo( NUI::GetDBString( 17423 ) ) );
+	const wstring& caption=GetDBString(4382);
+	for(wchar_t c:caption) if(c>=0x400 && c<=0x4ff) return russian;
+	return english;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CVideoOptionsUI -- retail shape (ProcessMessage @0x2254d0, UpdateFromConfig @0x220f60, operator&
-// @0x22bee0): six IMMEDIATE-apply combos + gamma scroll + 2 checkboxes; no apply button.
-// NOTE the control names are retail's own: "smoothness" = FSAA, "fsaa_level" = lighting quality.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+static NDb::CUIContainer* MakeVideoOptionsTemplate()
+{
+	NDb::CUIContainer* original=NDb::GetUIContainer(161);
+	NDb::CUIContainer* modern=new NDb::CUIContainer;
+	modern->nWidth=original->nWidth; modern->nHeight=original->nHeight;
+	for(auto control:original->controls)
+	{
+		const string& id=control->szID;
+		// Keep the book backdrop, but omit the old gamma preview artwork.
+		const bool backdrop=control->type==NDb::UI_IMAGE && control->rect.Width()>=original->nWidth/2 &&
+			control->rect.Height()>=original->nHeight/2;
+		if(backdrop || id=="base" || id=="cancel" || id=="default" || id=="resolution" ||
+			id=="quality" || id=="anisotropic_level" || id=="texture_quality" ||
+			id=="smoothness" || id=="fsaa_level") modern->controls.push_back(control);
+	}
+	return modern;
+}
+static void AddToggleItems(CComplexComboBox* combo)
+{
+	combo->AddItem(0,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Off",L"\u0412\u044b\u043a\u043b.")),171);
+	combo->AddItem(1,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"On",L"\u0412\u043a\u043b.")),173);
+}
 class CVideoOptionsUI: public CEmptyOptionsUI
 {
 	OBJECT_NOCOPY_METHODS(CVideoOptionsUI)
@@ -399,65 +411,52 @@ private:
 	ZDATA_(CEmptyOptionsUI)
 	bool bIgnoreNotify;
 	CObj<CHoverButton> pDefault;
-	CPtr<CCheckButton> pHWCursor;
-	CPtr<CCheckButton> pShowCrown;
-	CObj<CComplexScroll> pGammaScroll;
-	CObj<CComplexComboBox> pQuality;
-	CObj<CComplexComboBox> pFSAALevel;
-	CObj<CComplexComboBox> pLightingQuality;
+	CObj<CComplexComboBox> pAntialiasing;
 	CObj<CComplexComboBox> pResolution;
-	CObj<CComplexComboBox> pTextureQuality;
 	CObj<CComplexComboBox> pAnisotropicLevel;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CEmptyOptionsUI*)this); f.Add(2,&bIgnoreNotify); f.Add(3,&pDefault); f.Add(4,&pHWCursor); f.Add(5,&pShowCrown); f.Add(6,&pGammaScroll); f.Add(7,&pQuality); f.Add(8,&pFSAALevel); f.Add(9,&pLightingQuality); f.Add(10,&pResolution); f.Add(11,&pTextureQuality); f.Add(12,&pAnisotropicLevel); return 0; }
+	CObj<CComplexComboBox> pFullscreen;
+	CObj<CComplexComboBox> pVSync;
+	CObj<CComplexComboBox> pShowFPS;
+	ZEND int operator&(CStructureSaver& f) { f.Add(1,(CEmptyOptionsUI*)this); f.Add(2,&bIgnoreNotify); f.Add(3,&pDefault); f.Add(8,&pAntialiasing); f.Add(10,&pResolution); f.Add(12,&pAnisotropicLevel); f.Add(13,&pFullscreen); f.Add(14,&pVSync); f.Add(15,&pShowFPS); return 0; }
 
-	unsigned long long displayRevision = 0; // Runtime only.
+	unsigned long long displayRevision = 0;
+	bool configInitialized = false; // Combo view children are bound after template loading.
 	void RefreshModes();
 	void UpdateFromConfig();
-
+	void ArrangeControls();
 public:
 	void Update(const STime& time, NGScene::I2DGameView* view);
-	CVideoOptionsUI(): bIgnoreNotify( false ) {}
-	CVideoOptionsUI( const SWindowInfo &sInfo );
-
-	bool ProcessMessage( const SEvent &sEvent );
+	CVideoOptionsUI(): bIgnoreNotify(false) {}
+	CVideoOptionsUI(const SWindowInfo& info): CEmptyOptionsUI(info,NGame::OS_VIDEO),bIgnoreNotify(false) {}
+	bool ProcessMessage(const SEvent& event);
 };
-////////////////////////////////////////////////////////////////////////////////////////////////////
-CVideoOptionsUI::CVideoOptionsUI( const SWindowInfo &sInfo ):
-	CEmptyOptionsUI( sInfo, NGame::OS_VIDEO ), bIgnoreNotify( false )
-{
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail @0x220f60: push the live config back into every control (guarded against notify feedback)
 void CVideoOptionsUI::RefreshModes()
 {
 	if(!IsValid(pResolution)) return;
 	const bool previous=bIgnoreNotify;
 	bIgnoreNotify=true;
 	pResolution->RemoveAllItems();
-	list<NGfx::SVideoMode> modesList;
-	NGfx::GetModesList( &modesList );
-	// retail @0x626c03 keeps w>=800 AND aspect==4:3, plus an 800..1024 16-bit list
-	// ("<right>%dx%dx16", id w|0x10000). WIDESCREEN port: every aspect stays (Sentinels'
-	// builder @0x4eba70 has no aspect check either); dev has no 16-bit plumbing.
-	for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); )
+	list<NGfx::SVideoMode> modes;
+	NGfx::GetModesList(&modes);
+	int configuredWidth,configuredHeight;
+	NGScene::GetConfiguredVideoMode(&configuredWidth,&configuredHeight);
+	bool found=false;
+	for(const auto& mode:modes) if(mode.nXSize==configuredWidth && mode.nYSize==configuredHeight) found=true;
+	if(!found && !NGlobal::GetVar("gfx_fullscreen",0).GetInt())
+		modes.push_back(NGfx::SVideoMode(configuredWidth,configuredHeight,32,NGfx::WINDOWED));
+	modes.sort([](const NGfx::SVideoMode& a,const NGfx::SVideoMode& b) {
+		return a.nXSize<b.nXSize || (a.nXSize==b.nXSize && a.nYSize<b.nYSize);
+	});
+	// Keep the current window dimensions selectable, even when not a monitor mode.
+	for(auto i=modes.begin(); i!=modes.end();)
+		if(i->nXSize<800 || i->nYSize<600) i=modes.erase(i); else ++i;
+	for(auto i=modes.begin(); i!=modes.end(); ++i)
 	{
-		if ( iTemp->nXSize < 800 )
-			iTemp = modesList.erase( iTemp );
-		else
-			iTemp++;
-	}
-	for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); iTemp++ )
-	{
-		int nTemplate = 172;
-		list<NGfx::SVideoMode>::iterator iNext = iTemp; iNext++;
-		if ( iTemp == modesList.begin() )
-			nTemplate = 171;
-		if ( iNext == modesList.end() )
-			nTemplate = 173;
-
-		WCHAR wsBuffer[1024];
-		swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>%dx%dx32", iTemp->nXSize, iTemp->nYSize );
-		pResolution->AddItem( EncodeVideoModeID( iTemp->nXSize, iTemp->nYSize ), NUI::CComplexComboBox::SInfo( wsBuffer ), nTemplate );
+		auto next=i; ++next;
+		int artwork=i==modes.begin()?171:(next==modes.end()?173:172);
+		WCHAR text[64];
+		swprintf(text,64,L"<right>%d x %d",i->nXSize,i->nYSize);
+		pResolution->AddItem(EncodeVideoModeID(i->nXSize,i->nYSize),CComplexComboBox::SInfo(text),artwork);
 	}
 	pResolution->SetSelectedItem(GetCurrentResolution());
 	displayRevision=S2Platform::Display().revision;
@@ -465,175 +464,168 @@ void CVideoOptionsUI::RefreshModes()
 }
 void CVideoOptionsUI::Update(const STime& time, NGScene::I2DGameView* view)
 {
-	if(displayRevision!=S2Platform::Display().revision) { RefreshModes(); UpdateFromConfig(); }
+	if(displayRevision!=S2Platform::Display().revision) RefreshModes();
+	UpdateFromConfig(); // Also tracks hotkeys and a display-mode rollback.
 	CEmptyOptionsUI::Update(time,view);
 }
 void CVideoOptionsUI::UpdateFromConfig()
 {
-	bIgnoreNotify = true;
-	UpdateUIElement( pHWCursor, "ui_hwcursor" );
-	UpdateUIElement( pShowCrown, "gfx_particles" );
-	if ( IsValid( pGammaScroll ) )
-	{
-		// the INT scroll API (retail CScroll::GetValue/SetValue): 0..100 <-> gamma 0..2 (x50 / x0.02)
-		pGammaScroll->CScroll::SetMaxValue( 100 );
-		pGammaScroll->CScroll::SetValue( Float2Int( NGlobal::GetVar( "gfx_gamma", 1024 ).GetFloat() * 50.0f ) );
-	}
-	if ( IsValid( pQuality ) )
-		pQuality->SetSelectedItem( NGScene::GetSpeedMode() );
-	if ( IsValid( pFSAALevel ) )
-		pFSAALevel->SetSelectedItem( NGScene::GetFSAAMode() );
-	if ( IsValid( pTextureQuality ) )
-		pTextureQuality->SetSelectedItem( NGScene::GetTextureMode() );
-	if ( IsValid( pLightingQuality ) )
-		pLightingQuality->SetSelectedItem( NGScene::GetLightingQualityMode() );
-	if ( IsValid( pAnisotropicLevel ) )
-		pAnisotropicLevel->SetSelectedItem( Float2Int( NGlobal::GetVar( "gfx_anisotropic_filter", 1 ).GetFloat() ) );
-	if ( IsValid( pResolution ) )
-		{ pResolution->SetSelectedItem( GetCurrentResolution() );
-		  pResolution->SetStyle(STYLE_ENABLED, NGlobal::GetVar("gfx_fullscreen",1).GetFloat()==0); }
-	if ( IsValid( pQuality ) )
-		pQuality->SetStyle( STYLE_ENABLED, true );
-	if ( IsValid( pLightingQuality ) )
-		pLightingQuality->SetStyle( STYLE_ENABLED, true );
-	// retail @0x62117d: 16-bit mode pins quality to fastest; lighting quality is only offered
-	// on the two best speed presets
-	bool bDisableLighting = false;
-	if ( NGfx::Is16BitMode() )
-	{
-		if ( IsValid( pQuality ) )
-		{
-			pQuality->SetStyle( STYLE_ENABLED, false );
-			pQuality->SetSelectedItem( 3 );
-		}
-		bDisableLighting = true;
-	}
-	else if ( NGScene::GetSpeedMode() > 1 )
-		bDisableLighting = true;
-	if ( bDisableLighting && IsValid( pLightingQuality ) )
-	{
-		pLightingQuality->SetStyle( STYLE_ENABLED, false );
-		pLightingQuality->SetSelectedItem( 0 );
-	}
-	bIgnoreNotify = false;
+	const bool previous=bIgnoreNotify;
+	bIgnoreNotify=true;
+	auto select=[this](CComplexComboBox* combo,int value) {
+		if(IsValid(combo) && (!configInitialized || combo->GetSelectedItem()!=value)) combo->SetSelectedItem(value);
+	};
+	select(pResolution,GetCurrentResolution());
+	select(pFullscreen,NGlobal::GetVar("gfx_fullscreen",0).GetInt()!=0);
+	select(pAnisotropicLevel,NGlobal::GetVar("gfx_anisotropic_filter",1).GetInt()>1?16:1);
+	select(pVSync,NGlobal::GetVar("gfx_vsync",1).GetInt()!=0);
+	select(pAntialiasing,NGlobal::GetVar("gfx_antialiasing",0).GetInt()==1?1:0);
+	select(pShowFPS,NGlobal::GetVar("gfx_show_fps",0).GetInt()!=0);
+	configInitialized=true;
+	bIgnoreNotify=previous;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
+void CVideoOptionsUI::ArrangeControls()
 {
-	switch( sEvent.nEvent )
+	// Obsolete fields were excluded from the template. Do not disable sibling
+	// windows here: combo drop-down lists also belong directly to this panel.
+	CComplexComboBox* combos[]={pResolution,pFullscreen,pAnisotropicLevel,pVSync,pAntialiasing,pShowFPS};
+	const wchar_t* labels[]={VideoText(L"RESOLUTION",L"\u0420\u0410\u0417\u0420\u0415\u0428\u0415\u041d\u0418\u0415"),
+		VideoText(L"FULLSCREEN",L"\u041f\u041e\u041b\u041d\u042b\u0419 \u042d\u041a\u0420\u0410\u041d"),
+		VideoText(L"ANISOTROPY",L"\u0410\u041d\u0418\u0417\u041e\u0422\u0420\u041e\u041f\u0418\u042f"),L"V-SYNC",
+		VideoText(L"ANTIALIASING",L"\u0421\u0413\u041b\u0410\u0416\u0418\u0412\u0410\u041d\u0418\u0415"),
+		VideoText(L"SHOW FPS",L"\u041f\u041e\u041a\u0410\u0417\u0410\u0422\u042c FPS")};
+	const int labelX=pDefault->GetAuthoredPosition().x;
+	const int fieldWidth=153;
+	const int valueX=pResolution->GetAuthoredPosition().x+pResolution->GetAuthoredSize().x-fieldWidth;
+	const int top=148; // Start beside the first tab, just below the book heading.
+	for(int row=0;row<6;++row)
+	{
+		const int y=top+row*48;
+		const int reduction=combos[row]->GetAuthoredSize().x-fieldWidth;
+		list<CPtr<CWindow>> parts;
+		combos[row]->GetChildrenList(&parts);
+		for(auto part:parts)
+		{
+			part->SetToolTip(0);
+			const SPoint size=part->GetSize();
+			if(size.x>=fieldWidth) part->SetSize(SPoint(size.x-reduction,size.y));
+		}
+		combos[row]->SetSize(SPoint(fieldWidth,combos[row]->GetSize().y));
+		combos[row]->SetToolTip(0); // The reused fields describe obsolete quality options.
+		combos[row]->SetPosition(combos[row]->AuthoredToLayout(SPoint(valueX,y)));
+		char id[40]; sprintf(id,"graphics_label_%d",row);
+		CText* label=new CText(SWindowInfo(this,SPoint(labelX,y-7),SPoint(valueX-labelX-10,42),id,
+			STYLE_VISIBLE|STYLE_ENABLED|STYLE_TRANSPARENT));
+		label->EnableAdaptiveLayout();
+		label->SetText(GetDBString(4404)+labels[row]);
+	}
+	const SPoint reset=pDefault->GetAuthoredPosition();
+	pDefault->SetPosition(pDefault->AuthoredToLayout(SPoint(reset.x,top+6*48+16)));
+}
+bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
+{
+	switch(event.nEvent)
 	{
 	case EVENT_NOTIFY:
 		{
-			// retail @0x625520: swallow the notifies our own SetSelectedItem calls emit
-			if ( bIgnoreNotify )
-				return true;
-			if (sEvent.szID == "modern_display") { GetInterface()->ShowDisplayOptions(); return true; }
-			bIgnoreNotify = true;
-			bool bChanged = false;
-			if ( sEvent.szID == "default" )
+			if(bIgnoreNotify) return true;
+			bIgnoreNotify=true;
+			if(event.szID=="default")
 			{
-				NGlobal::ResetVar( "gfx_gamma" );
-				NGlobal::ResetVar( "ui_hwcursor" );
-				NGlobal::ResetVar( "gfx_particles" );
-				// retail @0x62560d also runs NGScene::AutoDetectVideoConfig() -- deferred (GAutoDetect.h)
-				UpdateFromConfig();
-				bChanged = true;   // retail recreates unconditionally on default
+				NGlobal::ResetVar("gfx_anisotropic_filter");
+				NGlobal::ResetVar("gfx_vsync");
+				NGlobal::ResetVar("gfx_antialiasing");
+				NGlobal::ResetVar("gfx_show_fps");
 			}
-			else if ( IsValid( pResolution ) && sEvent.szID == pResolution->GetWindowID() )
+			else if((IsValid(pResolution) && event.szID==pResolution->GetWindowID()) ||
+				(IsValid(pFullscreen) && event.szID==pFullscreen->GetWindowID()))
 			{
-				bChanged = pResolution->GetSelectedItem() != GetCurrentResolution();
-				if (bChanged) NGScene::BeginDisplayChange();
-				SetCurrentResolution( pResolution->GetSelectedItem() );
+				if(pResolution->GetSelectedItem()==GetCurrentResolution() &&
+					pFullscreen->GetSelectedItem()==(NGlobal::GetVar("gfx_fullscreen",0).GetInt()!=0))
+				{ bIgnoreNotify=false; return true; }
+				NGScene::BeginDisplayChange();
+				SetCurrentResolution(pResolution->GetSelectedItem());
+				NGlobal::SetVar("gfx_fullscreen",pFullscreen->GetSelectedItem());
+				if(event.szID==pFullscreen->GetWindowID() && pFullscreen->GetSelectedItem())
+				{
+					// Arbitrary window dimensions are not necessarily monitor modes.
+					int width,height; NGScene::GetConfiguredVideoMode(&width,&height);
+					list<NGfx::SVideoMode> modes; NGfx::GetModesList(&modes);
+					bool supported=false;
+					for(const auto& mode:modes) if(mode.fullScreen==NGfx::FULL_SCREEN && mode.nXSize==width && mode.nYSize==height) supported=true;
+					NGfx::SVideoMode desktop;
+					if(!supported && NGfx::GetDesktopVideoMode(&desktop)) SetCurrentResolution(EncodeVideoModeID(desktop.nXSize,desktop.nYSize));
+				}
+				if(!NGScene::SetModeFromConfig(false)) NGScene::RevertDisplayChange();
 			}
-			else if ( IsValid( pQuality ) && sEvent.szID == pQuality->GetWindowID() )
-			{
-				bChanged = pQuality->GetSelectedItem() != NGScene::GetSpeedMode();
-				NGScene::SetSpeedMode( (NGScene::EConfigValue)pQuality->GetSelectedItem() );
-			}
-			else if ( IsValid( pTextureQuality ) && sEvent.szID == pTextureQuality->GetWindowID() )
-			{
-				bChanged = pTextureQuality->GetSelectedItem() != NGScene::GetTextureMode();
-				NGScene::SetTextureMode( (NGScene::EConfigValue)pTextureQuality->GetSelectedItem() );
-			}
-			else if ( IsValid( pFSAALevel ) && sEvent.szID == pFSAALevel->GetWindowID() )
-			{
-				bChanged = pFSAALevel->GetSelectedItem() != NGScene::GetFSAAMode();
-				NGScene::SetFSAAMode( (NGScene::EConfigValue)pFSAALevel->GetSelectedItem() );
-			}
-			else
-			{
-				// any other control (checkboxes/gamma/lighting/aniso) writes ALL its vars -- retail @0x625799
-				UpdateConfig( pHWCursor, "ui_hwcursor" );
-				UpdateConfig( pShowCrown, "gfx_particles" );
-				if ( IsValid( pLightingQuality ) )
-					NGScene::SetLightingQualityMode( (NGScene::EConfigValue)pLightingQuality->GetSelectedItem() );
-				if ( IsValid( pGammaScroll ) )
-					NGlobal::SetVar( "gfx_gamma", NGlobal::CValue( pGammaScroll->CScroll::GetValue() * 0.02f ) );
-				if ( IsValid( pAnisotropicLevel ) )
-					NGlobal::SetVar( "gfx_anisotropic_filter", NGlobal::CValue( (float)pAnisotropicLevel->GetSelectedItem() ) );
-			}
-			if ( bChanged )
-				NGlobal::ProcessCommand( L"gfx_update" );
-			bIgnoreNotify = false;
+			else if(IsValid(pAnisotropicLevel) && event.szID==pAnisotropicLevel->GetWindowID())
+				NGlobal::SetVar("gfx_anisotropic_filter",pAnisotropicLevel->GetSelectedItem());
+			else if(IsValid(pVSync) && event.szID==pVSync->GetWindowID())
+				NGlobal::SetVar("gfx_vsync",pVSync->GetSelectedItem());
+			else if(IsValid(pAntialiasing) && event.szID==pAntialiasing->GetWindowID())
+				NGlobal::SetVar("gfx_antialiasing",pAntialiasing->GetSelectedItem());
+			else if(IsValid(pShowFPS) && event.szID==pShowFPS->GetWindowID())
+				NGlobal::SetVar("gfx_show_fps",pShowFPS->GetSelectedItem());
+			bIgnoreNotify=false;
 			UpdateFromConfig();
 			break;
 		}
 	case EVENT_TEMPLATELOAD:
 		{
-			pDefault = new CHoverButton( sEvent.pLoader->GetControl( "default" ) );
-			pDefault->AddTextState( CHoverButton::STATE_NORMAL, GetDBString( 4404 ) + GetDBString( 4377 ) );
-			pDefault->AddTextState( CHoverButton::STATE_HOVER, GetDBString( 4405 ) + GetDBString( 4377 ) );
-			pGammaScroll = new CComplexScroll( sEvent.pLoader->GetControl( "gamma_slider" ) );
-
-			pQuality = new CComplexComboBox( sEvent.pLoader->GetControl( "quality" ) );
-			AddQualityItems( pQuality, true );
-
-			pFSAALevel = new CComplexComboBox( sEvent.pLoader->GetControl( "smoothness" ) );
-			AddQualityItems( pFSAALevel, false );
-
-			pTextureQuality = new CComplexComboBox( sEvent.pLoader->GetControl( "texture_quality" ) );
-			AddQualityItems( pTextureQuality, false );
-
-			pAnisotropicLevel = new CComplexComboBox( sEvent.pLoader->GetControl( "anisotropic_level" ) );
-			pAnisotropicLevel->AddItem( 1, CComplexComboBox::SInfo( NUI::GetDBString( 17434 ) ), 171 );
-			// retail @0x6269e0: one row per power-of-two level up to the device cap
-			for ( int nLevel = 2; nLevel <= NGfx::GetMaxAnisotropicLevel(); ++nLevel )
-			{
-				if ( GetNextPow2( nLevel ) != nLevel )
-					continue;
-				WCHAR wsBuffer[64];
-				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>x%d", nLevel );
-				pAnisotropicLevel->AddItem( nLevel, CComplexComboBox::SInfo( wsBuffer ), ( nLevel == NGfx::GetMaxAnisotropicLevel() ) ? 173 : 172 );
-			}
-
-			pResolution = new CComplexComboBox( sEvent.pLoader->GetControl( "resolution" ) );
+			pDefault=new CHoverButton(event.pLoader->GetControl("default"));
+			pDefault->AddTextState(CHoverButton::STATE_NORMAL,GetDBString(4404)+GetDBString(4377));
+			pDefault->AddTextState(CHoverButton::STATE_HOVER,GetDBString(4405)+GetDBString(4377));
+			pResolution=new CComplexComboBox(event.pLoader->GetControl("resolution"));
 			RefreshModes();
-
-			// retail's control naming: the "fsaa_level" row is the LIGHTING QUALITY combo
-			pLightingQuality = new CComplexComboBox( sEvent.pLoader->GetControl( "fsaa_level" ) );
-			AddQualityItems( pLightingQuality, false );
-
+			pFullscreen=new CComplexComboBox(event.pLoader->GetControl("quality"));
+			AddToggleItems(pFullscreen);
+			pAnisotropicLevel=new CComplexComboBox(event.pLoader->GetControl("anisotropic_level"));
+			pAnisotropicLevel->AddItem(1,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Off",L"\u0412\u044b\u043a\u043b.")),171);
+			pAnisotropicLevel->AddItem(16,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Maximum",L"\u041c\u0430\u043a\u0441\u0438\u043c\u0443\u043c")),173);
+			pVSync=new CComplexComboBox(event.pLoader->GetControl("texture_quality"));
+			AddToggleItems(pVSync);
+			pAntialiasing=new CComplexComboBox(event.pLoader->GetControl("smoothness"));
+			pAntialiasing->AddItem(0,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Off",L"\u0412\u044b\u043a\u043b.")),171);
+			pAntialiasing->AddItem(1,CComplexComboBox::SInfo(L"<right>FXAA"),173);
+			pShowFPS=new CComplexComboBox(event.pLoader->GetControl("fsaa_level"));
+			AddToggleItems(pShowFPS);
 			break;
 		}
 	case EVENT_TEMPLATELOADCOMPLETE:
-		{
-			// retail @0x62594c
-			pHWCursor = GetUIWindow<CCheckButton>( this, "hw_cursor" );
-			pShowCrown = GetUIWindow<CCheckButton>( this, "tree_crown" );
-			CButton* modern = new CButton(SWindowInfo(this, SPoint(16, GetAuthoredSize().y-36), SPoint(250,28), "modern_display"));
-			modern->EnableAdaptiveLayout();
-			modern->AddTextState(0, L"<font size=16pt>Display / UI scaling...");
-			modern->AddTextState(1, L"<font size=16pt><color=yellow>Display / UI scaling...");
-			modern->AddTextState(2, L"<font size=16pt><color=yellow>Display / UI scaling...");
-			UpdateFromConfig();
-			break;
-		}
+		ArrangeControls();
+		UpdateFromConfig();
+		break;
 	}
-
-	return CEmptyOptionsUI::ProcessMessage( sEvent );
+	return CEmptyOptionsUI::ProcessMessage(event);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CAudioOptionsUI
+bool SelectGraphicsOptionForDiagnostics(const string& name, int value, int height)
+{
+	CInterface* ui=CurrentInterfaceForDiagnostics();
+	if(!IsValid(ui)) return false;
+	CWindow* options=ui->GetChildByID("options");
+	if(!IsValid(options) || !dynamic_cast<CVideoOptionsUI*>(options)) return false;
+	if(name=="dropdown")
+	{
+		const char* fields[]={"resolution","quality","anisotropic_level","texture_quality","smoothness","fsaa_level"};
+		if(value<0 || value>=6) return false;
+		CComboBox* combo=dynamic_cast<CComboBox*>(options->GetChildByID(fields[value]));
+		return IsValid(combo) && combo->ProcessMessage(SEvent(EVENT_NOTIFY,height?"list":"drop_list"));
+	}
+	const char* control=0;
+	if(name=="resolution") {control="resolution"; value=EncodeVideoModeID(value,height);}
+	else if(name=="fullscreen") control="quality";
+	else if(name=="anisotropy") control="anisotropic_level";
+	else if(name=="vsync") control="texture_quality";
+	else if(name=="antialiasing") control="smoothness";
+	else if(name=="fps") control="fsaa_level";
+	if(!control) return false;
+	CComplexComboBox* combo=dynamic_cast<CComplexComboBox*>(options->GetChildByID(control));
+	if(!IsValid(combo)) return false;
+	combo->SetSelectedItem(value);
+	return combo->GetSelectedItem()==value;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CAudioOptionsUI: public CEmptyOptionsUI
 {
@@ -1295,9 +1287,12 @@ void COptionsInterface::Initialize( EOptionsScreen eScreen, NGScene::CScreenshot
 		NUI::LoadTemplate( pOptionsUI, NDb::GetUIContainer( 436 ) );
 		break;
 	case OS_VIDEO:
+	{
 		pOptionsUI = new NUI::CVideoOptionsUI( NUI::SWindowInfo( pInterface, NUI::SPoint( 0, 0 ), NUI::SPoint( 1024, 768 ), "options", NUI::STYLE_ENABLED ) );
-		NUI::LoadTemplate( pOptionsUI, NDb::GetUIContainer( 161 ) );
+		CObj<NDb::CUIContainer> modern=NUI::MakeVideoOptionsTemplate();
+		NUI::LoadTemplate( pOptionsUI, modern );
 		break;
+	}
 	case OS_AUDIO:
 		pOptionsUI = new NUI::CAudioOptionsUI( NUI::SWindowInfo( pInterface, NUI::SPoint( 0, 0 ), NUI::SPoint( 1024, 768 ), "options", NUI::STYLE_ENABLED ) );
 		NUI::LoadTemplate( pOptionsUI, NDb::GetUIContainer( 162 ) );

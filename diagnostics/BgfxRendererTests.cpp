@@ -10,11 +10,98 @@
 #include "../Main/VectorFonts.h"
 #include "../Main/GfxUtils.h"
 #include "../Main/Interface.h"
+#include "../Main/UICommCtrls.h"
+#include "../Main/GInit.h"
+#include "../MiscDll/Commands.h"
 #include "../Main/DisplayLayout.h"
 #include "../FileIO/Streams.h"
 #include <SDL3/SDL.h>
 
 namespace {
+CObj<NGfx::CGeometry> Quad(float left,float top,float right,float bottom,float z);
+void Draw(NGfx::CRenderContext& context,NGfx::CGeometry* geometry);
+int RunGraphicsOptions() {
+  // Existing profiles must not retain the removed low-quality presets.
+  NGlobal::SetVar("gfx_resolution",wstring(L"1024x768"));
+  NGlobal::SetVar("gfx_fullscreen",0);
+  NGlobal::SetVar("gfx_texture_mip",3);
+  NGlobal::SetVar("gfx_texture_usedxt",1);
+  NGlobal::SetVar("gfx_terrain_565",1);
+  NGlobal::SetVar("gfx_shadows",0);
+  NGlobal::SetVar("gfx_vsync",0);
+  if(!NGScene::SetModeFromConfig(false))return 50;
+  for(const char* name:{"gfx_texture_mip","gfx_texture_usedxt","gfx_terrain_565","gfx_16bit_textures","gfx_fastest"})
+    if(NGlobal::GetVar(name,-1).GetInt()!=0)return 51;
+  if(NGlobal::GetVar("gfx_shadows",0).GetInt()!=1 ||
+     NGlobal::GetVar("gfx_depth_tex_resolution",0).GetInt()!=1024 ||
+     NGlobal::GetVar("gfx_cl_cube_resolution",0).GetInt()!=128)return 52;
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 53;
+  NGlobal::SetVar("gfx_anisotropic_filter",1);
+  NGfx::Flip();
+  if(NGfx::pDevice->PresentationResetFlags()&(BGFX_RESET_VSYNC|BGFX_RESET_MAXANISOTROPY))return 54;
+  NGlobal::SetVar("gfx_vsync",1);NGlobal::SetVar("gfx_anisotropic_filter",16);
+  NGfx::Flip();
+  if((NGfx::pDevice->PresentationResetFlags()&(BGFX_RESET_VSYNC|BGFX_RESET_MAXANISOTROPY))!=
+     (BGFX_RESET_VSYNC|BGFX_RESET_MAXANISOTROPY))return 55;
+  NGlobal::SetVar("gfx_vsync",0);NGlobal::SetVar("gfx_anisotropic_filter",1);
+  NGfx::Flip();
+  if(NGfx::pDevice->PresentationResetFlags()&(BGFX_RESET_VSYNC|BGFX_RESET_MAXANISOTROPY))return 56;
+  if(!NGfx::pDevice->Healthy())return 57;
+  // GPU image test: filtering a stair-step edge must create intermediate
+  // coverage while preserving both uniform regions and opaque alpha.
+  CObj<NGfx::CTexture> pattern=NGfx::MakeTexture(128,128,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(pattern,0,NGfx::INPLACE);
+    for(int y=0;y<128;++y)for(int x=0;x<128;++x)
+      lock[y][x]=x>y/2+32?NGfx::SPixel8888(255,255,255,255):NGfx::SPixel8888(0,0,0,255);}
+  auto geometry=Quad(-1-1.0f/128,1+1.0f/128,1-1.0f/128,-1+1.0f/128,0.5f);
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);context.SetDepth(NGfx::DEPTH_NONE);
+  context.SetVertexShader(vsTexture);context.SetPixelShader(psTextureCopyAlpha);context.SetTexture(0,pattern);
+  context.ClearBuffers(0xff000000);Draw(context,geometry);
+  CArray2D<NGfx::SPixel8888> original,filtered;
+  NGlobal::SetVar("gfx_antialiasing",0);NGfx::MakeScreenShot(&original,false);
+  NGlobal::SetVar("gfx_antialiasing",1);NGfx::ApplySceneAntialiasing();NGfx::MakeScreenShot(&filtered,false);
+  int smooth=0;
+  for(int y=8;y<120;++y)for(int x=8;x<120;++x) {
+    if(original[y][x].r!=0 && original[y][x].r!=255)return 58;
+    if(filtered[y][x].r>0 && filtered[y][x].r<255)++smooth;
+    if(filtered[y][x].a!=255)return 59;
+  }
+  if(smooth<50 || filtered[64][16].r!=0 || filtered[64][112].r!=255)return 60;
+  // Fine UI strokes are composed after FXAA. Require exact texels, including
+  // after presentation and with AA toggled: neither path may filter the UI.
+  CObj<NGfx::CTexture> ui=NGfx::MakeTexture(32,32,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(ui,0,NGfx::INPLACE);
+    for(int y=0;y<32;++y)for(int x=0;x<32;++x)
+      lock[y][x]=(x+y)%2?NGfx::SPixel8888(255,255,255,255):NGfx::SPixel8888(0,0,0,255);}
+  context.ClearBuffers(0xff000000);Draw(context,geometry);
+  NGfx::ApplySceneAntialiasing();
+  context.SetTexture(0,ui,true);
+  auto uiGeometry=Quad(0.5f-1.0f/128,1+1.0f/128,1-1.0f/128,0.5f+1.0f/128,0.5f);
+  Draw(context,uiGeometry);
+  CArray2D<NGfx::SPixel8888> composed;
+  NGfx::MakeScreenShot(&composed,false);
+  for(int y=0;y<128;++y)for(int x=0;x<128;++x) {
+    if(x>=96 && y<32) {
+      const int value=((x-96+y)%2)?255:0;
+      if(composed[y][x].r!=value || composed[y][x].g!=value || composed[y][x].b!=value || composed[y][x].a!=255)return 62;
+    } else if(composed[y][x].color!=filtered[y][x].color)return 63;
+  }
+  NGfx::Flip();NGfx::MakeScreenShot(&filtered,false);
+  for(int y=0;y<128;++y)for(int x=0;x<128;++x)
+    if(filtered[y][x].color!=composed[y][x].color)return 64;
+  NGlobal::SetVar("gfx_antialiasing",0);NGfx::MakeScreenShot(&filtered,false);
+  for(int y=0;y<128;++y)for(int x=0;x<128;++x)
+    if(filtered[y][x].color!=composed[y][x].color)return 65;
+  // Legacy transient geometry expires when Flip advances its buffer frame.
+  geometry=Quad(-1-1.0f/128,1+1.0f/128,1-1.0f/128,-1+1.0f/128,0.5f);
+  context.SetTexture(0,pattern);context.ClearBuffers(0xff000000);Draw(context,geometry);
+  NGfx::ApplySceneAntialiasing();NGfx::MakeScreenShot(&filtered,false);
+  for(int y=0;y<128;++y)for(int x=0;x<128;++x)
+    if(filtered[y][x].color!=original[y][x].color)return 61;
+  std::printf("Graphics: maximum quality restored; live v-sync/anisotropy on/off; scene FXAA edge pixels=%d; UI texels exact before/after presentation; exact AA-off restoration passed\n",smooth);
+  return 0;
+}
 CObj<NGfx::CGeometry> Quad(float left,float top,float right,float bottom,float z) {
   CObj<NGfx::CGeometry> result;
   NGfx::CBufferLock<NGfx::SGeomVecFull> lock(&result,4);
@@ -64,6 +151,23 @@ int RunDisplay() {
     if(field->GetAuthoredPosition()!=NUI::SPoint(260,130)) return 35;
     field->SetPosition(field->AuthoredToLayout(NUI::SPoint(260,130)));
     if(field->GetAuthoredPosition()!=NUI::SPoint(260,130)) return 36;
+    // A moved graphics field must open its popup below the new position,
+    // aligned to the right edge, retaining its artwork and active hit area.
+    CObj<NUI::CComboBox> combo=new NUI::CComboBox(NUI::SWindowInfo(form,NUI::SPoint(672,200),NUI::SPoint(256,18),"combo"));
+    combo->EnableAdaptiveLayout();
+    combo->SetSize(NUI::SPoint(153,18));
+    combo->SetPosition(combo->AuthoredToLayout(NUI::SPoint(775,330)));
+    auto popup=form->GetChildByID("list");
+    popup->SetSize(NUI::SPoint(256,40));
+    popup->SetStyle(NUI::STYLE_VISIBLE,true);
+    combo->Update(0,nullptr);
+    const auto popupPosition=combo->GetPosition()+NUI::SPoint(153-256,18);
+    if(popup->GetPosition()!=popupPosition || popup->GetSize().x!=256 ||
+        !popup->GetStyle(NUI::STYLE_ENABLED) || !popup->HitTest(popupPosition.x+75,popupPosition.y+20)) return 44;
+    combo->SetStyle(NUI::STYLE_ENABLED,false);combo->Update(0,nullptr);
+    if(popup->GetStyle(NUI::STYLE_ENABLED)) return 45;
+    combo->SetStyle(NUI::STYLE_ENABLED,true);combo->Update(0,nullptr);
+    if(!popup->GetStyle(NUI::STYLE_ENABLED)) return 46;
     CObj<NUI::CWindow> map=new NUI::CWindow(NUI::SWindowInfo(root,NUI::SPoint(0,0),NUI::SPoint(1024,768),"globalmapUI"));
     CObj<NUI::CWindow> mapImage=new NUI::CWindow(NUI::SWindowInfo(map,NUI::SPoint(0,0),NUI::SPoint(1024,768),"background"));
     CObj<NUI::CWindow> zone=new NUI::CWindow(NUI::SWindowInfo(map,NUI::SPoint(217,190),NUI::SPoint(66,90),"northbritain"));
@@ -250,7 +354,9 @@ int main(int argc,char** argv) {
   S2Platform::SetErrorDialogs(false);
   if(!S2Platform::Init("Silent Storm bgfx regression",128,128,true))return 1;
   if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow()))) {S2Platform::Done();return 2;}
-  int result=argc>1 && std::string(argv[1])=="--display" ? RunDisplay() : Run();NGfx::Done3D();S2Platform::Done();
+  int result=argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
+             argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() : Run();
+  NGfx::Done3D();S2Platform::Done();
   if(result)fprintf(stderr,"bgfx regression failure code=%d\n",result);
   if(!result)fprintf(stdout,"bgfx shaders, depth, pass order, render targets, texture upload, stencil masks, blending, alpha test, cube sampling, readback, resize and shutdown passed\n");
   return result;

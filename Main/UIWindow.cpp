@@ -362,7 +362,7 @@ CToolTip* CWindow::GetToolTip() const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWindow::SetToolTip( CToolTip *pWindow )
 {
-	ASSERT( pWindow->GetParent() == GetInterface() );
+	ASSERT( !IsValid(pWindow) || pWindow->GetParent() == GetInterface() );
 	pToolTip = pWindow;
 
 	if ( !IsValid( pToolTip ) )

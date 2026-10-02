@@ -24,6 +24,7 @@ static SVideoMode videoMode;
 static bool initialized = false, gammaEnabled = false;
 bool Is16BitTextures() { return false; }
 bool Is16BitMode() { return false; }
+// bgfx exposes anisotropy as off / the device maximum, not individual levels.
 int GetMaxAnisotropicLevel() { return 16; }
 HWND GetHWND() { return windowHandle; }
 CVec2 GetScreenRect() { return CVec2(videoMode.nXSize, videoMode.nYSize); }
@@ -93,7 +94,17 @@ void GetModesList(list<SVideoMode>* output, int bpp) {
   });
 }
 bool Is3DActive() { return initialized && pDevice && pDevice->Healthy(); }
+bool GetDesktopVideoMode(SVideoMode* output) {
+  if(!output || !S2Platform::Window())return false;
+  const SDL_DisplayMode* mode=SDL_GetDesktopDisplayMode(SDL_GetDisplayForWindow(S2Platform::Window()));
+  if(!mode)return false;
+  *output=SVideoMode(mode->w,mode->h,32,FULL_SCREEN,int(mode->refresh_rate));
+  return true;
+}
 void SetGamma(bool enabled) { gammaEnabled = enabled; }
+void ApplySceneAntialiasing() {
+  if(initialized && pDevice) pDevice->ApplySceneAntialiasing();
+}
 void Flip() {
   if (!initialized || !S2Platform::Display().drawable) return;
   pDevice->Present(gammaEnabled ? Max(0.1f, NGlobal::GetVar("gfx_gamma", 1).GetFloat()) : 1.0f);
@@ -126,6 +137,8 @@ START_REGISTER(Gfx)
   REGISTER_VAR("gfx_tnl_mode", 0, 0, true)
   REGISTER_VAR("gfx_gamma", 0, 1, true)
   REGISTER_VAR_EX("gfx_anisotropic_filter", NGlobal::VarIntHandler, &nUseAnisotropy, 1, true)
+  REGISTER_VAR("gfx_vsync", 0, 1, true)
+  REGISTER_VAR("gfx_antialiasing", 0, 0, true) // 0 = off, 1 = FXAA on the 3D scene before UI.
   REGISTER_VAR_EX("gfx_validate", NGlobal::VarBoolHandler, &bDoValidateDevice, 0, true)
 FINISH_REGISTER
 }

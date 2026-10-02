@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "GInit.h"
 #include "Gfx.h"
+#include "GAutoDetect.h"
 #include "../Game/DisplayGeometry.h"
 #include "../MiscDll/LogStream.h"
 #include "GfxRender.h"
@@ -37,6 +38,7 @@ void GetConfiguredVideoMode( int *pModeX, int *pModeY )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SetModeFromConfig( bool bRecreate )
 {
+	ApplyMaximumQuality(); // Also overrides quality values in existing saved configurations.
 	// retail @0x1292e0 head: the gfx_recreate path tears the device down and re-initializes
 	// before applying the mode (this is what makes an in-game resolution switch take effect)
 	if ( bRecreate )

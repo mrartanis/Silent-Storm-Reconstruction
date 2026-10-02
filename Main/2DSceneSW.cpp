@@ -2,12 +2,18 @@
 #include "GfxBuffers.h"
 #include "2DSceneSW.h"
 #include "SWTexture.h"
+#include "SWTextureFilter.h"
+#include "../MiscDll/Commands.h"
+#include "../FileIO/BasicChunk1.h"
 #include "Render.h"
 #include "..\Misc\BasicShare.h"
 #include "..\DBFormat\DataFormat.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
 {
+// This filters the CPU composition stage, independently of GPU anisotropy.
+// Reload the mission after changing it to rebuild the terrain cache.
+static bool bTerrainBilinear = true;
 static CBasicShare<int, CSWTexture> shareSWTextures(129);
 CPtrFuncBase<CSWTextureData>* GetSWTex( NDb::CTexture *pTex ) 
 {
@@ -54,9 +60,11 @@ struct STextureIterator
 	int nUMask, nVMask;
 	unsigned int nMip;
 	T *pMip;
+	bool bBilinear;
 
-	void Init( float fU, float fV, float fDU, float fDV, const vector< CArray2D<T> > &tex )
+	void Init( float fU, float fV, float fDU, float fDV, const vector< CArray2D<T> > &tex, bool _bBilinear = false )
 	{
+		bBilinear = _bBilinear;
 		int nXSize = tex[0].GetXSize(), nYSize = tex[0].GetYSize();
 		nMip = 0;
 		while ( ( fabs(fDU) > 1.9 || fabs(fDV) > 1.9 ) && nMip < tex.size() - 1 )
@@ -73,19 +81,47 @@ struct STextureIterator
 		nVMask = (nYSize - 1 ) << nXBits;
 		pMip = &tex[nMip][0][0];
 	}
-	__forceinline const T& Fetch()
+	template<class TT>
+	__forceinline TT Sample( const TT *pData ) const
 	{
-		const T &r = pMip[((nV>>nVShift)&nVMask) + ((nU>>16)&nUMask) ];
+		if ( !bBilinear )
+			return pData[((nV>>nVShift)&nVMask) + ((nU>>16)&nUMask)];
+		// Match texel centers at half-integer coordinates; retain the original wrap.
+		const unsigned int u = nU - 0x8000u, v = nV - 0x8000u;
+		const unsigned int x0 = (u >> 16) & nUMask, x1 = (x0 + 1) & nUMask;
+		const unsigned int y0 = (v >> nVShift) & nVMask;
+		const unsigned int y1 = (y0 + nUMask + 1) & nVMask;
+		return Blend( pData[y0 + x0], pData[y0 + x1], pData[y1 + x0], pData[y1 + x1],
+			(u & 0xffff) >> 8, (v & 0xffff) >> 8 );
+	}
+	static NGfx::SPixel8888 Blend( const NGfx::SPixel8888 &p00, const NGfx::SPixel8888 &p10,
+		const NGfx::SPixel8888 &p01, const NGfx::SPixel8888 &p11, unsigned u, unsigned v )
+	{
+		NGfx::SPixel8888 result;
+		result.color = S2TerrainFilter::BilinearColor( p00.color, p10.color, p01.color, p11.color, u, v );
+		return result;
+	}
+	static SBumpPixel Blend( const SBumpPixel &p00, const SBumpPixel &p10,
+		const SBumpPixel &p01, const SBumpPixel &p11, unsigned u, unsigned v )
+	{
+		SBumpPixel result;
+		result.fDU = S2TerrainFilter::BilinearSlope( p00.fDU, p10.fDU, p01.fDU, p11.fDU, u, v );
+		result.fDV = S2TerrainFilter::BilinearSlope( p00.fDV, p10.fDV, p01.fDV, p11.fDV, u, v );
+		return result;
+	}
+	__forceinline T Fetch()
+	{
+		const T r = Sample( pMip );
 		nU += nDU;
 		nV += nDV;
 		return r;
 	}
 	// slow variant for special rare case
 	template<class TT>
-	__forceinline const TT& Fetch( const vector< CArray2D<TT> > &tex )
+	__forceinline TT Fetch( const vector< CArray2D<TT> > &tex )
 	{
 		TT *pData = &tex[nMip][0][0];
-		const TT &r = pData[((nV>>nVShift)&nVMask) + ((nU>>16)&nUMask) ];
+		const TT r = Sample( pData );
 		nU += nDU;
 		nV += nDV;
 		return r;
@@ -101,14 +137,14 @@ private:
 		STextureIterator<NGfx::SPixel8888> tex, mask;
 		float fU = texMapping.ptDU.w + nLeft * texMapping.ptDU.x + nY * texMapping.ptDU.y;
 		float fV = texMapping.ptDV.w + nLeft * texMapping.ptDV.x + nY * texMapping.ptDV.y;
-		tex.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pTexture->mips );
+		tex.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pTexture->mips, bTerrainBilinear );
 		NGfx::SPixel8888 *pRow = &res[nY][0];
 		NGfx::SPixel8888 *pDst = pRow + nLeft, *pFinish = pRow + nRight;
 		if ( pMaskTexture )
 		{
 			if ( bDoMask )
 			{
-				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips );
+				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
 				for ( ; pDst < pFinish; ++pDst )
 				{
 					const NGfx::SPixel8888 color = tex.Fetch();
@@ -124,7 +160,7 @@ private:
 			{
 				float fMaskU = maskMapping.ptDU.w + nLeft * maskMapping.ptDU.x + nY * maskMapping.ptDU.y;
 				float fMaskV = maskMapping.ptDV.w + nLeft * maskMapping.ptDV.x + nY * maskMapping.ptDV.y;
-				mask.Init( fMaskU, fMaskV, maskMapping.ptDU.x, maskMapping.ptDV.x, pMaskTexture->mips );
+				mask.Init( fMaskU, fMaskV, maskMapping.ptDU.x, maskMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
 				for ( ; pDst < pFinish; ++pDst )
 				{
 					const NGfx::SPixel8888 &m = mask.Fetch();
@@ -205,12 +241,12 @@ private:
 		STextureIterator<NGfx::SPixel8888> mask;
 		float fU = texMapping.ptDU.w + nLeft * texMapping.ptDU.x + nY * texMapping.ptDU.y;
 		float fV = texMapping.ptDV.w + nLeft * texMapping.ptDV.x + nY * texMapping.ptDV.y;
-		tex.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pTexture->bumpMips );
+		tex.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pTexture->bumpMips, bTerrainBilinear );
 		if ( pMaskTexture )
 		{
 			if ( bDoMask )
 			{
-				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips );
+				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
 				for ( int x = nLeft; x < nRight; ++x )
 				{
 					const SBumpPixel &color = tex.Fetch();
@@ -225,7 +261,7 @@ private:
 			{
 				float fMaskU = maskMapping.ptDU.w + nLeft * maskMapping.ptDU.x + nY * maskMapping.ptDU.y;
 				float fMaskV = maskMapping.ptDV.w + nLeft * maskMapping.ptDV.x + nY * maskMapping.ptDV.y;
-				mask.Init( fMaskU, fMaskV, maskMapping.ptDU.x, maskMapping.ptDV.x, pMaskTexture->mips );
+				mask.Init( fMaskU, fMaskV, maskMapping.ptDU.x, maskMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
 				for ( int x = nLeft; x < nRight; ++x )
 				{
 					const SBumpPixel &color = tex.Fetch();
@@ -618,6 +654,9 @@ void CSW2DScene::DrawBump( NGfx::CTexture *pTarget, const CTPoint<int> &vViewpor
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+START_REGISTER(TerrainCompositionFilter)
+	REGISTER_VAR_EX( "gfx_terrain_bilinear", NGlobal::VarBoolHandler, &bTerrainBilinear, 1, true )
+FINISH_REGISTER
 } // NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 using namespace NGScene;

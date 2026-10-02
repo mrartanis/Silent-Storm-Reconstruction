@@ -199,7 +199,14 @@ void S2Platform::UpdateDisplay(float percent)
 }
 bool S2Platform::SetMode(int width, int height, bool fullscreen)
 {
-  if (!window || !SDL_SetWindowFullscreenMode(window, nullptr) ||
+  SDL_DisplayMode mode{};
+  if (fullscreen && (!window || !SDL_GetClosestFullscreenDisplayMode(
+      SDL_GetDisplayForWindow(window), width, height, 0, true, &mode) ||
+      mode.w != width || mode.h != height)) {
+    std::fprintf(stderr,"DISPLAY: fullscreen resolution %dx%d is unavailable\n",width,height);
+    return false;
+  }
+  if (!window || !SDL_SetWindowFullscreenMode(window, fullscreen ? &mode : nullptr) ||
       !SDL_SetWindowFullscreen(window, fullscreen) ||
       (!fullscreen && !SDL_SetWindowSize(window, width, height)) || !SDL_SyncWindow(window)) {
     std::fprintf(stderr,"DISPLAY: SDL mode change failed: %s\n",SDL_GetError());

@@ -50,6 +50,9 @@ include("${root}/cmake/VectorFonts.cmake")
 add_executable(DisplayGeometryTests "${root}/diagnostics/DisplayGeometryTests.cpp")
 target_compile_features(DisplayGeometryTests PRIVATE cxx_std_17)
 add_test(NAME DisplayGeometryTests COMMAND DisplayGeometryTests)
+add_executable(TerrainTextureFilterTests "${root}/diagnostics/TerrainTextureFilterTests.cpp")
+target_compile_features(TerrainTextureFilterTests PRIVATE cxx_std_17)
+add_test(NAME TerrainTextureFilterTests COMMAND TerrainTextureFilterTests)
 option(S2_ENABLE_DEFERRED_LIGHT_TEST
   "Register animated-light resource regression" ON)
 set(S2_SCRIPT_CORPUS_DIR "" CACHE PATH "Directory containing the original autoload .l scripts")
@@ -541,6 +544,7 @@ add_custom_command(TARGET BgfxRendererTests POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:BgfxRendererTests>")
 add_test(NAME BgfxRendererTests COMMAND BgfxRendererTests)
 add_test(NAME DisplayRuntimeTests COMMAND BgfxRendererTests --display)
+add_test(NAME GraphicsOptionsRuntimeTests COMMAND BgfxRendererTests --graphics)
 s2_copy_fonts(BgfxRendererTests)
 add_test(NAME BgfxRuntimeImportTests COMMAND "${Python3_EXECUTABLE}"
   "${root}/diagnostics/CheckBgfxImports.py" "$<TARGET_FILE:Game>")

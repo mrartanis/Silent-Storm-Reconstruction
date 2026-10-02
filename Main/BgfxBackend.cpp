@@ -6,6 +6,7 @@
 #include "GameShaders.h"
 #include "../Misc/Win32Helper.h"
 #include "../Game/Platform.h"
+#include "../MiscDll/Commands.h"
 #undef min
 #undef max
 #include <array>
@@ -17,6 +18,12 @@
 namespace NGfx {
 namespace {
 unsigned activeEpoch = 0, nextEpoch = 0;
+uint32_t DisplayResetFlags() {
+  uint32_t flags = BGFX_RESET_NONE;
+  if (NGlobal::GetVar("gfx_vsync", 1).GetInt()) flags |= BGFX_RESET_VSYNC;
+  if (NGlobal::GetVar("gfx_anisotropic_filter", 1).GetInt() > 1) flags |= BGFX_RESET_MAXANISOTROPY;
+  return flags;
+}
 bgfx::TextureFormat::Enum TextureFormat(D3DFORMAT format) {
   switch (format) {
   case D3DFMT_A8R8G8B8: case D3DFMT_X8R8G8B8: return bgfx::TextureFormat::BGRA8;
@@ -217,9 +224,11 @@ void BgfxDeclaration::CopyVertices(void* output,const void* input,unsigned count
 struct BgfxDevice::Impl {
   bool initialized=false,healthy=true;
   unsigned width=0,height=0;
+  uint32_t resetFlags=0;
   bgfx::ViewId nextView=0,currentView=0;
   bool viewDirty=true,viewUsed=false;
   NWin32Helper::com_ptr<BgfxSurface> screenColor,screenDepth,color,depth;
+  NWin32Helper::com_ptr<BgfxSurface> antialiasedScene;
   NWin32Helper::com_ptr<BgfxBuffer> vertices,indices;
   NWin32Helper::com_ptr<BgfxDeclaration> declaration;
   NWin32Helper::com_ptr<BgfxShader> vertexShader,pixelShader;
@@ -296,6 +305,25 @@ struct BgfxDevice::Impl {
     for(auto frame:frameBuffers) bgfx::destroy(frame);
     frameBuffers.clear();frameSurfaces.clear();nextView=0;viewDirty=true;viewUsed=false;
   }
+  void DrawPresentation(bgfx::ViewId view, bgfx::FrameBufferHandle target, bgfx::TextureHandle source, float gamma, bool antialias) {
+    struct Vertex {float x,y,z,u,v;};
+    Vertex vertices[]={{-1,1,0,0,0},{3,1,0,2,0},{-1,-3,0,0,2}};
+    bgfx::VertexLayout layout;
+    layout.begin().add(bgfx::Attrib::Position,3,bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0,2,bgfx::AttribType::Float).end();
+    if(bgfx::getAvailTransientVertexBuffer(3,layout)<3) throw std::runtime_error("Presentation geometry budget exhausted");
+    bgfx::TransientVertexBuffer buffer;
+    bgfx::allocTransientVertexBuffer(&buffer,3,layout);memcpy(buffer.data,vertices,sizeof(vertices));
+    bgfx::setViewFrameBuffer(view,target);bgfx::setViewRect(view,0,0,width,height);
+    bgfx::setViewMode(view,bgfx::ViewMode::Sequential);bgfx::setViewClear(view,BGFX_CLEAR_NONE);
+    bgfx::setVertexBuffer(0,&buffer);
+    uint32_t flags=BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP;
+    if(!antialias)flags|=BGFX_SAMPLER_MIN_POINT|BGFX_SAMPLER_MAG_POINT;
+    bgfx::setTexture(0,samplers[0],source,flags);
+    float params[]={1.0f/std::max(0.1f,gamma),antialias?1.0f:0.0f,1.0f/width,1.0f/height};
+    bgfx::setUniform(uPresent,params);
+    bgfx::setState(BGFX_STATE_WRITE_RGB|BGFX_STATE_WRITE_A);bgfx::setStencil(BGFX_STENCIL_NONE);
+    bgfx::submit(view,presentProgram);
+  }
   void Apply(D3DPRIMITIVETYPE primitive) {
     // Keep the legacy integer pixel centers on the D3D11 half-integer grid.
     float raster[]={1.0f/color->storage->Width(color->level),-1.0f/color->storage->Height(color->level),0,0};
@@ -303,15 +331,18 @@ struct BgfxDevice::Impl {
     bgfx::setUniform(uVertex,vertexConstants,96);bgfx::setUniform(uPixel,pixelConstants,8);
     float alpha[4]={states[D3DRS_ALPHAREF]/255.0f,float(states[D3DRS_ALPHATESTENABLE]),float(states[D3DRS_ALPHAFUNC]),0};
     bgfx::setUniform(uAlpha,alpha);bgfx::setUniform(uProjection,projection,2);
+    const bool anisotropy=NGlobal::GetVar("gfx_anisotropic_filter",1).GetInt()>1;
     for(unsigned i=0;i<8;++i) if(textures[i]) {
       uint32_t flags=0;
       if(sampler[i][D3DSAMP_ADDRESSU]==D3DTADDRESS_CLAMP)flags|=BGFX_SAMPLER_U_CLAMP;
       if(sampler[i][D3DSAMP_ADDRESSV]==D3DTADDRESS_CLAMP)flags|=BGFX_SAMPLER_V_CLAMP;
       if(sampler[i][D3DSAMP_MINFILTER]==D3DTEXF_POINT)flags|=BGFX_SAMPLER_MIN_POINT;
       if(sampler[i][D3DSAMP_MAGFILTER]==D3DTEXF_POINT)flags|=BGFX_SAMPLER_MAG_POINT;
-      if(sampler[i][D3DSAMP_MINFILTER]==D3DTEXF_ANISOTROPIC)flags|=BGFX_SAMPLER_MIN_ANISOTROPIC;
-      if(sampler[i][D3DSAMP_MAGFILTER]==D3DTEXF_ANISOTROPIC)flags|=BGFX_SAMPLER_MAG_ANISOTROPIC;
-      if(sampler[i][D3DSAMP_MIPFILTER]!=D3DTEXF_LINEAR)flags|=BGFX_SAMPLER_MIP_POINT;
+      // Read the live option even when legacy SetTexturePointFilter's cache
+      // skips a sampler update. Keep point sampling for UI/special passes.
+      if(anisotropy && sampler[i][D3DSAMP_MINFILTER]!=D3DTEXF_POINT)flags|=BGFX_SAMPLER_MIN_ANISOTROPIC;
+      if(anisotropy && sampler[i][D3DSAMP_MAGFILTER]!=D3DTEXF_POINT)flags|=BGFX_SAMPLER_MAG_ANISOTROPIC;
+      if(sampler[i][D3DSAMP_MIPFILTER]==D3DTEXF_POINT)flags|=BGFX_SAMPLER_MIP_POINT;
       bgfx::setTexture(i,samplers[i],textures[i]->storage->handle,flags);
     }
     uint64_t state=0;DWORD write=states[D3DRS_COLORWRITEENABLE];
@@ -349,7 +380,7 @@ bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
   init.swapChain.ndt=S2Platform::NativeDisplay();
 #endif
   init.swapChain.nwh=window;
-  init.swapChain.width=w;init.swapChain.height=h;init.reset=BGFX_RESET_NONE;
+  init.swapChain.width=w;init.swapChain.height=h;init.reset=DisplayResetFlags();
   init.limits.maxTransientVbSize=64*1024*1024;init.limits.maxTransientIbSize=16*1024*1024;
   if(!bgfx::init(init)) { impl->Fail("Cannot initialize bgfx renderer");return false; }
   activeEpoch=++nextEpoch;impl->initialized=true;
@@ -372,7 +403,7 @@ BgfxDevice::~BgfxDevice() {
   impl->EndFrame();
   impl->vertices=0;impl->indices=0;impl->declaration=0;impl->vertexShader=0;impl->pixelShader=0;
   for(auto& t:impl->textures)t=0;
-  impl->color=0;impl->depth=0;impl->screenColor=0;impl->screenDepth=0;
+  impl->color=0;impl->depth=0;impl->screenColor=0;impl->screenDepth=0;impl->antialiasedScene=0;
   for(auto p:impl->programs)bgfx::destroy(p.second);
   if(bgfx::isValid(impl->presentProgram))bgfx::destroy(impl->presentProgram);
   for(auto s:impl->shaders)bgfx::destroy(s.second);
@@ -384,8 +415,10 @@ bool BgfxDevice::Resize(unsigned w,unsigned h) {
   if(!impl->initialized || !w || !h || w>16384 || h>16384)return false;
   try {
     impl->EndFrame();bgfx::SwapChain swapChain;swapChain.width=w;swapChain.height=h;
-    bgfx::reset(BGFX_RESET_NONE,&swapChain);
+    impl->resetFlags=DisplayResetFlags();
+    bgfx::reset(impl->resetFlags,&swapChain);
     impl->width=w;impl->height=h;
+    impl->antialiasedScene=0;
     impl->screenColor.Create(new BgfxSurface(std::make_shared<BgfxTextureStorage>(w,h,1,D3DFMT_A8R8G8B8,false,false,true)));
     impl->screenDepth.Create(new BgfxSurface(std::make_shared<BgfxTextureStorage>(w,h,1,D3DFMT_D24S8,false,false,true)));
     impl->color=impl->screenColor;impl->depth=impl->screenDepth;
@@ -393,24 +426,49 @@ bool BgfxDevice::Resize(unsigned w,unsigned h) {
   }catch(const std::exception& e){impl->Fail(e.what());return false;}
 }
 bool BgfxDevice::Healthy() const {return impl->initialized && impl->healthy;}
+unsigned BgfxDevice::PresentationResetFlags() const {return impl->resetFlags;}
+void BgfxDevice::ApplySceneAntialiasing() {
+  if(!Healthy() || NGlobal::GetVar("gfx_antialiasing",0).GetInt()!=1)return;
+  try {
+    if(impl->nextView+2>2045)throw std::runtime_error("Scene antialiasing exceeded ordered render-pass limit");
+    if(!impl->antialiasedScene)
+      impl->antialiasedScene.Create(new BgfxSurface(std::make_shared<BgfxTextureStorage>(
+        impl->width,impl->height,1,D3DFMT_A8R8G8B8,false,false,true)));
+    auto makeFrame=[this](bgfx::TextureHandle texture) {
+      auto frame=bgfx::createFrameBuffer(1,&texture,false);
+      if(!bgfx::isValid(frame))throw std::runtime_error("Scene antialiasing target creation failed");
+      impl->frameBuffers.push_back(frame);return frame;
+    };
+    // Filter into a separate target, then copy back with point sampling. Keep
+    // the original screen surface/depth and legacy render-target caches intact.
+    // The following UI passes receive later view IDs and never enter FXAA.
+    impl->DrawPresentation(impl->nextView++,makeFrame(impl->antialiasedScene->storage->handle),
+      impl->screenColor->storage->handle,1.0f,true);
+    impl->DrawPresentation(impl->nextView++,makeFrame(impl->screenColor->storage->handle),
+      impl->antialiasedScene->storage->handle,1.0f,false);
+    impl->viewDirty=true;
+  }catch(const std::exception& e){impl->Fail(e.what());}
+}
 void BgfxDevice::Present(float gamma) {
   if(!Healthy())return;
-  struct Vertex {float x,y,z,u,v;};
-  Vertex vertices[]={{-1,1,0,0,0},{3,1,0,2,0},{-1,-3,0,0,2}};
-  bgfx::VertexLayout layout;layout.begin().add(bgfx::Attrib::Position,3,bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0,2,bgfx::AttribType::Float).end();
-  if(bgfx::getAvailTransientVertexBuffer(3,layout)<3){impl->Fail("Presentation geometry budget exhausted");return;}
-  bgfx::TransientVertexBuffer buffer;bgfx::allocTransientVertexBuffer(&buffer,3,layout);memcpy(buffer.data,vertices,sizeof(vertices));
-  bgfx::setViewFrameBuffer(2047,BGFX_INVALID_HANDLE);bgfx::setViewRect(2047,0,0,impl->width,impl->height);
-  bgfx::setViewMode(2047,bgfx::ViewMode::Sequential);bgfx::setViewClear(2047,BGFX_CLEAR_NONE);
-  bgfx::setVertexBuffer(0,&buffer);bgfx::setTexture(0,impl->samplers[0],impl->screenColor->storage->handle,BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_MIN_POINT|BGFX_SAMPLER_MAG_POINT);
-  float params[]={1.0f/std::max(0.1f,gamma),0,0,0};bgfx::setUniform(impl->uPresent,params);
-  bgfx::setState(BGFX_STATE_WRITE_RGB|BGFX_STATE_WRITE_A);bgfx::setStencil(BGFX_STENCIL_NONE);
-  bgfx::submit(2047,impl->presentProgram);bgfx::frame();impl->EndFrame();
+  try {
+    impl->DrawPresentation(2047,BGFX_INVALID_HANDLE,impl->screenColor->storage->handle,gamma,false);
+    bgfx::frame();impl->EndFrame();
+    // Finish the old frame before changing swap-chain/sampler state. Keep all
+    // scene targets alive: these two switches need no resource recreation.
+    uint32_t flags=DisplayResetFlags();
+    if(flags!=impl->resetFlags) {
+      bgfx::SwapChain swapChain;swapChain.width=impl->width;swapChain.height=impl->height;
+      bgfx::reset(flags,&swapChain);impl->resetFlags=flags;
+    }
+  }catch(const std::exception& e){impl->Fail(e.what());}
 }
 void BgfxDevice::Screenshot(std::vector<unsigned char>* pixels,unsigned* width,unsigned* height) {
   if(!Healthy())return;
   *width=impl->width;*height=impl->height;pixels->resize(*width**height*4);
   auto readback=bgfx::createTexture2D(*width,*height,false,1,bgfx::TextureFormat::BGRA8,BGFX_TEXTURE_BLIT_DST|BGFX_TEXTURE_READ_BACK);
+  // The screen already contains the filtered scene and unfiltered interface.
+  // Gamma correction is handled by MakeScreenShot's correctGamma argument.
   bgfx::TextureRegion destination,source;
   destination.init(readback);source.init(impl->screenColor->storage->handle);
   bgfx::blit(2046,destination,source);

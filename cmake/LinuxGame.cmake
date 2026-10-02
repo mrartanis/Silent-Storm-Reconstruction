@@ -133,4 +133,5 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
 endif()
 
 add_test(NAME DisplayRuntimeTests COMMAND BgfxRendererTests --display)
+add_test(NAME GraphicsOptionsRuntimeTests COMMAND BgfxRendererTests --graphics)
 s2_copy_fonts(BgfxRendererTests)

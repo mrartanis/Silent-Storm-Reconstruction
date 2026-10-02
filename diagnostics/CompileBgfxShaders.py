@@ -235,10 +235,37 @@ def compile_all(args):
     # Present from a linear BGRA render target; apply the configured game gamma.
     present_vs = (VARYING + 'Varying main(float3 a_position:POSITION,float2 a_texcoord0:TEXCOORD0) {'
                   ' Varying o=(Varying)0;o.position=float4(a_position,1);o.tex0=float4(a_texcoord0,0,1);return o;}')
-    present_fs = (VARYING + 'uniform float4 u_present;\nTexture2D<float4> s0Texture:register(t0);\n'
-                  'SamplerState s0Sampler:register(s0);\nfloat4 main(Varying i):SV_TARGET {'
-                  'float4 c=s0Texture.Sample(s0Sampler,i.tex0.xy);'
-                  'return float4(pow(max(c.rgb,0),u_present.xxx),c.a);}')
+    present_fs = VARYING + r'''
+uniform float4 u_present; // gamma exponent, FXAA enabled, reciprocal width/height
+Texture2D<float4> s0Texture:register(t0);
+SamplerState s0Sampler:register(s0);
+float3 sampleColor(float2 uv) { return s0Texture.Sample(s0Sampler,uv).rgb; }
+float luma(float3 color) { return dot(color,float3(0.299,0.587,0.114)); }
+float3 filterEdges(float2 uv, float3 center) {
+    float2 pixel=u_present.zw;
+    float nw=luma(sampleColor(uv+float2(-1,-1)*pixel));
+    float ne=luma(sampleColor(uv+float2( 1,-1)*pixel));
+    float sw=luma(sampleColor(uv+float2(-1, 1)*pixel));
+    float se=luma(sampleColor(uv+float2( 1, 1)*pixel));
+    float mid=luma(center);
+    float low=min(mid,min(min(nw,ne),min(sw,se)));
+    float high=max(mid,max(max(nw,ne),max(sw,se)));
+    if(high-low < max(0.0312,high*0.125)) return center;
+    float2 direction=float2(-((nw+ne)-(sw+se)),(nw+sw)-(ne+se));
+    float reduce=max((nw+ne+sw+se)*(0.25*0.125),1.0/128.0);
+    direction=clamp(direction/(min(abs(direction.x),abs(direction.y))+reduce),-8.0,8.0)*pixel;
+    float3 a=0.5*(sampleColor(uv+direction*(1.0/3.0-0.5))+
+                  sampleColor(uv+direction*(2.0/3.0-0.5)));
+    float3 b=a*0.5+0.25*(sampleColor(uv-direction*0.5)+sampleColor(uv+direction*0.5));
+    float lb=luma(b);
+    return (lb<low || lb>high) ? a : b;
+}
+float4 main(Varying i):SV_TARGET {
+    float4 c=s0Texture.Sample(s0Sampler,i.tex0.xy);
+    if(u_present.y>0.5) c.rgb=filterEdges(i.tex0.xy,c.rgb);
+    return float4(pow(max(c.rgb,0),u_present.xxx),c.a);
+}
+'''
     jobs += [('vsPresent', 0, 0, present_vs, True), ('psPresent', 0, 0, present_fs, False)]
 
     def compile_one(job):
@@ -246,7 +273,8 @@ def compile_all(args):
         stem = f'{name}_{mask}'
         source_path = out.parent / (stem + '.hlsl')
         binary_path = out.parent / (stem + '.bin')
-        source_path.write_text(hlsl)
+        # shaderc's raw SPIR-V uniform parser requires LF even on a Windows host.
+        source_path.write_text(hlsl, encoding='utf-8', newline='\n')
         cmd = [args.shaderc, '-f', str(source_path), '-o', str(binary_path),
                '--type', 'vertex' if vertex else 'fragment', '--platform', args.platform,
                '-p', args.profile, '--raw', '-O', '3']

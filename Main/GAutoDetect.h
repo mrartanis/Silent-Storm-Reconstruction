@@ -66,6 +66,8 @@ EConfigValue GetTextureMode();                        // @0xf6bb0
 void SetTextureMode( EConfigValue mode );             // @0xf6bc0
 EConfigValue GetFSAAMode();                            // @0xf6be0
 void SetFSAAMode( EConfigValue mode );                // @0xf6bf0
+// Fixed resource/effect quality for the modern renderer; display settings remain configurable.
+void ApplyMaximumQuality();
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

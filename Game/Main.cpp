@@ -13,6 +13,7 @@
 #include "..\MiscDll\Commands.h"
 #include "..\Main\GResource.h" // CRAP for lack of anything better, there should actually be version support
 #include "..\Main\iInterMission.h" // CRAP, to start from mission
+#include "../Main/iOptionsMenu.h"
 #include "..\Main\iLoading.h"      // NGame::InitLoadingScreen / TermLoadingScreen -- loading-screen UI built once at boot
 #include "..\Misc\HPTimer.h"       // NHPTimer::UpdateHPTimerFrequency -- the per-frame TSC recalibration
 #include "..\Misc\RandomGen.h"     // [HARNESS] deterministic ISAAC seed for paired architecture tests
@@ -761,6 +762,15 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	}
 	else if ( sCmd == "displaytree" )
 		HarnessDisplayTree(NUI::CurrentInterfaceForDiagnostics());
+	else if ( sCmd == "graphicsoptions" )
+		NMainLoop::Command(new NGame::CICOptions(NGame::OS_VIDEO));
+	else if ( sCmd.compare(0,15,"graphicsoption ")==0 )
+	{
+		char name[40]{}; int value=0,height=0;
+		const int count=sscanf(sCmd.c_str(),"graphicsoption %39s %d %d",name,&value,&height);
+		const bool ok=count>=2 && NUI::SelectGraphicsOptionForDiagnostics(name,value,height);
+		SaveLoadDiag("[graphics-option] %s value=%d height=%d ok=%d\n",name,value,height,ok?1:0);
+	}
 	else if ( sCmd == "bugstate" )
 		HarnessBugState();
 	else if ( sCmd.compare(0,13,"projectpoint ")==0 )

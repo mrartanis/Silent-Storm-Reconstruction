@@ -54,8 +54,10 @@ int GetMaxAnisotropicLevel();   // @0x10cee0
 void SetGamma( bool bGamma );
 bool SetMode( const SVideoMode &m_, const SRenderTargetsInfo &_rtInfo );
 void GetModesList( list<SVideoMode> *pRes, int nBpp = 32 );
+bool GetDesktopVideoMode(SVideoMode* output);
 CVec2 GetScreenRect();
 void Flip();
+void ApplySceneAntialiasing();
 void MakeScreenShot( CArray2D<SPixel8888> *pRes, bool bCorrectGamma );
 void CheckBackBufferSize();
 void CheckDeviceCaps();

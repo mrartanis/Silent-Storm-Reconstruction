@@ -1526,6 +1526,18 @@ void CComboBox::SetSelectedItem( int nID )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CComboBox::Update( const STime &sTime, NGScene::I2DGameView *pView )
+{
+	// The popup is a sibling. Follow the field's right edge while retaining
+	// the authored row artwork width, even when the field itself is narrower.
+	const int popupWidth=Max(pList->GetAuthoredSize().x,GetSize().x);
+	pList->SetPosition(SPoint(GetPosition().x+GetSize().x-popupWidth,GetPosition().y+GetSize().y));
+	pList->SetSize(SPoint(popupWidth,pList->GetSize().y));
+	pList->SetStyle(STYLE_ENABLED,GetStyle(STYLE_ENABLED));
+	if(!GetStyle(STYLE_VISIBLE)) pList->SetStyle(STYLE_VISIBLE,false);
+	CWindow::Update(sTime,pView);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CComboBox::ProcessMessage( const SEvent &sEvent )
 {
 	switch ( sEvent.nEvent )

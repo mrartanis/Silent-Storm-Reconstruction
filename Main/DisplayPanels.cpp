@@ -7,6 +7,10 @@
 
 namespace NUI {
 namespace {
+bool RussianDisplayText() {
+  for(wchar_t c:GetDBString(4382)) if(c>=0x400 && c<=0x4ff) return true;
+  return false;
+}
 CWindow* Panel(CInterface* ui, const char* id, int height) {
   CWindow* old = ui->GetChildByID(id);
   if (IsValid(old)) { old->ShowWindow(SWTYPE_SHOW); return old; }
@@ -15,7 +19,16 @@ CWindow* Panel(CInterface* ui, const char* id, int height) {
   panel->EnableAdaptiveLayout();
   auto* background = new CImage(SWindowInfo(panel, SPoint(0,0), SPoint(544,height), "background",
       STYLE_ENABLED | STYLE_VISIBLE | STYLE_TRANSPARENT | STYLE_BOTTOMMOST));
-  background->SetColor(NGfx::SPixel8888(12,16,20,245));
+  const bool confirmation=std::string(id)=="display_confirmation";
+  background->SetColor(confirmation?NGfx::SPixel8888(216,203,175,255):NGfx::SPixel8888(12,16,20,245));
+  if(confirmation) {
+    const SPoint positions[]={SPoint(0,0),SPoint(0,height-3),SPoint(0,3),SPoint(541,3)};
+    const SPoint sizes[]={SPoint(544,3),SPoint(544,3),SPoint(3,height-6),SPoint(3,height-6)};
+    for(int i=0;i<4;++i) {
+      auto* border=new CImage(SWindowInfo(panel,positions[i],sizes[i],"border",STYLE_ENABLED|STYLE_VISIBLE|STYLE_TRANSPARENT));
+      border->SetColor(NGfx::SPixel8888(89,58,39,255));
+    }
+  }
   panel->ShowWindow(SWTYPE_SHOW);
   return panel;
 }
@@ -37,6 +50,13 @@ void Button(CWindow* parent, const char* id, int y, const wstring& text) {
     if (IsValid(label) && label->GetText()!=text) label->SetText(text);
   }
 }
+void NativeButton(CWindow* parent, const char* id, int y, const wstring& text) {
+  if(IsValid(parent->GetChildByID(id))) return;
+  auto* button=new CButton(SWindowInfo(parent,SPoint(16,y),SPoint(512,36),id));
+  button->AddTextState(0,GetDBString(4404)+L"<center>"+text);
+  button->AddTextState(1,GetDBString(4405)+L"<center>"+text);
+  button->AddTextState(2,GetDBString(4405)+L"<center>"+text);
+}
 }
 void CInterface::ShowDisplayOptions() {
   ResetMouseCapture();
@@ -49,7 +69,7 @@ void CInterface::UpdateDisplayPanels() {
     BringWindowToTop(settings);
     Label(settings,"title",12,L"<font size=22pt>Display and interface");
     const bool fullscreen=NGlobal::GetVar("gfx_fullscreen",1).GetFloat()!=0;
-    Button(settings,"display_mode",58,fullscreen?L"<font size=18pt>Window mode: Borderless fullscreen":L"<font size=18pt>Window mode: Window");
+    Button(settings,"display_mode",58,fullscreen?L"<font size=18pt>Window mode: Fullscreen":L"<font size=18pt>Window mode: Window");
     WCHAR text[256];
     const float percent=NGlobal::GetVar("ui_scale",0).GetFloat();
     const auto& m=S2Platform::Display();
@@ -65,10 +85,13 @@ void CInterface::UpdateDisplayPanels() {
   if(seconds>0) {
     confirmation=Panel(this,"display_confirmation",220);
     BringWindowToTop(confirmation);
-    WCHAR text[256]; swprintf(text,256,L"<font size=20pt>Keep this display mode? Reverting in %d seconds.",seconds);
-    Label(confirmation,"countdown",20,text);
-    Button(confirmation,"display_keep",92,L"<font size=18pt><center>Keep (Enter)");
-    Button(confirmation,"display_revert",140,L"<font size=18pt><center>Revert (Escape)");
+    const bool russian=RussianDisplayText();
+    WCHAR text[256]; swprintf(text,256,russian?
+      L"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c?<br>\u0412\u043e\u0437\u0432\u0440\u0430\u0442 \u0447\u0435\u0440\u0435\u0437 %d \u0441\u0435\u043a.":
+      L"Keep this display mode?<br>Reverting in %d seconds.",seconds);
+    Label(confirmation,"countdown",20,GetDBString(4402)+L"<center>"+text);
+    NativeButton(confirmation,"display_keep",92,russian?L"\u0421\u041e\u0425\u0420\u0410\u041d\u0418\u0422\u042c (ENTER)":L"KEEP (ENTER)");
+    NativeButton(confirmation,"display_revert",140,russian?L"\u0412\u0415\u0420\u041d\u0423\u0422\u042c (ESCAPE)":L"REVERT (ESCAPE)");
   } else if(IsValid(confirmation)) confirmation->SetStyle(STYLE_VISIBLE,false);
 }
 bool CInterface::HandleDisplayMessage(const SEvent& event) {

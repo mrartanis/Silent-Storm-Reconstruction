@@ -15,7 +15,7 @@ void BeginDisplayChange() {
   if (pending) RevertDisplayChange();
   previousResolution = NGlobal::GetVar("gfx_resolution", 1024).GetString();
   previousFullscreen = NGlobal::GetVar("gfx_fullscreen", 1).GetFloat();
-  // Remember the actual window size when switching into borderless mode.
+  // Remember the actual window size when switching into fullscreen mode.
   if (previousFullscreen == 0) {
     const auto& m = S2Platform::Display();
     WCHAR text[64]; swprintf(text,64,L"%dx%d",m.windowWidth,m.windowHeight);

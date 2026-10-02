@@ -538,7 +538,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 
 	if ( cmdFPSShow.ProcessEvent( eEvent ) )
 	{
-		bShowFPSStats = !bShowFPSStats;
+		NGlobal::SetVar("gfx_show_fps",NGlobal::GetVar("gfx_show_fps",0).GetInt()?0:1);
 		bRet = true;
 	}
 
@@ -626,42 +626,38 @@ void CInterface::Draw( const STime &sTime )
 
 	pNonPublicDemo->SetSize(SPoint(S2UI::Width(), S2UI::Height()));
 	pNonPublicDemo->Draw( this, sTime, pView );
+	bShowFPSStats=NGlobal::GetVar("gfx_show_fps",0).GetInt()!=0;
 	if( bShowFPSStats )
+	{
+		if(!IsValid(pFPSText))pFPSText=new CTextDraw(SPoint(12,36),SPoint(200,32),L"");
+		UpdateFPSText();
 		pFPSText->Draw( this, sTime, pView );
+	}
 
 	pCursor->Draw( sTime, pView );
 	pView->Flush();
-	UpdateFPSText();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CInterface::UpdateFPSText()
 {
-	if( bShowFPSStats )
-	{
-		NGScene::SRenderStats sStats;
-		NGScene::GetRenderStats( &sStats );
-
-		float fFPS = 1 / sStats.fFrameTime;
-		WCHAR wszBuf[1024];
-		if ( sStats.bGeometryThrashing )
-			swprintf( wszBuf, sizeof(wszBuf) / sizeof(wszBuf[0]), L"\n\n<font face=Courier size=16><left>FPS = %4.1f\n<color=red>Scene tris = %d<color=white>\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB",
-				fFPS, sStats.nSceneTris, sStats.nVertices, sStats.nTris, sStats.nParticles, sStats.nLitParticles, NGScene::CalcTouchedTextureSize() / 1000000.0f );
-		else
-			swprintf( wszBuf, sizeof(wszBuf) / sizeof(wszBuf[0]), L"\n\n<font face=Courier size=16><left>FPS = %4.1f\nScene tris = %d\nVertices = %d\nTris = %d\nParticles = %d(%d)\nTexMem = %.1f MB",
-				fFPS, sStats.nSceneTris, sStats.nVertices, sStats.nTris, sStats.nParticles, sStats.nLitParticles, NGScene::CalcTouchedTextureSize() / 1000000.0f );
-		if ( sStats.b2DTexturesThrashing )
-			wcscat( wszBuf, L"\n<color=red>2D texture cache thrashing<color=white>" );
-		if ( sStats.bTransparentThrashing )
-			wcscat( wszBuf, L"\n<color=red>transparent texture cache thrashing<color=white>" );
-		if ( sStats.bStaticShadowDepthRendered )
-			wcscat( wszBuf, L"\n<color=red>static shadow depth recalc<color=white>" );
-		if ( sStats.bLightmapThrashing )
-			wcscat( wszBuf, L"\n<color=red>lightmap buffer is thrashing<color=white>" );
- 		pFPSText->SetText( wszBuf );
-	}
+	// Measure completed frame intervals, including presentation/v-sync, in menus
+	// as well as missions. Scene render statistics omit parts of that interval.
+	static std::uint32_t previous = S2Platform::Milliseconds();
+	static float frameMs = 16.667f;
+	const std::uint32_t now = S2Platform::Milliseconds(), elapsed = now - previous;
+	previous = now;
+	if (elapsed && elapsed < 1000) frameMs = frameMs * 0.9f + elapsed * 0.1f;
+	WCHAR text[64];
+	swprintf(text,64,L"<font face=Courier size=16pt><color=white>FPS: %.0f",1000.0f / frameMs);
+	pFPSText->SetPosition(SPoint(12,36)); // Below the mission's top menu buttons.
+	pFPSText->SetSize(SPoint(180,32));
+	pFPSText->SetText(text);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace
 using namespace NUI;
 REGISTER_SAVELOAD_CLASS( 0xB2841122, CMouseCaptureHandler );
 REGISTER_SAVELOAD_CLASS( 0xB2841123, CInterface );
+START_REGISTER(UIInterfaceGraphics)
+	REGISTER_VAR("gfx_show_fps", 0, 0, true)
+FINISH_REGISTER

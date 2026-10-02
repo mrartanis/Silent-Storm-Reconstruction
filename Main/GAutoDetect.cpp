@@ -163,6 +163,15 @@ EConfigValue GetLightingQualityMode()             { return FindCfgMode( lighting
 // SetTextureMode @0xf6bc0 / GetTextureMode @0xf6bb0
 void SetTextureMode( EConfigValue mode )          { ApplyCfgValues( textureConfig, mode, CV_CUSTOM ); }
 EConfigValue GetTextureMode()                     { return FindCfgMode( textureConfig, CV_CUSTOM ); }
+void ApplyMaximumQuality()
+{
+	SetSpeedMode( CV_LOW ); // This axis is speed: index zero retains every effect.
+	SetTextureMode( CV_VHIGH );
+	SetLightingQualityMode( CV_VHIGH );
+	NGlobal::SetVar( "gfx_particles", 1 );
+	NGlobal::SetVar( "gfx_terrain_bilinear", 1 );
+	NGlobal::SetVar( "gfx_register_resolution", 1 );
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // SetFSAAMode @0xf6bf0 / GetFSAAMode @0xf6be0
 void SetFSAAMode( EConfigValue mode )             { ApplyCfgValues( fsaaConfig, mode, CV_CUSTOM ); }
