@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "..\Main\GInit.h"
+#include "../Main/DisplayOptions.h"
+#include "../Main/Interface.h"
 #include "Platform.h"
 #include "..\Main\iMain.h"
 #include "..\Input\Bind.h"
@@ -24,6 +26,12 @@
 #include "..\Main\A5Script.h"       // [HARNESS] ProcessCommand (console/lua entry for the command channel)
 #include "..\Main\LSHead.h"         // [HARNESS] export the complete facial-sequence test corpus
 #include "..\Main\iMission.h"       // [HARNESS] loaded mission and active player
+#include "../Main/iCommonUI.h"
+#include "../Main/iMissionUI.h"
+#include "../Main/iMissionExec.h"
+#include "../Main/iMissionDlgUI.h" // [HARNESS] inspect logical dialogue progress
+#include "../Main/ChapterInfo.h"
+#include "../Main/iChapterMapUI.h"
 #include "..\Main\Cursor.h"         // [HARNESS] center the software cursor on each loaded mission
 #include "..\Main\GView.h"          // [HARNESS] game-view dimensions for cursor positioning
 #include "..\Main\Camera.h"         // [HARNESS] verify the unattended camera remains stationary
@@ -490,6 +498,33 @@ static void HarnessCameraStatus()
 }
 
 // ============================================================================================
+static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
+  if (!IsValid(window) || !window->GetStyle(NUI::STYLE_VISIBLE) || depth > 8) return;
+  NUI::SPoint pos;
+  NUI::SRect clip;
+  if (window->ClientToScreen(&pos,&clip)) {
+    window->VirtualToScreen(&pos,&clip);
+    SaveLoadDiag("[display-control] depth=%d id=%s position=%d,%d clip=%d,%d,%d,%d active=%d\n",
+      depth,window->GetWindowID().c_str(),pos.x,pos.y,clip.x1,clip.y1,clip.x2,clip.y2,window->IsActive());
+  }
+  if(IsValid(window->GetInterface())) {
+    const auto cursor=window->GetInterface()->GetCursorPos();
+    if(window->HitTest(cursor.x,cursor.y))
+      SaveLoadDiag("[display-hit] depth=%d id=%s enabled=%d topmost=%d noactivate=%d cursor=%d,%d\n",
+        depth,window->GetWindowID().c_str(),window->GetStyle(NUI::STYLE_ENABLED),
+        window->GetStyle(NUI::STYLE_TOPMOST),window->GetStyle(NUI::STYLE_NOACTIVATE),cursor.x,cursor.y);
+  }
+  if(auto* dialog=dynamic_cast<NUI::CMissionDlgUI*>(window)) {
+    int page,phrase,offset,phase;
+    dialog->GetDisplayProgressForDiagnostics(&page,&phrase,&offset,&phase);
+    SaveLoadDiag("[dialog-display] page=%d phrase=%d offset=%d phase=%d\n",page,phrase,offset,phase);
+  }
+  if(auto* chapter=dynamic_cast<NUI::CChapterMapUI*>(window))
+    SaveLoadDiag("%s",chapter->GetTravelForDiagnostics().c_str());
+  list<CPtr<NUI::CWindow> > children;
+  window->GetChildrenList(&children);
+  for (auto it=children.begin();it!=children.end();++it) HarnessDisplayTree(*it,depth+1);
+}
 // [HARNESS] Frame-polled command channel -- a minimal RTC protocol between an external driver and
 // the running game. Once per frame (when g_bHarnessLog is on) the main loop reads ONE command line
 // from ".\_harness_cmd.txt" (raw system-ANSI bytes so Cyrillic slot names round-trip), clears the
@@ -594,6 +629,27 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 			NMainLoop::GetActiveProfile() == wanted ? 1 : 0,
 			find( profiles.begin(), profiles.end(), wanted ) != profiles.end() ? 1 : 0,
 			static_cast<unsigned>( profiles.size() ) );
+	}
+	else if ( sCmd == "displaystatus" )
+	{
+		const auto& m = S2Platform::Display();
+		SaveLoadDiag("[display] window=%dx%d pixels=%dx%d dpi=%.4f scale=%.4f canvas=%.2fx%.2f drawable=%d revision=%u confirmation=%d\n",
+			m.windowWidth,m.windowHeight,m.pixelWidth,m.pixelHeight,m.displayScale,m.uiScale,
+			m.CanvasWidth(),m.CanvasHeight(),m.drawable,m.revision,NGScene::DisplayChangeSeconds());
+		NUI::CInterface* ui = NUI::CurrentInterfaceForDiagnostics();
+		if (IsValid(ui)) { const auto& pos = ui->GetCursorPos(); SaveLoadDiag("[display] cursorUI=%d,%d\n",pos.x,pos.y); }
+	}
+	else if ( sCmd == "displaytree" )
+		HarnessDisplayTree(NUI::CurrentInterfaceForDiagnostics());
+	else if ( sCmd == "displaypanel" )
+	{
+		NUI::CInterface* ui = NUI::CurrentInterfaceForDiagnostics();
+		if (IsValid(ui)) ui->ShowDisplayOptions();
+	}
+	else if ( sCmd == "loadingscreenshot" )
+	{
+		NGame::ShowLoadingScreen(0);
+		SaveLoadDiag("[harness] loading screenshot ok=%d\n",NMainLoop::MakeScreenShot() ? 1 : 0);
 	}
 	else if ( sCmd == "screenshot" )
 		SaveLoadDiag( "[harness] screenshot ok=%d\n", NMainLoop::MakeScreenShot() ? 1 : 0 );
@@ -904,9 +960,21 @@ static int RunGame( const char *lpCmdLine )
 		SetUnhandledExceptionFilter( HarnessCrashFilter );
 #endif   // [HARNESS] symbolic backtrace on post-load AV
 
+	int lastWindowWidth = S2Platform::Display().windowWidth;
+	int lastWindowHeight = S2Platform::Display().windowHeight;
 	for (;;)
 	{
 		S2Platform::PumpEvents();
+		S2Platform::UpdateDisplay( NGlobal::GetVar( "ui_scale", 0 ).GetFloat() );
+		const auto& currentDisplay = S2Platform::Display();
+		if (NGlobal::GetVar("gfx_fullscreen",0).GetFloat() == 0 &&
+		    (currentDisplay.windowWidth != lastWindowWidth || currentDisplay.windowHeight != lastWindowHeight)) {
+			const auto& m = S2Platform::Display();
+			WCHAR size[64]; swprintf(size,64,L"%dx%d",m.windowWidth,m.windowHeight);
+			if (NGlobal::GetVar("gfx_resolution",1024).GetString() != size)
+				NGlobal::SetVar("gfx_resolution",wstring(size));
+		}
+		lastWindowWidth = currentDisplay.windowWidth; lastWindowHeight = currentDisplay.windowHeight;
 		bool bActive = S2Platform::Active();
 		// A hidden debugger leaves the window inactive. The ordinary harness still
 		// preserves retail pause-on-background behavior; this explicit test mode
@@ -925,6 +993,7 @@ static int RunGame( const char *lpCmdLine )
 			S2Platform::Delay( 40 );
 	}
 	//
+	NGScene::RevertDisplayChange();
 	NGlobal::SaveConfig( ".\\cfg\\config.cfg" );
 
 	return 0;

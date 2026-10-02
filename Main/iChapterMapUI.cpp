@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "Transform.h"
@@ -328,6 +329,12 @@ public:
 
 	const SChapterSector& GetSector() const;
 
+	// Gameplay positions stay on the authored map; window hit testing uses the
+	// centered layout. Use this for entry, discovery and random encounters.
+	bool HitTestMap(const CVec2& point) const {
+		return HitTest(point.x+S2UI::MapOffsetX(),point.y+S2UI::MapOffsetY());
+	}
+
 	virtual void UpdateSector( const STime &sTime, const CVec2 &vTeamPose )= 0;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -458,7 +465,7 @@ void CZoneSector::UpdateSector( const STime &sTime, const CVec2 &vTeamPos )
 
 	CPtr<NRPG::CGlobalGame> pGame = pChapter->GetRPGGame();
 
-	bool bHit = HitTest( vTeamPos.x, vTeamPos.y );
+	bool bHit = HitTestMap( vTeamPos );
 	if ( bHit )
 		pGame->pScenarioTracker->RevealZone( pZone );
 
@@ -567,7 +574,7 @@ void CRandomSector::UpdateSector( const STime &sTime, const CVec2 &vTeamPos )
 	static SRand sRand;
 
 	vector<string> templParams;
-	if ( HitTest( vTeamPos.x, vTeamPos.y ) )
+	if ( HitTestMap( vTeamPos ) )
 		NMainLoop::CommandWithAutoSave( NStr::ToAscii( GetDBString( 20243 ) ), new NGame::CICBeginMission( GetSector().nTemplate, -1, templParams, pChapter->GetRPGGame(), pChapter->GetChapterMap()->pPWLImage ) );
 
 	if ( sUpdateTime > sTime )
@@ -594,7 +601,7 @@ void CRandomSector::UpdateSector( const STime &sTime, const CVec2 &vTeamPos )
 
 			SPoint sMarkerPos;
 			const SPoint &sSize = GetSize();
-			GetParent()->ScreenToClient( SPoint( vPoint.x - sSize.x / 2, vPoint.y - sSize.y / 2 ), &sMarkerPos );
+			GetParent()->ScreenToClient( SPoint( vPoint.x - sSize.x / 2+S2UI::MapOffsetX(), vPoint.y - sSize.y / 2+S2UI::MapOffsetY() ), &sMarkerPos );
 			SetStyle( STYLE_VISIBLE, true );
 			SetPosition( sMarkerPos );
 		}
@@ -771,6 +778,18 @@ void CChapterMapUI::SetTarget( const CVec2 &_vTargetPos )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+string CChapterMapUI::GetTravelForDiagnostics() const {
+    string result=NStr::Format("[chapter] position=%.2f,%.2f target=%.2f,%.2f mapOffset=%d,%d\n",
+        vCurrentPos.x,vCurrentPos.y,vTargetPos.x,vTargetPos.y,S2UI::MapOffsetX(),S2UI::MapOffsetY());
+    for(int i=0;i<sectorsSet.size();++i) {
+        const auto& sector=sectorsSet[i]->GetSector();
+        const auto position=sectorsSet[i]->GetPosition();
+        result+=NStr::Format("[chapter-sector] index=%d type=%d template=%d visible=%d hit=%d local=%d,%d\n",
+            i,int(sector.eType),sector.nTemplate,sectorsSet[i]->IsVisible(),sectorsSet[i]->HitTestMap(vCurrentPos),position.x,position.y);
+    }
+    return result;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CChapterMapUI::ProcessMessage( const SEvent &sEvent )
 {
 	switch( sEvent.nEvent )
@@ -782,7 +801,7 @@ bool CChapterMapUI::ProcessMessage( const SEvent &sEvent )
 				bool bHandled = false;
 				for ( int nTemp = 0; nTemp < sectorsSet.size(); nTemp++ )
 				{
-					if ( !sectorsSet[nTemp]->HitTest( vCurrentPos.x, vCurrentPos.y ) )
+					if ( !sectorsSet[nTemp]->HitTestMap( vCurrentPos ) )
 						continue;
 
 					const SChapterSector &sSector = sectorsSet[nTemp]->GetSector();
@@ -865,7 +884,7 @@ bool CChapterMapUI::ProcessMessage( const SEvent &sEvent )
 					{
 						SPoint sPosition;
 						const CVec2 &vPos = sChapterSector.pointsSet.front();
-						pMapView->ScreenToClient( SPoint( vPos.x, vPos.y ), &sPosition );
+						pMapView->ScreenToClient( SPoint( vPos.x+S2UI::MapOffsetX(), vPos.y+S2UI::MapOffsetY() ), &sPosition );
 						sectorsSet.push_back( new CZoneSector( SWindowInfo( pMapView, sPosition, SPoint( N_ZONE_SIZE, N_ZONE_SIZE ), "", STYLE_ENABLED | STYLE_VISIBLE | STYLE_BOTTOMMOST ), pChapter, sChapterSector ) );
 						break;
 					}
@@ -878,7 +897,7 @@ bool CChapterMapUI::ProcessMessage( const SEvent &sEvent )
 					{
 						SPoint sPosition;
 						const CVec2 &vPos = sChapterSector.pointsSet.front();
-						pMapView->ScreenToClient( SPoint( vPos.x, vPos.y ), &sPosition );
+						pMapView->ScreenToClient( SPoint( vPos.x+S2UI::MapOffsetX(), vPos.y+S2UI::MapOffsetY() ), &sPosition );
 						sectorsSet.push_back( new CExitZoneSector( SWindowInfo( pMapView, sPosition, SPoint( N_ZONE_SIZE, N_ZONE_SIZE ), "", STYLE_ENABLED | STYLE_VISIBLE | STYLE_BOTTOMMOST ), pChapter, sChapterSector ) );
 						break;
 					}
@@ -902,7 +921,7 @@ bool CChapterMapUI::ProcessMessage( const SEvent &sEvent )
 	case EVENT_LBUTTONUP:
 	{
 		if ( pMapView->HitTest( sEvent.nX, sEvent.nY ) )
-			SetTarget( CVec2( sEvent.nX, sEvent.nY ) );
+			SetTarget( CVec2( sEvent.nX-S2UI::MapOffsetX(), sEvent.nY-S2UI::MapOffsetY() ) );
 
 		return true;
 	}
@@ -957,7 +976,7 @@ void CChapterMapUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			wstring wsText;
 			if ( pSector->GetDescription( &wsText ) )
 			{
-				if ( sCursorPos.x > 512 )
+				if ( sCursorPos.x > S2UI::MapOffsetX()+512 )
 				{
 					bHideLeft = false;
 					pTextLeft->Set( CDescriptionText::MODE_VISIBLE, wsText );
@@ -983,18 +1002,31 @@ void CChapterMapUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	sLastUpdateTime = sTargetTime;
 
 	SPoint sPoint;
-	pMapView->ScreenToClient( SPoint( vCurrentPos.x, vCurrentPos.y ), &sPoint );
+	pMapView->ScreenToClient( SPoint( vCurrentPos.x+S2UI::MapOffsetX(), vCurrentPos.y+S2UI::MapOffsetY() ), &sPoint );
 
 	bool bHitSector = false;
 	for ( int nTemp = 0; nTemp < sectorsSet.size(); nTemp++ )
 	{
-		if ( !sectorsSet[nTemp]->HitTest( vCurrentPos.x, vCurrentPos.y ) )
+		if ( !sectorsSet[nTemp]->HitTestMap( vCurrentPos ) )
 			continue;
 
 		bHitSector = true;
 		break;
 	}
 
+	// The team action stays above sector decorations, including after save load.
+	// Otherwise a decoration overlapping the marker can consume its mouse press.
+	pTeamMarker->SetStyle( STYLE_TOPMOST, true );
+	// The authored view has an empty topmost template slot in its lower-right
+	// corner. It draws nothing and must not intercept a marker or map click.
+	list<CPtr<CWindow>> viewChildren;
+	pMapView->GetChildrenList(&viewChildren);
+	for(auto child:viewChildren) {
+		if(!child->GetWindowID().empty() || !child->GetStyle(STYLE_TOPMOST) ||
+		   dynamic_cast<CChapterSector*>(child.GetPtr())) continue;
+		list<CPtr<CWindow>> contents; child->GetChildrenList(&contents);
+		if(contents.empty()) child->SetStyle(STYLE_TRANSPARENT,true);
+	}
 	const SPoint &sSize = pTeamMarker->GetSize();
 	pTeamMarker->SetPosition( SPoint( sPoint.x - sSize.x / 2, sPoint.y - sSize.y / 2 ) );
 	pTeamMarker->SetMode( bMoving ? CTeamMarker::MODE_MOVE : bHitSector ? CTeamMarker::MODE_ZONE : CTeamMarker::MODE_NORMAL );

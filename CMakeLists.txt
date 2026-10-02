@@ -46,6 +46,10 @@ add_executable(PortablePackageIndexTests "${root}/diagnostics/PortablePackageInd
 target_link_libraries(PortablePackageIndexTests PRIVATE s2_portable_package)
 target_compile_features(PortablePackageIndexTests PRIVATE cxx_std_17)
 enable_testing()
+include("${root}/cmake/VectorFonts.cmake")
+add_executable(DisplayGeometryTests "${root}/diagnostics/DisplayGeometryTests.cpp")
+target_compile_features(DisplayGeometryTests PRIVATE cxx_std_17)
+add_test(NAME DisplayGeometryTests COMMAND DisplayGeometryTests)
 option(S2_ENABLE_DEFERRED_LIGHT_TEST
   "Register animated-light resource regression" ON)
 set(S2_SCRIPT_CORPUS_DIR "" CACHE PATH "Directory containing the original autoload .l scripts")
@@ -528,6 +532,7 @@ s2_module(Main      lib LINK ADOImport DBFormat FileIO FModSound Input MiscDll M
                             s2_portable_effects)
 add_dependencies(Main S2BgfxShaders)
 target_include_directories(Main PRIVATE "${CMAKE_BINARY_DIR}/bgfx-generated")
+target_link_libraries(Main PUBLIC s2_vector_fonts)
 add_executable(BgfxRendererTests "${root}/diagnostics/BgfxRendererTests.cpp")
 target_link_libraries(BgfxRendererTests PRIVATE Main s2_platform)
 target_compile_features(BgfxRendererTests PRIVATE cxx_std_17)
@@ -535,6 +540,8 @@ target_compile_definitions(BgfxRendererTests PRIVATE _HAS_STD_BYTE=0 _HAS_AUTO_P
 add_custom_command(TARGET BgfxRendererTests POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:SDL3::SDL3>" "$<TARGET_FILE_DIR:BgfxRendererTests>")
 add_test(NAME BgfxRendererTests COMMAND BgfxRendererTests)
+add_test(NAME DisplayRuntimeTests COMMAND BgfxRendererTests --display)
+s2_copy_fonts(BgfxRendererTests)
 add_test(NAME BgfxRuntimeImportTests COMMAND "${Python3_EXECUTABLE}"
   "${root}/diagnostics/CheckBgfxImports.py" "$<TARGET_FILE:Game>")
 add_executable(NativeCombinerCoreTests
@@ -1559,3 +1566,5 @@ if(S2_GAME_DIR AND NOT TARGET s2_bink_compat)
   set_tests_properties(NativeAITileWireTests NativeZoneWireTests NativeAIDistanceWireTests NativeHeightLayersTests NativeHeightNetworkTests PROPERTIES ENVIRONMENT_MODIFICATION
     "PATH=path_list_prepend:${S2_GAME_DIR};PATH=path_list_prepend:${CMAKE_BINARY_DIR}/_implibs")
 endif()
+
+s2_copy_fonts(Game)

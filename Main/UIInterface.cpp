@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "../Game/Platform.h"
 #include "G2DView.h"
 #include "Transform.h"
@@ -136,10 +137,13 @@ struct SControlsSort
 void CLoader::Load( CWindow* _pParent, NDb::CUIContainer *pTemplate )
 {
 	pParent = _pParent;
+	pParent->EnableAdaptiveLayout();
 
 	if ( IsValid( pTemplate ) )
 	{
+		pParent->DisableAdaptiveLayout();
 		pParent->SetSize( SPoint( pTemplate->nWidth, pTemplate->nHeight ) );
+		pParent->EnableAdaptiveLayout();
 
 		vector< CPtr<NDb::CUIControl> > controls( pTemplate->controls );
 		sort( controls.begin(), controls.end(), SControlsSort() );
@@ -483,7 +487,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 		return true;
 
 	// retail @0x31c090: div-then-mul at x87 double precision, fistp RC=truncate (NOT round-to-nearest)
-	SPoint sPoint( int( (double)pCursor->GetPos().x / pView->GetViewportSize().x * 1024.0 ), int( (double)pCursor->GetPos().y / pView->GetViewportSize().y * 768.0 ) );
+	SPoint sPoint( int(S2UI::FromPixel(pCursor->GetPos().x)), int(S2UI::FromPixel(pCursor->GetPos().y)) );
 	if ( cmdLButtonUp.ProcessEvent( eEvent ) )
 	{
 		bRet |= ProcessMessage( SEvent( EVENT_LBUTTONUP, sPoint.x, sPoint.y ) );
@@ -543,9 +547,21 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CInterface::ProcessMessage( const SEvent &sEvent )
 {
+	if (HandleDisplayMessage(sEvent)) return true;
 	if ( IsValid( pMouseCapture ) )
 		if ( pMouseCapture->ProcessMessage( sEvent ) )
 			return true;
+	// Display panels belong to the interface, above the active mission desktop.
+	// Route their input explicitly and consume clicks outside a visible modal.
+	if(sEvent.nEvent & (EVENT_FLAG_HITTEST | EVENT_FLAG_ACTIVE)) {
+		CWindow* modal=GetChildByID("display_confirmation");
+		if(!IsValid(modal) || !modal->GetStyle(STYLE_VISIBLE)) modal=GetChildByID("display_settings");
+		if(IsValid(modal) && modal->GetStyle(STYLE_VISIBLE)) {
+			modal->ProcessMessage(sEvent);
+			return true;
+		}
+	}
+
 
 	switch( sEvent.nEvent )
 	{
@@ -561,10 +577,11 @@ bool CInterface::ProcessMessage( const SEvent &sEvent )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CInterface::Step( const STime &sTime )
 {
+	UpdateDisplayPanels();
 	sLastTime = sTime;		// keep the UI ms clock current (read by NScript::luaGetUITime)
 
 	// retail @0x31c5c0: same div-then-mul double-precision truncating map as ProcessEvent @0x31c090
-	SPoint sPoint( int( (double)pCursor->GetPos().x / pView->GetViewportSize().x * 1024.0 ), int( (double)pCursor->GetPos().y / pView->GetViewportSize().y * 768.0 ) );
+	SPoint sPoint( int(S2UI::FromPixel(pCursor->GetPos().x)), int(S2UI::FromPixel(pCursor->GetPos().y)) );
 	sCursorPoint = sPoint;
 
 	// retail Step @0x31c5c0: clear the sticky claim flag, pump the frame's MOUSEMOVE (any window that
@@ -592,8 +609,11 @@ void CInterface::UpdateCursor()
 	pCursor->Update();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static CPtr<CInterface> diagnosticInterface;
+CInterface* CurrentInterfaceForDiagnostics() { return diagnosticInterface; }
 void CInterface::Draw( const STime &sTime )
 {
+	diagnosticInterface = this;
 	// retail Draw @0x31caa0 step 1: when this interface OWNS its sound scene, advance the listener
 	// counter each frame (sCounter is serialized, tag 22). Retail follows with a listener-transform
 	// push (pSound vtbl+0x24, identity transforms); the dev self-created scene is 2D-only and exposes
@@ -604,6 +624,7 @@ void CInterface::Draw( const STime &sTime )
 	pView->StartNewFrame();
 	CWindow::Draw( sTime, pView );
 
+	pNonPublicDemo->SetSize(SPoint(S2UI::Width(), S2UI::Height()));
 	pNonPublicDemo->Draw( this, sTime, pView );
 	if( bShowFPSStats )
 		pFPSText->Draw( this, sTime, pView );

@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
+#include "../MiscDll/Commands.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "Transform.h"
@@ -45,7 +47,7 @@ private:
 	int nDistance;
 	SPoint sBasePosition;
 	CDBPtr<NDb::CDBCamera> pCamera;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CUnitView*)this); f.Add(2,&nDistance); f.Add(3,&sBasePosition); f.Add(4,&pCamera); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CUnitView*)this); f.Add(2,&nDistance); f.Add(3,&sBasePosition); f.Add(4,&pCamera); if(f.IsReading()) { SetLayoutAnchors(nDistance<0?S2Display::Near:S2Display::Far,S2Display::Far); SetCoeff(1); } return 0; }
 
 public:
 	CAnimUnitView() {}
@@ -58,7 +60,7 @@ public:
 CAnimUnitView::CAnimUnitView( const SWindowInfo &sInfo, NRender::IRenderGame *pRenderGame, int _nDistance, NDb::CDBCamera *_pCamera ):
 	CUnitView( sInfo, pRenderGame, 0.7f ), nDistance( _nDistance ), pCamera( _pCamera )
 {
-	sBasePosition = GetPosition();
+	sBasePosition = sInfo.sPosition;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAnimUnitView::SetUnit( NWorld::CUnit *pUnit )
@@ -71,7 +73,9 @@ void CAnimUnitView::SetUnit( NWorld::CUnit *pUnit )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CAnimUnitView::SetCoeff( float fCoeff )
 {
-	SetPosition( SPoint( sBasePosition.x + nDistance * ( 1.0f - fCoeff ), sBasePosition.y ) );
+	SetLayoutAnchors(nDistance<0?S2Display::Near:S2Display::Far,S2Display::Far);
+	const SPoint base=AuthoredToLayout(sBasePosition);
+	SetPosition( SPoint( base.x + nDistance * ( 1.0f - fCoeff ), base.y ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CMissionDlgUI
@@ -94,6 +98,7 @@ void CMissionDlgUI::ShowDesktop()
 {
 	eStage = START;
 	nStage = 0;
+	nSourcePhrase=-1; nSourceOffset=0;
 
 	csSystem << "WARNING: Dialog start!" << endl;
 
@@ -124,6 +129,30 @@ void CMissionDlgUI::HideDesktop()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMissionDlgUI::UpdateDesktop( const STime &sTime )
 {
+	const bool useVector=NGlobal::GetVar("ui_vector_fonts",1).GetFloat()!=0;
+	if(eStage!=START && (restoreDialogue || displayRevision!=S2Platform::Display().revision || vectorFonts!=useVector)) {
+		if(nSourcePhrase<0 && nStage>=0 && nStage<int(parsedPhrasesSet.size())) {
+			nSourcePhrase=parsedPhrasesSet[nStage].nSourcePhrase;
+			nSourceOffset=parsedPhrasesSet[nStage].nSourceOffset;
+		}
+		parsedPhrasesSet.clear();
+		UpdatePhrases(GetInterface()->GetView());
+		if(!parsedPhrasesSet.empty()) {
+			vector<S2Display::PageAnchor> anchors;
+			for(const auto& page:parsedPhrasesSet) anchors.push_back({page.nSourcePhrase,page.nSourceOffset});
+			const int mapped=S2Display::PageForSource(anchors,nSourcePhrase,nSourceOffset);
+			nStage=mapped>=0?mapped:Max(0,Min(nStage,int(parsedPhrasesSet.size())-1));
+			if(restoreDialogue && eStage<FINISH) SetStage(nStage);
+			else {
+				pDialog->SetText(GetDBString(11209)+parsedPhrasesSet[nStage].wsText);
+				pBack->SetStyle(STYLE_VISIBLE,nStage>0);
+				pExit->SetStyle(STYLE_VISIBLE,nStage==int(parsedPhrasesSet.size())-1);
+				pNext->SetStyle(STYLE_VISIBLE,nStage<int(parsedPhrasesSet.size())-1);
+			}
+		}
+		restoreDialogue=false;
+	}
+
 	switch( eStage )
 	{
 	case START:
@@ -306,6 +335,7 @@ void CMissionDlgUI::SetStage( int _nStage )
 	nStage = _nStage;
 
 	const SAckEvent &sEvent = parsedPhrasesSet[nStage];
+	nSourcePhrase=sEvent.nSourcePhrase; nSourceOffset=sEvent.nSourceOffset;
 
 	pDialog->SetText( GetDBString( 11209 ) + sEvent.wsText );
 
@@ -351,6 +381,8 @@ void CMissionDlgUI::SetStage( int _nStage )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 {
+	displayRevision=S2Platform::Display().revision;
+	vectorFonts=NGlobal::GetVar("ui_vector_fonts",1).GetFloat()!=0;
 	parsedPhrasesSet.reserve( phrasesSet.size() );
 
 	CObj<IML> pML = CreateML();
@@ -378,17 +410,19 @@ void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 		// retail UpdatePhrases @0x206d60 (the bVar9 gate): the sound/lipsync/expression attach to the
 		// FIRST page of each phrase only; continuation pages carry nulls so SetStage neither restarts
 		// the voiceline nor re-triggers the head on "Next".
+		const int sourcePhrase=nTemp;
+		int sourceOffset=0;
 		bool bFirstPage = true;
 		NDb::CSequence *pExpression = NDb::GetSequenceByExpression( sVoice.eExpression );
 		do
 		{
 			pML->SetText( wsText, 0 );
-			pML->Generate( pView, pDialog->GetSize().x );
+			pML->Generate( pView, S2UI::ToPixel(pDialog->GetSize().x) );
 
 			sRealSize = pML->GetSize();
 			CVec2 vScreenRect = pView->GetViewportSize();
-			sRealSize.x = sRealSize.x * 1024 / vScreenRect.x;
-			sRealSize.y = sRealSize.y * 768 / vScreenRect.y;
+			sRealSize.x = S2UI::FromPixel(sRealSize.x);
+			sRealSize.y = S2UI::FromPixel(sRealSize.y);
 
 			if ( sRealSize.y > pDialog->GetSize().y )
 			{
@@ -398,8 +432,8 @@ void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 				int nCutChar = 0;
 				for ( list<SRect>::const_iterator iRect = rects.begin(); iRect != rects.end(); iRect++ )
 				{
-					float fY = iRect->y2 * 768 / vScreenRect.y;
-					if ( iRect->y2 > pDialog->GetSize().y )
+					float fY = S2UI::FromPixel(iRect->y2);
+					if ( fY > pDialog->GetSize().y )
 						break;
 
 					nCutChar++;
@@ -433,6 +467,7 @@ void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 					if ( nTemp == nCutChar )
 					{
 						SAckEvent &sEvent = *parsedPhrasesSet.insert( parsedPhrasesSet.end(), SAckEvent());
+						sEvent.nSourcePhrase=sourcePhrase; sEvent.nSourceOffset=sourceOffset;
 						sEvent.pUnit = pEvent->pUnit;
 						sEvent.wsText = wsText.substr( 0, nCursor );
 						sEvent.nPriority = pEvent->nPriority;
@@ -444,6 +479,7 @@ void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 							bFirstPage = false;
 						}
 
+						sourceOffset += nCursor;
 						wsText = wsText.substr( nCursor );
 					}
 				}
@@ -451,6 +487,7 @@ void CMissionDlgUI::UpdatePhrases( NGScene::I2DGameView *pView )
 			else
 			{
 				SAckEvent &sEvent = *parsedPhrasesSet.insert( parsedPhrasesSet.end(), SAckEvent());
+				sEvent.nSourcePhrase=sourcePhrase; sEvent.nSourceOffset=sourceOffset;
 				sEvent.pUnit = pEvent->pUnit;
 				sEvent.wsText = wsText;
 				sEvent.nPriority = pEvent->nPriority;

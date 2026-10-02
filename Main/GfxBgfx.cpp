@@ -6,6 +6,7 @@
 #include "../MiscDll/Commands.h"
 #include "../FileIO/BasicChunk1.h"
 #include "Gfx.h"
+#include "VectorFonts.h"
 #include "GfxInternal.h"
 #include "GfxBuffersInternal.h"
 
@@ -48,24 +49,27 @@ bool SetMode(const SVideoMode& mode, const SRenderTargetsInfo& targets) {
     DoneRender(); DestroyLostableBuffers(); DoneZBuffer();
   }
   videoMode = mode;
+  const auto& display = S2Platform::Display();
+  videoMode.nXSize = display.pixelWidth; videoMode.nYSize = display.pixelHeight;
   rtInfo = targets;
   if (!pDevice) {
     pDevice.Create(new BgfxDevice);
-    if (!pDevice->Init(windowHandle, mode.nXSize, mode.nYSize)) { pDevice = 0; return false; }
-  } else if (!pDevice->Resize(mode.nXSize, mode.nYSize)) return false;
+    if (!pDevice->Init(windowHandle, videoMode.nXSize, videoMode.nYSize)) { pDevice = 0; return false; }
+  } else if (!pDevice->Resize(videoMode.nXSize, videoMode.nYSize)) return false;
   if (!InitZBuffer(D3DFMT_D24S8)) return false;
   InitBuffers();
   initialized = SUCCEEDED(InitRender());
   return initialized && pDevice->Healthy();
 }
 void CheckBackBufferSize() {
-  if (!initialized || videoMode.fullScreen != WINDOWED) return;
+  if (!initialized) return;
   int width, height;
   S2Platform::Size(&width, &height);
   if (width > 0 && height > 0 && (width != videoMode.nXSize || height != videoMode.nYSize)) {
-    SVideoMode resized = videoMode;
-    resized.nXSize = width; resized.nYSize = height;
-    SetMode(resized, rtInfo);
+    DoneRender(); DestroyLostableBuffers(); DoneZBuffer();
+    videoMode.nXSize = width; videoMode.nYSize = height;
+    initialized = pDevice->Resize(width, height) && InitZBuffer(D3DFMT_D24S8);
+    if (initialized) { InitBuffers(); initialized = SUCCEEDED(InitRender()); }
   }
 }
 void GetModesList(list<SVideoMode>* output, int bpp) {
@@ -73,18 +77,25 @@ void GetModesList(list<SVideoMode>* output, int bpp) {
   if (bpp != 32 || !S2Platform::Window()) return;
   int count = 0;
   SDL_DisplayMode** modes = SDL_GetFullscreenDisplayModes(SDL_GetDisplayForWindow(S2Platform::Window()), &count);
-  for (int i = 0; i < count; ++i) {
+  for (int i = 0; modes && i < count; ++i) {
     const SDL_DisplayMode& mode = *modes[i];
     bool exists = false;
     for (const auto& old : *output) if (old.nXSize == mode.w && old.nYSize == mode.h) exists = true;
     if (!exists) output->push_back(SVideoMode(mode.w, mode.h, 32, FULL_SCREEN, int(mode.refresh_rate)));
   }
   SDL_free(modes);
+  const auto& display = S2Platform::Display();
+  bool exists = false;
+  for (const auto& old : *output) if (old.nXSize == display.windowWidth && old.nYSize == display.windowHeight) exists = true;
+  if (!exists) output->push_back(SVideoMode(display.windowWidth, display.windowHeight, 32, WINDOWED));
+  output->sort([](const SVideoMode& a, const SVideoMode& b) {
+    return a.nXSize < b.nXSize || (a.nXSize == b.nXSize && a.nYSize < b.nYSize);
+  });
 }
 bool Is3DActive() { return initialized && pDevice && pDevice->Healthy(); }
 void SetGamma(bool enabled) { gammaEnabled = enabled; }
 void Flip() {
-  if (!initialized) return;
+  if (!initialized || !S2Platform::Display().drawable) return;
   pDevice->Present(gammaEnabled ? Max(0.1f, NGlobal::GetVar("gfx_gamma", 1).GetFloat()) : 1.0f);
   NextFrameBuffes();
   renderStats.Clear();
@@ -106,6 +117,7 @@ void MakeScreenShot(CArray2D<SPixel8888>* output, bool correctGamma) {
   }
 }
 void Done3D() {
+  NGScene::ResetVectorFontDevice();
   if (initialized) { DoneRender(); DestroyLostableBuffers(); DoneZBuffer(); DestroyManagedBuffers(); }
   initialized = false;
   pDevice = 0;

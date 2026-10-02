@@ -30,6 +30,8 @@ public:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CWindow*)this); f.Add(2,&nImageID); f.Add(3,&nProgress); f.Add(4,&pBackground); f.Add(5,&pProgress); return 0; }
 
 public:
+	struct SAuthoredControl { CPtr<CWindow> window; SPoint position, size; };
+	vector<SAuthoredControl> authoredControls; // Transient loading layout; no save tags.
 	CLoadingUI() {}
 	CLoadingUI( const SWindowInfo &sInfo );
 

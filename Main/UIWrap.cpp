@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
+#include "../MiscDll/Commands.h"
 #include "GPixelFormat.h"
 #include "Transform.h"
 #include "GSceneUtils.h"
@@ -56,9 +58,9 @@ const SPoint& CTextDraw::GetSize( NGScene::I2DGameView *pView )
 
 	sRealSize = sSize;
 	if ( sSize.x == -1 )
-		sRealSize.x = sMLSize.x * 1024 / vScreenRect.x;
+		sRealSize.x = sMLSize.x / S2UI::Scale();
 	if ( sSize.y == -1 )
-		sRealSize.y = sMLSize.y * 768 / vScreenRect.y;
+		sRealSize.y = sMLSize.y / S2UI::Scale();
 
 	return sRealSize;
 }
@@ -112,8 +114,8 @@ void CTextDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameView
 	{
 		CVec2 vScreenRect = pView->GetViewportSize();
 
-		float fXCoef = vScreenRect.x / 1024.0f;
-		float fYCoef = vScreenRect.y / 768.0f;
+		float fXCoef = S2UI::Scale();
+		float fYCoef = S2UI::Scale();
 		sScrPosition.x *= fXCoef;
 		sScrPosition.y *= fYCoef;
 		sScrWindow.x1 *= fXCoef;
@@ -133,12 +135,15 @@ void CTextDraw::UpdateText( NGScene::I2DGameView *pView )
 	CVec2 vScreenRect = pView->GetViewportSize();
 	int nNewSize;
 	if ( sSize.x > 0 )
-		nNewSize = int( float( sSize.x ) * vScreenRect.x / 1024.0f );   // retail truncates here (or ah,0xc)
+		nNewSize = int( float( sSize.x ) * S2UI::Scale() );   // retail truncates here (or ah,0xc)
 	else
 		nNewSize = int( vScreenRect.x );
 
-	if ( nNewSize != nSize )
+	if ( nNewSize != nSize || nDisplayRevision != S2Platform::Display().revision ||
+	     bVectorFonts != (NGlobal::GetVar("ui_vector_fonts", 1).GetFloat() != 0) )
 	{
+		nDisplayRevision = S2Platform::Display().revision;
+		bVectorFonts = NGlobal::GetVar("ui_vector_fonts", 1).GetFloat() != 0;
 		nSize = nNewSize;
 		pML->Generate( pView, nNewSize );
 	}
@@ -177,6 +182,11 @@ void CImageDraw::SetImage( NDb::CUITexture* _pTexture, const SRect &sTexRect )
 	sTextureRect = sTexRect;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CImageDraw::DrawAtPixels(const STime& time, NGScene::I2DGameView* view, const CVec2& position) {
+  vPixelPosition = position; bPixelPosition = true;
+  Draw(0, time, view);
+  bPixelPosition = false;
+}
 void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameView *pView )
 {
 	CVec2 vScreenRect = pView->GetViewportSize();
@@ -193,8 +203,8 @@ void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 	}
 	else
 	{
-		float fXCoef = vScreenRect.x / 1024.0f;
-		float fYCoef = vScreenRect.y / 768.0f;
+		float fXCoef = S2UI::Scale();
+		float fYCoef = S2UI::Scale();
 		sScrPosition.x *= fXCoef;
 		sScrPosition.y *= fYCoef;
 		sScrWindow.x1 *= fXCoef;
@@ -203,52 +213,21 @@ void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 		sScrWindow.y2 *= fYCoef;
 	}
 
+	if (bPixelPosition && !pWindow) {
+		const int dx = int(vPixelPosition.x)-sScrPosition.x, dy = int(vPixelPosition.y)-sScrPosition.y;
+		sScrPosition.x += dx; sScrPosition.y += dy;
+		sScrWindow.x1 += dx; sScrWindow.x2 += dx; sScrWindow.y1 += dy; sScrWindow.y2 += dy;
+	}
+
 	if ( IsValid( pUITexture ) )
 	{
-		NDb::EUIMode eMode;
-		CTPoint<float> scale( 1.0f, 1.0f );
-		switch( Float2Int( vScreenRect.x ) )
-		{
-			case 1600:
-				if ( IsValid( pUITexture->pTextures[NDb::UIM_1600x1200] ) )
-				{
-					eMode = NDb::UIM_1600x1200;
-					break;
-				}
-				scale.x *= 1600.0f / 1280.0f;
-				scale.y *= 1200.0f / 1024.0f;
-			case 1280:
-				if ( IsValid( pUITexture->pTextures[NDb::UIM_1280x1024] ) )
-				{
-					eMode = NDb::UIM_1280x1024;
-					break;
-				}
-				scale.x *= 1280.0f / 1024.0f;
-				scale.y *= 1024.0f / 768.0f;
-			case 1024:
-				if ( IsValid( pUITexture->pTextures[NDb::UIM_1024x768] ) )
-				{
-					eMode = NDb::UIM_1024x768;
-					break;
-				}
-				scale.x *= 1024.0f / 800.0f;
-				scale.y *= 768.0f / 600.0f;
-			case 800:
-				if ( IsValid( pUITexture->pTextures[NDb::UIM_800x600] ) )
-				{
-					eMode = NDb::UIM_800x600;
-					break;
-				}
-			default:
-				if ( !IsValid( pUITexture->pTextures[NDb::UIM_1024x768] ) )
-					return;
-
-				eMode = NDb::UIM_1024x768;
-				scale.x = vScreenRect.x / 1024.0f;
-				scale.y = vScreenRect.y / 768.0f;
-				break;
+		NDb::EUIMode eMode = NDb::UIM_1024x768;
+		if (!IsValid(pUITexture->pTextures[eMode])) {
+			for (int i = 0; i < 4; ++i) if (IsValid(pUITexture->pTextures[i])) { eMode = (NDb::EUIMode)i; break; }
 		}
-
+		if (!IsValid(pUITexture->pTextures[eMode])) return;
+		CTPoint<float> scale(S2UI::Scale() * pUITexture->nWidth / pUITexture->pTextures[eMode]->nWidth,
+		                      S2UI::Scale() * pUITexture->nHeight / pUITexture->pTextures[eMode]->nHeight);
 		NDb::CTexture *pTexture = pUITexture->pTextures[eMode];
 		ASSERT( ( pTexture->nWidth != 0 ) && ( pTexture->nHeight != 0 ) );
 		if ( ( pTexture->nWidth == 0 ) || ( pTexture->nHeight == 0 ) )
@@ -269,9 +248,63 @@ void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 		const float fTileSizeX = fabsf( sTexRect.Width() ) * vTileScale.x;
 		const float fTileSizeY = fabsf( sTexRect.Height() ) * vTileScale.y;
 		CRectLayout sLayout;
-		for ( int nTempY = 0; nTempY < sWindow.Height(); nTempY += pUITexture->nHeight )
-			for ( int nTempX = 0; nTempX < sWindow.Width(); nTempX += pUITexture->nWidth )
-				sLayout.AddRect( nTempX * vTileScale.x, nTempY * vTileScale.y, fTileSizeX, fTileSizeY, sTexRect, sDrawColor );
+		if(sAspectSource.x>0 && sAspectSource.y>0) {
+			// Loading assets include power-of-two padding. Fit the authored visible
+			// portion, not the padded texture or a repeated copy of the image.
+			const int sw=Min(sAspectSource.x,pUITexture->nWidth), sh=Min(sAspectSource.y,pUITexture->nHeight);
+			const auto fit=S2Display::Fit(sWindow.Width(),sWindow.Height(),sw,sh);
+			CRectLayout bars;
+			bars.AddRect(0,0,sWindow.Width()*S2UI::Scale(),sWindow.Height()*S2UI::Scale(),
+			    CTRect<float>(0,0,1,1),NGfx::SPixel8888(0,0,0,255));
+			pView->CreateDynamicRects((NDb::CTexture*)0,bars,sScrPosition,sScrWindow);
+			sLayout.AddRect(fit.x*S2UI::Scale(),fit.y*S2UI::Scale(),fit.width*S2UI::Scale(),fit.height*S2UI::Scale(),
+			    CTRect<float>(0,pTexture->nHeight,float(sw)*pTexture->nWidth/pUITexture->nWidth,
+			        pTexture->nHeight-float(sh)*pTexture->nHeight/pUITexture->nHeight),sDrawColor);
+		} else if(nHorizontalSplit<0 && sWindow.Width()>pUITexture->nWidth) {
+            const auto slices=S2Display::StretchHorizontal(sWindow.Width(),pUITexture->nWidth,-nHorizontalSplit);
+            const float tx=sTexRect.Width()/pUITexture->nWidth;
+            for(const auto& slice:slices)
+                sLayout.AddRect(slice.position*S2UI::Scale(),0,slice.width*S2UI::Scale(),fTileSizeY,
+                    CTRect<float>(sTexRect.x1+slice.source*tx,sTexRect.y1,
+                        sTexRect.x1+(slice.source+slice.sourceWidth)*tx,sTexRect.y2),sDrawColor);
+		} else if (nHorizontalSplit>0 && nHorizontalSplit<pUITexture->nWidth && sWindow.Width()>pUITexture->nWidth) {
+			const auto slices=S2Display::ExpandHorizontal(sWindow.Width(),pUITexture->nWidth,nHorizontalSplit);
+			const float texPerLogical=sTexRect.Width()/pUITexture->nWidth;
+			// The empty HUD plate supplies the gap, so rounded weapon-slot edges are not extruded.
+			NDb::CTexture* fillTexture=IsValid(pHorizontalFill) ? pHorizontalFill->pTextures[eMode].GetPtr() : 0;
+			if (!IsValid(fillTexture) && IsValid(pHorizontalFill))
+				for(int i=0;i<4;++i) if(IsValid(pHorizontalFill->pTextures[i])) { fillTexture=pHorizontalFill->pTextures[i]; break; }
+			if(IsValid(fillTexture)) {
+				const auto& gap=slices[1];
+				const auto material=S2Display::NeutralHorizontalTile(pHorizontalFill->nWidth,nHorizontalSplit);
+				const int fillWidth=Max(1,material.width), sourceX=material.source;
+				const int fillHeight=Max(1,pHorizontalFill->nHeight);
+				const float tx=float(fillTexture->nWidth)/pHorizontalFill->nWidth;
+				CRectLayout fill;
+				// Repeat the complete neutral tile at its authored size: stretching a single
+				// column turns its grain into conspicuous horizontal stripes.
+				for(int y=0;y<sWindow.Height();y+=fillHeight)
+					for(int x=0;x<gap.width;x+=fillWidth) {
+						const int width=Min(fillWidth,gap.width-x);
+						const int u1=x/fillWidth%2 ? sourceX+fillWidth : sourceX;
+						const int u2=x/fillWidth%2 ? u1-width : u1+width;
+						fill.AddRect((gap.position+x)*S2UI::Scale(),y*S2UI::Scale(),width*S2UI::Scale(),fillHeight*S2UI::Scale(),
+						    CTRect<float>(u1*tx,fillTexture->nHeight,u2*tx,0),sDrawColor);
+					}
+				pView->CreateDynamicRects(fillTexture,fill,sScrPosition,sScrWindow);
+			}
+			for (int y=0; y<sWindow.Height(); y+=pUITexture->nHeight) for (const auto& slice:slices) {
+				if(IsValid(fillTexture) && &slice==&slices[1]) continue;
+				const CTRect<float> uv(sTexRect.x1+slice.source*texPerLogical,sTexRect.y1,
+				    sTexRect.x1+(slice.source+slice.sourceWidth)*texPerLogical,sTexRect.y2);
+				sLayout.AddRect(slice.position*S2UI::Scale()*vScale.x,y*vTileScale.y,
+				    slice.width*S2UI::Scale()*vScale.x,fTileSizeY,uv,sDrawColor);
+			}
+		} else {
+			for ( int nTempY = 0; nTempY < sWindow.Height(); nTempY += pUITexture->nHeight )
+				for ( int nTempX = 0; nTempX < sWindow.Width(); nTempX += pUITexture->nWidth )
+					sLayout.AddRect( nTempX * vTileScale.x, nTempY * vTileScale.y, fTileSizeX, fTileSizeY, sTexRect, sDrawColor );
+		}
 
 		pView->CreateDynamicRects( pTexture, sLayout, sScrPosition, sScrWindow );
 	}
@@ -280,11 +313,38 @@ void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 		// texture-less fill: the old scale (vp/1024, vp/768) times the |texrect| (= the window dims)
 		CRectLayout sLayout;
 		sLayout.AddRect( 0, 0,
-			sWindow.Width() * pView->GetViewportSize().x / 1024.0f,
-			sWindow.Height() * pView->GetViewportSize().y / 768.0f,
+			sWindow.Width() * S2UI::Scale(),
+			sWindow.Height() * S2UI::Scale(),
 			CTRect<float>( 0, 0, sWindow.Width(), sWindow.Height() ), sDrawColor );
 		pView->CreateDynamicRects( (NDb::CTexture*)0, sLayout, sScrPosition, sScrWindow );
 	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void DrawTiledPanelBackground(CWindow* window, NGScene::I2DGameView* view, NDb::CUITexture* plate)
+{
+	if(!IsValid(plate) || plate->nWidth<=0 || plate->nHeight<=0) return;
+	NDb::CTexture* texture=plate->pTextures[NDb::UIM_1024x768];
+	if(!IsValid(texture)) for(int i=0;i<4;++i) if(IsValid(plate->pTextures[i])) { texture=plate->pTextures[i]; break; }
+	if(!IsValid(texture)) return;
+	SPoint position; SRect clip;
+	if(!window->ClientToScreen(&position,&clip)) return;
+	window->VirtualToScreen(&position,&clip);
+	const int tw=Min(512,plate->nWidth/2), th=Min(128,plate->nHeight/2);
+	if(th<=0) return;
+	const float tx=float(texture->nWidth)/plate->nWidth, ty=float(texture->nHeight)/plate->nHeight;
+	const int sx=Min(64,plate->nWidth-tw), sy=Min(40,plate->nHeight-th);
+	const SPoint size=window->GetSize();
+	CRectLayout tiles;
+	for(int y=0;y<size.y;y+=th) for(int x=0;x<size.x;x+=tw) {
+		const int w=Min(tw,size.x-x), h=Min(th,size.y-y);
+		// Mirrored neighbors share their edge texels, avoiding visible rectangular seams.
+		const int u1=x/tw%2 ? sx+tw : sx, u2=x/tw%2 ? sx+tw-w : sx+w;
+		const int v1=y/th%2 ? plate->nHeight-sy-th : plate->nHeight-sy;
+		const int v2=y/th%2 ? v1+h : v1-h;
+		tiles.AddRect(x*S2UI::Scale(),y*S2UI::Scale(),w*S2UI::Scale(),h*S2UI::Scale(),
+		    CTRect<float>(u1*tx,v1*ty,u2*tx,v2*ty),NGfx::SPixel8888(255,255,255,255));
+	}
+	view->CreateDynamicRects(texture,tiles,position,clip);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CModelWrap
@@ -293,7 +353,8 @@ void CImageDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 void MakeProjection( CTransformStack *pTS )
 {
 	pTS->Init();
-	pTS->MakeProjective( CVec2( 1024, 768 ), 60, 0.1f, 300 );
+	pTS->MakeProjective( CVec2( S2UI::Width(), S2UI::Height() ),
+		S2Display::PreviewFOV(60, S2UI::Height(), 1, 1), 0.1f, 300 );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail @0x329830 (disasm-verified consts 512/384): conjugate the widget-center NDC shift through
@@ -311,8 +372,8 @@ void MakeModelTransform( SFBTransform *pRes, const SPoint &sPosition, const SPoi
 
 	SHMatrix sShift;
 	Identity( &sShift );
-	sShift._14 = ( vCenter.x - 512.0f ) / 512.0f;
-	sShift._24 = ( 384.0f - vCenter.y ) / 384.0f;
+	sShift._14 = ( vCenter.x - S2UI::Width()*0.5f ) / (S2UI::Width()*0.5f);
+	sShift._24 = ( S2UI::Height()*0.5f - vCenter.y ) / (S2UI::Height()*0.5f);
 
 	SHMatrix sA, sB;
 	Multiply( &sA, sShift, tsProjection.Get().forward );
@@ -427,9 +488,10 @@ void CModelDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 	if ( !IsValid( pRender ) )
 		pRender = p3DView->CreateMesh( pModel, pTransform );
 
-	if ( bUpdated )
+	if ( bUpdated || S2Platform::Display().revision != nLayoutRevision )
 	{
 		bUpdated = false;
+		nLayoutRevision = S2Platform::Display().revision;
 		SFBTransform sResult;
 		MakeModelTransform( &sResult, sScrPosition, SPoint( sWindow.Width(), sWindow.Height() ), sCameraTransform, sModelTransform );
 		pTransform->Set( sResult );
@@ -450,8 +512,8 @@ void CModelDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 	{
 		const CVec2 &vScreenRect = pView->GetViewportSize();
 
-		float fXCoef = vScreenRect.x / 1024.0f;
-		float fYCoef = vScreenRect.y / 768.0f;
+		float fXCoef = S2UI::Scale();
+		float fYCoef = S2UI::Scale();
 		sRealSize.x *= fXCoef;
 		sRealSize.y *= fYCoef;
 		s2DScrPosition.x *= fXCoef;
@@ -472,8 +534,8 @@ void CModelDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 
 	NGScene::IGameView::SDrawInfo drawInfo;
 	drawInfo.pTS = &ts;
-	drawInfo.vOrigin = CVec2( sScrWindow.x1 / 1024.0f, sScrWindow.y1 / 768.0f );
-	drawInfo.vSize = CVec2( sScrWindow.Width() / 1024.0f, sScrWindow.Height() / 768.0f );
+	drawInfo.vOrigin = CVec2( sScrWindow.x1 / float(S2UI::Width()), sScrWindow.y1 / float(S2UI::Height()) );
+	drawInfo.vSize = CVec2( sScrWindow.Width() / float(S2UI::Width()), sScrWindow.Height() / float(S2UI::Height()) );
 	drawInfo.bOverlay = true;
 	p3DView->Draw( drawInfo );
 

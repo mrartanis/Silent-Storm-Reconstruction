@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "Transform.h"
@@ -155,7 +156,7 @@ CZoneGlobalSector::CZoneGlobalSector( const SWindowInfo &sInfo, NGame::IMission 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CZoneGlobalSector::HitTest( int nX, int nY )
 {
-	return IsPointInPolygon( GetSector().pointsSet, CVec2( nX, nY ) );
+	return IsPointInPolygon( GetSector().pointsSet, CVec2( nX-S2UI::MapOffsetX(), nY-S2UI::MapOffsetY() ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CZoneGlobalSector::ProcessMessage( const SEvent &sEvent )

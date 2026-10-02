@@ -172,7 +172,7 @@ void PumpMessages(bool focus)
         break;
       }
       case SDL_EVENT_MOUSE_MOTION:
-        Axis(&motionX, 0, event.motion.xrel); Axis(&motionY, 4, event.motion.yrel); break;
+        Axis(&motionX, 0, S2Platform::Display().WindowToPixelX(event.motion.xrel)); Axis(&motionY, 4, S2Platform::Display().WindowToPixelY(event.motion.yrel)); break;
       case SDL_EVENT_MOUSE_WHEEL:
         // Legacy binds expect +/-120 per wheel detent.
         Axis(&wheelRemainder, 8, event.wheel.y *

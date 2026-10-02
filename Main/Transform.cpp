@@ -1,9 +1,11 @@
 #if defined(_WIN32)
 #include "StdAfx.h"
+#include "../Game/DisplayGeometry.h"
 #else
 #include "../FileIO/HeadlessPlatform.h"
 #include "../Misc/Geom.h"
 #endif
+#include "../Game/DisplayGeometry.h"
 #include <cstring>
 #include "Transform.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,7 +308,7 @@ void CTransformStack::MakeProjective( const CVec2 &screenRect, float fFovX, floa
 	if ( screenRect.y == 0 || screenRect.x == 0 )
 		MakeProjective( 1, fFovX, fZMin, fZMax, vShift );
 	else
-		MakeProjective( screenRect.y / screenRect.x, fFovX, fZMin, fZMax, vShift ); 
+		MakeProjective( screenRect.y / screenRect.x, S2Display::HorizontalFOV(fFovX, screenRect.x, screenRect.y), fZMin, fZMax, vShift );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CTransformStack::MakeParallel( float fWidth, float fHeight, float fZMin, float fZMax )

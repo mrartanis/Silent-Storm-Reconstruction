@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "Sound.h"
 #include "G2DView.h"
 #include "RectLayout.h"
@@ -8,12 +9,25 @@
 #include "..\DBFormat\DataInterface.h"
 #include "Interface.h"
 #include "UIWindow.h"
+#include "UIBaseCtrls.h"
+#include "UIWrap.h"
 #include "UICommCtrls.h"	// CToolTip -- CWindow::pToolTip is the typed retail CObj<CToolTip>
 #include "A5Script.h"		// NScript::CScript -- retail CWindow window-scripting members (eventsMap/pScript)
 #include <cstdint>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NUI
 {
+namespace {
+bool MissionPanel(const string& id) {
+  return id=="inventorypanel" || id=="characterpanel" || id=="perkspanel" ||
+      id=="storepanel" || id=="medalspanel" || id=="biographypanel";
+}
+bool AuthoredForm(const string& id) {
+  return id=="chargenUI" || id=="facegenUI" || id=="options" || id=="saveloadmenu" ||
+      id=="clues" || id=="objectives" || id=="objectivesUI" || id=="exitmenu" || id=="ingamemenu" || id=="globalmapUI" || id=="chaptermapUI";
+}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const int N_TOOLTIP_TIME = 500;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,6 +37,7 @@ CWindow::CWindow( const SWindowInfo &sInfo ):
 	pParent( sInfo.pParent ), nStyle( sInfo.nStyle ), szID( sInfo.szID ), sSize( sInfo.sSize ), sPosition( sInfo.sPosition ), bActive( false ),
 	bRequireUpdate( true ), sToolTipAnchor( 0, 0 ), eToolTipAnchorType( NDb::UIA_NONE )	// retail ctor defaults (oracle @s2_imissionui.h:1126)
 {
+	bAdaptiveLayout = sPosition.x == 0 && sPosition.y == 0 && sSize.x == 1024 && sSize.y == 768;
 	if ( IsValid( pParent ) )
 	{
 		pParent->AddChild( this );
@@ -52,6 +67,7 @@ int CWindow::operator&( CStructureSaver &f )
 	f.Add( 15, &eToolTipAnchorType );
 	f.Add( 16, &eventsMap );
 	f.Add( 17, &pScript );
+	if (f.IsReading()) bAdaptiveLayout = true;
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,24 +156,79 @@ void CWindow::SetStyle( int _nStyle, bool bOn )
 		nStyle &= (~_nStyle);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CWindow::ResolveLayoutAnchors() const {
+	if (!bLayoutAnchorsSet && bAdaptiveLayout && IsValid(pParent)) {
+		// Authored form screens share one paper/background image. Move their
+		// content as a single centered group, keeping texture details and controls aligned.
+		const string& parentID=pParent->GetWindowID();
+		const bool map=parentID=="globalmapUI" || parentID=="chaptermapUI";
+		const bool form=pParent->sSize==SPoint(1024,768) && AuthoredForm(parentID) &&
+		    (!map || (szID!="gamemenu" && szID!="clues" && szID!="cancel"));
+		// The left HUD is one authored group, aligned with the baked portrait/slot frames.
+		const bool hudLeft=parentID=="unitpanel" && (szID=="unitstabbar" ||
+		    szID=="infopanel_singleunit" || szID=="infopanel_multipleunits");
+		const bool panel=MissionPanel(parentID);
+		anchorX = panel ? S2Display::Near : hudLeft ? S2Display::Near : form ? S2Display::Center : S2Display::InferAnchor(sPosition.x,sSize.x,pParent->sSize.x);
+		anchorY = (form || panel) ? S2Display::Center : S2Display::InferAnchor(sPosition.y,sSize.y,pParent->sSize.y);
+		bLayoutAnchorsSet = true;
+	}
+}
 const SPoint& CWindow::GetSize() const
 {
-	return sSize;
+	ResolveLayoutAnchors();
+	sLayoutSize = sSize;
+	if (szID == "desktop") { sLayoutSize = SPoint(S2UI::Width(), S2UI::Height()); }
+	else if (bAdaptiveLayout && IsValid(pParent)) {
+		const SPoint parent = pParent->GetSize();
+		if (anchorX == S2Display::Stretch)
+			sLayoutSize.x += parent.x - pParent->sSize.x;
+		if (anchorY == S2Display::Stretch)
+			sLayoutSize.y += parent.y - pParent->sSize.y;
+	}
+	return sLayoutSize;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWindow::SetSize( const SPoint &_sSize )
 {
+	ResolveLayoutAnchors();
 	sSize = _sSize;
+	if (bAdaptiveLayout && IsValid(pParent)) {
+		const SPoint parent = pParent->GetSize();
+		if (anchorX == S2Display::Stretch) sSize.x -= parent.x-pParent->sSize.x;
+		if (anchorY == S2Display::Stretch) sSize.y -= parent.y-pParent->sSize.y;
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+SPoint CWindow::AuthoredToLayout(const SPoint& point) const {
+	ResolveLayoutAnchors();
+	if(!bAdaptiveLayout || !IsValid(pParent)) return point;
+	const SPoint parent=pParent->GetSize();
+	return SPoint(S2Display::Position(point.x,pParent->sSize.x,parent.x,anchorX),
+	    S2Display::Position(point.y,pParent->sSize.y,parent.y,anchorY));
+}
 const SPoint& CWindow::GetPosition() const
 {
-	return sPosition;
+	ResolveLayoutAnchors();
+	sLayoutPosition = sPosition;
+	if (bAdaptiveLayout && IsValid(pParent)) {
+		const SPoint parent = pParent->GetSize();
+		sLayoutPosition.x = S2Display::Position(sPosition.x, pParent->sSize.x, parent.x,
+		    anchorX);
+		sLayoutPosition.y = S2Display::Position(sPosition.y, pParent->sSize.y, parent.y,
+		    anchorY);
+	}
+	return sLayoutPosition;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWindow::SetPosition( const SPoint &_sPosition )
 {
+	ResolveLayoutAnchors();
 	sPosition = _sPosition;
+	if (bAdaptiveLayout && IsValid(pParent)) {
+		const SPoint parent = pParent->GetSize();
+		sPosition.x -= S2Display::Position(0,pParent->sSize.x,parent.x,anchorX);
+		sPosition.y -= S2Display::Position(0,pParent->sSize.y,parent.y,anchorY);
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CWindow::IsActive() const
@@ -207,26 +278,26 @@ bool CWindow::ClientToScreen( SPoint *pPosition, SRect *pWindow, bool bSelf ) co
 
 		pWindow->x1 = 0;
 		pWindow->y1 = 0;
-		pWindow->x2 = sSize.x;
-		pWindow->y2 = sSize.y;
+		pWindow->x2 = GetSize().x;
+		pWindow->y2 = GetSize().y;
 	}
 
 	if ( pWindow->x1 < 0 )
 		pWindow->x1 = 0;
-	if ( pWindow->x2 > sSize.x )
-		pWindow->x2 = sSize.x;
+	if ( pWindow->x2 > GetSize().x )
+		pWindow->x2 = GetSize().x;
 	if ( pWindow->y1 < 0 )
 		pWindow->y1 = 0;
-	if ( pWindow->y2 > sSize.y )
-		pWindow->y2 = sSize.y;
+	if ( pWindow->y2 > GetSize().y )
+		pWindow->y2 = GetSize().y;
 
-	pPosition->x += sPosition.x;
-	pPosition->y += sPosition.y;
+	pPosition->x += GetPosition().x;
+	pPosition->y += GetPosition().y;
 
-	pWindow->x1 += sPosition.x;
-	pWindow->y1 += sPosition.y;
-	pWindow->x2 += sPosition.x;
-	pWindow->y2 += sPosition.y;
+	pWindow->x1 += GetPosition().x;
+	pWindow->y1 += GetPosition().y;
+	pWindow->x2 += GetPosition().x;
+	pWindow->y2 += GetPosition().y;
 
 	if ( IsValid( pParent ) )
 		pParent->ClientToScreen( pPosition, pWindow, false );
@@ -250,20 +321,17 @@ void CWindow::ScreenToClient( const SPoint &sScreenPos, SPoint *pPosition ) cons
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWindow::VirtualToScreen( SPoint *pPosition, SRect *pWindow )
 {
-	SRect sRect;
-	const CVec2 &vScreenRect = GetInterface()->GetView()->GetViewportSize();
-
 	if ( pPosition )
 	{
-		pPosition->x = pPosition->x * vScreenRect.x / 1024;
-		pPosition->y = pPosition->y * vScreenRect.y / 768;
+		pPosition->x = S2Display::Boundary(pPosition->x, S2UI::Scale());
+		pPosition->y = S2Display::Boundary(pPosition->y, S2UI::Scale());
 	}
 	if ( pWindow )
 	{
-		pWindow->x1 = pWindow->x1 * vScreenRect.x / 1024;
-		pWindow->x2 = pWindow->x2 * vScreenRect.x / 1024;
-		pWindow->y1 = pWindow->y1 * vScreenRect.y / 768;
-		pWindow->y2 = pWindow->y2 * vScreenRect.y / 768;
+		pWindow->x1 = S2Display::Boundary(pWindow->x1, S2UI::Scale());
+		pWindow->x2 = S2Display::Boundary(pWindow->x2, S2UI::Scale());
+		pWindow->y1 = S2Display::Boundary(pWindow->y1, S2UI::Scale());
+		pWindow->y2 = S2Display::Boundary(pWindow->y2, S2UI::Scale());
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -519,6 +587,25 @@ void CWindow::Update( const STime &sTime, NGScene::I2DGameView *pView )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWindow::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	if(MissionPanel(szID) && GetSize().y>sSize.y && IsValid(pParent)) {
+		CWindow* hud=pParent->GetChildByID("unitpanel");
+		CImage* plate=IsValid(hud) ? dynamic_cast<CImage*>(hud->GetChildByID("background_empty")) : 0;
+		if(IsValid(plate)) DrawTiledPanelBackground(this,pView,plate->GetImage());
+	}
+	if(sSize==SPoint(1024,768) && AuthoredForm(szID)) {
+		// Fill the area outside the centered authored form explicitly.
+		SPoint pos; SRect clip;
+		if(ClientToScreen(&pos,&clip)) {
+			VirtualToScreen(&pos,&clip);
+			const float scale=S2UI::Scale(), w=GetSize().x*scale, h=GetSize().y*scale;
+			const float dx=(GetSize().x-1024)/2*scale, dy=(GetSize().y-768)/2*scale;
+			CRectLayout bars;
+			const CTRect<float> uv(0,0,1,1); const NGfx::SPixel8888 black(0,0,0,255);
+			if(dx>0) { bars.AddRect(0,0,dx,h,uv,black); bars.AddRect(dx+1024*scale,0,w-dx-1024*scale,h,uv,black); }
+			if(dy>0) { bars.AddRect(dx,0,1024*scale,dy,uv,black); bars.AddRect(dx,dy+768*scale,1024*scale,h-dy-768*scale,uv,black); }
+			pView->CreateDynamicRects((NDb::CTexture*)0,bars,pos,clip);
+		}
+	}
 	list< CPtr<CWindow> > windowsList;
 	FormChildrenList( &windowsList );
 	for ( list< CPtr<CWindow> >::reverse_iterator iTemp = windowsList.rbegin(); iTemp != windowsList.rend(); iTemp++ )

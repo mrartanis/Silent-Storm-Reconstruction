@@ -123,12 +123,16 @@ public:
 	bool IsMouseCover() const { return true; };
 
 	bool ProcessEvent( const NInput::SEvent &eEvent );
+	bool HandleDisplayMessage(const SEvent& event);
+	void ShowDisplayOptions();
+	void UpdateDisplayPanels();
 	bool ProcessMessage( const SEvent &sEvent );
 	void UpdateCursor();
 	void Step( const STime &sTime );
 	void Draw( const STime &sTime );
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+CInterface* CurrentInterfaceForDiagnostics();
 } // Namespace
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

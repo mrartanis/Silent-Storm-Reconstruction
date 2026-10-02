@@ -4,6 +4,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "DG.h"
 #include "FontFormat.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGfx
@@ -34,7 +35,9 @@ private:
 	SFont sFont;
 	CObj< CPtrFuncBase<NGfx::CTexture> > pTexture;
 	CDGPtr< CPtrFuncBase<CFontFormatInfo> > pInfo;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&sFont); f.Add(3,&pTexture); f.Add(4,&pInfo); return 0; }
+	ZEND int operator&( CStructureSaver &f );
+	bool bRuntimeVector = false;
+	void RestoreRuntime();
 		
 public:
 	CFontInfo() {}
@@ -42,8 +45,10 @@ public:
 		sFont( _sFont ), pTexture( _pTexture ), pInfo( _pInfo ) {}
 
 	const SFont& GetType() const { return sFont; }
-	CPtrFuncBase<NGfx::CTexture>* GetTexture() const { return pTexture; }
-	CPtrFuncBase<CFontFormatInfo>* GetFormatInfo() const { return pInfo; }
+	void SetRuntimeVector(const SFont& request) { bRuntimeVector = true; sFont = request; }
+	bool IsVector() const { return bRuntimeVector; }
+	CPtrFuncBase<NGfx::CTexture>* GetTexture() { RestoreRuntime(); return pTexture; }
+	CPtrFuncBase<CFontFormatInfo>* GetFormatInfo() { RestoreRuntime(); return pInfo; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //! Локаль

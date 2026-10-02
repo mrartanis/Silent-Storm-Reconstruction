@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "../Game/Platform.h"
+#include "VectorFonts.h"
+#include "DisplayOptions.h"
 #include "iMain.h"
 #if !defined(_WIN32)
 #include "../FileIO/LinuxUserData.h"
@@ -59,7 +61,8 @@ void ShowLogo()
 
 		p2DScene->StartNewFrame();
 		// quad size = logo dims * (vp/1024, vp/768) = the full viewport (baked; no layout scale)
-		rl.AddRect( 0, 0, pLogo->nWidth * vSize.x / 1024.0f, pLogo->nHeight * vSize.y / 768.0f,
+		const auto fitted = S2Display::Fit(vSize.x, vSize.y, pLogo->nWidth, pLogo->nHeight);
+		rl.AddRect( fitted.x, fitted.y, fitted.width, fitted.height,
 			CRectLayout::STextureCoord( CTRect<float>( 0, pLogo->nHeight, pLogo->nWidth, 0 ) ) );
 		p2DScene->CreateDynamicRects( pLogo,  rl, CTPoint<int>( 0, 0 ), window );
 		p2DScene->Flush();
@@ -171,6 +174,7 @@ bool MakeScreenShot()
 void CInterfaceCommand::ResetStack()
 {
 	interfaces.clear();
+	NGScene::ClearVectorFonts();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CInterfaceCommand::SetInterface( IInterfaceBase *pNewInterface )
@@ -219,6 +223,7 @@ const STime IInterfaceObject::GetTime()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool IInterfaceBase::CanRender()
 {
+	if (!S2Platform::Display().drawable) return false;
 	if ( bAppIsActive && NGScene::Is3DActive() )
 		return true;
 	S2Platform::Delay( 10 );
@@ -523,8 +528,9 @@ static bool ProcessInterfaceCmds()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool StepApp( bool bActive, bool bSetGamma, bool bInput )
 {
-	if ( bActive )
-		NGfx::CheckBackBufferSize();
+	NGScene::PollDisplayChange();
+	S2Platform::UpdateDisplay(NGlobal::GetVar("ui_scale", 0).GetFloat());
+	NGfx::CheckBackBufferSize();
 	bAppIsActive = bActive;
 	NGfx::SetGamma( bSetGamma );
 	if ( !ProcessInterfaceCmds() )

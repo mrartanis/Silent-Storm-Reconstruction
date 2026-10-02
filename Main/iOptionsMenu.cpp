@@ -15,6 +15,8 @@
 #include "..\FileIO\PortableUserPaths.h"
 #include "..\FileIO\WindowsSaveNames.h"
 #include "iOptionsMenu.h"
+#include "DisplayOptions.h"
+#include "../Game/Platform.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NUI
 {
@@ -26,10 +28,13 @@ const int
 // and controls option screens: write a checkbox's state into a config var (1/0) and read it back.
 // Guarded against a missing control (our 32MB game.db may not ship every retail checkbox).
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// WIDESCREEN: combo item id packs both dimensions -- Sentinels @0x4eba9f ((w&0xfff)<<12)|(h&0xfff).
-static int EncodeVideoModeID( int nW, int nH )
-{
-	return ( ( nW & 0xfff ) << 12 ) | ( nH & 0xfff );
+// Runtime list indices retain arbitrary dimensions, including 5K/8K.
+static vector<NGfx::SVideoMode> modernModes;
+static int EncodeVideoModeID(int w, int h) {
+	for (int i=0; i<(int)modernModes.size(); ++i)
+		if (modernModes[i].nXSize==w && modernModes[i].nYSize==h) return i;
+	modernModes.push_back(NGfx::SVideoMode(w,h,32,NGfx::WINDOWED));
+	return (int)modernModes.size()-1;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void UpdateConfig( CCheckButton *pButton, const string &szVar )
@@ -364,7 +369,8 @@ static int GetCurrentResolution()
 static void SetCurrentResolution( int nMode )
 {
 	WCHAR wsMode[64];
-	swprintf( wsMode, sizeof(wsMode) / sizeof(wsMode[0]), L"%dx%d", ( nMode >> 12 ) & 0xfff, nMode & 0xfff );
+	if (nMode < 0 || nMode >= (int)modernModes.size()) return;
+	swprintf( wsMode, sizeof(wsMode) / sizeof(wsMode[0]), L"%dx%d", modernModes[nMode].nXSize, modernModes[nMode].nYSize );
 	NGlobal::SetVar( "gfx_resolution", wstring( wsMode ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,9 +410,12 @@ private:
 	CObj<CComplexComboBox> pAnisotropicLevel;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CEmptyOptionsUI*)this); f.Add(2,&bIgnoreNotify); f.Add(3,&pDefault); f.Add(4,&pHWCursor); f.Add(5,&pShowCrown); f.Add(6,&pGammaScroll); f.Add(7,&pQuality); f.Add(8,&pFSAALevel); f.Add(9,&pLightingQuality); f.Add(10,&pResolution); f.Add(11,&pTextureQuality); f.Add(12,&pAnisotropicLevel); return 0; }
 
+	unsigned long long displayRevision = 0; // Runtime only.
+	void RefreshModes();
 	void UpdateFromConfig();
 
 public:
+	void Update(const STime& time, NGScene::I2DGameView* view);
 	CVideoOptionsUI(): bIgnoreNotify( false ) {}
 	CVideoOptionsUI( const SWindowInfo &sInfo );
 
@@ -419,6 +428,46 @@ CVideoOptionsUI::CVideoOptionsUI( const SWindowInfo &sInfo ):
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail @0x220f60: push the live config back into every control (guarded against notify feedback)
+void CVideoOptionsUI::RefreshModes()
+{
+	if(!IsValid(pResolution)) return;
+	const bool previous=bIgnoreNotify;
+	bIgnoreNotify=true;
+	pResolution->RemoveAllItems();
+	list<NGfx::SVideoMode> modesList;
+	NGfx::GetModesList( &modesList );
+	// retail @0x626c03 keeps w>=800 AND aspect==4:3, plus an 800..1024 16-bit list
+	// ("<right>%dx%dx16", id w|0x10000). WIDESCREEN port: every aspect stays (Sentinels'
+	// builder @0x4eba70 has no aspect check either); dev has no 16-bit plumbing.
+	for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); )
+	{
+		if ( iTemp->nXSize < 800 )
+			iTemp = modesList.erase( iTemp );
+		else
+			iTemp++;
+	}
+	for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); iTemp++ )
+	{
+		int nTemplate = 172;
+		list<NGfx::SVideoMode>::iterator iNext = iTemp; iNext++;
+		if ( iTemp == modesList.begin() )
+			nTemplate = 171;
+		if ( iNext == modesList.end() )
+			nTemplate = 173;
+
+		WCHAR wsBuffer[1024];
+		swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>%dx%dx32", iTemp->nXSize, iTemp->nYSize );
+		pResolution->AddItem( EncodeVideoModeID( iTemp->nXSize, iTemp->nYSize ), NUI::CComplexComboBox::SInfo( wsBuffer ), nTemplate );
+	}
+	pResolution->SetSelectedItem(GetCurrentResolution());
+	displayRevision=S2Platform::Display().revision;
+	bIgnoreNotify=previous;
+}
+void CVideoOptionsUI::Update(const STime& time, NGScene::I2DGameView* view)
+{
+	if(displayRevision!=S2Platform::Display().revision) { RefreshModes(); UpdateFromConfig(); }
+	CEmptyOptionsUI::Update(time,view);
+}
 void CVideoOptionsUI::UpdateFromConfig()
 {
 	bIgnoreNotify = true;
@@ -441,7 +490,8 @@ void CVideoOptionsUI::UpdateFromConfig()
 	if ( IsValid( pAnisotropicLevel ) )
 		pAnisotropicLevel->SetSelectedItem( Float2Int( NGlobal::GetVar( "gfx_anisotropic_filter", 1 ).GetFloat() ) );
 	if ( IsValid( pResolution ) )
-		pResolution->SetSelectedItem( GetCurrentResolution() );
+		{ pResolution->SetSelectedItem( GetCurrentResolution() );
+		  pResolution->SetStyle(STYLE_ENABLED, NGlobal::GetVar("gfx_fullscreen",1).GetFloat()==0); }
 	if ( IsValid( pQuality ) )
 		pQuality->SetStyle( STYLE_ENABLED, true );
 	if ( IsValid( pLightingQuality ) )
@@ -477,6 +527,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 			// retail @0x625520: swallow the notifies our own SetSelectedItem calls emit
 			if ( bIgnoreNotify )
 				return true;
+			if (sEvent.szID == "modern_display") { GetInterface()->ShowDisplayOptions(); return true; }
 			bIgnoreNotify = true;
 			bool bChanged = false;
 			if ( sEvent.szID == "default" )
@@ -491,6 +542,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 			else if ( IsValid( pResolution ) && sEvent.szID == pResolution->GetWindowID() )
 			{
 				bChanged = pResolution->GetSelectedItem() != GetCurrentResolution();
+				if (bChanged) NGScene::BeginDisplayChange();
 				SetCurrentResolution( pResolution->GetSelectedItem() );
 			}
 			else if ( IsValid( pQuality ) && sEvent.szID == pQuality->GetWindowID() )
@@ -521,7 +573,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 					NGlobal::SetVar( "gfx_anisotropic_filter", NGlobal::CValue( (float)pAnisotropicLevel->GetSelectedItem() ) );
 			}
 			if ( bChanged )
-				NGlobal::ProcessCommand( L"gfx_recreate" );   // retail @0x62568d: apply IMMEDIATELY
+				NGlobal::ProcessCommand( L"gfx_update" );
 			bIgnoreNotify = false;
 			UpdateFromConfig();
 			break;
@@ -555,31 +607,7 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 			}
 
 			pResolution = new CComplexComboBox( sEvent.pLoader->GetControl( "resolution" ) );
-			list<NGfx::SVideoMode> modesList;
-			NGfx::GetModesList( &modesList );
-			// retail @0x626c03 keeps w>=800 AND aspect==4:3, plus an 800..1024 16-bit list
-			// ("<right>%dx%dx16", id w|0x10000). WIDESCREEN port: every aspect stays (Sentinels'
-			// builder @0x4eba70 has no aspect check either); dev has no 16-bit plumbing.
-			for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); )
-			{
-				if ( iTemp->nXSize < 800 )
-					iTemp = modesList.erase( iTemp );
-				else
-					iTemp++;
-			}
-			for( list<NGfx::SVideoMode>::iterator iTemp = modesList.begin(); iTemp != modesList.end(); iTemp++ )
-			{
-				int nTemplate = 172;
-				list<NGfx::SVideoMode>::iterator iNext = iTemp; iNext++;
-				if ( iTemp == modesList.begin() )
-					nTemplate = 171;
-				if ( iNext == modesList.end() )
-					nTemplate = 173;
-
-				WCHAR wsBuffer[1024];
-				swprintf( wsBuffer, sizeof(wsBuffer) / sizeof(wsBuffer[0]), L"<right>%dx%dx32", iTemp->nXSize, iTemp->nYSize );
-				pResolution->AddItem( EncodeVideoModeID( iTemp->nXSize, iTemp->nYSize ), NUI::CComplexComboBox::SInfo( wsBuffer ), nTemplate );
-			}
+			RefreshModes();
 
 			// retail's control naming: the "fsaa_level" row is the LIGHTING QUALITY combo
 			pLightingQuality = new CComplexComboBox( sEvent.pLoader->GetControl( "fsaa_level" ) );
@@ -592,6 +620,11 @@ bool CVideoOptionsUI::ProcessMessage( const SEvent &sEvent )
 			// retail @0x62594c
 			pHWCursor = GetUIWindow<CCheckButton>( this, "hw_cursor" );
 			pShowCrown = GetUIWindow<CCheckButton>( this, "tree_crown" );
+			CButton* modern = new CButton(SWindowInfo(this, SPoint(16, GetAuthoredSize().y-36), SPoint(250,28), "modern_display"));
+			modern->EnableAdaptiveLayout();
+			modern->AddTextState(0, L"<font size=16pt>Display / UI scaling...");
+			modern->AddTextState(1, L"<font size=16pt><color=yellow>Display / UI scaling...");
+			modern->AddTextState(2, L"<font size=16pt><color=yellow>Display / UI scaling...");
 			UpdateFromConfig();
 			break;
 		}

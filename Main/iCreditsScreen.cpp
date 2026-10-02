@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
+#include "../MiscDll/Commands.h"
 #include "Transform.h"
 #include "GView.h"
 #include "G2DView.h"
@@ -92,6 +94,8 @@ class CCreditsUI: public CDesktopWindow
 	OBJECT_BASIC_METHODS(CCreditsUI);
 private:
 	ZDATA_(CDesktopWindow)
+	unsigned displayRevision = ~0u; // Runtime text layout generation.
+	bool vectorFonts = false;
 	float            fScroll;        // current scroll offset (px); starts -clipHeight so the roll enters from below
 	STime            sLastTime;      // last Draw time, for the per-frame delta
 	CObj<CText>    pText;          // the markup credits text (release CObj<CText>)
@@ -116,9 +120,12 @@ CCreditsUI::CCreditsUI( const SWindowInfo &sInfo, bool bFinalCredits ):
 	                     STYLE_VISIBLE | STYLE_ENABLED | STYLE_TOPMOST | STYLE_TRANSPARENT ) );
 	pText = new CText( SWindowInfo( pClip, SPoint( 0, 0 ), pClip->GetSize(), "text",
 	                     STYLE_VISIBLE | STYLE_ENABLED | STYLE_TOPMOST | STYLE_TRANSPARENT ) );
-	pVideoPlayer = new CVideoPlayer( SWindowInfo( this, SPoint( 0, 0 ), GetSize(), "video",
+	pVideoPlayer = new CVideoPlayer( SWindowInfo( this, SPoint( 0, 0 ), SPoint(1024,768), "video",
 	                     STYLE_ENABLED | STYLE_BOTTOMMOST | STYLE_TRANSPARENT ) );
 
+	pClip->DisableAdaptiveLayout();
+	pText->DisableAdaptiveLayout();
+	pVideoPlayer->EnableAdaptiveLayout();
 	// Start the text just below the clip so the roll scrolls up into view.
 	fScroll = float( -pClip->GetSize().y );
 
@@ -156,6 +163,17 @@ bool CCreditsUI::IsComplete()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CCreditsUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	pClip->DisableAdaptiveLayout();
+	pText->DisableAdaptiveLayout();
+	pClip->SetPosition(SPoint(0,128));
+	pClip->SetSize(SPoint(S2UI::Width(),S2UI::Height()-256));
+	const bool fonts=NGlobal::GetVar("ui_vector_fonts",1).GetFloat()!=0;
+	if(displayRevision!=S2Platform::Display().revision || vectorFonts!=fonts) {
+		displayRevision=S2Platform::Display().revision; vectorFonts=fonts;
+		pText->SetSize(SPoint(pClip->GetSize().x,pText->GetSize().y));
+		SPoint measured; pText->GetRealSize(&measured);
+		pText->SetSize(SPoint(pClip->GetSize().x,(std::max)(measured.y,S2UI::Height())));
+	}
 	if ( sLastTime == 0 )
 		sLastTime = sTime;
 	fScroll += float( sTime - sLastTime ) * F_CREDITS_SCROLL_SPEED;

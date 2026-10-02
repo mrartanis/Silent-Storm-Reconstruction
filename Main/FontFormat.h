@@ -88,6 +88,7 @@ public:
 	//
 	int operator&( CStructureSaver &f );
 	friend class CFontGen;
+	friend class CVectorFontBuilder;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif // __FONTFORMAT_H__

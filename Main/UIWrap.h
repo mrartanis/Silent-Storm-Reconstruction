@@ -10,6 +10,7 @@ struct SFBTransform;
 struct SHMatrix;
 namespace NGScene
 {
+	class CCFBTransform;
 	class CCTRect;
 	class CCWString;
 	class CCTPoint;
@@ -34,6 +35,8 @@ class CTextDraw: public CObjectBase
 	OBJECT_BASIC_METHODS(CTextDraw);
 protected:
 	ZDATA
+	unsigned nDisplayRevision = ~0u;
+	bool bVectorFonts = false;
 	int nSize;
 	SPoint sSize;
 	SPoint sRealSize;
@@ -62,10 +65,17 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CImageDraw
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tile a neutral material patch without repeating authored frames or stretching grain.
+void DrawTiledPanelBackground(CWindow* window, NGScene::I2DGameView* view, NDb::CUITexture* plate);
 class CImageDraw: public CObjectBase
 {
 	OBJECT_BASIC_METHODS(CImageDraw);
 protected:
+	SPoint sAspectSource = SPoint(0,0); // Runtime fit/crop policy; never serialized.
+	CPtr<NDb::CUITexture> pHorizontalFill; // Runtime neutral backdrop; never serialized.
+	int nHorizontalSplit = 0; // Runtime HUD backdrop layout; reapplied by its owner after load.
+	bool bPixelPosition = false; // Runtime cursor placement; never serialized.
+	CVec2 vPixelPosition;
 	ZDATA
 	CVec2 vScale;
 	SRect sWindow;
@@ -90,6 +100,11 @@ public:
 	void SetImage( NDb::CUITexture* pTexture, const SRect &sTexRect = SRect( 0, 0, 0, 0 ) );
 
 	void Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameView *pView );
+	void DrawAtPixels(const STime& time, NGScene::I2DGameView* view, const CVec2& position);
+	void SetAspectFit(const SPoint& source) { sAspectSource=source; }
+	NDb::CUITexture* GetImage() const { return pUITexture.GetPtr(); }
+	void SetHorizontalStretch(int cap) { nHorizontalSplit=-cap; pHorizontalFill=0; }
+	void SetHorizontalExpansion(int split, NDb::CUITexture* fill) { nHorizontalSplit = split; pHorizontalFill = fill; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail UIWrap.obj free helpers behind CModelDraw::Draw:
@@ -114,6 +129,7 @@ protected:
 	CObj<CObjectBase> pRender;
 	CObj<NGScene::CCFBTransform> pTransform;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&bUpdated); f.Add(3,&bParentScene); f.Add(4,&sWindow); f.Add(5,&sModelTransform); f.Add(6,&sCameraTransform); f.Add(7,&sColor); f.Add(8,&pModel); f.Add(9,&pRender); f.Add(10,&p3DView); f.Add(11,&pTransform); return 0; }
+	unsigned nLayoutRevision = ~0u;
 	bool bUpdated = false;
 	bool bParentScene = true;
 	SHMatrix sModelTransform;

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <SDL3/SDL_events.h>
+#include "DisplayGeometry.h"
 
 struct SDL_Window;
 
@@ -22,6 +23,8 @@ bool Active();
 bool Exiting();
 void Exit();
 void Size(int* width, int* height);
+const S2Display::Metrics& Display();
+void UpdateDisplay(float uiPercent = -1);
 bool SetMode(int width, int height, bool fullscreen);
 void CursorPosition(float* x, float* y);
 void CaptureMouse(bool capture);

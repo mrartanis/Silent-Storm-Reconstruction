@@ -103,6 +103,9 @@ set(DBFormat_SRC
 )
 
 set(Main_SRC
+    VectorFonts.cpp
+    DisplayOptions.cpp
+    DisplayPanels.cpp
   "2DScene.cpp"
   "2DSceneSW.cpp"
   "BetaSpline.cpp"

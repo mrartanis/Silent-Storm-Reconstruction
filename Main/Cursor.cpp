@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "../Game/Platform.h"
 #include "Gfx.h"
 #include "GSceneUtils.h"
@@ -180,7 +181,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			sOldInfo.pCursor = 0;
 		}
 
-		CVec2 vVirtCursorPos( vCursorPos.x * 1024.0f / pView->GetViewportSize().x, vCursorPos.y * 768.0f / pView->GetViewportSize().y );
+		CVec2 vVirtCursorPos( S2UI::FromPixel(vCursorPos.x), S2UI::FromPixel(vCursorPos.y) );
 
 		// retail draws from the UICursors RECORD: texture = pCursor->pUITexture, anchor = retail
 		// CalcCursorPos @0xd6200: sPos = (int)( vVirt - texSize * nCenter ), nCenterX/Y from the record.
@@ -191,7 +192,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			pImage->SetWindow( SRect( sPos.x, sPos.y, sPos.x + pTex->nWidth, sPos.y + pTex->nHeight ) );
 			pImage->SetImage( pTex );
 			pImage->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );
-			pImage->Draw( 0, sTime, pView );
+			pImage->DrawAtPixels(sTime, pView, CVec2(vCursorPos.x-pTex->nWidth*sInfo.pCursor->nCenterX*S2UI::Scale(), vCursorPos.y-pTex->nHeight*sInfo.pCursor->nCenterY*S2UI::Scale()));
 
 			// BUG 8: draw the caption through the cursor's OWN CML markup engine (retail cursor path), so the
 			// DB-string markup renders as retail does -- Courier, 16pt, the DB colour, and the 1px black
@@ -201,7 +202,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			{
 				CVec2 vScr = pView->GetViewportSize();
 				SPoint sTextVirt( sPos.x + pTex->nWidth, sPos.y );
-				SPoint sScrPos( (int)( sTextVirt.x * vScr.x / 1024.0f ), (int)( sTextVirt.y * vScr.y / 768.0f ) );
+				SPoint sScrPos(vCursorPos.x+pTex->nWidth*(1-sInfo.pCursor->nCenterX)*S2UI::Scale(), vCursorPos.y-pTex->nHeight*sInfo.pCursor->nCenterY*S2UI::Scale());
 				pTextML->Generate( pView, (int)vScr.x );
 				SRect sScrWindow( sScrPos.x, sScrPos.y, (int)vScr.x, (int)vScr.y );
 				pTextML->Render( pView, sScrPos, sScrWindow );
@@ -214,7 +215,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			pOldImage->SetWindow( SRect( sPos.x, sPos.y, sPos.x + pTex->nWidth, sPos.y + pTex->nHeight ) );
 			pOldImage->SetImage( pTex );
 			pOldImage->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * ( 1.0f - fCoeff ) ) );
-			pOldImage->Draw( 0, sTime, pView );
+			pOldImage->DrawAtPixels(sTime, pView, CVec2(vCursorPos.x-pTex->nWidth*sOldInfo.pCursor->nCenterX*S2UI::Scale(), vCursorPos.y-pTex->nHeight*sOldInfo.pCursor->nCenterY*S2UI::Scale()));
 		}
 	}
 }

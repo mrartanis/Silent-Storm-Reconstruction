@@ -93,6 +93,12 @@ int main() {
       !Near(cover.y2, -0.0365372747f) ||
       cover.x1 >= cover.x2 || cover.y1 >= cover.y2) return 8;
 
+  CTransformStack original, wide;
+  original.MakeProjective(CVec2(1024,768),60,0.1f,100.0f);
+  wide.MakeProjective(CVec2(3440,1440),60,0.1f,100.0f);
+  if (!Near(original.GetProjection().forward._22,wide.GetProjection().forward._22) ||
+      wide.GetProjection().forward._11 >= original.GetProjection().forward._11) return 14;
+
   float signedZero = GameFloatFromBits(0x80000000u);
   if (GameFloatBits(signedZero) != 0x80000000u ||
       FP_SIGN_BIT_CONST(signedZero) != 0x80000000u) return 9;

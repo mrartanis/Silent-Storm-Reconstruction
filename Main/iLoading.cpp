@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "../Game/Platform.h"
+#include "DisplayLayout.h"
 #include "iLoading.h"
 #include "..\DBFormat\DataFormat.h"   // NDb::GetUITexture / NDb::GetUIContainer
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,8 +52,25 @@ void CLoadingUI::SetProgress( int nValue )
 void CLoadingUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
 	NDb::CUITexture *pTexture = NDb::GetUITexture( nImageID );
-	if ( IsValid( pBackground ) )
+	if ( IsValid( pBackground ) ) {
 		pBackground->SetImage( pTexture, SRect( 0, 0, 0, 0 ) );
+		pBackground->SetLayoutAnchors(S2Display::Stretch,S2Display::Stretch);
+		pBackground->SetAspectFit(pBackground->GetAuthoredSize());
+		if(authoredControls.empty()) {
+			list<CPtr<CWindow> > children; GetChildrenList(&children);
+			for(auto it=children.begin();it!=children.end();++it) if(*it!=pBackground) {
+				authoredControls.push_back({*it,(*it)->GetAuthoredPosition(),(*it)->GetAuthoredSize()});
+				(*it)->DisableAdaptiveLayout();
+			}
+		}
+		const SPoint original=pBackground->GetAuthoredSize(), size=pBackground->GetSize();
+		const auto fit=S2Display::Fit(size.x,size.y,original.x,original.y);
+		const float scale=fit.width/original.x;
+		for(const auto& item:authoredControls) {
+			item.window->SetPosition(SPoint(Float2Int(fit.x+item.position.x*scale),Float2Int(fit.y+item.position.y*scale)));
+			item.window->SetSize(SPoint(Float2Int(item.size.x*scale),Float2Int(item.size.y*scale)));
+		}
+	}
 	CWindow::Draw( sTime, pView );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

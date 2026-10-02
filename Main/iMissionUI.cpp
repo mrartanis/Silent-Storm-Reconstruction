@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "Transform.h"
@@ -971,8 +972,8 @@ void CHitTracker::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	if ( !TestRayInFrustrum( vBegPoint, &sTS, vScreenRect, &vScreenPoint ) )
 		return;
 
-	vScreenPoint.x = vScreenPoint.x * 1024 / vScreenRect.x;
-	vScreenPoint.y = vScreenPoint.y * 768 / vScreenRect.y;
+	vScreenPoint.x = vScreenPoint.x / S2UI::Scale();
+	vScreenPoint.y = vScreenPoint.y / S2UI::Scale();
 
 	SPoint sPosition;
 	GetParent()->ScreenToClient( SPoint( vScreenPoint.x, vScreenPoint.y ), &sPosition );
@@ -1200,6 +1201,16 @@ bool CMissionUI::ProcessMessage( const SEvent &sEvent )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMissionUI::Update( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	// Side panels span the mission viewport, including when restored from a save.
+	CWindow* panels[]={pPerksPanel,pStorePanel,pInventoryPanel,pCharacterPanel,pMedalsPanel,pBiographyPanel};
+	for(CWindow* panel:panels) if(IsValid(panel)) {
+		panel->SetLayoutAnchors(panel->GetAuthoredPosition().x>=512?S2Display::Far:S2Display::Near,S2Display::Stretch);
+		// Keep every authored control, frame and model viewport in one centered group.
+		// Extra height belongs to the neutral backdrop, not to repeated artwork.
+		list<CPtr<CWindow> > children; panel->GetChildrenList(&children);
+		for(auto it=children.begin();it!=children.end();++it)
+			(*it)->SetLayoutAnchors(S2Display::Near,S2Display::Center);
+	}
 	if ( pMission->CountSelected() != 1 )
 		pMission->SetPanelState( NGame::PANEL_STORE | NGame::PANEL_PERKS | NGame::PANEL_INVENTORY | NGame::PANEL_CHARACTER | NGame::PANEL_MEDALS | NGame::PANEL_BIOGRAPHY, false );
 	if ( pMission->GetPanelState( NGame::PANEL_STORE | NGame::PANEL_INVENTORY ) == NGame::PANEL_STORE )
@@ -1210,16 +1221,17 @@ void CMissionUI::Update( const STime &sTime, NGScene::I2DGameView *pView )
 
 	const SPoint &sSize = GetClientWindow()->GetSize();
 	const SPoint &sPosition = GetClientWindow()->GetPosition();
-	SRect sClientRect( 0, 0, 1024, 768 );
+	SRect sClientRect( 0, 0, S2UI::Width(), S2UI::Height() );
 	if ( !pMission->IsInterfaceHidden() )
 	{
-		sClientRect = SRect( 0, 32, 1024, 596 );
+		sClientRect = SRect( 0, 32, S2UI::Width(), S2UI::Height()-172 );
 		if ( pMission->GetPanelState( NGame::PANEL_INVENTORY ) != 0 )
-			sClientRect.x2 = 512;
+			sClientRect.x2 = S2UI::Width()-512;
 		if ( pMission->GetPanelState( NGame::PANEL_STORE | NGame::PANEL_PERKS | NGame::PANEL_CHARACTER | NGame::PANEL_MEDALS | NGame::PANEL_BIOGRAPHY ) != 0 )
 			sClientRect.x1 = 512;
 	}
 
+	GetClientWindow()->DisableAdaptiveLayout();
 	GetClientWindow()->SetSize( SPoint( sClientRect.Width(), sClientRect.Height() ) );
 	GetClientWindow()->SetPosition( SPoint( sClientRect.x1, sClientRect.y1 ) );
 
@@ -1326,8 +1338,8 @@ static float ProjectOverlayIconPos( const CVec3 &vAnchor, CTransformStack &sTS, 
 {
 	CVec2 vScreenPos;
 	TestRayInFrustrum( vAnchor, &sTS, vScreenRect, &vScreenPos );
-	vScreenPos.x = vScreenPos.x * 1024 / vScreenRect.x;
-	vScreenPos.y = vScreenPos.y * 768 / vScreenRect.y;
+	vScreenPos.x = vScreenPos.x / S2UI::Scale();
+	vScreenPos.y = vScreenPos.y / S2UI::Scale();
 
 	bool bRet = false;
 	if ( ( sViewRect.x1 < vScreenPos.x ) && ( sViewRect.x2 > vScreenPos.x ) && ( sViewRect.y1 < vScreenPos.y ) && ( sViewRect.y2 > vScreenPos.y ) )
@@ -1509,8 +1521,8 @@ void CMissionUI::UpdateItems( NGScene::I2DGameView *pView )
 		const int
 			N_X_STEP = 4,
 			N_Y_STEP = 16,
-			N_X_SIZE = 1024 / N_X_STEP,
-			N_Y_SIZE = 768 / N_Y_STEP;
+			N_X_SIZE = S2UI::Width() / N_X_STEP,
+			N_Y_SIZE = S2UI::Height() / N_Y_STEP;
 
 		CArray2D<bool> sMap( N_X_SIZE, N_Y_SIZE );
 		sMap.FillEvery( false );
@@ -1710,8 +1722,8 @@ void CMissionUI::UpdateEnemies()
 		CVec3 vEyePosition( pEnemy->GetPosition().GetEyePosition() );
 		vEyePosition += CVec3( 0, 0, 0.6f );
 		TestRayInFrustrum( vEyePosition, &sTS, vScreenRect, &vScreenPos );
-		vScreenPos.x = vScreenPos.x * 1024 / vScreenRect.x;
-		vScreenPos.y = vScreenPos.y * 768 / vScreenRect.y;
+		vScreenPos.x = vScreenPos.x / S2UI::Scale();
+		vScreenPos.y = vScreenPos.y / S2UI::Scale();
 
 		bool bRet = false;
 		if ( ( sViewRect.x1 < vScreenPos.x ) && ( sViewRect.x2 > vScreenPos.x ) && ( sViewRect.y1 < vScreenPos.y ) && ( sViewRect.y2 > vScreenPos.y ) )
@@ -1805,8 +1817,8 @@ void CMissionUI::UpdateClues()
 		CVec3 vIconPos( vMarkerPos );
 		vIconPos += CVec3( 0, 0, 2.2f );   // above the silhouette's head (marker stands on the ground)
 		TestRayInFrustrum( vIconPos, &sTS, vScreenRect, &vScreenPos );
-		vScreenPos.x = vScreenPos.x * 1024 / vScreenRect.x;
-		vScreenPos.y = vScreenPos.y * 768 / vScreenRect.y;
+		vScreenPos.x = vScreenPos.x / S2UI::Scale();
+		vScreenPos.y = vScreenPos.y / S2UI::Scale();
 
 		bool bRet = false;
 		if ( ( sViewRect.x1 < vScreenPos.x ) && ( sViewRect.x2 > vScreenPos.x ) && ( sViewRect.y1 < vScreenPos.y ) && ( sViewRect.y2 > vScreenPos.y ) )

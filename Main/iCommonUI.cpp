@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "../Game/Platform.h"
 #include "GSceneUtils.h"
 #include "Transform.h"
@@ -709,7 +710,7 @@ void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		return;
 	}
 
-	SPoint sSize( (float)GetSize().x * p3DView->GetScreenRect().x / 1024.0f, (float)GetSize().y * p3DView->GetScreenRect().y / 768.0f );
+	SPoint sSize( (float)GetSize().x * S2UI::Scale(), (float)GetSize().y * S2UI::Scale() );
 
 	SRect sWindow;
 	SPoint sPosition;
@@ -736,7 +737,8 @@ void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 
 	CTransformStack ts;
 	ts.Init();
-	ts.MakeProjective( CVec2( 1024, 768 ), fFOV * fScale, 0.1f, 300 );
+	const float previewFOV = S2Display::PreviewFOV(fFOV * fScale, S2UI::Height(), this->sSize.y, GetSize().y);
+	ts.MakeProjective( CVec2( S2UI::Width(), S2UI::Height() ), previewFOV, 0.1f, 300 );
 	// retail @0x1bf070: SetCamera( sCamera ) directly -- sCamera is the serialized camera transform,
 	// composed from the orbit params by RecalcCamera() (so it round-trips through a save and is valid
 	// on the first post-load frame before any SetUnit re-runs).
@@ -744,8 +746,8 @@ void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 
 	SHMatrix sShift;
 	Identity( &sShift);
-	sShift._14 = (float)( vPos.x - 512 ) / 512;
-	sShift._24 = (float)( 384 - vPos.y ) / 384;
+	sShift._14 = ( vPos.x - S2UI::Width()*0.5f ) / (S2UI::Width()*0.5f);
+	sShift._24 = ( S2UI::Height()*0.5f - vPos.y ) / (S2UI::Height()*0.5f);
 
 	SHMatrix sRes;
 	Multiply( &sRes, sShift, ts.Get().forward );
@@ -755,8 +757,8 @@ void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	drawInfo.pTS = &ts;
 	// Retail v1.2 0x5bfddb: the clip origin and size both use the visible rectangle.
 	// The unclipped position above still places the portrait while it slides off-screen.
-	drawInfo.vOrigin = CVec2( sWindow.x1 / 1024.0f, sWindow.y1 / 768.0f );
-	drawInfo.vSize = CVec2( sWindow.Width() / 1024.0f, sWindow.Height() / 768.0f );
+	drawInfo.vOrigin = CVec2( sWindow.x1 / float(S2UI::Width()), sWindow.y1 / float(S2UI::Height()) );
+	drawInfo.vSize = CVec2( sWindow.Width() / float(S2UI::Width()), sWindow.Height() / float(S2UI::Height()) );
 	drawInfo.bOverlay = true;
 	p3DView->Draw( drawInfo );
 
@@ -1572,8 +1574,8 @@ void CSlot::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 
 	NGScene::IGameView::SDrawInfo drawInfo;
 	drawInfo.pTS = &ts;
-	drawInfo.vOrigin = CVec2( sWindow.x1 / 1024.0f, sWindow.y1 / 768.0f );
-	drawInfo.vSize = CVec2( sWindow.Width() / 1024.0f, sWindow.Height() / 768.0f );
+	drawInfo.vOrigin = CVec2( sWindow.x1 / float(S2UI::Width()), sWindow.y1 / float(S2UI::Height()) );
+	drawInfo.vSize = CVec2( sWindow.Width() / float(S2UI::Width()), sWindow.Height() / float(S2UI::Height()) );
 	drawInfo.bOverlay = true;
 	p3DView->Draw( drawInfo );
 

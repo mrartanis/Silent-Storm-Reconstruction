@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include <cwctype>
 #include "../Game/Platform.h"
 #include "Gfx.h"
@@ -657,10 +658,10 @@ void CToolTip::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		sPosition.x = 0;
 	if ( sPosition.y < 0 )
 		sPosition.y = 0;
-	if ( sPosition.x + sRealSize.x > 1024 )
-		sPosition.x = 1024 - sRealSize.x;
-	if ( sPosition.y + sRealSize.y > 768 )
-		sPosition.y = 768 - sRealSize.y;
+	if ( sPosition.x + sRealSize.x > S2UI::Width() )
+		sPosition.x = S2UI::Width() - sRealSize.x;
+	if ( sPosition.y + sRealSize.y > S2UI::Height() )
+		sPosition.y = S2UI::Height() - sRealSize.y;
 
 	CWindow::SetSize( sRealSize );
 	CWindow::SetPosition( sPosition );
@@ -1804,8 +1805,7 @@ int CVideoPlayer::GetFrameCount()
 // then ALWAYS the base CWindow::Draw.  Modeled on the CScreenShot::Draw twin (the
 // dev CRectLayout uses a scale + texel-units texcoord; CreateDynamicRects clips to
 // the screen window).  The release additionally letterboxes with explicit black
-// bars (CreateDynamicClearRects); for the 4:3 fullscreen intro videos the
-// scale-to-fit is visually identical, so those bars are omitted.
+// bars. Fit is recalculated each draw without restarting playback.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CVideoPlayer::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
@@ -1828,7 +1828,11 @@ void CVideoPlayer::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			{
 				// quad size = movie dims * (real/movie) scale = the real window size (baked)
 				CRectLayout sLayout;
-				sLayout.AddRect( 0, 0, sRealSize.x, sRealSize.y, CTRect<float>( 0, 0, sVidSize.x, sVidSize.y ) );
+				const auto fitted = S2Display::Fit(sRealSize.x, sRealSize.y, sVidSize.x, sVidSize.y);
+				CRectLayout background;
+				background.AddRect(0, 0, sRealSize.x, sRealSize.y, CTRect<float>(0,0,1,1), NGfx::SPixel8888(0,0,0,255));
+				pView->CreateDynamicRects((NDb::CTexture*)0, background, sScrPosition, sScrWindow);
+				sLayout.AddRect(fitted.x, fitted.y, fitted.width, fitted.height, CTRect<float>(0,0,sVidSize.x,sVidSize.y));
 				pView->CreateDynamicRects( pTexture, sLayout, sScrPosition, sScrWindow );
 			}
 		}

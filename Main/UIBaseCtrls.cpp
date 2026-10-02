@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
+#include "../MiscDll/Commands.h"
 #include "G2DView.h"
 #include "Transform.h"
 #include "GSceneUtils.h"
@@ -125,8 +127,8 @@ void CText::GetRealSize( SPoint *pRes )
 	*pRes = pText->GetSize();
 
 	CVec2 vScreenRect = GetInterface()->GetView()->GetViewportSize();
-	pRes->x = Float2Int( float( pRes->x * 1024 ) / vScreenRect.x );
-	pRes->y = Float2Int( float( pRes->y * 768 ) / vScreenRect.y );
+	pRes->x = Float2Int( S2UI::FromPixel(pRes->x) );
+	pRes->y = Float2Int( S2UI::FromPixel(pRes->y) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CText::ProcessMessage( const SEvent &sEvent )
@@ -162,9 +164,12 @@ void CText::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 void CText::UpdateText( NGScene::I2DGameView *pView )
 {
 	CVec2 vScreenRect = pView->GetViewportSize();
-	int nNewSize = Float2Int( float( GetSize().x ) * vScreenRect.x / 1024.0f );
-	if ( nNewSize != nSize )
+	int nNewSize = Float2Int( float( GetSize().x ) * S2UI::Scale() );
+	if ( nNewSize != nSize || nDisplayRevision != S2Platform::Display().revision ||
+	     bVectorFonts != (NGlobal::GetVar("ui_vector_fonts", 1).GetFloat() != 0) )
 	{
+		nDisplayRevision = S2Platform::Display().revision;
+		bVectorFonts = NGlobal::GetVar("ui_vector_fonts", 1).GetFloat() != 0;
 		nSize = nNewSize;
 		pText->Generate( pView, nSize );
 	}
@@ -192,6 +197,26 @@ void CImage::SetImage( NDb::CUITexture* _pTexture, const SRect &sTexRect )
 {
 	SRect sRect( sTexRect );
 	pImage->SetImage( _pTexture, sRect );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+NDb::CUITexture* CImage::GetImage() const
+{
+	return IsValid(pImage) ? pImage->GetImage() : 0;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CImage::SetAspectFit(const SPoint& source)
+{
+	if(IsValid(pImage)) pImage->SetAspectFit(source);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CImage::SetHorizontalStretch(int cap)
+{
+	if(IsValid(pImage)) pImage->SetHorizontalStretch(cap);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CImage::SetHorizontalExpansion(int split, NDb::CUITexture* fill)
+{
+	if (IsValid(pImage)) pImage->SetHorizontalExpansion(split,fill);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CImage::SetSizeFromImage( NDb::CUITexture* pTexture )

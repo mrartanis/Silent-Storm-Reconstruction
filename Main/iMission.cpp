@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #if !defined(_WIN32)
 #include <filesystem>
 #include <codecvt>
@@ -1163,7 +1164,7 @@ void CMission::Step()
 		pClientWindow->ClientToScreen( &sScrPosition, &sScrWindow );
 
 		NUI::SRect sScrClientRect( sScrPosition.x, sScrPosition.y, sScrPosition.x + sScrSize.x, sScrPosition.y + sScrSize.y );
-		GetCamera()->SetScreenRect( CTRect<float>( float( sScrClientRect.x1 ) / 1024.0f, float( sScrClientRect.y1 ) / 768.0f, float( sScrClientRect.x2 ) / 1024.0f, float( sScrClientRect.y2 ) / 768.0f ) );
+		GetCamera()->SetScreenRect( CTRect<float>( float( sScrClientRect.x1 ) / S2UI::Width(), float( sScrClientRect.y1 ) / S2UI::Height(), float( sScrClientRect.x2 ) / S2UI::Width(), float( sScrClientRect.y2 ) / S2UI::Height() ) );
 
 		int nFlags = bRenderWorld ? N_RENDERMODE_3D : 0;	// retail @0x5a3d11 gates 3D on bRenderWorld
 		if ( !bHideInterface )

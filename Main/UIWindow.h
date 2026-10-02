@@ -1,5 +1,6 @@
 #ifndef __A5_UI_WINDOW_H__
 #define __A5_UI_WINDOW_H__
+#include "../Game/DisplayGeometry.h"
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -58,6 +59,11 @@ class CWindow: public CObjectBase
 {
 	OBJECT_NOCOPY_METHODS(CWindow);
 protected:
+	bool bAdaptiveLayout = false; // Runtime only; authored bounds remain the serialized values.
+	mutable SPoint sLayoutSize, sLayoutPosition;
+	mutable bool bLayoutAnchorsSet = false;
+	mutable S2Display::Anchor anchorX = S2Display::Near, anchorY = S2Display::Near;
+	void ResolveLayoutAnchors() const;
 	ZDATA
 	int nStyle;
 	bool bActive;
@@ -133,6 +139,14 @@ public:
 	const SCursorInfo& GetCursorInfo() const;
 	void SetCursorInfo( const SCursorInfo &sInfo );
 
+	void EnableAdaptiveLayout() { bAdaptiveLayout = true; bLayoutAnchorsSet = false; }
+	void DisableAdaptiveLayout() { bAdaptiveLayout = false; bLayoutAnchorsSet = false; }
+	void SetLayoutAnchors(S2Display::Anchor x, S2Display::Anchor y) {
+		bAdaptiveLayout=true; anchorX=x; anchorY=y; bLayoutAnchorsSet=true;
+	}
+	const SPoint& GetAuthoredSize() const { return sSize; }
+	const SPoint& GetAuthoredPosition() const { return sPosition; }
+	SPoint AuthoredToLayout(const SPoint& point) const;
 	virtual const SPoint& GetSize() const;
 	virtual void SetSize( const SPoint &_sSize );
 

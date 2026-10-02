@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "Gfx.h"
 #include "wInterface.h"
 #include "aiJob.h"
@@ -413,8 +414,8 @@ static void MakeUnitStateToolTip( IMission *pMission, NWorld::CUnit *pUnit, NUI:
 		pFrame->SetStyle( NUI::STYLE_VISIBLE, false );
 		return;
 	}
-	vScreen.x = vScreen.x * 1024 / vScreenRect.x;
-	vScreen.y = vScreen.y * 768 / vScreenRect.y;
+	vScreen.x = vScreen.x / S2UI::Scale();
+	vScreen.y = vScreen.y / S2UI::Scale();
 
 	// --- text: what the active player may learn about this unit
 	NWorld::SEnemyInfo info;
@@ -1600,8 +1601,8 @@ void CStateDragItem::Step()
 	const NUI::SPoint &sSize = pModel->GetSize();
 
 	CVec2 vCursorPos = GetMission()->GetCursor()->GetPos();
-	vCursorPos.x = vCursorPos.x * 1024 / vScreenRect.x;
-	vCursorPos.y = vCursorPos.y * 768 / vScreenRect.y;
+	vCursorPos.x = vCursorPos.x / S2UI::Scale();
+	vCursorPos.y = vCursorPos.y / S2UI::Scale();
 
 	NUI::SPoint sPosition( vCursorPos.x - sSize.x / 2, vCursorPos.y - sSize.y / 2 );
 	pModel->SetPosition( sPosition );
@@ -1738,7 +1739,7 @@ bool CStateSelection::Initialize( IMission *pMission )
 	pLockedCamera = GetMission()->GetCamera();
 	pLockedCamera->SetLock( true );
 	CVec2 vScreenRect = GetMission()->GetScene()->GetScreenRect();
-	NUI::SPoint sPoint( vAnchor.x * 1024 / vScreenRect.x, vAnchor.y * 768 / vScreenRect.y );
+	NUI::SPoint sPoint( vAnchor.x / S2UI::Scale(), vAnchor.y / S2UI::Scale() );
 	pSelection = new NUI::CSelectionWindow( NUI::SWindowInfo( GetMission()->GetDesktop()->GetClientWindow(), sPoint, NUI::SPoint( 0, 0 ), "selection", NUI::STYLE_ENABLED | NUI::STYLE_VISIBLE | NUI::STYLE_TRANSPARENT | NUI::STYLE_BOTTOMMOST ), this );
 	return true;
 }
@@ -1758,7 +1759,7 @@ void CStateSelection::Step()
 	CVec2 vCursorPos = GetMission()->GetCursor()->GetPos();
 	CVec2 vScreenRect = GetMission()->GetScene()->GetScreenRect();
 
-	NUI::SRect sRect( vAnchor.x * 1024 / vScreenRect.x, vAnchor.y * 768 / vScreenRect.y, vCursorPos.x * 1024 / vScreenRect.x, vCursorPos.y * 768 / vScreenRect.y );
+	NUI::SRect sRect( vAnchor.x / S2UI::Scale(), vAnchor.y / S2UI::Scale(), vCursorPos.x / S2UI::Scale(), vCursorPos.y / S2UI::Scale() );
 	pSelection->SetSize( NUI::SPoint( abs( sRect.Width() ), abs( sRect.Height() ) ) );
 	pSelection->SetPosition( NUI::SPoint( Min( sRect.x1, sRect.x2 ), Min( sRect.y1, sRect.y2 ) ) );
 }

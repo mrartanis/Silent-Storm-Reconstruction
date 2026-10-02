@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 /*
 #include "GSceneUtils.h"
 #include "RectLayout.h"
@@ -338,9 +339,9 @@ void CPopupMenu::Update( const SScene &sScene )
 
 		SPoint sSize = GetSize();
 		SPoint sPosition = GetPosition();
-		if ( sPosition.x + sSize.x > 1024 )
+		if ( sPosition.x + sSize.x > S2UI::Width() )
 			sPosition.x -= sSize.x;
-		if ( sPosition.y + sSize.y > 768 )
+		if ( sPosition.y + sSize.y > S2UI::Height() )
 			sPosition.y -= sSize.y;
 
 		SetPosition( sPosition );

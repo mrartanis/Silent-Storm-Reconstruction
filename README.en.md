@@ -9,13 +9,18 @@ This repository contains ongoing work on the source code, with the ultimate goal
 producing a behaviour-equivalent version of Silent Storm v1.2 by analyzing the
 .pdb files of version v1.1 (RussianPatch1) and decompiling v1.2.
 
-Status as of 2026-09-30: the Windows x64 game uses SDL3 for its window, keyboard
-and mouse while retaining D3D9 rendering. The agreed Windows scope of stage 3
-passed 170/170 tests and live menu, console and tutorial mission checks.
-Linux game launch and joint Windows/Linux validation will accompany bgfx in
-stage 4. The full campaign, complete Steam behaviour parity and macOS remain
-unverified. See the [stage 3 report](diagnostics/SDL3-PLATFORM-WINDOWS.md)
-for commands and limitations.
+Status as of 2026-10-02: the game uses SDL3 and bgfx on Windows x64,
+Linux x64 and Linux ARM64. Stage 6 implements resizable windows, borderless fullscreen,
+modern resolutions, uniform UI scaling and adaptive layouts, Hor+ camera projection,
+aspect-preserving video and bundled FreeType/Liberation vector fonts.
+Linux is tested with Vulkan/lavapipe; ARM64 runs through QEMU. Physical Linux GPUs,
+Linux HiDPI, macOS and full campaign parity with Steam remain unverified.
+See the [stage 6 report](diagnostics/MODERN-DISPLAY.md) for the resolution/input matrix,
+checks, build commands, evidence and limitations.
+Follow-up fixes cover wide HUD bars, inventory/character layouts, loading artwork,
+mission entry and random encounters on the campaign map. Deferred armorer differences
+and the visual differences in skill indicators are recorded in the
+[known issues log](diagnostics/MANUAL-BUGS-2026-09-23.md).
 
 <div align="center">
   <table>
@@ -41,7 +46,8 @@ for commands and limitations.
 - **Windows** with **Visual Studio 2022** (requires the "Desktop development with
   C++" workload, MSVC v143, Windows SDK 10) or newer. Tested with VS 2026.
 - **CMake 3.21+**
-- The target game build is **Windows x64**.
+- Target game builds are **Windows x64, Linux x64 and Linux ARM64**.
+  Linux requires Clang 18; ARM64 requires its sysroot and host shaderc.
 - **SDL3 3.4.16**: development package containing `cmake/SDL3Config.cmake` and `SDL3.dll`.
 - *Optional:* **DirectX SDK June 2010** (https://www.microsoft.com/en-us/download/details.aspx?id=6812) - only
   needed to build the `ShaderCompiler` tool; if it's not installed, the tool is
@@ -74,10 +80,11 @@ DLLs from your build. Preserve the original installation. The working directory
 must contain `game.db`, `cfg` and the complete `res` directory. Laboratory runs
 use `diagnostics/New-LabRun.ps1` and `Start-LabRun.ps1`.
 
-The main game now uses SDL3 for its window, keyboard and mouse. Stage 3 is
-validated on Windows with the existing D3D9 renderer; Linux launch and testing
-will accompany the renderer migration in stage 4. Commands and evidence:
-[SDL3-PLATFORM-WINDOWS.md](diagnostics/SDL3-PLATFORM-WINDOWS.md).
+The game uses SDL3 and bgfx. Copy `fonts` next to the executable so text does
+not depend on installed system fonts. The user configuration saves
+`gfx_resolution=WxH`, `gfx_fullscreen=0/1`, `ui_scale=0/75/100/125/150/200`
+and `ui_vector_fonts=0/1`. Mode and scale are available through **Display and interface**
+in the graphics settings. See [MODERN-DISPLAY.md](diagnostics/MODERN-DISPLAY.md).
 
 ### Notes
 - The imported proprietary libraries fmod / Bink / LifeStudio are **generated at

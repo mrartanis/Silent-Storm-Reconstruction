@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include <cwctype>
 #include <limits>
 #include "DG.h"
@@ -611,7 +612,7 @@ void CTextFormater::GetFontFormatInfo( const SFont &sFont, SFontInfo *pFontInfo 
 
 	sSearch.nSize = sFont.nSize & FONT_SIZE_MASK;
 	if ( sFont.nSize & FONT_SIZE_POINTS )
-		sSearch.nSize = (float)( sFont.nSize & FONT_SIZE_MASK ) * vScreen.x / 1024.0f;
+		sSearch.nSize = (float)( sFont.nSize & FONT_SIZE_MASK ) * S2UI::Scale();
 	else if ( sFont.nSize & FONT_SIZE_PIXELS )
 		sSearch.nSize = sFont.nSize & FONT_SIZE_MASK;
 	else
@@ -634,7 +635,7 @@ void CTextFormater::GetFontFormatInfo( const SFont &sFont, SFontInfo *pFontInfo 
 	pFontInfo->pFont = pFont;
 	pFontInfo->pInfo = pInfo->GetValue();
 
-	float fScale = (float)sSearch.nSize / pFontInfo->pInfo->GetLineSpace();
+	float fScale = pFont->IsVector() ? 1.0f : (float)sSearch.nSize / pFontInfo->pInfo->GetLineSpace();
 	pFontInfo->scale.x = fScale;
 	pFontInfo->scale.y = fScale;
 

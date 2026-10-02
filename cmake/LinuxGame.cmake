@@ -5,6 +5,15 @@ if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   message(FATAL_ERROR "The full Linux game requires Clang for historical anonymous union members")
 endif()
 set(_s2_game_root "${CMAKE_BINARY_DIR}/linux-sources")
+# Regenerate the build-only include-normalized copy after source edits, too.
+# Watching only file names leaves incremental builds using an older copy.
+set(_s2_prepare_inputs "${root}/diagnostics/PrepareLinuxSources.py")
+foreach(module IN ITEMS Misc MiscDll FileIO Image ADOImport DBFormat Input Script FModSound Main Game Media third_party diagnostics)
+  file(GLOB_RECURSE _s2_module_inputs CONFIGURE_DEPENDS
+    "${root}/${module}/*.h" "${root}/${module}/*.cpp" "${root}/${module}/*.c" "${root}/${module}/*.inl")
+  list(APPEND _s2_prepare_inputs ${_s2_module_inputs})
+endforeach()
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${_s2_prepare_inputs})
 execute_process(COMMAND "${Python3_EXECUTABLE}" "${root}/diagnostics/PrepareLinuxSources.py"
   --source "${root}" --output "${_s2_game_root}" COMMAND_ERROR_IS_FATAL ANY)
 include("${root}/sources.cmake")
@@ -81,7 +90,8 @@ foreach(module IN ITEMS Misc FileIO MiscDll Image ADOImport DBFormat Input Scrip
   target_link_libraries(${target} PRIVATE s2_platform bgfx)
 endforeach()
 target_link_libraries(s2_full_FileIO PUBLIC s2_portable_package s2_portable_structure s2_portable_user_paths)
-target_link_libraries(s2_full_Main PUBLIC s2_portable_effects)
+target_link_libraries(s2_full_Main PUBLIC s2_portable_effects s2_vector_fonts)
+s2_copy_fonts(Game)
 target_link_libraries(s2_full_ADOImport PUBLIC s2_portable_database)
 add_dependencies(s2_full_Main S2BgfxShaders)
 find_package(ZLIB REQUIRED)
@@ -121,3 +131,6 @@ if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
   add_test(NAME SDLInputConfiguration
     COMMAND SDLPlatformInputTests --bindings "${S2_GAME_DIR}/cfg/input.cfg")
 endif()
+
+add_test(NAME DisplayRuntimeTests COMMAND BgfxRendererTests --display)
+s2_copy_fonts(BgfxRendererTests)

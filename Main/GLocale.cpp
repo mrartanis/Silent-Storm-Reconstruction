@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "VectorFonts.h"
+#include "../MiscDll/Commands.h"
 #include "DG.h"
 #include "FontFormat.h"
 #include "GView.h"
@@ -89,15 +91,35 @@ CFontInfo* CTextLocaleInfo::SearchFont( const SFont &sFont )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CFontInfo* CTextLocaleInfo::GetFont( const SFont &sFont )
 {
+	if (NGlobal::GetVar("ui_vector_fonts", 1).GetFloat() != 0) {
+		if (CFontInfo* font = GetVectorFont(sFont)) return font;
+	}
 	CPtr<CFontInfo> pResFontInfo = 0;
 
 	pResFontInfo = SearchFont( sFont );
-	if ( !pResFontInfo )
-		pResFontInfo = SearchFont( SFont( 16, "System" ) );
+	if (!pResFontInfo) {
+		csSystem << "FONT: unknown family " << sFont.szName << "; using Liberation Sans" << endl;
+		pResFontInfo = GetVectorFont(SFont(sFont.nSize, "System"));
+		if (!pResFontInfo) pResFontInfo = SearchFont(SFont(16, "System"));
+	}
 
 	return pResFontInfo;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+int CFontInfo::operator&(CStructureSaver& f) {
+	f.Add(2, &sFont);
+	if (bRuntimeVector && !f.IsReading()) {
+		CObj<CPtrFuncBase<NGfx::CTexture>> texture;
+		CDGPtr<CPtrFuncBase<CFontFormatInfo>> info;
+		f.Add(3, &texture); f.Add(4, &info);
+	} else { f.Add(3, &pTexture); f.Add(4, &pInfo); }
+	return 0;
+}
+void CFontInfo::RestoreRuntime() {
+	if (IsValid(pTexture)) return;
+	CFontInfo* rebuilt = GetVectorFont(sFont);
+	if (rebuilt && rebuilt != this) { pTexture = rebuilt->pTexture; pInfo = rebuilt->pInfo; bRuntimeVector = true; }
+}
 } // namespace
 using namespace NGScene;
 REGISTER_SAVELOAD_CLASS( 0x02931162, CTextLocaleInfo )

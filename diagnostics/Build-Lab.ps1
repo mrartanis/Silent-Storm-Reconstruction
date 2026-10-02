@@ -62,6 +62,7 @@ if($Architecture -eq 'x64'){
   $runtime | Copy-Item -Destination $archive
  }
 }
+Copy-Item "$build\RelWithDebInfo\fonts" "$archive\fonts" -Recurse
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
 [ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;Graphics='bgfx';BgfxRoot=$BgfxRoot;BimgRoot=$BimgRoot;BxRoot=$BxRoot;BgfxCMakeRoot=$BgfxCMakeRoot;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;BuildDirectory=$build;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"

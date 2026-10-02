@@ -18,6 +18,7 @@ class CAnimUnitView;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SAckEvent
 {
+	int nSourcePhrase = -1, nSourceOffset = 0; // Runtime pagination anchor.
 	int nPriority;
 	wstring wsText;
 	CPtr<NWorld::CUnit> pUnit;
@@ -59,7 +60,11 @@ private:
 	EStage eStage;
 	////
 	int nStage;
-	vector<SAckEvent> parsedPhrasesSet;
+	int nSourcePhrase = -1, nSourceOffset = 0; // Logical progress, independent of layout.
+	vector<SAckEvent> parsedPhrasesSet; // Runtime pagination; contains live object references.
+	unsigned long long displayRevision = 0;
+	bool vectorFonts = true;
+	bool restoreDialogue = false;
 	vector<CObj<NWorld::CUnit> > unitsSet;
 	vector<CPtr<NWorld::CAckEvent> > phrasesSet;
 	////
@@ -78,7 +83,7 @@ private:
 	// skipped voiceline stops lipsyncing (SetStage @0x2059c0). Continuation pages (null pSequence)
 	// deliberately do NOT clear it: the same speaker keeps talking across subtitle pages.
 	CPtr<CAnimUnitView> pSequenceHolder;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDesktopWindow*)this); f.Add(2,&pMission); f.Add(3,&pTransition); f.Add(4,&nPanelsStateSave); f.Add(5,&sStageTime); f.Add(6,&eStage); f.Add(7,&nStage); f.Add(8,&parsedPhrasesSet); f.Add(9,&unitsSet); f.Add(10,&phrasesSet); f.Add(11,&pTopBackground); f.Add(12,&pBottomBackground); f.Add(13,&szDialogCode); f.Add(14,&pDialog); f.Add(15,&pBack); f.Add(16,&pNext); f.Add(17,&pExit); f.Add(18,&unitViewsSet); f.Add(19,&nID); f.Add(20,&pSequenceHolder); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDesktopWindow*)this); f.Add(2,&pMission); f.Add(3,&pTransition); f.Add(4,&nPanelsStateSave); f.Add(5,&sStageTime); f.Add(6,&eStage); f.Add(7,&nStage); if(!f.IsReading()) { vector<SAckEvent> empty; f.Add(8,&empty); } f.Add(9,&unitsSet); f.Add(10,&phrasesSet); f.Add(11,&pTopBackground); f.Add(12,&pBottomBackground); f.Add(13,&szDialogCode); f.Add(14,&pDialog); f.Add(15,&pBack); f.Add(16,&pNext); f.Add(17,&pExit); f.Add(18,&unitViewsSet); f.Add(19,&nID); f.Add(20,&pSequenceHolder); f.Add(21,&nSourcePhrase); f.Add(22,&nSourceOffset); if(f.IsReading()) restoreDialogue=true; return 0; }
 
 protected:
 	void SetStage( int nStage );
@@ -90,6 +95,7 @@ public:
 	CMissionDlgUI();
 	CMissionDlgUI( const SWindowInfo &sInfo, NGame::IMission *pMission, CDesktopWindow *pTransition, const string &szDialogCode, const vector<CObj<NWorld::CUnit> > &unitsSet, const vector<CPtr<NWorld::CAckEvent> > &phrasesSet, int nID = -1 );
 
+	void GetDisplayProgressForDiagnostics(int* page, int* phrase, int* offset, int* phase) const { *page=nStage; *phrase=nSourcePhrase; *offset=nSourceOffset; *phase=eStage; }
 	void ShowDesktop();
 	void HideDesktop();
 	void UpdateDesktop( const STime &sTime );

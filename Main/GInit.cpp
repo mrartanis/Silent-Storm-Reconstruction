@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "GInit.h"
 #include "Gfx.h"
+#include "../Game/DisplayGeometry.h"
+#include "../MiscDll/LogStream.h"
 #include "GfxRender.h"
 #include "..\MiscDll\Commands.h"
 
@@ -23,23 +25,12 @@ void GetConfiguredVideoMode( int *pModeX, int *pModeY )
 {
 	int nModeX = 1024, nModeY = 768;
 	NGlobal::CValue sValue = NGlobal::GetVar( "gfx_resolution", 1024 );
-
-	int nW = 0, nH = 0;
-	if ( swscanf( sValue.GetString().c_str(), L"%dx%d", &nW, &nH ) == 2 && nW > 0 && nH > 0 )
+	if ( !S2Display::ParseResolution(sValue.GetString(), &nModeX, &nModeY) )
 	{
-		nModeX = nW; nModeY = nH;
+		csSystem << "DISPLAY: invalid gfx_resolution '" << sValue.GetString() << "'; expected legacy size or WxH (100..16384); using windowed 1024x768" << endl;
+		NGlobal::SetVar("gfx_fullscreen", 0);
+		NGlobal::SetVar("gfx_resolution", wstring(L"1024x768"));
 	}
-	// legacy width whitelist -- retail @0x1292e0 (note 1280 maps to 1280x960, NOT 1280x1024)
-	else if ( sValue.GetFloat() == 320 ) { nModeX = 320; nModeY = 200; }
-	else if ( sValue.GetFloat() == 400 ) { nModeX = 400; nModeY = 300; }
-	else if ( sValue.GetFloat() == 640 ) { nModeX = 640; nModeY = 480; }
-	else if ( sValue.GetFloat() == 800 ) { nModeX = 800; nModeY = 600; }
-	else if ( sValue.GetFloat() == 1024 ) { nModeX = 1024; nModeY = 768; }
-	else if ( sValue.GetFloat() == 1152 ) { nModeX = 1152; nModeY = 864; }
-	else if ( sValue.GetFloat() == 1280 ) { nModeX = 1280; nModeY = 960; }
-	else if ( sValue.GetFloat() == 1600 ) { nModeX = 1600; nModeY = 1200; }
-	else { ASSERT( 0 ); }
-
 	*pModeX = nModeX;
 	*pModeY = nModeY;
 }
@@ -61,6 +52,10 @@ bool SetModeFromConfig( bool bRecreate )
 
 	NGfx::EFS fullScreen = NGfx::WINDOWED;
 	sValue = NGlobal::GetVar( "gfx_fullscreen", 0 );
+	if (sValue.GetFloat() != 0 && sValue.GetFloat() != 1) {
+		csSystem << "DISPLAY: invalid window mode; using window" << endl;
+		NGlobal::SetVar("gfx_fullscreen",0); sValue = NGlobal::CValue(0);
+	}
 #ifndef _MAPEDIT
 	if ( sValue.GetFloat() == 1 )
 		fullScreen = NGfx::FULL_SCREEN;
@@ -152,6 +147,8 @@ START_REGISTER(GInit)
 	REGISTER_CMD( "gfx_recreate", CommandGfxRecreate )
 	REGISTER_VAR( "gfx_resolution", 0, 1024, true )
 	REGISTER_VAR( "gfx_fullscreen", 0, 1, true )
+	REGISTER_VAR( "ui_scale", 0, 0, true )
+	REGISTER_VAR( "ui_vector_fonts", 0, 1, true )
 	REGISTER_VAR( "gfx_depth_tex_resolution", 0, 512, true )
 	REGISTER_VAR( "gfx_cl_sky_textures", 0, 0, true )
 	REGISTER_VAR( "gfx_cl_cube_resolution", 0, 16, true )

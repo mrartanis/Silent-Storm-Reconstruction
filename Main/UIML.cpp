@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
+#include "VectorFonts.h"
 #include <cwctype>
 #include "RectLayout.h"
 #include "G2DView.h"
@@ -42,7 +44,7 @@ static void GetFontFormatInfo( NGScene::I2DGameView *pView, const NGScene::SFont
 
 	sSearch.nSize = sFont.nSize & FONT_SIZE_MASK;
 	if ( sFont.nSize & FONT_SIZE_POINTS )
-		sSearch.nSize = Float2Int( float( sFont.nSize & FONT_SIZE_MASK ) * vScreen.x / 1024.0f );   // retail ROUND @0x72123c
+		sSearch.nSize = Float2Int( float( sFont.nSize & FONT_SIZE_MASK ) * S2UI::Scale() );   // retail ROUND @0x72123c
 	// FONT_SIZE_PIXELS (and a flag-less size): the raw masked value -- retail has no ASSERT arm.
 	if ( sSearch.nSize <= nMinFontSize )   // retail clamp to the SState minimum @0x721250
 		sSearch.nSize = nMinFontSize;
@@ -53,13 +55,9 @@ static void GetFontFormatInfo( NGScene::I2DGameView *pView, const NGScene::SFont
 	pFontInfo->pFont = pFont;
 	pFontInfo->pInfo = pInfo->GetValue();
 
-	float fScale = (float)sSearch.nSize / pFontInfo->pInfo->GetLineSpace();
+	float fScale = pFont->IsVector() ? 1.0f : (float)sSearch.nSize / pFontInfo->pInfo->GetLineSpace();
 	pFontInfo->scale.x = fScale;
 	pFontInfo->scale.y = fScale;
-	// WIDESCREEN (Sentinels @0x44cbcc-0x44cbdc): scale.y = fScale * (vp.y/vp.x) * 4/3, so glyph
-	// height tracks vp.y/768 while width keeps vp.x/1024. Gated wider-than-4:3 => 4:3/5:4 bit-identical.
-	if ( vScreen.x * 3.0f > vScreen.y * 4.0f )
-		pFontInfo->scale.y = fScale * ( vScreen.y * 1024.0f ) / ( vScreen.x * 768.0f );
 
 	return;
 }
@@ -86,7 +84,7 @@ private:
 	CRectLayout sNormal;
 	CRectLayout sOutline;
 	CObj<CPtrFuncBase<NGfx::CTexture> > pTexture;
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nStrSize); f.Add(3,&nStrStart); f.Add(4,&pStream); f.Add(5,&sState); f.Add(6,&sSize); f.Add(7,&sPosition); f.Add(8,&edges); f.Add(9,&sNormal); f.Add(10,&sOutline); f.Add(11,&pTexture); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nStrSize); f.Add(3,&nStrStart); f.Add(4,&pStream); f.Add(5,&sState); f.Add(6,&sSize); f.Add(7,&sPosition); f.Add(8,&edges); f.Add(9,&sNormal); f.Add(10,&sOutline); if (!f.IsReading() && NGScene::IsVectorTexture(pTexture)) { CObj<CPtrFuncBase<NGfx::CTexture>> empty; f.Add(11,&empty); } else f.Add(11,&pTexture); return 0; }
 
 public:
 	// retail default ctor @0x324c60 leaves the slice indices uninitialized (only the save/load path
@@ -135,10 +133,9 @@ void CMLTextObject::Generate( NGScene::I2DGameView *pView )
 
 	// outline border in screen pixels: nOutlineBorder * viewportW / 1024 (retail @0x7218e0)
 	const CVec2 vScreen = pView->GetViewportSize();
-	const float fS = float( sState.nOutlineBorder ) * vScreen.x / 1024.0f;
+	const float fS = float( sState.nOutlineBorder ) * S2UI::Scale();
 	// WIDESCREEN (Sentinels @0x44cd34-0x44cd3e): the ring's vertical offset scales by vp.y/768
-	const float fSY = ( vScreen.x * 3.0f > vScreen.y * 4.0f )
-		? float( sState.nOutlineBorder ) * vScreen.y / 768.0f : fS;
+	const float fSY = fS;
 
 	float fX = 0;
 	WCHAR wcLastChar = 0;
@@ -309,32 +306,13 @@ void CMLImageObject::Generate( NGScene::I2DGameView *pView )
 		sSize.x = pUITexture->nWidth;
 		sSize.y = pUITexture->nHeight;
 
-		CVec2 vImageMode( 1024, 768 );
 		NDb::EUIMode eMode = NDb::UIM_1024x768;
-		switch( Float2Int( pView->GetViewportSize().x ) )
-		{
-			case 1600:
-				eMode = NDb::UIM_1600x1200;
-				break;
-			case 1280:
-				eMode = NDb::UIM_1280x1024;
-				break;
-			case 1024:
-				eMode = NDb::UIM_1024x768;
-				break;
-			case 800:
-				eMode = NDb::UIM_800x600;
-				break;
+		if (!IsValid(pUITexture->pTextures[eMode])) {
+			for (int i=0;i<NDb::UIM_MAX;++i) if(IsValid(pUITexture->pTextures[i])) { eMode=(NDb::EUIMode)i; break; }
 		}
-
-		CVec2 vScale( 1.0f, 1.0f );
-		if ( !IsValid( pUITexture->pTextures[eMode] ) )
-		{
-			eMode = NDb::UIM_1024x768;
-			vScale.x = pView->GetViewportSize().x / 1024.0f;
-			vScale.y = pView->GetViewportSize().y / 768.0f;
-		}
-
+		if (!IsValid(pUITexture->pTextures[eMode])) return;
+		CVec2 vScale(S2UI::Scale()*pUITexture->nWidth/pUITexture->pTextures[eMode]->nWidth,
+		             S2UI::Scale()*pUITexture->nHeight/pUITexture->pTextures[eMode]->nHeight);
 		pTexture = pUITexture->pTextures[eMode];
 		if ( IsValid( pTexture ) )
 		{

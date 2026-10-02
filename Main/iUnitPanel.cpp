@@ -1479,6 +1479,11 @@ bool CUnitPanel::ProcessMessage( const SEvent &sEvent )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitPanel::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	// Match the fixed left information group and the right-docked command controls.
+	// Insert background only at their boundary, never repeat the portrait/slot artwork.
+	const int split=pInfoPanelSingleUnit->GetAuthoredPosition().x+pInfoPanelSingleUnit->GetAuthoredSize().x;
+	CImage* backgrounds[]={pBackgroundEmpty,pBackgroundSingleUnit,pBackgroundMultipleUnits};
+	for (CImage* background:backgrounds) if (IsValid(background)) background->SetHorizontalExpansion(split,IsValid(pBackgroundEmpty) ? pBackgroundEmpty->GetImage() : 0);
 	int nCountSelected = pMission->CountSelected();
 
 	bool bSignlePanel = false, bMultiPanel = false;

@@ -36,6 +36,7 @@ if($buildMetadata.Architecture -eq 'x64'){
  Get-ChildItem -LiteralPath $archive -File | Where-Object Name -Match '^(avcodec|avformat|avutil|swscale|swresample)-[0-9]+\.dll$' |
   Copy-Item -Destination "$run\game"
 }
+if(Test-Path -LiteralPath "$archive\fonts"){Copy-Item "$archive\fonts" "$run\game\fonts" -Recurse}
 Copy-Item "$archive\build.json" "$run\evidence"
 Copy-Item "$LabRoot\evidence\baseline-files.csv" "$run\evidence"
 Get-ChildItem "$run\game" -File | Get-FileHash | Export-Csv "$run\evidence\runtime-hashes.csv" -NoTypeInformation

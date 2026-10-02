@@ -33,6 +33,8 @@ class CText: public CWindow
 	OBJECT_NOCOPY_METHODS(CText);
 private:
 	ZDATA_(CWindow)
+	unsigned nDisplayRevision = ~0u;
+	bool bVectorFonts = false;
 	int nSize;
 	wstring wsText;
 	CObj<IML> pText;
@@ -82,6 +84,10 @@ public:
 	void SetColor( const NGfx::SPixel8888 &sColor );
 	void SetImage( NDb::CUITexture* pTexture, const SRect &sTexRect = SRect( 0, 0, 0, 0 ) );
 	void SetSizeFromImage( NDb::CUITexture* pTexture );
+	NDb::CUITexture* GetImage() const;
+	void SetAspectFit(const SPoint& source);
+	void SetHorizontalExpansion(int split, NDb::CUITexture* fill);
+	void SetHorizontalStretch(int cap);
 
 	bool ProcessMessage( const SEvent &sEvent );
 	void Draw( const STime &sTime, NGScene::I2DGameView *pView );

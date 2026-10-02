@@ -13,6 +13,8 @@ SDL_Window* window = nullptr;
 bool exiting = false;
 bool active = false;
 bool errorDialogs = true;
+S2Display::Metrics display;
+float uiPercent = 0;
 std::deque<S2Platform::InputEvent> input;
 void InitError(const char* operation)
 {
@@ -41,7 +43,7 @@ bool S2Platform::Init(const char* title, int width, int height, bool hidden)
     return false;
   }
   window = SDL_CreateWindow(title, width, height,
-      SDL_WINDOW_RESIZABLE | (hidden ? SDL_WINDOW_HIDDEN : 0));
+      SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY | (hidden ? SDL_WINDOW_HIDDEN : 0));
   if (!window) {
     InitError("SDL_CreateWindow");
     SDL_Quit();
@@ -49,6 +51,7 @@ bool S2Platform::Init(const char* title, int width, int height, bool hidden)
   }
   SDL_SetWindowMinimumSize(window, 100, 100);
   active = (SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) != 0;
+  UpdateDisplay();
   if (!SDL_StartTextInput(window)) {
     InitError("SDL_StartTextInput");
     Done();
@@ -167,6 +170,7 @@ void S2Platform::PumpEvents()
       default: break;
     }
   }
+  UpdateDisplay();
 }
 
 bool S2Platform::PollInput(InputEvent* event)
@@ -179,14 +183,35 @@ bool S2Platform::Exiting() { return exiting; }
 void S2Platform::Exit() { exiting = true; }
 void S2Platform::Size(int* width, int* height)
 {
-  if (!window || !SDL_GetWindowSizeInPixels(window, width, height)) *width = *height = 0;
+  *width = display.drawable ? display.pixelWidth : 0;
+  *height = display.drawable ? display.pixelHeight : 0;
+}
+const S2Display::Metrics& S2Platform::Display() { return display; }
+void S2Platform::UpdateDisplay(float percent)
+{
+  if (percent >= 0 && std::isfinite(percent)) uiPercent = percent;
+  if (!window) return;
+  int w = 0, h = 0, pw = 0, ph = 0;
+  SDL_GetWindowSize(window, &w, &h);
+  SDL_GetWindowSizeInPixels(window, &pw, &ph);
+  display = S2Display::Update(display,w,h,pw,ph,SDL_GetWindowDisplayScale(window),
+      SDL_GetDisplayForWindow(window),bool(SDL_GetWindowFlags(window) & SDL_WINDOW_MINIMIZED),uiPercent);
 }
 bool S2Platform::SetMode(int width, int height, bool fullscreen)
 {
-  return window && SDL_SetWindowFullscreen(window, fullscreen) &&
-      (fullscreen || SDL_SetWindowSize(window, width, height)) && SDL_SyncWindow(window);
+  if (!window || !SDL_SetWindowFullscreenMode(window, nullptr) ||
+      !SDL_SetWindowFullscreen(window, fullscreen) ||
+      (!fullscreen && !SDL_SetWindowSize(window, width, height)) || !SDL_SyncWindow(window)) {
+    std::fprintf(stderr,"DISPLAY: SDL mode change failed: %s\n",SDL_GetError());
+    return false;
+  }
+  UpdateDisplay();
+  return true;
 }
-void S2Platform::CursorPosition(float* x, float* y) { SDL_GetMouseState(x, y); }
+void S2Platform::CursorPosition(float* x, float* y) {
+  SDL_GetMouseState(x, y);
+  *x = display.WindowToPixelX(*x); *y = display.WindowToPixelY(*y);
+}
 void S2Platform::CaptureMouse(bool capture)
 {
   if (!window) return;

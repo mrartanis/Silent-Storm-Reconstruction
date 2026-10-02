@@ -91,6 +91,7 @@ public:
 	CChapterMapUI( const SWindowInfo &sInfo, NGame::IMission *pChapter );
 
 	void SetTarget( const CVec2 &_vTargetPos );
+	string GetTravelForDiagnostics() const;
 
 	bool ProcessMessage( const SEvent &sEvent );
 	void Draw( const STime &sTime, NGScene::I2DGameView *pView );

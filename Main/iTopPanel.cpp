@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "wInterface.h"
@@ -160,8 +161,22 @@ bool CTopBar::ProcessMessage( const SEvent &sEvent )
 	return false;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace {
+void LayoutTopStrip(CWindow* parent) {
+    list<CPtr<CWindow>> children; parent->GetChildrenList(&children);
+    for(auto child:children) {
+        if(auto image=dynamic_cast<CImage*>(child.GetPtr())) {
+            if(child->GetAuthoredSize().x==1024) image->SetHorizontalStretch(280);
+        }
+        if(child->GetWindowID()=="bar" || child->GetWindowID()=="text")
+            child->SetLayoutAnchors(S2Display::Stretch,S2Display::Near);
+        LayoutTopStrip(child);
+    }
+}
+}
 void CTopBar::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	LayoutTopStrip(this);
 	EMode ePrevMode = eMode;
 	if ( pMission->IsRealTime() )
 		eMode = REALTIME;
