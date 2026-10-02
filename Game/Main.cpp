@@ -622,8 +622,17 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
       if((ch>=L'0' && ch<=L'9') || ch==L'-' || ch==L'.') plain+=char(ch);
       else number=false;
     }
-    if(number && !plain.empty()) SaveLoadDiag("[display-number] depth=%d id=%s value=%s\n",
-      depth,window->GetWindowID().c_str(),plain.c_str());
+    if(number && !plain.empty()) {
+      string colour="default";
+      const auto& markup=text->GetText();
+      const auto start=markup.find(L"<color=");
+      if(start!=wstring::npos) {
+        const auto end=markup.find(L'>',start);
+        if(end!=wstring::npos) colour.assign(markup.begin()+start+7,markup.begin()+end);
+      }
+      SaveLoadDiag("[display-number] depth=%d id=%s value=%s color=%s\n",
+        depth,window->GetWindowID().c_str(),plain.c_str(),colour.c_str());
+    }
   }
   if(auto* image=dynamic_cast<NUI::CImage*>(window))
     if(auto* texture=image->GetImage()) SaveLoadDiag("[display-image] depth=%d id=%s texture=%d\n",

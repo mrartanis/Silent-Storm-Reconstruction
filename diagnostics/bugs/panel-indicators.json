@@ -1,0 +1,303 @@
+[
+  {
+    "command": "load bugs_after_headquarters_scene"
+  },
+  {
+    "wait_until": "available=1 .*sequence=0",
+    "query": "bugstate",
+    "timeout": 120
+  },
+  {
+    "dismiss_popups": true
+  },
+  {
+    "input": [
+      "key",
+      "0x2"
+    ]
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "wait_until": "id=shooting_bar ",
+    "timeout": 30
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "values": {
+        "shooting": 1
+      },
+      "hidden_images": [
+        "strength_icon",
+        "dexterity_icon",
+        "intelligence_icon",
+        "evasion_icon",
+        "ap_icon",
+        "vp_icon",
+        "hide_icon",
+        "spot_icon",
+        "burst_icon",
+        "melee_icon",
+        "snipe_icon",
+        "medicine_icon",
+        "shooting_icon",
+        "throwing_icon",
+        "interrupt_icon",
+        "engineering_icon"
+      ],
+      "colours": {
+        "shooting": "FFB3987C"
+      }
+    }
+  },
+  {
+    "capture": "panel-neutral"
+  },
+  {
+    "command": "console @UnitSetSkillMaxValue(GetHero(),1,40)"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "values": {
+        "shooting": 1
+      },
+      "images": {
+        "shooting_icon": 946
+      },
+      "colours": {
+        "shooting": "FF4C749F"
+      }
+    }
+  },
+  {
+    "capture": "panel-increase"
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "wait_until": "id=shooting_bar ",
+    "timeout": 30
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "hidden_images": [
+        "strength_icon",
+        "dexterity_icon",
+        "intelligence_icon",
+        "evasion_icon",
+        "ap_icon",
+        "vp_icon",
+        "hide_icon",
+        "spot_icon",
+        "burst_icon",
+        "melee_icon",
+        "snipe_icon",
+        "medicine_icon",
+        "shooting_icon",
+        "throwing_icon",
+        "interrupt_icon",
+        "engineering_icon"
+      ],
+      "colours": {
+        "shooting": "FFB3987C"
+      }
+    }
+  },
+  {
+    "command": "console @UnitSetSkillMaxValue(GetHero(),1,20)"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "values": {
+        "shooting": 1
+      },
+      "images": {
+        "shooting_icon": 947
+      },
+      "colours": {
+        "shooting": "FF9F4C74"
+      }
+    }
+  },
+  {
+    "capture": "panel-decrease"
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "wait_until": "id=shooting_bar ",
+    "timeout": 30
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "hidden_images": [
+        "strength_icon",
+        "dexterity_icon",
+        "intelligence_icon",
+        "evasion_icon",
+        "ap_icon",
+        "vp_icon",
+        "hide_icon",
+        "spot_icon",
+        "burst_icon",
+        "melee_icon",
+        "snipe_icon",
+        "medicine_icon",
+        "shooting_icon",
+        "throwing_icon",
+        "interrupt_icon",
+        "engineering_icon"
+      ],
+      "colours": {
+        "shooting": "FFB3987C"
+      }
+    }
+  },
+  {
+    "capture": "panel-acknowledged"
+  },
+  {
+    "command": "load bugs_kai_original_stale"
+  },
+  {
+    "wait_until": "available=1 .*sequence=0",
+    "query": "bugstate",
+    "timeout": 120
+  },
+  {
+    "dismiss_popups": true
+  },
+  {
+    "input": [
+      "key",
+      "0x2"
+    ]
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "wait_until": "id=shooting_bar ",
+    "timeout": 30
+  },
+  {
+    "command": "console @UnitSetSkillMaxValue(GetHero(),1,40)"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "images": {
+        "shooting_icon": 946
+      }
+    }
+  },
+  {
+    "input": [
+      "key",
+      "0x3"
+    ]
+  },
+  {
+    "wait": 1
+  },
+  {
+    "input": [
+      "key",
+      "0x2"
+    ]
+  },
+  {
+    "wait": 1
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "shooting_bar": 1
+      },
+      "hidden_images": [
+        "strength_icon",
+        "dexterity_icon",
+        "intelligence_icon",
+        "evasion_icon",
+        "ap_icon",
+        "vp_icon",
+        "hide_icon",
+        "spot_icon",
+        "burst_icon",
+        "melee_icon",
+        "snipe_icon",
+        "medicine_icon",
+        "shooting_icon",
+        "throwing_icon",
+        "interrupt_icon",
+        "engineering_icon"
+      ],
+      "colours": {
+        "shooting": "FFB3987C"
+      }
+    }
+  },
+  {
+    "capture": "panel-after-selection-switch"
+  }
+]

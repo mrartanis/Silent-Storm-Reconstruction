@@ -137,6 +137,7 @@ def run_step(step):
         model={int(row['skill']):row for row in records(state,'bug-skill') if int(row['pers'])==pers}
         bars={row['id']:float(row['value']) for row in records(tree,'display-progress') if 'id' in row}
         numbers={row['id']:float(row['value']) for row in records(tree,'display-number') if 'id' in row}
+        colours={row['id']:row.get('color') for row in records(tree,'display-number') if 'id' in row}
         images={row['id']:int(row['texture']) for row in records(tree,'display-image') if 'id' in row}
         for bar,skill in options['bars'].items():
             assert bar in bars,('missing progress bar',bar,tree)
@@ -146,6 +147,10 @@ def run_step(step):
             assert numbers.get(label)==int(model[skill]['value']),(label,numbers.get(label),model[skill])
         for image,texture in options.get('images',{}).items():
             assert images.get(image)==texture,(image,texture,images.get(image))
+        for image in options.get('hidden_images',[]):
+            assert image not in images,('indicator must be hidden',image,images.get(image))
+        for label,colour in options.get('colours',{}).items():
+            assert colours.get(label)==colour,('number colour',label,colour,colours.get(label))
         for skill,value in options.get('progress',{}).items():
             assert abs(float(model[int(skill)]['progress'])-value)<.00001,(skill,model[int(skill)],value)
         for pattern in options.get('arrows',[]): assert re.search(pattern,tree),('arrow state',pattern,tree)
