@@ -32,39 +32,16 @@
 namespace NScript
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// NESTED-SEQUENCE DEPTH GUARD: the WORLD edge now nests through the ownerless-interrupt STACK itself,
-// exactly like retail (StartSequence @0x375dd0 pushes one interrupt per c_BeginSequence, luaEndSequence
-// @0x2f1a60 pops one via EndOfTurn @0x3776f0; IsSequence stays true until the last pop) -- the script
-// commands below call those edges PER CALL, no guard. This guard now covers ONLY the per-unit block:
-// the dev-only cheat/idle/cancel lines (CHEAT_SCRIPTSEQUENCE does not exist in retail Game.exe -- byte
-// scan MISSING; it is the dev analog of retail's world-IsSequence probes) and the AI notifies. Retail
-// runs GetAIUnits+OnSequenceStarted/Finished per CALL, but the dev CAIUnit carries extra AIM_SCRIPT
-// control-stack handling inside those notifies, and running THAT per nested Begin/End (Common.l
-// DialogPlayWithSequence, EBase's pkrepair OnOpenObject handler) CCmdCancel'ed the outer cutscene's
-// live script routes -- a documented divergence until the control stack itself is converged.
-// The depth is per-world (the weak CPtr detects a destroyed/replaced world and resets).
-static CPtr<NWorld::CWorld> s_pSequenceWorld;
-static int s_nSequenceDepth = 0;
+// The serialized ownerless interrupt stack is the source of sequence nesting.
+// Begin calls this BEFORE pushing; End calls it AFTER popping. Per-unit work
+// therefore runs only at the outer edges, including after save/load. A separate
+// static depth lost the saved nesting and cleared flags on an inner End.
+// Keep the outer-edge guard: repeated AI notifications cancel the outer route.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void SetSequenceCheat( NWorld::CWorld *pWorld, bool bOn )
 {
-	if ( !IsValid( s_pSequenceWorld ) || s_pSequenceWorld.GetPtr() != pWorld )
-	{
-		s_pSequenceWorld = pWorld;
-		s_nSequenceDepth = 0;
-	}
-	if ( bOn )
-	{
-		if ( s_nSequenceDepth++ > 0 )
-			return;                    // nested Begin: the outer sequence already holds the world
-	}
-	else
-	{
-		if ( s_nSequenceDepth > 0 )
-			--s_nSequenceDepth;
-		if ( s_nSequenceDepth > 0 )
-			return;                    // nested End: the outer sequence is still running
-	}
+	if ( pWorld->IsSequence() )
+		return; // nested Begin, or an inner End with an outer scene still active
 	// (the world edge -- StartSequence push / EndOfTurn pop -- rides PER CALL in the script commands
 	// below, retail-1:1; this function is now only the depth-guarded per-unit block)
 	vector< CPtr<NWorld::CUnit> > units;

@@ -1,0 +1,13 @@
+[
+  {"command":"load bugs_kai_original_stale"},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"dismiss_popups":true},
+  {"assert_sequence_consistent":true},
+  {"input":["key","0x2"]},
+  {"start_combat":true},
+  {"snapshot":"before-pose"},
+  {"input":["key","0x2e"]},
+  {"wait_until":"hero=1 .*command=0","query":"bugstate","timeout":30},
+  {"verify_action":{"before":"before-pose","pers":"hero","action":"pose"}},
+  {"capture":"kai-loaded-save"}
+]

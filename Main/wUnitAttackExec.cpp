@@ -40,6 +40,7 @@
 #include "wDialog.h"
 #include "scriptCallLUA.h"
 #include "../Misc/EventsBase.h"
+#include "../FileIO/BasicChunk1.h"
 #include "eventUnit.h"
 #if defined(_WIN32)
 static CRandomGenerator &AttackExecRandom() { return random; }
@@ -804,6 +805,34 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 	{
 		pUS->GetWorld()->AddNextUIHint( false );
 		return;
+	}
+
+	if ( g_bSaveLoadDiag )
+	{
+		// Observe every executed transfer, including cursor pickup, rather than
+		// sampling only the final inventory and missing an intermediate owner.
+		auto pers = []( CUnit *unit ) {
+			auto* server = dynamic_cast<CUnitServer*>(unit);
+			auto* rpg = server ? server->GetUnitRPG()->GetRPGUnit() : nullptr;
+			return rpg && rpg->GetPers() ? rpg->GetPers()->GetRecordID() : -1;
+		};
+		auto placement = []( SItem::EPlacement value ) {
+			switch ( value )
+			{
+			case SItem::VACUUM: return "vacuum";
+			case SItem::HAND: return "hand";
+			case SItem::SLOT: return "slot";
+			case SItem::GROUND: return "ground";
+			case SItem::BACKPACK: return "backpack";
+			case SItem::STORAGE: return "store";
+			case SItem::UNIT_ANYPLACE: return "unit_anyplace";
+			default: return "unknown";
+			}
+		};
+		SaveLoadDiag("[inventory-move] item=%d identity=%p executor=%d source=%d source_unit=%d target=%d target_unit=%d source_place=%s target_place=%s\n",
+			pItem->GetDBItem()->GetRecordID(), static_cast<void*>(pItem.GetPtr()), pers(pUS),
+			int(sSource.eType), pers(sSource.pUnit), int(sTarget.eType), pers(sTarget.pUnit),
+			placement(sSource.eType), placement(sTarget.eType));
 	}
 
 	switch( sTarget.eType )

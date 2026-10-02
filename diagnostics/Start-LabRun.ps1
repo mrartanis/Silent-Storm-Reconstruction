@@ -17,7 +17,9 @@ if(!$GameArguments){$GameArguments=$runMetadata.Arguments}
 if(!$GameArguments){$GameArguments='-windowed -800 -harness'}
 if(!$Debugger){
     $buildMetadata = Get-Content "$run\evidence\build.json" -Raw | ConvertFrom-Json
-    $debugArch = if($buildMetadata.Architecture -eq 'x64'){'x64'}else{'x86'}
+    $binary=[IO.File]::ReadAllBytes((Join-Path $run 'game\Game.exe'))
+    $peOffset=[BitConverter]::ToInt32($binary,0x3c)
+    $debugArch = if([BitConverter]::ToUInt16($binary,$peOffset+4) -eq 0x8664){'x64'}else{'x86'}
     $Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\$debugArch\cdb.exe"
 }
 $runMetadata.Arguments = $GameArguments

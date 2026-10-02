@@ -32,6 +32,14 @@
 #include "../Main/iMissionDlgUI.h" // [HARNESS] inspect logical dialogue progress
 #include "../Main/ChapterInfo.h"
 #include "../Main/iChapterMapUI.h"
+#include "../Main/RPGUnitMission.h"
+#include "../Main/RPGItem.h"
+#include "../Main/RPGStore.h"
+#include "../Main/rpgCheatConstants.h"
+#include "../Main/wUnitServer.h"
+#include "../Main/UICommCtrls.h"
+#include "../Main/Transform.h"
+#include <cmath>
 #include "..\Main\Cursor.h"         // [HARNESS] center the software cursor on each loaded mission
 #include "..\Main\GView.h"          // [HARNESS] game-view dimensions for cursor positioning
 #include "..\Main\Camera.h"         // [HARNESS] verify the unattended camera remains stationary
@@ -498,14 +506,93 @@ static void HarnessCameraStatus()
 }
 
 // ============================================================================================
+static void HarnessBugState() {
+  auto* mission = dynamic_cast<NGame::IMission*>(NMainLoop::GetMissionInterfaceForHarness());
+  auto* world = mission ? dynamic_cast<NWorld::CWorld*>(mission->GetWorld()) : nullptr;
+  if (!world) { SaveLoadDiag("[bug-state] available=0\n"); return; }
+  int low = 0, high = 0;
+  if (mission->GetCamera()) mission->GetCamera()->GetCutFloorRange(&low,&high);
+  int sceneLow = 0, sceneHigh = 0;
+  if (mission->GetScene()) mission->GetScene()->GetCutFloorRange(&sceneLow,&sceneHigh);
+  SaveLoadDiag("[bug-state] available=1 time=%u sequence=%d realtime=%d floor=%d floor_min=%d floor_max=%d\n",
+    world->GetTime()->GetValue(),world->IsSequence(),world->IsRealTime(),mission->GetCutFloor(),low,high);
+  SaveLoadDiag("[bug-floor] camera_min=%d camera_max=%d scene_min=%d scene_max=%d\n",low,high,sceneLow,sceneHigh);
+  if (mission->GetCursor()) {
+    const auto& cursor=mission->GetCursor()->GetCursor();
+    CVec3 target(0,0,0);
+    const bool traced=mission->GetTracePosition(&target);
+    SaveLoadDiag("[bug-aim] cursor=%d traced=%d position=%.6f,%.6f,%.6f text=%s\n",
+      cursor.pCursor ? cursor.pCursor->GetRecordID() : -1,traced,target.x,target.y,target.z,
+      NStr::ToAscii(cursor.wsText).c_str());
+  }
+  vector<CPtr<NGame::IUnitTracker>> selected;
+  mission->GetSelectedUnits(&selected);
+  vector<CPtr<NWorld::CUnit>> units;
+  world->GetAllUnits(&units);
+  for (const auto& value : units) {
+    auto* unit = dynamic_cast<NWorld::CUnitServer*>(value.GetPtr());
+    if (!unit || !unit->GetUnitRPG()) continue;
+    auto* rpg = unit->GetUnitRPG()->GetRPGUnit();
+    const int pers = rpg->GetPers() ? rpg->GetPers()->GetRecordID() : -1;
+    bool isSelected = false;
+    for (const auto& tracker : selected) if (tracker->GetUnit() == unit) isSelected = true;
+    const CVec3 position = unit->GetPosition().GetCP();
+    auto* weapon = unit->GetUnitRPG()->GetWeaponItem();
+    SaveLoadDiag("[bug-unit] pers=%d hero=%d selected=%d ap=%d script_sequence=%d free_ap=%d pose=%d position=%.6f,%.6f,%.6f ammo=%d command=%d\n",
+      pers,rpg->IsHero(),isSelected,unit->GetAP(),rpg->IsCheatEnabled(NRPG::CHEAT_SCRIPTSEQUENCE),
+      rpg->IsCheatEnabled(NRPG::CHEAT_AP),unit->GetPosition().GetPose(),position.x,position.y,position.z,
+      weapon ? weapon->GetAmmoQuantity() : -1,unit->HasCommand());
+    if (weapon) SaveLoadDiag("[bug-weapon] pers=%d item=%d mode=%d shot_ap=%d\n",pers,
+      weapon->GetDBItem()->GetRecordID(),int(weapon->GetShootMode()),rpg->GetWeaponAP());
+    for (int skill = 0; skill < NDb::SKILL_TYPE_NUMBERS; ++skill)
+      SaveLoadDiag("[bug-skill] pers=%d skill=%d value=%d progress=%.6f\n",pers,skill,
+        unit->GetUnitRPG()->GetSkillMaxValue(static_cast<NDb::ESkillType>(skill)),
+        unit->GetUnitRPG()->GetSkillProgress(static_cast<NDb::ESkillType>(skill)));
+    auto* inventory = rpg->GetInventory();
+    for (const auto& entry : inventory->GetItems()) if (entry.pItem)
+      SaveLoadDiag("[bug-item] pers=%d place=backpack x=%d y=%d item=%d quantity=%d\n",pers,
+        entry.sPos.x,entry.sPos.y,entry.pItem->GetDBItem()->GetRecordID(),Max(1,entry.pItem->GetQuantity()));
+    for (int slot = 0; slot < NDb::N_SLOTS; ++slot) if (auto* item = inventory->Get(static_cast<NDb::ESlot>(slot)))
+      SaveLoadDiag("[bug-item] pers=%d place=slot slot=%d item=%d quantity=%d\n",pers,slot,
+        item->GetDBItem()->GetRecordID(),Max(1,item->GetQuantity()));
+    if (auto* item = unit->GetHandItem().pItem.GetPtr())
+      SaveLoadDiag("[bug-item] pers=%d place=hand item=%d quantity=%d\n",pers,
+        item->GetDBItem()->GetRecordID(),Max(1,item->GetQuantity()));
+  }
+  vector<CPtr<NRPG::IInventoryItem>> ground;
+  world->GetGroundItemsForDiagnostics(&ground);
+  for (const auto& item : ground)
+    SaveLoadDiag("[bug-ground] item=%d quantity=%d identity=%p\n",item->GetDBItem()->GetRecordID(),
+      Max(1,item->GetQuantity()),static_cast<void*>(item.GetPtr()));
+  for (const auto& player : world->GetGlobalGame()->players) if (player->pStore) {
+    vector<CPtr<NRPG::IInventoryItem>> stock;
+    player->pStore->GetItemsForDiagnostics(&stock);
+    for (const auto& item : stock)
+      SaveLoadDiag("[bug-store] item=%d quantity=%d\n",item->GetDBItem()->GetRecordID(),Max(1,item->GetQuantity()));
+  }
+}
+static void HarnessProjectPoint(const string& command) {
+  float x=0,y=0,z=0;
+  auto* mission = dynamic_cast<NGame::IMission*>(NMainLoop::GetMissionInterfaceForHarness());
+  if (!mission || !mission->GetWorld() || sscanf(command.c_str(),"projectpoint %f %f %f",&x,&y,&z)!=3 ||
+      !std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)) {
+    SaveLoadDiag("[bug-project] available=0\n"); return;
+  }
+  CTransformStack transform = mission->GetCameraTransform();
+  CVec2 screen;
+  const bool visible = TestRayInFrustrum(CVec3(x,y,z),&transform,mission->GetScene()->GetScreenRect(),&screen);
+  SaveLoadDiag("[bug-project] available=1 visible=%d pixel=%.3f,%.3f\n",visible,screen.x,screen.y);
+}
 static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
   if (!IsValid(window) || !window->GetStyle(NUI::STYLE_VISIBLE) || depth > 8) return;
   NUI::SPoint pos;
   NUI::SRect clip;
   if (window->ClientToScreen(&pos,&clip)) {
     window->VirtualToScreen(&pos,&clip);
-    SaveLoadDiag("[display-control] depth=%d id=%s position=%d,%d clip=%d,%d,%d,%d active=%d\n",
-      depth,window->GetWindowID().c_str(),pos.x,pos.y,clip.x1,clip.y1,clip.x2,clip.y2,window->IsActive());
+    const auto cursor=window->GetInterface()->GetCursorPos();
+    SaveLoadDiag("[display-control] depth=%d id=%s position=%d,%d clip=%d,%d,%d,%d active=%d hit=%d transparent=%d enabled=%d\n",
+      depth,window->GetWindowID().c_str(),pos.x,pos.y,clip.x1,clip.y1,clip.x2,clip.y2,window->IsActive(),
+      window->HitTest(cursor.x,cursor.y),window->GetStyle(NUI::STYLE_TRANSPARENT),window->GetStyle(NUI::STYLE_ENABLED));
   }
   if(IsValid(window->GetInterface())) {
     const auto cursor=window->GetInterface()->GetCursorPos();
@@ -521,6 +608,39 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
   }
   if(auto* chapter=dynamic_cast<NUI::CChapterMapUI*>(window))
     SaveLoadDiag("%s",chapter->GetTravelForDiagnostics().c_str());
+  if(auto* progress=dynamic_cast<NUI::CProgressBar*>(window))
+    SaveLoadDiag("[display-progress] depth=%d id=%s value=%.6f\n",depth,
+      window->GetWindowID().c_str(),progress->GetValue());
+  if(auto* text=dynamic_cast<NUI::CText*>(window)) {
+    string plain;
+    bool tag=false,number=true;
+    for(const wchar_t ch:text->GetText()) {
+      if(ch==L'<') { tag=true; continue; }
+      if(ch==L'>') { tag=false; continue; }
+      if(tag || ch==L' ') continue;
+      if((ch>=L'0' && ch<=L'9') || ch==L'-' || ch==L'.') plain+=char(ch);
+      else number=false;
+    }
+    if(number && !plain.empty()) SaveLoadDiag("[display-number] depth=%d id=%s value=%s\n",
+      depth,window->GetWindowID().c_str(),plain.c_str());
+  }
+  if(auto* image=dynamic_cast<NUI::CImage*>(window))
+    if(auto* texture=image->GetImage()) SaveLoadDiag("[display-image] depth=%d id=%s texture=%d\n",
+      depth,window->GetWindowID().c_str(),texture->GetRecordID());
+  if(auto* slot=dynamic_cast<NUI::CSlot*>(window)) {
+    vector<NUI::CSlot::SDiagnosticItem> items;
+    int width=0,height=0;
+    slot->GetDiagnosticItems(&items,&width,&height);
+    const auto size=slot->GetSize();
+    const auto scale=S2Platform::Display().uiScale;
+    if(width>0 && height>0) for(const auto& item:items) if(item.item) {
+      const auto footprint=item.item->GetSize();
+      SaveLoadDiag("[display-slot-item] depth=%d id=%s item=%d cell=%d,%d pixel=%.3f,%.3f\n",
+        depth,window->GetWindowID().c_str(),item.item->GetDBItem()->GetRecordID(),item.position.x,item.position.y,
+        pos.x+(item.position.x+footprint.x*.5f)*size.x*scale/width,
+        pos.y+(item.position.y+footprint.y*.5f)*size.y*scale/height);
+    }
+  }
   list<CPtr<NUI::CWindow> > children;
   window->GetChildrenList(&children);
   for (auto it=children.begin();it!=children.end();++it) HarnessDisplayTree(*it,depth+1);
@@ -641,6 +761,10 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	}
 	else if ( sCmd == "displaytree" )
 		HarnessDisplayTree(NUI::CurrentInterfaceForDiagnostics());
+	else if ( sCmd == "bugstate" )
+		HarnessBugState();
+	else if ( sCmd.compare(0,13,"projectpoint ")==0 )
+		HarnessProjectPoint(sCmd);
 	else if ( sCmd == "displaypanel" )
 	{
 		NUI::CInterface* ui = NUI::CurrentInterfaceForDiagnostics();

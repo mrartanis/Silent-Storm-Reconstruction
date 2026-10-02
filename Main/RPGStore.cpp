@@ -11,6 +11,7 @@
 #include "RPGUnit.h"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataRPG.h"
+#include <unordered_set>
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CStore - release vendor stock model bodies. Reconstructed from the v1.1 raw disassembly.
@@ -389,6 +390,17 @@ bool CStore::HasMappedItems() const
 		if ( IsValid( itemsMapsSet[i] ) && !itemsMapsSet[i]->GetItems().empty() )
 			return true;
 	return false;
+}
+void CStore::GetItemsForDiagnostics(vector<CPtr<IInventoryItem>>* result) const
+{
+	result->clear();
+	std::unordered_set<IInventoryItem*> seen;
+	// The priced rows can retain old references after Take. An empty mapped
+	// stock is still empty; never resurrect it by falling back to those rows.
+	for (const auto& map : itemsMapsSet) if (map)
+		for (const auto& entry : map->GetItems())
+			if (entry.pItem && seen.insert(entry.pItem.GetPtr()).second)
+				result->push_back(entry.pItem.GetPtr());
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

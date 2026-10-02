@@ -22,16 +22,26 @@ if(NOT root_count EQUAL 52)
 endif()
 
 set(all_summaries "")
+if(DEFINED EVIDENCE_DIR)
+  file(MAKE_DIRECTORY "${EVIDENCE_DIR}")
+endif()
 foreach(root IN LISTS roots)
   string(REPLACE "active_root_variant=" "" variant_id "${root}")
+  set(map_mode --deterministic)
+  if(DEFINED EVIDENCE_DIR)
+    set(map_mode --details)
+  endif()
   set(map_command ${TEST_EMULATOR} "${MAP_PROBE}" "${GAME_DB}" "${RESOURCE_DIR}"
-    "${variant_id}" --deterministic)
+    "${variant_id}" ${map_mode})
   execute_process(
     COMMAND ${map_command}
     RESULT_VARIABLE map_result
     OUTPUT_VARIABLE map_output
     ERROR_VARIABLE map_error
     TIMEOUT 600)
+  if(DEFINED EVIDENCE_DIR)
+    file(WRITE "${EVIDENCE_DIR}/${variant_id}.txt" "${map_output}\n${map_error}")
+  endif()
   if(NOT "${map_result}" STREQUAL "0" OR
      NOT map_output MATCHES "(^|\n)built=1 ")
     message(FATAL_ERROR
@@ -52,6 +62,9 @@ foreach(root IN LISTS roots)
 endforeach()
 
 string(SHA256 scenario_root_digest "${all_summaries}")
+if(DEFINED EVIDENCE_DIR)
+  file(WRITE "${EVIDENCE_DIR}/summaries.txt" "${all_summaries}")
+endif()
 message(STATUS "Built all ${root_count} active scenario root variants; digest=${scenario_root_digest}")
 set(expected_digest "c79a9c158d3f64204b1529ae576f4b74e59388dd7f9531ad725f2994dcf3894d")
 if(NOT scenario_root_digest STREQUAL expected_digest)

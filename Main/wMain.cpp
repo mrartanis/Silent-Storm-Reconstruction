@@ -1888,8 +1888,31 @@ void CWorld::CreateDefault()
 // all -- the deserialized TBS state resumes untouched. A realtime save stores bTurnDone=0 for every
 // live player, so running StartGame here made IsRealTimePossible (@0x364f10) fail ("player N has not
 // finished his turn") and falsely restarted a player turn: every realtime save loaded into turn-based.
+int CWorld::RepairInactiveSequenceFlags()
+{
+	// The saved ownerless interrupt is the scene's authority. Scripts do not use
+	// this cheat as a story variable. Repair only an inactive scene's orphaned
+	// bit; keep legitimate saved scenes, other cheats, AP and turn state intact.
+	if (IsSequence()) return 0;
+	vector<CPtr<CUnit>> units;
+	GetAllUnits(&units);
+	int repaired=0;
+	for (const auto& value : units) {
+		CDynamicCast<CUnitServer> unit(value);
+		if (!unit || !unit->GetUnitRPG()) continue;
+		auto* rpg=unit->GetUnitRPG()->GetRPGUnit();
+		if (rpg->IsCheatEnabled(NRPG::CHEAT_SCRIPTSEQUENCE)) {
+			rpg->SetCheat(NRPG::CHEAT_SCRIPTSEQUENCE,false);
+			unit->animator.SetBreathOnlyIdle(false);
+			++repaired;
+		}
+	}
+	if (repaired) SaveLoadDiag("[sequence-repair] inactive=1 units=%d\n",repaired);
+	return repaired;
+}
 void CWorld::RestoreRuntimeCaches( NRPG::CGlobalGame *_pGlobalGame )
 {
+	RepairInactiveSequenceFlags();
 	for ( list< CObj<CBuilding> >::iterator i = buildings.begin(); i != buildings.end(); ++i )
 		(*i)->Update();
 

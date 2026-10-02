@@ -1,0 +1,14 @@
+[
+  {"command":"load bugs_after_headquarters_scene"},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"dismiss_popups":true},
+  {"input":["key","0x2"]},
+  {"input":["key","0x16"]},
+  {"wait_until":"id=shooting_bar ","timeout":30},
+  {"input":["key","0x16"]},
+  {"command":"console @UnitSetSkillMaxValue(GetHero(),1,20)"},
+  {"input":["key","0x16"]},
+  {"wait_until":"id=shooting_bar ","timeout":30},
+  {"assert_panel":{"pers":"hero","bars":{"shooting_bar":1},"values":{"shooting":1},"images":{"shooting_icon":947}}},
+  {"capture":"panel-arrow-down"}
+]

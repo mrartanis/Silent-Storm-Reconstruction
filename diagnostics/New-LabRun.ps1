@@ -13,6 +13,17 @@ if($LinkResources){
  if(!$resItem.PSIsContainer -or ($resItem.Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked resources must be a real baseline directory'}
 }
 $buildMetadata=Get-Content "$archive\build.json" -Raw | ConvertFrom-Json
+# Older working-tree archives lack Architecture/NativeMedia metadata. Read
+# their PE machine and ship media DLLs by inventory instead of assuming x86.
+$binary=[IO.File]::ReadAllBytes((Join-Path $archive 'Game.exe'))
+$peOffset=[BitConverter]::ToInt32($binary,0x3c)
+$architecture=if([BitConverter]::ToUInt16($binary,$peOffset+4) -eq 0x8664){'x64'}else{'x86'}
+$mediaRuntime=@(Get-ChildItem -LiteralPath $archive -File | Where-Object Name -Match '^(avcodec|avformat|avutil|swscale|swresample)-[0-9]+\.dll$')
+if($buildMetadata.NativeMedia -or $mediaRuntime.Count -gt 0){
+ foreach($component in 'avcodec','avformat','avutil','swscale','swresample'){
+  if(@($mediaRuntime | Where-Object Name -Match "^$component-[0-9]+\.dll$").Count -ne 1){throw "Incomplete FFmpeg runtime: expected exactly one $component DLL in the build archive"}
+ }
+}
 New-Item -ItemType Directory "$run\game","$run\evidence" -Force | Out-Null
 $copyArgs=@($baseline,"$run\game",'/E','/R:1','/W:1','/NFL','/NDL','/NP',"/LOG:$run\evidence\copy.log")
 if($LinkResources){$copyArgs+=@('/XD',$resSource)}
@@ -26,16 +37,15 @@ if($LinkResources){
 }
 foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb'){Copy-Item "$archive\$file" "$run\game"}
 if(Test-Path -LiteralPath "$archive\SDL3.dll"){Copy-Item "$archive\SDL3.dll" "$run\game"}
-if($buildMetadata.Architecture -eq 'x64'){
+if($architecture -eq 'x64'){
  foreach($file in 'binkw32.dll'){Copy-Item "$archive\$file" "$run\game"}
  if($buildMetadata.NativeSFX){
   if(Test-Path -LiteralPath "$run\game\fmod.dll"){throw 'Native SFX run must not contain fmod.dll'}
  } elseif(Test-Path -LiteralPath "$archive\fmod.dll"){
   Copy-Item "$archive\fmod.dll" "$run\game"
  }
- Get-ChildItem -LiteralPath $archive -File | Where-Object Name -Match '^(avcodec|avformat|avutil|swscale|swresample)-[0-9]+\.dll$' |
-  Copy-Item -Destination "$run\game"
 }
+$mediaRuntime | Copy-Item -Destination "$run\game"
 if(Test-Path -LiteralPath "$archive\fonts"){Copy-Item "$archive\fonts" "$run\game\fonts" -Recurse}
 Copy-Item "$archive\build.json" "$run\evidence"
 Copy-Item "$LabRoot\evidence\baseline-files.csv" "$run\evidence"

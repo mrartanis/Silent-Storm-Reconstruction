@@ -29,7 +29,8 @@ int main(int argc,char**argv){
  if(!strcmp(argv[2],"move")&&argc==5){i.type=INPUT_MOUSE;i.mi.dx=atoi(argv[3]);i.mi.dy=atoi(argv[4]);if(abs(i.mi.dx)>200||abs(i.mi.dy)>200)return 2;i.mi.dwFlags=MOUSEEVENTF_MOVE;ok=Send(i);}
  else if(!strcmp(argv[2],"key")&&(argc==4||argc==5)){unsigned sc=strtoul(argv[3],0,0);unsigned hold=argc==5?strtoul(argv[4],0,10):80;if((sc&255)==0||(sc&255)>0x58||sc>0x158||hold>2000)return 2;i.type=INPUT_KEYBOARD;i.ki.wScan=(WORD)(sc&255);i.ki.dwFlags=KEYEVENTF_SCANCODE|((sc&256)?KEYEVENTF_EXTENDEDKEY:0);ok=Send(i);Sleep(hold);i.ki.dwFlags|=KEYEVENTF_KEYUP;ok=Send(i)&&ok;}
  else if((!strcmp(argv[2],"rdrag")||!strcmp(argv[2],"ldrag"))&&argc==5){int dx=atoi(argv[3]),dy=atoi(argv[4]);if(abs(dx)>200||abs(dy)>200)return 2;i.type=INPUT_MOUSE;const bool left=!strcmp(argv[2],"ldrag");i.mi.dwFlags=left?MOUSEEVENTF_LEFTDOWN:MOUSEEVENTF_RIGHTDOWN;ok=Send(i);Sleep(80);i.mi.dx=dx;i.mi.dy=dy;i.mi.dwFlags=MOUSEEVENTF_MOVE;ok=Send(i)&&ok;Sleep(80);i.mi.dx=i.mi.dy=0;i.mi.dwFlags=left?MOUSEEVENTF_LEFTUP:MOUSEEVENTF_RIGHTUP;ok=Send(i)&&ok;}
- else if(!strcmp(argv[2],"click")){i.type=INPUT_MOUSE;i.mi.dwFlags=MOUSEEVENTF_LEFTDOWN;ok=Send(i);Sleep(80);i.mi.dwFlags=MOUSEEVENTF_LEFTUP;ok=Send(i)&&ok;}
+ else if(!strcmp(argv[2],"ldown")||!strcmp(argv[2],"lup")){i.type=INPUT_MOUSE;i.mi.dwFlags=!strcmp(argv[2],"ldown")?MOUSEEVENTF_LEFTDOWN:MOUSEEVENTF_LEFTUP;ok=Send(i);Sleep(80);}
+ else if(!strcmp(argv[2],"click")||!strcmp(argv[2],"doubleclick")){i.type=INPUT_MOUSE;const int count=!strcmp(argv[2],"doubleclick")?2:1;for(int n=0;n<count;++n){i.mi.dwFlags=MOUSEEVENTF_LEFTDOWN;ok=Send(i)&&ok;Sleep(80);i.mi.dwFlags=MOUSEEVENTF_LEFTUP;ok=Send(i)&&ok;if(n+1<count)Sleep(80);}}
  else return 2;
  printf("PID=%lu action=%s success=%d\n",pid,argv[2],ok);return ok?0:5;
 }

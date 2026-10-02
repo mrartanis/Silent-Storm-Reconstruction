@@ -1,0 +1,16 @@
+[
+  {"command":"load bugs_store_open"},
+  {"wait_until":"id=storepanel ","timeout":120},
+  {"input":["key","0x3"]},
+  {"snapshot":"before-transfer"},
+  {"slot_item":{"slot":"view","item":84,"action":"click"}},
+  {"wait_until":"pers=120 place=hand item=84 ","query":"bugstate","timeout":30},
+  {"control":"storepanel/store"},
+  {"wait_not":"id=storepanel ","timeout":30},
+  {"assert":"pers=120 place=hand item=84 ","query":"bugstate"},
+  {"hover":"missionUI/view","at":[0.85,0.85]},
+  {"control":"missionUI/view","at":[0.85,0.85]},
+  {"wait_until":"pers=120 .*command=0","query":"bugstate","timeout":30},
+  {"inventory_transfer":{"before":"before-transfer","item":84,"recipient":"selected","quantity":1,"leader":"hero","destination":"ground","no_intermediate_leader":true}},
+  {"capture":"store-ground-drop"}
+]

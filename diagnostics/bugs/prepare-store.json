@@ -1,0 +1,14 @@
+[
+  {"command":"load bugs_store_seed"},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"wait_until":"id=storepanel ","timeout":60},
+  {"control":"storepanel/store"},
+  {"wait_not":"id=storepanel ","timeout":30},
+  {"assert_sequence_consistent":true},
+  {"command":"console @uiShowStore()"},
+  {"wait_until":"id=storepanel ","timeout":60},
+  {"command":"bugstate"},
+  {"command":"displaytree"},
+  {"capture":"prepared-store"},
+  {"command":"save bugs_store_open"}
+]

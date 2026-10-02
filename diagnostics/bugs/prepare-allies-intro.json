@@ -1,0 +1,18 @@
+[
+  {"command":"console mainmenu"},
+  {"wait_until":"id=mainmenuUI ","timeout":60},
+  {"control":"/campaign"},
+  {"control":"line_1/allies"},
+  {"control":"line_1/next"},
+  {"control":"/n1male"},
+  {"control":"line/play"},
+  {"wait_until":"id=facegenUI ","timeout":60},
+  {"control":"facegenUI/play"},
+  {"wait_until":"id=movieUI |id=dialogUI ","timeout":120},
+  {"advance_dialogue":true,"timeout":180},
+  {"dismiss_popups":true},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":90},
+  {"assert_sequence_consistent":true},
+  {"command":"save bugs_allies_intro"},
+  {"capture":"prepared-allies-intro"}
+]

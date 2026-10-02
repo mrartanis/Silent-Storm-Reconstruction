@@ -3,6 +3,7 @@
 #include "VectorFonts.h"
 #include "DisplayOptions.h"
 #include "iMain.h"
+#include "iMission.h"
 #if !defined(_WIN32)
 #include "../FileIO/LinuxUserData.h"
 #include <filesystem>
@@ -45,6 +46,14 @@ static list< CObj<IInterfaceBase> > interfaces;
 IInterfaceBase* GetCurrentInterfaceForHarness()
 {
 	return interfaces.empty() ? 0 : (IInterfaceBase*)interfaces.back();
+}
+IInterfaceBase* GetMissionInterfaceForHarness()
+{
+	for (auto it = interfaces.rbegin(); it != interfaces.rend(); ++it) {
+		auto* mission = dynamic_cast<NGame::IMission*>(it->GetPtr());
+		if (mission && mission->GetWorld()) return it->GetPtr();
+	}
+	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void ShowLogo()

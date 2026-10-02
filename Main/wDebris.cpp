@@ -208,6 +208,15 @@ void CDebrisController::GetInSphere( const SSphere &sphere, list< CObj<CDFrozenI
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // @0x749c20 (release CDebrisController::GetFrozenItem; the GetWorldItem @0x774cd0 thunk jmps here) -- the
 // on-ground world item carrying `pInvItem`: the first showFrozenItems entry whose GetInvItem() matches.
+void CDebrisController::GetGroundItemsForDiagnostics( vector<CPtr<NRPG::IInventoryItem>> *pRes ) const
+{
+	pRes->clear();
+	for ( const auto& item : showFrozenItems )
+		if ( IsValid(item) && item->GetInvItem() ) pRes->push_back(item->GetInvItem());
+	for ( const auto& item : showItems )
+		if ( IsValid(item) && item->GetInvItem() ) pRes->push_back(item->GetInvItem());
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 CDFrozenItem* CDebrisController::GetFrozenItem( NRPG::IInventoryItem *pInvItem )
 {
 	for ( list< CObj<CDFrozenItem> >::iterator i = showFrozenItems.begin(); i != showFrozenItems.end(); ++i )

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "ChapterTravel.h"
 #include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
@@ -781,6 +782,8 @@ void CChapterMapUI::SetTarget( const CVec2 &_vTargetPos )
 string CChapterMapUI::GetTravelForDiagnostics() const {
     string result=NStr::Format("[chapter] position=%.2f,%.2f target=%.2f,%.2f mapOffset=%d,%d\n",
         vCurrentPos.x,vCurrentPos.y,vTargetPos.x,vTargetPos.y,S2UI::MapOffsetX(),S2UI::MapOffsetY());
+    result+=NStr::Format("[chapter-clock] time=%u position=%.6f,%.6f target=%.6f,%.6f speed_steps_per_second=%u\n",
+        static_cast<unsigned>(sLastUpdateTime),vCurrentPos.x,vCurrentPos.y,vTargetPos.x,vTargetPos.y,S2Campaign::kTravelStepsPerSecond);
     for(int i=0;i<sectorsSet.size();++i) {
         const auto& sector=sectorsSet[i]->GetSector();
         const auto position=sectorsSet[i]->GetPosition();
@@ -944,16 +947,14 @@ void CChapterMapUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 	{
 		bMoving = true;
 
-		while ( ( fabs( vTargetPos - vCurrentPos ) > 1 ) && ( sLastUpdateTime < sTargetTime ) )
+		std::uint32_t last = sLastUpdateTime;
+		std::uint32_t steps = S2Campaign::TravelSteps( sTargetTime, last );
+		sLastUpdateTime = last;
+		while ( steps > 0 && S2Campaign::AdvanceTravelStep(vCurrentPos.x, vCurrentPos.y,
+			vTargetPos.x, vTargetPos.y, fXK, fYK) )
 		{
-			vCurrentPos.x += fXK;
-			vCurrentPos.y += fYK;
+			--steps;
 			fPassedPathLen += ( fXK + fYK );
-
-			SPoint sTile( vCurrentPos.x, vCurrentPos.y );
-			float fSpeed = 20;
-
-			sLastUpdateTime = sLastUpdateTime + 1000.0f / fSpeed;
 
 			if ( fPassedPathLen > F_PATH_CHECKLEN )
 			{
@@ -999,7 +1000,7 @@ void CChapterMapUI::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 		pTextRight->Set( CDescriptionText::MODE_HIDDEN );
 
 	pChapter->GetRPGGame()->vChapterPos = vCurrentPos;
-	sLastUpdateTime = sTargetTime;
+	if ( !bMoving ) sLastUpdateTime = sTargetTime;
 
 	SPoint sPoint;
 	pMapView->ScreenToClient( SPoint( vCurrentPos.x+S2UI::MapOffsetX(), vCurrentPos.y+S2UI::MapOffsetY() ), &sPoint );

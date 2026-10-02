@@ -881,6 +881,7 @@ if(S2_ENABLE_MISSION_MAP_PROBE)
             "-DMAP_PROBE=$<TARGET_FILE:NativeMissionMapProbe>"
             "-DGAME_DB=${S2_GAME_DB_PATH}"
             "-DRESOURCE_DIR=${_s2_mission_res_dir}"
+            "-DEVIDENCE_DIR=${CMAKE_BINARY_DIR}/scenario-root-maps"
             "-DTEST_EMULATOR=${CMAKE_CROSSCOMPILING_EMULATOR}"
             -P "${root}/diagnostics/RunScenarioRootMaps.cmake")
         set_tests_properties(NativeScenarioRootMaps PROPERTIES TIMEOUT 7200 LABELS extended)
@@ -1405,6 +1406,19 @@ target_link_libraries(NativeWorldInitProbe PRIVATE
   -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
   -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
 target_link_options(NativeWorldInitProbe PRIVATE -Wl,--gc-sections)
+add_executable(NativeCampaignSequenceTests
+  "${root}/diagnostics/NativeCampaignSequenceTests.cpp"
+  "${root}/Main/Time.cpp" "${root}/Main/DiscretePos.cpp")
+target_include_directories(NativeCampaignSequenceTests PRIVATE
+  "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NativeCampaignSequenceTests PRIVATE
+  -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
+  -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
+target_link_options(NativeCampaignSequenceTests PRIVATE -Wl,--gc-sections)
+add_executable(ChapterTravelTests "${root}/diagnostics/ChapterTravelTests.cpp")
+target_compile_features(ChapterTravelTests PRIVATE cxx_std_17)
+add_test(NAME ChapterTravelTests COMMAND ChapterTravelTests)
+set_tests_properties(ChapterTravelTests PROPERTIES LABELS "bugs;campaign")
 add_executable(NativeParticleRuntimeResourceTests
   "${root}/diagnostics/NativeParticleRuntimeResourceTests.cpp")
 target_link_libraries(NativeParticleRuntimeResourceTests PRIVATE
@@ -1451,6 +1465,14 @@ if(EXISTS "${S2_GAME_DB_PATH}" AND EXISTS "${S2_RESOURCE_PACKAGE_PATH}" AND
       COMMAND NativeWorldInitProbe "${S2_GAME_DB_PATH}" "${_s2_world_resources}")
     set_tests_properties(NativeWorldInitProbe PROPERTIES
       WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300)
+    foreach(_s2_sequence_mode IN ITEMS normal scene-save nested-save intro-normal)
+      add_test(NAME NativeCampaignSequence-${_s2_sequence_mode}
+        COMMAND NativeCampaignSequenceTests "${S2_GAME_DB_PATH}" "${_s2_world_resources}"
+          "${_s2_sequence_mode}" "${CMAKE_BINARY_DIR}/campaign-${_s2_sequence_mode}.sav")
+      set_tests_properties(NativeCampaignSequence-${_s2_sequence_mode} PROPERTIES
+        WORKING_DIRECTORY "${_s2_world_root}" TIMEOUT 300 LABELS "bugs;campaign"
+        ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/campaign-${_s2_sequence_mode}-data")
+    endforeach()
     # Include authored scripted routes and two scenario-root campaign maps,
     # not just the small bootstrap maps. All are present in game.db.
     foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526 5240)

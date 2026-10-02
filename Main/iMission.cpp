@@ -349,6 +349,8 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 	updatedStatesSet.push_back( new CStateEmpty() );
 	SetUpdatedStates( updatedStatesSet );
 
+	CDynamicCast<NWorld::CWorld> liveWorld(pWorld);
+	if (IsValid(liveWorld)) liveWorld->RepairInactiveSequenceFlags();
 	pWorld->RunPostInit( pPostInfo );
 
 	// retail zone-entry focus floor: the deploy camera-focus path (CUICmdUnitCameraExec::Update
@@ -974,6 +976,18 @@ void CMission::SetCameraParams( ECameraType eType, float _fFOV, const ICamera::S
 //    SetCameraParams @ iMission.cpp).
 void CMission::OnSnapshotRestored()
 {
+	// The scene and key-bind limits are runtime-only. A loaded CGameView starts
+	// with [-3,4], while the saved player camera still has the map's limits.
+	// Rebuild them from the saved variant, just as Initialize does, before UI
+	// commands/keys can change the floor. Do not change the save format.
+	nMinCutFloor = -3;
+	nMaxCutFloor = 4;
+	NDb::CTemplVariant *pVariant = NDb::GetTemplVariant( nVariantID );
+	if ( pVariant && pVariant->nMinCutFloor < pVariant->nMaxCutFloor ) {
+		nMinCutFloor = pVariant->nMinCutFloor;
+		nMaxCutFloor = pVariant->nMaxCutFloor - 1;
+	}
+	GetScene()->SetCutFloorRange( nMinCutFloor, nMaxCutFloor );
 	// Restore render state BEFORE rebuilding/lightmapping buildings, using the saved light
 	// and light mode (CGameView tags 21/27). GetDefaultLight is a template roulette for NEW
 	// scenes: calling it here rerolls day/night. Retail SetRenderMode @0x5872f0 reapplies

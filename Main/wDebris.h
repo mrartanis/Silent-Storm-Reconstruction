@@ -173,6 +173,8 @@ private:
 public:
 	// retail GetClueObjects @0x34a870: prune dead clueItems entries in place, copy the live ones out
 	void GetClueObjects( list<CPtr<CObjectBase> > *pRes );
+	// Read-only inventory audit, including items still falling after a ground drop.
+	void GetGroundItemsForDiagnostics( vector<CPtr<NRPG::IInventoryItem> > *pRes ) const;
 protected:
 	bool Segment( NAI::IAIMap *pMap, SSphere *pInvalidate );
 	bool HasDynamicItems() { return !items.empty(); }

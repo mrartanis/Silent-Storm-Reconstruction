@@ -26,8 +26,17 @@
 static std::uint64_t digest = UINT64_C(14695981039346656037);
 static std::uint64_t routeDigest = UINT64_C(14695981039346656037);
 static std::uint64_t behaviorDigest = UINT64_C(14695981039346656037);
+static bool details = false;
+static const char* component = "bootstrap";
+static unsigned detailIndex = 0;
+static void Component(const char* name) { component = name; detailIndex = 0; }
+static void Detail(const char* stream, std::uint32_t value) {
+  if (details) std::printf("detail component=%s index=%u stream=%s value=%08X signed=%d\n",
+    component, detailIndex++, stream, value, static_cast<std::int32_t>(value));
+}
 static void Add( std::uint32_t value )
 {
+  Detail("map", value);
 	for ( int byte = 0; byte < 4; ++byte )
 	{
 		digest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
@@ -36,6 +45,7 @@ static void Add( std::uint32_t value )
 }
 static void AddRouteWord( std::uint32_t value )
 {
+  Detail("route", value);
 	for ( int byte = 0; byte < 4; ++byte )
 	{
 		routeDigest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
@@ -44,6 +54,7 @@ static void AddRouteWord( std::uint32_t value )
 }
 static void AddBehaviorWord( std::uint32_t value )
 {
+  Detail("behavior", value);
 	for ( int byte = 0; byte < 4; ++byte )
 	{
 		behaviorDigest ^= static_cast<std::uint8_t>( value >> ( byte * 8 ) );
@@ -104,7 +115,8 @@ static std::size_t AddRoute( const std::vector<CPtr<CMapWaypoint> > &route )
 int main( int argc, char **argv )
 {
 	const bool printScripts = argc == 5 && !std::strcmp( argv[4], "--print-scripts" );
-	const bool deterministic = argc == 5 && !std::strcmp( argv[4], "--deterministic" );
+  details = argc == 5 && !std::strcmp( argv[4], "--details" );
+  const bool deterministic = details || (argc == 5 && !std::strcmp( argv[4], "--deterministic" ));
 	if ( argc != 4 && !printScripts && !deterministic )
 		return 2;
 	CFileStream database;
@@ -175,7 +187,8 @@ int main( int argc, char **argv )
 	// Mission scripts are stored in game.db, not in the startup .l corpus.
 	// Parse every script selected by the real builder with the game's Lua VM.
 	// This does not claim that the game-specific bindings can run headlessly.
-	std::size_t scriptBytes = 0;
+  Component("scripts");
+  std::size_t scriptBytes = 0;
 	for ( const CDBPtr<NDb::CScript> &record : map.scripts )
 	{
 		if ( !record || record->strCode.empty() ) return 7;
@@ -194,12 +207,14 @@ int main( int argc, char **argv )
 		AddBehaviorWord( static_cast<std::uint32_t>( record->strCode.size() ) );
 		for ( unsigned char byte : record->strCode )
 		{
+			Detail("script-byte", byte);
 			behaviorDigest ^= byte;
 			behaviorDigest *= UINT64_C(1099511628211);
 		}
 	}
 	const std::uint64_t scriptBehaviorDigest = behaviorDigest;
-	Add( built );
+  Component("terrain");
+  Add( built );
 	Add( map.terrain.nWidth ); Add( map.terrain.nHeight );
 	if ( map.terrain.nWidth > 0 && map.terrain.nHeight > 0 )
 	{
@@ -207,7 +222,8 @@ int main( int argc, char **argv )
 		Add( map.terrain.typeMap[0][0] );
 	}
 	const std::uint64_t terrainDigest = digest;
-	for ( const SMapBuilding &building : map.buildings )
+  Component("buildings");
+  for ( const SMapBuilding &building : map.buildings )
 	{
 		Add( building.pVariant ? building.pVariant->GetRecordID() : 0 );
 		Add( building.mpos.nFloor );
@@ -215,7 +231,8 @@ int main( int argc, char **argv )
 		Add( Float2Int( building.mpos.ptPos.y * 1000 ) );
 	}
 	const std::uint64_t buildingDigest = digest;
-	Add( static_cast<std::uint32_t>( map.scripts.size() ) );
+  Component("units");
+  Add( static_cast<std::uint32_t>( map.scripts.size() ) );
 	Add( static_cast<std::uint32_t>( map.groups.size() ) );
 	std::size_t unitRoutePoints = 0, groupRoutePoints = 0, routedUnits = 0;
 	for ( const SMapUnit &unit : map.units )
@@ -242,7 +259,8 @@ int main( int argc, char **argv )
 	}
 	const std::uint64_t unitDigest = digest;
 	const std::uint64_t unitBehaviorDigest = behaviorDigest;
-	std::vector<int> groupIDs;
+  Component("groups");
+  std::vector<int> groupIDs;
 	for ( const auto &group : map.groups ) groupIDs.push_back( group.first );
 	std::sort( groupIDs.begin(), groupIDs.end() );
 	for ( int id : groupIDs )
@@ -254,7 +272,8 @@ int main( int argc, char **argv )
 		groupRoutePoints += AddRoute( map.groups.at( id ).route );
 	}
 	const std::uint64_t groupBehaviorDigest = behaviorDigest;
-	for ( const CObj<CMapWaypoint> &waypoint : map.waypoints )
+  Component("waypoints");
+  for ( const CObj<CMapWaypoint> &waypoint : map.waypoints )
 	{
 		Add( waypoint->pos.nFloor );
 		Add( Float2Int( waypoint->pos.ptPos.x * 1000 ) );
@@ -273,7 +292,8 @@ int main( int argc, char **argv )
 	}
 	const std::uint64_t waypointDigest = digest;
 	const std::uint64_t waypointBehaviorDigest = behaviorDigest;
-	Add( static_cast<std::uint32_t>( map.slots.size() ) );
+  Component("slots");
+  Add( static_cast<std::uint32_t>( map.slots.size() ) );
 	for ( const SClueSlot &slot : map.slots )
 	{
 		Add( Float2Int( slot.pos.ptPos.x * 1000 ) );
@@ -292,7 +312,11 @@ int main( int argc, char **argv )
 	// precision (sub-unit z is FPU noise from floor placement, not a wire field).
 	std::vector<std::array<std::uint32_t, 8>> itemKeys;
 	itemKeys.reserve( map.items.size() );
-	for ( const SMapElement &item : map.items )
+	for ( const SMapElement &item : map.items ) {
+		if (details) std::printf("item_source object=%d floor=%d xyz=%.9g,%.9g,%.9g bits=%08X,%08X,%08X\n",
+			item.pObject ? item.pObject->nParentID : 0,item.pos.nFloor,
+			item.pos.ptPos.x,item.pos.ptPos.y,item.pos.ptPos.z,
+			FloatBits(item.pos.ptPos.x),FloatBits(item.pos.ptPos.y),FloatBits(item.pos.ptPos.z));
 		itemKeys.push_back( {
 			static_cast<std::uint32_t>( item.pObject ? item.pObject->nParentID : 0 ),
 			static_cast<std::uint32_t>( item.pos.nFloor ),
@@ -302,8 +326,10 @@ int main( int argc, char **argv )
 			static_cast<std::uint32_t>( item.nRelFloor ),
 			static_cast<std::uint32_t>( item.bOpen ),
 			static_cast<std::uint32_t>( item.bBorder ) } );
+	}
 	std::sort( itemKeys.begin(), itemKeys.end() );
-	for ( const auto &item : itemKeys )
+  Component("items");
+  for ( const auto &item : itemKeys )
 		for ( std::uint32_t value : item )
 			Add( value );
 	std::printf( "built=%d buildings=%zu units=%zu items=%zu waypoints=%zu slots=%zu scripts=%zu script_bytes=%zu digest=%016llX\n",

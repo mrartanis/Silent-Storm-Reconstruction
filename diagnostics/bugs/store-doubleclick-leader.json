@@ -1,0 +1,42 @@
+[
+  {
+    "command": "load bugs_store_open"
+  },
+  {
+    "wait_until": "id=storepanel ",
+    "timeout": 120
+  },
+  {
+    "input": [
+      "key",
+      "0x2"
+    ]
+  },
+  {
+    "snapshot": "before-transfer"
+  },
+  {
+    "slot_item": {
+      "slot": "view",
+      "item": 84,
+      "action": "doubleclick"
+    }
+  },
+  {
+    "wait": 3
+  },
+  {
+    "inventory_transfer": {
+      "before": "before-transfer",
+      "item": 84,
+      "recipient": "selected",
+      "quantity": 1,
+      "leader": "hero",
+      "no_intermediate_leader": true,
+      "different_from_leader": false
+    }
+  },
+  {
+    "capture": "store-doubleclick-leader"
+  }
+]

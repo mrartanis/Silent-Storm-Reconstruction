@@ -110,8 +110,12 @@ void CStoreSlot::Take( int nX, int nY, bool bToUnit )
 
 	CPtr<NGame::IPlayerTracker> pPlayer = GetGame()->GetActivePlayer();
 	vector<CPtr<NGame::IUnitTracker> > unitsSet;
-	pPlayer->GetUnits( &unitsSet );
-	if ( unitsSet.empty() )
+	// Match CInventoryPanel::Draw: the visible inventory belongs to the one
+	// selected unit, not the first squad member or the store's interlocutor.
+	// Use it for the initial cursor pickup as well, so a double click/drag never
+	// acquires the leader as an intermediate owner or command executor.
+	pMission->GetSelectedUnits( &unitsSet );
+	if ( unitsSet.size() != 1 )
 		return;
 
 	CPtr<NGame::IUnitTracker> pUnit = unitsSet.front();

@@ -683,6 +683,16 @@ target_include_directories(NativeWorldInitProbe PRIVATE
 target_precompile_headers(NativeWorldInitProbe PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(NativeWorldInitProbe PRIVATE Main Script)
 target_compile_features(NativeWorldInitProbe PRIVATE cxx_std_17)
+add_executable(NativeCampaignSequenceTests "${root}/diagnostics/NativeCampaignSequenceTests.cpp")
+add_executable(ChapterTravelTests "${root}/diagnostics/ChapterTravelTests.cpp")
+target_compile_features(ChapterTravelTests PRIVATE cxx_std_17)
+add_test(NAME ChapterTravelTests COMMAND ChapterTravelTests)
+set_tests_properties(ChapterTravelTests PROPERTIES LABELS "bugs;campaign")
+target_include_directories(NativeCampaignSequenceTests PRIVATE
+  "${root}/Main" "${CMAKE_BINARY_DIR}/rc_compat")
+target_precompile_headers(NativeCampaignSequenceTests PRIVATE "${root}/Main/StdAfx.h")
+target_link_libraries(NativeCampaignSequenceTests PRIVATE Main Script)
+target_compile_features(NativeCampaignSequenceTests PRIVATE cxx_std_17)
 add_executable(NativeCommandBridgeTests
   "${root}/diagnostics/NativeCommandBridgeTests.cpp")
 target_include_directories(NativeCommandBridgeTests PRIVATE
@@ -1115,6 +1125,21 @@ if(S2_ENABLE_NATIVE_VIDEO)
   target_include_directories(BinkCompatProbe PRIVATE
     "${root}/third_party/bink/include")
   target_link_libraries(BinkCompatProbe PRIVATE s2_bink_compat)
+  add_custom_command(TARGET Game POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:s2_bink_compat>" "$<TARGET_FILE_DIR:Game>")
+endif()
+if(S2_ENABLE_NATIVE_MUSIC OR S2_ENABLE_NATIVE_VIDEO)
+  # A double-click launch must resolve the same DLLs as CTest's PATH setup.
+  # Copy the complete runtime chain, including video scaling and resampling.
+  foreach(component IN ITEMS avcodec avformat avutil swscale swresample)
+    file(GLOB runtime_dll "${S2_FFMPEG_ROOT}/bin/${component}-*.dll")
+    list(LENGTH runtime_dll runtime_count)
+    if(NOT runtime_count EQUAL 1)
+      message(FATAL_ERROR "Expected one ${component} runtime DLL under ${S2_FFMPEG_ROOT}/bin")
+    endif()
+    add_custom_command(TARGET Game POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different "${runtime_dll}" "$<TARGET_FILE_DIR:Game>")
+  endforeach()
 endif()
 if(TARGET s2_bink_compat)
   set_tests_properties(NativeZoneWireTests NativeObjectPlaceTests NativeCriticalTests NativeJunctionTests NativeAITileWireTests NativeAIDistanceWireTests NativeHeightLayersTests NativeHeightNetworkTests PROPERTIES ENVIRONMENT_MODIFICATION
@@ -1218,6 +1243,18 @@ if(S2_GAME_DIR)
         COMMAND NativeWorldInitProbe "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
       set_tests_properties(NativeWorldInitProbe PROPERTIES
         WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 120)
+      foreach(_s2_sequence_mode IN ITEMS normal scene-save nested-save intro-normal)
+        add_test(NAME NativeCampaignSequence-${_s2_sequence_mode}
+          COMMAND NativeCampaignSequenceTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res"
+            ${_s2_sequence_mode} "${CMAKE_BINARY_DIR}/campaign-sequence-${_s2_sequence_mode}.sav")
+        set_tests_properties(NativeCampaignSequence-${_s2_sequence_mode} PROPERTIES
+          WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 300 LABELS "bugs;campaign"
+          ENVIRONMENT "S2_USER_DATA_DIR=${CMAKE_BINARY_DIR}/campaign-sequence-${_s2_sequence_mode}")
+        if(TARGET s2_bink_compat)
+          set_tests_properties(NativeCampaignSequence-${_s2_sequence_mode} PROPERTIES ENVIRONMENT_MODIFICATION
+            "PATH=path_list_prepend:$<TARGET_FILE_DIR:s2_bink_compat>;PATH=path_list_prepend:${S2_FFMPEG_ROOT}/bin")
+        endif()
+      endforeach()
       # Exercise authored routes and two scenario-root campaign maps in the
       # full world path as well as the small bootstrap variants.
       foreach(_s2_world_variant IN ITEMS 218 810 2223 3829 4526 5240)
@@ -1419,6 +1456,7 @@ if(S2_GAME_DIR)
               "-DMAP_PROBE=$<TARGET_FILE:NativeMissionMapProbe>"
               "-DGAME_DB=${S2_GAME_DIR}/game.db"
               "-DRESOURCE_DIR=${S2_GAME_DIR}/res"
+              "-DEVIDENCE_DIR=${CMAKE_BINARY_DIR}/scenario-root-maps"
               -P "${root}/diagnostics/RunScenarioRootMaps.cmake")
           set_tests_properties(NativeScenarioRootMaps PROPERTIES TIMEOUT 7200 LABELS extended)
         endif()

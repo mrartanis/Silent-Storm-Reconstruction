@@ -685,6 +685,14 @@ public:
 	void SetSize( const SPoint &sSize );
 	void SetSlotSize( int nWidth, int nHeight );
 
+	// Read only the rendered slot cache; do not call GetItemsList, which may
+	// refresh/filter store stock. Used to aim ordinary-input diagnostics.
+	struct SDiagnosticItem { CTPoint<int> position; CPtr<NRPG::IInventoryItem> item; };
+	void GetDiagnosticItems(vector<SDiagnosticItem>* result, int* width, int* height) const {
+		*width = nWidth; *height = nHeight; result->clear();
+		for (const auto& value : itemsSet) result->push_back({value.sPos,value.pItem});
+	}
+
 	bool ProcessMessage( const SEvent &sEvent );
 	void Draw( const STime &sTime, NGScene::I2DGameView *pView );
 };

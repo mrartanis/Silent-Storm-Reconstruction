@@ -5,7 +5,7 @@ p.add_argument('run',type=pathlib.Path)
 p.add_argument('--platform',choices=['windows','linux'],required=True)
 p.add_argument('--target',required=True)
 p.add_argument('--helper')
-p.add_argument('action',choices=['click','move','key','ldrag'])
+p.add_argument('action',choices=['click','doubleclick','move','key','ldrag','dragto'])
 p.add_argument('values',nargs='*')
 a=p.parse_args()
 if a.platform == 'linux':
@@ -41,6 +41,16 @@ def command(text):
     time.sleep(.3)
 def send(action,*values):
     if a.platform=='windows':
+        if action=='click':
+            # A press must span actual game frames. Fixed 80 ms pulses can
+            # disappear between input polls in a slow full-game render.
+            send('ldown')
+            try:
+                command('displaystatus')
+                command('displaystatus')
+            finally:
+                send('lup')
+            return
         # Foreground can change between cursor movement and a click. Keep the
         # helper's foreground guard and retry only its explicit 'no input sent'.
         for attempt in range(3):
@@ -64,7 +74,21 @@ def send(action,*values):
             command('displaystatus')
             command('displaystatus')
             cmd=['mouseup','1']
-        elif action=='key': cmd=['key',values[0]]
+        elif action=='doubleclick': cmd=['click','--repeat','2','--delay','160','1']
+        elif action=='key':
+            key=values[0]
+            if key.lower().startswith('0x'):
+                # The shared scenarios use the game's Windows scan codes.
+                # Translate to X11 key names before sending ordinary input.
+                names={0x1:'Escape',0x2:'1',0x3:'2',0x4:'3',0x10:'q',0x16:'u',0x1c:'Return',0x1e:'a',
+                       0x21:'f',0x2e:'c',0x32:'m',0x4a:'KP_Subtract',
+                       0x4e:'KP_Add',0x147:'Home'}
+                scan=int(key,16)
+                if scan not in names: raise ValueError('Unsupported X11 scan code: '+key)
+                key=names[scan]
+            cmd=['key',key]
+        elif action=='ldown': cmd=['mousedown','1']
+        elif action=='lup': cmd=['mouseup','1']
         else:
             subprocess.run(['xdotool','mousedown','1'],check=True)
             time.sleep(.2)
@@ -82,8 +106,7 @@ def state():
     cursor=re.findall(r'cursorUI=(\d+),(\d+)',text)[-1]
     print('state',metrics,'cursor',cursor,flush=True)
     return tuple(map(float,metrics)),tuple(map(float,cursor))
-if a.action in ['move','click']:
-    x,y=map(float,a.values)
+def move_to(x,y):
     previous = None
     gain = [2.0,2.0]
     for _ in range(24):
@@ -104,7 +127,15 @@ if a.action in ['move','click']:
         previous = (position,movement)
         send('move',*movement)
     else: raise RuntimeError('cursor did not reach the visible target')
-    if a.action=='click': send('click')
+if a.action in ['move','click','doubleclick','dragto']:
+    x,y=map(float,a.values)
+    if a.action=='dragto':
+        send('ldown')
+        try: move_to(x,y)
+        finally: send('lup')
+    else:
+        move_to(x,y)
+        if a.action in ['click','doubleclick']: send(a.action)
 elif a.action=='key': send('key',a.values[0])
 else: send('ldrag',*map(int,a.values))
 state()

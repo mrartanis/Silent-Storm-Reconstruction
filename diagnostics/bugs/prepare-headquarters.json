@@ -1,0 +1,16 @@
+[
+  {"command":"load bugs_allies_intro"},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"dismiss_popups":true},
+  {"command":"console @ExitToChapter()"},
+  {"wait_until":"id=globalmapUI ","timeout":120},
+  {"control":"globalmapUI/basezone"},
+  {"wait_until":"available=1","query":"bugstate","timeout":120},
+  {"advance_dialogue":true,"timeout":180},
+  {"dismiss_popups":true},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"assert_sequence_consistent":true},
+  {"command":"save bugs_allies_headquarters"},
+  {"command":"displaytree"},
+  {"capture":"prepared-headquarters"}
+]

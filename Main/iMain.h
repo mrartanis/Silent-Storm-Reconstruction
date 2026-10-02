@@ -17,6 +17,7 @@ class IInterfaceBase;
 int GetInterfaceStackDepth();
 // Harness-only, borrowed pointer valid until the next interface command.
 IInterfaceBase* GetCurrentInterfaceForHarness();
+IInterfaceBase* GetMissionInterfaceForHarness(); // read through modal hint/dialog overlays
 bool StepApp( bool bActive, bool bSetGamma, bool bInput = true ); // return false on exit state
 void DoneInterface();
 void ShowLogo();

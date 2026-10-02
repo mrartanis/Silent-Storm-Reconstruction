@@ -1,0 +1,118 @@
+[
+  {
+    "command": "load bugs_after_headquarters_scene"
+  },
+  {
+    "wait_until": "available=1 .*sequence=0",
+    "query": "bugstate",
+    "timeout": 120
+  },
+  {
+    "dismiss_popups": true
+  },
+  {
+    "input": [
+      "key",
+      "0x2"
+    ]
+  },
+  {
+    "command": "console @UnitSetXPLevel(GetHero(),1)"
+  },
+  {
+    "input": [
+      "key",
+      "0x16"
+    ]
+  },
+  {
+    "wait_until": "id=strength_bar ",
+    "timeout": 30
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "level_bar": 13,
+        "strength_bar": 14,
+        "dexterity_bar": 15,
+        "intelligence_bar": 16,
+        "evasion_bar": 11,
+        "ap_bar": 10,
+        "vp_bar": 9,
+        "hide_bar": 5,
+        "spot_bar": 6,
+        "burst_bar": 3,
+        "melee_bar": 0,
+        "snipe_bar": 4,
+        "medicine_bar": 7,
+        "shooting_bar": 1,
+        "throwing_bar": 2,
+        "interrupt_bar": 12,
+        "engineering_bar": 8
+      },
+      "values": {
+        "level": 13,
+        "strength": 14,
+        "dexterity": 15,
+        "intelligence": 16,
+        "evasion": 11,
+        "ap": 10,
+        "vp": 9,
+        "hide": 5,
+        "spot": 6,
+        "burst": 3,
+        "melee": 0,
+        "snipe": 4,
+        "medicine": 7,
+        "shooting": 1,
+        "throwing": 2,
+        "interrupt": 12,
+        "engineering": 8
+      },
+      "progress": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0
+      }
+    }
+  },
+  {
+    "capture": "panel-fixed-skills"
+  },
+  {
+    "command": "console @UnitGiveXP(GetHero(),100)"
+  },
+  {
+    "assert_panel": {
+      "pers": "hero",
+      "bars": {
+        "level_bar": 13,
+        "strength_bar": 14,
+        "dexterity_bar": 15,
+        "intelligence_bar": 16,
+        "shooting_bar": 1
+      },
+      "values": {
+        "level": 13,
+        "shooting": 1
+      }
+    }
+  },
+  {
+    "capture": "panel-fixed-xp"
+  }
+]

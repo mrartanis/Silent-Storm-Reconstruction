@@ -1,0 +1,17 @@
+[
+  {"command":"load bugs_allies_headquarters"},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"assert_sequence_consistent":true},
+  {"snapshot":"headquarters"},
+  {"command":"console @ExitToChapter()"},
+  {"wait_until":"id=globalmapUI ","timeout":120},
+  {"control":"globalmapUI//zone_normal"},
+  {"wait_until":"id=chaptermapUI ","timeout":120},
+  {"travel_to_sector":{"type":0,"visible":1},"timeout":300},
+  {"wait_until":"id=movieUI |id=dialogUI |id=missionUI |id=ingamemenu ","timeout":120},
+  {"advance_dialogue":true,"timeout":180},
+  {"wait_until":"available=1 .*sequence=0","query":"bugstate","timeout":120},
+  {"assert_sequence_consistent":true},
+  {"command":"save bugs_after_headquarters_scene"},
+  {"capture":"after-headquarters-first-scene"}
+]

@@ -70,6 +70,7 @@ public:
 	bool Place( const CTPoint<int> &point, IInventoryItem *item );          // @0x2b1060
 	void Update( int nLevel, const vector< CObj<CUnit> > &units );          // @0x2b1350
 	bool HasMappedItems() const;                                           // live-view initialization probe
+	void GetItemsForDiagnostics(vector<CPtr<IInventoryItem>>* result) const;
 	// Direct stock-row access is retained for diagnostics/save migration; normal store flow goes
 	// through Update/Place/Take and the category maps.
 	vector<SStoreItem>& ItemsSet() { return itemsSet; }

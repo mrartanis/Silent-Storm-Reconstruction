@@ -1,0 +1,13 @@
+[
+  {"command":"load bugs_store_open"},
+  {"wait_until":"id=storepanel ","timeout":120},
+  {"input":["key","0x3"]},
+  {"snapshot":"before-transfer"},
+  {"slot_item":{"slot":"view","item":84,"action":"move"}},
+  {"control":"inventorypanel/backpack","action":"dragto","at":[0.75,0.7]},
+  {"wait_until":"pers=120 place=hand item=84 ","query":"bugstate","timeout":30},
+  {"control":"inventorypanel/backpack","at":[0.75,0.7]},
+  {"wait_until":"pers=120 .*command=0","query":"bugstate","timeout":30},
+  {"inventory_transfer":{"before":"before-transfer","item":84,"recipient":"selected","quantity":1,"leader":"hero","destination":"backpack","no_intermediate_leader":true}},
+  {"capture":"store-drag"}
+]
