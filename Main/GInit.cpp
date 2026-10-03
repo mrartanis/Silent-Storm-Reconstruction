@@ -68,7 +68,7 @@ bool SetModeFromConfig( bool bRecreate )
 	nCLSkyTextures = Float2Int( NGlobal::GetVar( "gfx_cl_sky_textures", 0 ).GetFloat() );
 	nCLSkyTextures = Max( 0, nCLSkyTextures );
 	nCLSkyTextures = Min( nCLSkyTextures, N_MAX_SKY_TEXTURES );
-	if ( nDepthTexResolution != 1024 )
+	if ( nDepthTexResolution != 1024 && nDepthTexResolution != 2048 )
 		nDepthTexResolution = 512;
 
 	// select feature set

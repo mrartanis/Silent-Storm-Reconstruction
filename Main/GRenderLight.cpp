@@ -1493,6 +1493,7 @@ IRenderFactor* CSpotLight::CreateDiffuseFactor( CPtrFuncBase<NGfx::CTexture> *_p
 START_REGISTER(GRenderLight)
 	REGISTER_VAR_EX( "gfx_stencil_shadows", NGlobal::VarBoolHandler, &bStencilShadows, 0, true )
 	REGISTER_VAR_EX( "gfx_blur_sun", NGlobal::VarBoolHandler, &bBlurSun, 1, true )
+	REGISTER_VAR( "gfx_shadow_pcf", 0, 1, true )
 	REGISTER_VAR_EX( "gfx_specular", NGlobal::VarBoolHandler, &bDrawSpecular, 1, true )
 	REGISTER_VAR_EX( "gfx_point_specular", NGlobal::VarBoolHandler, &bDrawPointSpecular, 1, true )
 	REGISTER_VAR_EX( "gfx_cl_blur", NGlobal::VarBoolHandler, &bBlurCL, 1, true )

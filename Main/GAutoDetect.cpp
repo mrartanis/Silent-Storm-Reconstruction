@@ -168,6 +168,8 @@ void ApplyMaximumQuality()
 	SetSpeedMode( CV_LOW ); // This axis is speed: index zero retains every effect.
 	SetTextureMode( CV_VHIGH );
 	SetLightingQualityMode( CV_VHIGH );
+	NGlobal::SetVar( "gfx_depth_tex_resolution", 2048 );
+	NGlobal::SetVar( "gfx_cl_cube_resolution", 256 );
 	NGlobal::SetVar( "gfx_particles", 1 );
 	NGlobal::SetVar( "gfx_terrain_bilinear", 1 );
 	NGlobal::SetVar( "gfx_register_resolution", 1 );

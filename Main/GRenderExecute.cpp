@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../MiscDll/Commands.h"
 #include "../diagnostics/FrameProfiler.h"
 #include "GRenderFactor.h"
 #include "GRenderExecute.h"
@@ -441,6 +442,7 @@ static void ExecOps( NGfx::CRenderContext *pRC, const vector<CRenderCmdList::SOp
 			pRC->SetVSConst( 25, &op.p1.pPDirDepth->m.x, 4 );
 			pRC->SetPSConst( 0, op.p1.pDirDepth->vChannelSelect );
 			pRC->SetPSConst( 1, CVec4( ( 1 - op.p3.f ) * lightInfo.vShadowColor, 124/256.0f ) );
+			pRC->SetPSConst( 2, CVec4( 0, 0, NGlobal::GetVar("gfx_shadow_pcf",1).GetInt()!=0 ? 1.0f : 0.0f, 0 ) );
 			pRC->SetTexture( 0, op.p2.pTex );
 			triListType = TLT_POSITION;
 			break;

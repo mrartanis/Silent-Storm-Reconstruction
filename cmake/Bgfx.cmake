@@ -63,6 +63,6 @@ add_custom_command(OUTPUT "${S2_BGFX_SHADER_HEADER}"
   COMMAND "${Python3_EXECUTABLE}" "${root}/diagnostics/CompileBgfxShaders.py"
           --source "${root}/Main/GfxShaders.cpp" --shaderc "${_s2_shaderc}"
           --output "${S2_BGFX_SHADER_HEADER}" --platform "${_s2_shader_platform}" --profile "${_s2_shader_profile}"
-  DEPENDS ${_s2_shaderc_dependency} "${root}/Main/GfxShaders.cpp" "${root}/diagnostics/CompileBgfxShaders.py"
+  DEPENDS ${_s2_shaderc_dependency} "${root}/Main/GfxShaders.cpp" "${root}/Main/DirectionalShadowPcf.hlsl" "${root}/diagnostics/CompileBgfxShaders.py"
   VERBATIM)
 add_custom_target(S2BgfxShaders DEPENDS "${S2_BGFX_SHADER_HEADER}")

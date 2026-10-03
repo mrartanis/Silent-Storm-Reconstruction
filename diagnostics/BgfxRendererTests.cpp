@@ -35,8 +35,8 @@ int RunGraphicsOptions() {
   for(const char* name:{"gfx_texture_mip","gfx_texture_usedxt","gfx_terrain_565","gfx_16bit_textures","gfx_fastest"})
     if(NGlobal::GetVar(name,-1).GetInt()!=0)return 51;
   if(NGlobal::GetVar("gfx_shadows",0).GetInt()!=1 ||
-     NGlobal::GetVar("gfx_depth_tex_resolution",0).GetInt()!=1024 ||
-     NGlobal::GetVar("gfx_cl_cube_resolution",0).GetInt()!=128)return 52;
+     NGlobal::GetVar("gfx_depth_tex_resolution",0).GetInt()!=2048 ||
+     NGlobal::GetVar("gfx_cl_cube_resolution",0).GetInt()!=256)return 52;
   NGfx::SRenderTargetsInfo targets;
   if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 53;
   NGlobal::SetVar("gfx_anisotropic_filter",1);
@@ -122,6 +122,46 @@ bool Color(const CArray2D<NGfx::SPixel8888>& image,int x,int y,int r,int g,int b
   const auto& pixel=image[y][x];
   if(abs(int(pixel.r)-r)<=3 && abs(int(pixel.g)-g)<=3 && abs(int(pixel.b)-b)<=3)return true;
   fprintf(stderr,"Pixel %d,%d expected %d,%d,%d got %d,%d,%d\n",x,y,r,g,b,pixel.r,pixel.g,pixel.b);return false;
+}
+int RunShadowPcf() {
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 140;
+  NGlobal::SetVar("gfx_antialiasing",0);
+  CObj<NGfx::CTexture> map=NGfx::MakeTexture(32,32,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(map,0,NGfx::INPLACE);
+    for(int y=0;y<32;++y)for(int x=0;x<32;++x)
+      lock[y][x]=x>y/2+8?NGfx::SPixel8888(255,0,0,255):NGfx::SPixel8888(0,0,0,255);}
+  auto geometry=Quad(-1-1.0f/128,1+1.0f/128,1-1.0f/128,-1+1.0f/128,.5f);
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);context.SetDepth(NGfx::DEPTH_NONE);
+  context.SetVertexShader(vsDirectionalTestSmoothed);context.SetPixelShader(psShadowTestSmoothed);
+  context.SetVSConst(4,CVec4(0,.5f,0,0));context.SetVSConst(16,CVec4(0,0,0,.5f));
+  context.SetVSConst(19,CVec4(0,1,1,0));
+  context.SetVSConst(25,CVec4(.5f,0,0,.5f));context.SetVSConst(26,CVec4(0,-.5f,0,.5f));
+  context.SetVSConst(28,CVec4(0,0,0,1));
+  context.SetPSConst(0,CVec4(1,0,0,0));context.SetPSConst(1,CVec4(.2f,.2f,.2f,124/256.f));
+  context.SetTexture(0,map,true);
+  CArray2D<NGfx::SPixel8888> hard,soft,restored;
+  context.SetPSConst(2,CVec4(0,0,0,0));context.ClearBuffers(0);Draw(context,geometry);NGfx::MakeScreenShot(&hard,false);
+  context.SetPSConst(2,CVec4(0,0,1,0));context.ClearBuffers(0);Draw(context,geometry);NGfx::MakeScreenShot(&soft,false);
+  int fractional=0;
+  for(int y=8;y<120;++y)for(int x=8;x<120;++x) {
+    if(hard[y][x].r!=51 && hard[y][x].r!=255)return 141;
+    if(soft[y][x].r>51 && soft[y][x].r<255)++fractional;
+    if(soft[y][x].a!=hard[y][x].a)return 142;
+  }
+  if(fractional<100 || !Color(soft,8,64,255,255,255) || !Color(soft,120,64,51,51,51))return 143;
+  context.SetPSConst(2,CVec4(0,0,0,0));context.ClearBuffers(0);Draw(context,geometry);NGfx::MakeScreenShot(&restored,false);
+  for(int y=0;y<128;++y)for(int x=0;x<128;++x)if(restored[y][x].color!=hard[y][x].color)return 144;
+  // A steep receiver plane stored in the map must remain lit. Testing every tap
+  // against the center depth would incorrectly self-shadow half of this plane.
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(map,0,NGfx::INPLACE);
+    for(int y=0;y<32;++y)for(int x=0;x<32;++x)
+      lock[y][x]=NGfx::SPixel8888(int((.3f+.4f*(x+.5f)/32)*255+.5f),0,0,255);}
+  context.SetVSConst(16,CVec4(.2f,0,0,.5f));context.SetPSConst(2,CVec4(0,0,1,0));
+  context.ClearBuffers(0);Draw(context,geometry);NGfx::MakeScreenShot(&soft,false);
+  for(int y=8;y<120;++y)for(int x=8;x<120;++x)if(soft[y][x].r!=255)return 145;
+  printf("Shadow PCF: %d fractional edge pixels, lit/shadow interiors and alpha preserved, exact off restoration, sloped receiver remains lit\n",fractional);
+  return 0;
 }
 int RunIndexRing() {
   const bool originalBan=NGfx::bBan32BitIndices;
@@ -614,7 +654,8 @@ int main(int argc,char** argv) {
              argc>1 && std::string(argv[1])=="--partial" ? RunPartialGeometry() :
              argc>1 && std::string(argv[1])=="--index-ring" ? RunIndexRing() :
              argc>1 && std::string(argv[1])=="--passes" ? RunPassStress() :
-             argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() : Run();
+             argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() :
+             argc>1 && std::string(argv[1])=="--shadow-pcf" ? RunShadowPcf() : Run();
   NGfx::Done3D();S2Platform::Done();
   if(result)fprintf(stderr,"bgfx regression failure code=%d\n",result);
   if(!result)fprintf(stdout,"bgfx shaders, depth, pass order, render targets, texture upload, stencil masks, blending, alpha test, cube sampling, readback, resize and shutdown passed\n");

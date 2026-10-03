@@ -231,6 +231,11 @@ def compile_all(args):
                  for selected in itertools.combinations(sorted(samplers), count)]
         for mask in masks:
             hlsl, _ = translate(tokens, mask)
+            if name == 'psShadowTestSmoothed' and mask == 0:
+                # Explicit bgfx quality extension; retain the token translation
+                # as a runtime reference path, never as an unsupported fallback.
+                hlsl = hlsl.replace('float4 main(Varying i)', 'float4 legacyShadow(Varying i)')
+                hlsl += (Path(args.source).parent / 'DirectionalShadowPcf.hlsl').read_text()
             jobs.append((name, number, mask, hlsl, name.startswith('vs')))
     # Present from a linear BGRA render target; apply the configured game gamma.
     present_vs = (VARYING + 'Varying main(float3 a_position:POSITION,float2 a_texcoord0:TEXCOORD0) {'
