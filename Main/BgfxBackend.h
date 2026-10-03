@@ -43,8 +43,8 @@ class BgfxBuffer : public BgfxResource {
   uint64_t Version(unsigned first, unsigned end) const;
 public:
   std::vector<unsigned char> bytes;
-  bool index32 = false;
-  explicit BgfxBuffer(unsigned size, bool wide = false);
+  bool index32 = false, dynamicIndex = false;
+  explicit BgfxBuffer(unsigned size, bool wide = false, bool dynamic = false);
   ~BgfxBuffer();
   HRESULT Lock(unsigned offset, unsigned size, void** output, DWORD flags);
   HRESULT Unlock();
@@ -52,7 +52,7 @@ public:
   void MarkWritten(unsigned offset, unsigned size);
   bgfx::DynamicVertexBufferHandle VertexGPU(const BgfxDeclaration&, unsigned offset,
                                            unsigned stride, unsigned first, unsigned count);
-  bgfx::DynamicIndexBufferHandle IndexGPU(unsigned first, unsigned count);
+  bgfx::DynamicIndexBufferHandle IndexGPU(unsigned first, unsigned count, unsigned* gpuFirst=nullptr);
 };
 class BgfxShader : public BgfxResource {
 public:

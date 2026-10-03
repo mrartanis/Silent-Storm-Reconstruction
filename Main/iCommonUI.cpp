@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "DisplayLayout.h"
 #include "../Game/Platform.h"
 #include "GSceneUtils.h"
@@ -701,6 +702,7 @@ void CUnitView::PlayAnimation( NDb::CAnimation *pAnim, bool bLoop )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitView::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	S2Perf::Scope perf(S2Perf::UIPortraits);
 	// retail @0x1bf070: with a live unit the 2D window draws LAST -- clear-rect(1.0) ->
 	// Flush -> 3D head -> clear-rect(0.0) -> CWindow::Draw -- so the face background/frame
 	// children land after the 3D depth punch-through instead of being wiped by it.

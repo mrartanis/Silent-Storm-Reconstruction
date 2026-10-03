@@ -128,6 +128,29 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ILinearBuffer* CreateBuffer( int nFormatID, int nSize, EBufferUsage usage ); // for internal use in BufferLock<>
+// A combined mesh owns this buffer across frames. Writes compare against its
+// retained CPU contents and invalidate only the changed vertex range.
+class IPartialGeometry : virtual public CObjectBase
+{
+public:
+	virtual CGeometry* GetGeometry() = 0;
+	virtual int GetSize() const = 0;
+	virtual void WriteRange( int first, int count, const void *data ) = 0;
+};
+IPartialGeometry* RetainGeometry( CGeometry *existing, int format, int stride, int count, EBufferUsage usage );
+template<class TElement>
+class CPartialGeometryUpdate
+{
+	CPtr<IPartialGeometry> pObj;
+public:
+	CPartialGeometryUpdate( CObj<CGeometry> *result, int count, EBufferUsage usage = DYNAMIC )
+	{
+		pObj = RetainGeometry( result->GetPtr(), TElement::ID, sizeof(TElement), count, usage );
+		*result = pObj->GetGeometry();
+	}
+	void Write( int first, int count, const void *data ) { pObj->WriteRange( first, count, data ); }
+	int GetSize() const { return pObj->GetSize(); }
+};
 template<class TElement>
 class CBufferLock
 {

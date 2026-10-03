@@ -1,4 +1,9 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
+#pragma push_macro("for")
+#undef for
+#include <memory>
+#pragma pop_macro("for")
 #include "DG.h"
 #include "GfxBuffers.h"
 #include "GfxRender.h"
@@ -791,12 +796,18 @@ struct SGfxOutputTransformer : public SPartTransformer<SGenericTransformer>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SGfxCacheTransformer : public SPartTransformer<SGenericTransformer>
 {
-	NGfx::CBufferLock<SGfxVertex> geom;
+	std::unique_ptr<NGfx::CBufferLock<SGfxVertex> > geom;
+	std::unique_ptr<NGfx::CPartialGeometryUpdate<SGfxVertex> > partial;
 	int nVert;
 
 	SGfxCacheTransformer( CObj<NGfx::CGeometry> *pGeom, int nTotal, NGfx::EBufferUsage usage ) 
-		: geom( pGeom, nTotal, usage ), nVert(0) 
+		: nVert(0)
 	{
+		static const bool fullRebuild = std::getenv("S2_GEOMETRY_FULL_REBUILD") != 0;
+		if ( !bLowRAM && !fullRebuild )
+			partial.reset( new NGfx::CPartialGeometryUpdate<SGfxVertex>(pGeom, nTotal, usage) );
+		else
+			geom.reset( new NGfx::CBufferLock<SGfxVertex>(pGeom, nTotal, usage) );
 	}
 	void Transform( IPart *p, const vector<CVec3> &transformed )
 	{
@@ -812,7 +823,7 @@ struct SGfxCacheTransformer : public SPartTransformer<SGenericTransformer>
 		// Retail v1.2 0x503ebb: only low-RAM mode bypasses the part cache.
 		if ( bLowRAM )
 		{
-			nVert += DoTransform( p, &geom[nVert], transformed );
+			nVert += DoTransform( p, &(*geom)[nVert], transformed );
 			return;
 		}
 		int nSize = sizeof(SGfxVertex) * nPartVerts;
@@ -824,9 +835,10 @@ struct SGfxCacheTransformer : public SPartTransformer<SGenericTransformer>
 		}
 		if ( nSize > 0 )
 		{
-			memcpy( &geom[nVert], &p->gfxData[0], nSize );
+			if ( partial ) partial->Write( nVert, nPartVerts, &p->gfxData[0] );
+			else memcpy( &(*geom)[nVert], &p->gfxData[0], nSize );
 			nVert += nPartVerts;
-			ASSERT( nVert <= geom.GetSize() );
+			ASSERT( nVert <= (partial ? partial->GetSize() : geom->GetSize()) );
 		}
 	}
 };
@@ -865,6 +877,7 @@ void TransformPart( IPart *p, vector<CVec3> *pRes, vector<STriangle> *pTris )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CVBCombiner::XFormPosition()
 {
+	S2Perf::Scope perf(S2Perf::CPUPositionTransform);
 	const vector< CPtr<IPart> > &parts = pCombiner->GetValue();
 	partBVs.resize( parts.size() );
 
@@ -944,6 +957,9 @@ void CVBCombiner::SimpleTransform( TTrans *p )
 // for static & dynamic geometry
 void CVBCombiner::Recalc()
 {
+	S2Perf::Scope perf(S2Perf::CPUVertexCombine);
+	S2Perf::Scope typePerf(lt==LT_NONE?S2Perf::CPUMeshCombine:
+		lt==LT_NORMAL?S2Perf::CPULightmapCombine:S2Perf::CPUOtherCombine);
 	if ( bNeedXForm )
 		XFormPosition();
 	bNeedRecalc = false;
@@ -962,6 +978,16 @@ void CVBCombiner::Recalc()
 		nPositions += pObjInfo->GetPositions().size();
 		nVerts += pObjInfo->GetVertices().size();
 		nLMs += pObjInfo->GetLMInfo().size();
+		if(S2Perf::Get().file) {
+			const auto kind=(*i)->GetTransformType();
+			static const bool logParts = std::getenv("S2_PERF_PART_TYPES") != 0;
+			if(logParts && S2Perf::Get().frame==0)
+				std::fprintf(stderr,"[perf-combiner-part] transform=%d vertices=%zu lightmap=%d usage=%d\n",
+					int(kind),pObjInfo->GetVertices().size(),int(lt),int(ct));
+			if(kind==TT_NONE || kind==TT_SIMPLE_DISCRETE)
+				S2Perf::Get().combinedFixedVertices+=pObjInfo->GetVertices().size();
+			else S2Perf::Get().combinedMovingVertices+=pObjInfo->GetVertices().size();
+		}
 	}
 
 	if ( !nVerts )
@@ -1095,6 +1121,7 @@ void CVBCombiner::Recalc()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CIBCombiner::Recalc()
 {
+	S2Perf::Scope perf(S2Perf::CPUIndexCombine);
 	const vector< CPtr<IPart> > &parts = pCombiner->GetValue();
 	//vector< CPtr<IPart> >::const_iterator i;// = parts.begin();
 	value.resize( parts.size() );

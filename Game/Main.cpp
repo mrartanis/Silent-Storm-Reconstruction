@@ -730,6 +730,13 @@ static bool HarnessPoll()   // returns false to request main-loop exit
             SaveLoadDiag("[harness] perf camera frozen=%d\n",mission->GetCamera()->IsCameraFrozen()?1:0);
         } else SaveLoadDiag("[harness] perf camera rejected\n");
     }
+    else if(sCmd=="perfworld 0" || sCmd=="perfworld 1") {
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission) {
+            NGlobal::SetVar("diag_freeze_world_clock",sCmd=="perfworld 0"?1:0);
+            SaveLoadDiag("[harness] perf world frozen=%d\n",NGlobal::GetVar("diag_freeze_world_clock",0).GetInt());
+        } else SaveLoadDiag("[harness] perf world rejected\n");
+    }
     else if ( sCmd.compare(0,8,"perfpan ")==0 ) {
         CVec3 delta;auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
         if(mission && mission->GetCamera() && sscanf(sCmd.c_str(),"perfpan %f %f %f",&delta.x,&delta.y,&delta.z)==3 &&

@@ -1136,7 +1136,8 @@ void CMission::Step()
 	if ( GetTime() - sFPSLimitLastTime < sMinFrameTime )
 		return;
 	sFPSLimitLastTime = GetTime();
-	sTimeCounter.Advance( !bPause, GetTime() );
+	// Harness comparisons freeze animations without switching to the pause UI.
+	sTimeCounter.Advance( !bPause && !NGlobal::GetVar("diag_freeze_world_clock",0).GetInt(), GetTime() );
 	sUITimeCounter.Advance( true, GetTime() );
 	EraseInvalidRefs( &soundsList );	// retail @0x5a3b2a
 

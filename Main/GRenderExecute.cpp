@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "GRenderFactor.h"
 #include "GRenderExecute.h"
 #include "GfxRender.h"
@@ -66,9 +67,10 @@ static void SetDepthCmpVal( NGfx::CRenderContext *pRC, const CVec4 &vChannelSele
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void AddTriangles( NGfx::CRenderContext *pRC, const SRenderFragmentInfo &fragment, 
+static void AddTriangles( NGfx::CRenderContext *pRC, const SRenderFragmentInfo &fragment,
 	const CSceneFragments &scene, ETrilistType triListType )
 {
+	S2Perf::Scope perf(S2Perf::SceneTriangles);
 	for ( int k = 0; k < fragment.elements.size(); ++k )
 	{
 		const SRenderFragmentInfo::SElement &element = fragment.elements[k];
@@ -97,7 +99,7 @@ static void ExecOps( NGfx::CRenderContext *pRC, const vector<CRenderCmdList::SOp
 	for ( vector<CRenderCmdList::SOperation>::const_iterator i = ops.begin(); i != ops.end(); ++i )
 		renderThem.push_back( &(*i) );
 
-	sort( renderThem.begin(), renderThem.end(), SCompareOps() );
+	{ S2Perf::Scope perf(S2Perf::SceneSort); sort( renderThem.begin(), renderThem.end(), SCompareOps() ); }
 	//renderThem.sort( SCompareOps() );
 
 	const CRenderCmdList::SOperation *pPrevOp = 0;
@@ -903,6 +905,7 @@ static void ExecOps( NGfx::CRenderContext *pRC, const vector<CRenderCmdList::SOp
 void Execute( IRender *pRender, NGfx::CRenderContext *pRC, const CTransformStack &ts, const CRenderCmdList &cl,
 	const CSceneFragments &scene, const SLightInfo &lightInfo )
 {
+	S2Perf::Scope perf(S2Perf::SceneExecute);
 	pRC->SetTransform( ts.Get() );
 	ExecOps( pRC, cl.ops, scene, lightInfo );
 }

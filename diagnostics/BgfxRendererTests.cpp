@@ -123,6 +123,136 @@ bool Color(const CArray2D<NGfx::SPixel8888>& image,int x,int y,int r,int g,int b
   if(abs(int(pixel.r)-r)<=3 && abs(int(pixel.g)-g)<=3 && abs(int(pixel.b)-b)<=3)return true;
   fprintf(stderr,"Pixel %d,%d expected %d,%d,%d got %d,%d,%d\n",x,y,r,g,b,pixel.r,pixel.g,pixel.b);return false;
 }
+int RunIndexRing() {
+  const bool originalBan=NGfx::bBan32BitIndices;
+  struct RestorePath { bool original; ~RestorePath(){NGfx::bBan32BitIndices=original;} } restore{originalBan};
+  for(bool wide:{false,true}) {
+  NGfx::bBan32BitIndices=!wide;
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 120;
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);context.SetDepth(NGfx::DEPTH_NONE);
+  context.SetVertexShader(vsConstLight);context.SetPixelShader(psDiffuse);
+  auto& perf=S2Perf::Get();perf.file=std::tmpfile();if(!perf.file)return 121;
+  struct StopCapture { ~StopCapture(){S2Perf::Stop();} } stop;
+  S2Perf::Begin();
+  auto quad=[](float left,float right) {
+    CObj<NGfx::CGeometry> geometry;
+    NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> update(&geometry,4);
+    NGfx::SGeomVecFull data[4]{};
+    const CVec3 positions[]={CVec3(left,1,.5f),CVec3(right,1,.5f),CVec3(right,-1,.5f),CVec3(left,-1,.5f)};
+    for(int i=0;i<4;++i)data[i].pos=positions[i];
+    update.Write(0,4,data);return geometry;
+  };
+  auto left=quad(-1,0),right=quad(0,1);
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(1,0,0,1));Draw(context,left);
+  NGfx::NextFrameBuffes(true); // cache aging inside the same GPU frame
+  // Degenerate triangles exercise real legacy submissions without adding
+  // hundreds of thousands of fullscreen fragments to this regression.
+  std::vector<STriangle> filler(65536,STriangle(0,0,0));
+  context.DrawPrimitive(left,NGfx::STriangleList(filler.data(),65536,0));
+  if(perf.ibRenames!=1)return 122; // 768 KB fits without replacing a used bank
+  for(int pass=0;pass<20;++pass) {
+    for(unsigned i=0;i<filler.size();++i) {
+      const unsigned index=(i/5000+pass)%4;
+      filler[i]=STriangle(index,index,index);
+    }
+    context.DrawPrimitive(right,NGfx::STriangleList(filler.data(),int(filler.size()),0));
+  }
+  if(perf.ibRenames<2)return 123; // force wrap and preserve the early red draw
+  context.SetVSConst(16,CVec4(0,1,0,1));Draw(context,right);
+  CArray2D<NGfx::SPixel8888> image;NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 124;
+  NGfx::Flip();S2Perf::Begin();
+  left=quad(-1,0);right=quad(0,1);
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(0,0,1,1));Draw(context,left);
+  context.SetVSConst(16,CVec4(0,1,0,1));Draw(context,right);
+  NGfx::MakeScreenShot(&image,false);
+  if(perf.ibRenames || !Color(image,32,64,0,0,255) || !Color(image,96,64,0,255,0))return 125;
+  std::printf("%d-bit index ring: cache aging does not rewind, 65536 triangles without rename, forced multi-MB wrap preserves early draw, next frame reuses the GPU bank; pixels passed\n",wide?32:16);
+  if(!NGfx::pDevice->Healthy())return 126;
+  }
+  return 0;
+}
+int RunPartialGeometry() {
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 100;
+  CObj<NGfx::CGeometry> geometry;
+  NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> update(&geometry,256);
+  std::vector<NGfx::SGeomVecFull> data(256);
+  auto quad=[&](int first,float left,float right) {
+    const CVec3 positions[]={CVec3(left,1,.5f),CVec3(right,1,.5f),CVec3(right,-1,.5f),CVec3(left,-1,.5f)};
+    for(int i=0;i<4;++i)data[first+i].pos=positions[i];
+  };
+  quad(0,-1,0);quad(128,0,1);update.Write(0,256,data.data());
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);context.SetDepth(NGfx::DEPTH_NONE);
+  context.SetVertexShader(vsConstLight);context.SetPixelShader(psDiffuse);
+  auto draw=[&](int first,const CVec4& color) {
+    STriangle triangles[]={STriangle(first,first+1,first+2),STriangle(first,first+2,first+3)};
+    context.SetVSConst(16,color);context.DrawPrimitive(geometry,NGfx::STriangleList(triangles,2,0));
+  };
+  CArray2D<NGfx::SPixel8888> image;
+  context.ClearBuffers(0xff000000);draw(0,CVec4(1,0,0,1));draw(128,CVec4(0,1,0,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 101;
+  auto& perf=S2Perf::Get();perf.file=std::tmpfile();if(!perf.file)return 102;
+  struct StopCapture { ~StopCapture(){S2Perf::Stop();} } stop;
+  S2Perf::Begin();
+  // A retained mesh stays alive through pool rotation. Unchanged parts must
+  // neither pack vertices nor send a vertex update to the GPU.
+  NGfx::Flip();auto* identity=geometry.GetPtr();
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&geometry,132);
+   if(identity!=geometry.GetPtr())return 103;
+   next.Write(0,4,data.data());next.Write(128,4,data.data()+128);}
+  context.ClearBuffers(0xff000000);draw(0,CVec4(1,0,0,1));draw(128,CVec4(0,1,0,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(perf.gpuVBUpdates || perf.packedVertices || perf.partialCopiedBytes ||
+     perf.partialSkippedBytes!=8*sizeof(data[0]))return 104;
+  S2Perf::Begin();quad(128,.25f,.75f);update.Write(128,4,data.data()+128);
+  context.ClearBuffers(0xff000000);draw(0,CVec4(1,0,0,1));draw(128,CVec4(0,1,0,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0) || !Color(image,120,64,0,0,0) ||
+     perf.gpuVBUpdates!=1 || !perf.packedVertices || perf.packedVertices>256 || perf.partialCopiedBytes!=4*sizeof(data[0]))return 105;
+  // An overwrite after an earlier draw must retain that draw's snapshot.
+  context.ClearBuffers(0xff000000);draw(0,CVec4(1,0,0,1));
+  quad(0,0,1);update.Write(0,4,data.data());draw(0,CVec4(0,0,1,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,0,255))return 106;
+  // Capacity growth and format changes replace the object; shrinking retains it.
+  CObj<NGfx::CGeometry> grown=geometry;
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&grown,513);
+   if(grown.GetPtr()==geometry.GetPtr())return 107;}
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecNT1> next(&grown,4);
+   if(grown->GetGeometryFormatID()!=NGfx::SGeomVecNT1::ID)return 108;}
+  if(!NGfx::SetMode(NGfx::SVideoMode(256,128,32,NGfx::WINDOWED),targets))return 109;
+  context.SetScreenRT();quad(0,-1,0);
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&geometry,132);next.Write(0,132,data.data());}
+  context.ClearBuffers(0xff000000);draw(0,CVec4(1,0,0,1));draw(128,CVec4(0,1,0,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,64,64,255,0,0) || !Color(image,192,64,0,255,0))return 110;
+  NGfx::Done3D();
+  if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow())) ||
+     !NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 111;
+  context.SetScreenRT();quad(0,0,1);
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&geometry,132);next.Write(0,132,data.data());}
+  context.ClearBuffers(0xff000000);draw(0,CVec4(0,0,1,1));
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,0,0,0) || !Color(image,96,64,0,0,255))return 112;
+  bool rejected=false;try{NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&geometry,132);next.Write(131,2,data.data());}catch(const std::exception&){rejected=true;}
+  if(!rejected)return 113;
+  // Spill into another bank instead of evicting a mesh already used this frame.
+  CObj<NGfx::CGeometry> largeA,largeB;
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&largeA,90000);
+   quad(0,-1,0);next.Write(0,4,data.data());}
+  {NGfx::CPartialGeometryUpdate<NGfx::SGeomVecFull> next(&largeB,90000);
+   quad(0,0,1);next.Write(0,4,data.data());}
+  if(!IsValid(largeA) || !IsValid(largeB) || largeA->GetVertexStream()==largeB->GetVertexStream())return 115;
+  context.ClearBuffers(0xff000000);context.SetVSConst(16,CVec4(1,0,0,1));Draw(context,largeA);
+  context.SetVSConst(16,CVec4(0,1,0,1));Draw(context,largeB);
+  NGfx::MakeScreenShot(&image,false);
+  if(!Color(image,32,64,255,0,0) || !Color(image,96,64,0,255,0))return 116;
+  std::printf("Partial geometry: exact pixels, zero unchanged uploads, changed range packing, pool rotation, same-frame snapshots, shrink/grow/format, resize/device epoch, invalid range, pool spill without live eviction passed\n");
+  return NGfx::pDevice->Healthy()?0:114;
+}
 int RunGeometry() {
   NGfx::SRenderTargetsInfo targets;
   if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 70;
@@ -481,6 +611,8 @@ int main(int argc,char** argv) {
   if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow()))) {S2Platform::Done();return 2;}
   int result=argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
              argc>1 && std::string(argv[1])=="--geometry" ? RunGeometry() :
+             argc>1 && std::string(argv[1])=="--partial" ? RunPartialGeometry() :
+             argc>1 && std::string(argv[1])=="--index-ring" ? RunIndexRing() :
              argc>1 && std::string(argv[1])=="--passes" ? RunPassStress() :
              argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() : Run();
   NGfx::Done3D();S2Platform::Done();

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "Gfx.h"
 #include "GInit.h"
 #include "GfxRender.h"
@@ -1938,7 +1939,7 @@ void CGScene::Draw( CTransformStack *pTS, CTransformStack *pClipTS, NGfx::CRende
 	int nUseIgnoreMark = N_SKIP_IGNORED_TEST;
 	if ( hsrMode != HSR_NONE )
 	{
-		UpdateIgnoreMark( &renderWrapper, pClipTS, mask, hsrMode );
+		{ S2Perf::Scope perf(S2Perf::SceneHSR); UpdateIgnoreMark( &renderWrapper, pClipTS, mask, hsrMode ); }
 		nUseIgnoreMark = nCurrentIgnoreMark;
 	}
 	ERLRequest rlReq = RN_ALL;
@@ -1979,7 +1980,7 @@ void CGScene::Draw( CTransformStack *pTS, CTransformStack *pClipTS, NGfx::CRende
 		nUseIgnoreMark != N_SKIP_IGNORED_TEST ? pHZBuffer : 0,
 		IsUsingCacheLighting( renderPath ) ? NGfx::GetRegisterTexture( N_CL_TARGET_REGISTER ) : 0
 		);
-	MakeRenderList( pClipTS, &renderList, rlReq, nUseIgnoreMark );
+	{ S2Perf::Scope perf(S2Perf::SceneList); MakeRenderList( pClipTS, &renderList, rlReq, nUseIgnoreMark ); }
 
 
 	if ( bWireframe )
@@ -1997,7 +1998,7 @@ void CGScene::Draw( CTransformStack *pTS, CTransformStack *pClipTS, NGfx::CRende
 		for ( list< CPtr<ILight> >::iterator k = lights.begin(); k != lights.end(); ++k )
 		{
 			ILight *pLight = *k;
-			pLight->Render( pTS, pClipTS, pRC, renderPath, &renderWrapper, geom, useParticleTarget );
+			{ S2Perf::Scope perf(S2Perf::SceneLights); pLight->Render( pTS, pClipTS, pRC, renderPath, &renderWrapper, geom, useParticleTarget ); }
 		}
 		// render fog & reflection
 		if ( renderPath != RP_TNL )
@@ -2040,6 +2041,7 @@ void CGScene::Draw( CTransformStack *pTS, CTransformStack *pClipTS, NGfx::CRende
 	// draw transparent stuff
 	if ( trMode != TRM_NONE )
 	{
+		S2Perf::Scope perf(S2Perf::SceneTransparent);
 		if ( bUseFakeParticleLM )
 			pTransp->Render( pRC, pFakeParticleLM->GetValue(), pFogLookup, pSky );
 		else

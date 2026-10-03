@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "../diagnostics/FrameProfiler.h"
 #undef for
+#include "IndexBounds.h"
 #include "BgfxBackend.h"
 #include "GfxShaders.h"
 #include "GfxShadersDescr.h"
@@ -199,6 +200,7 @@ struct VertexBank {
   VertexBank() { vertexBanks.insert(this); }
   void Flush() {
     if(epoch!=activeEpoch || !bgfx::isValid(handle))return;
+    S2Perf::Scope flushPerf(S2Perf::GeometryFlush);
     S2Perf::Scope perf(S2Perf::GPUUpload);
     for(unsigned i=0;i<blocks.size();) {
       if(!blocks[i].pending) {++i;continue;}
@@ -214,20 +216,22 @@ struct VertexBank {
   ~VertexBank() { if(epoch==activeEpoch && drawBarrier)drawBarrier();Flush();vertexBanks.erase(this);if(epoch && epoch==activeEpoch && bgfx::isValid(handle))bgfx::destroy(handle); }
 };
 struct IndexBank {
-  unsigned epoch=0,stride=0,count=0;
+  unsigned epoch=0,stride=0,count=0,gpuCount=0,offset=0;
+  uint64_t windowFrame=0;
   bgfx::DynamicIndexBufferHandle handle=BGFX_INVALID_HANDLE;
   std::vector<GPUBlock> blocks;
   std::vector<unsigned char> shadow;
   IndexBank() { indexBanks.insert(this); }
   void Flush() {
     if(epoch!=activeEpoch || !bgfx::isValid(handle))return;
+    S2Perf::Scope flushPerf(S2Perf::GeometryFlush);
     S2Perf::Scope perf(S2Perf::GPUUpload);
     for(unsigned i=0;i<blocks.size();) {
       if(!blocks[i].pending) {++i;continue;}
       unsigned first=i*IndexBlock;
       do {blocks[i++].pending=false;}while(i<blocks.size() && blocks[i].pending);
       unsigned end=std::min(i*IndexBlock,count),size=(end-first)*stride;
-      bgfx::update(handle,first,bgfx::copy(shadow.data()+first*stride,size));
+      bgfx::update(handle,offset+first,bgfx::copy(shadow.data()+first*stride,size));
       if(S2Perf::Get().file) {++S2Perf::Get().gpuIBUpdates;S2Perf::Get().gpuUploadBytes+=size;}
     }
   }
@@ -247,8 +251,8 @@ struct BgfxBuffer::GPUStorage {
   std::map<std::tuple<uint64_t,unsigned,unsigned>,std::unique_ptr<VertexBank>> vertices;
   std::unique_ptr<IndexBank> indices;
 };
-BgfxBuffer::BgfxBuffer(unsigned size,bool wide)
-  :gpu(new GPUStorage),versions((size+DirtyPage-1)/DirtyPage,1),bytes(size),index32(wide) {}
+BgfxBuffer::BgfxBuffer(unsigned size,bool wide,bool dynamic)
+  :gpu(new GPUStorage),versions((size+DirtyPage-1)/DirtyPage,1),bytes(size),index32(wide),dynamicIndex(dynamic) {}
 BgfxBuffer::~BgfxBuffer() = default;
 uint64_t BgfxBuffer::Version(unsigned first,unsigned end) const {
   uint64_t result=0;
@@ -276,6 +280,7 @@ HRESULT BgfxBuffer::Unlock() {
 }
 bgfx::DynamicVertexBufferHandle BgfxBuffer::VertexGPU(const BgfxDeclaration& d,unsigned offset,
                                                     unsigned stride,unsigned first,unsigned count) {
+  S2Perf::Scope detailPerf(S2Perf::GeometryVB);
   S2Perf::Scope perf(S2Perf::GPUUpload);
   if(!activeEpoch || locked || !stride || stride!=d.layout.getStride() || offset>bytes.size() ||
      uint64_t(first)+count>(bytes.size()-offset)/stride)throw std::runtime_error("Invalid GPU vertex range");
@@ -290,6 +295,8 @@ bgfx::DynamicVertexBufferHandle BgfxBuffer::VertexGPU(const BgfxDeclaration& d,u
   }
   auto& bank=*entry;
   auto rename=[&]() {
+    S2Perf::Scope renamePerf(S2Perf::GeometryRename);
+    if(S2Perf::Get().file)++S2Perf::Get().vbRenames;
     if(bgfx::isValid(bank.handle)) {if(drawBarrier)drawBarrier();bank.Flush();bgfx::destroy(bank.handle);}
     bank.handle=bgfx::createDynamicVertexBuffer(bank.count,d.gpuLayout);
     if(!bgfx::isValid(bank.handle))throw std::runtime_error("GPU vertex buffer allocation failed");
@@ -298,6 +305,7 @@ bgfx::DynamicVertexBufferHandle BgfxBuffer::VertexGPU(const BgfxDeclaration& d,u
   };
   if(!bgfx::isValid(bank.handle))rename();
   const unsigned end=first+count, lastBlock=(end+VertexBlock-1)/VertexBlock;
+  if(S2Perf::Get().file)S2Perf::Get().vbBlocks+=lastBlock-first/VertexBlock;
   for(unsigned i=first/VertexBlock;i<lastBlock;++i) {
     const auto& block=bank.blocks[i];
     unsigned begin=i*VertexBlock, finish=std::min(begin+VertexBlock,bank.count);
@@ -316,7 +324,8 @@ bgfx::DynamicVertexBufferHandle BgfxBuffer::VertexGPU(const BgfxDeclaration& d,u
   }
   return bank.handle;
 }
-bgfx::DynamicIndexBufferHandle BgfxBuffer::IndexGPU(unsigned first,unsigned count) {
+bgfx::DynamicIndexBufferHandle BgfxBuffer::IndexGPU(unsigned first,unsigned count,unsigned* gpuFirst) {
+  S2Perf::Scope detailPerf(S2Perf::GeometryIB);
   S2Perf::Scope perf(S2Perf::GPUUpload);
   const unsigned stride=index32?4:2, capacity=unsigned(bytes.size()/stride), end=first+count;
   if(!activeEpoch || locked || uint64_t(first)+count>capacity)throw std::runtime_error("Invalid GPU index range");
@@ -324,23 +333,46 @@ bgfx::DynamicIndexBufferHandle BgfxBuffer::IndexGPU(unsigned first,unsigned coun
   if(!gpu->indices) {
     gpu->indices.reset(new IndexBank);gpu->indices->epoch=activeEpoch;
     gpu->indices->stride=stride;gpu->indices->count=capacity;
+    static const bool append=std::getenv("S2_GEOMETRY_INDEX_NO_APPEND")==nullptr;
+    // Callers that do not accept a binding offset keep the original bank.
+    const unsigned windows=append && dynamicIndex && gpuFirst ? std::max(1u,(4u*1024*1024)/std::max(1u,unsigned(bytes.size()))) : 1;
+    gpu->indices->gpuCount=capacity*windows;
     gpu->indices->blocks.resize((capacity+IndexBlock-1)/IndexBlock);gpu->indices->shadow.resize(bytes.size());
   }
   auto& bank=*gpu->indices;
+  if(bank.windowFrame!=geometryFrame) {
+    // Earlier frames were flushed before frame advancement. Start at zero
+    // again; stale versions from the previous window must not skip uploads.
+    if(bank.offset) {bank.Flush();bank.offset=0;std::fill(bank.blocks.begin(),bank.blocks.end(),GPUBlock{});}
+    bank.windowFrame=geometryFrame;
+  }
   auto rename=[&]() {
+    S2Perf::Scope renamePerf(S2Perf::GeometryRename);
+    if(S2Perf::Get().file)++S2Perf::Get().ibRenames;
     if(bgfx::isValid(bank.handle)) {if(drawBarrier)drawBarrier();bank.Flush();bgfx::destroy(bank.handle);}
-    bank.handle=bgfx::createDynamicIndexBuffer(capacity,index32?BGFX_BUFFER_INDEX32:BGFX_BUFFER_NONE);
+    bank.offset=0;
+    bank.handle=bgfx::createDynamicIndexBuffer(bank.gpuCount,index32?BGFX_BUFFER_INDEX32:BGFX_BUFFER_NONE);
     if(!bgfx::isValid(bank.handle))throw std::runtime_error("GPU index buffer allocation failed");
     std::fill(bank.blocks.begin(),bank.blocks.end(),GPUBlock{});
     if(S2Perf::Get().file)++S2Perf::Get().gpuRenames;
   };
   if(!bgfx::isValid(bank.handle))rename();
+  if(!gpuFirst && bank.offset)rename();
   const unsigned lastBlock=(end+IndexBlock-1)/IndexBlock;
+  if(S2Perf::Get().file)S2Perf::Get().ibBlocks+=lastBlock-first/IndexBlock;
   for(unsigned i=first/IndexBlock;i<lastBlock;++i) {
     const auto& block=bank.blocks[i];unsigned begin=i*IndexBlock,finish=std::min(begin+IndexBlock,capacity);
     if(block.frame==geometryFrame && block.version!=Version(begin*stride,finish*stride) &&
        std::memcmp(bytes.data()+block.usedFirst*stride,bank.shadow.data()+block.usedFirst*stride,
-                   (block.usedEnd-block.usedFirst)*stride)!=0) { rename();break; }
+                   (block.usedEnd-block.usedFirst)*stride)!=0) {
+      if(gpuFirst && bank.offset+capacity<=bank.gpuCount-capacity) {
+        // Flush queued draws and the old window before reusing the small CPU
+        // ring. All earlier draws retain their own immutable GPU contents.
+        if(drawBarrier)drawBarrier();bank.Flush();bank.offset+=capacity;
+        std::fill(bank.blocks.begin(),bank.blocks.end(),GPUBlock{});
+      } else rename();
+      break;
+    }
   }
   for(unsigned i=first/IndexBlock;i<lastBlock;++i) {
     auto& block=bank.blocks[i];unsigned begin=i*IndexBlock,finish=std::min(begin+IndexBlock,capacity);
@@ -351,6 +383,7 @@ bgfx::DynamicIndexBufferHandle BgfxBuffer::IndexGPU(unsigned first,unsigned coun
     }
     Used(block,std::max(first,begin),std::min(end,finish));
   }
+  if(gpuFirst)*gpuFirst=bank.offset+first;
   return bank.handle;
 }
 BgfxDeclaration::BgfxDeclaration(const D3DVERTEXELEMENT9* elements) {
@@ -538,6 +571,7 @@ struct BgfxDevice::Impl {
   }
   void FlushDraw() {
     if(!pending.valid)return;
+    S2Perf::Scope perf(S2Perf::DrawFlush);
     bgfx::setVertexBuffer(0,pending.vb,pending.vertexStart,pending.vertexCount);
     if(pending.indexed)bgfx::setIndexBuffer(pending.ib,pending.indexStart,pending.indexCount);
     Apply(pending.primitive);bgfx::submit(pending.view,pending.program);
@@ -584,6 +618,7 @@ struct BgfxDevice::Impl {
     bgfx::submit(view,presentProgram);
   }
   void Apply(D3DPRIMITIVETYPE primitive) {
+    S2Perf::Scope perf(S2Perf::RenderApply);
     // Keep the legacy integer pixel centers on the D3D11 half-integer grid.
     float raster[]={1.0f/color->storage->Width(color->level),-1.0f/color->storage->Height(color->level),0,0};
     bgfx::setUniform(uRaster,raster);
@@ -775,7 +810,7 @@ HRESULT BgfxDevice::CreateDepthStencilSurface(unsigned w,unsigned h,D3DFORMAT fo
   catch(const std::exception& e){return impl->Fail(e.what());}
 }
 HRESULT BgfxDevice::CreateVertexBuffer(unsigned size,DWORD,DWORD,D3DPOOL,BgfxBuffer** out,HANDLE*) {if(!out || !size)return E_INVALIDARG;*out=new BgfxBuffer(size);return S_OK;}
-HRESULT BgfxDevice::CreateIndexBuffer(unsigned size,DWORD,D3DFORMAT format,D3DPOOL,BgfxBuffer** out,HANDLE*) {if(!out || !size)return E_INVALIDARG;*out=new BgfxBuffer(size,format==D3DFMT_INDEX32);return S_OK;}
+HRESULT BgfxDevice::CreateIndexBuffer(unsigned size,DWORD usage,D3DFORMAT format,D3DPOOL,BgfxBuffer** out,HANDLE*) {if(!out || !size)return E_INVALIDARG;*out=new BgfxBuffer(size,format==D3DFMT_INDEX32,(usage&D3DUSAGE_DYNAMIC)!=0);return S_OK;}
 HRESULT BgfxDevice::CreateVertexDeclaration(const D3DVERTEXELEMENT9* elements,BgfxDeclaration** out) {
   if(!out || !elements)return E_INVALIDARG;*out=nullptr;
   try{*out=new BgfxDeclaration(elements);return S_OK;}catch(const std::exception& e){return impl->Fail(e.what());}
@@ -832,16 +867,29 @@ HRESULT BgfxDevice::DrawIndexedPrimitive(D3DPRIMITIVETYPE primitive,int base,uns
     unsigned indexSize=impl->indices->index32?4:2;
     if(uint64_t(start+uint64_t(num))*indexSize>impl->indices->bytes.size())throw std::runtime_error("Game index buffer bounds violation");
     std::vector<uint32_t> source; if(!impl->persistentGeometry || base<0)source.resize(num);uint32_t low=UINT32_MAX,high=0;
+    { S2Perf::Scope boundsPerf(S2Perf::IndexBounds);
+    if(S2Perf::Get().file)S2Perf::Get().scannedIndices+=num;
+    // Fixed-width loads avoid a runtime-sized memcpy and validation branch
+    // for every index. Keep the old path available for capture comparisons.
+    static const bool slowIndexScan=std::getenv("S2_GEOMETRY_SLOW_INDEX_SCAN")!=nullptr;
+    if(!slowIndexScan) {
+      const auto* data=impl->indices->bytes.data()+size_t(start)*indexSize;
+      if(indexSize==4)S2Geometry::FastIndexBounds<uint32_t>(data,num,base,source,low,high);
+      else S2Geometry::FastIndexBounds<uint16_t>(data,num,base,source,low,high);
+    } else {
     for(unsigned i=0;i<num;++i){uint32_t index=0;memcpy(&index,impl->indices->bytes.data()+uint64_t(start+i)*indexSize,indexSize);int64_t effective=int64_t(index)+base;
       if(effective<0 || effective>UINT32_MAX)throw std::runtime_error("Invalid game base vertex");
       if(!source.empty())source[i]=uint32_t(effective);low=std::min(low,uint32_t(effective));high=std::max(high,uint32_t(effective));}
+    }
+    }
     unsigned vertices=high-low+1;const auto& layout=impl->declaration->gpuLayout;
     if(impl->declaration->layout.getStride()!=impl->stride || uint64_t(high+uint64_t(1))*impl->stride+impl->vertexOffset>impl->vertices->bytes.size())throw std::runtime_error("Game vertex buffer bounds violation");
     if(impl->persistentGeometry) {
       auto vb=impl->vertices->VertexGPU(*impl->declaration,impl->vertexOffset,impl->stride,low,vertices);
       if(base>=0) {
-        auto ib=impl->indices->IndexGPU(start,num);
-        impl->QueueDraw(vb,unsigned(base),high-unsigned(base)+1,primitive,ib,start,num);return S_OK;
+        unsigned gpuStart=0;
+        auto ib=impl->indices->IndexGPU(start,num,&gpuStart);
+        impl->QueueDraw(vb,unsigned(base),high-unsigned(base)+1,primitive,ib,gpuStart,num);return S_OK;
       } else {
         impl->FlushDraw();
         // bgfx has no negative base-vertex binding. Keep the old normalized

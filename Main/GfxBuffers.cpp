@@ -8,6 +8,7 @@
 //#include "GfxUtils.h"
 //#include "GfxRender.h"
 #include "GfxBuffersInternal.h"
+#include "../diagnostics/FrameProfiler.h"
 
 const int N_SYSMEM_TEXTURES = 2;
 const int N_SYSMEM_TEXTURE_SIZE = 1024;
@@ -78,6 +79,7 @@ class CLinearBuffer : public CObjectBase
 	int nStride;
 	DWORD dwNextLockFlags, dwLockFlags, dwFirstLockFlags;
 	bool bIsDynamicBuffer, bIsThrashing;
+	bool bIsRetained;
 	int nKeepObjectsFrames;
 	struct SBuffersPerFrame
 	{
@@ -86,10 +88,12 @@ class CLinearBuffer : public CObjectBase
 	list<SBuffersPerFrame> frames;
 public:
 	CLinearBuffer() {}
-	CLinearBuffer( int _nSize, int _nStride, int _nFormatID, ETrueBufferUsage usage ) : nFormatID(_nFormatID), nStride(_nStride), bIsThrashing(false)
+	CLinearBuffer( int _nSize, int _nStride, int _nFormatID, ETrueBufferUsage usage, bool retained = false ) : nFormatID(_nFormatID), nStride(_nStride), bIsThrashing(false), bIsRetained(retained)
 	{
 		int nFibSize = NCache::GetMajorFib( _nSize );
 		int nSize = NCache::fib(nFibSize);
+		if ( nSize <= 0 || _nStride <= 0 || nSize > INT_MAX / _nStride )
+			throw std::runtime_error("Invalid geometry pool size");
 		pDX = RegisterDXBuffer( new TDXBuffer( nSize * _nStride, usage ) );//DYNAMIC ) );
 		pCache = new CCache( nCurrentFrame );
 		NCache::CFibElement root;
@@ -97,7 +101,13 @@ public:
 		root.nShift = 0;
 		pCache->AddRoot( root );
 		frames.push_front(SBuffersPerFrame());
-		if ( usage == DYNAMIC )
+		if ( retained )
+		{
+			bIsDynamicBuffer = false;
+			dwLockFlags = dwFirstLockFlags = D3DLOCK_NOOVERWRITE;
+			nKeepObjectsFrames = N_MAX_PRESENTS_IN_QUEUE + 1;
+		}
+		else if ( usage == DYNAMIC )
 		{
 			bIsDynamicBuffer = true;
 			dwLockFlags = D3DLOCK_NOOVERWRITE;
@@ -124,7 +134,8 @@ public:
 	TDXBuffer* GetBuffer() const { return pDX; }
 	int GetFormatID() const {	return nFormatID; }
 	int GetStride() const { return nStride; }
-	TUserObject* Alloc( int nSize )
+	bool IsRetained() const { return bIsRetained; }
+	TUserObject* Alloc( int nSize, bool avoidThrashing = false )
 	{
 		ASSERT( IsValid( pCache ) );
 		//ASSERT( nSize < 65536 );
@@ -134,12 +145,16 @@ public:
 		typename CCache::SCachePlace best;
 		if ( !pCache->GetPlace( el, &best ) )
 		{
+			if ( avoidThrashing ) return 0;
 			ASSERT( 0 );
 			return 0;
 		}
 		ASSERT( pCache->GetCurrentRU() == nCurrentFrame );
 		if ( best.nMRU >= nCurrentFrame - N_MAX_PRESENTS_IN_QUEUE )
 		{
+			// A retained pool must not evict geometry already collected for
+			// this frame. Allocate another bank instead of rotating live slots.
+			if ( avoidThrashing ) return 0;
 			bIsThrashing = true;
 			OnThrashing();
 			// wait till rendered
@@ -231,6 +246,21 @@ public:
 	}
 
 	unsigned char* Lock(int start, int count) { pDX->Lock(dwNextLockFlags); dwNextLockFlags=dwLockFlags; pDX->obj->MarkWritten(start*nStride,count*nStride); return pDX->pLocked; }
+	void WriteRange( int first, int count, const void *data )
+	{
+		pDX->Lock(D3DLOCK_NOOVERWRITE);
+		pDX->obj->MarkWritten(0, 0);
+		const int bytes = count * nStride, offset = first * nStride;
+		unsigned char *target = pDX->pLocked + offset;
+		if ( memcmp(target, data, bytes) != 0 )
+		{
+			pDX->obj->MarkWritten(offset, bytes);
+			memcpy(target, data, bytes);
+			if ( S2Perf::Get().file ) S2Perf::Get().partialCopiedBytes += bytes;
+		}
+		else if ( S2Perf::Get().file ) S2Perf::Get().partialSkippedBytes += bytes;
+		pDX->Unlock();
+	}
 	void Unlock() { pDX->Unlock(); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,12 +294,20 @@ class CUserGeometry;
 typedef CLinearBuffer<CVB, CUserGeometry> CGeometryBuffer;
 class CUserGeometry : 
 	public CLinearBufferElement<CGeometryBuffer, CVB, CUserGeometry>,
-	public CGeometry
+	public CGeometry, public IPartialGeometry
 {
 	OBJECT_NOCOPY_METHODS(CUserGeometry);
 	typedef CLinearBufferElement<CGeometryBuffer, CVB, CUserGeometry> TParent;
 public:
 	CUserGeometry( CGeometryBuffer *_p = 0 ) : TParent(_p) {}
+	virtual CGeometry* GetGeometry() { return this; }
+	virtual int GetSize() const { return nSize; }
+	virtual void WriteRange( int first, int count, const void *data )
+	{
+		if ( !IsValid(this) || first < 0 || count < 0 || first > nSize || count > nSize - first || (!data && count) )
+			throw std::runtime_error("Invalid retained geometry range");
+		if ( count ) pBuffer->WriteRange(nStart + first, count, data);
+	}
 	virtual void* GetVertexStream() { return pBuffer; }
 	virtual int GetVBStart() const { return nStart; }
 	virtual int GetVBSize() const { return nSize; }
@@ -923,7 +961,19 @@ struct S32Triangle
 {
 	int n1, n2, n3;
 };
-const int N_TRIS_BUFFER_SIZE = 65536; // in bytes
+// Keep CPU batches small; the backend appends their snapshots in a larger GPU
+// bank. Larger CPU rings remain selectable for isolated A/B captures.
+static int DynamicIndexBufferSize()
+{
+	const int defaultBytes = 65536;
+	if ( const char *text = std::getenv("S2_GEOMETRY_INDEX_KB") )
+	{
+		char *end = 0;
+		const long kb = std::strtol(text, &end, 10);
+		if ( end != text && *end == 0 && kb >= 64 && kb <= 16384 ) return int(kb) * 1024;
+	}
+	return defaultBytes;
+}
 template<class T, class TIB>
 class CDynamicTrisBase
 {
@@ -936,12 +986,13 @@ public:
 	CDynamicTrisBase() { Clear(); }
 	virtual void Init()
 	{
-		int nBufSize = N_TRIS_BUFFER_SIZE;
+		int nBufSize = DynamicIndexBufferSize();
 		int n = nBufSize / T::N_TRIANGLE_SIZE;
 		n = n & (~1);
 		nLast = n;
 		nBuf = n;
 		pDynamicTrisBuffer = new TIB( nBufSize, TBU_DYNAMIC );
+		std::fprintf(stderr, "[geometry] %d-bit index ring: %d bytes\n", T::N_TRIANGLE_SIZE == 12 ? 32 : 16, nBufSize);
 		nStart = n;
 	}
 	TIB* GetBuffer() { return pDynamicTrisBuffer; }
@@ -1184,6 +1235,8 @@ static CCMCache cmCache;
 static CTextureCache textureCache, transparentCache;
 typedef unordered_map<SGeometryType, CObj<CGeometryBuffer>,SGeometryTypeHash > CGeometryCacheHash;
 static CGeometryCacheHash geometries;
+typedef unordered_map<SGeometryType, vector<CObj<CGeometryBuffer> >, SGeometryTypeHash> CRetainedGeometryCache;
+static CRetainedGeometryCache retainedGeometries;
 static CDynamicTrisIndices32 dynamicTris32;
 static CDynamicTrisIndices16 dynamicTris16;
 static NWin32Helper::com_ptr<BgfxBuffer> pCurrentVB;
@@ -1221,6 +1274,7 @@ void DestroyLostableBuffers()
 	dynamicTris16.Clear();
 	dynamicTris32.Clear();
 	geometries.clear();
+	retainedGeometries.clear();
 	pCurrentVB = 0;
 	sysTextures.clear();
 	rtCache.clear();
@@ -1256,10 +1310,19 @@ void NextFrameBuffes( bool bOnThrashing )
 		i->second.Walk();
 	for ( CGeometryCacheHash::iterator i = geometries.begin(); i != geometries.end(); ++i )
 		i->second->NextFrame( bOnThrashing );
+	for ( auto i = retainedGeometries.begin(); i != retainedGeometries.end(); ++i )
+		for ( auto j = i->second.begin(); j != i->second.end(); ++j )
+			(*j)->NextFrame(bOnThrashing);
 	textureCache.NextFrame( bOnThrashing );
 	transparentCache.NextFrame( bOnThrashing );
-	dynamicTris16.NextFrame();
-	dynamicTris32.NextFrame();
+	// Thrashing advances the geometry cache's age, not the GPU frame. Rewinding
+	// indices here overwrites earlier draws and forces a full bank snapshot.
+	static const bool rewindOnThrash = std::getenv("S2_GEOMETRY_INDEX_REWIND_ON_THRASH") != 0;
+	if ( !bOnThrashing || rewindOnThrash )
+	{
+		dynamicTris16.NextFrame();
+		dynamicTris32.NextFrame();
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CTexture* GetTextureContainer( CTexture *pTex, STexturePlaceInfo *pPlace )
@@ -1330,6 +1393,33 @@ void InitBuffers()
 		dynamicTris32.Init();
 		pDevice->SetIndices( dynamicTris32.GetBuffer()->obj );
 	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+IPartialGeometry* RetainGeometry( CGeometry *existing, int format, int stride, int count, EBufferUsage usage )
+{
+	if ( count <= 0 || stride <= 0 || count > INT_MAX / stride / 2 )
+		throw std::runtime_error("Invalid retained geometry size");
+	CUserGeometry *retained = IsValid(existing) ? dynamic_cast<CUserGeometry*>(existing) : 0;
+	if ( retained && retained->pBuffer->IsRetained() && retained->GetFormatID() == format &&
+		retained->pBuffer->GetStride() == stride && count <= retained->GetBufSize() )
+	{
+		retained->SetSize(count);
+		retained->DoTouch();
+		return retained;
+	}
+	auto& pools = retainedGeometries[SGeometryType(usage, format)];
+	for ( auto i = pools.begin(); i != pools.end(); ++i )
+		if ( CUserGeometry *allocated = (*i)->Alloc(count, true) ) return allocated;
+	// Separate static and animated banks preserve batching without letting
+	// a late portrait update invalidate the whole static scene. Add a bank
+	// when all slots are live; never evict geometry collected for this frame.
+	const int vertices = Max(count * 2, usage == STATIC ? 500000 : 100000);
+	if ( vertices > INT_MAX / stride ) throw std::runtime_error("Retained geometry pool too large");
+	CObj<CGeometryBuffer> pool = new CGeometryBuffer(vertices, stride, format, TBU_DYNAMIC, true);
+	pools.push_back(pool);
+	CUserGeometry *allocated = pool->Alloc(count, true);
+	if ( !allocated ) throw std::runtime_error("Retained geometry allocation failed");
+	return allocated;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static ILinearBuffer* MakeGeometry( int nFormatID, int nSize, EBufferUsage usage )

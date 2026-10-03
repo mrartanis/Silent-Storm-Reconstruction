@@ -159,6 +159,12 @@ private:
 	SHMatrix mPrevView;
 	typedef unordered_map<SPointLightPos,CObj<NGfx::CCubeTexture>, SPointLightPosHash> CPointDepthHash;
 	CPointDepthHash pointDepths;
+	// Camera recovery uses fixed sky samples; progressive channels keep rotating.
+	// Transient GPU caches: save tags 2..6 are unchanged.
+	vector<SDirectionalDepthInfo> stableDepthInfos;
+	vector<CVec3> stableSkyDirs;
+	vector<CObj<NGfx::CTexture> > stableDepthBuffers;
+	CPtr<NGfx::CTexture> stableRegisterOwner;
 private:
 	struct SLightmapTargetGeom
 	{
@@ -184,7 +190,7 @@ private:
 	void RenderSkyCheck( SLightmapTargetGeom *pTarget, float fStrength, int nBuffer, bool bFast );
 	void ChooseNewSkyDirection( int nBuffer, int nTarget );
 	void RecalcStep( NGfx::CRenderContext *pRC, CSceneFragments *pScene, CTransformStack *pTS );
-	void RecalcDepthChannel( int nBuffer, int nChannel, bool bFast );
+	void RecalcDepthChannel( int nBuffer, int nChannel, bool bFast, bool bStable = false );
 public:
 	CLightmapTracker();
 	void CatchUp( NGfx::CRenderContext *pRC, IRender *_pRender, CTransformStack *pTS, CSceneFragments *pScene, bool bHasNewLightmaps, const SGroupSelect &groupSelect );

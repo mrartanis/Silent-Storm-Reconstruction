@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GfxBuffers.h"
+#include "GfxInternal.h"
 #include "GLightmapStateWire.h"
 #include "GGeometry.h"
 #include "..\Misc\RandomGen.h"
@@ -635,10 +636,12 @@ static void RenderParallelDepth( IRender *pRender, NGfx::CRenderContext *pRC,
 	Execute( pRender, pRC, ts, res, geom, lightInfo );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void CLightmapTracker::RecalcDepthChannel( int nBuffer, int nChannel, bool bFast )
+void CLightmapTracker::RecalcDepthChannel( int nBuffer, int nChannel, bool bFast, bool bStable )
 {
 	NGfx::CRenderContext rcDepth;
-	NGfx::CTexture *pDepth = shadowMapsShare.GetLMDepthBuffer( nBuffer );
+	NGfx::CTexture *pDepth = bStable ? stableDepthBuffers[nBuffer].GetPtr() : shadowMapsShare.GetLMDepthBuffer(nBuffer);
+	vector<SDirectionalDepthInfo> &infos = bStable ? stableDepthInfos : depthInfos;
+	const vector<CVec3> &dirs = bStable ? stableSkyDirs : skyDirs;
 	if ( nChannel == N_ALL_DEPTH_CHANNELS )
 	{
 		rcDepth.SetTextureRT( pDepth );
@@ -660,13 +663,13 @@ void CLightmapTracker::RecalcDepthChannel( int nBuffer, int nChannel, bool bFast
 		if ( ( nChannel & (1<<i) ) == 0 )
 			continue;
 		int nInfoIdx = nBuffer * N_DEPTH_CHANNELS_PER_TEX + i;
-		const CVec3 &vDir = skyDirs[ nInfoIdx ];
+		const CVec3 &vDir = dirs[ nInfoIdx ];
 		rcDepth.SetColorWrite( depthChannels[ i ] );
 		if ( bHasRendered )
 			rcDepth.ClearZBuffer();
-		RenderParallelDepth( pRender, &rcDepth, currentBound.s, vDir, groupSelect, &depthInfos[ nInfoIdx ], bFast );
+		RenderParallelDepth( pRender, &rcDepth, currentBound.s, vDir, groupSelect, &infos[ nInfoIdx ], bFast );
 		bHasRendered = true;
-		CVec4 &vChannel = depthInfos[ nInfoIdx ].vChannelSelect;
+		CVec4 &vChannel = infos[ nInfoIdx ].vChannelSelect;
 		vChannel = CVec4(0,0,0,0);
 		vChannel.m[i] = 1;
 	}
@@ -684,6 +687,11 @@ void CLightmapTracker::RenderSkyCheck( SLightmapTargetGeom *pTarget, float fStre
 	lightInfo.vLightColor = CVec4(f,f,f,f);
 
 	int nBase = nBuffer * N_DEPTH_CHANNELS_PER_TEX;
+	static const bool movingSkySamples = std::getenv("S2_LIGHTING_MOVING_SKY_SAMPLES") != nullptr;
+	const bool bStable = bFast && !movingSkySamples;
+	vector<SDirectionalDepthInfo> &infos = bStable ? stableDepthInfos : depthInfos;
+	const vector<CVec3> &dirs = bStable ? stableSkyDirs : skyDirs;
+	NGfx::CTexture *pDepth = bStable ? stableDepthBuffers[nBuffer].GetPtr() : shadowMapsShare.GetLMDepthBuffer(nBuffer);
 
 	if ( 1 )//bFast )
 	{
@@ -691,23 +699,23 @@ void CLightmapTracker::RenderSkyCheck( SLightmapTargetGeom *pTarget, float fStre
 		if ( NGfx::GetHardwareLevel() >= NGfx::HL_GFORCE3 )
 		{
 			SSkyDepth3Info depthInfo;
-			depthInfo.channels[0] = &depthInfos[ nBase + 0 ];
-			depthInfo.channels[1] = &depthInfos[ nBase + 1 ];
-			depthInfo.channels[2] = &depthInfos[ nBase + 2 ];
-			depthInfo.vDirs[0] = -skyDirs[ nBase + 0 ];
-			depthInfo.vDirs[1] = -skyDirs[ nBase + 1 ];
-			depthInfo.vDirs[2] = -skyDirs[ nBase + 2 ];
+			depthInfo.channels[0] = &infos[ nBase + 0 ];
+			depthInfo.channels[1] = &infos[ nBase + 1 ];
+			depthInfo.channels[2] = &infos[ nBase + 2 ];
+			depthInfo.vDirs[0] = -dirs[ nBase + 0 ];
+			depthInfo.vDirs[1] = -dirs[ nBase + 1 ];
+			depthInfo.vDirs[2] = -dirs[ nBase + 2 ];
 			RenderLight( pTarget, lightInfo, RO_CL_SKY_3LIGHT, 
-				&depthInfo, shadowMapsShare.GetLMDepthBuffer( nBuffer ), DPM_EQUAL|ABM_ADD );
+				&depthInfo, pDepth, DPM_EQUAL|ABM_ADD );
 		}
 		else
 		{
 			for ( int k = 0; k < 3; ++k )
 			{
-				lightInfo.vLightPos = CVec4( -skyDirs[ nBase + k ], 0 );
+				lightInfo.vLightPos = CVec4( -dirs[ nBase + k ], 0 );
 				rc.SetColorWrite( NGfx::COLORWRITE_NONE );
 				RenderLight( pTarget, lightInfo, RO_CL_SKY_DIR_CHECK, 
-					&depthInfos[ nBase + k ], shadowMapsShare.GetLMDepthBuffer( nBuffer ), DPM_EQUAL|STM_LIGHT );
+					&infos[ nBase + k ], pDepth, DPM_EQUAL|STM_LIGHT );
 				rc.SetColorWrite( NGfx::COLORWRITE_ALPHA );
 				RenderLight( pTarget, lightInfo, RO_CL_SKY_LIGHT, 
 					0.0f, 0.0f, DPM_EQUAL|STM_TEST_CLEAR_MARK|ABM_ADD );
@@ -718,10 +726,10 @@ void CLightmapTracker::RenderSkyCheck( SLightmapTargetGeom *pTarget, float fStre
 	{
 		for ( int k = 0; k < 3; ++k )
 		{
-			lightInfo.vLightPos = CVec4( -skyDirs[ nBase + k ], 0 );
+			lightInfo.vLightPos = CVec4( -dirs[ nBase + k ], 0 );
 			rc.SetColorWrite( NGfx::COLORWRITE_NONE );
 			RenderLight( pTarget, lightInfo, RO_CL_SKY_DIR_CHECK, 
-				&depthInfos[ nBase + k ], shadowMapsShare.GetLMDepthBuffer( nBuffer ), DPM_EQUAL|STM_LIGHT );
+				&infos[ nBase + k ], pDepth, DPM_EQUAL|STM_LIGHT );
 			rc.SetColorWrite( NGfx::COLORWRITE_ALPHA );
 			CRenderCmdList alphaTestOps;
 			const vector<SRenderFragmentInfo*> &fragments = pTarget->pGeom->GetFragments();
@@ -886,7 +894,7 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 {
 	NGfx::CRenderContext rc( *_pRC );
 	pRender = _pRender;
-	bool bRecalcAllDepth = false;
+	bool bRecalcAllDepth = bHasNewLightmaps;
 	if ( _gs != groupSelect )
 	{
 		// floor changed - everything must be recalculated
@@ -912,6 +920,27 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 		}
 		bRecalcAllDepth = true;
 	}
+	// Fixed recovery maps are independent of the progressive sample phase and
+	// seed, including after loading an existing save.
+	static const bool movingSkySamples = std::getenv("S2_LIGHTING_MOVING_SKY_SAMPLES") != nullptr;
+	if ( !movingSkySamples && (stableDepthBuffers.size() != GetSkyTexturesNum()
+		|| stableRegisterOwner.GetPtr() != NGfx::GetRegisterTexture(0)) )
+	{
+		stableRegisterOwner = NGfx::GetRegisterTexture(0);
+		SLightStateCalcSeed seed;
+		stableDepthInfos.resize(GetSkyTexturesNum() * N_DEPTH_CHANNELS_PER_TEX);
+		stableSkyDirs.resize(stableDepthInfos.size());
+		for ( int k = 0; k < stableSkyDirs.size(); ++k )
+			stableSkyDirs[k] = lightState.GenerateSkyDir(&seed);
+		stableDepthBuffers.resize(GetSkyTexturesNum());
+		for ( int k = 0; k < stableDepthBuffers.size(); ++k )
+			// Own storage: TARGET uses the finite shared LRU pool and may alias
+			// the progressive maps or return null when all pool entries are busy.
+			stableDepthBuffers[k] = NGfx::MakeRenderTarget(N_DEFAULT_RT_RESOLUTION,
+				N_DEFAULT_RT_RESOLUTION, NGfx::SPixel8888::ID);
+		bRecalcAllDepth = true;
+		bHasNewLightmaps = true;
+	}
 	// calc new scene bound & check if need to recalc depths
 	SBound bNew;
 	MakeSceneGeometryBound( &bNew, *pTS, F_MAX_SCENE_HEIGHT );
@@ -925,7 +954,10 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 	if ( bRecalcAllDepth )
 	{
 		for ( int k = 0; k < GetSkyTexturesNum(); ++k )
+		{
 			RecalcDepthChannel( k, N_ALL_DEPTH_CHANNELS, true );
+			if ( !movingSkySamples ) RecalcDepthChannel(k, N_ALL_DEPTH_CHANNELS, true, true);
+		}
 	}
 
 	// calc lightmap for new stuff

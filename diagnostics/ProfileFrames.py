@@ -1,14 +1,17 @@
 """Capture opt-in frame scopes in an isolated harness run; never attach to user games.
 
-Plan: JSON array of {command: str}, {wait: seconds}, or {capture: tag, frames: int}.
+Plan: JSON array of {command: str}, {wait: seconds}, {screenshot: tag},
+or {capture: tag, frames: int}.
 CPU scopes are inclusive. bgfx metrics describe earlier asynchronous frames.
 """
 import argparse
 import csv
+import hashlib
 import json
 import os
 from pathlib import Path
 import statistics
+import shutil
 import subprocess
 import time
 
@@ -26,6 +29,7 @@ def summarize(path):
         if not values:
             continue
         result[name] = {"mean": statistics.mean(values),
+                        "min": values[0], "max": values[-1],
                         "median": statistics.median(values),
                         "p95": values[min(len(values)-1, int(.95*len(values)))]}
     result["fps"] = 1000/result.get("frame_interval_ms", result["frame_ms"])["mean"]
@@ -48,6 +52,14 @@ def main():
     evidence = run/"evidence"
     env = os.environ.copy()
     env["S2_USER_DATA_DIR"] = str(run/"user-data")
+    (evidence/(a.plan.stem+"-metadata.json")).write_text(json.dumps({
+        "game_sha256": hashlib.sha256((run/"game/Game.exe").read_bytes()).hexdigest(),
+        "environment": {k: v for k, v in env.items()
+                        if k.startswith(("S2_PERF_", "S2_GEOMETRY_", "S2_LIGHTING_", "S2_DIAG_"))},
+        "config": (run/"game/cfg/config.cfg").read_text(),
+        "user_config": {str(p.relative_to(run)): p.read_text()
+                        for p in (run/"user-data/cfg").glob("*.cfg")},
+    }, indent=2), encoding="utf-8")
     stream = (evidence/(a.plan.stem+"-process.log")).open("wb")
     process = subprocess.Popen([str(run/"game/Game.exe"), "-windowed", "-harness",
                                 "-harness-active", "-cfg", a.cfg],
@@ -87,6 +99,19 @@ def main():
                 command(step["command"])
             elif "wait" in step:
                 time.sleep(step["wait"])
+            elif "screenshot" in step:
+                tag = step["screenshot"]
+                if not tag or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" for c in tag):
+                    raise ValueError(f"Invalid screenshot tag: {tag}")
+                response = command("screenshot")
+                if "screenshot ok=1" not in response:
+                    raise RuntimeError(response)
+                source = max((run/"user-data/screenshots").glob("*.bmp"), key=lambda p: p.stat().st_mtime_ns)
+                destination = evidence/(tag+".bmp")
+                if destination.exists():
+                    raise FileExistsError(destination)
+                shutil.copyfile(source, destination)
+                observations.append({"screenshot": tag, "source": str(source), "file": str(destination)})
             elif "capture" in step:
                 tag = step["capture"]
                 frames = step.get("frames", 180)
@@ -99,6 +124,10 @@ def main():
                     time.sleep(.5)
                 path = run/"game"/f"_perf_{tag}.csv"
                 summary = summarize(path)
+                for dimension in ("width", "height"):
+                    if dimension in step and (summary[dimension]["min"] != step[dimension] or
+                                              summary[dimension]["max"] != step[dimension]):
+                        raise RuntimeError(f"Unexpected {dimension}: {summary[dimension]}")
                 if summary["frames"] != frames:
                     raise RuntimeError(f"Capture includes skipped frames: {summary}")
                 summaries.append(summary)

@@ -545,11 +545,17 @@ add_custom_command(TARGET BgfxRendererTests POST_BUILD
 add_test(NAME BgfxRendererTests COMMAND BgfxRendererTests)
 add_test(NAME DisplayRuntimeTests COMMAND BgfxRendererTests --display)
 add_test(NAME GraphicsOptionsRuntimeTests COMMAND BgfxRendererTests --graphics)
+add_test(NAME PartialGeometryRuntimeTests COMMAND BgfxRendererTests --partial)
+add_test(NAME IndexRingRuntimeTests COMMAND BgfxRendererTests --index-ring)
+set_tests_properties(IndexRingRuntimeTests PROPERTIES ENVIRONMENT "S2_GEOMETRY_INDEX_KB=64")
 s2_copy_fonts(BgfxRendererTests)
 add_executable(VertexPackingBench "${root}/diagnostics/VertexPackingBench.cpp")
 target_link_libraries(VertexPackingBench PRIVATE Main s2_platform)
 target_compile_features(VertexPackingBench PRIVATE cxx_std_17)
 target_compile_definitions(VertexPackingBench PRIVATE _HAS_STD_BYTE=0 _HAS_AUTO_PTR_ETC=1)
+add_executable(IndexBoundsBench "${root}/diagnostics/IndexBoundsBench.cpp")
+target_compile_features(IndexBoundsBench PRIVATE cxx_std_17)
+add_test(NAME IndexBoundsParityTests COMMAND IndexBoundsBench)
 add_test(NAME BgfxRuntimeImportTests COMMAND "${Python3_EXECUTABLE}"
   "${root}/diagnostics/CheckBgfxImports.py" "$<TARGET_FILE:Game>")
 add_executable(NativeCombinerCoreTests
