@@ -41,6 +41,7 @@ private:
 	CDGPtr<CVersioningBase> pUpdateRegion;
 	int nDetail;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&bBumpTexture); f.Add(3,&sSeed); f.Add(4,&nrRegion); f.Add(6,&pInfo); f.Add(7,&pGrass); f.Add(8,&fWorldToScreen); f.Add(9,&pUpdateRegion); f.Add(10,&nDetail); return 0; }
+	bool bOwnedTexture = false; // Runtime allocation policy; not serialized.
 
 	struct SSpotTextures
 	{
@@ -64,6 +65,7 @@ public:
 	void FreeTexture( NGfx::CTexture *_pTex );
 	//! this+0x14 valid? (@0x17d840) -- used by CTerrainTextureBlend
 	bool IsValidValue() { return IsValid( pValue ); }
+	bool RequireOwnedTexture() { if(IsValid(pValue) && !bOwnedTexture) { pValue=0; Updated(); return true; } return false; }
 	//! best-effort "fake" texture without caching in pValue (@0x17d0b0) -- used by UseAnything
 	NGfx::CTexture* CalcFake();
 };
@@ -94,6 +96,7 @@ private:
 	NHPTimer::STime tCalced256;
 	CObj<NGfx::CTexture> pFake;
 
+	void ObserveTexture();
 	void UseAnything();          // @0x17d370
 	float GetBlend();            // @0x17af50
 protected:

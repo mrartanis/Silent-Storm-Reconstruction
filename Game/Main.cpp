@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/TextureResidency.h"
 #include "../diagnostics/FrameProfiler.h"
 #include "..\Main\GInit.h"
 #include "../Main/DisplayOptions.h"
@@ -678,6 +679,7 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
 //   camerastatus    log software-cursor position and camera anchor
 //   perfpose <x> <y> <z> <yaw> <pitch> <rod> set a reproducible camera pose
 //   perfoscillate <dx> <dy> <dz> <even frames> move every frame; 0 restores origin
+//   texturestatus report opt-in texture quality/residency and GPU memory
 //   perfmotionstatus log remaining frames for a continuous camera-motion probe
 //   perffloor <-3..4> change the actual scene cut floor (range/lock still apply)
 //   perflighting <0..3> isolate lighting: bit 1 disables sun shadows, bit 2 disables CL
@@ -752,6 +754,13 @@ static bool HarnessPoll()   // returns false to request main-loop exit
             if(mission->GetCamera()->IsCameraFrozen()!=freeze)mission->GetCamera()->FreezeCamera(freeze);
             SaveLoadDiag("[harness] perf camera frozen=%d\n",mission->GetCamera()->IsCameraFrozen()?1:0);
         } else SaveLoadDiag("[harness] perf camera rejected\n");
+    }
+    else if(sCmd=="texturestatus") {
+        auto& d=S2TextureDiag::Get();
+        unsigned high=0,low=0,fake=0,bumpHigh=0,bumpLow=0,filesFull=0,filesFake=0;
+        for(const auto& v:d.terrain) if(d.presentedFrame-v.second.frame<=1) { const auto& e=v.second; if(e.bump) { if(e.width==256) ++bumpHigh; else ++bumpLow; } else if(e.width==256) ++high; else if(e.width==128) ++low; else ++fake; }
+        for(const auto& v:d.files) if(d.presentedFrame-v.second.frame<=1) { if(v.second.placeholder) ++filesFake; else if(v.second.width) ++filesFull; }
+        SaveLoadDiag("[harness] textures enabled=%d streaming=%d frame=%d terrain_high=%u terrain_low=%u terrain_fake=%u bump_high=%u bump_low=%u files_full=%u files_fake=%u evictions=%llu generated128=%llu generated256=%llu stress_fallbacks=%llu pending_fallbacks=%llu budget_fallbacks=%llu file_full_loads=%llu file_low_loads=%llu gpu_bytes=%llu gpu_textures=%u\n",S2TextureDiag::Enabled()?1:0,NGlobal::GetVar("gfx_texture_streaming",0).GetInt(),nDGCurrentFrame,high,low,fake,bumpHigh,bumpLow,filesFull,filesFake,d.evictions,d.generated128,d.generated256,d.stressFallbacks,d.pendingFallbacks,d.budgetFallbacks,d.fullFileLoads,d.lowFileLoads,d.gpuBytes,d.gpuTextures);
     }
     else if(sCmd=="perfworld 0" || sCmd=="perfworld 1") {
         auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());

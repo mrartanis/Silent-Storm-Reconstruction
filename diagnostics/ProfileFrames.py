@@ -55,7 +55,7 @@ def main():
     (evidence/(a.plan.stem+"-metadata.json")).write_text(json.dumps({
         "game_sha256": hashlib.sha256((run/"game/Game.exe").read_bytes()).hexdigest(),
         "environment": {k: v for k, v in env.items()
-                        if k.startswith(("S2_PERF_", "S2_GEOMETRY_", "S2_LIGHTING_", "S2_DIAG_"))},
+                        if k.startswith(("S2_PERF_", "S2_GEOMETRY_", "S2_LIGHTING_", "S2_DIAG_", "S2_TEXTURE_"))},
         "config": (run/"game/cfg/config.cfg").read_text(),
         "user_config": {str(p.relative_to(run)): p.read_text()
                         for p in (run/"user-data/cfg").glob("*.cfg")},

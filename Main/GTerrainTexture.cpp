@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/TextureResidency.h"
 #include "DG.h"
 #include "GfxBuffers.h"
 #include "2DSceneSW.h"
@@ -17,6 +18,7 @@
 namespace NGScene
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+extern bool bTextureStreaming;
 static bool bAllWasReady = true;
 static bool bIsStress = false;
 static bool bIsLoading = false;
@@ -92,6 +94,7 @@ public:
 		SHolder &best = textures[nBest];
 		if ( IsValid( best.pTexture ) && IsValid( best.pOwner ) )
 		{
+			if(S2TextureDiag::Enabled()) ++S2TextureDiag::Get().evictions;
 			best.pOwner->FreeTexture( best.pTexture );
 			//best.pTexture = 0;
 //			ASSERT( !best.pTexture.IsValid() ); // CRAP
@@ -599,7 +602,13 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 	
 	if ( bAllWasReady )
 	{
-		// create texture buffer
+		// Full-quality terrain owns its buffer; the 70-slot legacy pool cannot
+		// replace a texture still referenced by another visible patch.
+		if ( !bTextureStreaming && (!bOwnedTexture || !IsValid(pValue)) )
+		{
+			pValue = NGfx::MakeTexture(nSize,nSize,5,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+			bOwnedTexture = true;
+		}
 		if ( !IsValid(pValue) )
 		{
 			// retail single-resolution leaf: only the base pValue slot, no pTex128/pTex256 cache
@@ -610,6 +619,7 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 		}
 		if ( !IsValid( pValue ) )
 			return false;
+		if(S2TextureDiag::Enabled()) { if(nSize==256) ++S2TextureDiag::Get().generated256; else ++S2TextureDiag::Get().generated128; }
 		if ( !bBumpTexture )
 			p2DScene->Draw( pValue, CTPoint<int>( N_VSPACE_SIZE, N_VSPACE_SIZE ) );
 		else
@@ -695,6 +705,13 @@ CTerrainTextureBlend::CTerrainTextureBlend( bool _bBump, SRandomSeed _sSeed, con
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // @0x17af50: cross-fade weight remaining (F_TRANSFER_TIME seconds after the 256 result arrived).
+void CTerrainTextureBlend::ObserveTexture()
+{
+	if(!S2TextureDiag::Enabled()) return;
+	int width=0;
+	if(IsValid(value.pTex[0])) { CDynamicCast<NGfx::I2DBuffer> buffer(value.pTex[0]); if(buffer) width=buffer->GetXSize(); }
+	S2TextureDiag::Observe(true,this,nDGCurrentFrame,width,bBumpTexture,width<128);
+}
 float CTerrainTextureBlend::GetBlend()
 {
 	float f = F_TRANSFER_TIME - (float)NHPTimer::GetTimePassed( &tCalced256 );  // Max<float>( 0, ... )
@@ -724,6 +741,7 @@ void CTerrainTextureBlend::UseAnything()
 // bump-less 256 result is shown, set up the 128->256 cross-fade in value.pTex[1] / value.fBlend.
 void CTerrainTextureBlend::Recalc()
 {
+	struct Observation { CTerrainTextureBlend* p; ~Observation() { p->ObserveTexture(); } } observation={this};
 	value.pTex[1] = 0;
 	value.fBlend = 0;
 	NHPTimer::STime tLast;
@@ -733,8 +751,20 @@ void CTerrainTextureBlend::Recalc()
 		nPrevDGFrame = nDGCurrentFrame;
 		fElapsedTime = 0;
 	}
+	if ( !bTextureStreaming )
+	{
+		// Keep a ready high-resolution result during camera motion. Only new
+		// compositions share the time budget; pending results retry next frame.
+		if(pTex256->IsValidValue() || bIsLoading || fElapsedTime <= F_LIMIT_TIME_RECALC)
+			value.pTex[0] = pTex256->GetValue();
+		if(!IsValid(value.pTex[0])) value.pTex[0] = pTex256->CalcFake();
+		fElapsedTime += (float)NHPTimer::GetTimePassed(&tLast);
+		nPrevDetail = nDetail = 0;
+		return;
+	}
 	if ( !bIsLoading && ( fElapsedTime > F_LIMIT_TIME_RECALC || ( bIsStress && bBumpTexture ) || HasFileRequestsInFly() ) )
 	{
+		if(S2TextureDiag::Enabled()) { auto& d=S2TextureDiag::Get(); if(fElapsedTime>F_LIMIT_TIME_RECALC) ++d.budgetFallbacks; if(bIsStress && bBumpTexture) ++d.stressFallbacks; if(HasFileRequestsInFly()) ++d.pendingFallbacks; }
 		// out of time -- show whatever we already have
 		UseAnything();
 		nPrevDetail = nDetail;
@@ -750,6 +780,7 @@ void CTerrainTextureBlend::Recalc()
 		}
 		if ( pTex128->IsValidValue() )
 		{
+			if(S2TextureDiag::Enabled()) ++S2TextureDiag::Get().stressFallbacks;
 			nDetail = 1;
 			value.pTex[0] = pTex128->GetValue();
 			nPrevDetail = nDetail;
@@ -785,6 +816,16 @@ void CTerrainTextureBlend::Recalc()
 // drops textures -- a cheap version probe), recompute nDetail from pLOD, and report staleness.
 bool CTerrainTextureBlend::NeedUpdate()
 {
+	ObserveTexture();
+	if(!bTextureStreaming)
+	{
+		bFakeRecalc = true;
+		bool changed = pTex256.Refresh();
+		bFakeRecalc = false;
+		changed = pTex256->RequireOwnedTexture() || changed;
+		nDetail = 0;
+		return changed || !pTex256->IsValidValue() || value.pTex[0] != pTex256->GetValue() || value.fBlend != 0;
+	}
 	pLOD.Refresh();
 	bFakeRecalc = true;
 	bool bChanged128 = pTex128.Refresh();

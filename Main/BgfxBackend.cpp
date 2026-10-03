@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/TextureResidency.h"
 #include "../diagnostics/FrameProfiler.h"
 #undef for
 #include "IndexBounds.h"
@@ -759,6 +760,7 @@ void BgfxDevice::Present(float gamma) {
     impl->DrawPresentation(2047,BGFX_INVALID_HANDLE,impl->screenColor->storage->handle,gamma,false);
     if(S2Perf::Get().file) S2Perf::Get().views=impl->nextView;
     FlushGeometry();bgfx::frame();impl->EndFrame();
+    if(S2TextureDiag::Enabled()) { ++S2TextureDiag::Get().presentedFrame; const auto* s=bgfx::getStats(); if(s) { S2TextureDiag::Get().gpuBytes=s->textureMemoryUsed; S2TextureDiag::Get().gpuTextures=s->numTextures; } }
     if(S2Perf::Get().file) {
       auto& p=S2Perf::Get(); const auto* s=bgfx::getStats(); ++p.presents;
       p.width=impl->width; p.height=impl->height;

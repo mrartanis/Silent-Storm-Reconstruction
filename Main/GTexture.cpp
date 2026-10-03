@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/TextureResidency.h"
 #include "GfxBuffers.h"
 #include "GTexture.h"
 #include "GPixelFormat.h"
@@ -23,6 +24,7 @@ static int GetRealTextureID( NDb::CTexture *pTex )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGScene
 {
+bool bTextureStreaming = false;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CTextureLoader
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +133,7 @@ void CFileTexture::Recalc()
 	if ( !IsValid(pRequest) )
 	{
 		pRequest = new CFileRequest( "Textures", GetRealTextureID( pTex ) );
-		if ( pTex->usage == NDb::CTexture::TEXTURE_USAGE_2D || pTex->bInstantLoad )
+		if ( pTex->usage == NDb::CTexture::TEXTURE_USAGE_2D || pTex->bInstantLoad || !bTextureStreaming )
 			pRequest->Read();
 		else
 			AddFileRequest( pRequest );
@@ -140,6 +142,7 @@ void CFileTexture::Recalc()
 	if ( !pRequest->IsReady() )
 	{
 		bIsFakeTexture = true;
+		if(S2TextureDiag::Enabled()) ++S2TextureDiag::Get().lowFileLoads;
 		bool bHasRead = false;
 		try
 		{
@@ -164,6 +167,7 @@ void CFileTexture::Recalc()
 		return;
 	}
 	bIsFakeTexture = false;
+	if(S2TextureDiag::Enabled()) ++S2TextureDiag::Get().fullFileLoads;
 	SMMPFileHeader hdr;
 	CFileRequest &file = *pRequest;
 	if ( file->GetSize() > 0 )
@@ -189,6 +193,9 @@ void CFileTexture::Recalc()
 bool CFileTexture::NeedUpdate()
 {
 	bool bRes = TParent::NeedUpdate();
+	int width=0;
+	if(S2TextureDiag::Enabled() && IsValid(pValue)) { CDynamicCast<NGfx::I2DBuffer> buffer(pValue); if(buffer) width=buffer->GetXSize(); }
+	S2TextureDiag::Observe(false,this,nDGCurrentFrame,width,false,bIsFakeTexture);
 	return bIsFakeTexture || bRes;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,6 +298,7 @@ void CColorTexture::Recalc()
 extern int nTextureUseMip;   // GTerrainTexture.cpp, retail @0x9c60a4
 bool bLowRAM = false; // gfx_low_ram, retail @0x9c60a8; shared with geometry caching
 START_REGISTER(GTexture)
+	REGISTER_VAR_EX( "gfx_texture_streaming", NGlobal::VarBoolHandler, &bTextureStreaming, 0, true )
 	REGISTER_VAR_EX( "gfx_texture_usedxt", NGlobal::VarBoolHandler, &bDXTModeOn, 1, true )
 	REGISTER_VAR_EX( "gfx_texture_mip", NGlobal::VarIntHandler, &nTextureUseMip, 0, true )
 	REGISTER_VAR_EX( "gfx_low_ram", NGlobal::VarBoolHandler, &bLowRAM, 0, false )
