@@ -163,6 +163,52 @@ int RunShadowPcf() {
   printf("Shadow PCF: %d fractional edge pixels, lit/shadow interiors and alpha preserved, exact off restoration, sloped receiver remains lit\n",fractional);
   return 0;
 }
+int RunSpecularProjection() {
+  NGfx::SRenderTargetsInfo targets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 150;
+  NGlobal::SetVar("gfx_antialiasing",0);
+  CObj<NGfx::CTexture> white=NGfx::MakeTexture(1,1,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(white,0,NGfx::INPLACE);lock[0][0]=NGfx::SPixel8888(255,255,255,255);}
+  CObj<NGfx::CTexture> shadow=NGfx::MakeTexture(128,128,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  {NGfx::CTextureLock<NGfx::SPixel8888> lock(shadow,0,NGfx::INPLACE);
+    for(int y=0;y<128;++y)for(int x=0;x<128;++x) {
+      const int value=((x/16+y/16)%2)?48:200;
+      lock[y][x]=NGfx::SPixel8888(value,value,value,255);
+    }}
+  NGfx::CRenderContext context;context.SetCulling(NGfx::CULL_NONE);
+  context.SetVSConst(7,CVec4(.5f,-.5f,.5f+.5f/128,.5f+.5f/128));
+  int checked=0;
+  // The two real material shaders must sample the shadow under THIS pixel,
+  // including perspective (varying W), zoom and camera translation. A missing
+  // _dw modifier instead scales/wraps the mask and extinguishes whole panels.
+  for(bool textured:{false,true})for(float distance:{2.f,5.f,18.f})for(float pan:{-.17f,0.f,.23f}) {
+    const CVec4 projection[]={CVec4(distance*1.3f,0,0,pan),CVec4(0,distance*1.3f,0,0),
+                             CVec4(0,0,0,distance*.5f),CVec4(.23f,-.11f,0,distance)};
+    context.SetVSConst(10,projection,4);
+    auto geometry=Quad(-1,1,1,-1,.5f);
+    context.SetDepth(NGfx::DEPTH_NORMAL);context.SetVertexShader(vsConstLight);context.SetPixelShader(psDiffuse);
+    context.SetVSConst(16,CVec4(0,0,0,1));context.ClearBuffers(0xff000000);Draw(context,geometry);
+    context.SetDepth(NGfx::DEPTH_EQUAL);
+    context.SetVertexShader(textured?vsFullPPTexSpecular:vsFullPPSpecular);
+    context.SetPixelShader(textured?psFullPerPixelTexSpecular:psFullPerPixelSpecular);
+    context.SetVSConst(17,CVec4(1,1,1,1));
+    context.SetTexture(0,white,true);context.SetTexture(1,white);
+    context.SetTexture(2,textured?white.GetPtr():shadow.GetPtr(),true);
+    if(textured)context.SetTexture(3,shadow,true);
+    Draw(context,geometry);
+    CArray2D<NGfx::SPixel8888> image;NGfx::MakeScreenShot(&image,false);
+    for(int y=16;y<112;++y)for(int x=16;x<112;++x) {
+      const int value=((x/16+y/16)%2)?48:200;
+      if(!Color(image,x,y,value,value,value)) {
+        fprintf(stderr,"Specular projection: textured=%d distance=%g pan=%g\n",textured,distance,pan);return 151;
+      }
+      ++checked;
+    }
+    NGfx::Flip();
+  }
+  printf("Specular projection: color/textured materials, varying perspective W, three zooms and three pans, %d shadow-mask pixels matched at exact depth\n",checked);
+  return NGfx::pDevice->Healthy()?0:152;
+}
 int RunIndexRing() {
   const bool originalBan=NGfx::bBan32BitIndices;
   struct RestorePath { bool original; ~RestorePath(){NGfx::bBan32BitIndices=original;} } restore{originalBan};
@@ -655,7 +701,8 @@ int main(int argc,char** argv) {
              argc>1 && std::string(argv[1])=="--index-ring" ? RunIndexRing() :
              argc>1 && std::string(argv[1])=="--passes" ? RunPassStress() :
              argc>1 && std::string(argv[1])=="--graphics" ? RunGraphicsOptions() :
-             argc>1 && std::string(argv[1])=="--shadow-pcf" ? RunShadowPcf() : Run();
+             argc>1 && std::string(argv[1])=="--shadow-pcf" ? RunShadowPcf() :
+             argc>1 && std::string(argv[1])=="--specular-projection" ? RunSpecularProjection() : Run();
   NGfx::Done3D();S2Platform::Done();
   if(result)fprintf(stderr,"bgfx regression failure code=%d\n",result);
   if(!result)fprintf(stdout,"bgfx shaders, depth, pass order, render targets, texture upload, stencil masks, blending, alpha test, cube sampling, readback, resize and shutdown passed\n");

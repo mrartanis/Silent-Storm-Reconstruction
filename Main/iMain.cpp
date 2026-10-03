@@ -5,6 +5,7 @@
 #include "DisplayOptions.h"
 #include "iMain.h"
 #include "iMission.h"
+#include "Cursor.h"
 #if !defined(_WIN32)
 #include "../FileIO/LinuxUserData.h"
 #include <filesystem>
@@ -604,6 +605,12 @@ bool HaveInterfaceCommand()
 int GetInterfaceStackDepth()
 {
 	return interfaces.size();
+}
+void ConfigureMouse()
+{
+	NUI::UpdateCursorMode();
+	NGame::IMission* mission=interfaces.empty() ? nullptr : dynamic_cast<NGame::IMission*>(interfaces.back().GetPtr());
+	S2Platform::AllowCameraMouseDrag(mission && mission->GetWorld() && mission->GetCamera());
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void LoadSavedGame( const string &szID, const vector<wstring> &szParams, void *pContext )

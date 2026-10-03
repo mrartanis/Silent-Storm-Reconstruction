@@ -192,6 +192,76 @@ int main(int argc, char** argv)
         "monotonic clocks retain seconds and milliseconds");
   Check(std::fabs(NHPTimer::GetSeconds(1000000000) - 1) < 1e-12, "high-resolution clock units");
 
+  // Native presentation stays absolute; input retains each event's own position
+  // even when movement and a complete click arrive in one slow frame.
+  WindowEvent(SDL_EVENT_WINDOW_FOCUS_LOST); Pump(); Drain();
+  WindowEvent(SDL_EVENT_WINDOW_FOCUS_GAINED); Pump(); Drain();
+  S2Platform::UseNativeCursor(true);
+  S2Platform::CaptureMouse(true);
+  const std::uint32_t cursorPixels[6]={0xffee1100,0,0xff00dd22,0xff1133ff,0,0xffffffff};
+  Check(S2Platform::SelectNativeCursor(42,24,36,5,7,cursorPixels,3,2), "create alpha color cursor with custom hotspot");
+  S2Platform::NativeCursorVisible(true);
+  Check(!SDL_GetWindowRelativeMouseMode(S2Platform::Window()) && SDL_CursorVisible(), "native cursor visible in absolute mode");
+  SDL_Cursor* firstCursor=SDL_GetCursor();
+  Check(S2Platform::SelectNativeCursor(42,24,36,5,7) && SDL_GetCursor()==firstCursor &&
+        S2Platform::GetCursorStats().creations==1, "cursor image is reused across frames");
+  Check(S2Platform::SelectNativeCursor(42,48,72,10,14,cursorPixels,3,2), "UI scale creates matching cursor size and hotspot");
+  Check(S2Platform::SelectNativeCursor(42,24,36,5,7) && SDL_GetCursor()==firstCursor &&
+        S2Platform::GetCursorStats().creations==2, "UI scale reversal reuses cached cursor");
+  Check(!S2Platform::SelectNativeCursor(43,24,36,24,0,cursorPixels,3,2), "reject out-of-image hotspot");
+  auto mouseButton=[&](bool down,int which,float x,float y) {
+    SDL_Event e{}; e.type=down?SDL_EVENT_MOUSE_BUTTON_DOWN:SDL_EVENT_MOUSE_BUTTON_UP;
+    e.button.windowID=SDL_GetWindowID(S2Platform::Window());
+    e.button.button=which; e.button.down=down; e.button.x=x; e.button.y=y;
+    Send(e);
+  };
+  motion.motion.x=100.25f; motion.motion.y=110.5f; motion.motion.xrel=.25f; motion.motion.yrel=.5f;
+  Send(motion); mouseButton(true,SDL_BUTTON_LEFT,120,130);
+  S2Platform::Delay(55); // One rendered frame at less than 20 FPS.
+  motion.motion.x=200; motion.motion.y=210; Send(motion);
+  mouseButton(false,SDL_BUTTON_LEFT,220,230);
+  Pump(); messages=Drain();
+  std::vector<NInput::SMessage> clicks;
+  bool firstPosition=false, secondPosition=false;
+  for (const auto& m:messages) {
+    if(m.hasPointer && m.pointerX==100.25f && m.pointerY==110.5f) firstPosition=true;
+    if(m.hasPointer && m.pointerX==200 && m.pointerY==210) secondPosition=true;
+    if(m.cType==NInput::CT_KEY && m.nAction==12) clicks.push_back(m);
+  }
+  Check(firstPosition && secondPosition, "fractional absolute motion reaches UI without redundant events");
+  Check(clicks.size()==2 && clicks[0].hasPointer && clicks[1].hasPointer &&
+        clicks[0].pointerX==120 && clicks[0].pointerY==130 &&
+        clicks[1].pointerX==220 && clicks[1].pointerY==230 &&
+        clicks[1].tTime-clicks[0].tTime>=50, "slow frame preserves click coordinates and event times");
+
+  S2Platform::AllowCameraMouseDrag(true);
+  mouseButton(true,SDL_BUTTON_RIGHT,140,150); Pump(); Drain();
+  Check(S2Platform::CameraMouseDragging() && SDL_GetWindowRelativeMouseMode(S2Platform::Window()) &&
+        !SDL_CursorVisible(), "camera drag grabs relative motion and hides cursor");
+  motion.motion.x=400; motion.motion.y=410; motion.motion.xrel=12; motion.motion.yrel=-4;
+  Send(motion); Pump(); messages=Drain();
+  Check(Count(messages,NInput::CT_AXIS,0)==1 && Count(messages,NInput::CT_AXIS,4)==1,
+        "camera drag retains relative axis deltas");
+  for(const auto& m:messages) if(m.hasPointer)
+    Check(m.pointerX==140 && m.pointerY==150, "camera drag anchors logical cursor");
+  mouseButton(true,SDL_BUTTON_MIDDLE,400,410); Pump(); Drain();
+  mouseButton(false,SDL_BUTTON_RIGHT,400,410); Pump(); Drain();
+  Check(S2Platform::CameraMouseDragging(), "releasing one camera button retains the other");
+  mouseButton(false,SDL_BUTTON_MIDDLE,400,410); Pump(); Drain();
+  Check(!S2Platform::CameraMouseDragging() && !SDL_GetWindowRelativeMouseMode(S2Platform::Window()) &&
+        SDL_CursorVisible(), "camera release restores absolute native cursor");
+  mouseButton(true,SDL_BUTTON_RIGHT,140,150); Pump(); Drain();
+  WindowEvent(SDL_EVENT_WINDOW_FOCUS_LOST); Pump(); messages=Drain();
+  Check(!S2Platform::CameraMouseDragging() && !SDL_GetWindowRelativeMouseMode(S2Platform::Window()) &&
+        !SDL_GetWindowMouseGrab(S2Platform::Window()) && Count(messages,NInput::CT_KEY,13,false)==1,
+        "focus loss cancels native camera drag and releases input");
+  WindowEvent(SDL_EVENT_WINDOW_FOCUS_GAINED); Pump(); Drain();
+  S2Platform::CaptureMouse(true);
+  S2Platform::UseNativeCursor(false);
+  Check(SDL_GetWindowRelativeMouseMode(S2Platform::Window()) && !SDL_CursorVisible(),
+        "software option restores legacy relative mode");
+  S2Platform::CaptureMouse(false);
+
   Check(S2Platform::SetMode(800, 600, false), "resize SDL window");
   int width = 0, height = 0; S2Platform::Size(&width, &height);
   Check(width == 800 && height == 600, "drawable dimensions after resize");
@@ -203,6 +273,8 @@ int main(int argc, char** argv)
   Check(!S2Platform::Window(), "idempotent cleanup");
   Check(S2Platform::Init("Silent Storm SDL restart", 640, 480, true), "restart after cleanup");
   Check(!S2Platform::Exiting(), "restart resets exit flag");
+  Check(!S2Platform::NativeCursorEnabled() && S2Platform::GetCursorStats().cached==0,
+        "restart releases native cursor cache and mode");
   S2Platform::Done();
   std::printf("SDL platform/input: %d failures\n", failures);
   return failures ? 1 : 0;

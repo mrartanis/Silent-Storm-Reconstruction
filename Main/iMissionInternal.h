@@ -281,6 +281,7 @@ public:
 	void DoEvent( NWorld::CCommand *pCmd );
 
 	bool IsUpdated() const;
+	void RefreshPointerTarget() override;
 
 	IState* GetState() const;
 	bool CommandState( IState *pState );

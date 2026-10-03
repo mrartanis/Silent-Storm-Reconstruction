@@ -26,7 +26,8 @@ typedef std::uint32_t STime;
 		// CT_WIN_CHAR; SDL key-down/repeat supplies CT_WIN_KEY in the UI's virtual-key
 		// numbering. Physical CT_KEY edges remain separate from text and repeat.
 		CT_WIN_CHAR,
-		CT_WIN_KEY
+		CT_WIN_KEY,
+		CT_POINTER // absolute position, including sub-pixel motion without an axis delta
 	};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	struct SMessage
@@ -38,6 +39,8 @@ typedef std::uint32_t STime;
 		int nParam;
 		bool bState;
 		STime tTime;
+		bool hasPointer = false;
+		float pointerX = 0, pointerY = 0;
 	};
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	bool InitInput( bool bNonExclusiveMode = false, int nSampleBufferSize = -1 );

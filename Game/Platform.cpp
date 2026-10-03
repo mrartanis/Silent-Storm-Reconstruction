@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <clocale>
 #include <deque>
+#include <map>
+#include <tuple>
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -16,6 +18,46 @@ bool errorDialogs = true;
 S2Display::Metrics display;
 float uiPercent = 0;
 std::deque<S2Platform::InputEvent> input;
+bool nativeCursor = false, mouseCaptured = false, cursorVisible = false;
+bool cameraDragAllowed = false;
+Uint32 cameraButtons = 0;
+float dragX = 0, dragY = 0;
+using CursorKey = std::tuple<int,int,int,int,int>;
+std::map<CursorKey,SDL_Cursor*> cursors;
+S2Platform::CursorStats cursorStats{};
+void ApplyMouseMode()
+{
+  if (!window) return;
+  const bool relative = mouseCaptured && (!nativeCursor || cameraButtons != 0);
+  if (SDL_GetWindowRelativeMouseMode(window) != relative)
+    SDL_SetWindowRelativeMouseMode(window, relative);
+  SDL_SetWindowMouseGrab(window, mouseCaptured);
+  SDL_CaptureMouse(mouseCaptured);
+  const bool visible = !mouseCaptured || (nativeCursor && cursorVisible && !cameraButtons);
+  if (SDL_CursorVisible() != visible) { if (visible) SDL_ShowCursor(); else SDL_HideCursor(); }
+}
+void StopCameraDrag(bool restore)
+{
+  if (!cameraButtons) return;
+  cameraButtons = 0;
+  ApplyMouseMode();
+  if (restore && window && active) SDL_WarpMouseInWindow(window, dragX, dragY);
+}
+void QueueMouse(const SDL_Event& event)
+{
+  S2Platform::InputEvent item{event,0};
+  if (nativeCursor) {
+    item.hasPointer = true;
+    float x = dragX, y = dragY;
+    if (!cameraButtons) {
+      if (event.type == SDL_EVENT_MOUSE_MOTION) { x=event.motion.x; y=event.motion.y; }
+      else { x=event.button.x; y=event.button.y; }
+    }
+    item.pointerX = display.WindowToPixelX(x);
+    item.pointerY = display.WindowToPixelY(y);
+  }
+  input.push_back(item);
+}
 void InitError(const char* operation)
 {
   char message[1024];
@@ -37,6 +79,8 @@ bool S2Platform::Init(const char* title, int width, int height, bool hidden)
   }
 #endif
   SDL_SetHint(SDL_HINT_MOUSE_AUTO_CAPTURE, "0");
+  // Cursor images are already sized to drawable/UI pixels; avoid a second DPI scale.
+  SDL_SetHint(SDL_HINT_MOUSE_DPI_SCALE_CURSORS, "0");
   if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
     InitError("SDL_Init");
     SDL_Quit();
@@ -65,12 +109,17 @@ void S2Platform::Done()
   input.clear();
   if (window) {
     CaptureMouse(false);
+    SDL_SetCursor(SDL_GetDefaultCursor());
+    for (auto& entry : cursors) if (entry.second) SDL_DestroyCursor(entry.second);
+    cursors.clear(); cursorStats = {};
     SDL_StopTextInput(window);
     SDL_DestroyWindow(window);
     window = nullptr;
     SDL_Quit();
   }
   active = false;
+  nativeCursor = mouseCaptured = cursorVisible = cameraDragAllowed = false;
+  cameraButtons = 0;
 }
 
 SDL_Window* S2Platform::Window() { return window; }
@@ -159,10 +208,24 @@ void S2Platform::PumpEvents()
         }
         break;
       case SDL_EVENT_MOUSE_MOTION:
-        if (event.motion.windowID == id) input.push_back({event, 0});
+        if (event.motion.windowID == id) QueueMouse(event);
         break;
       case SDL_EVENT_MOUSE_BUTTON_DOWN: case SDL_EVENT_MOUSE_BUTTON_UP:
-        if (event.button.windowID == id) input.push_back({event, 0});
+        if (event.button.windowID == id) {
+          QueueMouse(event);
+          const Uint32 bit=SDL_BUTTON_MASK(event.button.button);
+          if (nativeCursor && cameraDragAllowed && mouseCaptured &&
+              (event.button.button == SDL_BUTTON_RIGHT || event.button.button == SDL_BUTTON_MIDDLE)) {
+            if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+              if (!cameraButtons) { dragX=event.button.x; dragY=event.button.y; }
+              cameraButtons |= bit; ApplyMouseMode();
+            } else {
+              const Uint32 remaining=cameraButtons & ~bit;
+              if (remaining) cameraButtons=remaining;
+              else StopCameraDrag(true);
+            }
+          }
+        }
         break;
       case SDL_EVENT_MOUSE_WHEEL:
         if (event.wheel.windowID == id) input.push_back({event, 0});
@@ -216,16 +279,73 @@ bool S2Platform::SetMode(int width, int height, bool fullscreen)
   return true;
 }
 void S2Platform::CursorPosition(float* x, float* y) {
-  SDL_GetMouseState(x, y);
+  if (cameraButtons) { *x=dragX; *y=dragY; }
+  else SDL_GetMouseState(x, y);
   *x = display.WindowToPixelX(*x); *y = display.WindowToPixelY(*y);
 }
 void S2Platform::CaptureMouse(bool capture)
 {
   if (!window) return;
-  SDL_SetWindowMouseGrab(window, capture);
-  SDL_SetWindowRelativeMouseMode(window, capture);
-  SDL_CaptureMouse(capture);
-  if (capture) SDL_HideCursor(); else SDL_ShowCursor();
+  if (!capture) StopCameraDrag(false);
+  mouseCaptured = capture;
+  ApplyMouseMode();
+}
+void S2Platform::UseNativeCursor(bool enabled)
+{
+  if (nativeCursor == enabled) return;
+  StopCameraDrag(true);
+  nativeCursor=enabled; ApplyMouseMode();
+}
+bool S2Platform::NativeCursorEnabled() { return nativeCursor; }
+void S2Platform::AllowCameraMouseDrag(bool allowed)
+{
+  if (!allowed) StopCameraDrag(true);
+  cameraDragAllowed=allowed;
+}
+bool S2Platform::CameraMouseDragging() { return cameraButtons != 0; }
+bool S2Platform::SelectNativeCursor(int id,int width,int height,int hotX,int hotY,
+    const void* pixels,int sourceWidth,int sourceHeight)
+{
+  if (!window || width<=0 || height<=0 || width>512 || height>512 ||
+      hotX<0 || hotY<0 || hotX>=width || hotY>=height) return false;
+  const CursorKey key{id,width,height,hotX,hotY};
+  auto it=cursors.find(key);
+  if (it==cursors.end()) {
+    if (!pixels || sourceWidth<=0 || sourceHeight<=0 || sourceWidth>4096 || sourceHeight>4096) return false;
+    SDL_Surface* source=SDL_CreateSurfaceFrom(sourceWidth,sourceHeight,SDL_PIXELFORMAT_ARGB8888,
+        const_cast<void*>(pixels),sourceWidth*4);
+    SDL_Surface* scaled=SDL_CreateSurface(width,height,SDL_PIXELFORMAT_ARGB8888);
+    SDL_Cursor* cursor=nullptr;
+    if (source && scaled) {
+      SDL_SetSurfaceBlendMode(source,SDL_BLENDMODE_NONE);
+      if (SDL_BlitSurfaceScaled(source,nullptr,scaled,nullptr,SDL_SCALEMODE_LINEAR)) {
+        cursor=SDL_CreateColorCursor(scaled,hotX,hotY);
+        if (const char* dir=SDL_getenv("S2_DIAG_CURSOR_DIR")) {
+          const std::string path=std::string(dir)+"/cursor-"+std::to_string(id)+"-"+std::to_string(width)+"x"+std::to_string(height)+".bmp";
+          SDL_SaveBMP(scaled,path.c_str());
+        }
+      }
+    }
+    SDL_DestroySurface(source); SDL_DestroySurface(scaled);
+    if (!cursor) std::fprintf(stderr,"CURSOR: creation failed id=%d: %s\n",id,SDL_GetError());
+    it=cursors.emplace(key,cursor).first;
+    if (cursor) ++cursorStats.creations;
+  }
+  if (!it->second) return false;
+  if (SDL_GetCursor()!=it->second && !SDL_SetCursor(it->second)) return false;
+  cursorStats.id=id; cursorStats.width=width; cursorStats.height=height;
+  cursorStats.hotX=hotX; cursorStats.hotY=hotY;
+  return true;
+}
+void S2Platform::NativeCursorVisible(bool visible)
+{
+  if (cursorVisible==visible) return;
+  cursorVisible=visible; ApplyMouseMode();
+}
+S2Platform::CursorStats S2Platform::GetCursorStats()
+{
+  auto result=cursorStats; result.cached=int(cursors.size()); result.native=nativeCursor;
+  result.dragging=cameraButtons!=0; result.visible=SDL_CursorVisible(); return result;
 }
 void S2Platform::Error(const char* message)
 {

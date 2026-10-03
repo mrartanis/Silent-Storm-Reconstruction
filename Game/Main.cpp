@@ -858,6 +858,11 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		HarnessUnitPositions();
 	else if ( sCmd == "grenades" )
 		HarnessGrenades();
+	else if ( sCmd == "cursorstatus" ) {
+		const auto c=S2Platform::GetCursorStats();
+		SaveLoadDiag("[harness] cursor native=%d dragging=%d visible=%d id=%d size=%dx%d hotspot=%d,%d cached=%d creations=%d\n",
+			c.native,c.dragging,c.visible,c.id,c.width,c.height,c.hotX,c.hotY,c.cached,c.creations);
+	}
 	else if ( sCmd == "camerastatus" )
 		HarnessCameraStatus();
 	else if ( sCmd == "explstatus" )
@@ -1243,6 +1248,7 @@ static int RunGame( const char *lpCmdLine )
 	for (;;)
 	{
 		S2Perf::Begin();
+		NMainLoop::ConfigureMouse();
 		S2Platform::PumpEvents();
 		S2Platform::UpdateDisplay( NGlobal::GetVar( "ui_scale", 0 ).GetFloat() );
 		const auto& currentDisplay = S2Platform::Display();

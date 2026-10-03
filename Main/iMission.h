@@ -447,6 +447,7 @@ public:
 	virtual bool GetTracePosition( NAI::SPosition *pPos ) const = 0;
 
 	virtual NUI::ICursor* GetCursor() const = 0;
+	virtual void RefreshPointerTarget() {}
 	virtual NUI::CInterface* GetInterface() const = 0;
 	virtual bool IsInterfaceHidden() const = 0;
 	virtual bool IsSequence() const { return false; }   // retail mission vtbl+0x44: true while a scripted sequence runs (CMission override = nSequence>0)

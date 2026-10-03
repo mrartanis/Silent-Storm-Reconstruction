@@ -488,6 +488,9 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 
 	// retail @0x31c090: div-then-mul at x87 double precision, fistp RC=truncate (NOT round-to-nearest)
 	SPoint sPoint( int(S2UI::FromPixel(pCursor->GetPos().x)), int(S2UI::FromPixel(pCursor->GetPos().y)) );
+	const bool pointerMoved=eEvent.mMessage.hasPointer && (sCursorPoint.x!=sPoint.x || sCursorPoint.y!=sPoint.y);
+	sCursorPoint = sPoint;
+	if (pointerMoved) ProcessMessage(SEvent(EVENT_MOUSEMOVE,sPoint.x,sPoint.y));
 	if ( cmdLButtonUp.ProcessEvent( eEvent ) )
 	{
 		bRet |= ProcessMessage( SEvent( EVENT_LBUTTONUP, sPoint.x, sPoint.y ) );
@@ -495,7 +498,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 		// retail @0x31c090 step 4: the synthetic DBLCLK also needs the two clicks within 5.0px.
 		// Time-only gating forged a DBLCLK from panel-button click + world click -- the reset
 		// default state ran CStateMove::OnLButtonDblClk, so a look/attack click became a move.
-		if ( S2Platform::Milliseconds() - sLastLButtonDownTime < sDoubleClickTime )
+		if ( eEvent.mMessage.tTime - sLastLButtonDownTime < sDoubleClickTime )
 		{
 			int nDX = sLastLButtonClickPoint.x - sPoint.x;
 			int nDY = sLastLButtonClickPoint.y - sPoint.y;
@@ -503,7 +506,7 @@ bool CInterface::ProcessEvent( const NInput::SEvent &eEvent )
 				bRet |= ProcessMessage( SEvent( EVENT_LBUTTONDBLCLK, sPoint.x, sPoint.y ) );
 		}
 
-		sLastLButtonDownTime = S2Platform::Milliseconds();
+		sLastLButtonDownTime = eEvent.mMessage.tTime;
 		sLastLButtonClickPoint = sPoint;
 	}
 	if ( cmdLButtonDown.ProcessEvent( eEvent ) )

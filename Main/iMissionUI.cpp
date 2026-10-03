@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../Game/Platform.h"
 #include "DisplayLayout.h"
 #include "GView.h"
 #include "G2DView.h"
@@ -1196,6 +1197,11 @@ bool CMissionUI::ProcessMessage( const SEvent &sEvent )
 	if ( bRet )
 		return true;
 
+	// UI children get first refusal. World actions then use this click's ray,
+	// rather than the hover target cached on the preceding rendered frame.
+	if (S2Platform::NativeCursorEnabled() &&
+	    (sEvent.nEvent==EVENT_LBUTTONDOWN || sEvent.nEvent==EVENT_LBUTTONUP || sEvent.nEvent==EVENT_LBUTTONDBLCLK))
+		pMission->RefreshPointerTarget();
 	return pMission->GetState()->ProcessMessage( sEvent );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

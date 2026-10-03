@@ -2010,6 +2010,17 @@ void CMission::UpdateState()
 	ASSERT( 0 );
 	CommandState( new CStateEmpty );
 }
+void CMission::RefreshPointerTarget()
+{
+	if (!IsReady()) return;
+	TraceCursor();
+	if (TrackChanges() || bForceUpdateNextFrame) {
+		bUpdated=true;
+		bForceUpdateNextFrame=true; // Preserve the refresh for the next UI step too.
+		UpdateActionsInfo();
+		if (pState->GetType()!=IState::TEMPORARY) UpdateState();
+	}
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::UpdateSound()
 {

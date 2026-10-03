@@ -1,5 +1,10 @@
 #include "StdAfx.h"
 #include "DisplayLayout.h"
+#include "GResource.h"
+#include "GPixelFormat.h"
+#include "mmpFormat.h"
+#include <set>
+#include <tuple>
 #include "../Game/Platform.h"
 #include "Gfx.h"
 #include "GSceneUtils.h"
@@ -20,6 +25,55 @@ namespace NGfx
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NUI
 {
+static bool bHWCursor = true;
+void UpdateCursorMode() { S2Platform::UseNativeCursor(bHWCursor); }
+// Use the same texture, orientation, dimensions and anchor as CImageDraw.
+static bool SelectCursorImage(NDb::CUICursor* cursor)
+{
+	if (!IsValid(cursor) || !IsValid(cursor->pUITexture)) return false;
+	NDb::CUITexture* ui = cursor->pUITexture;
+	NDb::CTexture* texture = ui->pTextures[NDb::UIM_1024x768];
+	if (!IsValid(texture)) for (int i=0;i<4;++i)
+		if (IsValid(ui->pTextures[i])) { texture=ui->pTextures[i]; break; }
+	if (!IsValid(texture) || texture->nWidth<=0 || texture->nHeight<=0) return false;
+	const int width=Max(1,int(ui->nWidth*S2UI::Scale()+.5f));
+	const int height=Max(1,int(ui->nHeight*S2UI::Scale()+.5f));
+	const int hotX=Min(width-1,Max(0,int(width*cursor->nCenterX+.5f)));
+	const int hotY=Min(height-1,Max(0,int(height*cursor->nCenterY+.5f)));
+	const int id=cursor->GetRecordID();
+	if (S2Platform::SelectNativeCursor(id,width,height,hotX,hotY)) return true;
+	using Key=std::tuple<int,int,int,int,int>;
+	static std::set<Key> failed;
+	const Key key(id,width,height,hotX,hotY);
+	if (failed.count(key)) return false;
+	bool ok=false;
+	try {
+		// The decompressed alias also covers DXT UI assets when DXT rendering is enabled.
+		const int textureID=texture->GetRecordID() | (texture->bIsDXT ? 0x01000000 : 0);
+		CObj<NGScene::CFileRequest> file=new NGScene::CFileRequest("Textures",textureID);
+		file->Read();
+		CDataStream* stream=file->GetStream();
+		stream->Seek(0);
+		SMMPFileHeader header;
+		stream->Read(&header,sizeof(header));
+		if (header.dwSignature==MMP_SIGNATURE && header.format==NGfx::CF_A8R8G8B8 &&
+		    header.nSizeX>=texture->nWidth && header.nSizeY>=texture->nHeight &&
+		    header.nSizeX<=4096 && header.nSizeY<=4096 && width<=512 && height<=512 &&
+		    stream->GetSize()>=int(sizeof(header))+header.nSizeX*header.nSizeY*int(sizeof(DWORD))) {
+			std::vector<DWORD> stored(header.nSizeX*header.nSizeY);
+			stream->Read(stored.data(),int(stored.size()*sizeof(DWORD)));
+			std::vector<DWORD> pixels(texture->nWidth*texture->nHeight);
+			for (int y=0;y<texture->nHeight;++y)
+				memcpy(&pixels[y*texture->nWidth],&stored[(texture->nHeight-1-y)*header.nSizeX],texture->nWidth*sizeof(DWORD));
+			ok=S2Platform::SelectNativeCursor(id,width,height,hotX,hotY,pixels.data(),texture->nWidth,texture->nHeight);
+		}
+	} catch (...) { }
+	if (!ok) {
+		failed.insert(key);
+		fprintf(stderr,"Native cursor %d (%dx%d): using software fallback\n",id,width,height);
+	}
+	return ok;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const int N_TRANSITION_TIME	= 250;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,6 +148,7 @@ CCursor::CCursor( bool _bShow ):
 	pOldImage = new CImageDraw();
 
 	pTimer = sTimer.GetTime();
+	sLastUpdateTime = 0;
 
 	int pdwParams[3];
 	S2Platform::MouseAcceleration( &pdwParams[0], &pdwParams[1], &pdwParams[2] );
@@ -154,6 +209,11 @@ void CCursor::Update()
 	pTimer.Refresh();
 	STime sDelta = pTimer->GetValue() - sLastUpdateTime;
 	sLastUpdateTime = pTimer->GetValue();
+	if (S2Platform::NativeCursorEnabled()) {
+		bindX.GetDelta(); bindY.GetDelta();
+		if (S2Platform::Active()) S2Platform::CursorPosition(&vCursorPos.x,&vCursorPos.y);
+		return;
+	}
 	if ( sDelta == 0 )
 		return;
 
@@ -169,6 +229,8 @@ void CCursor::Update()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
+	const bool nativeImage=S2Platform::NativeCursorEnabled() && bShow && SelectCursorImage(sInfo.pCursor);
+	S2Platform::NativeCursorVisible(nativeImage);
 	if ( sTransitionTime == 0 )
 		sTransitionTime = sTime;
 
@@ -192,7 +254,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 			pImage->SetWindow( SRect( sPos.x, sPos.y, sPos.x + pTex->nWidth, sPos.y + pTex->nHeight ) );
 			pImage->SetImage( pTex );
 			pImage->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );
-			pImage->DrawAtPixels(sTime, pView, CVec2(vCursorPos.x-pTex->nWidth*sInfo.pCursor->nCenterX*S2UI::Scale(), vCursorPos.y-pTex->nHeight*sInfo.pCursor->nCenterY*S2UI::Scale()));
+			if (!nativeImage) pImage->DrawAtPixels(sTime, pView, CVec2(vCursorPos.x-pTex->nWidth*sInfo.pCursor->nCenterX*S2UI::Scale(), vCursorPos.y-pTex->nHeight*sInfo.pCursor->nCenterY*S2UI::Scale()));
 
 			// BUG 8: draw the caption through the cursor's OWN CML markup engine (retail cursor path), so the
 			// DB-string markup renders as retail does -- Courier, 16pt, the DB colour, and the 1px black
@@ -208,7 +270,7 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 				pTextML->Render( pView, sScrPos, sScrWindow );
 			}
 		}
-		if ( IsValid( sOldInfo.pCursor ) && IsValid( sOldInfo.pCursor->pUITexture ) )
+		if ( !nativeImage && IsValid( sOldInfo.pCursor ) && IsValid( sOldInfo.pCursor->pUITexture ) )
 		{
 			NDb::CUITexture *pTex = sOldInfo.pCursor->pUITexture;
 			SPoint sPos( vVirtCursorPos.x - float( pTex->nWidth ) * float( sOldInfo.pCursor->nCenterX ), vVirtCursorPos.y - float( pTex->nHeight ) * float( sOldInfo.pCursor->nCenterY ) );
@@ -222,6 +284,8 @@ void CCursor::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CCursor::ProcessEvent( const NInput::SEvent &sEvent )
 {
+	if (S2Platform::NativeCursorEnabled() && sEvent.mMessage.hasPointer)
+		vCursorPos=CVec2(sEvent.mMessage.pointerX,sEvent.mMessage.pointerY);
 	bindX.ProcessEvent( sEvent );
 	bindY.ProcessEvent( sEvent );
 }
@@ -235,6 +299,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CEditorCursor::ProcessEvent( const NInput::SEvent &eEvent )
 {
+	if (S2Platform::NativeCursorEnabled()) { CCursor::ProcessEvent(eEvent); return; }
 	POINT sPoint;
 	float x = 0, y = 0;
 	S2Platform::CursorPosition( &x, &y );
@@ -254,11 +319,9 @@ ICursor* ICursor::CreateEditorCursor()
 	return new CEditorCursor;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// retail Cursor.obj registrar: single var, VarBoolHandler -> bHWCursor @0x98db60, default 0, saved
-// (the software cursor path stays the renderer; the flag feeds the options checkbox + saved config)
-static bool bHWCursor = false;
+// The existing graphics checkbox and saved config select native or software cursors.
 START_REGISTER(Cursor)
-	REGISTER_VAR_EX( "ui_hwcursor", NGlobal::VarBoolHandler, &bHWCursor, 0, true )
+	REGISTER_VAR_EX( "ui_hwcursor", NGlobal::VarBoolHandler, &bHWCursor, 1, true )
 FINISH_REGISTER
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace

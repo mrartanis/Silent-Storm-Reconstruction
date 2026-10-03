@@ -72,12 +72,19 @@ int VirtualKey(SDL_Scancode scan)
     default: return 0;
   }
 }
-void Push(EControlType type, int action, int value, bool down = true)
+void Push(EControlType type, int action, int value, bool down = true,
+          const S2Platform::InputEvent* input = nullptr)
 {
   SMessage message{};
   message.cType = type; message.nAction = action; message.nParam = value;
   message.bState = down; message.ePOVAxis = PA_UNKNOWN;
   message.tTime = S2Platform::Milliseconds();
+  if (input) {
+    if (input->event.common.timestamp)
+      message.tTime = static_cast<std::uint32_t>(input->event.common.timestamp / 1000000);
+    message.hasPointer = input->hasPointer;
+    message.pointerX = input->pointerX; message.pointerY = input->pointerY;
+  }
   messages.push_back(message);
 }
 void ReleaseAll()
@@ -98,12 +105,13 @@ int MouseButton(int button)
   if (button == SDL_BUTTON_MIDDLE) return 2;
   return button >= 4 && button <= 8 ? button - 1 : -1;
 }
-void Axis(float* remainder, int action, float delta)
+bool Axis(float* remainder, int action, float delta, const S2Platform::InputEvent* input = nullptr)
 {
   *remainder += delta;
   const int whole = static_cast<int>(*remainder);
   *remainder -= whole;
-  if (whole) Push(CT_AXIS, action, whole);
+  if (whole) Push(CT_AXIS, action, whole, true, input);
+  return whole != 0;
 }
 }
 
@@ -171,8 +179,12 @@ void PumpMessages(bool focus)
           Push(CT_WIN_CHAR, -1, static_cast<int>(c));
         break;
       }
-      case SDL_EVENT_MOUSE_MOTION:
-        Axis(&motionX, 0, S2Platform::Display().WindowToPixelX(event.motion.xrel)); Axis(&motionY, 4, S2Platform::Display().WindowToPixelY(event.motion.yrel)); break;
+      case SDL_EVENT_MOUSE_MOTION: {
+        const bool x=Axis(&motionX, 0, S2Platform::Display().WindowToPixelX(event.motion.xrel), &input);
+        const bool y=Axis(&motionY, 4, S2Platform::Display().WindowToPixelY(event.motion.yrel), &input);
+        if (input.hasPointer && !x && !y) Push(CT_POINTER, -1, 0, true, &input);
+        break;
+      }
       case SDL_EVENT_MOUSE_WHEEL:
         // Legacy binds expect +/-120 per wheel detent.
         Axis(&wheelRemainder, 8, event.wheel.y *
@@ -181,7 +193,7 @@ void PumpMessages(bool focus)
         const int button = MouseButton(event.button.button);
         const bool down = event.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
         if (button >= 0 && buttons[button] != down) {
-          buttons[button] = down; Push(CT_KEY, 12 + button, down ? 128 : -128, down);
+          buttons[button] = down; Push(CT_KEY, 12 + button, down ? 128 : -128, down, &input);
         }
         break;
       }

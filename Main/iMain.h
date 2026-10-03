@@ -15,6 +15,7 @@ namespace NMainLoop
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class IInterfaceBase;
 int GetInterfaceStackDepth();
+void ConfigureMouse();
 // Harness-only, borrowed pointer valid until the next interface command.
 IInterfaceBase* GetCurrentInterfaceForHarness();
 IInterfaceBase* GetMissionInterfaceForHarness(); // read through modal hint/dialog overlays
