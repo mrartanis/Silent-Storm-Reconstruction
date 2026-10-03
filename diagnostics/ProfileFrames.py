@@ -67,7 +67,7 @@ def main():
     (evidence/"perf-process.pid").write_text(str(process.pid))
     observations = []
 
-    def command(value):
+    def command(value, completion=None):
         deadline = time.monotonic()+180
         offset = log.stat().st_size if log.exists() else 0
         if channel.exists():
@@ -80,7 +80,8 @@ def main():
                 if value == "quit": return ""
                 raise RuntimeError(f"Game exited: {process.returncode}")
             text = log.read_bytes()[offset:].decode("latin1") if log.exists() else ""
-            if not channel.exists() and "[harness] cmd: "+value in text:
+            if (not channel.exists() and "[harness] cmd: "+value in text and
+                    (completion is None or completion in text)):
                 time.sleep(.15)
                 text = log.read_bytes()[offset:].decode("latin1")
                 observations.append({"command": value, "result": text})
@@ -103,7 +104,7 @@ def main():
                 tag = step["screenshot"]
                 if not tag or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" for c in tag):
                     raise ValueError(f"Invalid screenshot tag: {tag}")
-                response = command("screenshot")
+                response = command("screenshot", "[harness] screenshot ok=")
                 if "screenshot ok=1" not in response:
                     raise RuntimeError(response)
                 source = max((run/"user-data/screenshots").glob("*.bmp"), key=lambda p: p.stat().st_mtime_ns)

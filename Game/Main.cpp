@@ -45,6 +45,7 @@
 #include <cmath>
 #include "..\Main\Cursor.h"         // [HARNESS] center the software cursor on each loaded mission
 #include "..\Main\GView.h"          // [HARNESS] game-view dimensions for cursor positioning
+#include "../Main/GScene.h"
 #include "..\Main\Camera.h"         // [HARNESS] verify the unattended camera remains stationary
 #include "..\Main\wMain.h"          // [HARNESS] direct, DB-backed grenade blast in a loaded world
 #include "..\Main\wExplTracker.h"   // [HARNESS] explosion scheduler state for save/load probes
@@ -675,6 +676,9 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
 //   unitpos         log world-space positions of the first 32 live units for choosing a point
 //   grenades        log grenade DB records with multiple explosion waves
 //   camerastatus    log software-cursor position and camera anchor
+//   perfpose <x> <y> <z> <yaw> <pitch> <rod> set a reproducible camera pose
+//   perffloor <-3..4> change the actual scene cut floor (range/lock still apply)
+//   perflighting <0..3> isolate lighting: bit 1 disables sun shadows, bit 2 disables CL
 //   explstatus      log queued and in-flight explosion tracker counts
 //   explodesave <slot> <count> <id> <x> <y> <z> save on first active wavefront (up to 600 frames)
 //   explodesaveperk <slot> <count> <id> <x> <y> <z> <structure> <area> <0|1> test perk-bearing wavefront
@@ -746,6 +750,38 @@ static bool HarnessPoll()   // returns false to request main-loop exit
             pos.ptAnchor+=delta;mission->GetCamera()->SetPlacement(pos);
             SaveLoadDiag("[harness] perf pan=%.3f,%.3f,%.3f\n",delta.x,delta.y,delta.z);
         } else SaveLoadDiag("[harness] perf pan rejected\n");
+    }
+    else if ( sCmd.compare(0,13,"perflighting ")==0 ) {
+        int flags=0;
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetScene() && sscanf(sCmd.c_str(),"perflighting %d",&flags)==1 && flags>=0 && flags<=3) {
+            mission->GetScene()->GetGScene()->SetLightingOptions(flags);
+            SaveLoadDiag("[harness] perf lighting flags=%d\n",flags);
+        } else SaveLoadDiag("[harness] perf lighting rejected\n");
+    }
+    else if ( sCmd.compare(0,10,"perffloor ")==0 ) {
+        int floor=0;
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && sscanf(sCmd.c_str(),"perffloor %d",&floor)==1 && floor>=-3 && floor<=4) {
+            mission->SetCutFloor(floor);
+            SaveLoadDiag("[harness] perf floor requested=%d actual=%d\n",floor,mission->GetCutFloor());
+        } else SaveLoadDiag("[harness] perf floor rejected\n");
+    }
+    else if ( sCmd.compare(0,9,"perfpose ")==0 ) {
+        ICamera::SCameraPos pos;
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetCamera() && sscanf(sCmd.c_str(),"perfpose %f %f %f %f %f %f",
+           &pos.ptAnchor.x,&pos.ptAnchor.y,&pos.ptAnchor.z,&pos.fYaw,&pos.fPitch,&pos.fRod)==6 &&
+           std::isfinite(pos.ptAnchor.x) && std::isfinite(pos.ptAnchor.y) && std::isfinite(pos.ptAnchor.z) &&
+           std::isfinite(pos.fYaw) && std::isfinite(pos.fPitch) && std::isfinite(pos.fRod) &&
+           fabs(pos.ptAnchor.x)<=1024 && fabs(pos.ptAnchor.y)<=1024 && fabs(pos.ptAnchor.z)<=256 &&
+           fabs(pos.fYaw)<=32 && fabs(pos.fPitch)<=3.14f && pos.fRod>=5 && pos.fRod<=150) {
+            ICamera::SCameraPos previous; mission->GetCamera()->GetPlacement(&previous);
+            pos.fRoll=previous.fRoll; pos.fFOV=previous.fFOV;
+            if(!mission->GetCamera()->IsCameraFrozen()) mission->GetCamera()->FreezeCamera(true);
+            mission->GetCamera()->SetPlacement(pos);
+            HarnessCameraStatus();
+        } else SaveLoadDiag("[harness] perf pose rejected\n");
     }
     else if ( sCmd.compare(0,9,"perfzoom ")==0 ) {
         float rod=0;

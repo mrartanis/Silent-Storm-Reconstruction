@@ -826,8 +826,11 @@ void CLightmapTracker::RecalcStep( NGfx::CRenderContext *pRC, CSceneFragments *p
 					else
 					{
 						DownsampleCubeMapDepth( p.vCenter, p.fRadius );
+						// Match CatchUp's map resolution and depth bias. Switching between
+						// the full cube and its cached copy changes lamp shadow boundaries
+						// whenever camera/floor changes reset the screen lightmap.
 						RenderPointLightShadowed( &lmTarget, p.vCenter, p.fRadius, p.vColor,
-							shadowMapsShare.GetCubeDepth(), 2, false );
+							pointDepths[ SPointLightPos( p.vCenter, p.fRadius ) ], 3, false );
 					}
 					++rs.nStep;
 				}
