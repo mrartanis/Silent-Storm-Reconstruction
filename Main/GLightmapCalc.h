@@ -159,7 +159,7 @@ private:
 	SHMatrix mPrevView;
 	typedef unordered_map<SPointLightPos,CObj<NGfx::CCubeTexture>, SPointLightPosHash> CPointDepthHash;
 	CPointDepthHash pointDepths;
-	// Camera recovery uses fixed sky samples; progressive channels keep rotating.
+	// Motion and idle use fixed sky samples; rotating channels are diagnostic-only.
 	// Transient GPU caches: save tags 2..6 are unchanged.
 	vector<SDirectionalDepthInfo> stableDepthInfos;
 	vector<CVec3> stableSkyDirs;

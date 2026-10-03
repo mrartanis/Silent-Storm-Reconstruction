@@ -677,6 +677,8 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
 //   grenades        log grenade DB records with multiple explosion waves
 //   camerastatus    log software-cursor position and camera anchor
 //   perfpose <x> <y> <z> <yaw> <pitch> <rod> set a reproducible camera pose
+//   perfoscillate <dx> <dy> <dz> <even frames> move every frame; 0 restores origin
+//   perfmotionstatus log remaining frames for a continuous camera-motion probe
 //   perffloor <-3..4> change the actual scene cut floor (range/lock still apply)
 //   perflighting <0..3> isolate lighting: bit 1 disables sun shadows, bit 2 disables CL
 //   explstatus      log queued and in-flight explosion tracker counts
@@ -695,6 +697,23 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
 // The driver (gen/_loadtest.py in s2_scratch) writes _harness_cmd.txt and reads the logs. Sweep the
 // whole harness by grepping "[HARNESS]".
 // ============================================================================================
+static ICamera::SCameraPos g_harnessMotionOrigin;
+static CVec3 g_harnessMotionDelta;
+static int g_harnessMotionFrames = 0;
+static int g_harnessMotionFrame = 0;
+
+// Move before every rendered frame, so screenshots cover recovery while moving.
+static void HarnessCameraMotionTick()
+{
+    if (!g_harnessMotionFrames) return;
+    auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+    if (!mission || !mission->GetCamera()) { g_harnessMotionFrames=0; return; }
+    ICamera::SCameraPos pos=g_harnessMotionOrigin;
+    if ((++g_harnessMotionFrame % 2) != 0) pos.ptAnchor+=g_harnessMotionDelta;
+    mission->GetCamera()->SetPlacement(pos);
+    if (--g_harnessMotionFrames == 0) SaveLoadDiag("[harness] perf motion complete\n");
+}
+
 static bool HarnessPoll()   // returns false to request main-loop exit
 {
 	HarnessCenterCursor();
@@ -740,6 +759,22 @@ static bool HarnessPoll()   // returns false to request main-loop exit
             NGlobal::SetVar("diag_freeze_world_clock",sCmd=="perfworld 0"?1:0);
             SaveLoadDiag("[harness] perf world frozen=%d\n",NGlobal::GetVar("diag_freeze_world_clock",0).GetInt());
         } else SaveLoadDiag("[harness] perf world rejected\n");
+    }
+    else if ( sCmd.compare(0,14,"perfoscillate ")==0 ) {
+        CVec3 delta; int frames=0;
+        auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+        if(mission && mission->GetCamera() && sscanf(sCmd.c_str(),"perfoscillate %f %f %f %d",&delta.x,&delta.y,&delta.z,&frames)==4 &&
+           std::isfinite(delta.x) && std::isfinite(delta.y) && std::isfinite(delta.z) &&
+           fabs(delta.x)<=8 && fabs(delta.y)<=8 && fabs(delta.z)<=8 && frames>=0 && frames<=2400 && frames%2==0) {
+            if(g_harnessMotionFrames) mission->GetCamera()->SetPlacement(g_harnessMotionOrigin);
+            mission->GetCamera()->GetPlacement(&g_harnessMotionOrigin);
+            for(int i=0;i<8 && !mission->GetCamera()->IsCameraFrozen();++i) mission->GetCamera()->FreezeCamera(true);
+            g_harnessMotionDelta=delta; g_harnessMotionFrames=frames; g_harnessMotionFrame=0;
+            SaveLoadDiag("[harness] perf motion frames=%d frozen=%d\n",frames,mission->GetCamera()->IsCameraFrozen()?1:0);
+        } else SaveLoadDiag("[harness] perf motion rejected\n");
+    }
+    else if(sCmd=="perfmotionstatus") {
+        SaveLoadDiag("[harness] perf motion remaining=%d frame=%d\n",g_harnessMotionFrames,g_harnessMotionFrame);
     }
     else if ( sCmd.compare(0,8,"perfpan ")==0 ) {
         CVec3 delta;auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
@@ -798,6 +833,7 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	else if ( sCmd.compare( 0, 5, "load " ) == 0 )
 	{
 		g_harnessWavefrontSaveSlot.clear();
+		g_harnessMotionFrames = 0;
 		g_pHarnessCenteredCursor = 0;
 		NMainLoop::Command( new NMainLoop::CICLoad( sCmd.substr( 5 ) ) );
 	}
@@ -1218,6 +1254,7 @@ static int RunGame( const char *lpCmdLine )
 
 		if ( S2Platform::Exiting() )
 			break;
+		if (g_bHarnessLog) HarnessCameraMotionTick();
 		if ( !NMainLoop::StepApp( bStepActive, bActive ) )
 			break;
 

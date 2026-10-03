@@ -22,6 +22,13 @@ const int N_DEPTH_CHANNELS_PER_TEX = 3;
 const int N_ALL_DEPTH_CHANNELS = 0xffffffff;
 const float F_MAX_SCENE_HEIGHT = 20; // CRAP need to store max height in single place
 const int N_POINT_LIGHT_RECALC_STEPS = 4;
+// Camera recovery and idle lighting must use the same sky estimate. Keep the
+// old rotating refinement available only for diagnostic comparisons.
+static bool UseProgressiveSky()
+{
+    static const bool enabled = std::getenv("S2_LIGHTING_MOVING_SKY_SAMPLES") != nullptr;
+    return enabled;
+}
 //! brightness in the darkest area, max is 255
 const int N_DARKEST_AREA = 16;
 //!!! maximal triangle extent, needed to avoid problems
@@ -886,8 +893,8 @@ void CLightmapTracker::RecalcStep( NGfx::CRenderContext *pRC, CSceneFragments *p
 						nPassesPerCalc = 32;
 				}
 				rs.nState = RC_START; // circle on the sand round and round ( (C)Belinda Carl..)
-				rs.bCalcSky = true;
-				rs.bCalcColor = !rs.bCalcColor; // calc color every second attempt
+			rs.bCalcSky = UseProgressiveSky();
+			rs.bCalcColor = !rs.bCalcSky || !rs.bCalcColor;
 			}
 			break;
 	}
@@ -923,18 +930,23 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 		}
 		bRecalcAllDepth = true;
 	}
-	// Fixed recovery maps are independent of the progressive sample phase and
-	// seed, including after loading an existing save.
-	static const bool movingSkySamples = std::getenv("S2_LIGHTING_MOVING_SKY_SAMPLES") != nullptr;
+	// Fixed high-quality maps are used both in motion and at rest, including
+	// after loading an existing save. Their storage is transient.
+	const bool movingSkySamples = UseProgressiveSky();
 	if ( !movingSkySamples && (stableDepthBuffers.size() != GetSkyTexturesNum()
 		|| stableRegisterOwner.GetPtr() != NGfx::GetRegisterTexture(0)) )
 	{
 		stableRegisterOwner = NGfx::GetRegisterTexture(0);
-		SLightStateCalcSeed seed;
 		stableDepthInfos.resize(GetSkyTexturesNum() * N_DEPTH_CHANNELS_PER_TEX);
 		stableSkyDirs.resize(stableDepthInfos.size());
 		for ( int k = 0; k < stableSkyDirs.size(); ++k )
-			stableSkyDirs[k] = lightState.GenerateSkyDir(&seed);
+		{
+			// Equal-area strata in the same [0.3,1] cosine range as GenerateSkyDir.
+			// The golden angle avoids the correlated base-2/base-6 prefix.
+			float z=1.0f-0.7f*(k+0.5f)/stableSkyDirs.size();
+			float radius=sqrt(1-z*z), angle=k*2.39996323f;
+			stableSkyDirs[k]=CVec3(cos(angle)*radius,sin(angle)*radius,-z);
+		}
 		stableDepthBuffers.resize(GetSkyTexturesNum());
 		for ( int k = 0; k < stableDepthBuffers.size(); ++k )
 			// Own storage: TARGET uses the finite shared LRU pool and may alias
@@ -958,8 +970,8 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 	{
 		for ( int k = 0; k < GetSkyTexturesNum(); ++k )
 		{
-			RecalcDepthChannel( k, N_ALL_DEPTH_CHANNELS, true );
-			if ( !movingSkySamples ) RecalcDepthChannel(k, N_ALL_DEPTH_CHANNELS, true, true);
+			if (movingSkySamples) RecalcDepthChannel(k,N_ALL_DEPTH_CHANNELS,true);
+			else RecalcDepthChannel(k,N_ALL_DEPTH_CHANNELS,false,true);
 		}
 	}
 
@@ -996,12 +1008,12 @@ void CLightmapTracker::CatchUp( NGfx::CRenderContext *_pRC, IRender *_pRender, C
 		NGfx::AlphaSqrtModulateRegister( lmTarget.pRC, N_CL_TARGET_REGISTER, N_CL_TEMP_REGISTER, 1 );
 		// initiate recalc
 		rs.nState = RC_START;
-		rs.bCalcSky = true;
+		rs.bCalcSky = UseProgressiveSky();
 		rs.bCalcColor = true;
 		nLights = GetSkyTexturesNum();
 		nPassesPerCalc = Max( 4, GetSkyTexturesNum() * 2 );
 	}
-	if ( pScene->HasSelectedFragments() && !bHasNewLightmaps && 1 ) // if not stress mode
+	if ( pScene->HasSelectedFragments() && !bHasNewLightmaps && (movingSkySamples || !lightState.points.empty()) )
 		RecalcStep( &rc, pScene, pTS );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
