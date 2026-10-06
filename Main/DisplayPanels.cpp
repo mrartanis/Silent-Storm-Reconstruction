@@ -68,8 +68,8 @@ void CInterface::UpdateDisplayPanels() {
   if (IsValid(settings) && settings->GetStyle(STYLE_VISIBLE)) {
     BringWindowToTop(settings);
     Label(settings,"title",12,L"<font size=22pt>Display and interface");
-    const bool fullscreen=NGlobal::GetVar("gfx_fullscreen",1).GetFloat()!=0;
-    Button(settings,"display_mode",58,fullscreen?L"<font size=18pt>Window mode: Fullscreen":L"<font size=18pt>Window mode: Window");
+    const int mode=NGlobal::GetVar("gfx_fullscreen",1).GetInt();
+    Button(settings,"display_mode",58,mode==2?L"<font size=18pt>Window mode: Borderless":mode==1?L"<font size=18pt>Window mode: Fullscreen":L"<font size=18pt>Window mode: Window");
     WCHAR text[256];
     const float percent=NGlobal::GetVar("ui_scale",0).GetFloat();
     const auto& m=S2Platform::Display();
@@ -112,7 +112,7 @@ bool CInterface::HandleDisplayMessage(const SEvent& event) {
   else if(id=="display_close") { CWindow* panel=GetChildByID("display_settings"); if(IsValid(panel)) panel->SetStyle(STYLE_VISIBLE,false); }
   else if(id=="display_mode") {
     NGScene::BeginDisplayChange();
-    NGlobal::SetVar("gfx_fullscreen",NGlobal::GetVar("gfx_fullscreen",1).GetFloat()!=0?0.0f:1.0f);
+    NGlobal::SetVar("gfx_fullscreen",(NGlobal::GetVar("gfx_fullscreen",1).GetInt()+1)%3);
     if(!NGScene::SetModeFromConfig(false)) NGScene::RevertDisplayChange();
   } else if(id=="display_scale") {
     const int choices[]={0,75,100,125,150,200};

@@ -25,7 +25,7 @@ void BeginDisplayChange() {
   deadline = S2Platform::Milliseconds() + 15000;
   pending = true;
 }
-void ConfirmDisplayChange() { pending = false; }
+void ConfirmDisplayChange() { pending = false; NGlobal::SaveConfig(".\\cfg\\config.cfg"); }
 void RevertDisplayChange() {
   if (!pending) return;
   pending = false;

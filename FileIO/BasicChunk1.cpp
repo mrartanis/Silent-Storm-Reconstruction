@@ -5,6 +5,7 @@
 #include <cstdarg>
 #include <climits>
 #include <stdexcept>
+#include <unordered_set>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // save-load load-trace diagnostic (dev harness) -- see BasicChunk1.h
 bool g_bSaveLoadDiag = false;
@@ -473,9 +474,32 @@ void CStructureSaver::DataChunkBLOB( CMemoryStream &file )
 	file.Seek( 0 );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+std::uint32_t CStructureNetworkContext::Identify(CObjectBase *p)
+{
+	if (!p) return 0;
+	auto found = ids.find(p);
+	if (found != ids.end()) return found->second;
+	if (nextID == 0 || (!externalReferences && nextID >= 0x80000000u))
+		throw SFileIOError("network object IDs exhausted");
+	std::uint32_t id = nextID++;
+	ids[p] = id;
+	refs[id] = p;
+	types[id] = static_cast<std::uint32_t>(pSSClasses->GetObjectTypeID(p));
+	return id;
+}
 void CStructureSaver::StoreObject( CObjectBase *pObject )
 {
 	std::uint32_t wireID = 0;
+	if (network && pObject)
+	{
+		if (network->externalReferences && network->ids.count(pObject))
+		{
+			wireID = network->ids.at(pObject);
+			RawData(&wireID, 4);
+			return;
+		}
+		if (network->include && !network->include(pObject)) pObject = nullptr;
+	}
 	if ( pObject != 0 )
 	{
 		CPObjectsHash::iterator it = storedObjects.find( pObject );
@@ -483,7 +507,7 @@ void CStructureSaver::StoreObject( CObjectBase *pObject )
 		{
 			if ( nextWireID == 0 )
 				throw SFileIOError( "too many serialized objects" );
-			wireID = nextWireID++;
+			wireID = network ? network->Identify(pObject) : nextWireID++;
 			toStore.push_back( pObject );
 			storedObjects[pObject] = wireID;
 		}
@@ -502,6 +526,7 @@ CObjectBase* CStructureSaver::LoadObject()
 		CObjectsHash::iterator pFound = objects.find( wireID );
 		if ( pFound != objects.end() )
 			return pFound->second;
+		if (network) throw SFileIOError("unresolved network object reference");
 		ASSERT(0);
 		// here  we are in problem - stored object does not exist
 		// actually i think we got to throw the exception
@@ -606,6 +631,8 @@ void CStructureSaver::Start( bool bRead )
 	data.Clear();
 	chunks.push_back(CChunkLevel());
 	bIsReading = bRead;
+	if (network && bRead && network->externalReferences)
+		objects = network->refs;
 	if ( g_bWireAudit && bRead )
 	{
 		NWireAudit::frames.clear();
@@ -652,12 +679,42 @@ void CStructureSaver::Start( bool bRead )
 			static_cast<std::size_t>(obj.GetSize()), &objectRecords ) )
 			throw std::runtime_error( "invalid structure object table" );
 		// create all objects from obj
+		std::unordered_set<std::uint32_t> invalidNetworkIds;
 		for ( const auto &record : objectRecords )
 		{
 			const int nTypeID = static_cast<int>(record.typeId);
 			const std::uint32_t wireID = record.wireId;
 			const bool bValid = record.valid;
-			CObjectBase *pObject = pSSClasses->CreateObject( nTypeID );
+			if (network && network->externalReferences && !bValid)
+				throw SFileIOError("external packet contains an invalid object");
+			if (network && network->externalReferences &&
+				(wireID < 0x80000000u || objects.count(wireID)))
+				throw SFileIOError("external packet redefines a world object");
+			if (network && (!wireID || (!network->externalReferences && objects.count(wireID))))
+				throw SFileIOError("duplicate or zero network object ID");
+			CObjectBase *pObject = nullptr;
+			if (network && network->refs.count(wireID))
+			{
+				if (network->types.at(wireID) != record.typeId)
+					throw SFileIOError("network object changed type");
+				pObject = network->refs.at(wireID);
+			}
+			else pObject = pSSClasses->CreateObject( nTypeID );
+			if (network && pObject)
+			{
+				network->refs[wireID] = pObject;
+				network->ids[pObject] = wireID;
+				network->types[wireID] = record.typeId;
+				if (bValid) {
+					network->owners[wireID] = pObject;
+					// Only preserve a mission ownership domain which actually exists.
+					// Adding one to a normal CObj-only animator would invalidate it
+					// when removed from the replica, even if the renderer still owns it.
+					if (!network->externalReferences && pObject->HasMissionOwners())
+						network->missionOwners[wireID] = pObject;
+				}
+			}
+			if (network && !pObject) throw SFileIOError("unregistered network object type");
 			ASSERT( pObject );
 			// [REGDIAG] a class id dev's registry can't build (CreateObject == null) must NOT enter the
 			// invalidate dance below -- CPtr/CObj(null) -> ReleaseObj on a null `this` (Basic2.cpp:56)
@@ -668,10 +725,16 @@ void CStructureSaver::Start( bool bRead )
 				if ( g_bSaveLoadDiag )
 					SaveLoadDiag( "[REGDIAG] CreateObject returned NULL for id=0x%08X (bValid=%d)\n", nTypeID, (int)bValid );
 			}
-			else if ( !bValid )
+			else if (network && !bValid)
+				invalidNetworkIds.insert(wireID);
+			else if ( !bValid && IsValid(pObject) )
 			{
 				// make object invalid
 				CPtr<CObjectBase> pTemp( pObject );
+				if (network) {
+					network->owners.erase(wireID);
+					network->missionOwners.erase(wireID);
+				}
 				{
 					CObj<CObjectBase> pTempObj( (CObjectBase*)pObject );
 				}
@@ -699,7 +762,21 @@ void CStructureSaver::Start( bool bRead )
 					if ( g_bWireAudit ) NWireAudit::nTypeId = pSSClasses->GetObjectTypeID( pObject );
 					if ( StartChunk( 1, 1 ) )
 					{
-						(*pObject)&( *this );
+						bool changed = true;
+						std::vector<std::uint8_t> body;
+						if (network && !network->externalReferences)
+						{
+							const CChunkLevel &level = chunks.back();
+							body.assign(data.GetBuffer() + level.nStart,
+								data.GetBuffer() + level.nStart + level.nLength);
+							auto prior = network->bodies.find(wireID);
+							changed = prior == network->bodies.end() || prior->second != body;
+						}
+						if (changed && !invalidNetworkIds.count(wireID)) {
+							(*pObject)&( *this );
+							if (network && !network->externalReferences) network->changed.push_back(pObject);
+						}
+						if (network && !network->externalReferences) network->bodies[wireID] = std::move(body);
 						FinishChunk();
 					}
 				}
@@ -790,6 +867,24 @@ void CStructureSaver::Finish()
 		AlignDataFileSize();
 		WriteShortChunkSave( res, 2, data );
 	}
+	if (network && IsReading() && !network->externalReferences)
+	{
+		// Invalidating a mine removes it from its spatial index. Defer that
+		// destructor until after the index (and every other dependency) is read.
+		std::vector<S2FileIO::StructureObjectRecord> records;
+		if (!S2FileIO::DecodeStructureObjectTable(
+			static_cast<const std::uint8_t*>(obj.GetBuffer()),
+			static_cast<std::size_t>(obj.GetSize()), &records))
+			throw std::runtime_error("invalid structure object table");
+		for (const auto &record : records) if (!record.valid)
+		{
+			auto found = network->refs.find(record.wireId);
+			if (found != network->refs.end() && IsValid(found->second))
+				found->second->Invalidate();
+			network->owners.erase(record.wireId);
+			network->missionOwners.erase(record.wireId);
+		}
+	}
 	obj.Clear();
 	data.Clear();
 	// objects.clear() releases the temporary object-table refs; on the READ path that can cascade into
@@ -797,6 +892,22 @@ void CStructureSaver::Finish()
 	// layer). Flag the window so ReleaseObj/Ref skips a release whose target is no longer mapped instead
 	// of faulting. Cost is one IsBadReadPtr per release, only during this teardown.
 	const bool bWasReading = IsReading();
+	if (network && bWasReading && !network->externalReferences)
+	{
+		// Root and dependent fields have already been updated. Retire objects
+		// missing from the new graph only after every surviving link is restored.
+		for (auto it = network->refs.begin(); it != network->refs.end(); )
+		{
+			const auto id = it->first;
+			if (objects.count(id)) { ++it; continue; }
+			network->ids.erase(it->second.GetPtr());
+			network->owners.erase(id);
+			network->missionOwners.erase(id);
+			network->types.erase(id);
+			network->bodies.erase(id);
+			it = network->refs.erase(it);
+		}
+	}
 	if ( bWasReading )
 		g_bSaveLoadTeardown = true;
 	objects.clear();

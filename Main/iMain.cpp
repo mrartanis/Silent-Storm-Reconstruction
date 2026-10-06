@@ -235,7 +235,7 @@ const STime IInterfaceObject::GetTime()
 bool IInterfaceBase::CanRender()
 {
 	if (!S2Platform::Display().drawable) return false;
-	if ( bAppIsActive && NGScene::Is3DActive() )
+	if ( (bAppIsActive || RenderWhenInactive()) && NGScene::Is3DActive() )
 		return true;
 	S2Platform::Delay( 10 );
 	return false;
@@ -568,7 +568,7 @@ bool StepApp( bool bActive, bool bSetGamma, bool bInput )
 		currentTime = event.mMessage.tTime;
 	}
 
-	if ( bActive )
+	if ( bActive || interfaces.back()->RenderWhenInactive() )
 		NGScene::LoadPrecached();
 
 	{ S2Perf::Scope perf(S2Perf::Interface); interfaces.back()->Step(); }

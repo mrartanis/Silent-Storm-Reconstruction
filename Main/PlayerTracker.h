@@ -57,7 +57,7 @@ private:
 
 public:
 	CPlayerTracker() {}
-	CPlayerTracker( IMission *pMission, NRPG::CGlobalPlayer *_pGlobalPlayer, const wstring &wsName );
+	CPlayerTracker( IMission *pMission, NRPG::CGlobalPlayer *_pGlobalPlayer, const wstring &wsName, NWorld::IPlayer *existingPlayer = 0 );
 
 	void AddUnit( NRPG::CUnit *pMerc );
 	void RemoveUnit( IUnitTracker *pUnit );

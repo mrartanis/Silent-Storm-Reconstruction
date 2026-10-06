@@ -45,7 +45,7 @@ bool Init3D(HWND handle) {
 }
 bool SetMode(const SVideoMode& mode, const SRenderTargetsInfo& targets) {
   if (mode.nXSize <= 0 || mode.nYSize <= 0 ||
-      !S2Platform::SetMode(mode.nXSize, mode.nYSize, mode.fullScreen == FULL_SCREEN)) return false;
+      !S2Platform::SetMode(mode.nXSize, mode.nYSize, static_cast<S2Platform::WindowMode>(mode.fullScreen))) return false;
   if (initialized) {
     DoneRender(); DestroyLostableBuffers(); DoneZBuffer();
   }

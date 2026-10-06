@@ -44,6 +44,7 @@ static list<CResourceTracker*>& GetTrackers()
 // scans the list LAST-registered-FIRST so mod content overrides the base game. (This dev source
 // had collapsed the list to a single string -- restored to the release shape for mod support.)
 static vector<string> szDirs;
+vector<string> GetNetworkResourceDirectories() { return szDirs; }
 // release NGScene::AddResourceDir @0x157b30 -- append the dir, enforcing a trailing '\'
 void AddResourceDir( const char *pszName )
 {

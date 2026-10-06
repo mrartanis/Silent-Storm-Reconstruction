@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "../diagnostics/FrameProfiler.h"
 #include "wInterface.h"
+#include "wMain.h"
+#include "wUnitServer.h"
 #include "wHeightLayers.h"
 #include "Grid.h"
 #include "wInterfaceVisitors.h"
@@ -361,10 +363,19 @@ void CSetRender::AddMesh( NDb::CModel *pModel, CFuncBase<NAnimation::SSkeletonPo
 {
 	NGScene::SRoomInfo room( pGroup, nFloor );
 	NGScene::SFullRoomInfo fakeRoom( room, 0, -1 );
-	CPtr<NAnimation::CSkeletonAnimator> pAnimator = new NAnimation::CSkeletonAnimator( pModel->pSkeleton );
-	pAnimator->pTime = pTime;
-	pAnimator->AddSmartAimer( 0, pAnimation, pState, pAimTime, pAnimator, pModel->pSkeleton );
-	pAnimator->bServer = false;
+	CPtr<NAnimation::CSkeletonAnimator> pAnimator;
+	auto* replicaUnit = dynamic_cast<NWorld::CUnitServer*>(GetCurrentSrcObject());
+	if (replicaUnit && replicaUnit->GetWorld()->bNetworkReplica)
+		pAnimator = dynamic_cast<NAnimation::CSkeletonAnimator*>(pAnimation);
+	if (g_bSaveLoadDiag) SaveLoadDiag("[network-render] unit=%p replica=%d animation=%p direct=%d\n",replicaUnit,replicaUnit?replicaUnit->GetWorld()->bNetworkReplica:0,pAnimation,IsValid(pAnimator));
+	// The local smart aimer may replace a steady pose with an idle clip and
+	// freeze it. A replica renders the confirmed server bones directly.
+	if (!pAnimator) {
+		pAnimator = new NAnimation::CSkeletonAnimator( pModel->pSkeleton );
+		pAnimator->pTime = pTime;
+		pAnimator->AddSmartAimer( 0, pAnimation, pState, pAimTime, pAnimator, pModel->pSkeleton );
+		pAnimator->bServer = false;
+	}
 	// Recolour the body skin (neck/hands) to the committed hero's race before the skin render (retail AddMesh
 	// @0x2ccf60 calls ChooseBodyColor when a head info is passed). pHead is the unit -> its CHeadInfo's race.
 	if ( pHead )
@@ -1516,11 +1527,14 @@ void CRenderGame::FastUpdate( STime currentTime )
 void CRenderGame::UpdateViewWorld( bool bAdvanceTime, STime currentTime, NWorld::IPlayer *pViewFrom, bool bShowAllUnits )
 {
 	S2Perf::Scope perf(S2Perf::World);
+	NWorld::CWorld* network = dynamic_cast<NWorld::CWorld*>(pWorld.GetPtr());
+	if (network && network->bNetworkArena) currentTime = network->GetAimTime()->GetValue();
 	timer.Advance( bAdvanceTime, currentTime );
 
 	pHeadsController->Advance( currentTime );
 
 	STime t = timer.GetTime()->GetValue();
+	if (network && network->bNetworkArena) t = currentTime;
 	pWorld->UpdateWorld( t, pViewFrom );
 	pGrass->Update( t );
 

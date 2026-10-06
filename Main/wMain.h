@@ -28,6 +28,7 @@ class CMapWaypoint;
 
 namespace NAI
 {
+	class CPath;
 	class IAIJobManager;
 	class CAIRouteWaypoint;
 	class CAICommander;
@@ -396,7 +397,7 @@ public:
 		TTBSWorld::SActionTrackerChunk atc = ActionTrackerChunk();		f.Add(4,&atc);	// tag 4: CActionTracker
 		f.Add(5,(CDebrisController*)this);					// tag 5: CDebrisController base
 		f.Add(6,&pShow); f.Add(7,&pShowUnits);
-		f.Add(8,&uiCmdsList); f.Add(9,&eventHits);
+		if (!f.IsNetwork()) { f.Add(8,&uiCmdsList); f.Add(9,&eventHits); }
 		f.Add(10,&pTerrain); f.Add(11,&pTime); f.Add(12,&pAimTime);
 		f.Add(13,&tPrev); f.Add(14,&tHiddenDelta);
 		f.Add(15,&pAIMap); f.Add(16,&pPathNetwork); f.Add(17,&pRPGGame);
@@ -425,7 +426,7 @@ public:
 		f.Add(52,&bIsBase);							// retail 0x34 (+0x1b9)
 		f.Add(53,&bDelayUpdateVisibleCalc);					// retail 0x35 (+0x1ba)
 		f.Add(54,&bCallUpdateVisible);						// retail 0x36 (+0x1bb)
-		f.Add(55,&eventEarthQuakes);						// retail 0x37 (+0x1bc)
+		if (!f.IsNetwork()) f.Add(55,&eventEarthQuakes);	// retail 0x37 (+0x1bc)
 		f.Add(56,&bScriptWantTurnBased);					// retail 0x38 (+0x1c0)
 		f.Add(57,&pGameOverCall); f.Add(58,&tMaxGameOverCall);			// retail 0x39/0x3a
 		f.Add(59,&willWantTBS);							// retail 0x3b
@@ -488,6 +489,24 @@ private:
 	void CheckRealTimeTurn();
 
 public:
+	// Runtime session flags deliberately do not change the file save format.
+	bool bNetworkArena = false;
+	bool bNetworkReplica = false;
+	std::function<EUnitCommandResult(CUnitServer*,CCmd*,int*,int*)> networkPreview;
+	std::function<NAI::CPath*(CUnitServer*)> networkPreviewPath;
+	std::function<int(int,CUnit*,CUnit*,CVec3,int,bool)> networkHitChance;
+	vector<NAI::SPathPlace> networkDeployment[2];
+	// Authoring positions captured from the fully assembled map, before removing
+	// campaign actors/scripts. Runtime only; neither saves nor replicas need them.
+	vector<CVec3> networkSpawnPositions[2];
+	bool bNetworkEncounterDeployment = false;
+	list<CObj<CUICmd> > networkUIEvents;
+	list<CObj<CHitLocator> > networkHitEvents;
+	list<CObj<CEarthQuakeEvent> > networkEarthQuakes;
+	void DrainNetworkEvents(vector<CObj<CObjectBase> > *events);
+	void PresentNetworkEvent(CObjectBase *event);
+	void PrepareNetworkDeployment(int squadSize);
+	void AdvanceNetworkSegment();
 	CWorld();
 	CWorld( NRPG::CGlobalGame *_pGlobalGame );
 
@@ -627,6 +646,7 @@ public:
 		CObjectBase *pIgnitionObject = 0, const SPerkMineModifiers *pMods = 0 );
 	IExplosionMaster *GetExplosionMasterForHarness() const { return pExplosionMaster.GetPtr(); }
 	const list< CObj<CBuilding> > &GetBuildingsForHarness() const { return buildings; }
+	const list< CObj<CObjectServerBase> > &GetObjectsForHarness() const { return objects; }
 	const vector<SWorldDeploySpot> &GetDeploySpotsForHarness() const { return deploySpots; }
 	void KillObject( CObjectServerBase *pOS );
 	// Retail has NO CWorld pocket methods -- it inlines these two bodies into luaObjectPlaceInPocket

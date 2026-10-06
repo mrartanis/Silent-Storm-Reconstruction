@@ -16,6 +16,8 @@
 #include "..\Main\GResource.h" // CRAP for lack of anything better, there should actually be version support
 #include "..\Main\iInterMission.h" // CRAP, to start from mission
 #include "../Main/iOptionsMenu.h"
+#include "../Main/iNetworkMenu.h"
+#include "../Main/NetworkDiagnostics.h"
 #include "../Main/iHeroMenu.h"
 #include "..\Main\iLoading.h"      // NGame::InitLoadingScreen / TermLoadingScreen -- loading-screen UI built once at boot
 #include "..\Misc\HPTimer.h"       // NHPTimer::UpdateHPTimerFrequency -- the per-frame TSC recalibration
@@ -41,6 +43,7 @@
 #include "../Main/RPGStore.h"
 #include "../Main/rpgCheatConstants.h"
 #include "../Main/wUnitServer.h"
+#include "../Main/GAnimation.h"
 #include "../Main/UICommCtrls.h"
 #include "../Main/Transform.h"
 #include <cmath>
@@ -67,6 +70,7 @@
 // file (no engine calls) so it survives a corrupted heap. Terminates after logging (unattended runs).
 static LONG WINAPI HarnessCrashFilter( EXCEPTION_POINTERS *pEP )
 {
+	S2Net::NetworkCrashFilter(pEP);
 	FILE *pF = fopen( "_saveload.log", "ab" );
 	if ( pF )
 	{
@@ -663,6 +667,13 @@ static void HarnessDisplayTree(NUI::CWindow* window, int depth = 0) {
   window->GetChildrenList(&children);
   for (auto it=children.begin();it!=children.end();++it) HarnessDisplayTree(*it,depth+1);
 }
+static NUI::CWindow* HarnessFindWindow(NUI::CWindow* window,const string& id) {
+  if(!IsValid(window))return nullptr;
+  if(window->GetWindowID()==id)return window;
+  list<CPtr<NUI::CWindow>> children;window->GetChildrenList(&children);
+  for(auto child:children)if(auto* found=HarnessFindWindow(child,id))return found;
+  return nullptr;
+}
 // [HARNESS] Frame-polled command channel -- a minimal RTC protocol between an external driver and
 // the running game. Once per frame (when g_bHarnessLog is on) the main loop reads ONE command line
 // from ".\_harness_cmd.txt" (raw system-ANSI bytes so Cyrillic slot names round-trip), clears the
@@ -736,6 +747,81 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	SaveLoadDiag( "[harness] cmd: %s\n", sCmd.c_str() );
 	if ( sCmd == "quit" )
 		return false;
+	else if(sCmd.compare(0,8,"uiclick ")==0) {
+		auto* button=HarnessFindWindow(NUI::CurrentInterfaceForDiagnostics(),sCmd.substr(8));
+		bool ok=IsValid(button) && button->GetStyle(NUI::STYLE_ENABLED) && IsValid(button->GetParent());
+		if(ok)button->SendMessage(button->GetParent(),NUI::SEvent(NUI::EVENT_NOTIFY,button->GetWindowID()));
+		SaveLoadDiag("[harness] UI button %s activated=%d\n",sCmd.substr(8).c_str(),ok);
+	}
+	else if(sCmd.compare(0,6,"uiset ")==0) {
+		auto split=sCmd.find(' ',6);bool ok=false;
+		if(split!=string::npos)if(auto* edit=dynamic_cast<NUI::CEdit*>(HarnessFindWindow(NUI::CurrentInterfaceForDiagnostics(),sCmd.substr(6,split-6)))) {
+			edit->SetText(NStr::ToUnicode(sCmd.substr(split+1)));ok=true;
+		}
+		SaveLoadDiag("[harness] UI field set=%d\n",ok);
+	}
+	else if (sCmd.compare(0,3,"net")==0) {
+		auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
+		auto* world=mission?dynamic_cast<NWorld::CWorld*>(mission->GetWorld()):nullptr;
+		if(sCmd=="netmenu")NMainLoop::Command(new NGame::CICNetworkMenu);
+		else if(!world || !world->bNetworkArena)SaveLoadDiag("[network] no active match\n");
+		else if(sCmd=="netstatus") {
+			const int local=mission->GetActivePlayer()->GetPlayer()->GetScenarioPlayerID();
+			const int turn=world->GetCurrentPlayer()?world->GetCurrentPlayer()->GetScenarioPlayerID():-1;
+			SaveLoadDiag("[network] local=%d turn=%d replica=%d time=%u executing=%d\n",local,turn,world->bNetworkReplica,world->GetTime()->GetValue(),world->IsExecuting());
+			NWorld::IPlayer::CUnitSet units;mission->GetActivePlayer()->GetPlayer()->GetUnits(&units);
+			for(size_t i=0;i<units.size();++i){auto* unit=static_cast<NWorld::CUnitServer*>(units[i].GetPtr());auto p=unit->GetPosition().GetCP();auto* weapon=unit->GetUnitRPG()->GetWeaponItem();
+				SaveLoadDiag("[network] unit=%u ap=%d ammo=%d pose=%d command=%d pos=%.3f,%.3f,%.3f hp=%d grid=%u,%u mode=%d\n",unsigned(i),unit->GetAP(),weapon?weapon->GetAmmoQuantity():-1,unit->GetPosition().GetPose(),unit->HasCommand(),p.x,p.y,p.z,unit->GetUnitRPG()->GetTotalVP(),unit->GetPosition().pos.p.GetX(),unit->GetPosition().pos.p.GetY(),weapon?int(weapon->GetShootMode()):-1);}
+			for(int side=0;side<2;++side) {NWorld::IPlayer::CUnitSet team;world->GetPlayerByID(side)->GetUnits(&team);
+				for(size_t i=0;i<team.size();++i){auto* unit=static_cast<NWorld::CUnitServer*>(team[i].GetPtr());auto p=unit->GetPosition().GetCP();SaveLoadDiag("[network] team=%d fighter=%u alive=%d pos=%.3f,%.3f,%.3f\n",side,unsigned(i),unit->CanFight(),p.x,p.y,p.z);}}
+		}else if(sCmd=="netbones") {
+			vector<CPtr<NWorld::CUnit>> units;world->GetAllUnits(&units);
+			unsigned index=0;for(auto actor:units)if(auto* unit=dynamic_cast<NWorld::CUnitServer*>(actor.GetPtr())) {
+				CDGPtr<NAnimation::CSkeletonAnimator> animation(unit->GetNetworkSkeletonAnimator());animation.Refresh();
+				const auto& bones=animation->GetValue();unsigned hash=2166136261u;
+				const auto* bytes=reinterpret_cast<const unsigned char*>(bones.data());
+				for(size_t i=0;i<bones.size()*sizeof(NAnimation::SBonePose);++i)hash=(hash^bytes[i])*16777619u;
+				SaveLoadDiag("[network-bones] side=%d id=%u fight=%d animator=%p count=%u hash=%08x root=%.3f,%.3f,%.3f\n",unit->GetPlayer()->GetScenarioPlayerID(),index++,unit->CanFight(),animation.GetPtr(),unsigned(bones.size()),hash,bones[0].pos.x,bones[0].pos.y,bones[0].pos.z);
+			}
+		}else if(sCmd=="netui") {
+			vector<CPtr<NGame::IUnitTracker>> selected;mission->GetSelectedUnits(&selected);
+			SaveLoadDiag("[network-ui] selected=%u ready=%d client=%d\n",unsigned(selected.size()),mission->IsReady(),mission->IsNetworkClient());
+			for(int action=0;action<NGame::UA_MAXVALUE;++action) {
+				NGame::SActionInfo info;mission->GetActionInfo(static_cast<NGame::EUnitAction>(action),&info);
+				SaveLoadDiag("[network-ui] action=%d available=%d ok=%d result=%d ap=%d,%d\n",action,info.bAvailable,info.bOk,info.eResult,info.nMinAP,info.nMaxAP);
+			}
+		}else if(sCmd=="netturn")mission->Command(new NWorld::CCmdEndOfTurn);
+		else {
+			char verb[24]={};int index=-1,a=0,b=0;
+			const int fields=sscanf(sCmd.c_str(),"%23s %d %d %d",verb,&index,&a,&b);
+			NWorld::IPlayer::CUnitSet units;mission->GetActivePlayer()->GetPlayer()->GetUnits(&units);
+			if(fields>=2 && index>=0 && index<int(units.size())) {
+				auto* unit=static_cast<NWorld::CUnitServer*>(units[index].GetPtr());
+				if(string(verb)=="netmove" && fields==4) {auto destination=unit->GetPosition().pos;destination.p.SetXY(destination.p.GetX()+a,destination.p.GetY()+b);destination.p.SetFinal(0);mission->Command(unit,new NWorld::CCmdPath(destination));}
+				else if(string(verb)=="netshoot" && fields==4)mission->Command(unit,new NWorld::CCmdShootTile(unit->GetPosition().GetCP()+CVec3(float(a),float(b),1)));
+				else if(string(verb)=="netreload")mission->Command(unit,new NWorld::CCmdReload);
+				else if(string(verb)=="netgrenade") {
+					for(const auto& item:unit->GetUnitRPG()->GetInventory()->GetItems())if(dynamic_cast<NRPG::IGrenadeItemInfo*>(item.pItem.GetPtr())) {
+						NWorld::SItem source(unit,NWorld::SItem::BACKPACK,item.sPos,item.pItem);
+						NWorld::SItem target(unit,NWorld::SItem::SLOT,int(NDb::SLOT_2));
+						mission->Command(unit,new NWorld::CCmdExchangeInventoryItems(source,target,true,int(NDb::SLOT_2)));break;
+					}
+				}
+				else if(string(verb)=="netthrow") {
+					float x=0,y=0,z=0;
+					if(sscanf(sCmd.c_str(),"%23s %d %f %f %f",verb,&index,&x,&y,&z)==5)
+						mission->Command(unit,new NWorld::CCmdShootTile(CVec3(x,y,z)));
+				}
+				else if(string(verb)=="netmode" && fields==3 && a>=0 && a<NDb::SM_MAXVALUE)mission->Command(unit,new NWorld::CCmdShootMode(static_cast<NDb::EShootMode>(a)));
+				else if(string(verb)=="netattack" && fields==3) {
+					NWorld::IPlayer::CUnitSet enemies;world->GetPlayerByID(1-unit->GetPlayer()->GetScenarioPlayerID())->GetUnits(&enemies);
+					if(a>=0 && a<int(enemies.size()))mission->Command(unit,new NWorld::CCmdShootObject(enemies[a],0));
+				}
+				else if(string(verb)=="netpose" && fields==3 && a>=0 && a<=2) {auto pose=static_cast<NAI::EPose>(a);mission->Command(unit,new NWorld::CCmdWishPose(pose),false);auto destination=unit->GetSetPosePosition();destination.SetPose(pose);mission->Command(unit,new NWorld::CCmdPath(destination.pos,NAI::PF_USE_POSEDIR));}
+				else SaveLoadDiag("[network] invalid action\n");
+			}else SaveLoadDiag("[network] invalid unit\n");
+		}
+	}
 	else if ( sCmd.compare( 0, 5, "perf " ) == 0 ) {
         char tag[81] = {}; int frames = 0;
         bool ok = sscanf(sCmd.c_str(), "perf %80s %d", tag, &frames)==2 && S2Perf::Start(tag,frames);
@@ -909,6 +995,9 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	}
 	else if ( sCmd == "displaytree" )
 		HarnessDisplayTree(NUI::CurrentInterfaceForDiagnostics());
+	else if ( sCmd == "audiostatus" ) {
+        SaveLoadDiag("[audio] sfx=%.3f music=%.3f mode=%d\n",NGlobal::GetVar("sound_sfxvolume",.75f).GetFloat(),NGlobal::GetVar("sound_musicvolume",.75f).GetFloat(),NGlobal::GetVar("sound_mode",1).GetInt());
+    }
 	else if ( sCmd == "graphicsoptions" )
 		NMainLoop::Command(new NGame::CICOptions(NGame::OS_VIDEO));
 	else if ( sCmd.compare(0,15,"graphicsoption ")==0 )
@@ -1040,6 +1129,7 @@ struct GameLifetime {
 };
 static int RunGame( const char *lpCmdLine )
 {
+	S2Net::StartupLog("begin");
 	vector<string> szParams;
 	NStr::SplitStringWithMultipleBrackets( lpCmdLine, szParams, ' ' );
 	S2Platform::SetErrorDialogs( find( szParams.begin(), szParams.end(), "-harness" ) == szParams.end()
@@ -1062,6 +1152,7 @@ static int RunGame( const char *lpCmdLine )
 		CFileStream f;
 		f.OpenRead( "game.db" );
 		NDatabase::Serialize( f, CStructureSaver::READ );
+		S2Net::StartupLog("database-ready");
 	}
 	catch (...)
 	{
@@ -1087,6 +1178,7 @@ static int RunGame( const char *lpCmdLine )
 		return 1;
 	}
 	lifetime.graphics = true;
+	S2Net::StartupLog("window-ready");
 	#if !defined(S2_X64_MEDIA_STUBS) || defined(S2_NATIVE_MUSIC)
 	if ( !NSound::InitSound( static_cast<HWND>( S2Platform::NativeWindow() ) ) )
 	{
@@ -1106,6 +1198,7 @@ static int RunGame( const char *lpCmdLine )
 	}
 
 	lifetime.input = true;
+	S2Net::StartupLog("input-and-sound-ready");
 	// Load config & process params
 	NGlobal::LoadConfig( ".\\cfg\\autoexec.cfg" );
 
@@ -1113,10 +1206,16 @@ static int RunGame( const char *lpCmdLine )
 	bool bHarnessActive = false;
 	string szLoadSlot;
 	string szCfg( "start.cfg" );
+	int networkRole = 0;
+	int networkMap = 0;
+	unsigned networkPort = 7780;
+	string networkAddress = "127.0.0.1";
 	for ( int i = 0; i < szParams.size(); ++i )
 	{
 		if ( szParams[i] == "-fullscreen" )
 			NGlobal::SetVar( "gfx_fullscreen", 1 );
+		else if ( szParams[i] == "-borderless" )
+			NGlobal::SetVar( "gfx_fullscreen", 2 );
 		else if ( szParams[i] == "-windowed" )
 			NGlobal::SetVar( "gfx_fullscreen", 0 );
 		else if ( szParams[i] == "-harness" )   // [HARNESS] enable the command channel + console tee WITHOUT auto-loading
@@ -1205,6 +1304,17 @@ static int RunGame( const char *lpCmdLine )
 			if ( i + 1 < szParams.size() )
 				szCfg = szParams[++i];
 		}
+		else if (szParams[i] == "-net-map" && i + 1 < szParams.size())
+			networkMap=std::atoi(szParams[++i].c_str());
+		else if (szParams[i] == "-net-host" && i + 1 < szParams.size())
+		{
+			networkRole = 1; networkPort = static_cast<unsigned>(std::strtoul(szParams[++i].c_str(),nullptr,10));
+		}
+		else if (szParams[i] == "-net-connect" && i + 2 < szParams.size())
+		{
+			networkRole = 2; networkAddress = szParams[++i];
+			networkPort = static_cast<unsigned>(std::strtoul(szParams[++i].c_str(),nullptr,10));
+		}
 	}
 	//
 	#if defined(S2_X64_MEDIA_STUBS) && !defined(S2_NATIVE_MUSIC)
@@ -1218,6 +1328,7 @@ static int RunGame( const char *lpCmdLine )
 		return 1;
 	}
 	//
+	S2Net::StartupLog("renderer-ready");
 	if ( !NSound::SetModeFromConfig() )
 	{
 		ASSERT(0);
@@ -1234,7 +1345,11 @@ static int RunGame( const char *lpCmdLine )
 	// ShowLoadingScreen, so ShowWindow(SHOW) here does not overlay the menu queued just below.
 	lifetime.interface = true;
 	NGame::InitLoadingScreen();
-	if ( bDoLoad )
+	NGame::ShowLoadingScreen(0);
+	S2Net::StartupLog("loading-screen-ready");
+	if (networkRole)
+		NMainLoop::Command(new NGame::CICNetworkMenu(networkRole,networkPort,networkAddress,"",networkMap));
+	else if ( bDoLoad )
 		NMainLoop::Command( new NMainLoop::CICLoad( szLoadSlot.empty() ? NMainLoop::GetQuickSaveSlot( true ) : szLoadSlot ) );
 	else
 		NMainLoop::Command( new CICInterMission( szCfg ) );
@@ -1284,6 +1399,7 @@ static int RunGame( const char *lpCmdLine )
 	NGScene::RevertDisplayChange();
 	NGlobal::SaveConfig( ".\\cfg\\config.cfg" );
 
+	S2Net::StartupLog("normal-exit");
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1299,7 +1415,8 @@ int main(int argc, char** argv)
  for (int i = 1; i < argc; ++i) { if (i > 1) arguments += " "; arguments += argv[i]; }
  const char* commandLine = arguments.c_str();
 #endif
+ S2Net::InstallNetworkCrashDiagnostics();
  try { return RunGame(commandLine); }
- catch (const std::exception& error) { S2Platform::Error(error.what()); return 1; }
- catch (...) { S2Platform::Error("Game initialization or update failed"); return 1; }
+ catch (const std::exception& error) { S2Net::NetworkLog(std::string("Uncaught game exception: ")+error.what());S2Platform::Error(error.what()); return 1; }
+ catch (...) { S2Net::NetworkLog("Uncaught non-standard game exception");S2Platform::Error("Game initialization or update failed"); return 1; }
 }

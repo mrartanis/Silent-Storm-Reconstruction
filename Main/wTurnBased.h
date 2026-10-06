@@ -63,7 +63,7 @@ protected:
 	TPlayerUnitSet units;
 	CObj<TCommander> pCommander;
 public:
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nPlayerID); f.Add(3,&bTurnDone); f.Add(5,&units); f.Add(6,&pCommander); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&nPlayerID); f.Add(3,&bTurnDone); f.Add(5,&units); if (!f.IsNetwork()) f.Add(6,&pCommander); return 0; }
 
 	CPlayerBase(): nPlayerID( 0 ), bTurnDone( true ) {}
 

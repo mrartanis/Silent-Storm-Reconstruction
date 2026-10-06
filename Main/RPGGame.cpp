@@ -11,6 +11,7 @@
 #include "../Misc/RandomGen.h"
 #include "wTSFlags.h"
 #include "wInterface.h"
+#include "wMain.h"
 #include "RPGUnitMission.h"
 #include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataMap.h"   // NDb::EDiplomacyState / DS_ALLY -- friendly-fire ally check in cover penetration
@@ -705,6 +706,9 @@ int GetAttackerToHit( const NWorld::CUnit *pAttacker, NWorld::CUnit *pTarget, in
 int CGame::GetCompositeToHit( NWorld::CUnit *pAttacker, 
 	NWorld::CUnit *pTarget, NAI::EHitLocation eHL, bool bFirstTurn )
 {
+	auto* actor = dynamic_cast<NWorld::CUnitServer*>(pAttacker);
+	if (actor && actor->GetWorld()->bNetworkReplica)
+		return actor->GetWorld()->networkHitChance ? actor->GetWorld()->networkHitChance(0,pAttacker,pTarget,CVec3(0,0,0),eHL,bFirstTurn) : 0;
 	vector<NRPG::CAttackPortion> attack;
 	CDynamicCast<NRPG::IUnitMission> pRealAttacker( pAttacker->GetRPG() );
 	ASSERT( pRealAttacker );
@@ -768,6 +772,9 @@ int CGame::GetCompositeToHit( NWorld::CUnit *pAttacker,
 int CGame::GetGrenadeCompositeToHit( NWorld::CUnit *pAttacker, 
 	CVec3 ptTarget, bool bFirstTurn, NDb::CRPGGrenade *pGrenade )
 {
+	auto* actor = dynamic_cast<NWorld::CUnitServer*>(pAttacker);
+	if (actor && actor->GetWorld()->bNetworkReplica)
+		return actor->GetWorld()->networkHitChance ? actor->GetWorld()->networkHitChance(1,pAttacker,nullptr,ptTarget,0,bFirstTurn) : 0;
 	int nDistance = fabs( pAttacker->GetPosition().GetCP() - ptTarget ) / FP_GRID_STEP;
 
 	// release: the grenade calcer derives the thrown grenade from the unit's ACTIVE item, so the
@@ -780,6 +787,9 @@ int CGame::GetGrenadeCompositeToHit( NWorld::CUnit *pAttacker,
 int CGame::GetTileCompositeToHit(  NWorld::CUnit *pAttacker, CVec3 ptTilePos, 
 		NAI::ETileHitLocation eHitLocation, bool bFirstTurn )
 {
+	auto* actor = dynamic_cast<NWorld::CUnitServer*>(pAttacker);
+	if (actor && actor->GetWorld()->bNetworkReplica)
+		return actor->GetWorld()->networkHitChance ? actor->GetWorld()->networkHitChance(2,pAttacker,nullptr,ptTilePos,eHitLocation,bFirstTurn) : 0;
 	int nDistance = fabs( pAttacker->GetPosition().GetCP() - ptTilePos ) / FP_GRID_STEP;
 	//
 	CDynamicCast<NRPG::IUnitMission> pRPG( pAttacker->GetRPG() );
@@ -823,6 +833,9 @@ int CGame::GetTileCompositeToHit(  NWorld::CUnit *pAttacker, CVec3 ptTilePos,
 int CGame::GetBazookaToHit(  NWorld::CUnit *pAttacker, CVec3 ptTilePos, 
 		NAI::ETileHitLocation eHitLocation, bool bFirstTurn )
 {
+	auto* actor = dynamic_cast<NWorld::CUnitServer*>(pAttacker);
+	if (actor && actor->GetWorld()->bNetworkReplica)
+		return actor->GetWorld()->networkHitChance ? actor->GetWorld()->networkHitChance(3,pAttacker,nullptr,ptTilePos,eHitLocation,bFirstTurn) : 0;
 	int nDistance = fabs( pAttacker->GetPosition().GetCP() - ptTilePos ) / FP_GRID_STEP;
 	//
 	CDynamicCast<NRPG::IUnitMission> pRPG( pAttacker->GetRPG() );

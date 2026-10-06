@@ -371,6 +371,7 @@ public:
 private:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pSeq); f.Add(3,&nBones); f.Add(4,&pSkeleton); f.Add(5,&pTime); f.Add(6,&bServer); f.Add(7,&bItem); return 0; }
 
+	bool bNetworkPose = false; // runtime replica cache; never part of file saves
 	CParticleSkeleton* GetCorpseAnimator();
 
 protected:
@@ -379,6 +380,7 @@ protected:
 public:
 	CSkeletonAnimator() {}
 	CSkeletonAnimator( NDb::CSkeleton *_pSkeleton );
+	void ApplyNetworkPose( const SSkeletonPose &pose );
 
 	bool IsFreezed() const;
 	const int GetBoneIndex( const char *pszName );

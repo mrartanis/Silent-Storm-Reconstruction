@@ -33,6 +33,8 @@ protected:
 public:
 	CVersioningBase() { nFrameCalced = 0; nVersion = 1; }
 	void Updated() { nVersion++; } // should be called when function recalc its value or value is changed
+	// Network reads replace fields without going through their ordinary setters.
+	void NetworkFieldsChanged() { nFrameCalced = 0; Updated(); }
 	//! returns if node was refreshed on this frame, for information purposes, normally not needed for user
 	bool WasRefreshed() const { return nFrameCalced == nDGCurrentFrame; }
 	friend class CBaseScene;

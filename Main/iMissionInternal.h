@@ -12,6 +12,8 @@
 // all of these classes are saveload-registered, so smart-pointer members link on the incomplete-type
 // cast path too.
 namespace NUI { class CMissionUI; }
+namespace S2Net { class NetworkSession; class NetworkWorld; }
+#include <memory>
 namespace NGScene { class CPolyline; }
 namespace NDb { class CString; class CUITexture; }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +86,9 @@ public:
 class CMission: public CMissionBase
 {
 	OBJECT_BASIC_METHODS(CMission)
+  std::shared_ptr<S2Net::NetworkSession> networkSession;
+  bool networkLeaveRequested = false;
+  std::shared_ptr<S2Net::NetworkWorld> networkWorld;
 private:
 	NInput::CBind bindStartOfTurn, bindEndOfTurn, bindNextEnemy; 
 	NInput::CBind bindSaveMenu, bindLoadMenu; 
@@ -273,6 +278,9 @@ public:
 	// The trivial accessors + player/desktop/light/camera-focus family moved to CMissionBase
 	// (retail placement -- see iMission.h); CMission keeps only its real overrides below.
 	bool Initialize( int nTemplateID, int nVariantID, NScenario::CScenarioZone *pZone, const vector<string> &params, NRPG::CGlobalGame *pGlobalGame, NDb::CUITexture *pPWLImage = 0 );
+  bool InitializeNetwork(std::shared_ptr<S2Net::NetworkWorld>,std::shared_ptr<S2Net::NetworkSession>);
+  void StopAction();
+  void PauseGame(bool state);
 	void Terminate();
 
 	// dev-extra bForceUpdateNextFrame latch on top of the retail base Command/DoEvent bodies
@@ -293,6 +301,7 @@ public:
 	int GetUnitsState();
 	NWorld::CUnit::EState GetUnitsWorldState();
 	void GetActionInfo( EUnitAction eAction, SActionInfo *pInfo );
+	bool IsNetworkClient() const override;
 	bool CanDoCommand( NWorld::CCommand *pCmd );	// retail @0x1fbf10 (mission vtbl+0xa8)
 	void CanDoCommand( NWorld::CCmd *pCmd, bool bNoTarget, SActionInfo *pInfo );
 	NWorld::EUnitCommandResult CanDoCommand( NWorld::CCmd *pCmd, bool bNoTarget = false, int *pnMinAP = 0, int *pnMaxAP = 0, bool *pbEnoughAPToStart = 0 );

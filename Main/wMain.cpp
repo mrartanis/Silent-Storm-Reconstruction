@@ -5,6 +5,7 @@
 #include "../FileIO/BasicChunk1.h"
 #include "../Misc/Geom.h"
 #endif
+#include <map>
 #include "Transform.h"
 #include "InterfaceConst.h"
 #include "MapBuild.h"
@@ -833,6 +834,21 @@ void CWorld::AddHitLocator( CHitLocator* pLocator )
 void CWorld::AddUICommand( CUICmd *pCmd )
 {
 	uiCmdsList.push_back( pCmd );
+}
+void CWorld::DrainNetworkEvents(vector<CObj<CObjectBase> > *events)
+{
+	events->clear();
+	for (auto event : uiCmdsList) events->push_back(event.GetPtr());
+	for (auto event : eventHits) events->push_back(event.GetPtr());
+	for (auto event : eventEarthQuakes) events->push_back(event.GetPtr());
+	uiCmdsList.clear(); eventHits.clear(); eventEarthQuakes.clear();
+}
+void CWorld::PresentNetworkEvent(CObjectBase *event)
+{
+	if (auto* ui = dynamic_cast<CUICmd*>(event)) networkUIEvents.push_back(ui);
+	else if (auto* hit = dynamic_cast<CHitLocator*>(event)) networkHitEvents.push_back(hit);
+	else if (auto* quake = dynamic_cast<CEarthQuakeEvent*>(event)) networkEarthQuakes.push_back(quake);
+	else throw std::runtime_error("unknown network presentation event");
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::CreateFakeTerrainInfo( STerrainInfo *pTerrain )
@@ -1698,6 +1714,39 @@ void CWorld::CreateRandom( int nVariantID, const vector<string> &params,
 		CreateDefault();
 		return;
 	}
+	vector<SMapPosition> authoredNetworkSpawns[2];
+	if (bNetworkArena)
+	{
+		networkSpawnPositions[0].clear();networkSpawnPositions[1].clear();
+		// The UnitHero/UnitN scheme has priority over legacy deploy placeables.
+		std::map<string,SMapPosition> playerWaypoints;
+		for(const auto& waypoint:mapInfo.waypoints)
+			if(IsValid(waypoint->pName)) {
+				string name=waypoint->pName->szName;NStr::ToLower(name);playerWaypoints[name]=waypoint->pos;
+			}
+		auto hero=playerWaypoints.find("unithero");
+		if(hero!=playerWaypoints.end()) {
+			authoredNetworkSpawns[0].push_back(hero->second);
+			for(int i=1;i<=9;++i) {
+				auto point=playerWaypoints.find(NStr::Format("unit%d",i));
+				if(point==playerWaypoints.end())break;
+				authoredNetworkSpawns[0].push_back(point->second);
+			}
+		} else if(!mapInfo.deploySpots.empty()) {
+			// AddPlayer normally expands a formation from deploy spot zero.
+			authoredNetworkSpawns[0].push_back(mapInfo.deploySpots.front().pos);
+		}
+		CObj<NRPG::CGlobalDiplomacy> authoredDiplomacy=new NRPG::CGlobalDiplomacy;
+		authoredDiplomacy->LoadDiplomacy(nVariantID);
+		for(const auto& unit:mapInfo.units)
+			if(!unit.bSlot && IsValid(unit.pPers) && unit.nScenarioPlayer>=0 && unit.nScenarioPlayer<16 &&
+			   authoredDiplomacy->GetDiplomacyState(unit.nScenarioPlayer,0)==NDb::DS_ENEMY)
+				authoredNetworkSpawns[1].push_back(unit.pos);
+		mapInfo.units.clear();
+		mapInfo.groups.clear();
+		mapInfo.scripts.clear();
+		mapInfo.waypoints.clear();
+	}
 	// retail NRPG::CreateGame @0x299150 receives the completed STerrainInfo; the vision tracker
 	// derives its grass-occlusion bitmap from it before registering its cube trackers with the map.
 	pRPGGame = NRPG::CreateGame( pAIMap, pPathNetwork, mapInfo.terrain );
@@ -1746,6 +1795,10 @@ void CWorld::CreateRandom( int nVariantID, const vector<string> &params,
 		//
 		vector<NAI::SPathPlace> empty;
 		pPathNetwork->UpdateColouring( empty );
+		if(bNetworkArena)for(int side=0;side<2;++side)for(const auto& spawn:authoredNetworkSpawns[side]) {
+			NAI::SPosition position;pPathNetwork->SetOnFloor(&position,spawn.nFloor,spawn.ptPos);
+			networkSpawnPositions[side].push_back(position.GetCP());
+		}
 		LoadWaypoints( mapInfo.waypoints );
 		// before this point do not place units
 		pDeployedDeadUnitsPlayer = new CPlayer( L"Deployed dead units fake player", pGlobalGame, 0, -1 );
@@ -2041,7 +2094,7 @@ IPlayer* CWorld::AddPlayer( const wstring &wsName, NRPG::CGlobalPlayer *pGlobalP
 {
 	CFWContext world( &pCurrentWorld, this );
   //  
-	CPlayer *pRes = new CPlayer( wsName, pGlobalGame, pGlobalPlayer, 0 );
+	CPlayer *pRes = new CPlayer( wsName, pGlobalGame, pGlobalPlayer, bNetworkArena ? nPartiesAdded : 0 );
 	csSystem << "User player was created" << endl; // DEBUG
 	RegisterPlayer( pRes );
 	pRes->SetCommander( _pCommander );
@@ -2094,6 +2147,12 @@ IPlayer* CWorld::AddPlayer( const wstring &wsName, NRPG::CGlobalPlayer *pGlobalP
 			placeForUnit = pPathNetwork->GetDeployPlace( placeForUnit, nShift );
 		}
 
+		if (bNetworkArena)
+		{
+			if (nPartiesAdded >= 2 || i >= networkDeployment[nPartiesAdded].size())
+				throw std::runtime_error("network deployment is incomplete");
+			placeForUnit = networkDeployment[nPartiesAdded][i];
+		}
 		if ( pGlobalPlayer->deployData.bPassage )
 		{
 			// passage
@@ -2524,6 +2583,11 @@ void CWorld::ExecuteCommand( CCommand *_pCmd )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CHitLocator* CWorld::GetHitEvent()
 {
+	if (bNetworkArena)
+	{
+		if (networkHitEvents.empty()) return 0;
+		auto* event = networkHitEvents.front().Extract(); networkHitEvents.pop_front(); return event;
+	}
 	if ( eventHits.empty() )
 		return 0;
 	CHitLocator* pPart = eventHits.front().Extract();
@@ -2533,6 +2597,11 @@ CHitLocator* CWorld::GetHitEvent()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CUICmd* CWorld::GetUICommand()
 {
+	if (bNetworkArena)
+	{
+		if (networkUIEvents.empty()) return 0;
+		auto* event = networkUIEvents.front().Extract(); networkUIEvents.pop_front(); return event;
+	}
 	if ( uiCmdsList.empty() )
 		return 0;
 
@@ -2544,6 +2613,11 @@ CUICmd* CWorld::GetUICommand()
 // retail @0x363ff0: pop-front with ownership transfer, same idiom as GetUICommand/GetHitEvent
 CEarthQuakeEvent* CWorld::GetEarthQuakeEvent()
 {
+	if (bNetworkArena)
+	{
+		if (networkEarthQuakes.empty()) return 0;
+		auto* event = networkEarthQuakes.front().Extract(); networkEarthQuakes.pop_front(); return event;
+	}
 	if ( eventEarthQuakes.empty() )
 		return 0;
 	CEarthQuakeEvent* pEvent = eventEarthQuakes.front().Extract();
@@ -2825,6 +2899,7 @@ bool CWorld::CanSeeAction( IPlayer *_pPlayer )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::UpdateWorld( STime tScene, IPlayer *pPlayer )
 {
+	if (bNetworkArena || bNetworkReplica) return;
 	CFWContext world( &pCurrentWorld, this );
 	ASSERT( IsValid( pTime ) );
 	STime tCurrent = pTime->GetValue();
@@ -2849,6 +2924,19 @@ void CWorld::UpdateWorld( STime tScene, IPlayer *pPlayer )
 			nSkipped++;
 		}
 	}
+}
+void CWorld::AdvanceNetworkSegment()
+{
+	if (!bNetworkArena || bNetworkReplica) return;
+	CFWContext context(&pCurrentWorld, this);
+	pTime->Set(pTime->GetValue() + DW_SEGMENT_TIME);
+	MarkNewDGFrame();
+	CDGPtr<CFuncBase<STime> > clock(pTime);
+	clock.Refresh();
+	pAimTime->Set(pTime->GetValue() - tHiddenDelta);
+	CDGPtr<CFuncBase<STime> > aim(pAimTime);
+	aim.Refresh();
+	Segment();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail luaObjectPlaceInPocket @0x2e9000: if not pocketed yet -- pocket (non-master hold),
@@ -3282,7 +3370,13 @@ void CWorld::OnPassControlNotify()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::OnNewPlayerFastTurnOrTime( const CEventOnNewPlayerFastTurnOrTime &event )
 {
+	if (bNetworkReplica) return;
 	vector< CPtr<CPlayer> > players;
+	if (IsValid(event.pPlayer)) {
+		GetPlayersList(&players);
+		if (std::find(players.begin(),players.end(),event.pPlayer)==players.end()) return;
+		players.clear();
+	}
 	if ( !IsValid( event.pPlayer ) )
 		GetPlayersList( &players );
 	else

@@ -424,6 +424,7 @@ public:
 		bSwitch = false;
 	}
 	void SetVolume( int n ) {
+        n = Clamp(n, 0, nMusicVolume);
 #if defined(S2_NATIVE_MUSIC)
 		if ( music ) music->SetVolume( n / 255.0f );
 #else
@@ -778,7 +779,7 @@ CSound3D *Play3DSound( const SPlayParams &params )
 // bUseExisting adopts an already-open stream of the SAME file (cross-scene music continuity).
 CStream* PlayStream( const char *pszName, bool bUseExisting, int nStartMs, bool bLoop, float fFadeInSec )
 {
-	if ( !bIsFMODInitialized || nMusicVolume == 0 || !pszName )
+	if ( !bIsFMODInitialized || !pszName )
 		return 0;
 	if ( bUseExisting )
 	{
@@ -862,9 +863,9 @@ void SetMusicMasterVolume( int nMusic )
 {
 	if ( !bIsFMODInitialized )
 		return;
+	nMusicVolume = Clamp(nMusic, 0, 255);
 	for ( CStreamList::iterator i = streams.begin(); i != streams.end(); ++i )
-		(*i)->SetVolume( nMusic );
-	nMusicVolume = nMusic;
+		(*i)->SetVolume( nMusicVolume );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void SetSpeakerType( ESpeakerType speaker )

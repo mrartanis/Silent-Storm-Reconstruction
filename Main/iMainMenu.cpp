@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "NetworkDiagnostics.h"
+#include "../Game/Platform.h"
 #include "Transform.h"
 #include "GView.h"
 #include "G2DView.h"
@@ -19,6 +21,7 @@
 #include "iSideMenu.h"
 #include "iCustomGameMenu.h"   // NGame::CICCustomGameMenu (the custom-game / mods-browser screen)
 #include "iOptionsMenu.h"
+#include "iNetworkMenu.h"
 #include "iCreditsScreen.h"
 #include "..\Misc\StrProc.h"
 #include "..\MiscDll\Commands.h"
@@ -130,6 +133,10 @@ CMainMenuUI::CMainMenuUI( const SWindowInfo &sInfo ):
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CMainMenuUI::ProcessMessage( const SEvent &sEvent )
 {
+	if (sEvent.nEvent == EVENT_NOTIFY && sEvent.szID == "network")
+	{
+		NMainLoop::Command(new NGame::CICNetworkMenu); return true;
+	}
 	switch( sEvent.nEvent )
 	{
 		case EVENT_TEMPLATELOAD:
@@ -154,6 +161,8 @@ bool CMainMenuUI::ProcessMessage( const SEvent &sEvent )
 			pOptions    = pButtonsLine2->AddHoverButton( "options",    0x4beb, GetDBString( 0x2b79 ) + GetDBString( 0x2a98 ), GetDBString( 0x2b7a ) + GetDBString( 0x2a98 ), GetDBString( 0x43bb ) + GetDBString( 0x2a98 ) );
 			pCredits    = pButtonsLine2->AddHoverButton( "credits",    0x4bee, GetDBString( 0x2b79 ) + GetDBString( 0x2a99 ), GetDBString( 0x2b7a ) + GetDBString( 0x2a99 ), GetDBString( 0x43bb ) + GetDBString( 0x2a99 ) );
 			pQuit       = pButtonsLine2->AddHoverButton( "quit",       0x4bec, GetDBString( 0x2b79 ) + GetDBString( 0x2a9a ), GetDBString( 0x2b7a ) + GetDBString( 0x2a9a ), GetDBString( 0x43bb ) + GetDBString( 0x2a9a ) );
+			const wstring networkCaption = L"\u0421\u0435\u0442\u0435\u0432\u0430\u044f \u0438\u0433\u0440\u0430";
+			pButtonsLine2->AddHoverButton("network",0,GetDBString(0x2b79)+networkCaption,GetDBString(0x2b7a)+networkCaption,GetDBString(0x43bb)+networkCaption);
 			break;
 		}
 	}
@@ -173,6 +182,7 @@ class CMainMenuInterface: public CRenderBaseInterface
 	OBJECT_BASIC_METHODS(CMainMenuInterface);
 private:
 	NInput::CBind bindTutorial, bindCampaign, bindCustomGame, bindLoadGame, bindOptions, bindCredits, bindQuitGame;
+	bool firstFrameReported = false;
 
 	ZDATA_(CRenderBaseInterface)
 	CObj<NUI::CMainMenuUI> pMainMenuUI;
@@ -183,6 +193,7 @@ public:
 	CMainMenuInterface();
 
 	void Initialize();
+	bool RenderWhenInactive() const override { return true; }
 
 	void Step();
 	bool ProcessEvent( const NInput::SEvent &sEvent );
@@ -197,7 +208,9 @@ CMainMenuInterface::CMainMenuInterface():
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMainMenuInterface::Initialize()
 {
+	S2Net::StartupLog("main-menu-world-begin");
 	CRenderBaseInterface::Initialize( N_MAINMENU_TEMPLATE );
+	S2Net::StartupLog("main-menu-world-ready");
 
 	CPtr<NDb::CDBCamera> pDBCamera = NDb::GetDBCamera( N_MAINMENU_CAMERA );
 	ICamera::SCameraPos sCameraPos( pDBCamera->vAnchor, pDBCamera->fDistance, pDBCamera->fPitch, pDBCamera->fYaw, pDBCamera->fRoll, pDBCamera->fFOV );
@@ -311,6 +324,10 @@ void CMainMenuInterface::Step()
 		GetCamera()->SetScreenRect( CTRect<float>( 0.0f, 0.0f, 1.0f, 1.0f ) );
 
 		RenderFrame( GetTime(), GetCamera() );
+        if (!firstFrameReported) {
+            firstFrameReported = true;
+            S2Net::StartupLog(std::string("main-menu-presented focus=") + (S2Platform::Active()?"1":"0"));
+        }
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

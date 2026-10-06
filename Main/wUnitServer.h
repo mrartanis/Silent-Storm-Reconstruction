@@ -241,6 +241,7 @@ public:
 	virtual void GetInfo( NRPG::SUnitInfo *pInfo ) const;
 	virtual IPlayer* GetPlayer() const;
 	virtual NAI::CPath* GetCurrentPath();
+	NAI::CPath* CreateNetworkPreviewPath(CCmd* command);
 	virtual IPathViewer* CreatePathViewer();
 	virtual NRPG::IUnitMissionInfo* GetRPG() const;
 	virtual const NAI::SUnitPosition& GetPosition() const { return GetUnitPosition(); }

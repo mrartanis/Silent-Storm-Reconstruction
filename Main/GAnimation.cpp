@@ -1,5 +1,6 @@
 #if defined(_WIN32)
 #include "StdAfx.h"
+#include <stdexcept>
 #else
 #include "../FileIO/StdAfx.h"
 #include "../FileIO/BasicChunk1.h"
@@ -916,8 +917,15 @@ CSkeletonAnimator::CSkeletonAnimator( NDb::CSkeleton *_pSkeleton )
 	bItem = false;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void CSkeletonAnimator::ApplyNetworkPose( const SSkeletonPose &pose )
+{
+  if ( pose.size() != nBones ) throw std::runtime_error("Invalid network skeleton pose");
+  value = pose; bNetworkPose = true; NetworkFieldsChanged();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CSkeletonAnimator::NeedUpdate()
 {
+  if ( bNetworkPose ) return false;
 	if ( !pTime.Refresh() )
 		return false;
 	if ( pSkeleton )
@@ -939,6 +947,7 @@ bool CSkeletonAnimator::NeedUpdate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSkeletonAnimator::Recalc()
 {
+  if ( bNetworkPose ) return;
 	STime time = pTime->GetValue();
 	if ( value.size() != nBones )
 		value.resize( nBones );

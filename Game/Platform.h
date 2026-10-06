@@ -27,7 +27,11 @@ void Exit();
 void Size(int* width, int* height);
 const S2Display::Metrics& Display();
 void UpdateDisplay(float uiPercent = -1);
-bool SetMode(int width, int height, bool fullscreen);
+enum class WindowMode { Windowed = 0, Fullscreen = 1, Borderless = 2 };
+bool SetMode(int width, int height, WindowMode mode);
+inline bool SetMode(int width, int height, bool fullscreen) {
+  return SetMode(width,height,fullscreen?WindowMode::Fullscreen:WindowMode::Windowed);
+}
 void CursorPosition(float* x, float* y);
 void CaptureMouse(bool capture);
 void UseNativeCursor(bool enabled);

@@ -16,6 +16,7 @@
 #include "iCommonUI.h"
 #include "MemObject.h"
 #include "UnitTracker.h"
+#include "wUnitServer.h"
 #include "iGameStates.h"	// GetSelectionColor (v1.2 selection palette)
 #include "..\Misc\StrProc.h"
 #include "..\DBFormat\DataMap.h"
@@ -86,21 +87,23 @@ void CUnitTracker::SyncAllSkills()
 // UCR_NOT_ENOUGH_AP (real-time: AP accrues). A rejected command is never queued and sTarget is
 // left untouched. The Jan03 IsRealTime()/bInstantly split survives only as Command's submit
 // flavor (retail forces it off for CCmdContinue @0x72b797). NOTE CanDo destroys a zero-ref
-// command, hence the CPtr holder. (Retail's extra bStandUp leg -- WALK-pose cancel + wish-pose,
+// command; the intent holder also survives a network preview envelope. (Retail's extra bStandUp leg -- WALK-pose cancel + wish-pose,
 // v1.2 PK/corpse guards -- is a separate unported parity item.)
 NWorld::EUnitCommandResult CUnitTracker::SetTargetPosition( const NAI::SPosition &sPos, bool bInstantly )
 {
 	CObj<NAI::CPath> pCurrentPath( pUnit->GetCurrentPath() );
-	const bool bContinue = IsValid( pCurrentPath ) && IsSamePlace( sTarget.p, sPos.p );
+	const bool bContinue = IsValid( pCurrentPath ) && (!pMission->IsNetworkClient() || static_cast<NWorld::CUnitServer*>(pUnit.GetPtr())->HasCommand()) && IsSamePlace( sTarget.p, sPos.p );
 
-	CPtr<NWorld::CCmd> pCmd;
+	// The asynchronous preview temporarily owns the command envelope. Keep the
+	// intent owned here until it has also been submitted.
+	CObj<NWorld::CCmd> pCmd;
 	if ( bContinue )
 		pCmd = new NWorld::CCmdContinue;
 	else
 		pCmd = new NWorld::CCmdPath( sPos, NAI::PF_DEFAULT );
 
 	NWorld::EUnitCommandResult eResult = pUnit->CanDo( pCmd );
-	if ( eResult != NWorld::UCR_OK && eResult != NWorld::UCR_NOT_ENOUGH_AP )
+	if ( eResult != NWorld::UCR_OK && eResult != NWorld::UCR_NOT_ENOUGH_AP && eResult != NWorld::UCR_PENDING )
 		return eResult;
 
 	const bool bSubmitInstantly = !bContinue && ( pMission->IsRealTime() || bInstantly );

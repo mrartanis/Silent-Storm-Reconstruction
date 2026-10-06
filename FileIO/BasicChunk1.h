@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <type_traits>
 #include <typeinfo>
+#include <functional>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 externA5 CClassFactory<CObjectBase> *pSSClasses;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +78,26 @@ void RecordRawStructureType( const char *pszType, std::size_t nHostSize, bool bA
 template<int N> struct SGenericNumberTemplate {};
 template<class T> class CArray2D;
 typedef char chunk_id;
+// Optional, session-owned object registry. File serializers never use it.
+// Weak writer holds prevent address reuse from aliasing an old network ID.
+struct CStructureNetworkContext
+{
+	std::unordered_map<CObjectBase*, std::uint32_t> ids;
+	std::unordered_map<std::uint32_t, CPtr<CObjectBase> > refs;
+	std::unordered_map<std::uint32_t, CObj<CObjectBase> > owners;
+	// The engine has two independent ownership domains. Rebuilding a CMObj
+	// field can invalidate an object even while an ordinary CObj holds it.
+	std::unordered_map<std::uint32_t, CMObj<CObjectBase> > missionOwners;
+	std::unordered_map<std::uint32_t, std::uint32_t> types;
+	std::unordered_map<std::uint32_t, std::vector<std::uint8_t> > bodies;
+	std::function<bool(CObjectBase*)> include;
+	// Objects whose fields changed during the latest complete graph read.
+	// Consumers refresh presentation only after all references are restored.
+	std::vector<CPtr<CObjectBase> > changed;
+	std::uint32_t nextID = 1;
+	bool externalReferences = false;
+	std::uint32_t Identify(CObjectBase *p);
+};
 class CStructureSaver
 {
 public:
@@ -84,6 +105,7 @@ public:
 	typedef std::wstring stdWString;
 private:
 	CDataStream &destStream;
+	CStructureNetworkContext *network = nullptr;
 
 	struct CChunkLevel
 	{
@@ -222,6 +244,15 @@ private:
 	template<class T>
 		void __cdecl CallObjectSerialize( const chunk_id idChunk, int nChunkNumber, T *p, SGenericNumberTemplate<1> *pp )
 		{
+			// Legacy overload selection treats payload-less polymorphic bases
+			// (notably CCmd) as blobs, including their native vtable address.
+			// They have no serialized fields; network records must be empty.
+			// Preserve the historical blob layout for ordinary save files.
+			if (network && std::is_base_of<CObjectBase,T>::value)
+			{
+				if (StartChunk(idChunk,nChunkNumber)) FinishChunk();
+				return;
+			}
 			DataScalarChunk( idChunk, p, nChunkNumber,
 				std::integral_constant<bool, S2FileIO::StructureFieldCodec<T>::kPortable>() );
 		}
@@ -430,12 +461,14 @@ public:
 		READ,
 		WRITE
 	};
-	CStructureSaver( CDataStream &res, EMode mode ): destStream(res) 
+	CStructureSaver( CDataStream &res, EMode mode, CStructureNetworkContext *context = nullptr ): destStream(res), network(context)
 	{ 
+		if(network && mode==READ && !network->externalReferences)network->changed.clear();
 		Start( mode == READ ); 
 	}
 	~CStructureSaver() { Finish(); }
 	bool IsReading() { return bIsReading; }
+	bool IsNetwork() const { return network != nullptr; }
 	// file format version (0 = legacy, 1 = release/shipped). Consulted by version-gated operator&.
 	int GetVersion() const { return nVersion; }
 

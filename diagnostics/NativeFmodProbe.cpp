@@ -63,7 +63,17 @@ int main(int argc, char** argv)
       float mutedPeak = 0;
       for (float value : output) mutedPeak = std::max(mutedPeak, std::abs(value));
       if (mutedPeak > 0.000001f) return 13;
+      FSOUND_SetSFXMasterVolume(128);
+      FSOUND_SetCurrentPosition(channel,0);
+      if (!S2FmodRenderForTest(output.data(),output.size()/2)) return 14;
+      float halfPeak=0;for(float value:output)halfPeak=std::max(halfPeak,std::abs(value));
       FSOUND_SetSFXMasterVolume(255);
+      FSOUND_SetCurrentPosition(channel,0);
+      if (!S2FmodRenderForTest(output.data(),output.size()/2)) return 15;
+      float restoredPeak=0;for(float value:output)restoredPeak=std::max(restoredPeak,std::abs(value));
+      const float ratio=halfPeak/restoredPeak;
+      if(restoredPeak<=0.0000001f || ratio<0.45f || ratio>0.55f)return 16;
+      std::printf("Live master gain: muted=%g half/full=%g restored=%g\n",mutedPeak,ratio,restoredPeak);
     }
     FSOUND_StopSound(channel);
     FSOUND_Sample_Free(sample);

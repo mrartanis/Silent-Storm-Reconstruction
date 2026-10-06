@@ -106,6 +106,7 @@ private:
 	bool bJustUnhided;
 	CPtr<CObjectBase> pAIMapHull;
 public:
+	NAnimation::CSkeletonAnimator* GetNetworkSkeletonAnimator() { return animator.GetSkeletonAnimator(); }
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pRPG); f.Add(3,&nextLock); f.Add(4,&bLocksTwoPlaces); f.Add(5,&position); f.Add(6,&bStrafe); f.Add(7,&wishPose); f.Add(8,&pWorld); f.Add(9,&bindGlobal); f.Add(10,&bUndrawWeapon); f.Add(11,&bNoHeavyWeapon); f.Add(12,&miscObjects); f.Add(13,&pModel); f.Add(14,&bIsPKWhichIsWeared); f.Add(15,&pHandModel); f.Add(16,&pHandEffect); f.Add(17,&tBeginHandEffect); f.Add(18,&bBloodyDeath); f.Add(19,&animator); f.Add(20,&nPrevFloor); f.Add(21,&bHeadless); f.Add(22,&bCanHide); f.Add(23,&bTemporaryAimed); f.Add(24,&vPrevGetCorpseAIPosition); f.Add(25,&bNotAddedToVisitors); f.Add(26,&attachedEffects); f.Add(27,&bTrackSequence); f.Add(28,&corpseHLpos); return 0; }
 
 public:

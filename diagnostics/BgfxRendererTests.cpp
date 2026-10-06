@@ -17,6 +17,7 @@
 #include "../Main/DisplayLayout.h"
 #include "../FileIO/Streams.h"
 #include <SDL3/SDL.h>
+#include <bgfx/bgfx.h>
 #include "FrameProfiler.h"
 
 namespace {
@@ -613,6 +614,38 @@ int RunDisplay() {
   std::printf("English/Cyrillic vector atlas upload, descriptor serialization (%d bytes), metrics restoration and device generation passed, pixels=%d\n",wire.GetSize(),lit);
   NGScene::ClearVectorFonts(); return 0;
 }
+
+int RunFocusRestore() {
+  SDL_ShowWindow(S2Platform::Window());
+  SDL_RaiseWindow(S2Platform::Window());
+  S2Platform::PumpEvents();
+  const SDL_DisplayMode desktop=*SDL_GetDesktopDisplayMode(SDL_GetDisplayForWindow(S2Platform::Window()));
+  NGfx::SRenderTargetsInfo targets;targets.nRegisters=1;targets.AddTex(16,1);
+  for(auto mode:{NGfx::WINDOWED,NGfx::BORDERLESS,NGfx::FULL_SCREEN}) {
+    const bool exclusive=mode==NGfx::FULL_SCREEN;
+    if(!NGfx::SetMode(NGfx::SVideoMode(exclusive?desktop.w:800,exclusive?desktop.h:600,32,mode),targets))return 170;
+#if defined(_WIN32)
+    // A worker can wait for window messages from this very thread in Present.
+    if(bgfx::getCaps()->supported & BGFX_CAPS_RENDERER_MULTITHREADED)return 171;
+#endif
+    for(int cycle=0;cycle<6;++cycle) {
+      S2Platform::PumpEvents();
+      {NGfx::CRenderContext frame;frame.ClearBuffers(0xff224466);NGfx::Flip();}
+      SDL_MinimizeWindow(S2Platform::Window());SDL_SyncWindow(S2Platform::Window());S2Platform::PumpEvents();
+      S2Platform::Delay(30);
+      SDL_RestoreWindow(S2Platform::Window());SDL_RaiseWindow(S2Platform::Window());SDL_SyncWindow(S2Platform::Window());S2Platform::PumpEvents();
+      NGfx::CheckBackBufferSize();
+      {NGfx::CRenderContext frame;frame.ClearBuffers(0xff224466);NGfx::Flip();}
+      // Opening options takes a GPU readback after the restored frame.
+      CArray2D<NGfx::SPixel8888> image;NGfx::MakeScreenShot(&image,false);
+      if(image.GetXSize()<128 || image.GetYSize()<128 || !Color(image,64,64,0x22,0x44,0x66))return 172;
+    }
+  }
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 173;
+  std::puts("18 windowed/borderless/fullscreen minimize/restore cycles: presentation and options readback passed");
+  return 0;
+}
+
 int Run() {
   NGfx::SRenderTargetsInfo targets;targets.nRegisters=1;targets.AddTex(16,1);
   if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 3;
@@ -695,7 +728,8 @@ int main(int argc,char** argv) {
   S2Platform::SetErrorDialogs(false);
   if(!S2Platform::Init("Silent Storm bgfx regression",128,128,true))return 1;
   if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow()))) {S2Platform::Done();return 2;}
-  int result=argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
+  int result=argc>1 && std::string(argv[1])=="--focus-restore" ? RunFocusRestore() :
+             argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
              argc>1 && std::string(argv[1])=="--geometry" ? RunGeometry() :
              argc>1 && std::string(argv[1])=="--partial" ? RunPartialGeometry() :
              argc>1 && std::string(argv[1])=="--index-ring" ? RunIndexRing() :

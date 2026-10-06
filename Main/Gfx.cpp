@@ -479,12 +479,17 @@ static bool InitD3D()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SetMode( const SVideoMode &m, const SRenderTargetsInfo &_rtInfo )
 {
-	if ( !S2Platform::SetMode( m.nXSize, m.nYSize, m.fullScreen == FULL_SCREEN ) )
+	if ( !S2Platform::SetMode( m.nXSize, m.nYSize, static_cast<S2Platform::WindowMode>(m.fullScreen) ) )
 		return false;
-	if ( !FillPresent( m ) )
+	SVideoMode actual = m;
+	if (m.fullScreen == BORDERLESS) {
+		actual.nXSize = S2Platform::Display().pixelWidth;
+		actual.nYSize = S2Platform::Display().pixelHeight;
+	}
+	if ( !FillPresent( actual ) )
 		return false;
 	rtInfo = _rtInfo;
-	videoMode = m;
+	videoMode = actual;
 	HRESULT hr = ResetDevice();
 	return D3D_OK == hr;
 }

@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "NetworkWorld.h"
+#include "iNetworkMenu.h"
 #include "DisplayLayout.h"
 #if !defined(_WIN32)
 #include <filesystem>
@@ -169,6 +171,26 @@ CMission::CMission():
 {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+bool CMission::InitializeNetwork(std::shared_ptr<S2Net::NetworkWorld> world, std::shared_ptr<S2Net::NetworkSession> session)
+{
+	networkWorld = std::move(world); networkSession = std::move(session);
+	bCanSave = false; bCanRestart = false;
+	networkWorld->BindSession(networkSession);
+	pWorld = networkWorld->Match().world.GetPtr();
+	return Initialize(networkWorld->Match().templateID,networkWorld->Match().variantID,
+		nullptr,vector<string>(),networkWorld->Match().game);
+}
+void CMission::StopAction()
+{
+	if (!networkSession) { CMissionBase::StopAction(); return; }
+	vector<CPtr<IUnitTracker> > selected;
+	GetSelectedUnits(&selected);
+	for (auto unit : selected) Command(new NWorld::CCmdCancel(unit->GetUnit()));
+}
+void CMission::PauseGame(bool state)
+{
+	if (!networkSession) CMissionBase::PauseGame(state);
+}
 bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenarioZone *_pZone, const vector<string> &params, NRPG::CGlobalGame *_pGlobalGame, NDb::CUITexture *_pPWLImage )
 {
 	pZone = _pZone;
@@ -234,7 +256,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 		pWorld->CreateRandom( nVariantID, params, true, clues,
 			nMobsLevel, &pPostInfo, sSeed );
 	}
-	else
+	else if (!networkSession)
 		pWorld->CreateRestored( pGlobalGame );	// retail @0x36e100: rebind the live global game + refresh buildings
 
 	ShowLoadingScreen( 50 );   // world object built (release counter band boundary [50,75])
@@ -294,12 +316,14 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 			pCWorld->GetOwnScript()->SetScriptInterface( pInterface );
 	}
 
-	playersSet.resize( pGlobalGame->players.size() );
-	for ( int nTemp = 0; nTemp < pGlobalGame->players.size(); nTemp++ )
+	playersSet.resize( networkSession ? 1 : pGlobalGame->players.size() );
+	for ( int nTemp = 0; nTemp < playersSet.size(); nTemp++ )
 	{
 		WCHAR wsString[1024];
 		swprintf( wsString, sizeof(wsString) / sizeof(wsString[0]), L"Player %d", nTemp );
-		playersSet[nTemp] = new CPlayerTracker( this, pGlobalGame->players[nTemp], wsString );
+		unsigned slot = networkSession ? networkSession->LocalSlot() : nTemp;
+		playersSet[nTemp] = new CPlayerTracker( this, pGlobalGame->players[slot], wsString,
+			networkSession ? networkWorld->Match().players[slot].GetPtr() : nullptr );
 		// retail @0x200690: stamp the variant's inclusive cut-floor range on each tracker's OWN
 		// camera right after creation (tracker vtbl+0x18 GetCamera -> camera vtbl+0x3c
 		// SetCutFloorRange @0xcba10; retail passes variant min / max-1 -- the same inclusive range
@@ -350,8 +374,11 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 	SetUpdatedStates( updatedStatesSet );
 
 	CDynamicCast<NWorld::CWorld> liveWorld(pWorld);
-	if (IsValid(liveWorld)) liveWorld->RepairInactiveSequenceFlags();
-	pWorld->RunPostInit( pPostInfo );
+	if (!networkSession)
+	{
+		if (IsValid(liveWorld)) liveWorld->RepairInactiveSequenceFlags();
+		pWorld->RunPostInit( pPostInfo );
+	}
 
 	// retail zone-entry focus floor: the deploy camera-focus path (CUICmdUnitCameraExec::Update
 	// @0x24eae0 -> CCamera::ShowPlacesFromBestPoint @0xcf1c0 tail) sets the camera cut floor to the
@@ -446,7 +473,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 	// it drains AFTER CICBeginMission::Exec has installed this mission into the interface stack,
 	// so the snapshot contains the fresh mission (an inline save here would capture the OLD stack).
 	// The pause/lose-menu "Restart mission" button loads it back via CICLoadFile.
-	NMainLoop::Command( new NMainLoop::CICSaveFile( "restart.sav" ) );
+	if (!networkSession) NMainLoop::Command( new NMainLoop::CICSaveFile( "restart.sav" ) );
 
 	ShowLoadingScreen( 100 );  // mission fully initialized (release finish helper @0x1fb600 paints 100%)
 
@@ -455,6 +482,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::Terminate()
 {
+	if (networkSession) { networkSession->Finish("Player left"); return; }
 	// retail @0x1fbc30: save this zone's world for re-entry ONLY when it is the scenario base,
 	// a linked (multi-template) zone, or the script enabled the "reenter" feature. Carried
 	// corpses are dropped from the world first (they leave in their carrier's arms), then the
@@ -474,6 +502,7 @@ void CMission::Terminate()
 void CMission::Command( NWorld::CCommand *pCmd )
 {
 	bForceUpdateNextFrame = true;
+	if (networkSession) { networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return; }
 
 	ASSERT( pCmd );
 	pActivePlayer->GetCommander()->Do( pCmd );
@@ -483,6 +512,14 @@ void CMission::Command( NWorld::CCommand *pCmd )
 void CMission::DoEvent( NWorld::CCommand *pCmd )
 {
 	bForceUpdateNextFrame = true;
+	// Inventory open/close and other campaign UI hooks have no arena script.
+	if (networkSession && dynamic_cast<NWorld::CCmdCallScriptFunction*>(pCmd)) {
+		CObj<NWorld::CCommand> hold(pCmd);return;
+	}
+	if (networkSession && networkSession->LocalSlot()!=0 && dynamic_cast<NWorld::CCmdInterfaceEvent*>(pCmd)) {
+		CObj<NWorld::CCommand> hold(pCmd);return;
+	}
+	if (networkSession) { networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return; }
 
 	ASSERT( pCmd );
 	pActivePlayer->GetCommander()->DoEvent( pCmd );
@@ -625,6 +662,7 @@ void CMission::GetActionInfo( EUnitAction eAction, SActionInfo *pInfo )
 {
 	*pInfo = actionsInfoSet[eAction];
 }
+bool CMission::IsNetworkClient() const {return networkSession && !networkSession->IsHost();}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail CMission::CanDoCommand @0x1fbf10 (mission vtbl+0xa8): only CCmdEndOfTurn is gated -- a 2s
 // cooldown after the world current-player change (UI clock); every other command is true.
@@ -649,6 +687,10 @@ void CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoTarget, SActionInfo *pI
 	pInfo->bAvailable = false;
 	switch( pInfo->eResult )
 	{
+	case NWorld::UCR_PENDING:
+		pInfo->bAvailable = true;
+		pInfo->bEnoughAP = false;
+		break;
 	case NWorld::UCR_UNAVAILABLE:
 	case NWorld::UCR_INVALID_COMMAND:
 		pInfo->bOk = false;
@@ -720,6 +762,7 @@ static int UCRRetailOrdinal( NWorld::EUnitCommandResult eRes )
 	case NWorld::UCR_TARGET_OUT_OF_RANGE:			return 13;
 	case NWorld::UCR_NEED_HIGHER_SKILL:				return 15;
 	case NWorld::UCR_CANT_SEE_TARGET:              return 14;
+	case NWorld::UCR_PENDING:                     return 22;
 	case NWorld::UCR_CANT_HEAL:						return 16;
 	case NWorld::UCR_DOOR_LOCKED:					return 17;
 	case NWorld::UCR_INVENTORY_NO_PLACE:			return 18;
@@ -759,6 +802,7 @@ NWorld::EUnitCommandResult CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoT
 	int nMinAP = -1, nMaxAP = -1;
 	bool bHaveAP = false;
 	bool bHaveRes = false;
+	bool bPending = false;
 	NWorld::EUnitCommandResult eTotalRes = NWorld::UCR_OK;
 	for ( vector< CPtr<IUnitTracker> >::iterator iTemp = unitsSet.begin(); iTemp != unitsSet.end(); iTemp++ )
 	{
@@ -787,7 +831,10 @@ NWorld::EUnitCommandResult CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoT
 		}
 
 		int nStartAP = -1, nFullAP = -1;
-		NWorld::EUnitCommandResult eRes = pUnit->CanDo( pCmd, &nStartAP, &nFullAP );
+		NWorld::EUnitCommandResult eRes = networkSession && !networkSession->IsHost()
+			? networkWorld->Preview(static_cast<NWorld::CUnitServer*>(pUnit.GetPtr()),pCmd,&nStartAP,&nFullAP,bNoTarget)
+			: pUnit->CanDo( pCmd, &nStartAP, &nFullAP );
+		bPending = bPending || eRes == NWorld::UCR_PENDING;
 
 		// retail min/max fold over the full-action AP; units reporting -1 are skipped
 		if ( nFullAP != -1 )
@@ -832,11 +879,16 @@ NWorld::EUnitCommandResult CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoT
 	if ( pnMaxAP )
 		*pnMaxAP = nMaxAP;
 
-	return eTotalRes;
+	return bPending ? NWorld::UCR_PENDING : eTotalRes;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::UpdateActionsInfo()
 {
+	if(networkSession && !networkSession->IsHost()) {
+		vector<CPtr<IUnitTracker>> selected;GetSelectedUnits(&selected);
+		std::vector<NWorld::CUnit*> units;for(auto tracker:selected)units.push_back(tracker->GetUnit());
+		networkWorld->SetPreviewSelection(units);
+	}
 	// retail SActionInfo::SetValid @0x1a18d0 -- the "instant OK, zero AP" filler retail's
 	// UpdateActionsInfo (@0x1fb9c0) applies to the always-possible actions
 	actionsInfoSet[UA_DEFAULT].SetValid();
@@ -1119,6 +1171,25 @@ void CMission::SetPanelState( int nMask, bool bState )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::Step()
 {
+	if (networkSession)
+	{
+		networkSession->Poll();
+		if(networkWorld->TakePreviewUpdated())bForceUpdateNextFrame=true;
+		auto error=networkWorld->TakeCommandError();
+		if(error!=NWorld::UCR_OK)ShowError(this,error);
+		if (networkSession->IsHost() && networkSession->State() == S2Net::SessionState::Playing)
+		{
+			int winner = networkWorld->Match().Winner();
+			if (winner != -2) networkSession->Finish(winner == -1 ? "Draw" : winner == 0 ? "Host won" : "Client won");
+		}
+		if (networkSession->State() == S2Net::SessionState::Finished || networkSession->State() == S2Net::SessionState::Failed)
+		{
+			if (networkLeaveRequested) NMainLoop::Command(new CICMainMenu());
+			else NMainLoop::Command(new CICNetworkMenu(0,7780,"127.0.0.1",networkSession->Status()));
+			return;
+		}
+		bWaitForPartFinished = false;
+	}
 	// release CMissionBase::Step @0x1a3ad0 head -- ALL of this was missing (retail's CMission
 	// overrides neither Step nor InternalStep: no such symbol exists, so @0x1a3ad0 IS the mission's
 	// Step). Three pieces, in retail's order, before CanRender:
@@ -1161,7 +1232,7 @@ void CMission::Step()
 				pActivePlayer->GetPlayer(), bShowAllCheat || bCheatVisibility );
 
 			InternalStep();
-			if ( !bWaitForPartFinished )
+			if ( networkSession || !bWaitForPartFinished )
 				break;
 			MarkNewDGFrame();
 			// retail @0x5a3c56: a queued interface command (load/exit) aborts the skip fast-forward
@@ -1274,7 +1345,7 @@ void CMission::InternalStep()
 	for ( vector< CObj<IPlayerTracker> >::iterator iPlayer = playersSet.begin(); iPlayer != playersSet.end(); iPlayer++ )
 		(*iPlayer)->Update( (*iPlayer)->GetPlayer() == pWorld->GetCurrentPlayer() );
 
-	if ( !bLoseSignalSended && pActivePlayer->IsPlayerLoser() )
+	if ( !networkSession && !bLoseSignalSended && pActivePlayer->IsPlayerLoser() )
 	{
 		// BUG 3 (delayed Lose dialog) -- retail plumbing now ported (W3.3): GameStep @0x2017a0 (single-player
 		// defeat) fires OnPlayerLose wrapped in a CCmdDelayedCallGameOver (nMaxDelay = 4000ms, ctor @0x204b50).
@@ -1365,6 +1436,7 @@ void CMission::InternalStep()
 // 20238 "You can leave the combat area.", 20239 "Can't leave the area. Not all units at the border."
 bool CMission::CanLeaveZone( wstring *pwsReason )
 {
+	if (networkSession) { *pwsReason = L"Network match"; return false; }
 	vector< CPtr<NWorld::CUnit> > unitsSet;
 	GetActivePlayer()->GetPlayer()->GetUnits( &unitsSet );
 
@@ -1424,6 +1496,14 @@ bool CMission::CanLeaveZone( wstring *pwsReason )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CMission::ProcessEvent( const NInput::SEvent &sEvent )
 {
+	if (networkSession)
+	{
+		if (bindSaveMenu.ProcessEvent(sEvent) || bindLoadMenu.ProcessEvent(sEvent)) return true;
+		if (bindGameMenu.ProcessEvent(sEvent) || bindEndMission.ProcessEvent(sEvent))
+		{
+			networkLeaveRequested = true; networkSession->Finish("Player left"); return true;
+		}
+	}
 	NInput::SetSection( "game" );
 
 	pCursor->ProcessEvent( sEvent );
@@ -1689,7 +1769,7 @@ bool CMission::ProcessEvent( const NInput::SEvent &sEvent )
 	{
 		SActionInfo sInfo;
 		GetActionInfo( UA_CONTINUE, &sInfo );
-		if ( sInfo.bAvailable && sInfo.bOk )
+		if ( sInfo.bAvailable && (sInfo.bOk || sInfo.eResult==NWorld::UCR_PENDING) )
 		{
 			vector<CPtr<IUnitTracker> > unitsSet;
 			GetSelectedUnits( &unitsSet );
@@ -2046,7 +2126,7 @@ void CMission::WeaponReload()
 {
 	SActionInfo sInfo;
 	GetActionInfo( UA_WEAPONRELOAD, &sInfo );
-	if ( sInfo.eResult != NWorld::UCR_OK )
+	if ( sInfo.eResult != NWorld::UCR_OK && sInfo.eResult != NWorld::UCR_PENDING )
 	{
 		ShowError( this, sInfo.eResult );
 		return;
@@ -2256,7 +2336,7 @@ void CMission::UnitCollectAP( NWorld::ECollectSnipeAP eAP )
 
 	SActionInfo sAction;
 	GetActionInfo( eAction, &sAction );
-	if ( sAction.eResult != NWorld::UCR_OK )
+	if ( sAction.eResult != NWorld::UCR_OK && sAction.eResult != NWorld::UCR_PENDING )
 	{
 		ShowError( this, sAction.eResult );
 		return;

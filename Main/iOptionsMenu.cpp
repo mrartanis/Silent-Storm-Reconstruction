@@ -476,7 +476,7 @@ void CVideoOptionsUI::UpdateFromConfig()
 		if(IsValid(combo) && (!configInitialized || combo->GetSelectedItem()!=value)) combo->SetSelectedItem(value);
 	};
 	select(pResolution,GetCurrentResolution());
-	select(pFullscreen,NGlobal::GetVar("gfx_fullscreen",0).GetInt()!=0);
+	select(pFullscreen,NGlobal::GetVar("gfx_fullscreen",0).GetInt());
 	select(pAnisotropicLevel,NGlobal::GetVar("gfx_anisotropic_filter",1).GetInt()>1?16:1);
 	select(pVSync,NGlobal::GetVar("gfx_vsync",1).GetInt()!=0);
 	select(pAntialiasing,NGlobal::GetVar("gfx_antialiasing",0).GetInt()==1?1:0);
@@ -490,7 +490,7 @@ void CVideoOptionsUI::ArrangeControls()
 	// windows here: combo drop-down lists also belong directly to this panel.
 	CComplexComboBox* combos[]={pResolution,pFullscreen,pAnisotropicLevel,pVSync,pAntialiasing,pShowFPS};
 	const wchar_t* labels[]={VideoText(L"RESOLUTION",L"\u0420\u0410\u0417\u0420\u0415\u0428\u0415\u041d\u0418\u0415"),
-		VideoText(L"FULLSCREEN",L"\u041f\u041e\u041b\u041d\u042b\u0419 \u042d\u041a\u0420\u0410\u041d"),
+		VideoText(L"WINDOW MODE",L"\u0420\u0415\u0416\u0418\u041c \u041e\u041a\u041d\u0410"),
 		VideoText(L"ANISOTROPY",L"\u0410\u041d\u0418\u0417\u041e\u0422\u0420\u041e\u041f\u0418\u042f"),L"V-SYNC",
 		VideoText(L"ANTIALIASING",L"\u0421\u0413\u041b\u0410\u0416\u0418\u0412\u0410\u041d\u0418\u0415"),
 		VideoText(L"SHOW FPS",L"\u041f\u041e\u041a\u0410\u0417\u0410\u0422\u042c FPS")};
@@ -541,12 +541,12 @@ bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 				(IsValid(pFullscreen) && event.szID==pFullscreen->GetWindowID()))
 			{
 				if(pResolution->GetSelectedItem()==GetCurrentResolution() &&
-					pFullscreen->GetSelectedItem()==(NGlobal::GetVar("gfx_fullscreen",0).GetInt()!=0))
+					pFullscreen->GetSelectedItem()==NGlobal::GetVar("gfx_fullscreen",0).GetInt())
 				{ bIgnoreNotify=false; return true; }
 				NGScene::BeginDisplayChange();
 				SetCurrentResolution(pResolution->GetSelectedItem());
 				NGlobal::SetVar("gfx_fullscreen",pFullscreen->GetSelectedItem());
-				if(event.szID==pFullscreen->GetWindowID() && pFullscreen->GetSelectedItem())
+				if(event.szID==pFullscreen->GetWindowID() && pFullscreen->GetSelectedItem()==1)
 				{
 					// Arbitrary window dimensions are not necessarily monitor modes.
 					int width,height; NGScene::GetConfiguredVideoMode(&width,&height);
@@ -578,7 +578,9 @@ bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 			pResolution=new CComplexComboBox(event.pLoader->GetControl("resolution"));
 			RefreshModes();
 			pFullscreen=new CComplexComboBox(event.pLoader->GetControl("quality"));
-			AddToggleItems(pFullscreen);
+			pFullscreen->AddItem(0,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Window",L"\u041e\u043a\u043d\u043e")),171);
+			pFullscreen->AddItem(1,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Fullscreen",L"\u041f\u043e\u043b\u043d\u044b\u0439 \u044d\u043a\u0440\u0430\u043d")),172);
+			pFullscreen->AddItem(2,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Borderless",L"\u0411\u0435\u0437 \u0440\u0430\u043c\u043a\u0438")),173);
 			pAnisotropicLevel=new CComplexComboBox(event.pLoader->GetControl("anisotropic_level"));
 			pAnisotropicLevel->AddItem(1,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Off",L"\u0412\u044b\u043a\u043b.")),171);
 			pAnisotropicLevel->AddItem(16,CComplexComboBox::SInfo(wstring(L"<right>")+VideoText(L"Maximum",L"\u041c\u0430\u043a\u0441\u0438\u043c\u0443\u043c")),173);
@@ -657,15 +659,21 @@ bool CAudioOptionsUI::ProcessMessage( const SEvent &sEvent )
 	{
 	case EVENT_NOTIFY:
 		{
-			if ( sEvent.szID == "apply" )
-			{
-				NGlobal::SetVar( "sound_sfxvolume", pSoundVolume->GetValue() );
-				NGlobal::SetVar( "sound_musicvolume", pMusicVolume->GetValue() );
-			}
+			if (sEvent.szID == "apply" || sEvent.szID == "sound_volume" || sEvent.szID == "music_volume")
+            {
+                // The shipped audio page has no Apply button. Scroll notifications
+                // must update the live mixer, including already playing channels.
+                NGlobal::SetVar("sound_sfxvolume", pSoundVolume->GetValue());
+                NGlobal::SetVar("sound_musicvolume", pMusicVolume->GetValue());
+                NGlobal::SaveConfig(".\\cfg\\config.cfg");
+            }
 			else if ( sEvent.szID == "default" )
 			{
 				pSoundVolume->SetValue( 1.0f );
 				pMusicVolume->SetValue( 0.5f );
+                NGlobal::SetVar("sound_sfxvolume", pSoundVolume->GetValue());
+                NGlobal::SetVar("sound_musicvolume", pMusicVolume->GetValue());
+                NGlobal::SaveConfig(".\\cfg\\config.cfg");
 			}
 
 			break;
@@ -1252,6 +1260,7 @@ private:
 
 public:
 	COptionsInterface();
+	bool RenderWhenInactive() const override { return true; }
 
 	void Initialize( EOptionsScreen eScreen, NGScene::CScreenshotTexture *pScreenShotTexture );
 

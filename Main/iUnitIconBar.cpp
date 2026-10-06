@@ -248,7 +248,8 @@ void CIconBarSet::CreateButton( int nNormalIcon, int nDisabledIcon, CComplexButt
 	CPtr<CComplexButton> pButton = iconsSet[nSlot].pButton;
 	pButton->Set( pNormalIcon, pDisabledIcon, eState, szID );
 	pButton->SetStyle( STYLE_VISIBLE, true );
-	pButton->SetStyle( STYLE_ENABLED, sActionInfo.bOk );
+	// A click is an intent; the host validates it even while a probe is pending.
+	pButton->SetStyle( STYLE_ENABLED, sActionInfo.bOk || sActionInfo.eResult==NWorld::UCR_PENDING );
 
 	CPtr<CToolTip> pToolTip = pButton->GetToolTip();
 	pToolTip->SetText( GetDBString( nToolTipID ) );

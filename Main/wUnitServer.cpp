@@ -497,6 +497,11 @@ void CUnitServer::DynamicallyLockWay( CPtr<NAI::CPath> pPath )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 EUnitCommandResult CUnitServer::CanDo( CCmd *p, int *pnStartAP, int *pnFullAP )
 {
+	if (GetWorld()->bNetworkReplica)
+	{
+		if (GetWorld()->networkPreview) return GetWorld()->networkPreview(this,p,pnStartAP,pnFullAP);
+		return UCR_UNAVAILABLE;
+	}
 	CPtr<CCmd> pCmdHolder = p;
 
 	if ( pnStartAP )
@@ -670,6 +675,7 @@ CCommandExecute* CUnitServer::CreateExecutor( CCmd *pCmd, EUnitCommandResult *pE
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitServer::RefreshExecutor()
 {
+	if (GetWorld()->bNetworkReplica) return;
 	if ( IsValid( pExec ) )
 		return;
 	if ( !IsValid( pCurrentCmd ) )
@@ -1406,10 +1412,26 @@ bool CUnitServer::CheckSpot( CUnitServer *pTarget )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 NAI::CPath* CUnitServer::GetCurrentPath()
 {
+	if (GetWorld()->bNetworkReplica)
+	{
+		if (GetWorld()->networkPreviewPath) {
+			auto* preview = GetWorld()->networkPreviewPath(this); if (preview) return preview;
+		}
+		return IsValid(pExec) ? pExec->GetCurrentPath() : nullptr;
+	}
 	RefreshExecutor();
 	if ( IsValid( pExec ) )
 		return pExec->GetCurrentPath();
 	return 0;
+}
+NAI::CPath* CUnitServer::CreateNetworkPreviewPath(CCmd* command)
+{
+	if (GetWorld()->bNetworkReplica) return nullptr;
+	EUnitCommandResult result=UCR_OK;
+	CObj<CCommandExecute> executor=pState->CreateExecutor(command,&result);
+	if (!IsValid(executor)) return nullptr;
+	CObj<NAI::CPath> path=executor->GetCurrentPath();
+	return path.Extract();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 IPathViewer* CUnitServer::CreatePathViewer()
@@ -1885,6 +1907,7 @@ bool CUnitServer::IsDead() const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitServer::OnNewPlayerFastTurnOrTime( const CEventOnNewPlayerFastTurnOrTime &event )
 {
+	if (GetWorld()->bNetworkReplica) return;
 	// retail @0x3c0300: re-arm hiding at the start of THIS unit's own player fast-turn (or a player-less
 	// forced-real-time tick). Pairs with Hide()'s bCanHide=false-on-unhide so a unit that unhid can hide again
 	// only after its next turn -- WITHOUT this the gate would permanently lock out re-hiding.
@@ -1894,6 +1917,7 @@ void CUnitServer::OnNewPlayerFastTurnOrTime( const CEventOnNewPlayerFastTurnOrTi
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitServer::OnNewPlayerTurnOrTime( const CEventOnNewPlayerTurnOrTime &event )
 {
+	if (GetWorld()->bNetworkReplica) return;
 	if ( CanFight() && ( !IsValid( event.pPlayer ) || event.pPlayer == GetPlayer() ) )
 	{
 		// Bleeding

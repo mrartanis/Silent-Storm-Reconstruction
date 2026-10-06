@@ -23,7 +23,7 @@ namespace NGame
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CPlayerTracker
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CPlayerTracker::CPlayerTracker( IMission *_pMission, NRPG::CGlobalPlayer *_pGlobalPlayer, const wstring &_wsName ): 
+CPlayerTracker::CPlayerTracker( IMission *_pMission, NRPG::CGlobalPlayer *_pGlobalPlayer, const wstring &_wsName, NWorld::IPlayer *existingPlayer ):
 	pMission( _pMission ), pGlobalPlayer( _pGlobalPlayer ), wsName( _wsName )
 {
 	// retail CPlayerTracker ctor @0x287d70: the HUMAN player's commander is a NAI::CSequenceCommander
@@ -35,10 +35,18 @@ CPlayerTracker::CPlayerTracker( IMission *_pMission, NRPG::CGlobalPlayer *_pGlob
 	// NWorld::CCommander the resolve returned 0, every player-payload event was null, and the whole
 	// stimulus layer (heard gunfire -> possibleEnemy -> HUNT, mid-turn sighting -> pEnemy) was inert.
 	CDynamicCast<NWorld::CWorld> pWorld( pMission->GetWorld() );
-	NAI::CSequenceCommander *pSeqCommander = new NAI::CSequenceCommander( pWorld );
-	pCommander = pSeqCommander;
-	pPlayer =  pMission->GetWorld()->AddPlayer( wsName, pGlobalPlayer, pCommander );
-	pSeqCommander->SetPlayer( pPlayer.GetPtr() );   // retail @0x287d70 tail: CAICommander::SetPlayer @0x33e60
+	if (existingPlayer)
+	{
+		pPlayer = existingPlayer;
+		pCommander = existingPlayer->GetCommander();
+	}
+	else
+	{
+		NAI::CSequenceCommander *pSeqCommander = new NAI::CSequenceCommander( pWorld );
+		pCommander = pSeqCommander;
+		pPlayer = pMission->GetWorld()->AddPlayer( wsName, pGlobalPlayer, pCommander );
+		pSeqCommander->SetPlayer( pPlayer.GetPtr() );
+	}
 
 	NAI::SPosition sPos;
 	pPlayer->GetDeploySpot( &sPos.p );

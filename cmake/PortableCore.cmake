@@ -28,6 +28,9 @@ target_include_directories(s2_game_structure PRIVATE "${CMAKE_BINARY_DIR}/fileio
 target_link_libraries(s2_game_structure PUBLIC
   s2_game_streams s2_game_objects s2_portable_structure)
 target_compile_features(s2_game_structure PUBLIC cxx_std_17)
+add_executable(NetworkSerializerTests "${root}/diagnostics/NetworkSerializerTests.cpp")
+target_link_libraries(NetworkSerializerTests PRIVATE s2_game_structure s2_network_graph)
+add_test(NAME NetworkSerializerTests COMMAND NetworkSerializerTests)
 add_executable(StructureWireProbe "${root}/diagnostics/StructureWireProbe.cpp")
 target_link_libraries(StructureWireProbe PRIVATE s2_game_structure)
 add_test(NAME StructureWireWrite
@@ -332,6 +335,8 @@ target_compile_options(s2_game_world_object PRIVATE
 # mission and script bindings still need to join the game link graph.
 add_library(s2_game_world STATIC
   "${root}/Main/wMain.cpp"
+  "${root}/Main/NetworkMatch.cpp"
+  "${root}/Main/NetworkWorld.cpp"
   "${root}/Main/wMainMoves.cpp"
   "${root}/Main/wMainTrace.cpp"
   "${root}/Main/wMainPath.cpp"
@@ -341,6 +346,7 @@ target_include_directories(s2_game_world PRIVATE
   "${root}/ADOImport" "${root}/MiscDll" "${root}/Script"
   "${root}/third_party/lifestudio/include")
 target_compile_features(s2_game_world PUBLIC cxx_std_17)
+target_link_libraries(s2_game_world PUBLIC s2_network_graph)
 target_compile_options(s2_game_world PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_unit_execution STATIC
   "${root}/Main/wUnitAttack.cpp"
@@ -1406,6 +1412,20 @@ target_link_libraries(NativeWorldInitProbe PRIVATE
   -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
   -Wl,--start-group ${_s2_portable_archives} -Wl,--end-group)
 target_link_options(NativeWorldInitProbe PRIVATE -Wl,--gc-sections)
+add_executable(NetworkMatchTests
+  "${root}/diagnostics/NetworkMatchTests.cpp"
+  "${root}/Main/Time.cpp" "${root}/Main/DiscretePos.cpp")
+target_include_directories(NetworkMatchTests PRIVATE "${CMAKE_BINARY_DIR}/main_case_include" "${root}/Main")
+target_link_libraries(NetworkMatchTests PRIVATE
+  -Wl,--whole-archive s2_game_locks -Wl,--no-whole-archive
+  -Wl,--start-group ${_s2_portable_archives} s2_network_graph -Wl,--end-group)
+target_link_options(NetworkMatchTests PRIVATE -Wl,--gc-sections)
+if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/game.db")
+  add_test(NAME NetworkMatchTests COMMAND NetworkMatchTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+  set_tests_properties(NetworkMatchTests PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}")
+  add_test(NAME NetworkEncounterMapsTests COMMAND NetworkMatchTests "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res" --maps)
+  set_tests_properties(NetworkEncounterMapsTests PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}")
+endif()
 add_executable(NativeCampaignSequenceTests
   "${root}/diagnostics/NativeCampaignSequenceTests.cpp"
   "${root}/Main/Time.cpp" "${root}/Main/DiscretePos.cpp")

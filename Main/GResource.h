@@ -183,6 +183,7 @@ public:
 // through CFileRequest system
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddResourceDir( const char *pszName );
+vector<string> GetNetworkResourceDirectories();
 void ClearResourceDirs();	// release @0x157950 -- drop all resource dirs (CModManager::Activate)
 void CloseAllResources();
 void RunResourceLoadingThread();

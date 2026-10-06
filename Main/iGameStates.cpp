@@ -171,7 +171,7 @@ void ShowError( IMission *pMission, NWorld::EUnitCommandResult eResult )
 	case NWorld::UCR_NO_TARGET: nStringID = 18852; break;
 	case NWorld::UCR_NOT_ENOUGH_AP: nStringID = 18853; break;
 	case NWorld::UCR_PATH_NOT_FOUND:
-		nStringID = pMission->GetWorld()->GetAIJobManager()->HasPassCalcerJobs() ? 21061 : 18844;
+		nStringID = pMission->GetWorld()->GetAIJobManager() && pMission->GetWorld()->GetAIJobManager()->HasPassCalcerJobs() ? 21061 : 18844;
 		break;
 	case NWorld::UCR_NEED_RELOAD: nStringID = 18846; break;
 	case NWorld::UCR_NO_EQUIPMENT: nStringID = 18847; break;
@@ -208,6 +208,10 @@ static void MakeCursorString( IMission *pMission, const SActionInfo &sInfo, wstr
 
 	if ( !pMission->IsRealTime() )
 	{
+		if(sInfo.eResult==NWorld::UCR_PENDING) {
+			*pRes+=L"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430...";
+			return;
+		}
 		*pRes += NUI::GetDBString( 19808 );					// "AP: "
 		if ( sInfo.nMaxAP >= 0 )
 		{
@@ -574,7 +578,7 @@ bool CStateMove::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_MOVE, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -695,6 +699,12 @@ void CStateMove::UpdateCursor()
 		sCursorInfo = NUI::SCursorInfo( NDb::GetUICursor( N_CURSOR_BLOCK ) );
 		return;
 	}
+	if(GetMission()->IsNetworkClient()) {
+		SActionInfo info;GetMission()->CanDoCommand(new NWorld::CCmdPath(pos,NAI::PF_DEFAULT),false,&info);
+		wstring text;MakeCursorString(GetMission(),info,&text);
+		sCursorInfo=NUI::SCursorInfo(NDb::GetUICursor(info.bOk || info.eResult==NWorld::UCR_PENDING?N_CURSOR_MOVE:N_CURSOR_BLOCK),text.c_str());
+		return;
+	}
 
 	NAI::SPathPlace p( pos.p );
 	p.SetPose( NAI::CM_CROUCH );
@@ -736,7 +746,7 @@ bool CStateAttack::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_ATTACK, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -809,7 +819,7 @@ bool CStateAttack::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( sInfo.eResult != NWorld::UCR_OK && sInfo.eResult != NWorld::UCR_OK_RELOAD )
+	if ( sInfo.eResult != NWorld::UCR_OK && sInfo.eResult != NWorld::UCR_OK_RELOAD && sInfo.eResult != NWorld::UCR_PENDING )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail v1.2 0x5dc98d: no clip for the replacement reload (NO_EQUIPMENT=10).
@@ -1124,7 +1134,7 @@ bool CStateUse::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_USE, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -1240,7 +1250,7 @@ bool CStateUse::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStateUse::OnLButtonUp barks NOTHING on failure
@@ -1379,7 +1389,7 @@ bool CStatePickItem::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStatePickItem::OnLButtonUp @0x5dc911 (cmp eResult,0x12 -> IA literal 3): a full
@@ -1652,7 +1662,7 @@ bool CStateUntrap::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_USE, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -1682,7 +1692,7 @@ bool CStateUntrap::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStateUntrap barks nothing, success or failure
@@ -1877,7 +1887,7 @@ bool CStateRotate::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_LOOK, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -1922,7 +1932,7 @@ bool CStateSetTrap::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_ATTACK, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -1976,7 +1986,7 @@ bool CStateSetTrap::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStateSetTrap barks nothing on failure
@@ -2019,7 +2029,7 @@ bool CStateSetMine::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_MINE, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -2037,7 +2047,7 @@ bool CStateSetMine::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStateSetMine @0x1db3a0 barks nothing on failure
@@ -2111,7 +2121,7 @@ bool CStateFirstAid::Initialize( IMission *pMission )
 
 	SActionInfo sGeneralInfo;
 	pMission->GetActionInfo( UA_HEAL, &sGeneralInfo );
-	if ( ( GetType() == FORCED ) && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
+	if ( ( GetType() == FORCED ) && sGeneralInfo.eResult!=NWorld::UCR_PENDING && ( !sGeneralInfo.bOk || !sGeneralInfo.bEnoughAP ) )
 	{
 		ShowError( GetMission(), sGeneralInfo.eResult );
 		return false;
@@ -2143,7 +2153,7 @@ bool CStateFirstAid::OnLButtonUp( int nX, int nY )
 		return true;
 
 	GetMission()->CanDoCommand( pCmd, false, &sInfo );
-	if ( !sInfo.bAvailable || !sInfo.bOk )
+	if ( sInfo.eResult!=NWorld::UCR_PENDING && (!sInfo.bAvailable || !sInfo.bOk) )
 	{
 		ShowError( GetMission(), sInfo.eResult );
 		// retail CStateFirstAid @0x1db550 barks nothing on failure
@@ -2229,7 +2239,7 @@ bool CStatePose::Initialize( IMission *pMission )
 
 	SActionInfo sInfo;
 	GetMission()->GetActionInfo( eAction, &sInfo );
-	if ( sInfo.eResult != NWorld::UCR_OK )
+	if ( sInfo.eResult != NWorld::UCR_OK && sInfo.eResult != NWorld::UCR_PENDING )
 		return false;
 
 	vector< CPtr<NGame::IUnitTracker> > unitsSet;
@@ -2256,7 +2266,7 @@ bool CStateDropCorpse::Initialize( IMission *pMission )
 
 	SActionInfo sInfo;
 	GetMission()->GetActionInfo( UA_DROPCORPSE, &sInfo );
-	if ( sInfo.eResult != NWorld::UCR_OK )
+	if ( sInfo.eResult != NWorld::UCR_OK && sInfo.eResult != NWorld::UCR_PENDING )
 		return false;
 
 	vector< CPtr<NGame::IUnitTracker> > unitsSet;

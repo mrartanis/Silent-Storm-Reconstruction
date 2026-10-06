@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <climits>
 #include "GfxLegacyTokens.h"
 #include "Gfx.h"
 #include "GfxBuffers.h"

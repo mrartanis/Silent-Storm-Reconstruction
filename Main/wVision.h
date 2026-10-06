@@ -40,7 +40,7 @@ protected:
 	// @0x7c5032), NOT serialized (retail operator& @0x3c7330 saves only the other four -- tags 2..5).
 	list<CPtr<CObjectBase> > tempVisibleObjects;
 public:
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&visible); f.Add(3,&visibleObjects); f.Add(4,&trappedObjects); f.Add(5,&addToVisibleTraps); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&visible); f.Add(3,&visibleObjects); f.Add(4,&trappedObjects); f.Add(5,&addToVisibleTraps); if(f.IsNetwork())f.Add(100,&tempVisibleObjects); return 0; }
 	const list<CPtr<TUnit> >& GetTBSVisible() const { return visible; }
 	const list<CPtr<CObjectBase> >& GetTBSVisibleObjects() const { return visibleObjects; }
 	const list<CPtr<CObjectBase> >& GetTBSTrappedObjects() const { return trappedObjects; }
@@ -90,7 +90,7 @@ protected:
 	// saves only the six lists above -- tags 2..7).
 	TObjectList temporaryVisibleObjects;
 public:
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&addToVisible); f.Add(3,&visible); f.Add(4,&visibleObjects); f.Add(5,&prevTrappedObjects); f.Add(6,&trappedObjects); f.Add(7,&addToVisibleTraps); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&addToVisible); f.Add(3,&visible); f.Add(4,&visibleObjects); f.Add(5,&prevTrappedObjects); f.Add(6,&trappedObjects); f.Add(7,&addToVisibleTraps); if(f.IsNetwork())f.Add(100,&temporaryVisibleObjects); return 0; }
 private:
 	void AddVisibleCorpsesToAddVisible()
 	{

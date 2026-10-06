@@ -670,6 +670,10 @@ bool BgfxDevice::Init(HWND window,unsigned w,unsigned h) {
   bgfx::Init init;
 #if defined(_WIN32)
   init.type=bgfx::RendererType::Direct3D11;
+  // DXGI Present may synchronously call the HWND owner during focus/mode
+  // changes. Keep D3D11 on that thread: waiting for bgfx's render worker
+  // otherwise prevents dispatch of the very window messages it needs.
+  bgfx::renderFrame();
 #else
   init.type=bgfx::RendererType::Vulkan;
   init.swapChain.ndt=S2Platform::NativeDisplay();

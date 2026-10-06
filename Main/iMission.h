@@ -405,6 +405,7 @@ public:
 
 	virtual int GetUnitsState() = 0;
 	virtual NWorld::CUnit::EState GetUnitsWorldState() = 0;
+	virtual bool IsNetworkClient() const { return false; }
 	virtual void GetActionInfo( EUnitAction eAction, SActionInfo *pInfo ) = 0;
 	// retail mission vtbl+0xe0 (CMission @0x1fcbd0): may the squad leave the zone now? Fills *pwsReason
 	// with the localized status line (also filled with "you can leave" 20238 on the true path). Consumers:

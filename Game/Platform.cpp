@@ -260,8 +260,10 @@ void S2Platform::UpdateDisplay(float percent)
   display = S2Display::Update(display,w,h,pw,ph,SDL_GetWindowDisplayScale(window),
       SDL_GetDisplayForWindow(window),bool(SDL_GetWindowFlags(window) & SDL_WINDOW_MINIMIZED),uiPercent);
 }
-bool S2Platform::SetMode(int width, int height, bool fullscreen)
+bool S2Platform::SetMode(int width, int height, WindowMode requested)
 {
+  const bool fullscreen=requested==WindowMode::Fullscreen;
+  const bool windowed=requested==WindowMode::Windowed;
   SDL_DisplayMode mode{};
   if (fullscreen && (!window || !SDL_GetClosestFullscreenDisplayMode(
       SDL_GetDisplayForWindow(window), width, height, 0, true, &mode) ||
@@ -270,8 +272,8 @@ bool S2Platform::SetMode(int width, int height, bool fullscreen)
     return false;
   }
   if (!window || !SDL_SetWindowFullscreenMode(window, fullscreen ? &mode : nullptr) ||
-      !SDL_SetWindowFullscreen(window, fullscreen) ||
-      (!fullscreen && !SDL_SetWindowSize(window, width, height)) || !SDL_SyncWindow(window)) {
+      !SDL_SetWindowFullscreen(window, !windowed) ||
+      (windowed && !SDL_SetWindowSize(window, width, height)) || !SDL_SyncWindow(window)) {
     std::fprintf(stderr,"DISPLAY: SDL mode change failed: %s\n",SDL_GetError());
     return false;
   }

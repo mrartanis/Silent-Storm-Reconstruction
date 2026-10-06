@@ -54,13 +54,15 @@ bool SetModeFromConfig( bool bRecreate )
 
 	NGfx::EFS fullScreen = NGfx::WINDOWED;
 	sValue = NGlobal::GetVar( "gfx_fullscreen", 0 );
-	if (sValue.GetFloat() != 0 && sValue.GetFloat() != 1) {
+	if (sValue.GetFloat() != 0 && sValue.GetFloat() != 1 && sValue.GetFloat() != 2) {
 		csSystem << "DISPLAY: invalid window mode; using window" << endl;
 		NGlobal::SetVar("gfx_fullscreen",0); sValue = NGlobal::CValue(0);
 	}
 #ifndef _MAPEDIT
 	if ( sValue.GetFloat() == 1 )
 		fullScreen = NGfx::FULL_SCREEN;
+	else if (sValue.GetFloat() == 2)
+		fullScreen = NGfx::BORDERLESS;
 #endif
 
 	NGfx::SRenderTargetsInfo rtInfo;

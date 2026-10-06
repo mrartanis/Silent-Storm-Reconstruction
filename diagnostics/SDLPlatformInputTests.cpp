@@ -265,6 +265,17 @@ int main(int argc, char** argv)
   Check(S2Platform::SetMode(800, 600, false), "resize SDL window");
   int width = 0, height = 0; S2Platform::Size(&width, &height);
   Check(width == 800 && height == 600, "drawable dimensions after resize");
+  // Borderless fills the current monitor without requesting an exclusive mode.
+  SDL_ShowWindow(S2Platform::Window()); SDL_SyncWindow(S2Platform::Window());
+  const auto* desktop=SDL_GetDesktopDisplayMode(SDL_GetDisplayForWindow(S2Platform::Window()));
+  Check(desktop && S2Platform::SetMode(800,600,S2Platform::WindowMode::Borderless), "enter borderless desktop mode");
+  Check((SDL_GetWindowFlags(S2Platform::Window()) & SDL_WINDOW_FULLSCREEN) &&
+      !SDL_GetWindowFullscreenMode(S2Platform::Window()), "borderless has no exclusive display mode");
+  int pixelWidth=0,pixelHeight=0;SDL_GetWindowSizeInPixels(S2Platform::Window(),&pixelWidth,&pixelHeight);
+  Check(desktop && pixelWidth==desktop->w && pixelHeight==desktop->h,"borderless fills desktop pixels");
+  Check(S2Platform::SetMode(800,600,S2Platform::WindowMode::Windowed), "return from borderless to window");
+  Check(!(SDL_GetWindowFlags(S2Platform::Window()) & SDL_WINDOW_FULLSCREEN), "window mode restores frame");
+  S2Platform::Size(&width,&height);Check(width==800 && height==600,"window size restored after borderless");
   WindowEvent(SDL_EVENT_WINDOW_MINIMIZED); Pump();
   Check(!S2Platform::Active(), "minimized window pauses input");
   WindowEvent(SDL_EVENT_WINDOW_CLOSE_REQUESTED); Pump();

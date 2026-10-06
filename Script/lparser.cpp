@@ -91,7 +91,7 @@ static void check_condition (LexState *ls, int c, const char *msg) {
 }
 
 
-static int optional (LexState *ls, int c) {
+static int luaOptional (LexState *ls, int c) {
   if (ls->t.token == c) {
     next(ls);
     return 1;
@@ -456,7 +456,7 @@ static void var_or_func_tail (LexState *ls, expdesc *v) {
 
 static void var_or_func (LexState *ls, expdesc *v) {
   /* var_or_func -> ['%'] NAME var_or_func_tail */
-  if (optional(ls, '%')) {  /* upvalue? */
+  if (luaOptional(ls, '%')) {  /* upvalue? */
     pushupvalue(ls, str_checkname(ls));
     v->k = VEXP;
     v->u.l.t = v->u.l.f = NO_JUMP;
@@ -574,7 +574,7 @@ static void constructor (LexState *ls) {
   check(ls, '{');
   constructor_part(ls, &cd);
   nelems = cd.n;
-  if (optional(ls, ';')) {
+  if (luaOptional(ls, ';')) {
     Constdesc other_cd;
     constructor_part(ls, &other_cd);
     check_condition(ls, (cd.k != other_cd.k), "invalid constructor syntax");
@@ -847,7 +847,7 @@ static void fornum (LexState *ls, TString *varname) {
   exp1(ls);  /* initial value */
   check(ls, ',');
   exp1(ls);  /* limit */
-  if (optional(ls, ','))
+  if (luaOptional(ls, ','))
     exp1(ls);  /* optional step */
   else
     luaK_code1(fs, OP_PUSHINT, 1);  /* default step */
@@ -935,7 +935,7 @@ static void localstat (LexState *ls) {
     next(ls);  /* skip LOCAL or ',' */
     new_localvar(ls, str_checkname(ls), nvars++);
   } while (ls->t.token == ',');
-  if (optional(ls, '='))
+  if (luaOptional(ls, '='))
     nexps = explist1(ls);
   else
     nexps = 0;
@@ -1076,7 +1076,7 @@ static void parlist (LexState *ls) {
         case TK_NAME: new_localvar(ls, str_checkname(ls), nparams++); break;
         default: luaK_error(ls, "<name> or `...' expected");
       }
-    } while (!dots && optional(ls, ','));
+    } while (!dots && luaOptional(ls, ','));
   }
   code_params(ls, nparams, dots);
 }
@@ -1109,7 +1109,7 @@ static void chunk (LexState *ls) {
   int islast = 0;
   while (!islast && !block_follow(ls->t.token)) {
     islast = stat(ls);
-    optional(ls, ';');
+    luaOptional(ls, ';');
     LUA_ASSERT(ls->fs->stacklevel == ls->fs->nactloc,
                "stack size != # local vars");
   }

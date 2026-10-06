@@ -100,6 +100,7 @@ public:
 	void SetEditSize( int nSize );
 	void SetTextFormat( const wstring &wsFormat );
 	void SetCursorPosition( int nPos );
+	int GetCursorPosition() const { return nCursor; }
 
 	bool ProcessMessage( const SEvent &sEvent );
 	void Draw( const STime &sTime, NGScene::I2DGameView *pView );

@@ -55,6 +55,9 @@ public:
 	CObjectBase& operator=( const CObjectBase &a ) { return *this; }
 	//
 	int IsRefInvalid() const { return (nObjData & 0x80000000); }
+	bool HasMissionOwners() const { return (nObjData & 0x7ff00000) != 0; }
+	// Replicas apply server tombstones after restoring all dependent fields.
+	void Invalidate() { if (!IsRefInvalid()) ReleaseObj(0, 0); }
 	// reset data in class to default values, saves RefCount from destruction
 	void Clear() { AddRef(); DestroyContents(); DecRef(); }
 	// for serialization purposes
