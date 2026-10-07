@@ -91,12 +91,21 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
+As of 2026-10-07, 49 of these verified originals are accepted in the shared
+queue/native pack, and tutorial 6265 is retained as an original structural color
+gradient with its original alpha (0–251). All 15 missing historical sources are
+explicitly registered as original fallback. The source-queue snapshots stay
+unchanged for provenance: consult `../new-groups-second-batch-check.json` and
+`../../sources.json` rather than re-importing these entire lists. The exact
+remaining verified set contains 1,753 IDs: clothing 275, equipment 245, weapons
+124, heads 184, UI 696, effects 196, clues 17, final 3 and miscellaneous 13.
+All four camp atlases and both artistic training targets are now complete.
+
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
 soldier Body/Legs). `first-batches/equipment.json` contains 657, 664–669 (knife,
-shell bag, backpack, flask, clip case, gas mask, shovel). All eleven have verified
-originals and typed material/model consumers; they still need the per-image
-source examination and UV/layout review before imagegen. They are independent
-inputs for the coordinator after the RGB565 world batch is validated and pushed.
+shell bag, backpack, flask, clip case, gas mask, shovel). All eleven are now
+accepted after individual imagegen, UV review, numeric calibration and native
+validation. These are provenance inputs and must not be generated again.
 
 ## Interface, cursors and fonts
 
@@ -124,5 +133,6 @@ of the expanded image. Resolve/check that runtime path before accepting cursor H
 There is no cursor generation or pack registration in this audit.
 
 Only the coordinator imports approved jobs, adjusts brightness, validates the
-entire pack and updates common metadata. This directory contains no generated
-artwork, comparisons or HTML. Historical files and release archives were read only.
+entire pack and updates common metadata. Artwork and exact prompts are in the
+parent expanded/generated directory; there are no public comparisons or HTML.
+Historical files and release archives were read only.

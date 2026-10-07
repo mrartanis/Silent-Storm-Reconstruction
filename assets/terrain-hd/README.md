@@ -1,4 +1,4 @@
-# HD world textures
+# HD textures
 
 For the Russian build/install and authoring instructions, see
 [HD-TEXTURES.md](../../HD-TEXTURES.md). To continue generation in a new Codex
@@ -8,12 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **1,982 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 4 clothing, 7 equipment, 3 weapons,
-2 heads, 2 interface icons and 2 effects. All 2,349 world-scope resources
-have a recorded disposition; 20 accepted new-group textures bring the shared queue to
-2,369. Original fallback covers 257 technical maps,
-73 structural/solid masks, 48 unavailable historical sources, one release mismatch
+The completed pack contains **2,011 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 12 clothing, 14 equipment, 3 weapons,
+2 heads, 2 interface icons, 10 effects, 4 camp atlases and 2 training targets.
+All 2,349 world-scope resources have a recorded disposition. The shared queue
+contains 2,414 records, including 49 accepted new-group textures, the original
+6265 structural gradient and 15 newly recorded missing historical sources.
+Original fallback covers 257 technical maps,
+74 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and eight resource IDs whose original-preserving image generation was unavailable
 (seven distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -24,7 +26,9 @@ bringing the queue to 2,349 entries. `expanded/rgb565-followup.json` preserves
 the audit and `expanded/rgb565-batch-check.json` records this extension.
 Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
-originals and 15 missing sources; they remain preparation, not accepted HD.
+originals and 15 missing sources. Their source queues are preparation snapshots;
+current acceptance is established only by sources.json, shared queue and native
+validation. There remain 1,753 verified originals outside the shared queue.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
 inventory and a ready continuation prompt are in `expanded/full-texture-inventory.json`
@@ -62,8 +66,8 @@ averages premultiplied mip channels for the engine's transparent renderer.
 
 ## Build and install
 
-All 10,152 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (9,109,551,131 bytes before Git deduplication/compression).
+All 10,274 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,211,304,855 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
@@ -167,6 +171,25 @@ PNG alpha remains available unchanged for provenance. Brightness measurements
 use the final native mask so dark translucent edges remain correctly calibrated.
 
 ## Verification
+
+The second new-group package adds 29 textures and passed another Windows x64
+Game build and full native validation: 2,011 textures, 4,022 aliases, 111 archives
+and 6,706,321,654 bytes. All 1,982 previously accepted source objects, PNGs and
+native MMP hashes stayed unchanged. Native luminance errors for the new 29 are
+below 0.023 levels/255. `expanded/new-groups-second-batch-check.json` records
+source/release identity, original alpha, dimensions, per-ID evidence and all
+1,753 remaining verified source IDs. It covers eight clothing, seven ordinary
+RGB565 equipment, eight particle sprites, four camp atlases and two training
+targets. Reviewed side letterboxing in 6616/6618 is registered to exact original
+occupied bounds. Sprite masks, particle pivots/timing/blend and atlas detail
+counts remain original. The 6265 gradient retains its original native RGB and
+structural alpha (0–251) through fallback.
+
+`expanded/new-groups-second-live-check.json` records the final 2,011-texture
+pack's isolated Windows/D3D11 menu check at 2560×1440. Terrain HD patches changed
+11→0→11. The 120-frame capture averaged 59.97 FPS; the test process quit normally
+with code 0. Captures were privately inspected; this validates switching in the
+headquarters scene, not every model and particle in all missions.
 
 The first new-group package passed a Windows x64 Game build and full native
 validation on 2026-10-07: 1,982 textures, 3,964 aliases, 110 archives and

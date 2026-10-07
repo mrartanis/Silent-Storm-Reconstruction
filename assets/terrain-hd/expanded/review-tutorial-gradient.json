@@ -1,0 +1,242 @@
+{
+  "scope": "Independent read-only tutorial gradient and wood UV/mark audit; not HD acceptance",
+  "historical_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "shared_metadata_changed": false,
+  "generation_performed": false,
+  "records": [
+    {
+      "id": 6265,
+      "typed_usage_verified_from_historical_database": [
+        {
+          "material": {
+            "ID": 4308,
+            "TextureID": 6265,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2596,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6423,
+              "slot": "Material0",
+              "model_template_id": 4106,
+              "material_template_id": 2596,
+              "geometry_id": 3871,
+              "geometry_source": "GameTutorials\\Arrow.mb",
+              "native_geometry_available": true,
+              "native_geometry_bytes": 3429,
+              "native_geometry_sha256": "510564414ce413dca43527bfcac9f17b8fe2151177499cdc7b8b7ce212ee726b"
+            },
+            {
+              "table": "Models",
+              "id": 7800,
+              "slot": "Material3",
+              "model_template_id": 4683,
+              "material_template_id": 2596,
+              "geometry_id": 4280,
+              "geometry_source": "Buildings\\Furniture\\FunStuff.mb",
+              "native_geometry_available": true,
+              "native_geometry_bytes": 10949,
+              "native_geometry_sha256": "2ed11cf21562310199fe7b4b67be8cb0022c6cb16a1c1e2fd60bf7c4572a34fc"
+            },
+            {
+              "table": "Models",
+              "id": 7802,
+              "slot": "Material3",
+              "model_template_id": 4684,
+              "material_template_id": 2596,
+              "geometry_id": 4281,
+              "geometry_source": "Buildings\\Furniture\\FunStuff.mb",
+              "native_geometry_available": false,
+              "native_geometry_bytes": null,
+              "native_geometry_sha256": null
+            }
+          ]
+        }
+      ],
+      "recommendation": "Preserve exact original native resource. Do not imagegen this structural diffuse gradient.",
+      "source_rgba_sha256": "892651ca837f539b58831b0efeac8d230d193c31cd922d7faf688cd13d3e2946",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_native_format": 6,
+      "private_rgb_review": "Smooth largely vertical red/orange-to-dark-red diffuse gradient; no illustrated arrow, material grain, objects or artistic details in RGB.",
+      "rgb_extrema": [
+        [
+          137,
+          219
+        ],
+        [
+          23,
+          47
+        ],
+        [
+          2,
+          21
+        ]
+      ],
+      "maximum_horizontal_rgb_range": [
+        2,
+        6,
+        2
+      ],
+      "top_middle_bottom_rgb": [
+        [
+          219,
+          43,
+          19
+        ],
+        [
+          163,
+          30,
+          10
+        ],
+        [
+          137,
+          23,
+          2
+        ]
+      ],
+      "alpha_extrema": [
+        0,
+        251
+      ],
+      "alpha_review": "Alpha is NOT fully opaque:0..251 and contains structural UV-like panel outlines and a downward-pointing triangular outline. Material4308 is opaque/Clamp. Preserve alpha exactly with native fallback; do not flatten or reinterpret it.",
+      "reason_correction_required": "Current shared reason calls it an opaque red gradient. Precisely: the MATERIAL is opaque; the source PNG alpha is spatial and not opaque.",
+      "arrow_shape_statement": "RGB does not contain an arrow drawing. Model6423 binds this texture to native geometry3871 GameTutorials/Arrow.mb; mesh/UV coloring is the supported explanation of the visible arrow. Exact vertex topology was not independently decoded in this short audit.",
+      "other_consumers": "Also Models7800 and7802 Material3 on FunStuff.mb; fallback protects these shared uses as well."
+    },
+    {
+      "id": 5958,
+      "typed_usage_verified_from_historical_database": [
+        {
+          "material": {
+            "ID": 3897,
+            "TextureID": 5958,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2461,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6247,
+              "slot": "Material0",
+              "model_template_id": 4006,
+              "material_template_id": 2461,
+              "geometry_id": 3797,
+              "geometry_source": "GameTutorials\\Targets_Training.mb",
+              "native_geometry_available": true,
+              "native_geometry_bytes": 6701,
+              "native_geometry_sha256": "644119b03933413cda205fd20002b201f539347fddd089ae379ec42b454199c6"
+            },
+            {
+              "table": "Models",
+              "id": 6425,
+              "slot": "Material0",
+              "model_template_id": 4107,
+              "material_template_id": 2461,
+              "geometry_id": 3872,
+              "geometry_source": "GameTutorials\\Targets_Training.mb",
+              "native_geometry_available": true,
+              "native_geometry_bytes": 6701,
+              "native_geometry_sha256": "1ca753b2fb358937b339dcf63d8ba427ee9a2127627495e5ab2da3f7286ecc0d"
+            }
+          ]
+        }
+      ],
+      "recommendation": "Main material/atlas arrangement and number/placement of dark marks appear preserved, with caution on over-defining circular knot detail. Retain original low contrast through numerical brightness matching; do not add damage/holes or interpret faint marks as fasteners.",
+      "source_rgba_sha256": "736b03404e5e8dc6804d9f995cd32bc1c455d660dc6c4aa5310a1a993f700012",
+      "source_size": [
+        64,
+        128
+      ],
+      "raw": "assets/terrain-hd/expanded/generated/5958-raw.png",
+      "raw_sha256": "a8b623dd76074e7058e4591269cd4e7417d4b17c71848883199871df168d1fb4",
+      "raw_size": [
+        887,
+        1774
+      ],
+      "target_size": [
+        256,
+        512
+      ],
+      "source_review": "Dark olive-brown wood, two UV surface regions: tall left downward-pointing wedge/stake-like panel, right vertical rectangular plank. Grain is longitudinal. No wire/barbs/fasteners/cracks/holes shown in the diffuse source.",
+      "original_primary_marks": [
+        {
+          "count": 1,
+          "surface": "right vertical plank",
+          "approx_native_bbox": [
+            52,
+            38,
+            57,
+            43
+          ],
+          "description": "Compact faint angular dark blotch; exact construction/wood-knot anatomy is ambiguous."
+        },
+        {
+          "count": 1,
+          "surface": "right vertical plank",
+          "approx_native_bbox": [
+            52,
+            90,
+            58,
+            96
+          ],
+          "description": "Second compact faint angular dark blotch, below the first."
+        }
+      ],
+      "generated_primary_marks": [
+        {
+          "surface": "right vertical plank",
+          "approx_native_center": [
+            54.5,
+            39.0
+          ],
+          "description": "Upper dark small rounded/ring-like knot at corresponding source-mark position."
+        },
+        {
+          "surface": "right vertical plank",
+          "approx_native_center": [
+            54.5,
+            92.5
+          ],
+          "description": "Lower dark small rounded/ring-like knot at corresponding source-mark position."
+        }
+      ],
+      "mark_count_review": "Two prominent compact source blotches on the right plank, and two corresponding generated spots. No additional prominent mark found on the left panel; longitudinal dark streaks there are grain/shading, not new damage.",
+      "mark_shape_caution": "Generated small knots are more explicitly circular/ring-like than the coarse angular source blotches. Source does not establish a drilled hole, nail, hardware rim or concentric crack rings. Do not add any such features; if coordinator judges circles read as holes/hardware, reject that anatomy rather than infer it from the filename.",
+      "uv_review": "Complete1:2 canvas retained; right plank stays in right region with top/bottom edges and narrow dark separator; left pointed tip remains near original x17..19 at bottom native row127. Main taper and shape are present. The source DXT black padding is often RGB around8 rather than exact0; generated empty padding is nearer0. This is not an alpha cutout (original alpha255). Exact native geometry UV vertices were not decoded here, so this review does not certify subpixel sampling limits.",
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "private_review_method": "Original native PNG,8x nearest-neighbor source view, a3x-brightness private source view to locate existing marks, and full-canvas LANCZOS4x normalized raw. No comparison sheet/HTML or source modification.",
+      "registration_advice": "No automatic crop,bbox or UV remap justified by this audit. Preserve full canvas and authored black/tinted unused areas; resolve any exact boundary adjustment explicitly against geometry/UVs."
+    }
+  ]
+}

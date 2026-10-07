@@ -1,0 +1,204 @@
+{
+  "purpose": "Independent private UV/material review; no raw or shared metadata changes.",
+  "records": [
+    {
+      "id": 6616,
+      "source_rgb_bbox": [
+        0,
+        0,
+        64,
+        256
+      ],
+      "generated_rgb_bbox": [
+        92,
+        0,
+        634,
+        2170
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "generated_alpha_extrema": [
+        255,
+        255
+      ],
+      "source_size": [
+        64,
+        256
+      ],
+      "generated_size": [
+        725,
+        2170
+      ],
+      "target_size": [
+        256,
+        1024
+      ],
+      "recommendation": "accept-after-reviewed-registration-and-calibration",
+      "recommended_job_flags": {
+        "register_rgb_bbox": true
+      },
+      "registration_review": {
+        "method": "RGB max-channel>8 occupied bbox, same as importer",
+        "reason": "Original and raw are fully opaque. Raw has outside black side letterboxing; all material regions remain in original vertical order. Map the full occupied original atlas rectangle from occupied generated rectangle without cropping/rearranging material islands. Internal black UV voids remain intact.",
+        "private_preview": "build/6616-camp-registration-verified.png"
+      },
+      "material_and_feature_review": {
+        "materials": "Longitudinal dark tree bark, pale cut-end grain, existing charcoal and sparse red embers preserved. Fine grain remains inside source surfaces.",
+        "round_end_count": {
+          "source": 6,
+          "generated": 6
+        },
+        "round_end_positions": "Two top ends, one left near45% height, two near53% and one lower-center near94%; sizes and order retained.",
+        "charred_areas": "Upper narrow center/right charcoal strip, lower-left charcoal strip and lower-right broad charcoal patch retained. Hot marks remain restricted to those existing regions.",
+        "topology": "No new logs/flames/smoke/external glowing debris; original bark strips and black gaps retained."
+      }
+    },
+    {
+      "id": 6618,
+      "source_rgb_bbox": [
+        0,
+        0,
+        62,
+        256
+      ],
+      "generated_rgb_bbox": [
+        90,
+        0,
+        604,
+        2170
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "generated_alpha_extrema": [
+        255,
+        255
+      ],
+      "source_size": [
+        64,
+        256
+      ],
+      "generated_size": [
+        725,
+        2170
+      ],
+      "target_size": [
+        256,
+        1024
+      ],
+      "recommendation": "accept-after-reviewed-registration-and-calibration",
+      "recommended_job_flags": {
+        "register_rgb_bbox": true
+      },
+      "registration_review": {
+        "method": "RGB max-channel>8 occupied bbox, same as importer",
+        "reason": "Original and raw are fully opaque. Raw has outside black side letterboxing; all material regions remain in original vertical order. Map the full occupied original atlas rectangle from occupied generated rectangle without cropping/rearranging material islands. Internal black UV voids remain intact.",
+        "private_preview": "build/6618-camp-registration-verified.png"
+      },
+      "material_and_feature_review": {
+        "materials": "Long dark brown bark face, lower-left pale cut end and two source right-side bark/wood patches preserved.",
+        "cut_end_count": {
+          "source": 1,
+          "generated": 1
+        },
+        "right_patch_count": {
+          "source": 2,
+          "generated": 2
+        },
+        "right_patch_positions": "Small angled upper-right patch at about18–27% height; larger horizontal/notched patch at about46–62% height.",
+        "topology": "Original main bark face, bottom/cap overlap, lower-right flare and black cutout retained; no new panels/cut ends."
+      }
+    }
+  ],
+  "6617_review": {
+    "recommendation": "accept-current-second-raw-after-calibration; do-not-remove-two-dots",
+    "source_size": [
+      256,
+      128
+    ],
+    "raw_size": [
+      1774,
+      887
+    ],
+    "checked_source_roi": [
+      180,
+      86,
+      256,
+      128
+    ],
+    "dots": [
+      {
+        "logical_coordinate": [
+          249,
+          90
+        ],
+        "original_rgba": [
+          74,
+          68,
+          56,
+          255
+        ],
+        "neighbor_coordinate": [
+          249,
+          89
+        ],
+        "neighbor_rgba": [
+          12,
+          11,
+          11,
+          255
+        ],
+        "finding": "Existing upper-right source dot; raw retains its position."
+      },
+      {
+        "logical_coordinate": [
+          205,
+          122
+        ],
+        "original_rgba": [
+          72,
+          64,
+          52,
+          255
+        ],
+        "neighbor_coordinate": [
+          205,
+          121
+        ],
+        "neighbor_rgba": [
+          17,
+          18,
+          13,
+          255
+        ],
+        "finding": "Existing lower-left source dot; raw retains its position."
+      }
+    ],
+    "layout": "Olive canvas main panel with its original four corner marks, triangular regions, right rectangles and wooden strips retained. Previously omitted short horizontal strip is present in second raw.",
+    "reason": "Suspected lower-panel grommets/dots are existing source features; deleting them would change source artwork."
+  },
+  "5957_review": {
+    "source_size": [
+      128,
+      128
+    ],
+    "raw_file": "assets/terrain-hd/expanded/generated/5957-review-source-border-raw.png",
+    "finding": "Dark torso-rectangle outline already exists in original. Smaller lower red rectangle, right dark target perimeter and crossbars also have source dark borders.",
+    "approximate_existing_torso_outline_bounds": [
+      22,
+      54,
+      49,
+      102
+    ],
+    "recommendation": "Do not delete source rectangle/perimeter. First raw passes content/layout review; accept after calibration, or target only slight stroke thickening if exact width is required.",
+    "minor_difference": "HD redraw makes thin outline more continuous and locally roughly one logical pixel thicker near torso top/left. No new plaque/target/object; same outline/edges at original coordinates.",
+    "targeted_retry_if_desired": "Keep all artwork/UV regions and match original thin flat painted dark outline/irregular wear. No raised black rim/bevel. Do not remove original outline, crossbars or small lower rectangle."
+  },
+  "source_raw_modified": false,
+  "shared_metadata_modified": false,
+  "html_created": false,
+  "pending": "Coordinator imports reviewed registration, numerically calibrates, inspects normalized/calibrated images privately and validates pack."
+}

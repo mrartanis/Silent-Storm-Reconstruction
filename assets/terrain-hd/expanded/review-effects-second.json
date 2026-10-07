@@ -1,0 +1,937 @@
+{
+  "ids": [
+    583,
+    584,
+    585,
+    1689,
+    1690,
+    1691,
+    4087,
+    4088
+  ],
+  "tool": "built-in image_gen",
+  "originals_inspected_before_generation": true,
+  "all_raws_and_exact_prompts_saved": true,
+  "ready_for_coordinator": true,
+  "real_service_refusals": [],
+  "rejected_generation_attempts": [],
+  "shared_metadata_modified": false,
+  "source_selection": {
+    "source_queue": "assets/terrain-hd/expanded/groups/source-queues/effects.json",
+    "selected_exact_source_records": "assets/terrain-hd/expanded/selected-effects-second.json",
+    "acceptance_exclusion_checked": "sources.json and main queue before generation and again after8 outputs. All8 are unaccepted, pending in independent source queue and not yet appended to main queue.",
+    "reason": "Simple single particle sprites with resolved ParticleInstances color bindings, source parity and clear artwork. All selected particle bindings use Normal blend; all resolved particle definitions have WrapX/Y0.",
+    "deferred_candidates": [
+      {
+        "id": 2816,
+        "reason": "Shell casing uses Additive blend in resolved example; prefer Normal starters."
+      },
+      {
+        "id": 4086,
+        "reason": "Very thin wire-like artwork, requires more careful topology review."
+      },
+      {
+        "id": 4089,
+        "reason": "Very thin wire-like artwork, requires more careful topology review."
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": 583,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "00559119bfd0101985430593a8028729d42d0f1df8131b5fca4f05b7ee137118",
+      "particle_binding_count": 459,
+      "resolved_binding_count": 458,
+      "unresolved_definition_count": 1,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 23,
+        "field": "Texture2",
+        "role": "color",
+        "UserName": "WoodHitSmall",
+        "SrcName": "Effects\\WoodHit.mb",
+        "EffectID": 23,
+        "ParticleID": 23,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.5,
+        "Speed": 1,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 23,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.5648544430732727,
+          "CenterY": -0.36418911814689636,
+          "CenterZ": -0.20895856618881226,
+          "HalfBoxX": 1.4105157852172852,
+          "HalfBoxY": 1.2354224920272827,
+          "HalfBoxZ": 1.114116907119751,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\WoodHit.mb",
+          "UserName": "WoodHitSmall",
+          "ExportPrefix": "PFX_"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 581,
+          "Texture1": 582,
+          "Texture2": 583,
+          "Texture3": 584,
+          "Texture4": 585,
+          "Texture5": 2331,
+          "Texture15": 4128
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)",
+        "(0.20000000298023224, 0.0)",
+        "(0.25, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/583.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/583-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/583-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "Long narrow irregular/torn wood regions and original small fiber-like pieces preserved; existing fork-like contour retained. No new debris objects.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          0,
+          2,
+          30,
+          29
+        ],
+        "generated_bbox": [
+          147,
+          267,
+          1086,
+          1008
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 584,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "b77cbfb091992ee34bff03a49129322fced96b023862bf686592d800dc2e8edc",
+      "particle_binding_count": 457,
+      "resolved_binding_count": 456,
+      "unresolved_definition_count": 1,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 23,
+        "field": "Texture3",
+        "role": "color",
+        "UserName": "WoodHitSmall",
+        "SrcName": "Effects\\WoodHit.mb",
+        "EffectID": 23,
+        "ParticleID": 23,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.5,
+        "Speed": 1,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 23,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.5648544430732727,
+          "CenterY": -0.36418911814689636,
+          "CenterZ": -0.20895856618881226,
+          "HalfBoxX": 1.4105157852172852,
+          "HalfBoxY": 1.2354224920272827,
+          "HalfBoxZ": 1.114116907119751,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\WoodHit.mb",
+          "UserName": "WoodHitSmall",
+          "ExportPrefix": "PFX_"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 581,
+          "Texture1": 582,
+          "Texture2": 583,
+          "Texture3": 584,
+          "Texture4": 585,
+          "Texture5": 2331,
+          "Texture15": 4128
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)",
+        "(0.20000000298023224, 0.0)",
+        "(0.25, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/584.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/584-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/584-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "Short diagonal wood fragment with broad uneven middle, existing edge notches and taper preserved.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          3,
+          4,
+          28,
+          28
+        ],
+        "generated_bbox": [
+          203,
+          233,
+          1045,
+          1014
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 585,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "e722960ca6ad850afec84a1f11dfc1e48ebe67913a016734f0e1c8d8283ec45c",
+      "particle_binding_count": 457,
+      "resolved_binding_count": 456,
+      "unresolved_definition_count": 1,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 23,
+        "field": "Texture4",
+        "role": "color",
+        "UserName": "WoodHitSmall",
+        "SrcName": "Effects\\WoodHit.mb",
+        "EffectID": 23,
+        "ParticleID": 23,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.5,
+        "Speed": 1,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 23,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.5648544430732727,
+          "CenterY": -0.36418911814689636,
+          "CenterZ": -0.20895856618881226,
+          "HalfBoxX": 1.4105157852172852,
+          "HalfBoxY": 1.2354224920272827,
+          "HalfBoxZ": 1.114116907119751,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\WoodHit.mb",
+          "UserName": "WoodHitSmall",
+          "ExportPrefix": "PFX_"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 581,
+          "Texture1": 582,
+          "Texture2": 583,
+          "Texture3": 584,
+          "Texture4": 585,
+          "Texture5": 2331,
+          "Texture15": 4128
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)",
+        "(0.20000000298023224, 0.0)",
+        "(0.25, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/585.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/585-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/585-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "Narrow diagonal wood shard with original asymmetric jagged middle and brown material preserved.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          9,
+          3,
+          23,
+          29
+        ],
+        "generated_bbox": [
+          442,
+          209,
+          821,
+          1024
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 1689,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "6ec60f902787c542af618b819db95cc9834e4d5daaab23782e5017579d925d30",
+      "particle_binding_count": 454,
+      "resolved_binding_count": 454,
+      "unresolved_definition_count": 0,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 359,
+        "field": "Texture10",
+        "role": "color",
+        "UserName": "Wood02",
+        "SrcName": "",
+        "EffectID": 182,
+        "ParticleID": 109,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.44999998807907104,
+        "Speed": 1.7000000476837158,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 109,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.14324474334716797,
+          "CenterY": -0.08494329452514648,
+          "CenterZ": -0.822237491607666,
+          "HalfBoxX": 5.307278156280518,
+          "HalfBoxY": 5.070449352264404,
+          "HalfBoxZ": 4.1887969970703125,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\Wood02.mb",
+          "UserName": "Wood02",
+          "ExportPrefix": "Wood"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture4": 581,
+          "Texture5": 582,
+          "Texture6": 583,
+          "Texture7": 584,
+          "Texture8": 585,
+          "Texture9": 1690,
+          "Texture10": 1689
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)",
+        "(0.20000000298023224, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1.100000023841858,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/1689.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/1689-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1689-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "One broad white/light-grey angular ceramic fragment; original facets and irregular projections retained.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          6,
+          4,
+          26,
+          28
+        ],
+        "generated_bbox": [
+          203,
+          139,
+          1015,
+          1127
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 1690,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "a3f0d034e8334d14ed93b173f97d0cce3268402b04d445431d365552b99b692c",
+      "particle_binding_count": 454,
+      "resolved_binding_count": 454,
+      "unresolved_definition_count": 0,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 359,
+        "field": "Texture9",
+        "role": "color",
+        "UserName": "Wood02",
+        "SrcName": "",
+        "EffectID": 182,
+        "ParticleID": 109,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.44999998807907104,
+        "Speed": 1.7000000476837158,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 109,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.14324474334716797,
+          "CenterY": -0.08494329452514648,
+          "CenterZ": -0.822237491607666,
+          "HalfBoxX": 5.307278156280518,
+          "HalfBoxY": 5.070449352264404,
+          "HalfBoxZ": 4.1887969970703125,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\Wood02.mb",
+          "UserName": "Wood02",
+          "ExportPrefix": "Wood"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture4": 581,
+          "Texture5": 582,
+          "Texture6": 583,
+          "Texture7": 584,
+          "Texture8": 585,
+          "Texture9": 1690,
+          "Texture10": 1689
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)",
+        "(0.20000000298023224, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1.100000023841858,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/1690.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/1690-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1690-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "One smaller white/light-grey ceramic shard with upward-right tip and uneven lower-left body retained.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          7,
+          7,
+          22,
+          25
+        ],
+        "generated_bbox": [
+          375,
+          304,
+          879,
+          962
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 1691,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "6a1ddf569644c4f2f708ba252de7e1ced4718e84deac865f38dfba2248d3622f",
+      "particle_binding_count": 282,
+      "resolved_binding_count": 282,
+      "unresolved_definition_count": 0,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 448,
+        "field": "Texture2",
+        "role": "color",
+        "UserName": "Ceramics",
+        "SrcName": "",
+        "EffectID": 250,
+        "ParticleID": 133,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.25,
+        "Speed": 1.600000023841858,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 133,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": 0.14685297012329102,
+          "CenterY": 0.16182565689086914,
+          "CenterZ": -1.7261351346969604,
+          "HalfBoxX": 3.2795462608337402,
+          "HalfBoxY": 2.925014019012451,
+          "HalfBoxZ": 3.400765895843506,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\Ceramics.mb",
+          "UserName": "Ceramics",
+          "ExportPrefix": "Ceramics"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 1689,
+          "Texture1": 1690,
+          "Texture2": 1691,
+          "Texture3": 1692,
+          "Texture4": 1689,
+          "Texture5": 1690,
+          "Texture6": 1691,
+          "Texture7": 1692,
+          "Texture8": 1689,
+          "Texture9": 1690,
+          "Texture10": 1691,
+          "Texture11": 1692
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1.399999976158142,
+        2
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/1691.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/1691-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1691-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "One small narrow white ceramic sliver at original diagonal orientation, with original straight/angled edge structure and tiny scale.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          9,
+          10,
+          23,
+          22
+        ],
+        "generated_bbox": [
+          400,
+          468,
+          726,
+          759
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 4087,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "84fad0f9c61e66815979383751816d59526b0fcefdb4120f49229909fb5eca35",
+      "particle_binding_count": 249,
+      "resolved_binding_count": 248,
+      "unresolved_definition_count": 1,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 886,
+        "field": "Texture1",
+        "role": "color",
+        "UserName": "Metal",
+        "SrcName": "",
+        "EffectID": 348,
+        "ParticleID": 138,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.41999998688697815,
+        "Speed": 1.2000000476837158,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 138,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": -1.3015680313110352,
+          "CenterY": -0.23631668090820312,
+          "CenterZ": -5.638621807098389,
+          "HalfBoxX": 18.13702392578125,
+          "HalfBoxY": 19.162445068359375,
+          "HalfBoxZ": 15.549654006958008,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\Metal.mb",
+          "UserName": "Metal02",
+          "ExportPrefix": "Metal02"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 4099,
+          "Texture1": 4087,
+          "Texture2": 4086,
+          "Texture3": 4094,
+          "Texture4": 4100,
+          "Texture5": 4088,
+          "Texture6": 4089,
+          "Texture7": 4090,
+          "Texture8": 4091,
+          "Texture9": 4092,
+          "Texture10": 4093,
+          "Texture11": 4101,
+          "Texture12": 4095,
+          "Texture13": 4096,
+          "Texture14": 4097,
+          "Texture15": 4098
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1,
+        1.7999999523162842
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/4087.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/4087-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/4087-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "Single anonymous dark brown-grey bent metal scrap with irregular upper/lower lobes and original fold/facet shading; no bolts, holes or extra objects.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          7,
+          3,
+          25,
+          29
+        ],
+        "generated_bbox": [
+          398,
+          275,
+          870,
+          972
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    },
+    {
+      "id": 4088,
+      "category": "effects",
+      "independent_source_status": "pending",
+      "main_queue_status": "not-yet-added",
+      "exact_source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "936ff041c47d1729c72898b2bc64f30234fd89908b67628c57c70928284c9a2d",
+      "particle_binding_count": 249,
+      "resolved_binding_count": 248,
+      "unresolved_definition_count": 1,
+      "representative_resolved_binding": {
+        "table": "ParticleInstances",
+        "id": 886,
+        "field": "Texture5",
+        "role": "color",
+        "UserName": "Metal",
+        "SrcName": "",
+        "EffectID": 348,
+        "ParticleID": 138,
+        "IsCrown": 0,
+        "AlphaBlending": "Normal",
+        "Static": "Dynamic",
+        "PivotX": 0,
+        "PivotY": 0,
+        "Scale": 0.41999998688697815,
+        "Speed": 1.2000000476837158,
+        "CycleCount": 1,
+        "particle_definition": {
+          "ID": 138,
+          "BumpID": 0,
+          "AIGeometryID": 0,
+          "RPGArmorID": 0,
+          "CenterX": -1.3015680313110352,
+          "CenterY": -0.23631668090820312,
+          "CenterZ": -5.638621807098389,
+          "HalfBoxX": 18.13702392578125,
+          "HalfBoxY": 19.162445068359375,
+          "HalfBoxZ": 15.549654006958008,
+          "WrapX": 0,
+          "WrapY": 0,
+          "SrcName": "Effects\\Metal.mb",
+          "UserName": "Metal02",
+          "ExportPrefix": "Metal02"
+        },
+        "particle_reference_status": "resolved",
+        "frame_bindings": {
+          "Texture0": 4099,
+          "Texture1": 4087,
+          "Texture2": 4086,
+          "Texture3": 4094,
+          "Texture4": 4100,
+          "Texture5": 4088,
+          "Texture6": 4089,
+          "Texture7": 4090,
+          "Texture8": 4091,
+          "Texture9": 4092,
+          "Texture10": 4093,
+          "Texture11": 4101,
+          "Texture12": 4095,
+          "Texture13": 4096,
+          "Texture14": 4097,
+          "Texture15": 4098
+        },
+        "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+      },
+      "all_blend_modes": [
+        "Normal"
+      ],
+      "all_pivots": [
+        "(0.0, 0.0)"
+      ],
+      "all_resolved_wraps": [
+        "(0.0, 0.0)"
+      ],
+      "all_timing_cycle_count": [
+        "1"
+      ],
+      "all_timing_speed_range": [
+        1,
+        1.7999999523162842
+      ],
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "original_png": "assets/terrain-hd/expanded/original/4088.png",
+      "generated_png": "assets/terrain-hd/expanded/generated/4088-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/4088-prompt.txt",
+      "private_layout": "single-sprite; no atlas cells or animation grid",
+      "private_4x_review": "Single dark jagged metal scrap with source edge projections and central folded grey-brown facets retained; no new identifiable object.",
+      "registration": {
+        "method": "Reviewed single-sprite alpha>8 bbox registration",
+        "source_bbox": [
+          6,
+          4,
+          28,
+          29
+        ],
+        "generated_bbox": [
+          300,
+          202,
+          1068,
+          1101
+        ],
+        "reason": "Generator changed occupied canvas bounds. Registered private128x128 preview matched confirmed original sprite footprint. Native pack restores exact source soft alpha, including all tiny original protrusions or separate visible contour pieces."
+      },
+      "status": "ready-for-source-queue-append-and-import"
+    }
+  ],
+  "coordinator_required": [
+    "Append exactly8 selected source-queue records into shared pending queue after current package commit/push.",
+    "Import jobs-effects-second.json; retain explicit reviewed registration and original soft alpha/premultiplied handling.",
+    "Numerically calibrate brightness only for these new IDs; inspect calibrated128x128 images privately before acceptance.",
+    "Keep all ParticleInstances bindings, source partial/missing-definition entries, pivots (including nonzero0.2/0.25 in some wood usages), speed/cycle counts and resolved wraps unchanged.",
+    "Build Game and validate the entire native pack, then update factual coverage and commit/push only verified outputs."
+  ],
+  "limitations": "Some cached particle bindings lack a resolved particle definition; many explicit resolved bindings establish artwork use, while those unresolved relationships remain recorded unchanged. Source queue equality and this private material/layout review do not prove every effect at runtime.",
+  "no_html_or_comparison_created": true
+}
