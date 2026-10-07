@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,220 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 52 clothing, 65 equipment, 64 weapons,
-2 heads, 22 interface icons, 47 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,239 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 58 clothing, 75 equipment, 64 weapons,
+2 heads, 25 interface icons, 47 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,625 records, including 258 accepted new-group textures, the original
+contains 2,644 records, including 277 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,542 verified originals outside the shared queue, including next
+validation. There remain 1,523 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -135,8 +135,10 @@ accepted IDs. Next independent raw packets require coordinator review.
 
 Eleventh accepted packet: `expanded/jobs-new-groups-eleventh.json` adds6 equipment,5 additive effect frames and UI5842 direct-original v3:2,220 textures/4,440 aliases/117 archives/7,118,248,712 bytes. Prior2,208 source/PNG/native hashes unchanged. Six opaque native RGBA equal reviewed PNG; five effects retain original zero alpha and exact calibrated RGB. UI5842 retains full source alpha, wholecanvas UV and reviewed premultiplied RGBA; localized RGB review resolved the earlier conservative v3 edge-color hold as original brown frame/gold X. v1/v2 remain rejected. Full validation and actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-eleventh-{batch,live}-check.json`. UI1995 original107x39/native428x156 is held by the packer's NPOT assert; its original stays unchanged. All17 clues-first remain original:16 text/diagram/uncertain and5288 two shifted-rib attempts. Raw/prompt/provenance retained. Exact serviceCRLF prompt writing now avoids Windows CR duplication;12 byte comparisons passed before Git normalization. Do not regenerate accepted IDs.
 
-All 11,511 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,259,083,598 bytes before Git deduplication/compression).
+Twelfth accepted packet: `expanded/jobs-new-groups-twelfth.json` adds6 clothing,10 equipment and3 UI:2,239 textures/4,478 aliases/118 archives/7,176,096,190 bytes. Prior2,220 source/PNG/native hashes unchanged. All17 opaque native RGBA equal privately reviewed calibrated PNG; UI7115/7116 retain complete original alpha and exact premultiplied RGBA. Their source-only wholecanvas nearest affine3:1 helpers inverse-resize the complete raw to original4x, without crop/padding/BBox. Full validation, actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-twelfth-{batch,live}-check.json`. UI5111 original38x46 is held for NPOT support;5 otherUI,6 clothing and2 equipment attempts remain outside the pack as reviewed. Source/raw/exactprompt provenance retained and initial4010v1 archived before canonicalv2. Do not regenerate accepted IDs.
+
+All 11,651 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,364,610,669 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

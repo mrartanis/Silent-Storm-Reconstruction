@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Приняты 2 220 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
-52 одежды, 65 экипировки, 64 оружия, 2 лиц, 22 UI, 47 эффектов,
+Приняты 2 239 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+58 одежды, 75 экипировки, 64 оружия, 2 лиц, 25 UI, 47 эффектов,
 4 лагерных атласа и 2 учебные мишени.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 258 текстур новых групп; всего 2 625 записей общей очереди, pending нет.
+Приняты 277 текстур новых групп; всего 2 644 записей общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -134,6 +134,12 @@ UI1995 художественно проверена, но original107×39→428
 
 Следующие equipment-eighth, clothing-eighth и UI-seventh могут уже иметь raw; сначала проверяй stable jobs/reviews.
 
+Двенадцатая порция принята: jobs-new-groups-twelfth (19): clothing-eighth6, equipment-eighth10 и UI-seventh3. Пакет: 2 239 текстур/4 478 алиасов/118 архивов/7,176,096,190 байт. Все прежние 2 220 source/PNG/native хеши сохранены. Все17 opaque native RGBA равны проверенным PNG; UI7115/7116 сохраняют полную исходную альфу и exact premultiplied RGBA. У этих двух широких панелей использованы source-only nearest fullcanvas affine guides3:1 и inverse wholecanvas Lanczos к исходным4× размерам без crop/padding/BBox. После художественной проверки количеств/материалов/UV прошли полная native-валидация и реальное меню HD on/off/on со штатным quit: new-groups-twelfth-{batch,live}-check.json. Не регенерировать принятые ID.
+
+UI5111 original38×46 NPOT сохраняет исходник. UI1994/2018/2031 отклонены за letterbox UV,4882/5743 за контраст материала; clothing3922/3923/4299/4448/4450/4553 и equipment3801/3802 вне native. Все raw и точные аргументы вызовов сохранены, исходные4010v1 дополнительно архивированы перед canonicalv2.
+
+Следующие equipment-ninth, effects-ninth, weapons-eighth и UI-eighth могут иметь raw; сначала stable jobs/reviews.
+
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
 
@@ -156,8 +162,8 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-eleventh-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 542: одежда 235, экипировка 194, оружие 62, головы 184, UI 675,
+`new-groups-twelfth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 523: одежда 229, экипировка 184, оружие 62, головы 184, UI 672,
 эффекты 159, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена

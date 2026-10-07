@@ -1,0 +1,44 @@
+{
+  "id": 2018,
+  "tool": "built-in image_gen.imagegen",
+  "tool_output": "exec-9dff9563-03bd-4a9a-94aa-3dbaa401ddb7.png",
+  "tool_output_session": "01a116d4-8f32-7d43-96c1-c69a58216f1e",
+  "saved_utc": "2026-10-07T23:14:31.309356+00:00",
+  "generated": "assets/terrain-hd/expanded/generated/2018-raw.png",
+  "prompt_file": "assets/terrain-hd/expanded/generated/2018-prompt.txt",
+  "reference_pngs": [
+    "assets/terrain-hd/expanded/generated/2018-ui-seventh-original-rgb-support.png"
+  ],
+  "transparent_background": false,
+  "raw_sha256": "4e566ffbca9531ca86e2186933641c8148e100db69d00a9d4907e5842e9e1a7c",
+  "prompt_sha256": "fd362ccde87415a03e62e00b10364a175839b131c98c7e2c518db7f6a7c7c316",
+  "exact_prompt": "Use case: precise-object-edit\r\nAsset type: Silent Storm original painted UI texture 2018, complete 512 by 64 pixel UV canvas.\r\nInput image: edit target is a nearest-enlarged RGB-only view of the ORIGINAL COMPLETE texture. It is the exact geometry and material reference, not an inspiration image.\r\nPrimary request: faithfully refine only the original painted surface into an HD texture. Preserve every existing shape and the complete original canvas. Keep the original aspect ratio 512:64, canvas framing and all normalized UV coordinates EXACTLY. Return the full image edge-to-edge, without fitting the painted object into another aspect ratio, padding, crop, rotation, relocation or redesign.\r\nSubject and invariants: The source is a very wide shallow dark brown-grey mottled metal inventory strip. Exactly THREE original black cut-out slots: one left, one middle, one right; all three intersect the lower canvas edge. Retain their exact horizontal positions, width, height, corner radius and bottom clipping. Preserve the thin existing upper bevel and dark matte granular material, with no additional slots or lower border.\r\nMaterials: keep the source's quiet fine grain and original broad shading. Do not enlarge the pattern or turn the texture into polished chrome, dramatic scratches, chunky grain or outlined decoration. Match original material and soft highlights. Brightness will be calibrated numerically later; preserve the relative source shading.\r\nConstraints: every region remains at its existing UV location and size. Keep the exact original number and geometry of details. Black empty/cut-out areas remain black. This is a plain painted GAME TEXTURE, not a scene or product rendering. Return opaque RGB; the source alpha is restored separately. No text, fonts, labels, logos, flags, portraits, invented symbols, decorative curls, screws, extra hardware, new cells or grids. No artificial transparent cut-out or color fringe. No artistic additions. Only refine the existing painting.",
+  "reference_sha256": {
+    "assets/terrain-hd/expanded/generated/2018-ui-seventh-original-rgb-support.png": "18e004280290118d9bc40bffa66abec7725363ba79551b9a1c857357a8593cdf"
+  },
+  "source_transform_recipe": {
+    "input": "assets/terrain-hd/expanded/original/2018.png",
+    "operations": "Source RGBA to native RGB only, exposing original stored RGB, nearest8x full canvas without crop/rotation/UV fitting. Original variable alpha preserved separately by root final pack. No inpainting/unpremultiplication/art insertion.",
+    "output": "assets/terrain-hd/expanded/generated/2018-ui-seventh-original-rgb-support.png"
+  },
+  "source_rgba_sha256": "c3d636a3033e2da2452d81af7edf4c7db56cebd29b8f75e329d009f543f24b7d",
+  "original_source_size": [
+    512,
+    64
+  ],
+  "raw_size": [
+    2172,
+    724
+  ],
+  "prompt_serialization": "Exact actual built-in argument including original CRLF equals UTF-8 prompt file bytes without trailing newline. Reference paths portable equivalents of actual absolute repo paths.",
+  "native_texture_type": "Transparent",
+  "native_alpha_source": "Original source alpha LANCZOS4x; checked byte-identical in private native preview. Root final pack responsibility.",
+  "reproducible_tool_arguments": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: Silent Storm original painted UI texture 2018, complete 512 by 64 pixel UV canvas.\r\nInput image: edit target is a nearest-enlarged RGB-only view of the ORIGINAL COMPLETE texture. It is the exact geometry and material reference, not an inspiration image.\r\nPrimary request: faithfully refine only the original painted surface into an HD texture. Preserve every existing shape and the complete original canvas. Keep the original aspect ratio 512:64, canvas framing and all normalized UV coordinates EXACTLY. Return the full image edge-to-edge, without fitting the painted object into another aspect ratio, padding, crop, rotation, relocation or redesign.\r\nSubject and invariants: The source is a very wide shallow dark brown-grey mottled metal inventory strip. Exactly THREE original black cut-out slots: one left, one middle, one right; all three intersect the lower canvas edge. Retain their exact horizontal positions, width, height, corner radius and bottom clipping. Preserve the thin existing upper bevel and dark matte granular material, with no additional slots or lower border.\r\nMaterials: keep the source's quiet fine grain and original broad shading. Do not enlarge the pattern or turn the texture into polished chrome, dramatic scratches, chunky grain or outlined decoration. Match original material and soft highlights. Brightness will be calibrated numerically later; preserve the relative source shading.\r\nConstraints: every region remains at its existing UV location and size. Keep the exact original number and geometry of details. Black empty/cut-out areas remain black. This is a plain painted GAME TEXTURE, not a scene or product rendering. Return opaque RGB; the source alpha is restored separately. No text, fonts, labels, logos, flags, portraits, invented symbols, decorative curls, screws, extra hardware, new cells or grids. No artificial transparent cut-out or color fringe. No artistic additions. Only refine the existing painting.",
+    "referenced_image_paths": [
+      "assets/terrain-hd/expanded/generated/2018-ui-seventh-original-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_argument_serialization": "Reference arguments were absolute paths resolved against the current repository root; JSON preserves their exact image identities as portable repo-relative paths with byte SHA256. Exact prompt and transparent_background are unchanged actual arguments."
+}
