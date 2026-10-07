@@ -1,0 +1,49 @@
+{
+  "ids": [
+    5168,
+    5169,
+    7581,
+    7584
+  ],
+  "tool": "built-in image_gen",
+  "preview_size": [
+    512,
+    512
+  ],
+  "private_review": "Originals and raw outputs inspected. Per-island registered previews inspected at 4x; black unused atlas area, clock island extents, housing seams, clock print orientation, hand angles and detached 7584 chip considered. Numerical brightness and final acceptance remain with coordinator.",
+  "support_recipe": {
+    "ids": [
+      7581,
+      7584
+    ],
+    "source_bbox": [
+      0,
+      1,
+      61,
+      65
+    ],
+    "rotate_degrees": 180,
+    "canvas_transform": "Rotate only the face crop and paste back to identical source bbox; enlarge entire atlas4x by nearest for built-in edit target. Inverse rotate only generated face region during per-island normalization.",
+    "files": [
+      "generated/7581-upright-support.png",
+      "generated/7584-upright-support.png"
+    ],
+    "script": "../register_rgb565_a.py"
+  },
+  "rejected_variants": {
+    "5168-rejected-numerals": "Initial prompt mistakenly asked for Roman instead of original inverted Arabic digits; model also changed numeral geometry.",
+    "5169-rejected-uv": "Initial prompt used Roman numerals and generated face/bottom band placement drifted.",
+    "5168-rejected-upright-face": "Wrong abstract glyph detail and incomplete original inverted Arabic print preservation.",
+    "5169-rejected-upright-face": "Wrong abstract glyph detail and incomplete original inverted Arabic print preservation.",
+    "7581-rejected-upright-face": "Replaced original inverted print with conventional upright numeral layout.",
+    "7584-rejected-upright-face": "Conventional upright print; separate chip was corrected but print remained wrong.",
+    "7584-rejected-dot-location": "Detached chip incorrectly relocated onto upper housing band; later prompt restored separate chip UV island.",
+    "7581-rejected-roman-ring": "Direct inverted-ring prompt produced simplified/malformed Roman numeral groups.",
+    "7584-rejected-roman-ring": "Direct inverted-ring prompt produced simplified/malformed Roman numeral groups.",
+    "7584-rejected-extra-hand": "Incorrect prompt described upward-right second hand despite rotated damaged reference; generated apparent extra hand."
+  },
+  "coordinator_review_concerns": [
+    "7581: inspect VIII and XII printed groups against source before accepting; narrow source marking restoration is authorized by coordinator if needed.",
+    "7584: inspect damaged short hand silhouette and dark damage patches against source; no whole-image interpolation substitute."
+  ]
+}

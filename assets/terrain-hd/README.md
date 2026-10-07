@@ -8,8 +8,8 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **1,952 HD textures**: 178 terrain assets, 29 tree
-assets and 1,745 building/environment assets. All 2,339 resources in the requested
+The completed pack contains **1,962 HD textures**: 178 terrain assets, 30 tree
+assets and 1,754 building/environment assets. All 2,349 resources in the requested
 scope have a recorded disposition. Original fallback covers 257 technical maps,
 73 structural/solid masks, 48 unavailable historical sources, one release mismatch
 and eight resource IDs whose original-preserving image generation was unavailable
@@ -17,8 +17,10 @@ and eight resource IDs whose original-preserving image generation was unavailabl
 An additional read-only audit found ten ordinary color RGB565 resources excluded
 by the old format filter: 5076, 5168, 5169, 6997 and 7581–7586. They are genuine
 bark, clock and medical-bed artwork, and all ten exactly match release pixels.
-They remain a follow-up outside the completed 2,339-entry queue, documented in
-`expanded/rgb565-followup.json`. Character, equipment, weapon, face, interface
+All ten are now accepted, numerically calibrated and fully native-validated,
+bringing the queue to 2,349 entries. `expanded/rgb565-followup.json` preserves
+the audit and `expanded/rgb565-batch-check.json` records this extension.
+Character, equipment, weapon, face, interface
 and effect groups also require separate inventories. The full 5,801-texture DB
 inventory and a ready continuation prompt are in `expanded/full-texture-inventory.json`
 and `CONTINUE-HD-TEXTURES.md`; current coverage does not mean all game textures.
@@ -55,8 +57,8 @@ averages premultiplied mip channels for the engine's transparent renderer.
 
 ## Build and install
 
-All 8,469 original, raw AI-generated, normalized, calibrated and rejected PNGs
-are ordinary Git files (8,934,956,122 bytes before Git deduplication/compression).
+All 8,525 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (8,982,285,448 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
@@ -161,6 +163,14 @@ use the final native mask so dark translucent edges remain correctly calibrated.
 
 ## Verification
 
+The RGB565 extension passed a Windows x64 Game build and full native validation
+on 2026-10-07: 1,962 textures, 3,924 aliases, 110 archives and 6,627,588,404 bytes.
+Every previous PNG and native texture payload retained its hash. The new assets
+were privately inspected after per-island UV registration and numerical brightness
+matching. `expanded/rgb565-batch-check.json` records commands, hashes and per-ID
+dimensions/luminance. This extends the native checks; the earlier live game report
+below still describes its original 1,952-texture scene.
+
 `validate_pack.py` checks every archive hash, both aliases of every resource,
 native dimensions, full mip payload, original alpha and brightness against the
 historical source (within 0.1 luminance levels). It reads individual payloads
@@ -178,7 +188,7 @@ on both platforms cover adjacent HD packs, working-directory fallback, HD opt-ou
 and exclusion from network resource directories. Results are recorded in
 `expanded/source-build-check.json` and `expanded/incremental-build-check.json`.
 
-The completed 1,952-texture pack passed all native checks on 2026-10-07:
+The preceding 1,952-texture pack passed all native checks on 2026-10-07:
 3,904 aliases in 110 archives, totalling 6,615,704,000 bytes. An isolated Windows
 D3D11 game run at 2560×1440 then toggled HD off and back on through the actual
 graphics menu. Visible HD terrain patches changed 11 → 0 → 11; the captured

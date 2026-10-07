@@ -1,0 +1,33 @@
+{
+  "ids": [
+    7582,
+    7583,
+    7585,
+    7586
+  ],
+  "tool": "built-in image_gen",
+  "reviewed_size": [
+    512,
+    512
+  ],
+  "raw_size": [
+    1254,
+    1254
+  ],
+  "input_reference": "Second attempts used a visibility-only 1024x1024 Lanczos enlargement of each exact 128x128 original from expanded/original. The enlarged references are in ignored build/{id}-target-reference.png and are reproducible with Pillow Image.resize((1024,1024),Image.Resampling.LANCZOS). No detail was manually synthesized.",
+  "rejected_first_attempts": {
+    "7582": "Printed face incorrectly interpreted as upright, glyph locations changed; dial shrank.",
+    "7583": "Dial shrank and delicate looped original hands replaced with solid pointers.",
+    "7585": "Printed face glyphs changed despite correct general damaged material.",
+    "7586": "Dial shrank, loops and glyph silhouettes drifted."
+  },
+  "accepted_attempt_review": {
+    "7582": "Printed dial is upside down at original orientation, hands retain up-left/up-right angles, grey painted face and steel housing maintained.",
+    "7583": "Roman ring and source radial text, two ornamental hollow-loop hands, brown aged wood housing maintained.",
+    "7585": "Matches 7582 design and upside-down numerals with original damage groups on dial and broad clouded wear on housing.",
+    "7586": "Matches 7583 design and looped hands with original top/side/lower chips and scraped wood housing."
+  },
+  "registration": "jobs-rgb565-b.json contains half-open source logical and generated raw rectangles, one for the dial and one for lower housing. Measured original islands and private review established their geometry. Raw is unmodified; importer can replay registration. Preview code in build/clocks_b_preview.py is only a private reproduction of uv_regions.",
+  "pending": "Coordinator must import, numerically match brightness, inspect calibrated results and validate entire native pack before final acceptance.",
+  "service_refusal": false
+}

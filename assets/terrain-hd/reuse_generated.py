@@ -39,6 +39,9 @@ def reuse():
             job['register_alpha_bbox'] = True
         elif registration == 'RGB occupied bounding-box UV registration':
             job['register_rgb_bbox'] = True
+        elif registration == 'Reviewed per-island UV registration; opaque black unused atlas regions':
+            job['uv_regions'] = donor['uv_registration']['regions']
+            job['uv_registration_reason'] = donor['uv_registration']['reason']
         jobs.append(job)
     if jobs:
         import_jobs(jobs)

@@ -37,14 +37,48 @@ def import_jobs(jobs, replace=False):
         original = Image.open(ROOT / item['original_png']).convert('RGBA')
         assert hashlib.sha256(original.tobytes()).hexdigest() == item['source_rgba_sha256']
         raw = out / f'{id}-raw.png'
-        shutil.copy2(Path(job['generated']), raw)
+        saved = Path(job['generated'])
+        if saved.resolve() != raw.resolve():
+            shutil.copy2(saved, raw)
         image = Image.open(raw).convert('RGBA')
         logical = item['logical_size']
         assert list(original.size) == logical
         normalized = out / f'{id}.png'
         target_size = tuple(n * 4 for n in logical)
         registration = None
-        if job.get('register_alpha_bbox') or job.get('register_rgb_bbox'):
+        if job.get('uv_regions'):
+            # Explicitly reviewed atlas islands only. Coordinates are recorded
+            # in raw generated pixels and original logical pixels, respectively.
+            assert not job.get('register_alpha_bbox') and not job.get('register_rgb_bbox')
+            assert original.getchannel('A').getextrema() == (255, 255)
+            registered = Image.new('RGBA', target_size, (0, 0, 0, 255))
+            occupied = Image.new('L', target_size)
+            regions = []
+            for region in job['uv_regions']:
+                source_bbox = region['source_bbox']
+                generated_bbox = region['generated_bbox']
+                assert len(source_bbox) == len(generated_bbox) == 4
+                assert all(isinstance(n, int) for n in source_bbox + generated_bbox)
+                assert 0 <= source_bbox[0] < source_bbox[2] <= original.width
+                assert 0 <= source_bbox[1] < source_bbox[3] <= original.height
+                assert 0 <= generated_bbox[0] < generated_bbox[2] <= image.width
+                assert 0 <= generated_bbox[1] < generated_bbox[3] <= image.height
+                target_bbox = tuple(n * 4 for n in source_bbox)
+                assert occupied.crop(target_bbox).getbbox() is None, (id, 'Overlapping UV regions')
+                occupied.paste(255, target_bbox)
+                material = image.crop(generated_bbox)
+                rotation = region.get('rotate', 0)
+                assert rotation in (0, 180), (id, 'Unreviewed island rotation')
+                if rotation == 180:
+                    material = material.transpose(Image.Transpose.ROTATE_180)
+                material = material.resize(
+                    (target_bbox[2] - target_bbox[0], target_bbox[3] - target_bbox[1]), Image.Resampling.LANCZOS)
+                registered.paste(material, target_bbox[:2])
+                regions.append(region)
+            registered.save(normalized)
+            registration = {'method': 'Reviewed per-island UV registration; opaque black unused atlas regions',
+                            'regions': regions, 'reason': job['uv_registration_reason']}
+        elif job.get('register_alpha_bbox') or job.get('register_rgb_bbox'):
             # Remove generator letterboxing on extreme-aspect UV strips, then
             # register the material to the original occupied canvas region.
             # Native packing still restores the complete original alpha mask.

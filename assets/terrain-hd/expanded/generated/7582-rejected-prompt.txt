@@ -1,0 +1,8 @@
+Use case: precise-object-edit
+Asset type: Silent Storm game diffuse UV texture atlas, opaque RGB565 source, square.
+Input image: image 1 is the exact edit target, 128 by 128 pixels.
+Primary request: faithfully restore fine surface detail in this same flat atlas at 4x resolution (512 by 512). It is a pale grey round clock dial in the upper-left quadrant, black unused UV background over upper-right and middle, and a dull dark metal horizontal housing strip across the bottom.
+Composition constraints: every component must stay at exactly the same normalized x/y coordinates and occupy exactly the same fraction of the image as the reference. Keep the dial center, circle radius and partial clipping on left edge identical. Keep the bottom strip's top edge at about y=89/128 and its horizontal seams at the original y positions. Preserve all black unused UV space.
+Dial: preserve the original exact number arrangement, marks, shape and angle of the hands, and all visible wear and small damaged markings; sharpen what is present, do not invent new characters or redraw the dial with a different clock design. Preserve the pale grey material, dark hands and rim, aged appearance.
+Housing: preserve the same dull dark grey slightly brown metal, existing seams and wear, same scale of the surface marks.
+Rendering: flat texture pixels with original baked shading; no scene, perspective, 3D object, composition change, new label, new plaque, logo, bolts, extra trim, new components or watermark. Add only fine material detail inside existing regions. Do not brighten or recolor; match the reference closely. Fully opaque square image.

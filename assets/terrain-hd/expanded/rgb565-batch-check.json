@@ -1,0 +1,644 @@
+{
+  "date": "2026-10-07",
+  "ids": [
+    5076,
+    5168,
+    5169,
+    6997,
+    7581,
+    7582,
+    7583,
+    7584,
+    7585,
+    7586
+  ],
+  "tool": "built-in image_gen",
+  "historical_release_rgba_matches": true,
+  "game_build_windows_x64": true,
+  "full_native_validation_passed": true,
+  "native_textures": 1962,
+  "native_aliases": 3924,
+  "native_archives": 110,
+  "native_bytes": 6627588404,
+  "previous_1952_png_and_native_payload_hashes_unchanged": true,
+  "private_review": "Every original and normalized/calibrated output inspected; clock UV islands registered explicitly. Printed dial orientation, hand shapes, housing materials and damage retained.",
+  "tests": [
+    "test_prepare_sources.py: 3 passed",
+    "test_import_registration.py: 1 passed"
+  ],
+  "build_command": "cmake --build G:/SS/lab/build-x64-stage4 --config RelWithDebInfo --target Game",
+  "validation_command": "python assets/terrain-hd/validate_pack.py --pack G:/SS/lab/build-x64-stage4/RelWithDebInfo/res-hd",
+  "evidence": {
+    "hd-rgb565-game-build.log": "ab92db94246ccba6433b283750e5c20e4a9381919fae095bbc3280a4bd645614",
+    "hd-rgb565-validation.log": "4951c850d32a57a21548a5818f1d8f254b9f6979a1a18cd28e8a54d99986fee5"
+  },
+  "textures": [
+    {
+      "id": 5076,
+      "logical_size": [
+        32,
+        128
+      ],
+      "physical_size": [
+        128,
+        512
+      ],
+      "source_rgba_sha256": "c257039710c6b7ea06536d1f0237d157ed3065ca8ad7259437eb047e86d38dbe",
+      "release_rgba_sha256": "c257039710c6b7ea06536d1f0237d157ed3065ca8ad7259437eb047e86d38dbe",
+      "raw_png_sha256": "cc16fe22a99486b0c47b0a60edbb5cda06029095c3f1d4ed6a4631b1419e0265",
+      "prompt_file": "expanded/generated/5076-prompt.txt",
+      "uv_registration": null,
+      "source_luma": 27.85952548828125,
+      "corrected_luma": 27.869289862060544,
+      "luma_error": 0.009764373779294289
+    },
+    {
+      "id": 5168,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "6aa3b2a6e377bc1a6648c31db070eaad0934919bd8e5ed6b95e5610a6362c7c3",
+      "release_rgba_sha256": "6aa3b2a6e377bc1a6648c31db070eaad0934919bd8e5ed6b95e5610a6362c7c3",
+      "raw_png_sha256": "4f3906190ab80554f2fedd2acce77ba534f68c42b370a7c08e43cd5a882e5575",
+      "prompt_file": "expanded/generated/5168-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "clock-face",
+            "source_bbox": [
+              0,
+              1,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              11,
+              562,
+              577
+            ]
+          },
+          {
+            "name": "housing-upper",
+            "source_bbox": [
+              1,
+              88,
+              128,
+              99
+            ],
+            "generated_bbox": [
+              7,
+              848,
+              1249,
+              968
+            ]
+          },
+          {
+            "name": "housing-middle-trim",
+            "source_bbox": [
+              1,
+              99,
+              128,
+              108
+            ],
+            "generated_bbox": [
+              7,
+              968,
+              1249,
+              1039
+            ]
+          },
+          {
+            "name": "housing-lower",
+            "source_bbox": [
+              1,
+              108,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              7,
+              1039,
+              1249,
+              1250
+            ]
+          }
+        ],
+        "reason": "Source is an opaque atlas with a face at (0,1)-(61,65), housing strip x=1..128 y=88..128 split at original horizontal seams y=99 and y=108, and otherwise black unused pixels. Raw clock and housing occupied bounds were independently inspected and are registered per island to correct generator margins without global repacking."
+      },
+      "source_luma": 36.37371795654297,
+      "corrected_luma": 36.37134904632568,
+      "luma_error": 0.002368910217285247
+    },
+    {
+      "id": 5169,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "3a6907f094f6755aa29fbb5bef8d61b899256e2f3e6bc36aa60a0bda6bda5663",
+      "release_rgba_sha256": "3a6907f094f6755aa29fbb5bef8d61b899256e2f3e6bc36aa60a0bda6bda5663",
+      "raw_png_sha256": "3c258fcd1c1030460db0a7ce611280844b01ca944a3d3a1579bb502fbc1142b5",
+      "prompt_file": "expanded/generated/5169-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "clock-face",
+            "source_bbox": [
+              0,
+              1,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              12,
+              583,
+              608
+            ]
+          },
+          {
+            "name": "housing-upper",
+            "source_bbox": [
+              1,
+              88,
+              128,
+              99
+            ],
+            "generated_bbox": [
+              7,
+              855,
+              1247,
+              970
+            ]
+          },
+          {
+            "name": "housing-middle-trim",
+            "source_bbox": [
+              1,
+              99,
+              128,
+              108
+            ],
+            "generated_bbox": [
+              7,
+              970,
+              1247,
+              1054
+            ]
+          },
+          {
+            "name": "housing-lower",
+            "source_bbox": [
+              1,
+              108,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              7,
+              1054,
+              1247,
+              1254
+            ]
+          }
+        ],
+        "reason": "Source is an opaque atlas with a face at (0,1)-(61,65), housing strip x=1..128 y=88..128 split at original horizontal seams y=99 and y=108, and otherwise black unused pixels. Raw clock and housing occupied bounds were independently inspected and are registered per island to correct generator margins without global repacking."
+      },
+      "source_luma": 34.16214534912109,
+      "corrected_luma": 34.160790924072266,
+      "luma_error": 0.0013544250488237708
+    },
+    {
+      "id": 6997,
+      "logical_size": [
+        64,
+        64
+      ],
+      "physical_size": [
+        256,
+        256
+      ],
+      "source_rgba_sha256": "9cb3f7cdbb2384bca7bda9ea2dfd5e5d3474638bf21417557dc7872bca0021ef",
+      "release_rgba_sha256": "9cb3f7cdbb2384bca7bda9ea2dfd5e5d3474638bf21417557dc7872bca0021ef",
+      "raw_png_sha256": "393abf39465576da1f3c51354ad036601bb4cbe4ac01894b2332e92c51013f85",
+      "prompt_file": "expanded/generated/6997-prompt.txt",
+      "uv_registration": null,
+      "source_luma": 27.07005517578125,
+      "corrected_luma": 27.07006273803711,
+      "luma_error": 7.562255859738798e-06
+    },
+    {
+      "id": 7581,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "2353400cf6a6a02d0a110db240511e2c7ed83a79d6e2f4d846947c719a65bcac",
+      "release_rgba_sha256": "2353400cf6a6a02d0a110db240511e2c7ed83a79d6e2f4d846947c719a65bcac",
+      "raw_png_sha256": "e159b095b284920b0b3a5efb36b08cfdc156c0ee63bba8bdc35c1ff811362855",
+      "prompt_file": "expanded/generated/7581-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "clock-face",
+            "source_bbox": [
+              0,
+              1,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              23,
+              46,
+              582,
+              604
+            ],
+            "rotate": 180
+          },
+          {
+            "name": "housing-upper",
+            "source_bbox": [
+              1,
+              88,
+              128,
+              99
+            ],
+            "generated_bbox": [
+              9,
+              863,
+              1245,
+              972
+            ]
+          },
+          {
+            "name": "housing-middle-trim",
+            "source_bbox": [
+              1,
+              99,
+              128,
+              108
+            ],
+            "generated_bbox": [
+              9,
+              972,
+              1245,
+              1058
+            ]
+          },
+          {
+            "name": "housing-lower",
+            "source_bbox": [
+              1,
+              108,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              9,
+              1058,
+              1245,
+              1254
+            ]
+          }
+        ],
+        "reason": "Source is an opaque atlas with a face at (0,1)-(61,65), housing strip x=1..128 y=88..128 split at original horizontal seams y=99 and y=108, and otherwise black unused pixels. Raw clock and housing occupied bounds were independently inspected and are registered per island to correct generator margins without global repacking. Clock edit target was explicitly rotated 180 degrees for generation; only clock crop is rotated back to restore original print/hand/damage UV orientation."
+      },
+      "source_luma": 26.124590039062497,
+      "corrected_luma": 26.123302667236327,
+      "luma_error": 0.0012873718261694478
+    },
+    {
+      "id": 7582,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "1fac549a772b8230cb61e1986234cfdb90291bf87b86655e8870e1db20992ab9",
+      "release_rgba_sha256": "1fac549a772b8230cb61e1986234cfdb90291bf87b86655e8870e1db20992ab9",
+      "raw_png_sha256": "0c01c47309cf1a760a47d49054f5720dfcc9cfcb3247bacc5e0225b421ea6788",
+      "prompt_file": "expanded/generated/7582-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "dial",
+            "source_bbox": [
+              0,
+              2,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              15,
+              579,
+              621
+            ]
+          },
+          {
+            "name": "housing-strip",
+            "source_bbox": [
+              0,
+              88,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              0,
+              867,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "reason": "Original inspected: two separate UV material islands, dial at upper-left and full-width bottom housing strip, unused middle/right black. The generator slightly shrank/shifted the dial and housing; register the islands separately to their confirmed original logical bounds. Preserve the original dial numerals, material and hand silhouettes. Bboxes are half-open; source logical size 128x128, raw 1254x1254."
+      },
+      "source_luma": 31.95260120849609,
+      "corrected_luma": 31.955374153137207,
+      "luma_error": 0.002772944641115771
+    },
+    {
+      "id": 7583,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "ae3e82ed48ea8e3fb03c633c3aa236ce3eba246301dc64123b60c7d00c9191fd",
+      "release_rgba_sha256": "ae3e82ed48ea8e3fb03c633c3aa236ce3eba246301dc64123b60c7d00c9191fd",
+      "raw_png_sha256": "8f0dee3d5d1c41e2fd13852e204f3b7801000fd6e2c205639bcf053b05841230",
+      "prompt_file": "expanded/generated/7583-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "dial",
+            "source_bbox": [
+              0,
+              0,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              10,
+              582,
+              614
+            ]
+          },
+          {
+            "name": "housing-strip",
+            "source_bbox": [
+              0,
+              88,
+              127,
+              128
+            ],
+            "generated_bbox": [
+              0,
+              863,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "reason": "Original inspected: two separate UV material islands, dial at upper-left and full-width bottom housing strip, unused middle/right black. The generator slightly shrank/shifted the dial and housing; register the islands separately to their confirmed original logical bounds. Preserve the original dial numerals, material and hand silhouettes. Bboxes are half-open; source logical size 128x128, raw 1254x1254."
+      },
+      "source_luma": 26.292778417968748,
+      "corrected_luma": 26.292570244598387,
+      "luma_error": 0.0002081733703604982
+    },
+    {
+      "id": 7584,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "c561d7466c55fb0959eb4cc212bf4062353545c4f020a2e47413665506dac8df",
+      "release_rgba_sha256": "c561d7466c55fb0959eb4cc212bf4062353545c4f020a2e47413665506dac8df",
+      "raw_png_sha256": "742c6d719c95a899f3df32390bb8d2664ad5f00ebb864b9d306b53b28dddd809",
+      "prompt_file": "expanded/generated/7584-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "clock-face",
+            "source_bbox": [
+              0,
+              1,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              27,
+              53,
+              581,
+              606
+            ],
+            "rotate": 180
+          },
+          {
+            "name": "housing-upper",
+            "source_bbox": [
+              1,
+              88,
+              128,
+              99
+            ],
+            "generated_bbox": [
+              9,
+              861,
+              1245,
+              978
+            ]
+          },
+          {
+            "name": "housing-middle-trim",
+            "source_bbox": [
+              1,
+              99,
+              128,
+              108
+            ],
+            "generated_bbox": [
+              9,
+              978,
+              1245,
+              1058
+            ]
+          },
+          {
+            "name": "housing-lower",
+            "source_bbox": [
+              1,
+              108,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              9,
+              1058,
+              1245,
+              1254
+            ]
+          },
+          {
+            "name": "detached-damage-chip",
+            "source_bbox": [
+              35,
+              83,
+              39,
+              87
+            ],
+            "generated_bbox": [
+              343,
+              812,
+              377,
+              844
+            ]
+          }
+        ],
+        "reason": "Source is an opaque atlas with a face at (0,1)-(61,65), housing strip x=1..128 y=88..128 split at original horizontal seams y=99 and y=108, and otherwise black unused pixels. Raw clock and housing occupied bounds were independently inspected and are registered per island to correct generator margins without global repacking. Clock edit target was explicitly rotated 180 degrees for generation; only clock crop is rotated back to restore original print/hand/damage UV orientation."
+      },
+      "source_luma": 25.375888159179688,
+      "corrected_luma": 25.378189246368407,
+      "luma_error": 0.002301087188719464
+    },
+    {
+      "id": 7585,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "e100f7a8cefa20a671a1188bed76be690cf9f18993a9c13ab47839553c8e2abf",
+      "release_rgba_sha256": "e100f7a8cefa20a671a1188bed76be690cf9f18993a9c13ab47839553c8e2abf",
+      "raw_png_sha256": "ab07db461732a313d41ecd940ccd29e18909ce958042f260216511b7491901d4",
+      "prompt_file": "expanded/generated/7585-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "dial",
+            "source_bbox": [
+              0,
+              2,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              13,
+              593,
+              626
+            ]
+          },
+          {
+            "name": "housing-strip",
+            "source_bbox": [
+              0,
+              88,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              7,
+              860,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "reason": "Original inspected: two separate UV material islands, dial at upper-left and full-width bottom housing strip, unused middle/right black. The generator slightly shrank/shifted the dial and housing; register the islands separately to their confirmed original logical bounds. Preserve the original dial numerals, material and hand silhouettes. Bboxes are half-open; source logical size 128x128, raw 1254x1254."
+      },
+      "source_luma": 31.26646359863281,
+      "corrected_luma": 31.267188188934327,
+      "luma_error": 0.0007245903015160593
+    },
+    {
+      "id": 7586,
+      "logical_size": [
+        128,
+        128
+      ],
+      "physical_size": [
+        512,
+        512
+      ],
+      "source_rgba_sha256": "91ba8bd0ec9dd5ffee709f865655a119e322141c6a049de37cbeeca3e185c102",
+      "release_rgba_sha256": "91ba8bd0ec9dd5ffee709f865655a119e322141c6a049de37cbeeca3e185c102",
+      "raw_png_sha256": "96a8eb06cacf40916267e2bf1eecb3a2f6f87da0df02e9d753cb136f07cd7c21",
+      "prompt_file": "expanded/generated/7586-prompt.txt",
+      "uv_registration": {
+        "method": "Reviewed per-island UV registration; opaque black unused atlas regions",
+        "regions": [
+          {
+            "name": "dial",
+            "source_bbox": [
+              0,
+              0,
+              61,
+              65
+            ],
+            "generated_bbox": [
+              0,
+              10,
+              590,
+              616
+            ]
+          },
+          {
+            "name": "housing-strip",
+            "source_bbox": [
+              0,
+              88,
+              128,
+              128
+            ],
+            "generated_bbox": [
+              0,
+              858,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "reason": "Original inspected: two separate UV material islands, dial at upper-left and full-width bottom housing strip, unused middle/right black. The generator slightly shrank/shifted the dial and housing; register the islands separately to their confirmed original logical bounds. Preserve the original dial numerals, material and hand silhouettes. Bboxes are half-open; source logical size 128x128, raw 1254x1254."
+      },
+      "source_luma": 26.376915783691405,
+      "corrected_luma": 26.377895288085938,
+      "luma_error": 0.0009795043945324267
+    }
+  ]
+}
