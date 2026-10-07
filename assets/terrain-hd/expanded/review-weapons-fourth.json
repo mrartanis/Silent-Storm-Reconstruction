@@ -1,0 +1,850 @@
+{
+  "ids": [
+    1817,
+    4333,
+    4587,
+    4589,
+    5325,
+    5336,
+    5351,
+    5352,
+    5534,
+    5535,
+    2919,
+    2925
+  ],
+  "tool": "built-in image_gen",
+  "originals_inspected_before_generation": true,
+  "all_raws_and_exact_prompts_saved": true,
+  "generation_completed": true,
+  "ready_for_coordinator": true,
+  "real_service_refusals": [],
+  "rejected_generation_attempts": [],
+  "pending_artistic_review_ids": [],
+  "shared_metadata_modified": false,
+  "calibration_performed": false,
+  "native_pack_built_or_validated": false,
+  "source_selection": {
+    "source_queue": "assets/terrain-hd/expanded/groups/source-queues/weapons.json",
+    "selected_exact_source_records": "assets/terrain-hd/expanded/selected-weapons-fourth.json",
+    "reason": "Small coherent clip/detail atlases and two readable blade layouts, exact historical/release decoded RGBA and dimensions parity, typed diffuse Materials.TextureID→Models.Material consumers, opaque/Clamp. Accepted IDs/hashes, all main-queue IDs and weapons-second/third selections excluded initially and at final audit.",
+    "deferred_candidates": [
+      {
+        "ids": [
+          4590,
+          4591
+        ],
+        "reason": "Technical flat gradient/large uniform green regions; defer purpose audit rather than treating as ordinary artistic diffuse."
+      },
+      {
+        "ids": [
+          4592,
+          4594
+        ],
+        "reason": "Fully transparent glass source; not ordinary artistic diffuse."
+      },
+      {
+        "ids": [
+          1947,
+          1948,
+          1949,
+          5088
+        ],
+        "reason": "Very narrow1:4 scope atlases; prefer separate careful layout/registration review."
+      }
+    ]
+  },
+  "jobs_path": "assets/terrain-hd/expanded/jobs-weapons-fourth.json",
+  "private_helpers": [
+    "build/weapons_fourth_select.py",
+    "build/weapons_fourth_prepare.py",
+    "build/weapons_fourth_prompts.py",
+    "build/weapons_fourth_preview.py",
+    "build/weapons_fourth_review.py"
+  ],
+  "records": [
+    {
+      "id": 1817,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Rifles\\Clips\\SWT_40Clip.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "6118324ef7492027a5ac4c25fc8826e4363a1a2a3339c161c321a9b8804a6a36",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        32,
+        32
+      ],
+      "native_target_size": [
+        128,
+        128
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1209,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 793,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1232,
+              "field": "Material0",
+              "material_template_id": 793,
+              "geometry_id": 1467,
+              "geometry": "Characters\\Weapons\\RiflesClips.mb",
+              "model_template_id": 878,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/1817-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1817-prompt.txt",
+      "raw_sha256": "0a69c7f6bc052db7310abe1fa79341406667de19bebb75ae69aa4262879cb0d7",
+      "private_preview": "build/1817-weapons-fourth-direct.png",
+      "review": "Broad original steel rectangle, pale border, right narrow side island and upper warm inset retained. Single lower-center light-edged mark already has a dark U-like center in source: source x11..12/y24..26 RGBmean45..47 versus surrounding73..79, with light lower rim up to131. Generated increases contrast around this EXISTING mark, not a new object; coordinator should inspect after numerical calibration. Source mark crop build/1817-fourth-mark-source.png inspected.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 4333,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Rifles\\Clips\\SeaDevilGun_Clip.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "41ab6e600d601692102d2d521b5ee5d5eded09c744375d5a542864c624d6293e",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        64,
+        64
+      ],
+      "native_target_size": [
+        256,
+        256
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 2695,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1747,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4550,
+              "field": "Material0",
+              "material_template_id": 1747,
+              "geometry_id": 2677,
+              "geometry": "Characters\\Weapons\\RiflesClips.mb",
+              "model_template_id": 3041,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/4333-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/4333-prompt.txt",
+      "raw_sha256": "7cd6172dcbf12b4cfecbfa847f52037f3111ab0410f969fbb2848534c748c2c7",
+      "private_preview": "build/4333-weapons-fourth-direct.png",
+      "review": "Original left brass/copper-brown strip, horizontal band and lower vertical highlight retained. Two right hexagonal end-face islands retain exactly three dark holes each, six total, at their original centers and shapes. Hexagonal perimeter and internal connecting edges retained; no extra fastener.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 4587,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TerGunClip.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "5b4edcd42478244e0faf951d9961780a910204cad660e960e00f6c2dafb8a089",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        64,
+        32
+      ],
+      "native_target_size": [
+        256,
+        128
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 2855,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1835,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4812,
+              "field": "Material0",
+              "material_template_id": 1835,
+              "geometry_id": 2774,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3201,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/4587-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/4587-prompt.txt",
+      "raw_sha256": "5e8407fd79b634f54561170527692841ff74fa40bd23fe98d82a37790c1e5120",
+      "private_preview": "build/4587-weapons-fourth-direct.png",
+      "review": "Original horizontal dark framed inset, tiny corner marks and narrow red left strip retained. Broad right red paint UV area, original dark markings and bottom-left grey padding remain in their source regions. No logo, new object or alpha change.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 4589,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TerMachineGunClip.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "7759a93af91faa21b31a0b3797592ff95164f379cc588d61837098b636e89ca1",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        32,
+        64
+      ],
+      "native_target_size": [
+        128,
+        256
+      ],
+      "raw_size": [
+        887,
+        1774
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 2857,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1837,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4814,
+              "field": "Material0",
+              "material_template_id": 1837,
+              "geometry_id": 2776,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3203,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/4589-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/4589-prompt.txt",
+      "raw_sha256": "5b0348bb3938455fc14ab6f4efc56dbcb7473fe71c6fbc415cad55c3046ed02b",
+      "private_preview": "build/4589-weapons-fourth-direct.png",
+      "review": "Original seven ladder-like left rectangular patches and their seam spacing retained, olive right material island and warm narrow inset preserved. Slim bottom side panel and all original black cuts retained; no added blocks or holes.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5325,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Silencers\\Silencer.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "fdb2545aa82b7ba2e735013ec22ef636beae8e43db1767abc018df10af6fbba2",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        64,
+        32
+      ],
+      "native_target_size": [
+        256,
+        128
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3459,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2222,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5584,
+              "field": "Material1",
+              "material_template_id": 2222,
+              "geometry_id": 3401,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3674,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5585,
+              "field": "Material2",
+              "material_template_id": 2222,
+              "geometry_id": 3402,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3675,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5592,
+              "field": "Material1",
+              "material_template_id": 2222,
+              "geometry_id": 3409,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3682,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5593,
+              "field": "Material1",
+              "material_template_id": 2222,
+              "geometry_id": 3410,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3683,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5596,
+              "field": "Material1",
+              "material_template_id": 2222,
+              "geometry_id": 3413,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3686,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5325-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5325-prompt.txt",
+      "raw_sha256": "4c1b481fa5a38a363e67170fd556b33183e7a95843383ede9ed02106a6618102",
+      "private_preview": "build/5325-weapons-fourth-direct.png",
+      "review": "Broad upper steel panel, three original lower end-face patches and right diagonal knurl strip retained. Original rightmost pattern occupies logical y0..21; source rows22..31 are exactly black, confirmed numerically and mirrored by raw. Coarse diamond scale, phase and spacing privately reviewed; no fabric/carbon-fiber material swap or invented full-height pattern.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5336,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\SubMachineGuns\\MP41.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "417b2c236ba9212d0cf2e7a112bc90d2f6db523c9fe24c1ff73a152ebdee63d0",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        64,
+        32
+      ],
+      "native_target_size": [
+        256,
+        128
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3471,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2231,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5593,
+              "field": "Material2",
+              "material_template_id": 2231,
+              "geometry_id": 3410,
+              "geometry": "Characters\\Weapons\\Silencers.mb",
+              "model_template_id": 3683,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5605,
+              "field": "Material2",
+              "material_template_id": 2231,
+              "geometry_id": 3421,
+              "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+              "model_template_id": 3694,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5336-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5336-prompt.txt",
+      "raw_sha256": "1e2208808fab81c12b14f7cab413da0ffafcd047150b09e5c51926fe6bdf1a1e",
+      "private_preview": "build/5336-weapons-fourth-direct.png",
+      "review": "Original warm brown wood, small upper-left rounded cap and long diagonal-top main UV island retained. Existing dark marks, source grain direction/scale and black padding maintained. Fine wood grain added within source areas; no new knots or holes, metal swap or new object.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5351,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TGL_Clip_Axis_Red.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "7317692572efefc5e1491890e1088519a7cbbbbcffd2ddf6c3aa83c0b014aa75",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        64
+      ],
+      "native_target_size": [
+        512,
+        256
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3480,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2233,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5609,
+              "field": "Material0",
+              "material_template_id": 2233,
+              "geometry_id": 3423,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3696,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5351-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5351-prompt.txt",
+      "raw_sha256": "24022272eb4a38b5868cf96f1b5c012df5e3acd469f2ccc450e3b8c2f2b8c3d4",
+      "private_preview": "build/5351-weapons-fourth-direct.png",
+      "review": "Dark blue-grey steel retained, original red vertical paint stripe keeps position/width and interruptions. Long seam count, broad dark upper-right surface, two lower-right curved/chamfered patches and all black gaps maintained.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5352,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TGL_Clip_Allies_Red.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "f3d86a1d7888b26c047da461ccd7a3046a91f4f0978066f178de4100f51d8f98",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        64
+      ],
+      "native_target_size": [
+        512,
+        256
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3482,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2234,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5611,
+              "field": "Material0",
+              "material_template_id": 2234,
+              "geometry_id": 3424,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3697,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5352-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5352-prompt.txt",
+      "raw_sha256": "4a4fc4a972a95229065a959776f835d0bf748c2737a7404351d43f2df4e8ae78",
+      "private_preview": "build/5352-weapons-fourth-direct.png",
+      "review": "Dark olive paint retained, original red vertical stripe keeps position/width and interruptions. Left grey cut face, diagonal existing worn edge, long seams, original far-right transverse bands and separate lower-right round patch maintained. No color-variant substitution.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5534,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TGL_Clip_Allies_Blue.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "4ac28296d734364352892f076e679f13bc1a184a203a319996d93d3bdd5c6b5f",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        64
+      ],
+      "native_target_size": [
+        512,
+        256
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3599,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2306,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5773,
+              "field": "Material0",
+              "material_template_id": 2306,
+              "geometry_id": 3424,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3801,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5534-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5534-prompt.txt",
+      "raw_sha256": "05dbc1330f20b2deb6bde07c46fc1ea23180c57bf85e2b74d00b33581d82c5f3",
+      "private_preview": "build/5534-weapons-fourth-direct.png",
+      "review": "Dark olive paint retained, original BLUE stripe keeps position/width and interruptions. Left grey cut face, diagonal existing worn edge, long seams, original far-right transverse bands and separate lower-right round patch maintained. No red or blue-grey variant substitution.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 5535,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\TGL_Clip_Axis_Blue.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "abb67b0446c8d41638eeb28d835aa779b3ac9fc56ead7031e0cf2769395244aa",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        64
+      ],
+      "native_target_size": [
+        512,
+        256
+      ],
+      "raw_size": [
+        1774,
+        887
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 3601,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2307,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5775,
+              "field": "Material0",
+              "material_template_id": 2307,
+              "geometry_id": 3423,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3802,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/5535-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/5535-prompt.txt",
+      "raw_sha256": "d539b92d53d5ce94fa7ebd8dd3b167ba7585b350f856cc5aab93528071c95c51",
+      "private_preview": "build/5535-weapons-fourth-direct.png",
+      "review": "Dark blue-grey steel retained, original BLUE vertical stripe keeps position/width and interruptions. Long seam count, broad dark upper-right surface, two lower-right curved/chamfered patches and all black gaps maintained. No red variant substitution.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 2919,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\GerBlade.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "bc8d5ea79dc7149771f3ce6cc09412143d323905de6741ec05b2594de34f70af",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        128
+      ],
+      "native_target_size": [
+        512,
+        512
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1780,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1190,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1694,
+              "field": "Material0",
+              "material_template_id": 1190,
+              "geometry_id": 2004,
+              "geometry": "Characters\\Weapons\\RobotWeapons.mb",
+              "model_template_id": 1272,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/2919-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2919-prompt.txt",
+      "raw_sha256": "5f602c12f719a863e34f5f7d9445983152b0d4db5b544dc8944cf95b8bed2243",
+      "private_preview": "build/2919-weapons-fourth-direct.png",
+      "review": "Original top frame packing and two existing large upper-right dark recesses retained; central brown panels, small left bands/loop, lower-middle grey patch and brown right patch maintained. Broad bottom grey blade-face island retains exactly two oval fastener marks and long light seam. No new hardware or material island.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    },
+    {
+      "id": 2925,
+      "category": "weapons",
+      "source_name": "Characters\\Weapons\\Robot\\UKBlade.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "891ba5f437f911bbb93381ec2928be4c4c37d60dc70fbeeeb67c2580e5bb89f9",
+      "independent_source_status": "pending",
+      "main_queue_status_at_final_review": "not-yet-added",
+      "logical_size": [
+        128,
+        128
+      ],
+      "native_target_size": [
+        512,
+        512
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "raw_alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1786,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1196,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1700,
+              "field": "Material0",
+              "material_template_id": 1196,
+              "geometry_id": 2010,
+              "geometry": "Characters\\Weapons\\RobotWeapons.mb",
+              "model_template_id": 1278,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "addressing": "Clamp unchanged",
+      "raw_png": "assets/terrain-hd/expanded/generated/2925-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2925-prompt.txt",
+      "raw_sha256": "4d566e520389d84b46a52fdd2d8f4bf62bac279d459af1c0caaf2d4f1062d827",
+      "private_preview": "build/2925-weapons-fourth-direct.png",
+      "review": "Original top/middle mechanical UV packing, two upper-right dark recesses and separate bottom curved silver blade-face island retained. Private nearest source/generated crops confirm TEN original triangular pale tooth highlights along bottom island, matching original phase at logical x approximately28,37,46,55,64,73,82,91,100,109. Pitch remains approximately9 logical pixels; no added tooth or curvature change. Helpers build/2925-fourth-teeth-source.png and build/2925-fourth-teeth-generated.png are private only.",
+      "registration": "None: source aspect/layout retained and direct4x normalization privately reviewed. No UV reconstruction, bbox registration or source RGB preservation regions required.",
+      "status": "ready-for-coordinator-import-and-calibrated-review",
+      "review_required": true
+    }
+  ],
+  "coordination": "Generation stops after this12 for coordinator review and commit synchronization."
+}

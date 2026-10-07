@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Приняты 2 065 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
-22 одежды, 26 экипировки, 27 оружия, 2 лиц, 10 UI, 10 эффектов,
+Приняты 2 097 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+31 одежды, 32 экипировки, 39 оружия, 2 лиц, 15 UI, 10 эффектов,
 4 лагерных атласа и 2 учебные мишени.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 103 текстуры новых групп; всего 2 468 записей общей очереди, pending нет.
+Приняты 135 текстур новых групп; всего 2 500 записей общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -41,13 +41,26 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 jobs-clothing-third-retries (2350), jobs-equipment-third (12),
 jobs-weapons-third (1805–1816). НЕ запускай их снова. Flattened accepted jobs:
 `jobs-new-groups-fourth.json`, native/check: `new-groups-fourth-batch-check.json`.
-Актуально: 2 065 текстур/4 130 алиасов/112 архивов/6 750 015 264 байта;
+После четвёртой порции: 2 065 текстур/4 130 алиасов/112 архивов/6 750 015 264 байта;
 прежние 2 031 source/PNG/native хешей сохранены.
 `new-groups-fourth-live-check.json`: реальное меню HD on/off/on, штатный quit.
 2151/2235 не импортированы; raw/prompts всех попыток и причины сохранены
 в review-clothing-third.json. Остальные jobs-clothing/equipment/weapons-fourth,
 UI-third и heads-second могут уже содержать готовые raw; проверь reviews,
 актуальные sources/queue и импортируй только готовые подмножества.
+
+Пятая порция уже принята: jobs-new-groups-fifth.json (32), из
+jobs-clothing-fourth (9), jobs-equipment-fourth-first-ready (6),
+jobs-weapons-fourth (12) и jobs-ui-third (5). НЕ генерируй их заново.
+Актуально: 2 097 текстур/4 194 алиаса/112 архивов/6 779 639 268 байт;
+new-groups-fifth-batch-check.json подтверждает неизменность предыдущих 2 065.
+new-groups-fifth-live-check.json: реальное меню HD on/off/on, штатный quit.
+2443/2542/2546 pending из-за belt marks; UI6100/6101 из-за внутреннего рисунка.
+heads-second (1898/1899/2169/2170/2172–2175) сохранён pending зубного рисунка/стиля;
+jobs-heads-second.json пустой. Не объявлять эти raw принятыми.
+Снаряжение2985/2986/2991/2995/2997/3006 проходит новые direct-original retries:
+проверяй review и stable jobs snapshot, часть попыток уже отложена из-за UV drift.
+Clothing-fifth и weapons-fifth в работе независимых агентов; сначала ищи raw/jobs.
 
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
@@ -71,8 +84,8 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-fourth-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 699: одежда 265, экипировка 233, оружие 100, головы 184, UI 688,
+`new-groups-fifth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 667: одежда 256, экипировка 227, оружие 88, головы 184, UI 683,
 эффекты 196, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена

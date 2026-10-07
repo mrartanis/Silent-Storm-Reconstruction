@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,065 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 22 clothing, 26 equipment, 27 weapons,
-2 heads, 10 interface icons, 10 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,097 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 31 clothing, 32 equipment, 39 weapons,
+2 heads, 15 interface icons, 10 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,468 records, including 103 accepted new-group textures, the original
+contains 2,500 records, including 135 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,699 verified originals outside the shared queue, including next
+validation. There remain 1,667 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -83,8 +83,17 @@ native top mips match reviewed calibrated PNG RGBA byte for byte. Clothing
 
 ## Build and install
 
-All 10,509 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (9,445,359,654 bytes before Git deduplication/compression).
+`expanded/new-groups-fifth-batch-check.json` records9 clothing,6 equipment,12 weapons
+and5 UI icons:2,097 textures/4,194 aliases/112 archives/6,779,639,268 bytes.
+All previous2,065 source/PNG/native hashes are unchanged. All27 opaque native top
+mips match reviewed calibrated PNG RGBA; all5 native UI top mips were privately
+reviewed with the original full alpha. `expanded/new-groups-fifth-live-check.json`
+records real-menu HD on/off/on and normal isolated Game exit. Clothing2443/2542/2546,
+six initial equipment images, UI6100/6101 and eight heads are pending fidelity
+corrections, outside the accepted set; all attempts remain provenance.
+
+All 10,703 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,596,367,766 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

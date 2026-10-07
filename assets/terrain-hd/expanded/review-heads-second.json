@@ -1,0 +1,911 @@
+{
+  "ids": [
+    1898,
+    1899,
+    2169,
+    2170,
+    2172,
+    2173,
+    2174,
+    2175
+  ],
+  "tool": "built-in image_gen",
+  "originals_inspected_before_generation": true,
+  "source_full_alpha_inspected": true,
+  "all8_raws_saved": true,
+  "exact_actual_prompts_saved": true,
+  "ready_ids": [],
+  "pending_ids": [
+    1898,
+    1899,
+    2169,
+    2170,
+    2172,
+    2173,
+    2174,
+    2175
+  ],
+  "ready_for_coordinator_import": false,
+  "jobs_path": "assets/terrain-hd/expanded/jobs-heads-second.json",
+  "import_jobs_count": 0,
+  "reason_no_ready_jobs": "Strict source tooth-count/contour fidelity cannot be confirmed: source64px dental patch is indistinct while AI invents more regular crowns or additional pale rows; first1899 also has skin-style drift. No pending raw is declared accepted merely because UV packing is stable.",
+  "selected_source_records": "assets/terrain-hd/expanded/selected-heads-second.json",
+  "real_service_refusals": [],
+  "rejected_generation_attempts": [
+    {
+      "id": 1898,
+      "attempt": 1,
+      "raw": "assets/terrain-hd/expanded/generated/1898-rejected-skin-detail-raw.png",
+      "prompt": "assets/terrain-hd/expanded/generated/1898-rejected-skin-detail-prompt.txt",
+      "reason": "Photoreal skin grain/pores and excessive anatomical dental definition."
+    },
+    {
+      "id": 1899,
+      "attempt": 1,
+      "raw": "assets/terrain-hd/expanded/generated/1899-rejected-skin-detail-raw.png",
+      "prompt": "assets/terrain-hd/expanded/generated/1899-rejected-skin-detail-prompt.txt",
+      "reason": "Photoreal pores/detail and anatomical regular dental painting. Same first raw retained as primary pending diagnostic."
+    }
+  ],
+  "planned_unexecuted_retry_prompt_files": [
+    "assets/terrain-hd/expanded/generated/1898-pending-retry-prompt.txt",
+    "assets/terrain-hd/expanded/generated/1899-pending-retry-prompt.txt"
+  ],
+  "shared_metadata_modified": false,
+  "numerical_calibration_performed": false,
+  "native_pack_built_or_validated": false,
+  "source_rgb_insertions_performed": false,
+  "uv_registration_performed": false,
+  "records": [
+    {
+      "id": 1898,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\7.Axis02\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "61e070a3038893894b839605feab4fee2e688ae167c098a11e7f0ae4578e8626",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/1898-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1898-prompt.txt",
+      "raw_sha256": "2878d2121d307e61dc97a08999412a12778aeaf03d39cf6451b518ec374e472a",
+      "source_alpha_stats": {
+        "id": 1898,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 1.3938078703703705,
+          "rgb_max": 82,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "42ad7f092a19be8ec81319e172e9c25b06d887071c74b3218d5de6967c6f77dc"
+        },
+        "teeth_region_rgba_sha256": "c609c45dc0c0334a52e5ee0c8d664eca5f18a7212184bb2ba3cd14ba83aca3bc"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.01634979248046875,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1300,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 862,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 7,
+              "field": "Material0",
+              "material_template_id": 862,
+              "head_source": "Heads\\GDP\\Axis02.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "First output introduced photoreal skin grain/pores and glossy regular dental crowns; rejected raw/prompt saved. Targeted smooth-painted retry removed skin grain and preserves recognizable male face/hair and inverted geometry. Dental crowns remain more segmented/anatomical than faint source ivory patches, so exact original tooth count is NOT confirmed. Gum margin alpha/RGB altered. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 1.3938078703703705,
+        "source_rgb_max": 82,
+        "source_rgb_le8_fraction": 0.9592013888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "42ad7f092a19be8ec81319e172e9c25b06d887071c74b3218d5de6967c6f77dc",
+        "generated_direct4x_rgb_mean": 5.20751953125,
+        "generated_direct4x_alpha_mean": 16.411241319444443,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/1898-heads-second-direct.png"
+    },
+    {
+      "id": 1899,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\8.Axis03\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "fe2d1c5f7eb3bbdaafe57295e4f4353579ce995de4b647546920afc701c90c2c",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/1899-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/1899-prompt.txt",
+      "raw_sha256": "51a88005244cf4bebb29171b6edbde5c0575d95f431c8415223f9eba041dad6e",
+      "source_alpha_stats": {
+        "id": 1899,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 1.3938078703703705,
+          "rgb_max": 82,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "42ad7f092a19be8ec81319e172e9c25b06d887071c74b3218d5de6967c6f77dc"
+        },
+        "teeth_region_rgba_sha256": "c609c45dc0c0334a52e5ee0c8d664eca5f18a7212184bb2ba3cd14ba83aca3bc"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.010240554809570312,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1301,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 863,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 8,
+              "field": "Material0",
+              "material_template_id": 863,
+              "head_source": "Heads\\GDP\\Axis03.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "First output retained inverted islands but introduced dense photoreal pores and exaggerated skin detail despite prohibition. Also replaced faint source dental painting with regular anatomical crowns. Rejected copy saved; primary raw is that same first attempt, exact first prompt restored. Improved retry prompt saved separately but not executed after8 unique heads; awaiting coordinator. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 1.3938078703703705,
+        "source_rgb_max": 82,
+        "source_rgb_le8_fraction": 0.9592013888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "42ad7f092a19be8ec81319e172e9c25b06d887071c74b3218d5de6967c6f77dc",
+        "generated_direct4x_rgb_mean": 18.97430193865741,
+        "generated_direct4x_alpha_mean": 2.8213433159722223,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/1899-heads-second-direct.png"
+    },
+    {
+      "id": 2169,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\13.AhmadNamju\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "c4980ae0e0b4e02fb4929adbdaaf0bc2076fe1b046f6e50f1fbffb8d18141abd",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2169-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2169-prompt.txt",
+      "raw_sha256": "0859b93f06f62f9ed3b75a834b3fb0ba52c350f7afb01dff9a83489ad82b83c2",
+      "source_alpha_stats": {
+        "id": 2169,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 4.125,
+          "rgb_max": 107,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "1bc1c50a6f351bef8c7d23c792b471b7fad4752a0f4b1d2f0f54b0329a7d501f"
+        },
+        "teeth_region_rgba_sha256": "66485e9e6da87d38104b49935c128bb04d7e57098e4edcb02112a6d420b768cc"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.016786575317382812,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1448,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 988,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 13,
+              "field": "Material0",
+              "material_template_id": 988,
+              "head_source": "Heads\\GDP\\Axis\\AhmadNamju.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted male face/hair/ear proportions, darker yellow-tan skin, original dark jaw shading and brown eye patch remain at source UV. Generated beard/stubble detail is denser than source paint and dental region appears to have overlapping pale bands within the upper row, beyond source faint dental painting. Tooth count is not confirmed; gum region brighter/different alpha. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 4.125,
+        "source_rgb_max": 107,
+        "source_rgb_le8_fraction": 0.890625,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "1bc1c50a6f351bef8c7d23c792b471b7fad4752a0f4b1d2f0f54b0329a7d501f",
+        "generated_direct4x_rgb_mean": 7.976218894675926,
+        "generated_direct4x_alpha_mean": 18.811197916666668,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2169-heads-second-direct.png"
+    },
+    {
+      "id": 2170,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\14.AxelBieber\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "dfdcdcb5e3eaebbd4634b9c4dec46cf53a24a8cd0c404a13a1c67e6bf2ba87e2",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2170-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2170-prompt.txt",
+      "raw_sha256": "26187aafda7ebaea4bc49159dbc68c5fcd1549449147b5b0a90e192ebba593da",
+      "source_alpha_stats": {
+        "id": 2170,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 0.75,
+          "rgb_max": 24,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149"
+        },
+        "teeth_region_rgba_sha256": "4aea7b2cacf298a0486d44d2a2e93b60e6f6a065e96cf36edccf5e8efabec9b3"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.008327484130859375,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1449,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 989,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 14,
+              "field": "Material0",
+              "material_template_id": 989,
+              "head_source": "Heads\\GDP\\Axis\\AxelBieber.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted male face, golden/light-brown hair, ear/feature positions and brown iris retained in smooth painted treatment. Generated dental rows remain regular individual crowns although original separators are faint/indistinct; exact tooth count not confirmed. Native gum sparse mask became more continuous dark band. Pending dental/gum/identity check, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 0.75,
+        "source_rgb_max": 24,
+        "source_rgb_le8_fraction": 0.9513888888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+        "generated_direct4x_rgb_mean": 2.8380533854166665,
+        "generated_direct4x_alpha_mean": 40.96625434027778,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2170-heads-second-direct.png"
+    },
+    {
+      "id": 2172,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\16.Colleen-Holly-Cullen\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "27e0c299755be1dafcc8035767458ee5fc7a63d721bbe24a03ac5ad42d89da64",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2172-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2172-prompt.txt",
+      "raw_sha256": "a0da62086e39234966c33531a3e270012065b7f36666ccaebb17d6f39024d344",
+      "source_alpha_stats": {
+        "id": 2172,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 0.75,
+          "rgb_max": 24,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149"
+        },
+        "teeth_region_rgba_sha256": "4aea7b2cacf298a0486d44d2a2e93b60e6f6a065e96cf36edccf5e8efabec9b3"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.010929107666015625,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1451,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 991,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 16,
+              "field": "Material0",
+              "material_template_id": 991,
+              "head_source": "Heads\\GDP\\Axis\\Colleen-Holly-Cullen.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted female face, sparse small brown temple hair, warm skin and GREEN iris retained; smooth painted style, no obvious pore field. The dental rows are blurred but still inferred as individual crowns and exact source count cannot be confirmed. Technical gum dark band differs in alpha. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 0.75,
+        "source_rgb_max": 24,
+        "source_rgb_le8_fraction": 0.9513888888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+        "generated_direct4x_rgb_mean": 1.2956633391203705,
+        "generated_direct4x_alpha_mean": 17.07204861111111,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2172-heads-second-direct.png"
+    },
+    {
+      "id": 2173,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\17.DaniKunstler\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "83ab76ed91f8aa570e2a9d364880b3c9952c91d2dd7a5594f868012fade34356",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2173-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2173-prompt.txt",
+      "raw_sha256": "4e5a1589d2d68ac60e32c0d70d3bcf1f0454e3d2b998f0d6cddbee83b1ae4169",
+      "source_alpha_stats": {
+        "id": 2173,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 0.75,
+          "rgb_max": 24,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149"
+        },
+        "teeth_region_rgba_sha256": "4aea7b2cacf298a0486d44d2a2e93b60e6f6a065e96cf36edccf5e8efabec9b3"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.013998031616210938,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1452,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 992,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 17,
+              "field": "Material0",
+              "material_template_id": 992,
+              "head_source": "Heads\\GDP\\Axis\\DaniKunstler.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 5551,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 3036,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 94,
+              "field": "Material0",
+              "material_template_id": 3036,
+              "head_source": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            },
+            {
+              "table": "Heads",
+              "id": 98,
+              "field": "Material0",
+              "material_template_id": 3036,
+              "head_source": "Heads\\GDP\\Mob\\Civilians\\civFem2.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted female face, brown side hair masses, warm skin and amber/hazel-brown iris retained; smooth painted treatment and source UV positions maintained. Dental pattern remains more segmented than source, count not confirmed. Upper near-black gum margin disappeared completely in generated alpha, while source contains sparse opaque marks. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 0.75,
+        "source_rgb_max": 24,
+        "source_rgb_le8_fraction": 0.9513888888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+        "generated_direct4x_rgb_mean": 0.0,
+        "generated_direct4x_alpha_mean": 0.0003255208333333333,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2173-heads-second-direct.png"
+    },
+    {
+      "id": 2174,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\18.Ela-Eagle-Jelinek\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "7941eae796734b262594d38d896142123f3479ca1d575072697656b645994abf",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2174-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2174-prompt.txt",
+      "raw_sha256": "5d94778383e5b22277b3d5a2b1a73a0fbf166444ee492b0d0b9a019ad72cca13",
+      "source_alpha_stats": {
+        "id": 2174,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 0.75,
+          "rgb_max": 24,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149"
+        },
+        "teeth_region_rgba_sha256": "4aea7b2cacf298a0486d44d2a2e93b60e6f6a065e96cf36edccf5e8efabec9b3"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.011653900146484375,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1453,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 993,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 18,
+              "field": "Material0",
+              "material_template_id": 993,
+              "head_source": "Heads\\GDP\\Axis\\Ela-Eagle-Jelinek.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 5552,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 3036,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 94,
+              "field": "Material0",
+              "material_template_id": 3036,
+              "head_source": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            },
+            {
+              "table": "Heads",
+              "id": 98,
+              "field": "Material0",
+              "material_template_id": 3036,
+              "head_source": "Heads\\GDP\\Mob\\Civilians\\civFem2.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted female face, dark wavy/curly hair, warm skin and BLUE/GREY iris retained. Tooth-row painting remains regularized and exact count not confirmed; generated middle dental gap has pale/alpha fill absent from source gap, requiring native alpha restoration but this does not settle dental artwork fidelity. Gum alpha pattern changed. Pending, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 0.75,
+        "source_rgb_max": 24,
+        "source_rgb_le8_fraction": 0.9513888888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+        "generated_direct4x_rgb_mean": 4.046477141203703,
+        "generated_direct4x_alpha_mean": 9.504231770833334,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2174-heads-second-direct.png"
+    },
+    {
+      "id": 2175,
+      "status": "pending-artistic-dental-review-not-import-ready",
+      "review_required": true,
+      "source_name": "Heads\\19.Francisco-Paco-Escudero\\0.tga",
+      "source_match": "Exact decoded RGBA and dimensions match release",
+      "source_rgba_sha256": "534349d58d27d4453492475f02f3c90c9b7fb85661ef97b194af3526b39bfb25",
+      "logical_size": [
+        256,
+        256
+      ],
+      "native_target_size": [
+        1024,
+        1024
+      ],
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/2175-raw.png",
+      "prompt_file": "assets/terrain-hd/expanded/generated/2175-prompt.txt",
+      "raw_sha256": "9d43566ba6de3322b3abcb379feb97b3efbd4d006498094204799bc37103b5ed",
+      "source_alpha_stats": {
+        "id": 2175,
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_zero": 39072,
+        "alpha_partial": 0,
+        "alpha_255": 26464,
+        "alpha_bbox_gt8": [
+          0,
+          16,
+          128,
+          256
+        ],
+        "technical_gum_candidate": {
+          "source_bbox": [
+            0,
+            16,
+            64,
+            34
+          ],
+          "rgb_mean": 0.75,
+          "rgb_max": 24,
+          "alpha_mean": 41.171875,
+          "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149"
+        },
+        "teeth_region_rgba_sha256": "4aea7b2cacf298a0486d44d2a2e93b60e6f6a065e96cf36edccf5e8efabec9b3"
+      },
+      "generated_alpha_extrema": [
+        0,
+        255
+      ],
+      "generated_right_half_alpha_mean": 0.012294769287109375,
+      "typed_diffuse_consumers": [
+        {
+          "table": "Materials",
+          "id": 1454,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap",
+          "TemplateID": 994,
+          "consumers": [
+            {
+              "table": "Heads",
+              "id": 19,
+              "field": "Material0",
+              "material_template_id": 994,
+              "head_source": "Heads\\GDP\\Axis\\Francisco-Paco-Escudero.gdp",
+              "transformable": false,
+              "transformable_textures_id": 0
+            }
+          ]
+        }
+      ],
+      "layout_review": "All island types present at original normalized regions; face remains upside-down in x0..128,y128..256, eye x64..128,y64..128, mouth block x0..64,y64..128 and dental patch x0..64,y34..64. No rotation, bbox registration or programming artwork repair. Native alpha differs and should be source-restored only after artwork fidelity decision.",
+      "review": "Inverted male face, dark brown parted hair, original mild jaw/mouth shading and brown iris retained in painted treatment. Teeth still regularized into crowns, exact source count not confirmed; middle gap/upper gum alpha differs. Pending dental/gum/identity check, not accepted.",
+      "technical_gum_margin_requires_coordinator_decision": {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "source_rgb_mean": 0.75,
+        "source_rgb_max": 24,
+        "source_rgb_le8_fraction": 0.9513888888888888,
+        "source_alpha_mean": 41.171875,
+        "source_rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+        "generated_direct4x_rgb_mean": 2.649830005787037,
+        "generated_direct4x_alpha_mean": 6.943142361111111,
+        "reason": "Near-black sparse upper gum margin lies ABOVE artistic tooth rows; AI changed alpha and/or underlying RGB. Restoring native source alpha followed by generated edge fill may brighten this source-dark area. Coordinator must independently decide technical margin handling; no source RGB insertion has been performed."
+      },
+      "private4x_preview": "build/2175-heads-second-direct.png"
+    }
+  ],
+  "private_helpers": [
+    "build/heads_second_select.py",
+    "build/heads_second_prepare.py",
+    "build/heads_second_prompts.py",
+    "build/heads_second_preview.py",
+    "build/heads_second_review.py"
+  ],
+  "coordination": "Stopped after8 unique heads as requested; all pending and awaiting coordinator decision rather than importing guessed dental artwork."
+}
