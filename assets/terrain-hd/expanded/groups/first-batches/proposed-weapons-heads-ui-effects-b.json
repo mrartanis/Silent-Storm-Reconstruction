@@ -1,0 +1,442 @@
+{
+  "purpose": "Small independent first artwork batches after RGB565 batch push. Proposal only; no generation or shared metadata changes.",
+  "generation_started": false,
+  "approval_gate": "Wait for coordinator's message after verified RGB565 push.",
+  "source_queues_root": "assets/terrain-hd/expanded/groups/source-queues",
+  "inspected_originals": true,
+  "global_review_required": [
+    "Coordinator should confirm all source queues are still pending before generation.",
+    "Inspect each exact original again when making the prompt.",
+    "Preserve original logical size and UVs, restore original alpha in native pack, review normalized and calibrated outputs privately.",
+    "Do not create comparisons or HTML.",
+    "AI brightness differences must be corrected numerically; no regeneration for brightness."
+  ],
+  "groups": [
+    {
+      "category": "weapons",
+      "ids": [
+        1952,
+        1954,
+        1979
+      ],
+      "reason": "Three compact, visibly artistic, opaque diffuse submachine-gun atlases with established Materials→Template→Models color consumers; no text.",
+      "items": [
+        {
+          "id": 1952,
+          "name": "M3A1",
+          "logical_size": [
+            128,
+            64
+          ],
+          "hd_size": [
+            512,
+            256
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            64
+          ],
+          "material_alpha": "alpha_test",
+          "address_mode": "Clamp",
+          "layout": {
+            "kind": "irregular-multi-island-UV",
+            "notes": "Long dark steel rectangles and strips with receiver/body geometry in upper/right areas, smaller vertical/rectangular component islands left and middle. This is not a side-view weapon icon; retain every existing island, seam and component."
+          },
+          "review_required": [
+            "Source is fully opaque despite material alpha_test; retain alpha255 and RGB black unused UV.",
+            "Match wear and original metal scale; no assembly into a new complete gun.",
+            "Typed material1348/template906/model1360 and5592 use the same color texture."
+          ]
+        },
+        {
+          "id": 1954,
+          "name": "MP40",
+          "logical_size": [
+            128,
+            64
+          ],
+          "hd_size": [
+            512,
+            256
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            64
+          ],
+          "material_alpha": "alpha_test",
+          "address_mode": "Clamp",
+          "layout": {
+            "kind": "irregular-multi-island-UV",
+            "notes": "Large receiver strips across center/lower-right, upper-right long barrel/rod strip, tilted ribbed grip-like island at upper-left and small angular patches/strips. Retain orientation, rib count, dark spaces and original UV dimensions."
+          },
+          "review_required": [
+            "Materials1350/template908/models1362 and5605 color usage resolved.",
+            "Source alpha255; preserve black RGB islands and exact highlight placement."
+          ]
+        },
+        {
+          "id": 1979,
+          "name": "MP38",
+          "logical_size": [
+            128,
+            64
+          ],
+          "hd_size": [
+            512,
+            256
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            64
+          ],
+          "material_alpha": "alpha_test",
+          "address_mode": "Clamp",
+          "layout": {
+            "kind": "irregular-multi-island-UV",
+            "notes": "Shares the MP40 geometry consumer but distinct darker artwork: receiver strips, rod island upper-right, tilted grip upper-left and thin lower strips. Do not reuse MP40 merely because geometry and apparent arrangement match."
+          },
+          "review_required": [
+            "Material1377/template940/model1386 geometry1775 color usage resolved.",
+            "Preserve this original darker metal material; calibrate brightness from its own source.",
+            "Logical size/type/layout parity does not establish duplicate RGBA."
+          ]
+        }
+      ]
+    },
+    {
+      "category": "heads-lshead",
+      "ids": [
+        1896,
+        2171
+      ],
+      "reason": "Two non-transformable Heads material sources with identifiable faces and established typed consumers; neither is a solid/control map.",
+      "items": [
+        {
+          "id": 1896,
+          "name": "Allies01",
+          "logical_size": [
+            256,
+            256
+          ],
+          "hd_size": [
+            1024,
+            1024
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "address_mode": "Wrap",
+          "layout": {
+            "kind": "head-UV-atlas",
+            "notes": "Artwork occupies left half only; inverted facial/ear/hair artwork in lower left, neck/skin region above, separate round eye patch near x64..128/y64..128 and teeth/mouth strips near upper-left. Right half remains unused transparent. Treat all slots as UV components, not a new portrait."
+          },
+          "review_required": [
+            "Keep face upside-down, exact eye/nose/mouth landmarks, short light/brown hair and original identity/style.",
+            "Retain source binary alpha and every head/eye/teeth island without automatic bbox registration.",
+            "Material1298/template860/Head9 resolved; texture also used by Material5853/template3111/Head117, so changes affect two heads."
+          ]
+        },
+        {
+          "id": 2171,
+          "name": "CarmelinaDonati",
+          "logical_size": [
+            256,
+            256
+          ],
+          "hd_size": [
+            1024,
+            1024
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "address_mode": "Wrap",
+          "layout": {
+            "kind": "head-UV-atlas",
+            "notes": "Same general left-half atlas arrangement with upside-down female face and dark curly hair below, separate eye patch and upper-left teeth/mouth region; exact artwork differs from1896."
+          },
+          "review_required": [
+            "Preserve female character identity, dark curly hair silhouette, facial proportions and source painted game style.",
+            "Do not beautify/repose or replace with a portrait; preserve all UV slots and source binary alpha.",
+            "Material1450/template990/Head15 source Axis/CarmelinaDonati.gdp resolved, transformable=false."
+          ]
+        }
+      ]
+    },
+    {
+      "category": "interface-v5",
+      "ids": [
+        6091,
+        6092
+      ],
+      "reason": "Two native power-of-two status icons (32x32 to128x128) with visible artwork, no text/digits and empty cursor bindings; avoids existing native-pack NPOT limitation.",
+      "items": [
+        {
+          "id": 6091,
+          "name": "Bleeding",
+          "logical_size": [
+            32,
+            32
+          ],
+          "hd_size": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            6,
+            3,
+            25,
+            30
+          ],
+          "alpha_unique_levels": 80,
+          "layout": {
+            "kind": "single-icon",
+            "notes": "Single red shaded blood-drop symbol, rounded upper body and tapered lower tip, one highlight at upper-left; preserve slight tilt, exact source position/bbox, negative space and soft contour. No atlas grid, text or background tile."
+          },
+          "review_required": [
+            "UITextures812 R_1024x768 and derived32x32 UI logical size match physical source. No cursors or direct UIControls uses recorded.",
+            "Preserve original soft alpha and original drop silhouette, source highlight and red palette; do not add blood droplets or text.",
+            "Power-of-two input32x32 and target128x128 supported by current pack geometry checks; retain runtime logical dimensions32x32."
+          ]
+        },
+        {
+          "id": 6092,
+          "name": "Blind",
+          "logical_size": [
+            32,
+            32
+          ],
+          "hd_size": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "alpha_unique_levels": 110,
+          "layout": {
+            "kind": "single-icon",
+            "notes": "Single crossed-eye status symbol: gray eye/ring forms around blue center, crossed diagonal gray bars, on transparent unused pixels. Preserve exact iris/bar geometry, edge clipping and orientation; this is a status icon, not a cursor or new sight."
+          },
+          "review_required": [
+            "UITextures813 R_1024x768 and derived32x32 UI logical size match physical source. No cursor bindings or direct UIControls uses recorded.",
+            "Preserve gray/blue symbol and original soft alpha; do not invent numbers, pupil rings, bolts or a new reticle.",
+            "POT source/target32x32 to128x128; do not crop outer pixels because original alpha bbox touches all four edges."
+          ]
+        }
+      ]
+    },
+    {
+      "category": "effects",
+      "ids": [
+        581,
+        582
+      ],
+      "reason": "Two separate single-frame wood splinter sprite textures, visually artistic and much simpler than animation atlases/additive all-zero-alpha flare resources. Particle23 is resolved and confirms use.",
+      "items": [
+        {
+          "id": 581,
+          "name": "WoodHit/Wood.1",
+          "logical_size": [
+            64,
+            64
+          ],
+          "hd_size": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            8,
+            2,
+            58,
+            61
+          ],
+          "layout": {
+            "kind": "single-sprite",
+            "notes": "One long narrow wood splinter diagonally oriented from upper-left to lower-right with soft transparency and pointed ends. Original sprite is one material island, not an animation grid."
+          },
+          "review_required": [
+            "459 direct ParticleInstances bindings; representative instance23 Texture0, ParticleID23 resolved, WoodHitSmall, AlphaBlending Normal, PivotX/Y0, Scale0.5, Speed1, CycleCount1, WrapX/Y0.",
+            "Keep shape/center/rotation, grain direction, small splinter scale and soft original alpha (210 distinct levels).",
+            "Do not infer atlas cells from Texture0..15 animation bindings; no calibration_grid.",
+            "Some other ParticleInstances lack a definition; retain recorded metadata and do not change pivot/timing/blending."
+          ]
+        },
+        {
+          "id": 582,
+          "name": "WoodHit/Wood.2",
+          "logical_size": [
+            64,
+            64
+          ],
+          "hd_size": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            5,
+            7,
+            48,
+            56
+          ],
+          "layout": {
+            "kind": "single-sprite",
+            "notes": "One shorter irregular wood splinter similarly tilted, with a wider brighter middle and tapered torn ends. Distinct silhouette/bbox from581; no reuse or recentering."
+          },
+          "review_required": [
+            "Representative instance23 Texture1, ParticleID23 resolved; same Normal blend and original timing/pivot/Wrap0 semantics as581.",
+            "Keep source soft alpha (203 distinct levels), exact asymmetry and scale.",
+            "Do not change frame ordering or convert separate animation bindings into atlas cells.",
+            "Other particle missing-definition bindings remain a usage-review limitation."
+          ]
+        }
+      ]
+    }
+  ],
+  "deferred_after_inspection": [
+    {
+      "id": 2084,
+      "category": "interface-v5",
+      "reason": "Biographi icon includes printed text; outside requested text-free starter package."
+    },
+    {
+      "id": 5120,
+      "category": "effects",
+      "reason": "Artistic metallic bullet-hole overlay64×64 alpha0..255, but only Materials3421 Template2195 has been linked; runtime decal consumer still needs a targeted audit."
+    },
+    {
+      "id": 5273,
+      "category": "effects",
+      "reason": "Artistic wood bullet-hole overlay64×64 alpha0..255, but only Materials3416 Template2194 is linked; runtime decal consumer review deferred."
+    },
+    {
+      "id": 2085,
+      "category": "interface-v5",
+      "reason": "native_pack_npot_audit_required: 48x48 to 192x192 is non-power-of-two; existing native build-pack requires POT. Preserve this inspected candidate for later format/runtime audit.",
+      "inspected_proposal": {
+        "id": 2085,
+        "name": "Medals",
+        "logical_size": [
+          48,
+          48
+        ],
+        "hd_size": [
+          192,
+          192
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_bbox": [
+          4,
+          4,
+          44,
+          44
+        ],
+        "layout": {
+          "kind": "single-icon",
+          "notes": "Single bordered blue/dark tile occupying [4,4,44,44], an existing multi-pointed metal medal/sunburst with circular center above lower grey faceted/ribbon shapes. Preserve point count, center position and all original symbols as-is. No atlas grid."
+        },
+        "review_required": [
+          "UITextures400 R_1024x768 resolves this exact48×48 icon; derived UI logical size48×48 matches physical source.",
+          "No cursor bindings and no direct UIControls uses were recorded; retain runtime original logical dimensions.",
+          "Do not invent inscriptions or logos. Preserve4px transparent gutter and source binary alpha."
+        ]
+      }
+    },
+    {
+      "id": 2086,
+      "category": "interface-v5",
+      "reason": "native_pack_npot_audit_required: 48x48 to 192x192 is non-power-of-two; existing native build-pack requires POT. Preserve this inspected candidate for later format/runtime audit.",
+      "inspected_proposal": {
+        "id": 2086,
+        "name": "Item Repair",
+        "logical_size": [
+          48,
+          48
+        ],
+        "hd_size": [
+          192,
+          192
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "alpha_bbox": [
+          4,
+          4,
+          44,
+          44
+        ],
+        "layout": {
+          "kind": "single-icon",
+          "notes": "Single dark violet tile with diagonal open-end wrench running upper-left to lower-right, same [4,4,44,44] tile and 4px transparent gutter. No text, no cursor, no atlas grid."
+        },
+        "review_required": [
+          "UITextures396 R_1024x768 and derived48×48 UI logical size verified.",
+          "Keep wrench jaw openings, exact angle, silhouette, brushed silver material and dark tile shading.",
+          "No added handle holes, bolts, embossed marks or text. Preserve binary alpha."
+        ]
+      }
+    }
+  ],
+  "technical_observations": [
+    "All selected sources are pending in independent source queues with exact historical/release RGBA parity.",
+    "Candidate effects with alpha0..0 must not be classified as empty automatically: additive RGB-only effect textures exist, so a separate blend/runtime audit is required.",
+    "UI cursor sources, font resources and text-bearing icons were excluded from this proposed starter batch.",
+    "No selected image is visually solid or a structural/control map."
+  ]
+}

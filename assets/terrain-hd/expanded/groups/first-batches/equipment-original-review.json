@@ -1,0 +1,878 @@
+{
+  "version": 1,
+  "scope": "Private review of original source images only; not generation or HD acceptance",
+  "review_method": "Each native original viewed with view_image; each original additionally examined as an 8x nearest-neighbor private zoom without comparison or HTML",
+  "generation_started": false,
+  "shared_metadata_changed": false,
+  "registration_policy": "No cropping/bbox registration. Approximate noted rectangles are annotations only, not transforms or calibration grid. Preserve the complete source canvas.",
+  "brightness_policy": "Coordinate importer/match_brightness.py after generation; never regenerate for brightness",
+  "records": [
+    {
+      "id": 657,
+      "original_png": "expanded/original/657.png",
+      "source_rgba_sha256": "1129c08fb0af9b0ef65a6965a1a20350360fb2fe38edd35cf90a6d92a9dfd877",
+      "logical_size": [
+        128,
+        64
+      ],
+      "target_size": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 443,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 342,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 1475,
+                "field": "Material0",
+                "material_template_id": 342,
+                "geometry_id": 1866,
+                "geometry": "Characters\\Equipment\\Items\\Knives.mb",
+                "model_template_id": 1106,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Knife UV sheet: a large horizontal gray steel blade fills the lower band, with pointed right end and an authored recessed line. Upper band has a large dark-brown rectangular surface, narrow blue-gray trim at its left, a larger blue-gray panel toward the right, one narrow pale-gray rounded piece, and a separate warm-brown vertical grip surface at far right.",
+      "material_notes": [
+        "Gray blade and gray/blue-gray trim retain metal appearance.",
+        "Brown surfaces remain matte brown as authored; exact wood/leather subdivision is not reliably established by texture alone, so do not reinterpret them."
+      ],
+      "uv_regions": [
+        {
+          "region": "blade",
+          "approx_native_bbox": [
+            1,
+            40,
+            107,
+            63
+          ]
+        },
+        {
+          "region": "upper brown panel",
+          "approx_native_bbox": [
+            19,
+            4,
+            70,
+            40
+          ]
+        },
+        {
+          "region": "far-right brown grip",
+          "approx_native_bbox": [
+            110,
+            7,
+            127,
+            53
+          ]
+        }
+      ],
+      "invariants": [
+        "One horizontal blade, same length/width and same right tip.",
+        "Retain upper pieces and far-right grip in their exact separate source positions.",
+        "Keep the source blade recess and absence of serrations."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Preserve the single horizontal steel blade across the lower band, its pointed right tip and existing longitudinal recessed line. Preserve all separate upper brown and blue-gray/gray surfaces and the far-right brown vertical grip. Keep gray steel as gray steel and the authored brown surfaces matte brown. Sharpen existing fine material grain and worn edges conservatively. Do not add serrations, new bevel geometry, blade stamps or weapon markings.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 664,
+      "original_png": "expanded/original/664.png",
+      "source_rgba_sha256": "eee1c9267f00027f3f0d7f3f449217f0f41f354ce907efca7201696ed603523e",
+      "logical_size": [
+        32,
+        32
+      ],
+      "target_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 444,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 343,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 492,
+                "field": "Material0",
+                "material_template_id": 343,
+                "geometry_id": 324,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 407,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1729,
+                "field": "Material0",
+                "material_template_id": 343,
+                "geometry_id": 2036,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1304,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Extremely dark 32x32 diffuse map named ShellBag. One compact upright near-black form occupies the central area, with blue-gray highlight patches at upper and lower parts, nearly black unused surround, and a faint separate dark patch near upper right. Fine construction is ambiguous at native resolution.",
+      "material_notes": [
+        "Keep near-black painted bag surface and cool-gray existing highlights.",
+        "Do not infer bright metallic hardware or new construction details from the filename."
+      ],
+      "uv_regions": [
+        {
+          "region": "central upright painted form",
+          "approx_native_bbox": [
+            4,
+            3,
+            23,
+            30
+          ]
+        },
+        {
+          "region": "faint upper-right patch",
+          "approx_native_bbox": [
+            24,
+            2,
+            31,
+            13
+          ]
+        }
+      ],
+      "invariants": [
+        "Same central shape, same small highlight patches, same black surround.",
+        "Low-confidence source details must not be replaced with an invented complete bag."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. This tiny 32 by 32 source is deliberately almost black. Preserve its compact upright central painted form, the existing small cool blue-gray upper/lower highlights and the faint upper-right patch. Refine the existing surface very conservatively without inventing a bag reconstruction, extra compartments, straps, buckles, seams or metal parts. Preserve its exact small UV footprint and very low contrast.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 665,
+      "original_png": "expanded/original/665.png",
+      "source_rgba_sha256": "8e80885a32195111b3f65dcc4ecb4b18e01714da3d85f201dd75d2da247c0d75",
+      "logical_size": [
+        128,
+        64
+      ],
+      "target_size": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 445,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 344,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 496,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 329,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1718,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 2025,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1293,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1728,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 2035,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1303,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6770,
+                "field": "Material1",
+                "material_template_id": 344,
+                "geometry_id": 3997,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 4294,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6964,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 4079,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6976,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 4083,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6977,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 4084,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6978,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 4085,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6979,
+                "field": "Material0",
+                "material_template_id": 344,
+                "geometry_id": 4086,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 411,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Backpack UV atlas with brown worn fabric/leather-like rectangular front/back/side panels, two rounded oval/circular islands across lower-left half, narrow central strips, and two circular rolled-looking islands at far right. Existing small cool-gray strap fittings are sparse.",
+      "material_notes": [
+        "Brown canvas/leather appearance stays brown and matte.",
+        "Bright upper-middle worn patch is an authored surface highlight, not permission to make a metal plate.",
+        "Sparse gray fittings retain their existing positions and count."
+      ],
+      "uv_regions": [
+        {
+          "region": "left brown rectangles",
+          "approx_native_bbox": [
+            0,
+            1,
+            29,
+            45
+          ]
+        },
+        {
+          "region": "upper-middle bright worn panel",
+          "approx_native_bbox": [
+            31,
+            0,
+            56,
+            23
+          ]
+        },
+        {
+          "region": "lower rounded islands",
+          "approx_native_bbox": [
+            0,
+            46,
+            64,
+            63
+          ]
+        },
+        {
+          "region": "right rolled circular islands",
+          "approx_native_bbox": [
+            109,
+            7,
+            127,
+            63
+          ]
+        }
+      ],
+      "invariants": [
+        "Do not turn separate atlas surfaces into one perspective backpack.",
+        "Preserve both rounded lower-left islands and both circular far-right islands.",
+        "No additional pocket, strap, buckle or seam geometry."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Keep the backpack as its original UV atlas of brown worn panels, narrow strap/side strips, two rounded islands across the lower-left half and the two circular rolled-looking islands at far right. Preserve the existing pale worn upper-middle patch as part of its fabric/leather surface; do not turn it into a metal plate. Add restrained fine brown fabric/leather grain only inside existing islands; keep the existing sparse gray fittings and their exact count and locations.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 666,
+      "original_png": "expanded/original/666.png",
+      "source_rgba_sha256": "6e7a752b8817823aad3953c79302aaeae680c03bd45d61a74eaa3f7e602905a3",
+      "logical_size": [
+        64,
+        64
+      ],
+      "target_size": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 450,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 349,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 498,
+                "field": "Material0",
+                "material_template_id": 349,
+                "geometry_id": 327,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 413,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1733,
+                "field": "Material0",
+                "material_template_id": 349,
+                "geometry_id": 2040,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1308,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6962,
+                "field": "Material0",
+                "material_template_id": 349,
+                "geometry_id": 4078,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 413,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6980,
+                "field": "Material0",
+                "material_template_id": 349,
+                "geometry_id": 4087,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 413,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Flask/canteen UV atlas: large rounded brown upper-left cover surface, rounded brown lower-left cover, separate long brown vertical side/strap islands in right half, dark separators and small blue-gray metal cap/edge pieces at top and bottom/right.",
+      "material_notes": [
+        "The cover remains dark brown fabric/leather, not chrome.",
+        "Only small source blue-gray cap/edge pieces remain cool gray metal."
+      ],
+      "uv_regions": [
+        {
+          "region": "upper-left rounded cover",
+          "approx_native_bbox": [
+            0,
+            0,
+            38,
+            34
+          ]
+        },
+        {
+          "region": "lower-left rounded cover",
+          "approx_native_bbox": [
+            1,
+            35,
+            34,
+            63
+          ]
+        },
+        {
+          "region": "right long brown pieces",
+          "approx_native_bbox": [
+            35,
+            8,
+            59,
+            56
+          ]
+        }
+      ],
+      "invariants": [
+        "Both left rounded cover islands remain at original size and position.",
+        "Same narrow right-side islands and same gray cap pieces.",
+        "Black separators stay opaque and in-place."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Preserve the two large rounded brown cover islands on the left, the separate elongated brown side/strap islands on the right and the small cool-gray cap/edge pieces at the top, right edge and bottom. Keep the worn cover matte brown fabric/leather and the tiny existing gray pieces metallic. Refine restrained grain and existing edge wear without adding a canteen silhouette, straps, rivets or new fittings.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 667,
+      "original_png": "expanded/original/667.png",
+      "source_rgba_sha256": "3e0f4a6acac4f5aae9154ebdfa43d006bc753448937faaac66681b8573ce0cff",
+      "logical_size": [
+        64,
+        64
+      ],
+      "target_size": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 447,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 346,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 495,
+                "field": "Material0",
+                "material_template_id": 346,
+                "geometry_id": 330,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 410,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1731,
+                "field": "Material0",
+                "material_template_id": 346,
+                "geometry_id": 2038,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1306,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1732,
+                "field": "Material0",
+                "material_template_id": 346,
+                "geometry_id": 2039,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1307,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Clip-case UV atlas: large dark-brown square/rectangular island on left; three narrow brown vertical flap/pouch columns in right half, with three existing gray/brown buckle highlights and dark closures; rounded lower edges and black surrounding gaps.",
+      "material_notes": [
+        "Preserve brown leather/canvas pouch surfaces and tiny existing metal fittings.",
+        "Do not turn the left dark patch into a new separate accessory."
+      ],
+      "uv_regions": [
+        {
+          "region": "left broad rectangle",
+          "approx_native_bbox": [
+            1,
+            6,
+            28,
+            48
+          ]
+        },
+        {
+          "region": "right three pouch columns",
+          "approx_native_bbox": [
+            28,
+            5,
+            63,
+            55
+          ]
+        }
+      ],
+      "invariants": [
+        "Exactly three authored pouch/flap columns on right.",
+        "Same three closure/buckle highlight positions, same rounded bottom contours.",
+        "No added bullets, labels, pockets or ornament."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Keep the large dark-brown rectangular UV surface at left and exactly the three narrow brown pouch/flap columns at right, preserving their spacing, lower rounded edges and existing three small closure/buckle highlights. Refine only restrained leather/canvas grain and the tiny existing fittings. Do not add bullets, ammunition, a fourth pouch, stitching rows, emblems or extra buckles.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 668,
+      "original_png": "expanded/original/668.png",
+      "source_rgba_sha256": "6ed497c944478d548da5c1af2d20c7c0cc64292b309a366c76e3cf08daf3196a",
+      "logical_size": [
+        64,
+        64
+      ],
+      "target_size": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 446,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 345,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 494,
+                "field": "Material0",
+                "material_template_id": 345,
+                "geometry_id": 326,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 409,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1716,
+                "field": "Material1",
+                "material_template_id": 345,
+                "geometry_id": 2023,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1291,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 2186,
+                "field": "Material0",
+                "material_template_id": 345,
+                "geometry_id": 326,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1649,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6833,
+                "field": "Material0",
+                "material_template_id": 345,
+                "geometry_id": 4025,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 4318,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6835,
+                "field": "Material1",
+                "material_template_id": 345,
+                "geometry_id": 4026,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 4319,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6963,
+                "field": "Material0",
+                "material_template_id": 345,
+                "geometry_id": 4025,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1649,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Gas-mask container UV sheet: tall brown ridged/corrugated rectangular side island across left/center with authored horizontal light/dark ribs; two distinct circular brown-gray end-cap/ring islands stacked at right; narrow vertical boundary strips and black gaps.",
+      "material_notes": [
+        "Preserve muted brown/gray rigid case and same existing worn rib highlights.",
+        "This is a container surface atlas, not permission to generate a gas-mask face or lenses."
+      ],
+      "uv_regions": [
+        {
+          "region": "ribbed side sheet",
+          "approx_native_bbox": [
+            1,
+            0,
+            41,
+            64
+          ]
+        },
+        {
+          "region": "upper circular cap",
+          "approx_native_bbox": [
+            44,
+            0,
+            64,
+            29
+          ]
+        },
+        {
+          "region": "lower circular cap",
+          "approx_native_bbox": [
+            44,
+            37,
+            64,
+            64
+          ]
+        }
+      ],
+      "invariants": [
+        "Exactly two circular cap/ring islands at right.",
+        "Every existing horizontal rib stays at its original location and width; no new ribs or changed spacing.",
+        "Retain vertical strips and black gaps."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Preserve the tall ribbed/corrugated brown-gray rectangular side surface at left/center and exactly the two circular end-cap/ring UV islands stacked at right. Keep every authored horizontal rib at its original position, thickness and spacing; refine the existing rib edges and restrained worn rigid-material texture. Preserve the narrow vertical strips and black gaps. Do not add new ribs, lenses, a gas-mask face, knobs, bolts or stamped markings.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    },
+    {
+      "id": 669,
+      "original_png": "expanded/original/669.png",
+      "source_rgba_sha256": "1fce07d654aa29d2dbef66add91031825831acb40ba3a00690912c8997789824",
+      "logical_size": [
+        64,
+        64
+      ],
+      "target_size": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "transparent_background": false,
+      "status": "original-examined-awaiting-RGB565-validation-and-push",
+      "material_role": "opaque diffuse color",
+      "material_usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 448,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 347,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 493,
+                "field": "Material0",
+                "material_template_id": 347,
+                "geometry_id": 325,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 408,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 1734,
+                "field": "Material0",
+                "material_template_id": 347,
+                "geometry_id": 2041,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1309,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 2185,
+                "field": "Material0",
+                "material_template_id": 347,
+                "geometry_id": 325,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1649,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "uv_layout": "single complete unwrapped UV sheet; irregular islands; no assumed regular atlas grid",
+      "visual_description": "Shovel UV atlas: very dark olive-green broad blade surface in left half, narrow dark olive edge strips, separate dark handle/shaft surfaces in middle/right, long warm-brown wooden patch along lower-left band, additional small brown/gray pieces at lower right; black gaps.",
+      "material_notes": [
+        "Large left blade remains matte dark olive-painted metal with restrained existing scuffing.",
+        "Warm-brown lower strip retains wood appearance and same grain scale.",
+        "Dark separate pieces retain source hue/contrast."
+      ],
+      "uv_regions": [
+        {
+          "region": "large olive blade",
+          "approx_native_bbox": [
+            0,
+            0,
+            34,
+            58
+          ]
+        },
+        {
+          "region": "wooden lower band",
+          "approx_native_bbox": [
+            0,
+            58,
+            36,
+            64
+          ]
+        },
+        {
+          "region": "separate middle/right pieces",
+          "approx_native_bbox": [
+            34,
+            0,
+            64,
+            64
+          ]
+        }
+      ],
+      "invariants": [
+        "Same large blade outline and rounded lower edge.",
+        "Preserve lower wooden band and separated dark right islands; no recentering.",
+        "No new damage, bright rust, bolts or inscriptions."
+      ],
+      "planned_imagegen_prompt": "Edit this supplied original Silent Storm equipment UV texture into a faithful high-resolution texture, not a rendered object or illustration. Keep the exact full rectangular canvas, aspect ratio, UV island positions, original orientation, scale, spacing, black unused areas and every boundary. Do not crop, zoom, center, rotate, pack, move, duplicate or stretch islands; do not add borders. Refine only existing painted material surfaces and details at their original positions. Preserve original colors, material appearance, wear and painted shading. Do not add objects, symbols, logos, writing, fasteners, straps, stitching, holes or damage absent from the source. Keep all small features at their original relative size. The original is fully opaque: preserve the black areas as opaque black, not transparency. Brightness will be matched numerically afterward; retain the source's dark appearance. Output the texture atlas only, with no text or explanatory frame. Keep the large very dark olive-green painted shovel-blade island in the left half, its existing edge contour and lower rounded edge, the separate dark handle/shaft surfaces in the middle/right and the warm-brown wooden strip across the lower-left band. Refine subtle existing paint grain, scuffing and restrained wood grain at the original relative scale. Keep the dark green palette and black gaps. Do not assemble a rendered shovel or add rust patches, bolts, stamps, new scratches or holes.",
+      "qa_requirements": [
+        "Exact full-canvas UV registration at normalized 4x size",
+        "Original opaque alpha and opaque black unused areas",
+        "Same island count, contours and feature count/spacing",
+        "Materials and microdetail scale match original",
+        "No unintended bright metal, new fasteners/text/ornament or added damage",
+        "Privately inspect normalized generated image before accepting any HD result"
+      ]
+    }
+  ]
+}

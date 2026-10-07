@@ -9,8 +9,9 @@ requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
 The completed pack contains **1,962 HD textures**: 178 terrain assets, 30 tree
-assets and 1,754 building/environment assets. All 2,349 resources in the requested
-scope have a recorded disposition. Original fallback covers 257 technical maps,
+assets and 1,754 building/environment assets. All 2,349 world-scope resources
+have a recorded disposition; 20 new-group originals bring the shared queue to
+2,369 and are pending generation/review. Original fallback covers 257 technical maps,
 73 structural/solid masks, 48 unavailable historical sources, one release mismatch
 and eight resource IDs whose original-preserving image generation was unavailable
 (seven distinct source images). No entries in that queue remain pending.
@@ -20,8 +21,11 @@ bark, clock and medical-bed artwork, and all ten exactly match release pixels.
 All ten are now accepted, numerically calibrated and fully native-validated,
 bringing the queue to 2,349 entries. `expanded/rgb565-followup.json` preserves
 the audit and `expanded/rgb565-batch-check.json` records this extension.
-Character, equipment, weapon, face, interface
-and effect groups also require separate inventories. The full 5,801-texture DB
+Separate character, equipment, weapon, face, interface and effect inventories
+are now under `expanded/groups`. They include 1,803 exact release-matched
+originals and 15 missing sources; they remain preparation, not accepted HD.
+Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
+are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
 inventory and a ready continuation prompt are in `expanded/full-texture-inventory.json`
 and `CONTINUE-HD-TEXTURES.md`; current coverage does not mean all game textures.
 The original decoded pixels are matched to the release resources before editing;
@@ -57,8 +61,8 @@ averages premultiplied mip channels for the engine's transparent renderer.
 
 ## Build and install
 
-All 8,525 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (8,982,285,448 bytes before Git deduplication/compression).
+All 10,060 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,031,595,196 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

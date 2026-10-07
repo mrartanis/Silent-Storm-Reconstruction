@@ -1,0 +1,195 @@
+[
+  {
+    "texture": {
+      "ID": 5856,
+      "Width": 1024,
+      "Height": 2048,
+      "NMips": 0,
+      "AverageColor": -16711164,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Final\\Sky.tga",
+      "Format": "dxt1",
+      "UserName": "Sky",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "final",
+    "role": "typed-db-color-candidate",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3834,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "self_illum",
+          "AddressMode": "Wrap",
+          "TemplateID": 2430,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6181,
+              "field": "Material0",
+              "material_template_id": 2430,
+              "geometry_id": 3723,
+              "geometry": "Final\\FF.mb",
+              "model_template_id": 3973,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 6228,
+              "field": "Material0",
+              "material_template_id": 2430,
+              "geometry_id": 3791,
+              "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+              "model_template_id": 3996,
+              "flags": ""
+            }
+          ]
+        },
+        {
+          "table": "UITextures",
+          "id": 953,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Background"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 953,
+          "name": "Background",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            1024,
+            2048
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ]
+  },
+  {
+    "texture": {
+      "ID": 5887,
+      "Width": 2048,
+      "Height": 1024,
+      "NMips": 0,
+      "AverageColor": -11243399,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Final\\Earth.tga",
+      "Format": "dxt1",
+      "UserName": "Earth",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "final",
+    "role": "typed-db-color-candidate",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3861,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2444,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6196,
+              "field": "Material0",
+              "material_template_id": 2444,
+              "geometry_id": 3782,
+              "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+              "model_template_id": 3979,
+              "flags": ""
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 5892,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3123,
+          "consumers": []
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ]
+  },
+  {
+    "texture": {
+      "ID": 5889,
+      "Width": 1024,
+      "Height": 1024,
+      "NMips": 0,
+      "AverageColor": 235013127,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Final\\EarthCloudsNight.tga",
+      "Format": "8888",
+      "UserName": "EarthClouds",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "final",
+    "role": "typed-db-color-candidate",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3863,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "transparent",
+          "AddressMode": "Clamp",
+          "TemplateID": 2445,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6196,
+              "field": "Material1",
+              "material_template_id": 2445,
+              "geometry_id": 3782,
+              "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+              "model_template_id": 3979,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ]
+  }
+]

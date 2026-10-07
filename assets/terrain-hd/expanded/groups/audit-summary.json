@@ -1,0 +1,308 @@
+{
+  "version": 1,
+  "scope": "read-only candidate audit; not a generation queue or all-game completion",
+  "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "inventory_sha256": "7f5ac8e9abde4ccf31e8797e1df949b22feac0b41045745e8d220ba98a7048ae",
+  "inventory_exactly_matches_database": true,
+  "total_texture_records": 5801,
+  "table_count": 155,
+  "command": "python assets/terrain-hd/audit_texture_groups.py --database <historical-game.db> --textures <historical-Textures> --output assets/terrain-hd/expanded/groups",
+  "limitations": [
+    "Paths select groups, while typed DB links establish uses; lack of a direct link does not prove unused.",
+    "Headers are not decoded pixels. Release RGBA parity and structural/solid-mask inspection remain mandatory.",
+    "Model/head material slots resolve through MaterialTemplates -> Materials.TemplateID.",
+    "BRDFID points to BRDF records, not a texture; UIControls.TextureN points to UITextures, not a texture.",
+    "External script/native-resource references are not exhaustively interpreted.",
+    "UI logical dimensions are computed from original DB texture sizes; preserve DB sizes/coordinates.",
+    "Hardware cursor reader currently samples an original-size corner of physical HD storage; defer cursor assets pending runtime fix/check.",
+    "Raster/font atlas references require font-rendering audit; vector fonts are excluded from imagegen.",
+    "Native RGB565/CF_R5G6B5 is color; Format=565 alone is never an exclusion."
+  ],
+  "groups": {
+    "campaign-backgrounds": {
+      "file": "campaign-backgrounds.json",
+      "total": 5,
+      "candidate_input": "candidates/campaign-backgrounds.json",
+      "source_validation_candidates": 4,
+      "without_explicit_bump": 4,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 4,
+        "preserve-technical": 1
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "characters-clothing": {
+      "file": "characters-clothing.json",
+      "total": 586,
+      "candidate_input": "candidates/characters-clothing.json",
+      "source_validation_candidates": 300,
+      "without_explicit_bump": 389,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 287,
+        "mixed-color-control-audit-required": 9,
+        "preserve-technical": 253,
+        "source-unavailable-or-invalid": 13,
+        "usage-audit-required": 24
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": [
+        4872,
+        4873,
+        5508,
+        5510,
+        5515,
+        5528,
+        5698,
+        5727,
+        5728
+      ]
+    },
+    "clues": {
+      "file": "clues.json",
+      "total": 17,
+      "candidate_input": "candidates/clues.json",
+      "source_validation_candidates": 17,
+      "without_explicit_bump": 17,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 17
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "effects": {
+      "file": "effects.json",
+      "total": 238,
+      "candidate_input": "candidates/effects.json",
+      "source_validation_candidates": 206,
+      "without_explicit_bump": 238,
+      "dispositions": {
+        "accepted-do-not-regenerate": 9,
+        "candidate-source-pixel-validation-required": 206,
+        "usage-audit-required": 23
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "equipment": {
+      "file": "equipment.json",
+      "total": 439,
+      "candidate_input": "candidates/equipment.json",
+      "source_validation_candidates": 260,
+      "without_explicit_bump": 317,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 259,
+        "mixed-color-control-audit-required": 5,
+        "preserve-technical": 171,
+        "source-unavailable-or-invalid": 1,
+        "usage-audit-required": 3
+      },
+      "color_rgb565_ids": [
+        6197,
+        6199,
+        6200,
+        6247,
+        6248,
+        6249,
+        6250
+      ],
+      "mixed_role_ids": [
+        1909,
+        2197,
+        2379,
+        5144,
+        5377
+      ]
+    },
+    "final": {
+      "file": "final.json",
+      "total": 5,
+      "candidate_input": "candidates/final.json",
+      "source_validation_candidates": 3,
+      "without_explicit_bump": 4,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 3,
+        "mixed-color-control-audit-required": 1,
+        "preserve-technical": 1
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": [
+        5854
+      ]
+    },
+    "fonts": {
+      "file": "fonts.json",
+      "total": 17,
+      "candidate_input": "candidates/fonts.json",
+      "source_validation_candidates": 0,
+      "without_explicit_bump": 17,
+      "dispositions": {
+        "font-rendering-audit-no-imagegen": 17
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "heads-lshead": {
+      "file": "heads-lshead.json",
+      "total": 200,
+      "candidate_input": "candidates/heads-lshead.json",
+      "source_validation_candidates": 186,
+      "without_explicit_bump": 194,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 186,
+        "preserve-technical": 13,
+        "usage-audit-required": 1
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "interface-v5": {
+      "file": "interface-v5.json",
+      "total": 782,
+      "candidate_input": "candidates/interface-v5.json",
+      "source_validation_candidates": 699,
+      "without_explicit_bump": 778,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 698,
+        "cursor-runtime-audit-required": 49,
+        "mixed-color-control-audit-required": 2,
+        "preserve-technical": 17,
+        "source-unavailable-or-invalid": 1,
+        "usage-audit-required": 15
+      },
+      "color_rgb565_ids": [
+        6872
+      ],
+      "mixed_role_ids": [
+        4662,
+        5637
+      ]
+    },
+    "other": {
+      "file": "other.json",
+      "total": 36,
+      "candidate_input": "candidates/other.json",
+      "source_validation_candidates": 13,
+      "without_explicit_bump": 29,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 13,
+        "existing-queue-disposition": 5,
+        "preserve-technical": 11,
+        "usage-audit-required": 7
+      },
+      "color_rgb565_ids": [
+        7695
+      ],
+      "mixed_role_ids": [
+        10,
+        652
+      ]
+    },
+    "reference-maps": {
+      "file": "reference-maps.json",
+      "total": 12,
+      "candidate_input": "candidates/reference-maps.json",
+      "source_validation_candidates": 0,
+      "without_explicit_bump": 12,
+      "dispositions": {
+        "usage-audit-required": 12
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "tutorials": {
+      "file": "tutorials.json",
+      "total": 3,
+      "candidate_input": "candidates/tutorials.json",
+      "source_validation_candidates": 3,
+      "without_explicit_bump": 3,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 3
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": []
+    },
+    "weapons": {
+      "file": "weapons.json",
+      "total": 347,
+      "candidate_input": "candidates/weapons.json",
+      "source_validation_candidates": 127,
+      "without_explicit_bump": 229,
+      "dispositions": {
+        "candidate-source-pixel-validation-required": 127,
+        "mixed-color-control-audit-required": 1,
+        "preserve-technical": 217,
+        "usage-audit-required": 2
+      },
+      "color_rgb565_ids": [],
+      "mixed_role_ids": [
+        5356
+      ]
+    },
+    "world-remainder": {
+      "file": "world-remainder.json",
+      "total": 3114,
+      "candidate_input": "candidates/world-remainder.json",
+      "source_validation_candidates": 0,
+      "without_explicit_bump": 2335,
+      "dispositions": {
+        "accepted-do-not-regenerate": 1943,
+        "existing-queue-disposition": 392,
+        "preserve-technical": 779
+      },
+      "color_rgb565_ids": [
+        5076,
+        5168,
+        5169,
+        6997,
+        7581,
+        7582,
+        7583,
+        7584,
+        7585,
+        7586
+      ],
+      "mixed_role_ids": [
+        1013,
+        1014,
+        1343,
+        2037,
+        2039,
+        2766,
+        2767,
+        2768,
+        3060,
+        3105,
+        3106,
+        3194,
+        3195,
+        3196,
+        3197,
+        3198,
+        3199,
+        3200,
+        3201,
+        3570,
+        3571,
+        3593,
+        3594,
+        3595,
+        3971,
+        3972,
+        3973,
+        4777,
+        4793,
+        4794,
+        4795,
+        5483,
+        5490,
+        5491,
+        5526,
+        5529,
+        5542,
+        5543,
+        7713
+      ]
+    }
+  }
+}
