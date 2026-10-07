@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-07, 135 of these verified originals are accepted in the shared
+As of 2026-10-07, 143 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-fifth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-sixth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,667 IDs: clothing 256, equipment 227, weapons
-88, heads 184, UI 683, effects 196, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,659 IDs: clothing 256, equipment 223, weapons
+88, heads 184, UI 683, effects 192, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -150,5 +150,10 @@ already contain raw artwork: inspect current reviews instead of regenerating.
 
 The fifth coordinator packet adds9 clothing,6 equipment,12 weapons and5 UI.
 `../new-groups-fifth-batch-check.json` and `../new-groups-fifth-live-check.json`
-record the current2,097-texture pack and unchanged prior2,065 hashes. Source-queue
+record the fifth-stage2,097-texture pack and unchanged prior2,065 hashes. Source-queue
 snapshots stay unchanged; unaccepted raw/pending reviews are not HD coverage.
+
+The sixth packet accepts2991/2995/2997/3006 revised equipment and700/701/702/704
+dust frames. `../new-groups-sixth-batch-check.json` and live report record the
+current2,105-texture pack with prior2,097 hashes unchanged. Original full alpha
+and particle references/blends are retained.2985/2986/597 remain unaccepted.

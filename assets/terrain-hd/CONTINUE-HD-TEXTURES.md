@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Приняты 2 097 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
-31 одежды, 32 экипировки, 39 оружия, 2 лиц, 15 UI, 10 эффектов,
+Приняты 2 105 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+31 одежды, 36 экипировки, 39 оружия, 2 лиц, 15 UI, 14 эффектов,
 4 лагерных атласа и 2 учебные мишени.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 135 текстур новых групп; всего 2 500 записей общей очереди, pending нет.
+Приняты 143 текстуры новых групп; всего 2 508 записей общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -52,7 +52,7 @@ UI-third и heads-second могут уже содержать готовые raw
 Пятая порция уже принята: jobs-new-groups-fifth.json (32), из
 jobs-clothing-fourth (9), jobs-equipment-fourth-first-ready (6),
 jobs-weapons-fourth (12) и jobs-ui-third (5). НЕ генерируй их заново.
-Актуально: 2 097 текстур/4 194 алиаса/112 архивов/6 779 639 268 байт;
+После пятой порции: 2 097 текстур/4 194 алиаса/112 архивов/6 779 639 268 байт;
 new-groups-fifth-batch-check.json подтверждает неизменность предыдущих 2 065.
 new-groups-fifth-live-check.json: реальное меню HD on/off/on, штатный quit.
 2443/2542/2546 pending из-за belt marks; UI6100/6101 из-за внутреннего рисунка.
@@ -61,6 +61,18 @@ jobs-heads-second.json пустой. Не объявлять эти raw прин
 Снаряжение2985/2986/2991/2995/2997/3006 проходит новые direct-original retries:
 проверяй review и stable jobs snapshot, часть попыток уже отложена из-за UV drift.
 Clothing-fifth и weapons-fifth в работе независимых агентов; сначала ищи raw/jobs.
+
+Шестая порция уже принята: jobs-equipment-fourth-retries (2991/2995/2997/3006)
+и jobs-effects-third (700/701/702/704). НЕ генерировать их снова.
+Flattened jobs-new-groups-sixth.json:8. Актуально 2 105 текстур/4 210 алиасов/
+112 архивов/6 781 387 332 байта. new-groups-sixth-batch-check.json: все прежние
+2 097 source/PNG/native хеши сохранены; new-groups-sixth-live-check.json:
+реальное меню HD on/off/on, свой процесс штатно закрыт.
+2985/2986 отложены после v2 из-за UV/detail drift.597 raw сохранён pending:
+сдвинут большой фрагмент и пропал tiny source fragment. Его не импортировать.
+707/708/709 только source-reviewed и ещё не генерированы, helper707 — оригинал,
+не готовый HD. Clothing-fifth/weapons-fifth/UI-fourth в работе: сверяй новые
+reviews/jobs прежде imagegen, не повторяй существующие raw/ready jobs.
 
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
@@ -84,9 +96,9 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-fifth-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 667: одежда 256, экипировка 227, оружие 88, головы 184, UI 683,
-эффекты 196, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
+`new-groups-sixth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 659: одежда 256, экипировка 223, оружие 88, головы 184, UI 683,
+эффекты 192, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена
 сабагентами. Проверяй ready jobs/reviews до новых вызовов imagegen. Продолжай отдельными небольшими

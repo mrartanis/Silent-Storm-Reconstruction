@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,097 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 31 clothing, 32 equipment, 39 weapons,
-2 heads, 15 interface icons, 10 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,105 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 31 clothing, 36 equipment, 39 weapons,
+2 heads, 15 interface icons, 14 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,500 records, including 135 accepted new-group textures, the original
+contains 2,508 records, including 143 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,667 verified originals outside the shared queue, including next
+validation. There remain 1,659 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -92,8 +92,16 @@ records real-menu HD on/off/on and normal isolated Game exit. Clothing2443/2542/
 six initial equipment images, UI6100/6101 and eight heads are pending fidelity
 corrections, outside the accepted set; all attempts remain provenance.
 
-All 10,703 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (9,596,367,766 bytes before Git deduplication/compression).
+`expanded/new-groups-sixth-batch-check.json` records4 corrected equipment
+textures and4 full-canvas dust frames:2,105 textures/4,210 aliases/112 archives/
+6,781,387,332 bytes. All prior2,097 hashes are unchanged. Full source alpha,
+resolved particle animation bindings/blends and original UV canvases are preserved;
+no artistic source RGB inserts or whole-atlas registration. Native top mips
+privately inspected. `expanded/new-groups-sixth-live-check.json` records actual-menu
+HD on/off/on and normal isolated quit.2985/2986 and597 remain unaccepted.
+
+All 10,741 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,627,001,477 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
