@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-07, 69 of these verified originals are accepted in the shared
+As of 2026-10-07, 103 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
 unchanged for provenance: consult `../new-groups-second-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,733 IDs: clothing 275, equipment 245, weapons
-112, heads 184, UI 688, effects 196, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,699 IDs: clothing 265, equipment 233, weapons
+100, heads 184, UI 688, effects 196, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -141,3 +141,9 @@ The third coordinator packet adds12 magazine atlases and8 status icons. See
 `../new-groups-third-batch-check.json` and `../new-groups-third-live-check.json`;
 current full pack contains2,031 textures. Remaining counts denote HD acceptance,
 not an instruction to regenerate already saved raw artwork in next ready jobs.
+
+The fourth coordinator packet adds10 clothing,12 equipment and12 weapons;
+`../new-groups-fourth-batch-check.json` and `../new-groups-fourth-live-check.json`
+record the current2,065-texture pack.2151/2235 are unaccepted artistic retries
+outside shared queue, not permanent refusals. Independent new packets may
+already contain raw artwork: inspect current reviews instead of regenerating.
