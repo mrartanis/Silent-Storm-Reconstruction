@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-07, 189 of these verified originals are accepted in the shared
+As of 2026-10-08, 216 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-eighth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-ninth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,611 IDs: clothing 239, equipment 222, weapons
-67, heads 184, UI 677, effects 189, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,584 IDs: clothing 239, equipment 210, weapons
+62, heads 184, UI 677, effects 179, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -171,3 +171,11 @@ reused from accepted2998 with fresh matching RGBA/dimensions/alphaType/layout.
 unchanged and all26 opaque native RGBA equal reviewed calibrated PNG. Real-menu
 on/off/on and normal quit recorded in `new-groups-eighth-live-check.json`.
 1980 original retained after actual refusal; unaccepted corrections remain provenance.
+
+`../new-groups-ninth-batch-check.json` records12 equipment,10 additive effects,5
+weapons:2,178 textures/4,356 aliases/115 archives/6,946,542,070 bytes. Prior2,151
+source/PNG/native hashes unchanged. All17 opaque native RGBA equal reviewed PNG;
+all10 effects keep original uniformly zero alpha and exact reviewed RGB without
+premultiplication. Actual-menu HD on/off/on and normal quit recorded in
+`../new-groups-ninth-live-check.json`. Snow5189/5190 and disputed effect/weapon
+variants remain unaccepted provenance. Next raw packets require root review.

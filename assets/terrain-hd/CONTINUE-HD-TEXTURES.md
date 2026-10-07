@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Принята 2 151 HD-текстура: 178 ландшафта, 30 деревьев, 1 754 окружения,
-48 одежды, 37 экипировки, 59 оружия, 2 лиц, 20 UI, 17 эффектов,
+Приняты 2 178 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+48 одежды, 49 экипировки, 64 оружия, 2 лиц, 20 UI, 27 эффектов,
 4 лагерных атласа и 2 учебные мишени.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 189 текстур новых групп; всего 2 556 записей общей очереди, pending нет.
+Приняты 216 текстур новых групп; всего 2 583 записей общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -96,6 +96,22 @@ new-groups-eighth-batch-check.json: прежние2 125хеши неизменн
 byte-exact безnewcall, nativepayloadhash равен.1980 отказ записан вqueue.
 3399/3860/3861/3868/3869/4555/3873 одежды,4789/5323/5326 оружия pendingart.
 
+Девятая порция принята: jobs-new-groups-ninth (27): equipment-fifth12,
+effects-fourth-coordinator-ready6, effects-fifth4 и weapons-seventh5.
+Принятые ID сверять по flattened jobs, НЕ генерировать повторно. Пакет:
+2 178 текстур/4 356 алиасов/115 архивов/6 946 542 070 байт; все прежние
+2 151 source/PNG/native хеши сохранены. 17 opaque native RGBA равны проверенным
+PNG; 10 TransparentAdd кадров сохраняют исходную нулевую альфу, exact RGB
+и все typed bindings без premultiply. new-groups-ninth-{batch,live}-check.json:
+полная валидация, реальное меню HD on/off/on и штатный quit.
+5189/5190 отложены из-за плотного контура/белых filaments; 1089 — пересвет
+после scalar calibration; 2524/2525/2526 — новые glints. Оружие
+1947/1948/1949/5088/5350/5355 и source-only5511 не принято.
+UI-fifth raw сохранены, строгий ready только3131 ещё НЕ импортирован;
+6305/6307/6309 не генерировались после повторного material drift соседних UI.
+Следующие clothing-seventh/equipment-sixth/effects-sixth в работе независимых
+агентов: ищи существующие raw и stable jobs прежде новых вызовов.
+
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
 
@@ -118,9 +134,9 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-eighth-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 611: одежда 239, экипировка 222, оружие 67, головы 184, UI 677,
-эффекты 189, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
+`new-groups-ninth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 584: одежда 239, экипировка 210, оружие 62, головы 184, UI 677,
+эффекты 179, clues 17, final 3, miscellaneous 13. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена
 сабагентами. Проверяй ready jobs/reviews до новых вызовов imagegen. Продолжай отдельными небольшими

@@ -1,0 +1,1823 @@
+{
+  "packet": "weapons-seventh",
+  "status": "completed-art-review-stable-subset-awaiting-coordinator-import",
+  "ready_ids": [
+    2431,
+    5327,
+    5357,
+    7668,
+    7708
+  ],
+  "pending_ids": [
+    1947,
+    1948,
+    1949,
+    5088,
+    5350,
+    5355,
+    5511
+  ],
+  "held_without_generation_ids": [
+    5511
+  ],
+  "private_review_complete": true,
+  "generation_calls": {
+    "initial_per_selected_asset": 11,
+    "successful_initial_raws": 11,
+    "local_correction_calls": 2,
+    "total_calls": 13,
+    "successful_outputs_saved": 13,
+    "failed_calls": 0
+  },
+  "source_checks": "Independent historical MMP/release/original exact RGBA hash+dimensions+alpha, typed exclusive diffuse Materials.TextureID -> Models consumers recorded in selected/source rows; no accepted/sharedqueue IDs or exact accepted source duplicates selected. Readonly source checks.",
+  "fullcanvas_normalization": "Whole generated canvas resized to original logical dimensions4x via Lanczos; no cropping, bbox/island registration, alpha restoration or RGB artistic patching. Numeric brightness not performed by child; coordinator handles ready IDs.",
+  "source_only_normalized_uv_helpers": {
+    "ids": [
+      1947,
+      1948,
+      1949,
+      5088,
+      2431
+    ],
+    "method": "Nearest original-only affine resampling to supported1:3 portrait/3:1 landscape reference, normalized UV unchanged. Exact source dimensions1:4/4:1 restored only by ordinary wholecanvas importer resize. Helpers are not finalHD and are not artistic edits. 1947 initial did not use helper and failedpadding QA.",
+    "accepted_helper_id": 2431
+  },
+  "source_detail_count_corrections": {
+    "7668": "Primary exact sent prompt said3 uppermarks and6 middlegrille slots. Full original pixel/crop audit proved4 uppermarks and8slots3+2+3. Generator followed source and preserved correctcounts. Initial text retained verbatim for provenance, not retroactively edited.",
+    "7708": "Preliminary small sourcepreview suggested3 rightfan ribs; full sourcecrop proved4, generator follows4. Initial prompt did not assert numerical3, sourcepattern is authority."
+  },
+  "registration": {
+    "register_alpha_bbox": false,
+    "register_rgb_bbox": false,
+    "source_rgb_regions": null,
+    "content_replacement": false
+  },
+  "shared_metadata_modified": false,
+  "git_modified": false,
+  "build_or_game_launched": false,
+  "entries": [
+    {
+      "id": 1947,
+      "status": "pending-artwork",
+      "reason": "Initial generator introduced lateral black padding and moved/shrank normalized UV plus new cylindrical light bands; no retry.",
+      "source": {
+        "id": 1947,
+        "texture": {
+          "ID": 1947,
+          "Width": 16,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11316919,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Rifles\\SniperScopes\\Allies.tga",
+          "Format": "dxt1",
+          "UserName": "Allies",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1343,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 901,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1344,
+                  "field": "Material1",
+                  "material_template_id": 901,
+                  "geometry_id": 1757,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 989,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1346,
+                  "field": "Material1",
+                  "material_template_id": 901,
+                  "geometry_id": 1759,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 991,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1357,
+                  "field": "Material1",
+                  "material_template_id": 901,
+                  "geometry_id": 1770,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 1002,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          16,
+          64
+        ],
+        "source_sha256": "4f0d4d0b0762ba17b2ce46b54eb1a6a893cf1f0f86bd002ef15e9084b69c9945",
+        "source_rgba_sha256": "aced66e5141864a1549b171307a729069436956174186d92dd34b0429907133f",
+        "release_rgba_sha256": "aced66e5141864a1549b171307a729069436956174186d92dd34b0429907133f",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1947.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "aced66e5141864a1549b171307a729069436956174186d92dd34b0429907133f",
+          "dimensions": [
+            16,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\1947-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "ed783a54c824e89af5a33b5e44774a3fdaccc625634e2ad8fa0b9329b00a8c0f",
+          "source_guide_scale": 16,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/1947-raw.png",
+          "raw_sha256": "86d7e5a80bc1aa3140f5e9d3adf91cf8b43d3eba1e76e407deea949c962e35cd",
+          "raw_size": [
+            724,
+            2172
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/1947-prompt.txt",
+          "prompt_sha256": "60fd9c31dca9f14a1b2ae9f30c262716eb7bb71ccc1e6bcee3f15038c03e8c3b",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/1947-generation-call.json",
+          "call_metadata": {
+            "id": 1947,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Extremely narrow portrait1:4 scope diffuse map. Preserve the exact flat rectangular left-long grey/olive shading strip with its pale straight left edge; keep all original TOP/MIDDLE/BOTTOM black gaps and right-side small grey/brown rectangular islands. There are only the source tiny flat dark/light square marks within those right islands, especially upper and lower dark-center panels. Treat them as FLAT PAINTED marks, never new screws, rings, holes or physical hardware. Preserve all segment heights, widths, cuts and grey/olive/brown color positions. Do not turn this into an assembled optical scope. Smooth continuous material shading only; original straight UV island edges stay straight. Logical original16x64, requested4x64x256. Fill the entire corresponding 16:64 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/1947.png",
+              "expanded/generated/1947-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-1e1e5c3a-59c0-48a1-9965-ad8edb185374.png",
+            "raw_sha256": "86d7e5a80bc1aa3140f5e9d3adf91cf8b43d3eba1e76e407deea949c962e35cd"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/1947-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "be6d68c31bb26b4611bd22c2161450359744d4e499543ae700b33f055d8a11b3",
+          "normalized_size": [
+            64,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/1947-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/1947-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/1947-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/1947-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 1948,
+      "status": "pending-artwork",
+      "reason": "Fullcanvas helper removed padding but added cylindrical light rings and raised frame around source flat middle-right grey patch; no retry.",
+      "source": {
+        "id": 1948,
+        "texture": {
+          "ID": 1948,
+          "Width": 16,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11449016,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Rifles\\SniperScopes\\German.tga",
+          "Format": "dxt1",
+          "UserName": "German",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1344,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 902,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1338,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 1751,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 983,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1342,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 1755,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 987,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1349,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 1762,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 994,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4552,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 2678,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 3042,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4554,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 2679,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 3043,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5585,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 3402,
+                  "geometry": "Characters\\Weapons\\Silencers.mb",
+                  "model_template_id": 3675,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6944,
+                  "field": "Material1",
+                  "material_template_id": 902,
+                  "geometry_id": 4066,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 4361,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          16,
+          64
+        ],
+        "source_sha256": "812301edb7bccbe63272dc91959db667529cbe67b36c4126937bc35cce650371",
+        "source_rgba_sha256": "1534b99f6aa059ee9d5975cb9be6e0fe17c40303753a28b06c06d8c1a4848a29",
+        "release_rgba_sha256": "1534b99f6aa059ee9d5975cb9be6e0fe17c40303753a28b06c06d8c1a4848a29",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1948.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "1534b99f6aa059ee9d5975cb9be6e0fe17c40303753a28b06c06d8c1a4848a29",
+          "dimensions": [
+            16,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\1948-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "e3a1b4239d4417427a4e46b8049f5ee41d2fbf495f4db66d23eb0073e2f5236c",
+          "source_guide_scale": 16,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/1948-raw.png",
+          "raw_sha256": "e83db369ab9000a1e1a8f77d1af1a62236c748dfbbc43dfb718bdec8c79aced3",
+          "raw_size": [
+            725,
+            2170
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/1948-prompt.txt",
+          "prompt_sha256": "0b5c1983e7f96b2a91014fdd90b259a02d7f5131a8f97abec07e6751810cc359",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/1948-generation-call.json",
+          "call_metadata": {
+            "id": 1948,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Extremely narrow portrait1:4 dark grey/olive/brown scope diffuse map. Trace exact original left long rectangular material strip and its light left edge, including original dark brown section near its lower half and exact pale horizontal interruption positions. Right-top has original outlined dark rectangular panel, then separate small grey/olive panels with only tiny existing pale/dark flat marks; lower-right has one outlined grey patch and original dark-center square mark. Keep same heights/widths and every full-width black gap. NO interpreting source blocks as new fasteners, grooves or 3D parts; flat painted atlas only. Logical original16x64, requested4x64x256. Fill the entire corresponding 16:64 canvas with the same proportional source layout, no padding. IMPORTANT generation canvas compatibility: Image2 is source-only nearest preview stretched to supported portrait1:3, with EXACT unchanged normalized UVs. Output FULL1:3 canvas matching image2 normalized coordinates with no inset margins. The importer will normalize the entire generated canvas back to original1:4 physical proportions. Do NOT place a skinny1:4 picture inside a wider canvas. No new cylindrical rings, bands, bevels or screws; original flat painted rectangular bands and marks remain flat. Restore smooth diffuse materials only.",
+            "references": [
+              "expanded/original/1948.png",
+              "expanded/generated/1948-weapons-seventh-normalized-uv-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-99287c98-a2a1-46d5-813f-2311207785b1.png",
+            "raw_sha256": "e83db369ab9000a1e1a8f77d1af1a62236c748dfbbc43dfb718bdec8c79aced3"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/1948-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "013f9c0d8897489d61d6bd19dd30caecbfff321f38ab02a3e3e45910b944db86",
+          "normalized_size": [
+            64,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/1948-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/1948-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/1948-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/1948-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 1949,
+      "status": "pending-artwork",
+      "reason": "Fullcanvas helper preserved bounds but broad new light horizontal stripes replaced flat source material fields; local pattern cannot be corrected by global numeric gain.",
+      "source": {
+        "id": 1949,
+        "texture": {
+          "ID": 1949,
+          "Width": 16,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11186101,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Rifles\\SniperScopes\\Russian.tga",
+          "Format": "dxt1",
+          "UserName": "Russian",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1345,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 903,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1352,
+                  "field": "Material1",
+                  "material_template_id": 903,
+                  "geometry_id": 1765,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 997,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1356,
+                  "field": "Material1",
+                  "material_template_id": 903,
+                  "geometry_id": 1769,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 1001,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          16,
+          64
+        ],
+        "source_sha256": "c85cf4847a660ff12e7a0c03610765902d9a874e248773ca5f5027538892c573",
+        "source_rgba_sha256": "c40f841a3bc49f60d3f6143f3860361ea3bc0d3bcedf3074be6f68a6bb91283a",
+        "release_rgba_sha256": "c40f841a3bc49f60d3f6143f3860361ea3bc0d3bcedf3074be6f68a6bb91283a",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1949.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "c40f841a3bc49f60d3f6143f3860361ea3bc0d3bcedf3074be6f68a6bb91283a",
+          "dimensions": [
+            16,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\1949-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "9a9660b26c08e54ba73633ab5add442b289d53272bd29758679a50a0fa247242",
+          "source_guide_scale": 16,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/1949-raw.png",
+          "raw_sha256": "a236239fdb84bb18ddcf58adb35728de29b5444d08c3015c66f782957a356007",
+          "raw_size": [
+            725,
+            2170
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/1949-prompt.txt",
+          "prompt_sha256": "447ca8b8f9ece3c62ef73b333705d39f7da6fb16aaf8332d14167e8c739b5530",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/1949-generation-call.json",
+          "call_metadata": {
+            "id": 1949,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Extremely narrow portrait1:4 muted grey-brown scope diffuse map. Preserve exact original left-side long grey/brown rectangular surfaces, straight pale left edge and all source horizontal segment boundaries/black bands. Right-side original upper grey/olive small panels, thin middle dark vertical rectangle, lower grey panel and dark-center square mark retain exact original coordinates and widths/heights. Tiny source flat marks stay flat; no bolts, rings, holes, structural parts or added texture stripes. Fullcanvas same proportional map; do not construct a scope. Logical original16x64, requested4x64x256. Fill the entire corresponding 16:64 canvas with the same proportional source layout, no padding. IMPORTANT generation canvas compatibility: Image2 is source-only nearest preview stretched to supported portrait1:3, with EXACT unchanged normalized UVs. Output FULL1:3 canvas matching image2 normalized coordinates with no inset margins. The importer will normalize the entire generated canvas back to original1:4 physical proportions. Do NOT place a skinny1:4 picture inside a wider canvas. No new cylindrical rings, bands, bevels or screws; original flat painted rectangular bands and marks remain flat. Restore smooth diffuse materials only. CRITICAL FLAT ALBEDO: left long region is a flat painted diffuse-shading rectangle, not a cylinder. Add NO specular band, circular ring, bevel, border around panel or shadow. Keep original broad material-field colors and original painted block outlines exactly at source positions, with extremely subtle fine grain only inside existing material. Existing source painted flat marks remain same shapes; no raised or recessed treatment. Do not make a physically-rendered metal object.",
+            "references": [
+              "expanded/original/1949.png",
+              "expanded/generated/1949-weapons-seventh-normalized-uv-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-90f0a9bf-ff72-4c5f-a56e-4d75f207603e.png",
+            "raw_sha256": "a236239fdb84bb18ddcf58adb35728de29b5444d08c3015c66f782957a356007"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/1949-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "0da547a76a0ced50623b3b39f200fbad0553f7e02edc4c4e47c6f66ff31d4a14",
+          "normalized_size": [
+            64,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/1949-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/1949-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/1949-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/1949-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 2431,
+      "status": "art-reviewed-ready",
+      "reason": "Localv2 removed invented dense parallel machining grooves/radial cap grooves in upper-right fragment. Source broad shading bands retained; green/orange/grey materials, hole silhouettes and all other UV islands maintained.",
+      "source": {
+        "id": 2431,
+        "texture": {
+          "ID": 2431,
+          "Width": 256,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -13750756,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\RocketLaunchers\\PIAT.tga",
+          "Format": "dxt1",
+          "UserName": "PIAT",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1621,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1102,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1551,
+                  "field": "Material0",
+                  "material_template_id": 1102,
+                  "geometry_id": 1917,
+                  "geometry": "Characters\\Weapons\\RocketLaunchers_Real.mb",
+                  "model_template_id": 1173,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1557,
+                  "field": "Material0",
+                  "material_template_id": 1102,
+                  "geometry_id": 1919,
+                  "geometry": "Characters\\Weapons\\RocketLaunchers_Real.mb",
+                  "model_template_id": 1176,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          64
+        ],
+        "source_sha256": "f2387724ed71aa55170af294d2b1b01e2ec85591fdc57094287814b5aee2b028",
+        "source_rgba_sha256": "4959c29af0a80f82139d8c421e6d4b058cd53079bde124adb4595c2cc406bfa2",
+        "release_rgba_sha256": "4959c29af0a80f82139d8c421e6d4b058cd53079bde124adb4595c2cc406bfa2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/2431.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "4959c29af0a80f82139d8c421e6d4b058cd53079bde124adb4595c2cc406bfa2",
+          "dimensions": [
+            256,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\2431-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "e5174540ae1364060c418a5d03b1f457649111033b9dfbf83bcae134c8945ed0",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/2431-raw.png",
+          "raw_sha256": "bead4bd28f7518ed378f23eedc1a585b97f58ba8d45715903c7831db21797047",
+          "raw_size": [
+            2170,
+            725
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/2431-prompt.txt",
+          "prompt_sha256": "a917753fc5889fa31b452a1dde86131417c5dfb1518f106d938ff36f42fb48ef",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/2431-generation-call.json",
+          "call_metadata": {
+            "id": 2431,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Extremely wide landscape4:1 olive-painted grey steel diffuse atlas. Keep original top-left two broad olive rectangular faces, small warm orange-brown vertical insert beside them, thin upper horizontal panels/curved pieces, middle outlined olive panel with its original ONE dark circular mark, adjacent tall faintly-shaded material rectangle. Top-right cylindrical ribbed fragment keeps every source shallow line/groove and exact cap outline. Lower broad long olive strip and original right-side octagonal dark-hole end faces/grey rounded plate retain all original black holes and cuts exactly. No new paint wear, fastener, pattern or assembled weapon. Every fragment stays at same normalized coordinate. Logical original256x64, requested4x1024x256. Fill the entire corresponding 256:64 canvas with the same proportional source layout, no padding. Image2 is source-only original nearest preview in supported landscape3:1 format, exactly preserving normalizedUVs. Generate the entire3:1 canvas matching image2 normalized coordinates WITHOUT borders or inserting a skinny4:1 image. Standard importer resizes wholecanvas back to original4:1 geometry. No crop or registration; every original detail stays at the same normalizedUV.",
+            "references": [
+              "expanded/original/2431.png",
+              "expanded/generated/2431-weapons-seventh-normalized-uv-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-89663581-1c5c-4380-add6-94655d7f8ecb.png",
+            "raw_sha256": "bead4bd28f7518ed378f23eedc1a585b97f58ba8d45715903c7831db21797047"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "ff2e20068d87c45f5966db01a3737fea704e49ed5b9a24606ed608ebf362367e",
+          "normalized_size": [
+            1024,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        },
+        {
+          "attempt": "local-correction-v2",
+          "raw": "assets/terrain-hd/expanded/generated/2431-raw-weapons-seventh-v2.png",
+          "raw_sha256": "49e0b899ab4c4927e7639d2b5e6fb32093b202b9a3b669369b49e1f1966cf1d7",
+          "raw_size": [
+            2170,
+            725
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/2431-prompt-weapons-seventh-v2.txt",
+          "prompt_sha256": "cdaffcbc0311c20d83ad822400b502a9ef15a556d6900c3f0037fcb80ada4af8",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/2431-generation-call-weapons-seventh-v2.json",
+          "call_metadata": {
+            "id": 2431,
+            "status": "finished",
+            "builtin": true,
+            "attempt": "local-correction-v2",
+            "prompt": "Use case: precise-object-edit. Image1 ORIGINAL texture is sole layout/artwork authority; image2 is its source-only nearest enlarged normalizedUV 3:1 guide; image3 is current HD texture EDIT TARGET. Make ONE localized correction only: within the original upper-right cylindrical fragment logical rectangle (195,0)-(256,27) on original256x64 canvas, REMOVE the invented dense fine parallel machining grooves and invented radial grooves on the conical/right cap in image3. Restore source smooth broad light/dark bands and source cap outline only. Original shows a few broad shading bands, not a dense comb or radial ridges. Retain all actual original broad bands at their original normalized coordinates; DO NOT add grooves, change cap shape, generate holes/bolts or alter any neighboring island. Keep EVERY other pixel-region's art/material/layout, source holes, green panels, orange insert, black gaps, fullcanvas UV positions and clipping as image3. Refine only source existing smooth painted-metal micrograin, no new wear/damage/scratches/hardware. Output entire opaque image3-supported landscape3:1 canvas; no borders, crop, inset or repacking. Standard wholecanvas resize back to original4:1 is afterward. Original texture256x64, alpha255. Numerical brightness later. No new artwork or text.",
+            "references": [
+              "expanded/original/2431.png",
+              "expanded/generated/2431-weapons-seventh-normalized-uv-reference.png",
+              "expanded/generated/2431-raw.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-cf6c91e4-1b13-4e14-9d8e-3868ed963a4f.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\2431-raw-weapons-seventh-v2.png",
+            "raw_sha256": "49e0b899ab4c4927e7639d2b5e6fb32093b202b9a3b669369b49e1f1966cf1d7"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/2431-weapons-seventh-normalized-review-v2.png",
+          "normalized_sha256": "dc0e3493d6883e45bb7730996e3092486e9dd6090ef044236fe4d4f15f6ab291",
+          "normalized_size": [
+            1024,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 5088,
+      "status": "pending-artwork",
+      "reason": "Fullcanvas helper preserved bounds but broad new light horizontal stripes replaced flat source material fields; local pattern cannot be corrected by global numeric gain.",
+      "source": {
+        "id": 5088,
+        "texture": {
+          "ID": 5088,
+          "Width": 16,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -13025727,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\RocketLaunchers\\PlasmaGun_Scopes.tga",
+          "Format": "dxt1",
+          "UserName": "PlasmaGun_Scopes",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3246,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 2081,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5213,
+                  "field": "Material3",
+                  "material_template_id": 2081,
+                  "geometry_id": 3231,
+                  "geometry": "Characters\\Weapons\\RocketLaunchers_Real.mb",
+                  "model_template_id": 3476,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          16,
+          64
+        ],
+        "source_sha256": "55d62b7bae75c849f51c8cca72a7bf2e2abf0103254f2639d53c382b2f3413f2",
+        "source_rgba_sha256": "8d1c97faa99e5e129c5be2d81113bffbc306e58f87f5a8b0298978ec5ddfaca6",
+        "release_rgba_sha256": "8d1c97faa99e5e129c5be2d81113bffbc306e58f87f5a8b0298978ec5ddfaca6",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5088.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "8d1c97faa99e5e129c5be2d81113bffbc306e58f87f5a8b0298978ec5ddfaca6",
+          "dimensions": [
+            16,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5088-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "9679ec8d9cf0881c68d8a3597915fe9841799ed321bac30b114231c184765e7b",
+          "source_guide_scale": 16,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/5088-raw.png",
+          "raw_sha256": "0860ac1407932bcc6206d8a67b23dd4aec94479b125dffe42fd99027530b2cab",
+          "raw_size": [
+            725,
+            2170
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5088-prompt.txt",
+          "prompt_sha256": "c8c5ed7fb28265f364a4285de5b34506344acf42849d6a5ba984fa15920cb037",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5088-generation-call.json",
+          "call_metadata": {
+            "id": 5088,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Extremely narrow portrait1:4 dark blue-grey scope diffuse atlas. Preserve exact original narrow long left material strips, pale straight left edge, right tiny grey rectangular panels with source flat dark-center marks, original thin vertical dark recess strip, lower grey panel and bottom dark-center square mark. Match all original segment heights and black UV gaps. Preserve cyan/blue-grey material shifts and original subtle shading, no new green glow. Do not interpret tiny painted source blocks as hardware; NO added bolt, circle, groove, object or decoration. Smooth actual shading but keep UV rectangular edges exact. Logical original16x64, requested4x64x256. Fill the entire corresponding 16:64 canvas with the same proportional source layout, no padding. IMPORTANT generation canvas compatibility: Image2 is source-only nearest preview stretched to supported portrait1:3, with EXACT unchanged normalized UVs. Output FULL1:3 canvas matching image2 normalized coordinates with no inset margins. The importer will normalize the entire generated canvas back to original1:4 physical proportions. Do NOT place a skinny1:4 picture inside a wider canvas. No new cylindrical rings, bands, bevels or screws; original flat painted rectangular bands and marks remain flat. Restore smooth diffuse materials only. CRITICAL FLAT ALBEDO: left long region is a flat painted diffuse-shading rectangle, not a cylinder. Add NO specular band, circular ring, bevel, border around panel or shadow. Keep original broad material-field colors and original painted block outlines exactly at source positions, with extremely subtle fine grain only inside existing material. Existing source painted flat marks remain same shapes; no raised or recessed treatment. Do not make a physically-rendered metal object.",
+            "references": [
+              "expanded/original/5088.png",
+              "expanded/generated/5088-weapons-seventh-normalized-uv-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-d83dde0c-7b90-4d9c-928f-198add5345bb.png",
+            "raw_sha256": "0860ac1407932bcc6206d8a67b23dd4aec94479b125dffe42fd99027530b2cab"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5088-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "a2d0532ff0e30f94f7d3ee7aeec63f2e5a5404b166a3c305d2e83f85be5be7a1",
+          "normalized_size": [
+            64,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/5088-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/5088-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/5088-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/5088-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 5327,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw and fullcanvas4x inspected. Source grey-violet flat islands/central rectangular boundaries, right one existing mark, lower fragments and checker pitch/phase maintained. Checker source/raw close crops privately inspected; no new hardware.",
+      "source": {
+        "id": 5327,
+        "texture": {
+          "ID": 5327,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -15066594,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Silencers\\Nagant_1910_Silencer.tga",
+          "Format": "dxt1",
+          "UserName": "Nagant_1910_Silencer",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3462,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2224,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5595,
+                  "field": "Material1",
+                  "material_template_id": 2224,
+                  "geometry_id": 3412,
+                  "geometry": "Characters\\Weapons\\Silencers.mb",
+                  "model_template_id": 3685,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "717280ad47d0b5d88c5253ad77c33f0961ee7f73c03236e96c8fd4946058dd42",
+        "source_rgba_sha256": "290b22bba3d5ff431390424acd96fad4bf20ce4520f83edcf3acad3101aff82d",
+        "release_rgba_sha256": "290b22bba3d5ff431390424acd96fad4bf20ce4520f83edcf3acad3101aff82d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5327.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "290b22bba3d5ff431390424acd96fad4bf20ce4520f83edcf3acad3101aff82d",
+          "dimensions": [
+            128,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5327-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "c6f83fd424d5e868bb3bacac965b9a9554036a27156094a36074af148275c5ab",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/5327-raw.png",
+          "raw_sha256": "84ad1141981d5fe3cebb0e96249fd2fa999bbf27075d803523ec957d1c9bea75",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5327-prompt.txt",
+          "prompt_sha256": "5e5c08f13cb7909957b26fa6bb63721d3fea3f23ffcdba620dc5fc3584c43ee3",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5327-generation-call.json",
+          "call_metadata": {
+            "id": 5327,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Landscape2:1 muted blue-purple grey steel atlas. Preserve two upper central broad outlined rectangles, left/right clipped angled/rounded end faces, ONE source small flat dark-center mark on the upper-right end face, and all lower curved/cylindrical fragments with original small light/dark spots. Bottom-left small rectangular checker patch keeps EXACT original coarse alternating pattern pitch/phase/row/column counts and same width/height; no invented grid or new diamond rows. Black padding and clipped edges retained; no new circular hardware or engraved lettering. Logical original128x64, requested4x512x256. Fill the entire corresponding 128:64 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/5327.png",
+              "expanded/generated/5327-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-f2f3c5ef-6c80-48f0-9d5c-01da58aacc39.png",
+            "raw_sha256": "84ad1141981d5fe3cebb0e96249fd2fa999bbf27075d803523ec957d1c9bea75"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5327-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "4a0029f7856ba8fcba048170b1cb1343ceda2425320762d5819b734691e6c017",
+          "normalized_size": [
+            512,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 5350,
+      "status": "pending-artwork",
+      "reason": "Source two pale incomplete angular loops became a clearly curved/slanted 8 glyph. Exact source topology/glyph identity unresolved; no retry.",
+      "source": {
+        "id": 5350,
+        "texture": {
+          "ID": 5350,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14935785,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Robot\\TGL_M.tga",
+          "Format": "dxt1",
+          "UserName": "TGL_M",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3478,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2232,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5607,
+                  "field": "Material0",
+                  "material_template_id": 2232,
+                  "geometry_id": 3422,
+                  "geometry": "Characters\\Weapons\\RobotWeapons.mb",
+                  "model_template_id": 3695,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5758,
+                  "field": "Material0",
+                  "material_template_id": 2232,
+                  "geometry_id": 3530,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Robots\\HelenArmor_Crash.mb",
+                  "model_template_id": 3793,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "ade97f8df1bfc51fb2a5025068ab1992535aebf264f7cdebdd4b3660eb4f402a",
+        "source_rgba_sha256": "7e4b859240708f2f0aea324c17ee77961c425acf6fac665fb2890d4cb43375c5",
+        "release_rgba_sha256": "7e4b859240708f2f0aea324c17ee77961c425acf6fac665fb2890d4cb43375c5",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5350.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "7e4b859240708f2f0aea324c17ee77961c425acf6fac665fb2890d4cb43375c5",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5350-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "a6c22620799f7d079660f94ce5bbb58e4f8ab1b249b268d10386f9a34a94088c",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/5350-raw.png",
+          "raw_sha256": "acb31dc8071b19d0caf58a905c48c351be67ce0c6027e8a64aa3a4848417f88b",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5350-prompt.txt",
+          "prompt_sha256": "22cf49b270c443739ebae5906242ed6f75d048d5fa88f117dd08505aa555149a",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5350-generation-call.json",
+          "call_metadata": {
+            "id": 5350,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Square warm grey/charcoal painted-steel atlas. Preserve TWO large upper/middle octagonal ring end faces with their original black centers, THREE large black circular recesses across the bottom broad rectangle, plus ONE original smaller dark circular recess immediately above lower-right. Upper-left top narrow rectangle, left-middle broad rectangular plate and top-right big broad shaded rectangle keep exact source bounds. The left-middle plate contains TWO small pale incomplete loop-shaped flat painted marks stacked vertically: copy their source topology/squareness and positions precisely, do NOT reinterpret them as lettering, number8, physical rivets or complete them into new circles. Keep lower-left thin vertical seams and lower-right small slotted strip, all source gray/brown tones and dark gaps. Logical original128x128, requested4x512x512. Fill the entire corresponding 128:128 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/5350.png",
+              "expanded/generated/5350-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-627db630-4997-4e06-9e68-a3473ca2a825.png",
+            "raw_sha256": "acb31dc8071b19d0caf58a905c48c351be67ce0c6027e8a64aa3a4848417f88b"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5350-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "b2b8446aa5bcdfba4661c75b9af9112bfcc8fe1fe87c11e57eb69d60900f4554",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/5350-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/5350-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/5350-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/5350-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 5355,
+      "status": "pending-artwork",
+      "reason": "Initial missed separate dark short rectangular mark immediately right of original ring. Localv2 restored it but introduced pervasive swirl/engraving-like grey-metal microtexture absent from source. Both held.",
+      "source": {
+        "id": 5355,
+        "texture": {
+          "ID": 5355,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13555162,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Stun\\Stun_Gun.tga",
+          "Format": "dxt1",
+          "UserName": "Stun_Gun",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3491,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2236,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5616,
+                  "field": "Material0",
+                  "material_template_id": 2236,
+                  "geometry_id": 3426,
+                  "geometry": "Characters\\Weapons\\Stun.mb",
+                  "model_template_id": 3700,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "0655a9ec83f94645bcc0798c462298b1eda1f65fe9f7cc58ce573b52db72363e",
+        "source_rgba_sha256": "a36ad08c04c49495d14c5a8c032a9d8b9b935006596d0ff5e23c1e5789f62520",
+        "release_rgba_sha256": "a36ad08c04c49495d14c5a8c032a9d8b9b935006596d0ff5e23c1e5789f62520",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5355.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "a36ad08c04c49495d14c5a8c032a9d8b9b935006596d0ff5e23c1e5789f62520",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5355-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "716cea1d8b98e1562e7e81af5fb7f9cfa99f4da6d493cfd6fd03ba8439f21c9d",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/5355-raw.png",
+          "raw_sha256": "abc6397141639148d662e7cd5fe75335b79e0d92c09767a98892d2f9002f5cc1",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5355-prompt.txt",
+          "prompt_sha256": "723cc42556012065a8c64b120ba3ec0bb4b3ad78ecd63e3731b68c409917944e",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5355-generation-call.json",
+          "call_metadata": {
+            "id": 5355,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Square dark purple-grey steel and warm orange-brown WOOD diffuse atlas. Preserve source large irregular wooden island across middle/upper-right, with EXACT FOUR original small dark flat spots: three distributed along its lower horizontal portion and one near upper-right upright portion. Keep spots same tiny size/position; NO wood knots, grain swirls or ringed fastener interpretation around them. Existing wood has subdued smooth fine shading/grain, keep that scale and original silhouette. Retain left full-height steel strip and thin separator, upper-center curved steel fragments/source small marks, lower horizontal steel panels and original small rectangular recesses, edge clips and black gaps. No new hardware/damage. Logical original128x128, requested4x512x512. Fill the entire corresponding 128:128 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/5355.png",
+              "expanded/generated/5355-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-13053047-39f5-4568-a10f-82cd85fc2fe1.png",
+            "raw_sha256": "abc6397141639148d662e7cd5fe75335b79e0d92c09767a98892d2f9002f5cc1"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "302de830b819d099408dc941e7c18d171247ae1777ffc79d36d10b8428cabc4f",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-normalized-review-rejected-v1.png"
+          }
+        },
+        {
+          "attempt": "local-correction-v2",
+          "raw": "assets/terrain-hd/expanded/generated/5355-raw-weapons-seventh-v2.png",
+          "raw_sha256": "a7f1227c6745303e5fa525ca6695ceb79e5089d8db89822331b4f691187682a8",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5355-prompt-weapons-seventh-v2.txt",
+          "prompt_sha256": "2f9bb7f458a8d2493ee0b39eda0271dcffa451effb2dd7a6a642a0178692629a",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5355-generation-call-weapons-seventh-v2.json",
+          "call_metadata": {
+            "id": 5355,
+            "status": "finished",
+            "builtin": true,
+            "attempt": "local-correction-v2",
+            "prompt": "Use case: precise-object-edit. Image1 ORIGINAL128x128 atlas sole authority; image2 same original nearest enlarged source guide; image3 CURRENT HD atlas EDIT TARGET. ONE LOCAL correction ONLY within logical source rectangle(52,0)-(79,20): restore the original SECOND dark, vertically rectangular flat mark immediately RIGHT of the existing pale-ring dark-centered circular mark. Source has TWO separate marks there: pale-ring circle centered around(61,8), followed by dark short vertical rectangle around(69,8), separated by narrow metal. Current image3 retains the ring but replaces adjacent rectangular dark mark with amorphous shadow. Precisely restore original rectangle footprint/position/dark painted appearance, without adding any rim, new hole, screw, depth or new marks. Keep ring unchanged. Keep EVERY other region unchanged: four original dark brown wood dots, source broadwood shading boundaries, grey flat panels and their original details, allUV positions and fullsquare canvas. No new seams/knots/rings/scratches/hardware/damage; opaque alpha255 fullcanvas128x128 normalizedUV, no crop/padding/repacking. Numerical brightness correction afterward.",
+            "references": [
+              "expanded/original/5355.png",
+              "expanded/generated/5355-weapons-seventh-source-reference.png",
+              "expanded/generated/5355-raw.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-5a617cac-1c9d-477a-b0f5-54773eb2fa96.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5355-raw-weapons-seventh-v2.png",
+            "raw_sha256": "a7f1227c6745303e5fa525ca6695ceb79e5089d8db89822331b4f691187682a8"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-normalized-review-v2.png",
+          "normalized_sha256": "1ed80c289db220ae019b1992caddbe1d5c9bd360ed4f19ccf629668c70d50e6c",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-raw-rejected-v2.png",
+            "prompt": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-prompt-rejected-v2.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-generation-call-rejected-v2.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/5355-weapons-seventh-normalized-review-rejected-v2.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 5357,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/sourceguide/fullcanvas4x inspected. Two large receiver-like flat faces each retain three existing upper dark points, paired lower slots, top long slot, surrounding cutout silhouettes, single middle-right round mark and bottom long bar. Source DXT-block color variations on bar are smoothed as material, not reinterpreted as added marks; original bar geometry/width/UV preserved.",
+      "source": {
+        "id": 5357,
+        "texture": {
+          "ID": 5357,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14737631,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Stun\\Stun_Rifle.tga",
+          "Format": "dxt1",
+          "UserName": "Stun_Rifle",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3493,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2237,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5618,
+                  "field": "Material0",
+                  "material_template_id": 2237,
+                  "geometry_id": 3427,
+                  "geometry": "Characters\\Weapons\\Stun.mb",
+                  "model_template_id": 3701,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "ca77ebcac66e3bfd23e77a27d02c883ad9828c9b1affe955681333b9aa8de02c",
+        "source_rgba_sha256": "92e34e6c76e3f388ae882683b59787f51717b825133b8538a4378e6e889d8961",
+        "release_rgba_sha256": "92e34e6c76e3f388ae882683b59787f51717b825133b8538a4378e6e889d8961",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5357.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "92e34e6c76e3f388ae882683b59787f51717b825133b8538a4378e6e889d8961",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5357-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "12524ddb159d0ef2ccaafba19b341c9f14153486f2b9af681dcb101baefcab2e",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/5357-raw.png",
+          "raw_sha256": "68a8ba6bc35e0b6e93790af774c176dc1726f20116c8605b0f5efcc9929d05dd",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/5357-prompt.txt",
+          "prompt_sha256": "ab54f77f33b68d34dcfccb058b759cc2f61315a1fd81d3d7e411c3de5e6608de",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/5357-generation-call.json",
+          "call_metadata": {
+            "id": 5357,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Square dark blue-purple grey painted steel diffuse UV atlas. Preserve two separate upper/middle long irregular receiver-like flat faces with source straight ridges, original small pale/dark marks and exact ends. Keep all short side fragments, right-middle ring-like dark gap/clipped curved strip, bottom-right angled shaded face, lower-left/center rectangular panels and bottom long outlined bar exactly in original positions and rotations. Trace each source hole, line, boundary and clipped fragment; add none. No assembling into a complete rifle or inventing hardware, grooves, seam counts, damage, lettering. Logical original128x128, requested4x512x512. Fill the entire corresponding 128:128 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/5357.png",
+              "expanded/generated/5357-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-3e471c7f-149c-4a42-9ed4-f1c7edfc49ca.png",
+            "raw_sha256": "68a8ba6bc35e0b6e93790af774c176dc1726f20116c8605b0f5efcc9929d05dd"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/5357-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "8a87a65d4af052bcd8de8476514aa09029c55049c5f8e5ea06ce2913824e8ca6",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 5511,
+      "status": "held-source-mark-no-call",
+      "reason": "Source-only held before imagegen: small unresolved mark logical bbox162,45,187,56 contains a bar and tiny pale dashes/possible glyphs. No content invented; no call.",
+      "source": {
+        "id": 5511,
+        "texture": {
+          "ID": 5511,
+          "Width": 256,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -14408925,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Robot\\HelenPlasmaGun.tga",
+          "Format": "dxt1",
+          "UserName": "HelenPlasmaGun",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3584,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2298,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5754,
+                  "field": "Material3",
+                  "material_template_id": 2298,
+                  "geometry_id": 3528,
+                  "geometry": "Characters\\Weapons\\RobotWeapons.mb",
+                  "model_template_id": 3791,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5762,
+                  "field": "Material3",
+                  "material_template_id": 2298,
+                  "geometry_id": 3531,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Robots\\HelenArmor_Crash.mb",
+                  "model_template_id": 3795,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          64
+        ],
+        "source_sha256": "b9ddecb8a0f2b8fd4c6408bcfcb72cb25385ed016a6bb1e5f1e9f052d648c7b3",
+        "source_rgba_sha256": "6dba38372e97523ae3be93c5c85247624c52771de3f6381d96fa42426c2ec6bd",
+        "release_rgba_sha256": "6dba38372e97523ae3be93c5c85247624c52771de3f6381d96fa42426c2ec6bd",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5511.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "6dba38372e97523ae3be93c5c85247624c52771de3f6381d96fa42426c2ec6bd",
+          "dimensions": [
+            256,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\5511-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "b0cfe3d2fa82ca92cad5b01fa4ca6d9a91d3dd273b5efb2b4060746654874015",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": []
+    },
+    {
+      "id": 7668,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/fullcanvas4x/source enlarged detail crops inspected. Actual source has FOUR upper dark rectangular marks and EIGHT middle grille slots arranged3+2+3; raw follows source correctly despite initial exact prompt erroneous3/6. Nine vertical rib peaks match source exactly at logical x2,5,8,11,14,17,20,23,26, pitch3. Lower three paired grooves, brown V fields, clipping and black gaps retained.",
+      "source": {
+        "id": 7668,
+        "texture": {
+          "ID": 7668,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -12964043,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\SubMachineGuns\\Prototype8M1.tga",
+          "Format": "dxt1",
+          "UserName": "Prototype8M1",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5873,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 3118,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7808,
+                  "field": "Material0",
+                  "material_template_id": 3118,
+                  "geometry_id": 4284,
+                  "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                  "model_template_id": 4687,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7810,
+                  "field": "Material0",
+                  "material_template_id": 3118,
+                  "geometry_id": 4285,
+                  "geometry": "Characters\\Weapons\\SubMachineGunsClips.mb",
+                  "model_template_id": 4688,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "ea01c924104c6ce2920de0ccad6c23c9054b9bc2a2c08f04db28dd2cc6a5cb5d",
+        "source_rgba_sha256": "767d3c8a67382dbd5fc4e728dce1587d6bc9f5ab9d164ae0019d490333f5e3b6",
+        "release_rgba_sha256": "767d3c8a67382dbd5fc4e728dce1587d6bc9f5ab9d164ae0019d490333f5e3b6",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7668.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "767d3c8a67382dbd5fc4e728dce1587d6bc9f5ab9d164ae0019d490333f5e3b6",
+          "dimensions": [
+            128,
+            64
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\7668-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "eb5d0063344bccd2471eb98c4d67cde2469f4ea03b792628f441ea1c0f0696e0",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/7668-raw.png",
+          "raw_sha256": "64144ea6b88680018844cd5b5911f3656ab2aaa2964e622667c94bf69432975a",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/7668-prompt.txt",
+          "prompt_sha256": "f8f84d7343ca763287bb22c7139e1e17f8369825fad9f6fd6a012b10d13bef30",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/7668-generation-call.json",
+          "call_metadata": {
+            "id": 7668,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Landscape2:1 muted violet-grey steel atlas with original red-brown central-left V-shaped material region. Keep original THREE small dark marks in a row above the brown region. Bottom-left parallel stripe panel has exactly NINE pale vertical ribs centered at logicalx2,5,8,11,14,17,20,23,26 with original3-pixel pitch/phase, interrupted source shading and original right-end rectangular black recess remain. Middle-right small framed grille keeps original TWO columns x THREE rows dark slots (six total), adjacent ONE original dark spot. Lower-middle/right wide fragment has original THREE pairs of horizontal grooves on each side of the source central ridge. Preserve top narrow panels/slots and each tiny original light/dark notch. Brown region stays smooth source shading without wood grain, new stain or fold. No extra rib, slot, fastener or text. Logical original128x64, requested4x512x256. Fill the entire corresponding 128:64 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/7668.png",
+              "expanded/generated/7668-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-2e2a3380-59fc-457c-9879-08901810e0d2.png",
+            "raw_sha256": "64144ea6b88680018844cd5b5911f3656ab2aaa2964e622667c94bf69432975a"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/7668-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "cce9e097ef2fd61701a5fc7ee8d7a239d21a87ce6f52488f6b42447f2938a4f8",
+          "normalized_size": [
+            512,
+            256
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 7708,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/fullcanvas4x/source fan crop inspected. Right partial fan has FOUR source pale ribs, not the three suggested by initial small preview; raw retains four with source slants/pitch/phase/clipping. Left fan grooves and cap shading, source two dark ring-centered marks, left grey panel, brown fragments, bottom long bar and lower-left hexagonal dark hole maintained. Existing source patina refined, no new damage/hardware.",
+      "source": {
+        "id": 7708,
+        "texture": {
+          "ID": 7708,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13619926,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\MachineGuns\\Lewis.tga",
+          "Format": "dxt1",
+          "UserName": "LewisMk1",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5903,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3129,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7857,
+                  "field": "Material0",
+                  "material_template_id": 3129,
+                  "geometry_id": 4303,
+                  "geometry": "Characters\\Weapons\\MachineGuns_Real.mb",
+                  "model_template_id": 4711,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7859,
+                  "field": "Material0",
+                  "material_template_id": 3129,
+                  "geometry_id": 4305,
+                  "geometry": "Characters\\Weapons\\MachineGuns_Real.mb",
+                  "model_template_id": 4712,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7861,
+                  "field": "Material0",
+                  "material_template_id": 3129,
+                  "geometry_id": 4304,
+                  "geometry": "Characters\\Weapons\\MachineGunsClips.mb",
+                  "model_template_id": 4713,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "4f1039651dc858bc63e1a4c893dfbe60896527c0b792d5fd382a9153d57bf459",
+        "source_rgba_sha256": "906ad2a9da3b93718a2af20892a3da5098318461a3db96597718fafa68259695",
+        "release_rgba_sha256": "906ad2a9da3b93718a2af20892a3da5098318461a3db96597718fafa68259695",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7708.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "906ad2a9da3b93718a2af20892a3da5098318461a3db96597718fafa68259695",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "source_guide": "assets\\terrain-hd\\expanded\\generated\\7708-weapons-seventh-source-reference.png",
+          "source_guide_sha256": "e55ab33e2e96ce1f7b8cbedce713fd937c86faa3de3dc6ee4ee9b398e4ef2f21",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/7708-raw.png",
+          "raw_sha256": "b7fd222b72b57c9f4390dce97034dc65eb465ecf8b136499a948c6f324f937d5",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/7708-prompt.txt",
+          "prompt_sha256": "6488e1e61e8632f9007ff5a5a6a4827463b63a81fa69b9d82e90d12d14028646",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/7708-generation-call.json",
+          "call_metadata": {
+            "id": 7708,
+            "status": "finished",
+            "builtin": true,
+            "prompt": "Use case: precise-object-edit. Faithful HD historical-game DIFFUSE texture edit. Image1 ORIGINAL is sole artwork/layout authority. Image2 is only the EXACT SAME original enlarged nearest; never desired blocky output. Smooth/refine existing material micro-grain and actual contour continuity into HD painted texture. KEEP every original normalized UV coordinate, island silhouette, edge, width/height, rotation, clipping and unused black area. Preserve original material colors, tonal hierarchy, EXACT detail/hole/rib/slot/checker count, repetition pitch/phase and pattern scale. Flat unlit painted texture atlas, never render/photo/assembled object. NO new scratch, rust, chip, dent, bolt, rivet, knot, hole, groove, motif, marking, letters/digits, label or new part. Do not add crisp outlines where original only soft diffuse shading. Fully opaque alpha255 entire canvas. Fill original requested aspect completely; NO inset margins, letterboxing, crop or moved/repacked atlas. Numerical brightness correction happens afterward. Landscape2:1 dark blue-grey steel atlas with upper-right original brown wooden/painted material patch. Keep original top-middle partial circular/radial fan fragment with EXACT source radial rib/groove count, angular phase and same clipped arc; adjoining thin small strips and source round marks remain at their exact positions. Left broad vertical painted panel with original subtle contour/light marks, middle broad grey panel and dark rectangular gaps, bottom-center long shaded metal rectangles/vertical seams, lower-left original hexagonal black-hole end face retained. Upper-right brown patch retains source outline, smooth broad grain/shading scale, NO added knot, checkering, screws or rust. Flat diffuse atlas, no full assembled object or new geometry. Logical original256x128, requested4x1024x512. Fill the entire corresponding 256:128 canvas with the same proportional source layout, no padding.",
+            "references": [
+              "expanded/original/7708.png",
+              "expanded/generated/7708-weapons-seventh-source-reference.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-7c598f66-f69c-4386-a75d-d96c61983f4c.png",
+            "raw_sha256": "b7fd222b72b57c9f4390dce97034dc65eb465ecf8b136499a948c6f324f937d5"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/7708-weapons-seventh-normalized-review.png",
+          "normalized_sha256": "317b8119dfcda77e00723b064760c140ea2f5192cb1fc2b533f0c6d6bac2ec63",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    }
+  ]
+}
