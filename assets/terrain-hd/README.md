@@ -51,43 +51,33 @@ averages premultiplied mip channels for the engine's transparent renderer.
 
 ## Build and install
 
-Image bytes are distributed as `archives/*.zip` assets attached to GitHub Releases.
-This public fork cannot upload new LFS objects to its repository network, so the
-ZIP bytes stay outside Git history. Each archive covers
-a stable numeric range of 128 resource IDs; the ZIP stores the already compressed
-PNG bytes. Exactly identical files share a SHA-256 object across the bundle set.
-`archives/index.json` maps every original, raw generated, normalized, balanced and
-rejected PNG back to its working path. Unpacked PNGs and deterministic native
-`.res` payloads and downloaded ZIPs are ignored by Git and remain present in the
-local workspace. Each archive entry carries a pinned release URL and SHA-256.
-The current source snapshot is
-[hd-textures-20261007-1952](https://github.com/mrartanis/Silent-Storm-Reconstruction/releases/tag/hd-textures-20261007-1952):
-62 ZIP assets totalling 8,666,407,010 bytes. All GitHub-reported archive sizes and
-SHA-256 digests match the index, and an anonymous HTTPS download into a fresh
-directory passed its hash check (`expanded/archive-release-check.json`).
+All 8,469 original, raw AI-generated, normalized, calibrated and rejected PNGs
+are ordinary Git files (8,934,956,122 bytes before Git deduplication/compression).
+No ZIP, LFS or release download is required after cloning. Large asset additions
+are committed and pushed in bounded batches to stay below GitHub's push limit.
 
-After cloning, restore the images and build the ready game pack offline:
+Windows and Linux Game builds include the `S2HDTextures` dependency by default.
+It converts the accepted PNGs into `res-hd` next to the game executable, including
+numbered native shards and a generated manifest. Python 3.11+ and Pillow are
+required; point CMake's `Python3_EXECUTABLE` at the appropriate interpreter.
+The game discovers that adjacent HD directory even with the original game's
+install directory as its working directory. Existing working-directory HD packs
+remain a fallback. Original/Steam resources are not modified.
 
-```sh
-python assets/terrain-hd/archive_assets.py unpack --download --build --validate
-```
+The builder's `--incremental` mode checks referenced inputs and every output's
+size and modification time; unchanged builds skip conversion, while a changed
+PNG, missing shard or modified output triggers regeneration. `build-state.json`
+is generated only after a successful build. `-DS2_BUILD_HD_TEXTURES=OFF` omits
+the build step; this build option is separate from the runtime HD toggle.
+Generated `res-hd` files remain outside Git. No AI service or runtime upscaling
+is involved in building the native pack.
 
-Use Python 3.11 or newer and install Pillow and NumPy for image conversion and brightness matching. The restore
-checks archive and image hashes and preserves modified local PNGs by default.
-No AI service, Steam modification or runtime upscaling is involved in this step.
-After accepting new generations and rebuilding the pack, update the bundles with
-`python assets/terrain-hd/archive_assets.py pack`. Publish changed ZIPs as assets
-of a new release, set their `download_url` entries in `archives/index.json`, and
-commit the index and manifests. Unchanged archives retain their existing URLs;
-changed archives deliberately lose stale URLs until they are published again.
-Packing refuses to replace an existing archive set if any previously indexed PNG
-is missing locally: restore the complete working set before adding new images.
-
-With Python, Pillow and NumPy:
+For manual brightness matching and rebuilding, use Python, Pillow and NumPy:
 
 ```sh
 python assets/terrain-hd/match_brightness.py
 python assets/terrain-hd/build_pack.py
+python assets/terrain-hd/validate_pack.py
 ```
 
 Brightness matching always starts from the approved uncalibrated PNGs, so repeated

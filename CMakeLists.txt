@@ -1678,3 +1678,5 @@ if(S2_GAME_DIR AND NOT TARGET s2_bink_compat)
 endif()
 
 s2_copy_fonts(Game)
+include("${root}/cmake/HDTextures.cmake")
+s2_build_hd_textures(Game)

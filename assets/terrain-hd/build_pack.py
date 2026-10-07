@@ -42,8 +42,38 @@ def mmp(image, premultiply=False, alpha_reference=None):
     return struct.pack('<6I', 0x504d4d, 6, average, image.width, image.height, len(levels)) + b''.join(levels)
 
 
-def build(output):
+def inputs():
+    manifest = json.loads((ROOT / 'sources.json').read_text(encoding='utf-8'))
+    paths = {ROOT / 'sources.json', Path(__file__).resolve()}
+    for asset in manifest['textures']:
+        paths.add(ROOT / asset['png'])
+        if asset.get('native_alpha_reference'):
+            paths.add(ROOT / asset['native_alpha_reference'])
+    return sorted(paths)
+
+
+def file_state(path, relative_to):
+    stat = path.stat()
+    return {'file': path.relative_to(relative_to).as_posix(),
+            'bytes': stat.st_size, 'mtime_ns': stat.st_mtime_ns}
+
+
+def build(output, incremental=False):
     output.mkdir(parents=True, exist_ok=True)
+    state_path = output / 'build-state.json'
+    current_inputs = [file_state(path, ROOT) for path in inputs()]
+    if incremental and state_path.exists():
+        try:
+            state = json.loads(state_path.read_text(encoding='utf-8'))
+            unchanged = state.get('schema') == 1 and state['inputs'] == current_inputs
+            unchanged = unchanged and state['outputs'] and all(
+                file_state(output / entry['file'], output) == entry
+                for entry in state['outputs'])
+            if unchanged:
+                print(f'{output}: HD textures up to date')
+                return
+        except (OSError, ValueError, KeyError):
+            pass
     previous = json.loads((output / 'manifest.json').read_text(encoding='utf-8')) if (output / 'manifest.json').exists() else {}
     manifest = json.loads((ROOT / 'sources.json').read_text(encoding='utf-8'))
     payload = bytearray(8)
@@ -99,6 +129,12 @@ def build(output):
     manifest['archives'] = archives
     manifest['pack_sha256'] = archives[0]['sha256']
     (output / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    state = {'schema': 1, 'inputs': current_inputs,
+             'outputs': [file_state(output / name, output)
+                         for name in ['manifest.json'] + [a['file'] for a in archives]]}
+    temporary = state_path.with_suffix('.json.tmp')
+    temporary.write_text(json.dumps(state, indent=2) + '\n', encoding='utf-8')
+    temporary.replace(state_path)
     print(f'{output}: {len(manifest["textures"])} textures, {len(archives)} archives, '
           f'{sum(a["bytes"] for a in archives)} bytes')
 
@@ -106,4 +142,6 @@ def build(output):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT.parents[1] / 'res-hd')
-    build(parser.parse_args().output)
+    parser.add_argument('--incremental', action='store_true', help='Skip unchanged inputs and intact outputs')
+    args = parser.parse_args()
+    build(args.output, args.incremental)

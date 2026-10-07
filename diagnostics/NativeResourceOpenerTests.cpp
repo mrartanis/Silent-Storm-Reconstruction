@@ -154,6 +154,26 @@ int main( int argc, char **argv )
 	NGScene::CloseAllResources();
 	NGScene::ClearResourceDirs();
 	std::filesystem::current_path(previousDirectory);
+	// Built HD files live beside the executable, even with another working dir.
+	const auto applicationRoot=visualRoot / "application";
+	std::filesystem::create_directories(applicationRoot / "res-hd" / "Textures");
+	{
+		std::ofstream file(applicationRoot / "res-hd" / "Textures" / std::to_string(visualId),std::ios::binary);
+		file << "built-hd";
+	}
+	std::filesystem::current_path(visualRoot);
+	NGScene::AddBaseResourceDirs(applicationRoot.string().c_str());
+	if(readVisual()!="built-hd" || NGScene::GetNetworkResourceDirectories().size()!=1)return 22;
+	NGScene::SetHDTexturesEnabled(false);
+	if(readVisual()!="res")return 23;
+	NGScene::SetHDTexturesEnabled(true);
+	NGScene::CloseAllResources();
+	NGScene::ClearResourceDirs();
+	NGScene::AddBaseResourceDirs((visualRoot / "missing-application").string().c_str());
+	if(readVisual()!="res-hd")return 24;
+	NGScene::CloseAllResources();
+	NGScene::ClearResourceDirs();
+	std::filesystem::current_path(previousDirectory);
 	std::printf("package_id=%d package_bytes=%zu loose_bytes=%zu async_bytes=%zu\n",
 		id, expected.size(), overridden.size(), asyncBytes.size());
 	return 0;

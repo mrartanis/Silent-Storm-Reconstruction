@@ -187,7 +187,7 @@ public:
 // through CFileRequest system
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddResourceDir( const char *pszName );
-void AddBaseResourceDirs(); // Original assets, then the optional visual-only HD overlay.
+void AddBaseResourceDirs( const char* applicationDirectory = nullptr ); // Original assets, then the optional visual-only HD overlay.
 vector<string> GetNetworkResourceDirectories();
 void ClearResourceDirs();	// release @0x157950 -- drop all resource dirs (CModManager::Activate)
 void CloseAllResources();

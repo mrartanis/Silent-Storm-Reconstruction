@@ -105,16 +105,21 @@ static bool IsResourcePath( const string &path, bool directory )
         std::filesystem::is_regular_file(path, error)) && !error;
 #endif
 }
-void AddBaseResourceDirs()
+void AddBaseResourceDirs( const char* applicationDirectory )
 {
     AddResourceDir( "./res" );
-    string resolved;
-    if ( S2FileIO::ResolveGameResourcePath("./res-hd", &resolved) )
+    vector<string> candidates;
+    if(applicationDirectory && applicationDirectory[0])
+        candidates.push_back(string(applicationDirectory) + "/res-hd");
+    candidates.push_back("./res-hd");
+    for(const string& candidate:candidates)
     {
-        if ( IsResourcePath(resolved, true) )
+        string resolved;
+        if ( S2FileIO::ResolveGameResourcePath(candidate, &resolved) && IsResourcePath(resolved, true) )
         {
             AddResourceDir( resolved.c_str() );
             hdDirectory = szDirs.back();
+            break;
         }
     }
 }

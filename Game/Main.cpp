@@ -5,6 +5,7 @@
 #include "../Main/DisplayOptions.h"
 #include "../Main/Interface.h"
 #include "Platform.h"
+#include <SDL3/SDL_filesystem.h>
 #include "..\Main\iMain.h"
 #include "..\Input\Bind.h"
 #include "..\ADOImport\BasicDB.h"
@@ -1151,7 +1152,7 @@ static int RunGame( const char *lpCmdLine )
 #else
 	srand( static_cast<unsigned int>( S2Random::ClockSeed32() ) );
 #endif // _DEBUG
-	NGScene::AddBaseResourceDirs();
+	NGScene::AddBaseResourceDirs( SDL_GetBasePath() );
 	GameLifetime lifetime;
 	NGScene::RunResourceLoadingThread();
   // load game database
