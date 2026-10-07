@@ -133,6 +133,14 @@ def import_jobs(jobs, replace=False):
             asset['alpha_encoding'] = 'premultiplied'
         if registration:
             asset['uv_registration'] = registration
+        if job.get('source_rgb_regions'):
+            for region in job['source_rgb_regions']:
+                bounds = region['source_bbox']
+                assert len(bounds) == 4 and all(isinstance(n, int) for n in bounds)
+                assert 0 <= bounds[0] < bounds[2] <= original.width
+                assert 0 <= bounds[1] < bounds[3] <= original.height
+                assert region['reason']
+            asset['source_rgb_regions'] = job['source_rgb_regions']
         if job.get('content_replacement'):
             asset['content_replacement'] = job['content_replacement']
             asset['generation'] = 'Built-in image_gen; authorized printed-cover replacement; offline native-size resampling'

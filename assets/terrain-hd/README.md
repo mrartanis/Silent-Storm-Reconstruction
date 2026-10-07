@@ -8,10 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **1,962 HD textures**: 178 terrain assets, 30 tree
-assets and 1,754 building/environment assets. All 2,349 world-scope resources
-have a recorded disposition; 20 new-group originals bring the shared queue to
-2,369 and are pending generation/review. Original fallback covers 257 technical maps,
+The completed pack contains **1,982 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 4 clothing, 7 equipment, 3 weapons,
+2 heads, 2 interface icons and 2 effects. All 2,349 world-scope resources
+have a recorded disposition; 20 accepted new-group textures bring the shared queue to
+2,369. Original fallback covers 257 technical maps,
 73 structural/solid masks, 48 unavailable historical sources, one release mismatch
 and eight resource IDs whose original-preserving image generation was unavailable
 (seven distinct source images). No entries in that queue remain pending.
@@ -61,8 +62,8 @@ averages premultiplied mip channels for the engine's transparent renderer.
 
 ## Build and install
 
-All 10,060 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (9,031,595,196 bytes before Git deduplication/compression).
+All 10,152 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,109,551,131 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
@@ -166,6 +167,24 @@ PNG alpha remains available unchanged for provenance. Brightness measurements
 use the final native mask so dark translucent edges remain correctly calibrated.
 
 ## Verification
+
+The first new-group package passed a Windows x64 Game build and full native
+validation on 2026-10-07: 1,982 textures, 3,964 aliases, 110 archives and
+6,661,406,064 bytes. Every previously accepted 1,962 source object, PNG and native
+MMP payload retained its hash. `expanded/new-groups-first-batch-check.json`
+records all 20 IDs, source/release parity, dimensions, hashes and brightness errors.
+Clothing/equipment/weapons retain full-canvas UVs. Only individually reviewed
+single sprites 6091/581/582 use alpha-bbox registration. Both heads retain the
+explicit technical near-black gum margin (0,16,64,34) in source logical pixels
+before numerical gain; face and visible tooth artwork remain generated.
+`test_source_rgb_regions.py` verifies bounded RGB restoration and exact native
+unpremultiplication without changing alpha or pixels outside the reviewed region.
+
+`expanded/new-groups-live-check.json` records the isolated Windows/D3D11 check
+of the 1,982-texture pack at 2560×1440. The real graphics menu toggled HD off/on,
+terrain patches changed 11→0→11 and 120 frames averaged 60.11 FPS. All captures
+were privately inspected; the agent's test process quit normally with code 0.
+This checks switching in that scene, not every new model or particle.
 
 The RGB565 extension passed a Windows x64 Game build and full native validation
 on 2026-10-07: 1,962 textures, 3,924 aliases, 110 archives and 6,627,588,404 bytes.

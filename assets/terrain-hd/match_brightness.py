@@ -156,6 +156,37 @@ def match_cell(im, target_luma, premultiply, alpha=None):
     return best[2], best[1], best[3], rounding
 
 
+def source_straight_rgb(original, size, premultiplied):
+    """Resample stored source channels once; undo native premultiplication."""
+    import numpy as np
+    channels = [channel.resize(size, Image.Resampling.LANCZOS) for channel in original.split()]
+    rgb = np.stack([np.asarray(channel) for channel in channels[:3]], axis=2)
+    if premultiplied:
+        alpha = np.asarray(channels[3], dtype=np.uint32)[:, :, None]
+        # ceil reproduces original byte values under floor-based native multiply.
+        denominator = np.maximum(alpha, 1)
+        rgb = (rgb.astype(np.uint32) * 255 + denominator - 1) // denominator
+        rgb = np.where(alpha > 0, np.clip(rgb, 0, 255), 0).astype(np.uint8)
+    return Image.fromarray(rgb)
+
+
+def restore_source_regions(cell, source_rgb, regions, destination):
+    """Keep explicitly reviewed technical UV margins out of nearest-color fill.
+
+    Artistic face/material regions remain generated. PNG alpha is unchanged.
+    Region coordinates are already scaled to the complete HD image canvas.
+    """
+    rgb = cell.convert('RGB')
+    count = 0
+    for bounds in regions:
+        overlap = (max(bounds[0], destination[0]), max(bounds[1], destination[1]),
+                   min(bounds[2], destination[2]), min(bounds[3], destination[3]))
+        if overlap[0] < overlap[2] and overlap[1] < overlap[3]:
+            rgb.paste(source_rgb.crop(overlap), (overlap[0] - destination[0], overlap[1] - destination[1]))
+            count += (overlap[2] - overlap[0]) * (overlap[3] - overlap[1])
+    return Image.merge('RGBA', (*rgb.split(), cell.getchannel('A'))), count
+
+
 def main(ids=None):
     manifest = json.loads((ROOT / 'sources.json').read_text(encoding='utf-8'))
     reports = []
@@ -178,6 +209,16 @@ def main(ids=None):
         native_alpha = None
         if asset.get('native_alpha_reference'):
             native_alpha = Image.open(ROOT / asset['native_alpha_reference']).convert('RGBA').getchannel('A').resize(image.size, Image.Resampling.LANCZOS)
+        source_regions = []
+        source_rgb = None
+        if asset.get('source_rgb_regions'):
+            source_rgb = source_straight_rgb(original, image.size, premultiply)
+            for region in asset['source_rgb_regions']:
+                bounds = region['source_bbox']
+                source_regions.append([bounds[0] * image.width // original.width,
+                                       bounds[1] * image.height // original.height,
+                                       bounds[2] * image.width // original.width,
+                                       bounds[3] * image.height // original.height])
         def measure(im, alpha=None):
             measured = im.copy()
             if alpha is not None:
@@ -198,6 +239,9 @@ def main(ids=None):
                 padded = cleared = 0
                 if cell_alpha is not None:
                     cell, padded, cleared = pad_rgb_under_source_mask(cell, cell_alpha)
+                restored = 0
+                if source_regions:
+                    cell, restored = restore_source_regions(cell, source_rgb, source_regions, dst)
                 corrected, gain, actual, rounding = match_cell(cell, target, premultiply, cell_alpha)
                 output.paste(corrected, dst)
                 cells.append({'cell': [x, y], 'rgb_gain': gain, 'quantization': rounding,
@@ -206,6 +250,8 @@ def main(ids=None):
                               'original_luma': target,
                               'before_luma': measure(cell, cell_alpha),
                               'corrected_luma': actual})
+                if restored:
+                    cells[-1]['source_rgb_region_texels'] = restored
         assert output.size == image.size
         assert output.getchannel('A').tobytes() == image.getchannel('A').tobytes()
         calibrated = str(Path(filename).with_name(Path(filename).stem + '-balanced.png')).replace('\\', '/')
@@ -220,6 +266,8 @@ def main(ids=None):
                        'corrected_luma': measure(output, native_alpha)}
         if native_alpha is not None:
             calibration['native_alpha'] = 'Original source mask resampled at HD density; generated alpha preserved in PNG intermediates'
+        if source_regions:
+            calibration['source_rgb_regions'] = asset['source_rgb_regions']
         asset['brightness_calibration'] = calibration
         reports.append({'id': asset['id'], **calibration})
     manifest['name'] = 'HD world textures — brightness matched to originals'

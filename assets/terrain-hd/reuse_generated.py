@@ -42,6 +42,8 @@ def reuse():
         elif registration == 'Reviewed per-island UV registration; opaque black unused atlas regions':
             job['uv_regions'] = donor['uv_registration']['regions']
             job['uv_registration_reason'] = donor['uv_registration']['reason']
+        if donor.get('source_rgb_regions'):
+            job['source_rgb_regions'] = donor['source_rgb_regions']
         jobs.append(job)
     if jobs:
         import_jobs(jobs)

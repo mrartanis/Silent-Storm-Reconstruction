@@ -1,0 +1,7 @@
+Use case: precise-object-edit
+Asset type: Silent Storm head UV atlas targeted missing-gum-region correction.
+Image 1: exact original256x256 source, authoritative UV and dark gum material reference.
+Image 2: generated HD atlas EDIT TARGET. Preserve its entire head face, identity, short hair, ears, skin, neck/red block, eye patch, tooth positions and every other pixel-region layout unchanged.
+Change ONLY the upper-left teeth/gum island to restore the very dark almost-black upper gum margin that image2 omitted. In original logical coordinates the gum/mouth island occupies x0..64,y16..64 in the256x256 canvas. The upper margin x0..64,y16..34 is near-black dark brown/red RGB, with sparse original alpha. Preserve that near-black material and source silhouette; do not turn this top margin into bright pink gum.
+The actual tooth row stays at its EXISTING source location near y40..50. DO NOT move, enlarge, change tooth count or reposition the visible gum/tooth block at y34..64. Add the missing near-black upper margin above that existing block in its original UV area, matching image1. All other texture islands must remain unchanged and face remains upside down in LEFT HALF. Entire right half stays transparent unused UV.
+Retain original painted game style. Do not add new facial details, wrinkles, skin marks, makeup, scars, accessories, teeth, new objects, scene, labels, logos or text. Genuine transparency; same square flat atlas. This is a localized UV material restoration, not a redesign.

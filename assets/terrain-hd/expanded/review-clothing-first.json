@@ -1,0 +1,162 @@
+{
+  "ids": [
+    798,
+    800,
+    915,
+    917
+  ],
+  "tool": "built-in image_gen",
+  "ready_for_coordinator_review": true,
+  "shared_metadata_changed": false,
+  "calibration_performed": false,
+  "native_pack_changed": false,
+  "registration": "No whole or per-island bounding-box registration. All final preview canvases are direct full-canvas 4x normalization of built-in imagegen raw outputs.",
+  "input_recipe": {
+    "mode": "4x nearest-neighbor full-canvas supporting enlargement of decoded original before built-in edit",
+    "originals": "assets/terrain-hd/expanded/original/{id}.png",
+    "references": "assets/terrain-hd/expanded/generated/{id}-enlarged-source.png",
+    "unmodified_originals": true
+  },
+  "private_review": "Each decoded original, enlarged input, raw output and final 4x normalized preview was visually examined. Final outputs retain gray-green German cloth / khaki UK cloth, original fabric and leather regions, black UV gaps and original folds. No insignia, symbols, logos, new pockets or new belt holes/loops accepted. Numerical brightness is pending coordinator calibration.",
+  "textures": [
+    {
+      "id": 798,
+      "logical_size": [
+        256,
+        256
+      ],
+      "target_size": [
+        1024,
+        1024
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/798-raw.png",
+      "prompt_txt": "assets/terrain-hd/expanded/generated/798-prompt.txt",
+      "preview_png": "build/hd-clothing-first/798-normalized-preview.png",
+      "rejected": [
+        {
+          "raw": "assets/terrain-hd/expanded/generated/798-rejected-added-fasteners-raw.png",
+          "prompt": "assets/terrain-hd/expanded/generated/798-rejected-added-fasteners-prompt.txt",
+          "reason": "Initial generated fasteners were overly bright and expanded; source detail and UV front contours needed a more faithful reconstruction."
+        }
+      ],
+      "review_concern": "Fine generated edges may differ slightly from source within existing material islands; inspect original fastener shapes and cutout boundaries before final acceptance. No automatic UV rearrangement applied."
+    },
+    {
+      "id": 800,
+      "logical_size": [
+        256,
+        128
+      ],
+      "target_size": [
+        1024,
+        512
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/800-raw.png",
+      "prompt_txt": "assets/terrain-hd/expanded/generated/800-prompt.txt",
+      "preview_png": "build/hd-clothing-first/800-normalized-preview.png",
+      "rejected": [
+        {
+          "raw": "assets/terrain-hd/expanded/generated/800-rejected-added-fasteners-raw.png",
+          "prompt": "assets/terrain-hd/expanded/generated/800-rejected-added-fasteners-prompt.txt",
+          "reason": "Initial raw invented a row of circular belt perforations absent in the original."
+        }
+      ],
+      "review_concern": "Fine generated edges may differ slightly from source within existing material islands; inspect original fastener shapes and cutout boundaries before final acceptance. No automatic UV rearrangement applied."
+    },
+    {
+      "id": 915,
+      "logical_size": [
+        256,
+        256
+      ],
+      "target_size": [
+        1024,
+        1024
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/915-raw.png",
+      "prompt_txt": "assets/terrain-hd/expanded/generated/915-prompt.txt",
+      "preview_png": "build/hd-clothing-first/915-normalized-preview.png",
+      "rejected": [
+        {
+          "raw": "assets/terrain-hd/expanded/generated/915-rejected-added-fasteners-raw.png",
+          "prompt": "assets/terrain-hd/expanded/generated/915-rejected-added-fasteners-prompt.txt",
+          "reason": "Initial raw added four short upper belt loops/hardware islands absent in source and moved upper belt boundary."
+        }
+      ],
+      "review_concern": "Fine generated edges may differ slightly from source within existing material islands; inspect original fastener shapes and cutout boundaries before final acceptance. No automatic UV rearrangement applied."
+    },
+    {
+      "id": 917,
+      "logical_size": [
+        256,
+        128
+      ],
+      "target_size": [
+        1024,
+        512
+      ],
+      "raw_png": "assets/terrain-hd/expanded/generated/917-raw.png",
+      "prompt_txt": "assets/terrain-hd/expanded/generated/917-prompt.txt",
+      "preview_png": "build/hd-clothing-first/917-normalized-preview.png",
+      "rejected": [
+        {
+          "raw": "assets/terrain-hd/expanded/generated/917-rejected-added-fasteners-raw.png",
+          "prompt": "assets/terrain-hd/expanded/generated/917-rejected-added-fasteners-prompt.txt",
+          "reason": "Initial raw added two small waistband loops absent in source."
+        }
+      ],
+      "review_concern": "Fine generated edges may differ slightly from source within existing material islands; inspect original fastener shapes and cutout boundaries before final acceptance. No automatic UV rearrangement applied."
+    }
+  ],
+  "generation_call_log": [
+    {
+      "id": 798,
+      "pass": 1,
+      "output": "exec-29dcba5b-d9ed-4255-9618-537e509b70ed.png",
+      "status": "rejected"
+    },
+    {
+      "id": 800,
+      "pass": 1,
+      "output": "exec-4597ea31-1a89-440a-b002-03d49a55cab6.png",
+      "status": "rejected"
+    },
+    {
+      "id": 915,
+      "pass": 1,
+      "output": "exec-ee46780d-5ecc-47c8-9647-e62c7a87e0bb.png",
+      "status": "rejected"
+    },
+    {
+      "id": 917,
+      "pass": 1,
+      "output": "exec-30900bf4-b7b8-4955-8bf5-fdfa08e1fc30.png",
+      "status": "rejected"
+    },
+    {
+      "id": 798,
+      "pass": 2,
+      "output": "exec-ee3e6b83-b227-453e-9228-1f3996ef46d3.png",
+      "status": "prepared"
+    },
+    {
+      "id": 800,
+      "pass": 2,
+      "output": "exec-2717ee88-5e79-4725-969e-ac1f7998a40a.png",
+      "status": "prepared"
+    },
+    {
+      "id": 915,
+      "pass": 2,
+      "output": "exec-51d7df36-9bab-468c-aada-82afb3c6eaa7.png",
+      "status": "prepared"
+    },
+    {
+      "id": 917,
+      "pass": 2,
+      "output": "exec-95b134db-82a8-4fe0-b2d2-1c02f5c38f19.png",
+      "status": "prepared"
+    }
+  ],
+  "external_blocker": null
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "id": 1952,
+    "generated": "assets/terrain-hd/expanded/generated/1952-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm M3A1 weapon diffuse UV atlas, opaque.\nImage 1 is the exact 128x64 edit target. Faithfully restore this same flat texture at 4x, 512x256. Keep the entire 2:1 rectangular canvas, all UV island positions, scales, orientations, seams and black unused spaces exactly as the reference.\nThis image is disassembled UV material regions, not a complete gun picture. Preserve the long dark steel strips at top/right, the existing receiver/body regions, smaller vertical and rectangular panels at left and center, thin seams and original mechanical cutouts. Keep the SAME number and shape of existing details. The existing materials are worn dark steel with muted grey highlights; retain all original paint/shading/material identities and scale of wear.\nAdd only subtle fine steel surface grain and improve clarity within existing color regions. Do not rearrange or assemble islands, recenter, enlarge components, crop, add border, perspective, new object, extra screws, bolts, holes, lettering, logos or decorations. Preserve original dark palette and baked lighting; brightness will be calibrated later.\nFully opaque 2:1 flat raster atlas, including black unused regions. Preserve exact original geometry and pattern; no complete weapon render."
+  },
+  {
+    "id": 1954,
+    "generated": "assets/terrain-hd/expanded/generated/1954-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm MP40 diffuse weapon UV atlas, opaque 128x64.\nImage 1 is the exact edit target. Restore fine material detail in the SAME disassembled flat 2:1 raster atlas at 512x256. Keep the original canvas and exact normalized position, size, rotation and outline of every island.\nPreserve the upper-left tilted ribbed grip island, upper-right long horizontal rod/barrel band, large long steel receiver/body islands across center and lower-right, small angular patches, thin lower metal strips and all black gaps. Keep the same rib count, seams, original component count, mechanical recesses and grey worn steel material. Preserve original color, baked highlight/shadow placement and grain scale. Add fine surface detail only inside existing regions.\nDo not assemble these UV regions into a gun illustration, rotate, recenter, crop, shrink the islands or change the layout. No new screws, bolts, holes, labels, engravings, logos, paint colors, decorations, perspective, rendered objects, scenes or watermarks. Exact original shape and UV topology take priority over photorealistic polish.\nOutput is fully opaque, including unused black UV space. Rectangular 2:1 image, flat pixels only."
+  },
+  {
+    "id": 1979,
+    "generated": "assets/terrain-hd/expanded/generated/1979-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm MP38 diffuse weapon UV atlas, opaque.\nImage 1 is the exact 128x64 edit target. Restore fine material detail at 512x256 while preserving the SAME flat 2:1 disassembled UV atlas.\nKeep each existing island at exactly its source normalized position, size and rotation. Preserve tilted ribbed grip upper-left, small top/middle patches, long rod-like strip upper-right, large very dark receiver/body islands center and lower-right, thin lower strips, all cutouts and black gaps. Keep original number of ribs, seam count and positions, mechanical shapes and the distinct very dark blued/black steel finish and muted small highlights. Source artwork is deliberately darker than related weapons; do not recolor to brighter metal.\nAdd only subtle tiny worn steel material grain and clarity within existing regions. Preserve original scale of marks and baked lighting. Do not assemble into a complete gun, move islands, crop, add borders or normalize the layout. No new holes, screws, bolts, lettering, labels, logos, accessories, new textures/materials, perspective, scenes, rendered objects or watermark.\nFully opaque rectangular 2:1 flat raster texture, unused UV is black."
+  },
+  {
+    "id": 1896,
+    "generated": "assets/terrain-hd/expanded/generated/1896-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm head UV atlas targeted missing-gum-region correction.\nImage 1: exact original256x256 source, authoritative UV and dark gum material reference.\nImage 2: generated HD atlas EDIT TARGET. Preserve its entire head face, identity, short hair, ears, skin, neck/red block, eye patch, tooth positions and every other pixel-region layout unchanged.\nChange ONLY the upper-left teeth/gum island to restore the very dark almost-black upper gum margin that image2 omitted. In original logical coordinates the gum/mouth island occupies x0..64,y16..64 in the256x256 canvas. The upper margin x0..64,y16..34 is near-black dark brown/red RGB, with sparse original alpha. Preserve that near-black material and source silhouette; do not turn this top margin into bright pink gum.\nThe actual tooth row stays at its EXISTING source location near y40..50. DO NOT move, enlarge, change tooth count or reposition the visible gum/tooth block at y34..64. Add the missing near-black upper margin above that existing block in its original UV area, matching image1. All other texture islands must remain unchanged and face remains upside down in LEFT HALF. Entire right half stays transparent unused UV.\nRetain original painted game style. Do not add new facial details, wrinkles, skin marks, makeup, scars, accessories, teeth, new objects, scene, labels, logos or text. Genuine transparency; same square flat atlas. This is a localized UV material restoration, not a redesign.",
+    "source_rgb_regions": [
+      {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "reason": "Reviewed near-black technical gum margin; preserve source RGB under restored native alpha instead of nearest generated gum padding. The bounded original RGBA region was independently checked for each head, identical SHA256 d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149. Actual AI tooth row and face remain unchanged."
+      }
+    ]
+  },
+  {
+    "id": 2171,
+    "generated": "assets/terrain-hd/expanded/generated/2171-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm Carmelina Donati character head diffuse UV atlas.\nImage 1 is the exact 256x256 edit target. Restore fine detail of this same square flat texture at 1024x1024, keeping the original painted game style and exact same female character identity.\nCRITICAL: this is a UV atlas, not a portrait. All artwork occupies only the LEFT HALF x0..128 of256. Entire right half remains genuine transparent unused UV. Keep the FACE UPSIDE DOWN in the lower-left area, with the original pale skin, red/brown lips, facial proportions, nose, eyebrows, ears, dark curly hair/hairline and neutral expression. Every feature and UV component keeps exactly the same source normalized coordinates, size, orientation and alpha silhouette.\nPreserve the separate eye patch around source x64..128,y64..128 and the upper-left teeth/gum patch at source x0..64,y16..64, including its dark upper gum area, tooth row location, tooth count and deep red lower region. Do not enlarge, relocate, rotate, recenter or crop those islands. Preserve the source red/brown block and neck/skin regions between the mouth/eye slots and face.\nRefine only small skin/hair/eye/teeth surface details implied by the original. Match the same face, age, ethnicity, hairstyle, expression, feature shape, baked lighting and original game-painted style. Do not beautify or change face shape, add makeup/scars/accessories, replace with photoreal portrait lighting, add eyes to a slot or create new characters.\nGenuine transparent background and all original unused areas; no labels, text, logos, new objects, scenery, border or watermark. Flat raster UV image only.",
+    "source_rgb_regions": [
+      {
+        "source_bbox": [
+          0,
+          16,
+          64,
+          34
+        ],
+        "reason": "Reviewed near-black technical gum margin; preserve source RGB under restored native alpha instead of nearest generated gum padding. The bounded original RGBA region was independently checked for each head, identical SHA256 d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149. Actual AI tooth row and face remain unchanged."
+      }
+    ]
+  },
+  {
+    "id": 6091,
+    "generated": "assets/terrain-hd/expanded/generated/6091-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm UI status icon \"Bleeding\", no text, 32x32 original.\nImage 1 is the exact edit target. Faithfully restore fine shading of this SAME icon at 128x128.\nPreserve the exact single red blood-drop shape, original slight tilt, rounded upper body and narrow lower-right tapered tip, its red material, dark rim and small pale highlight at upper-left. Preserve every original proportion and location. The original occupied bounds are x6..25,y3..30 within the 32x32 square; keep this exact fraction of the full canvas, original centroid and the surrounding transparent margins. Do not recenter, straighten or enlarge the droplet to fill the canvas.\nKeep the source softly shaded painted game-icon style, original palette and baked highlight placement. Sharpen tiny existing detail only. No new droplets, splashes, streaks, decorations, labels, letters, digits, marks, border, bevel plaque, objects, scenery, perspective or watermark.\nGenuine transparent square background with the same soft alpha silhouette and original shape. The icon's logical dimensions and UV crop remain unchanged, only raster density increases4x.",
+    "register_alpha_bbox": true,
+    "uv_registration_reason": "Privately inspected original and generated single sprite/icon: generator changed occupied bounds. Register alpha>8 bounding box to confirmed source bounds, preserving original sprite/UI footprint; native pack restores exact original alpha. No atlas/multiple material islands."
+  },
+  {
+    "id": 6092,
+    "generated": "assets/terrain-hd/expanded/generated/6092-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm UI status icon \"Blind\", text-free 32x32.\nImage 1 is the exact edit target. Restore fine shading in this same icon at128x128, keeping the exact original flat game-icon style and symbol.\nThe source has a grey eye/ring surrounding a blue iris/pupil center, crossed by the original diagonal grey/black bars. Preserve the same eye geometry, ring thickness, iris size/placement, number and angles of crossing bars, original muted grey/blue palette and baked shadows/highlights. Do not redesign into a reticle, gear, bolt or different eye symbol.\nKeep exact original normalized coordinates, proportions, all clipping and transparent margins. Source occupied alpha touches all four edges of the32x32 canvas; do not shrink, add extra padding, crop or recenter. It is a single UI icon, not a cursor or an atlas.\nAdd only subtle fine shading clarity within existing shapes. No new objects, extra rings, screws, bolts, lines, labels, text, letters, digits, logos, scenery, perspective, borders or watermark.\nSquare genuine transparent background preserving the original soft alpha silhouette. Logical UI size and UV remain unchanged; only raster density increases4x."
+  },
+  {
+    "id": 581,
+    "generated": "assets/terrain-hd/expanded/generated/581-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm wood-hit particle sprite \"Wood.1\", transparent64x64.\nImage 1 is the exact edit target. Faithfully restore fine material detail in the SAME sprite at256x256.\nIt is exactly ONE tiny narrow torn wooden splinter, oriented diagonally from upper-left to lower-right, with dark pointed ends and original brown faceted middle. Keep the exact original outline, width profile, taper, asymmetry, position, angle, length, grain direction and original scale relative to the64x64 frame. Source nonzero-alpha bounds are x8..58,y2..61; keep those normalized bounds and the original transparent margins, no recentering or enlarging.\nPreserve the original dark aged brown wood, subtle original highlight placement, soft alpha falloff and delicate edges. Add only very fine wood-grain clarity INSIDE the existing shape; maintain the same small grain scale, no new cracks or chips that change its silhouette.\nThis is a single small particle frame, not an animation atlas, not a plank, stick, branch, leaf or complete object. No extra splinters, sparks, dust, debris, shadows outside the silhouette, scene, ground, background, text, logos, borders or watermark.\nGenuine transparent square background preserving the exact original soft-alpha silhouette and sprite footprint. Keep pivot/UV/shape unchanged, only raster density4x.",
+    "register_alpha_bbox": true,
+    "uv_registration_reason": "Privately inspected original and generated single sprite/icon: generator changed occupied bounds. Register alpha>8 bounding box to confirmed source bounds, preserving original sprite/UI footprint; native pack restores exact original alpha. No atlas/multiple material islands."
+  },
+  {
+    "id": 582,
+    "generated": "assets/terrain-hd/expanded/generated/582-raw.png",
+    "prompt": "Use case: precise-object-edit\nAsset type: Silent Storm wood-hit particle sprite \"Wood.2\", transparent64x64.\nImage 1 is the exact edit target. Restore fine material detail in this SAME single sprite at256x256.\nPreserve exactly ONE short irregular brown wooden splinter, diagonally angled from upper-left to lower-right, with the same broader brighter middle, torn tapered ends, bent/asymmetric outline and original dark edge shading. Retain exact source position, length, width profile, grain direction, rotation, texture scale and silhouette. Nonzero-alpha source bounds x5..48,y7..56 in64x64 square; preserve that normalized footprint and every transparent margin. Do not recenter or enlarge to fill the frame.\nAdd only tiny aged wood-grain clarity inside the existing shape. Keep the same worn brown material, baked lighting, fine pattern scale and original soft alpha falloff. Do not straighten into a smooth plank/rod, make a leaf, add new forks, cracks, chips or fibers outside the silhouette.\nSingle tiny particle frame only; no animation grid, new splinters, debris, sparks, dust, scene, ground, shadows outside the original shape, text, logos, borders, watermark or solid background.\nGenuine transparent square with same original alpha silhouette. UV, pivot and sprite shape remain unchanged;4x raster density only.",
+    "register_alpha_bbox": true,
+    "uv_registration_reason": "Privately inspected original and generated single sprite/icon: generator changed occupied bounds. Register alpha>8 bounding box to confirmed source bounds, preserving original sprite/UI footprint; native pack restores exact original alpha. No atlas/multiple material islands."
+  }
+]
