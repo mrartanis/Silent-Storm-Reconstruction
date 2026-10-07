@@ -55,6 +55,9 @@ All 8,469 original, raw AI-generated, normalized, calibrated and rejected PNGs
 are ordinary Git files (8,934,956,122 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
+The initial import used 17 data pushes. Every remote PNG blob ID and size matched
+the independently verified source bytes, and no ZIP or generated native files
+were included (`expanded/repository-transfer-check.json`).
 
 Windows and Linux Game builds include the `S2HDTextures` dependency by default.
 It converts the accepted PNGs into `res-hd` next to the game executable, including
@@ -162,10 +165,14 @@ result is saved in `res-hd/validation.json`; `expanded/queue.json` is marked
 validated only after the complete check passes. The detailed coverage report is
 `expanded/coverage.json`.
 
-The ZIP packaging was also restored into a fresh directory: all 8,469 PNGs passed
-their hash checks, and the offline build reproduced the complete native manifest
-and every one of the 110 `.res` archive hashes exactly. The recorded result is
-`expanded/archive-roundtrip-check.json`.
+The CMake integration passed full Game builds on Windows and Linux. Both produced
+the previously validated native manifest and the same 110 archive hashes beside
+the executable. Full native validation also passed on the Windows build output.
+Incremental tests cover unchanged builds, changed PNGs and alpha references,
+manifest edits, missing shards and modified outputs. Resource opener regressions
+on both platforms cover adjacent HD packs, working-directory fallback, HD opt-out
+and exclusion from network resource directories. Results are recorded in
+`expanded/source-build-check.json` and `expanded/incremental-build-check.json`.
 
 The completed 1,952-texture pack passed all native checks on 2026-10-07:
 3,904 aliases in 110 archives, totalling 6,615,704,000 bytes. An isolated Windows
