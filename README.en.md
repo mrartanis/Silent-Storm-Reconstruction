@@ -22,6 +22,11 @@ mission entry and random encounters on the campaign map. Deferred armorer differ
 and the visual differences in skill indicators are recorded in the
 [known issues log](diagnostics/MANUAL-BUGS-2026-09-23.md).
 
+HD textures are built alongside Game from PNGs committed to this repository.
+See [HD-TEXTURES.md](HD-TEXTURES.md) for the build, installation and asset workflow
+in Russian, and the [continuation prompt](assets/terrain-hd/CONTINUE-HD-TEXTURES.md)
+for a new Codex session.
+
 <div align="center">
   <table>
     <tr>
@@ -46,6 +51,9 @@ and the visual differences in skill indicators are recorded in the
 - **Windows** with **Visual Studio 2022** (requires the "Desktop development with
   C++" workload, MSVC v143, Windows SDK 10) or newer. Tested with VS 2026.
 - **CMake 3.21+**
+- **Python 3.11+ and Pillow** for the default HD pack build; set
+  `Python3_EXECUTABLE` to the interpreter with Pillow installed. New texture
+  brightness calibration also requires NumPy. See [HD-TEXTURES.md](HD-TEXTURES.md).
 - Target game builds are **Windows x64, Linux x64 and Linux ARM64**.
   Linux requires Clang 18; ARM64 requires its sysroot and host shaderc.
 - **SDL3 3.4.16**: development package containing `cmake/SDL3Config.cmake` and `SDL3.dll`.
@@ -81,7 +89,8 @@ must contain `game.db`, `cfg` and the complete `res` directory. Laboratory runs
 use `diagnostics/New-LabRun.ps1` and `Start-LabRun.ps1`.
 
 The game uses SDL3 and bgfx. Copy `fonts` next to the executable so text does
-not depend on installed system fonts. The user configuration saves
+not depend on installed system fonts. Also copy the entire generated `res-hd`
+directory alongside it for HD textures. The user configuration saves
 `gfx_resolution=WxH`, `gfx_fullscreen=0/1`, `ui_scale=0/75/100/125/150/200`
 and `ui_vector_fonts=0/1`. Mode and scale are available through **Display and interface**
 in the graphics settings. See [MODERN-DISPLAY.md](diagnostics/MODERN-DISPLAY.md).

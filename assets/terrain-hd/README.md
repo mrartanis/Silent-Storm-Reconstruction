@@ -1,5 +1,9 @@
 # HD world textures
 
+For the Russian build/install and authoring instructions, see
+[HD-TEXTURES.md](../../HD-TEXTURES.md). To continue generation in a new Codex
+session, use [CONTINUE-HD-TEXTURES.md](CONTINUE-HD-TEXTURES.md).
+
 The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
