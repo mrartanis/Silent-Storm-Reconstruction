@@ -60,6 +60,11 @@ PNG bytes. Exactly identical files share a SHA-256 object across the bundle set.
 rejected PNG back to its working path. Unpacked PNGs and deterministic native
 `.res` payloads and downloaded ZIPs are ignored by Git and remain present in the
 local workspace. Each archive entry carries a pinned release URL and SHA-256.
+The current source snapshot is
+[hd-textures-20261007-1952](https://github.com/mrartanis/Silent-Storm-Reconstruction/releases/tag/hd-textures-20261007-1952):
+62 ZIP assets totalling 8,666,407,010 bytes. All GitHub-reported archive sizes and
+SHA-256 digests match the index, and an anonymous HTTPS download into a fresh
+directory passed its hash check (`expanded/archive-release-check.json`).
 
 After cloning, restore the images and build the ready game pack offline:
 
