@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,011 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 12 clothing, 14 equipment, 3 weapons,
-2 heads, 2 interface icons, 10 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,031 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 12 clothing, 14 equipment, 15 weapons,
+2 heads, 10 interface icons, 10 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,414 records, including 49 accepted new-group textures, the original
+contains 2,434 records, including 69 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,8 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,753 verified originals outside the shared queue.
+validation. There remain 1,733 verified originals outside the shared queue, including next
+raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
 inventory and a ready continuation prompt are in `expanded/full-texture-inventory.json`
@@ -64,10 +65,17 @@ maps' 2048px storage size does not mean 2048px of native AI detail.
 Sprite PNGs use straight alpha; the builder premultiplies their colors and
 averages premultiplied mip channels for the engine's transparent renderer.
 
+`expanded/new-groups-third-batch-check.json` records 12 additional magazine
+atlases and 8 UI status icons, numerical brightness correction, exact native
+source alpha, immutable prior2,011 source/PNG/native hashes, and full Game/native
+validation of2,031 textures/4,062 aliases/111 archives/6,710,342,282 bytes.
+`expanded/new-groups-third-live-check.json` records real-menu HD on/off/on and
+normal isolated Game exit. A scene check does not certify every new model/UI state.
+
 ## Build and install
 
-All 10,274 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (9,211,304,855 bytes before Git deduplication/compression).
+All 10,348 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (9,264,583,023 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
