@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-07, 143 of these verified originals are accepted in the shared
+As of 2026-10-07, 163 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
 unchanged for provenance: consult `../new-groups-sixth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,659 IDs: clothing 256, equipment 223, weapons
-88, heads 184, UI 683, effects 192, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,638 IDs: clothing 256, equipment 223, weapons
+76, heads 184, UI 677, effects 189, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -155,5 +155,12 @@ snapshots stay unchanged; unaccepted raw/pending reviews are not HD coverage.
 
 The sixth packet accepts2991/2995/2997/3006 revised equipment and700/701/702/704
 dust frames. `../new-groups-sixth-batch-check.json` and live report record the
-current2,105-texture pack with prior2,097 hashes unchanged. Original full alpha
+sixth-stage2,105-texture pack with prior2,097 hashes unchanged. Original full alpha
 and particle references/blends are retained.2985/2986/597 remain unaccepted.
+
+`new-groups-seventh-batch-check.json` records20 more accepted weapon/UI/effect
+textures:2,125 textures/4,250 aliases/114 archives/6,890,090,830 bytes. Prior2,105
+hashes unchanged; full source alpha and native particle bindings preserved.
+`new-groups-seventh-live-check.json` confirms real-menu HD on/off/on and normal quit.
+7199 retains original after a real service rejection;7206 unattempted related hold.
+Other pending UI/composite raw artwork is provenance, not accepted HD.
