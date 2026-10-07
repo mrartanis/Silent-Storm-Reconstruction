@@ -17,7 +17,8 @@ static bool bTerrainBilinear = true;
 static CBasicShare<int, CSWTexture> shareSWTextures(129);
 CPtrFuncBase<CSWTextureData>* GetSWTex( NDb::CTexture *pTex ) 
 {
-	CPtrFuncBase<CSWTextureData> *pResult = shareSWTextures.Get( pTex->GetRecordID() );
+	CSWTexture *pResult = shareSWTextures.Get( pTex->GetRecordID() );
+	pResult->SetLogicalSize( pTex->nWidth, pTex->nHeight );
 	return pResult;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +145,11 @@ private:
 		{
 			if ( bDoMask )
 			{
-				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
+				// Spots map both full images to the same world rectangle, even when
+				// an HD diffuse mask accompanies an original-resolution bump map.
+				const float sx = float(pMaskTexture->GetXSize()) / pTexture->GetXSize();
+				const float sy = float(pMaskTexture->GetYSize()) / pTexture->GetYSize();
+				mask.Init( fU * sx, fV * sy, texMapping.ptDU.x * sx, texMapping.ptDV.x * sy, pMaskTexture->mips, bTerrainBilinear );
 				for ( ; pDst < pFinish; ++pDst )
 				{
 					const NGfx::SPixel8888 color = tex.Fetch();
@@ -246,7 +251,9 @@ private:
 		{
 			if ( bDoMask )
 			{
-				mask.Init( fU, fV, texMapping.ptDU.x, texMapping.ptDV.x, pMaskTexture->mips, bTerrainBilinear );
+				const float sx = float(pMaskTexture->GetXSize()) / pTexture->GetXSize();
+				const float sy = float(pMaskTexture->GetYSize()) / pTexture->GetYSize();
+				mask.Init( fU * sx, fV * sy, texMapping.ptDU.x * sx, texMapping.ptDV.x * sy, pMaskTexture->mips, bTerrainBilinear );
 				for ( int x = nLeft; x < nRight; ++x )
 				{
 					const SBumpPixel &color = tex.Fetch();
@@ -356,6 +363,11 @@ class CSWRects: public ISWRects
 			const CSWRectLayout::SRect &r = sRects.rects[nTemp];
 			CVec3 vGeom[4], vMaskRect[4], vTextureRect[4];
 			ApplyRectOrient( r.sTex.eOrient, r.sTex.rcTexRect, vTextureRect );
+			for ( int i = 0; i < 4; ++i )
+			{
+				vTextureRect[i].x *= pTextureData->texelScaleX;
+				vTextureRect[i].y *= pTextureData->texelScaleY;
+			}
 			float fWidth = r.sTex.GetWidth() * sRects.scale.x;
 			float fHeight = r.sTex.GetHeight() * sRects.scale.y;
 			vGeom[0] = CVec3( r.nX, r.nY, 0 );
@@ -375,6 +387,11 @@ class CSWRects: public ISWRects
 			{
 				CVec4 ptMaskDU, ptMaskDV;
 				ApplyRectOrient( r.sMask.eOrient, r.sMask.rcTexRect, vMaskRect );
+				for ( int i = 0; i < 4; ++i )
+				{
+					vMaskRect[i].x *= pMaskData->texelScaleX;
+					vMaskRect[i].y *= pMaskData->texelScaleY;
+				}
 				CalcGradient( gm, &ptMaskDU, vMaskRect[0].x, vMaskRect[1].x, vMaskRect[2].x );
 				CalcGradient( gm, &ptMaskDV, vMaskRect[0].y, vMaskRect[1].y, vMaskRect[2].y );
 				pRes->SetMaskMapping( ptMaskDU, ptMaskDV );
@@ -483,12 +500,10 @@ private:
 		void DrawScene( T *pRes, NGfx::CTexture *pTarget, const CTPoint<int> &vViewport )
 	{
 		CDynamicCast<NGfx::I2DBuffer> p2DBuffer( pTarget );
-		float fScale = 1;
-		int nXSize = vViewport.x, nYSize = vViewport.y;
-		while ( nXSize > p2DBuffer->GetXSize() )
-		{
-			nXSize /= 2; nYSize /= 2; fScale *= 0.5f;
-		}
+		// vViewport is the logical layout; the destination may be denser or smaller.
+		const float fScale = float(p2DBuffer->GetXSize()) / vViewport.x;
+		ASSERT( fabs(fScale - float(p2DBuffer->GetYSize()) / vViewport.y) < 0.001f );
+		int nXSize = p2DBuffer->GetXSize(), nYSize = p2DBuffer->GetYSize();
 		CTRect<int> dstRegion( 0, 0, nXSize, nYSize );
 		pRes->SetRegion( dstRegion );
 		pRes->SetScale( fScale );

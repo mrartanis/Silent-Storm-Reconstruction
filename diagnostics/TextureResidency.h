@@ -15,6 +15,7 @@ struct Entry { int frame=0,width=0; bool bump=false,placeholder=false; };
 struct State {
   std::map<const void*,Entry> terrain,files;
   std::uint64_t evictions=0,generated128=0,generated256=0;
+  std::uint64_t generatedHD=0;
   std::uint64_t stressFallbacks=0,pendingFallbacks=0,budgetFallbacks=0;
   std::uint64_t fullFileLoads=0,lowFileLoads=0,gpuBytes=0;
   unsigned gpuTextures=0; int presentedFrame=0;

@@ -374,7 +374,7 @@ static void SetCurrentResolution( int nMode )
 	NGlobal::SetVar( "gfx_resolution", wstring( wsMode ) );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// The modern renderer exposes six settings. Reuse the shipped combo artwork,
+// Reuse the shipped combo artwork,
 // but replace the obsolete quality controls and labels without editing game.db.
 static const wchar_t* VideoText(const wchar_t* english, const wchar_t* russian)
 {
@@ -396,6 +396,23 @@ static NDb::CUIContainer* MakeVideoOptionsTemplate()
 		if(backdrop || id=="base" || id=="cancel" || id=="default" || id=="resolution" ||
 			id=="quality" || id=="anisotropic_level" || id=="texture_quality" ||
 			id=="smoothness" || id=="fsaa_level") modern->controls.push_back(control);
+		if(id=="fsaa_level")
+		{
+			// A separate control reuses the existing artwork and nested combo layout.
+			NDb::CUIControl* hd=new NDb::CUIControl;
+			hd->type=control->type; hd->szID="hd_textures";
+			hd->nColor=control->nColor; hd->nDepth=control->nDepth;
+			hd->bVisible=control->bVisible; hd->bDefault=false;
+			hd->bTopmost=control->bTopmost; hd->bBottommost=control->bBottommost;
+			hd->bTransparent=control->bTransparent; hd->rect=control->rect;
+			for(int n=0;n<NDb::N_CTRL_SOUNDS;++n)hd->pSounds[n]=control->pSounds[n];
+			for(int n=0;n<NDb::N_CTRL_TEXTURES;++n)hd->pTextures[n]=control->pTextures[n];
+			for(int n=0;n<NDb::N_CTRL_MODELS;++n)hd->pModels[n]=control->pModels[n];
+			hd->pString=control->pString; hd->pContainer=control->pContainer;
+			hd->pNestedUIContainer=control->pNestedUIContainer;
+			hd->toolTipAnchorType=NDb::UIA_NONE; hd->sToolTipAnchor=control->sToolTipAnchor;
+			modern->controls.push_back(hd);
+		}
 	}
 	return modern;
 }
@@ -417,7 +434,8 @@ private:
 	CObj<CComplexComboBox> pFullscreen;
 	CObj<CComplexComboBox> pVSync;
 	CObj<CComplexComboBox> pShowFPS;
-	ZEND int operator&(CStructureSaver& f) { f.Add(1,(CEmptyOptionsUI*)this); f.Add(2,&bIgnoreNotify); f.Add(3,&pDefault); f.Add(8,&pAntialiasing); f.Add(10,&pResolution); f.Add(12,&pAnisotropicLevel); f.Add(13,&pFullscreen); f.Add(14,&pVSync); f.Add(15,&pShowFPS); return 0; }
+	CObj<CComplexComboBox> pHDTextures;
+	ZEND int operator&(CStructureSaver& f) { f.Add(1,(CEmptyOptionsUI*)this); f.Add(2,&bIgnoreNotify); f.Add(3,&pDefault); f.Add(8,&pAntialiasing); f.Add(10,&pResolution); f.Add(12,&pAnisotropicLevel); f.Add(13,&pFullscreen); f.Add(14,&pVSync); f.Add(15,&pShowFPS); f.Add(16,&pHDTextures); return 0; }
 
 	unsigned long long displayRevision = 0;
 	bool configInitialized = false; // Combo view children are bound after template loading.
@@ -481,6 +499,7 @@ void CVideoOptionsUI::UpdateFromConfig()
 	select(pVSync,NGlobal::GetVar("gfx_vsync",1).GetInt()!=0);
 	select(pAntialiasing,NGlobal::GetVar("gfx_antialiasing",0).GetInt()==1?1:0);
 	select(pShowFPS,NGlobal::GetVar("gfx_show_fps",0).GetInt()!=0);
+	select(pHDTextures,NGlobal::GetVar("gfx_hd_textures",1).GetInt()!=0);
 	configInitialized=true;
 	bIgnoreNotify=previous;
 }
@@ -488,9 +507,10 @@ void CVideoOptionsUI::ArrangeControls()
 {
 	// Obsolete fields were excluded from the template. Do not disable sibling
 	// windows here: combo drop-down lists also belong directly to this panel.
-	CComplexComboBox* combos[]={pResolution,pFullscreen,pAnisotropicLevel,pVSync,pAntialiasing,pShowFPS};
+	CComplexComboBox* combos[]={pResolution,pFullscreen,pHDTextures,pAnisotropicLevel,pVSync,pAntialiasing,pShowFPS};
 	const wchar_t* labels[]={VideoText(L"RESOLUTION",L"\u0420\u0410\u0417\u0420\u0415\u0428\u0415\u041d\u0418\u0415"),
 		VideoText(L"WINDOW MODE",L"\u0420\u0415\u0416\u0418\u041c \u041e\u041a\u041d\u0410"),
+		VideoText(L"HD TEXTURES",L"HD \u0422\u0415\u041a\u0421\u0422\u0423\u0420\u042b"),
 		VideoText(L"ANISOTROPY",L"\u0410\u041d\u0418\u0417\u041e\u0422\u0420\u041e\u041f\u0418\u042f"),L"V-SYNC",
 		VideoText(L"ANTIALIASING",L"\u0421\u0413\u041b\u0410\u0416\u0418\u0412\u0410\u041d\u0418\u0415"),
 		VideoText(L"SHOW FPS",L"\u041f\u041e\u041a\u0410\u0417\u0410\u0422\u042c FPS")};
@@ -498,9 +518,9 @@ void CVideoOptionsUI::ArrangeControls()
 	const int fieldWidth=153;
 	const int valueX=pResolution->GetAuthoredPosition().x+pResolution->GetAuthoredSize().x-fieldWidth;
 	const int top=148; // Start beside the first tab, just below the book heading.
-	for(int row=0;row<6;++row)
+	for(int row=0;row<7;++row)
 	{
-		const int y=top+row*48;
+		const int y=top+row*42;
 		const int reduction=combos[row]->GetAuthoredSize().x-fieldWidth;
 		list<CPtr<CWindow>> parts;
 		combos[row]->GetChildrenList(&parts);
@@ -520,7 +540,7 @@ void CVideoOptionsUI::ArrangeControls()
 		label->SetText(GetDBString(4404)+labels[row]);
 	}
 	const SPoint reset=pDefault->GetAuthoredPosition();
-	pDefault->SetPosition(pDefault->AuthoredToLayout(SPoint(reset.x,top+6*48+16)));
+	pDefault->SetPosition(pDefault->AuthoredToLayout(SPoint(reset.x,top+7*42+16)));
 }
 bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 {
@@ -536,6 +556,7 @@ bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 				NGlobal::ResetVar("gfx_vsync");
 				NGlobal::ResetVar("gfx_antialiasing");
 				NGlobal::ResetVar("gfx_show_fps");
+				NGlobal::ResetVar("gfx_hd_textures");
 			}
 			else if((IsValid(pResolution) && event.szID==pResolution->GetWindowID()) ||
 				(IsValid(pFullscreen) && event.szID==pFullscreen->GetWindowID()))
@@ -566,6 +587,8 @@ bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 				NGlobal::SetVar("gfx_antialiasing",pAntialiasing->GetSelectedItem());
 			else if(IsValid(pShowFPS) && event.szID==pShowFPS->GetWindowID())
 				NGlobal::SetVar("gfx_show_fps",pShowFPS->GetSelectedItem());
+			else if(IsValid(pHDTextures) && event.szID==pHDTextures->GetWindowID())
+				NGlobal::SetVar("gfx_hd_textures",pHDTextures->GetSelectedItem());
 			bIgnoreNotify=false;
 			UpdateFromConfig();
 			break;
@@ -591,6 +614,8 @@ bool CVideoOptionsUI::ProcessMessage(const SEvent& event)
 			pAntialiasing->AddItem(1,CComplexComboBox::SInfo(L"<right>FXAA"),173);
 			pShowFPS=new CComplexComboBox(event.pLoader->GetControl("fsaa_level"));
 			AddToggleItems(pShowFPS);
+			pHDTextures=new CComplexComboBox(event.pLoader->GetControl("hd_textures"));
+			AddToggleItems(pHDTextures);
 			break;
 		}
 	case EVENT_TEMPLATELOADCOMPLETE:
@@ -610,8 +635,8 @@ bool SelectGraphicsOptionForDiagnostics(const string& name, int value, int heigh
 	if(!IsValid(options) || !dynamic_cast<CVideoOptionsUI*>(options)) return false;
 	if(name=="dropdown")
 	{
-		const char* fields[]={"resolution","quality","anisotropic_level","texture_quality","smoothness","fsaa_level"};
-		if(value<0 || value>=6) return false;
+		const char* fields[]={"resolution","quality","anisotropic_level","texture_quality","smoothness","fsaa_level","hd_textures"};
+		if(value<0 || value>=7) return false;
 		CComboBox* combo=dynamic_cast<CComboBox*>(options->GetChildByID(fields[value]));
 		return IsValid(combo) && combo->ProcessMessage(SEvent(EVENT_NOTIFY,height?"list":"drop_list"));
 	}
@@ -622,6 +647,7 @@ bool SelectGraphicsOptionForDiagnostics(const string& name, int value, int heigh
 	else if(name=="vsync") control="texture_quality";
 	else if(name=="antialiasing") control="smoothness";
 	else if(name=="fps") control="fsaa_level";
+	else if(name=="hd") control="hd_textures";
 	if(!control) return false;
 	CComplexComboBox* combo=dynamic_cast<CComplexComboBox*>(options->GetChildByID(control));
 	if(!IsValid(combo)) return false;

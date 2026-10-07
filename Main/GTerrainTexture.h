@@ -42,6 +42,7 @@ private:
 	int nDetail;
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&bBumpTexture); f.Add(3,&sSeed); f.Add(4,&nrRegion); f.Add(6,&pInfo); f.Add(7,&pGrass); f.Add(8,&fWorldToScreen); f.Add(9,&pUpdateRegion); f.Add(10,&nDetail); return 0; }
 	bool bOwnedTexture = false; // Runtime allocation policy; not serialized.
+	unsigned resourceRevision = 0;
 
 	struct SSpotTextures
 	{

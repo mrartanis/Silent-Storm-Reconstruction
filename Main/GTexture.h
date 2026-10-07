@@ -44,6 +44,7 @@ class CFileTexture : public CResourceLoader<STextureKey, NGfx::CTexture>
 	typedef CResourceLoader<STextureKey, NGfx::CTexture> TParent;
 	bool bIsFakeTexture;
 	CObj<CFileRequest> pRequest;
+	unsigned resourceRevision = 0;
 protected:
 	virtual void Recalc();
 	virtual bool NeedUpdate();

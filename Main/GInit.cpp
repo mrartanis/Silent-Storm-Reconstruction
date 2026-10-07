@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GInit.h"
+#include "GResource.h"
 #include "Gfx.h"
 #include "GAutoDetect.h"
 #include "../Game/DisplayGeometry.h"
@@ -38,6 +39,7 @@ void GetConfiguredVideoMode( int *pModeX, int *pModeY )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SetModeFromConfig( bool bRecreate )
 {
+	SetHDTexturesEnabled( NGlobal::GetVar("gfx_hd_textures",1).GetInt()!=0 );
 	ApplyMaximumQuality(); // Also overrides quality values in existing saved configurations.
 	// retail @0x1292e0 head: the gfx_recreate path tears the device down and re-initializes
 	// before applying the mode (this is what makes an in-game resolution switch take effect)
@@ -143,6 +145,10 @@ void CommandGfxRecreate( const string &szID, const vector<wstring> &paramsSet, v
 // gfx_16bit_mode backing flag, retail @0x99cf93 (Is16BitMode @0x10cde0 returns it; this tree's
 // render path is still always 32-bit -- the flag only feeds the saved config / options packing).
 static bool bUse16BitMode = false;
+static void HDTexturesHandler( const string&, const NGlobal::CValue &value, void* )
+{
+	SetHDTexturesEnabled(value.GetInt()!=0);
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail GInitInit @0x12a320: 2 cmds + 9 vars; Jan03's gfx_refreshlimit was DROPPED in retail and
 // gfx_fullscreen defaults to 1.0 there.
@@ -150,6 +156,7 @@ START_REGISTER(GInit)
 	REGISTER_CMD( "gfx_update", CommandGfxUpdate )
 	REGISTER_CMD( "gfx_recreate", CommandGfxRecreate )
 	REGISTER_VAR( "gfx_resolution", 0, 1024, true )
+	REGISTER_VAR( "gfx_hd_textures", HDTexturesHandler, 1, true )
 	REGISTER_VAR( "gfx_fullscreen", 0, 1, true )
 	REGISTER_VAR( "ui_scale", 0, 0, true )
 	REGISTER_VAR( "ui_vector_fonts", 0, 1, true )

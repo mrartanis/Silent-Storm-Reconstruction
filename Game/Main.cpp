@@ -844,9 +844,11 @@ static bool HarnessPoll()   // returns false to request main-loop exit
     else if(sCmd=="texturestatus") {
         auto& d=S2TextureDiag::Get();
         unsigned high=0,low=0,fake=0,bumpHigh=0,bumpLow=0,filesFull=0,filesFake=0;
-        for(const auto& v:d.terrain) if(d.presentedFrame-v.second.frame<=1) { const auto& e=v.second; if(e.bump) { if(e.width==256) ++bumpHigh; else ++bumpLow; } else if(e.width==256) ++high; else if(e.width==128) ++low; else ++fake; }
+        unsigned hd=0;
+        for(const auto& v:d.terrain) if(d.presentedFrame-v.second.frame<=1) { const auto& e=v.second; if(e.bump) { if(e.width==256) ++bumpHigh; else ++bumpLow; } else if(e.width>256) { ++high; ++hd; } else if(e.width==256) ++high; else if(e.width==128) ++low; else ++fake; }
         for(const auto& v:d.files) if(d.presentedFrame-v.second.frame<=1) { if(v.second.placeholder) ++filesFake; else if(v.second.width) ++filesFull; }
         SaveLoadDiag("[harness] textures enabled=%d streaming=%d frame=%d terrain_high=%u terrain_low=%u terrain_fake=%u bump_high=%u bump_low=%u files_full=%u files_fake=%u evictions=%llu generated128=%llu generated256=%llu stress_fallbacks=%llu pending_fallbacks=%llu budget_fallbacks=%llu file_full_loads=%llu file_low_loads=%llu gpu_bytes=%llu gpu_textures=%u\n",S2TextureDiag::Enabled()?1:0,NGlobal::GetVar("gfx_texture_streaming",0).GetInt(),nDGCurrentFrame,high,low,fake,bumpHigh,bumpLow,filesFull,filesFake,d.evictions,d.generated128,d.generated256,d.stressFallbacks,d.pendingFallbacks,d.budgetFallbacks,d.fullFileLoads,d.lowFileLoads,d.gpuBytes,d.gpuTextures);
+        SaveLoadDiag("[harness] terrain_hd=%u generated_hd=%llu\n",hd,d.generatedHD);
     }
     else if(sCmd=="perfworld 0" || sCmd=="perfworld 1") {
         auto* mission=dynamic_cast<NGame::IMission*>(NMainLoop::GetCurrentInterfaceForHarness());
@@ -1000,6 +1002,12 @@ static bool HarnessPoll()   // returns false to request main-loop exit
     }
 	else if ( sCmd == "graphicsoptions" )
 		NMainLoop::Command(new NGame::CICOptions(NGame::OS_VIDEO));
+	else if ( sCmd == "closeoptions" )
+	{
+		NUI::CInterface* ui=NUI::CurrentInterfaceForDiagnostics();
+		if(IsValid(ui) && IsValid(ui->GetChildByID("options")))
+			NMainLoop::Command(new NMainLoop::CICExitModal());
+	}
 	else if ( sCmd.compare(0,15,"graphicsoption ")==0 )
 	{
 		char name[40]{}; int value=0,height=0;
@@ -1143,7 +1151,7 @@ static int RunGame( const char *lpCmdLine )
 #else
 	srand( static_cast<unsigned int>( S2Random::ClockSeed32() ) );
 #endif // _DEBUG
-	NGScene::AddResourceDir( ".\\res" );
+	NGScene::AddBaseResourceDirs();
 	GameLifetime lifetime;
 	NGScene::RunResourceLoadingThread();
   // load game database

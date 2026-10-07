@@ -53,6 +53,9 @@ public:
 	bool IsReady() const { return bIsReady.load(); }
 };
 void ReleaseFileRequestHolder();
+bool HDTexturesEnabled();
+void SetHDTexturesEnabled( bool enabled );
+unsigned GetTextureResourceRevision();
 void AddFileRequest( CFileRequest *pReq );
 template <class TKey, class TValue>
 class CLazyResourceLoader : public CResourceLoader<TKey,TValue>
@@ -136,6 +139,7 @@ class CFileResource: public IResource
 	CFileStream f;
 public:
 	CFileResource() {}
+	explicit CFileResource( const string &path ) { f.OpenRead( path.c_str() ); }
 	CFileResource( const char *pszResName, FILE_ID nFileID );
 	virtual CDataStream* GetStream() { return &f; }
 };
@@ -183,6 +187,7 @@ public:
 // through CFileRequest system
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddResourceDir( const char *pszName );
+void AddBaseResourceDirs(); // Original assets, then the optional visual-only HD overlay.
 vector<string> GetNetworkResourceDirectories();
 void ClearResourceDirs();	// release @0x157950 -- drop all resource dirs (CModManager::Activate)
 void CloseAllResources();

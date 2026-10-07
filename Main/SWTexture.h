@@ -28,10 +28,14 @@ class CSWTextureData: public CObjectBase
 public:
 	vector<CArray2D<NGfx::SPixel8888> > mips;
 	vector<CArray2D<SBumpPixel> > bumpMips;
+	// Layout coordinates stay in database texels even when the loaded image is denser.
+	float texelScaleX = 1, texelScaleY = 1;
 
 	void PrepareBump();
 	int GetXSize() const { return mips[0].GetXSize(); }
 	int GetYSize() const { return mips[0].GetYSize(); }
+	float GetLogicalXSize() const { return GetXSize() / texelScaleX; }
+	float GetLogicalYSize() const { return GetYSize() / texelScaleY; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CSWTexture : public CResourceLoader<int, CSWTextureData>
@@ -39,12 +43,17 @@ class CSWTexture : public CResourceLoader<int, CSWTextureData>
 	OBJECT_BASIC_METHODS(CSWTexture);
 	CObj<CFileRequest> pRequest;
 	bool bIsReady;
+	int logicalWidth = 0, logicalHeight = 0;
+	unsigned resourceRevision = 0;
+	bool SyncResourceRevision();
 	void LoadTexture();
 protected:
 	virtual void Recalc();
+	bool NeedUpdate() override;
 public:
 	CSWTexture() : bIsReady(false) {}
 	bool IsReady();
+	void SetLogicalSize( int width, int height ) { logicalWidth = width; logicalHeight = height; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CBilinearTexture: public CPtrFuncBase<CSWTextureData>

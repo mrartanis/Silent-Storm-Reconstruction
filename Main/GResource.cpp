@@ -44,7 +44,19 @@ static list<CResourceTracker*>& GetTrackers()
 // scans the list LAST-registered-FIRST so mod content overrides the base game. (This dev source
 // had collapsed the list to a single string -- restored to the release shape for mod support.)
 static vector<string> szDirs;
-vector<string> GetNetworkResourceDirectories() { return szDirs; }
+static string hdDirectory;
+static std::atomic<bool> hdTexturesEnabled{true};
+static std::atomic<unsigned> textureResourceRevision{1};
+static void WaitAllPendingLoad();
+bool HDTexturesEnabled() { return hdTexturesEnabled.load(); }
+unsigned GetTextureResourceRevision() { return textureResourceRevision.load(); }
+vector<string> GetNetworkResourceDirectories()
+{
+	vector<string> result;
+	for ( const string &dir : szDirs )
+		if ( dir != hdDirectory ) result.push_back(dir);
+	return result;
+}
 // release NGScene::AddResourceDir @0x157b30 -- append the dir, enforcing a trailing '\'
 void AddResourceDir( const char *pszName )
 {
@@ -64,47 +76,136 @@ void AddResourceDir( const char *pszName )
 void ClearResourceDirs()
 {
 	szDirs.clear();
+	hdDirectory.clear();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-typedef unordered_map<string, vector<CPtr<IFilesPackage> > > CPackHash;
+// Cache per layer rather than collapsing packages from all layers into one list.
+typedef unordered_map<string, CPtr<IFilesPackage> > CPackHash;
 static CPackHash packages;
+static unordered_map<string, vector<string>> hdTexturePackages;
 static NWin32Helper::CCriticalSection packageWork;
-// release NGScene::GetPackage @0x157ce0 -- collect (once, then cached) the "<dir><name>.res"
-// package from EVERY resource dir carrying one, in szDirs order (base first, mod dirs after).
-static vector<CPtr<IFilesPackage> >& GetPackages( const char *pszResName )
+void SetHDTexturesEnabled( bool enabled )
 {
-	CPackHash::iterator i = packages.find( pszResName );
-	if ( i != packages.end() )
-		return i->second;
-	vector<CPtr<IFilesPackage> > &res = packages[pszResName];
-	for ( int k = 0; k < szDirs.size(); ++k )
-	{
-		string szFullPath = szDirs[k] + pszResName + ".res";
-		IFilesPackage *pRes;
-		if ( strcmp( pszResName, "LRTextures" ) == 0 )
-			pRes = OpenCachedFilesPackage( szFullPath.c_str() );
-		else
-			pRes = OpenFilesPackage( szFullPath.c_str() );
-		if ( pRes )
-			res.push_back( pRes );
-	}
-#ifndef _MAPEDIT
-	ASSERT( !res.empty() );
-#endif
-	return res;
+    if ( HDTexturesEnabled() == enabled ) return;
+    WaitAllPendingLoad();
+    NWin32Helper::CCriticalSectionLock lock(packageWork);
+    hdTexturesEnabled = enabled;
+    ++textureResourceRevision;
+    for(CResourceTracker* tracker:GetTrackers()) tracker->Clear();
 }
-// release ::DoesFileExist( vector<CPtr<IFilesPackage>>&, int ) @0x3f33d0 (FilesPackage.obj) -- scan
-// the name's packages LAST-TO-FIRST and return the one carrying nFileID, so an active mod's .res
-// overrides the base package PER FILE (retail CResourceFileOpener goes through exactly this pair).
-static IFilesPackage* GetPackage( const char *pszResName, int nFileID )
+static bool IsResourcePath( const string &path, bool directory )
 {
-	vector<CPtr<IFilesPackage> > &packs = GetPackages( pszResName );
-	for ( int k = (int)packs.size() - 1; k >= 0; --k )
-	{
-		if ( DoesFileExist( packs[k], nFileID ) )
-			return packs[k];
-	}
-	return 0;
+#if defined(_WIN32)
+    const DWORD attributes = GetFileAttributesA(path.c_str());
+    return attributes != INVALID_FILE_ATTRIBUTES &&
+        bool(attributes & FILE_ATTRIBUTE_DIRECTORY) == directory;
+#else
+    std::error_code error;
+    return (directory ? std::filesystem::is_directory(path, error) :
+        std::filesystem::is_regular_file(path, error)) && !error;
+#endif
+}
+void AddBaseResourceDirs()
+{
+    AddResourceDir( "./res" );
+    string resolved;
+    if ( S2FileIO::ResolveGameResourcePath("./res-hd", &resolved) )
+    {
+        if ( IsResourcePath(resolved, true) )
+        {
+            AddResourceDir( resolved.c_str() );
+            hdDirectory = szDirs.back();
+        }
+    }
+}
+static IFilesPackage* GetLayerPackage( const string &dir, const char *name )
+{
+    const string path = dir + name + ".res";
+    CPackHash::iterator i = packages.find(path);
+    if ( i != packages.end() ) return i->second;
+    IFilesPackage *pack = strcmp(name, "LRTextures") == 0 ?
+        OpenCachedFilesPackage(path.c_str()) : OpenFilesPackage(path.c_str());
+    packages[path] = pack;
+    return pack;
+}
+static const vector<string>& GetHDTexturePackages(const string& dir)
+{
+    auto found=hdTexturePackages.find(dir);
+    if(found!=hdTexturePackages.end()) return found->second;
+    vector<string> names;
+    auto addName=[&](const string& name) {
+        if(name.compare(0,9,"Textures-")!=0 || name.size()==9)return;
+        for(size_t n=9;n<name.size();++n)if(name[n]<'0' || name[n]>'9')return;
+        names.push_back(name);
+    };
+#if defined(_WIN32)
+    WIN32_FIND_DATAA data;
+    HANDLE search=FindFirstFileA((dir+"Textures-*.res").c_str(),&data);
+    if(search!=INVALID_HANDLE_VALUE)
+    {
+        do {
+            if(data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)continue;
+            const string file=data.cFileName;
+            if(file.size()>4 && file.compare(file.size()-4,4,".res")==0)
+                addName(file.substr(0,file.size()-4));
+        } while(FindNextFileA(search,&data));
+        FindClose(search);
+    }
+#else
+    std::error_code error;
+    for(std::filesystem::directory_iterator it(dir,error),end;!error && it!=end;it.increment(error))
+    {
+        const string name=it->path().stem().string();
+        const string extension=it->path().extension().string();
+        if(extension==".res")addName(name);
+    }
+#endif
+    std::sort(names.begin(),names.end());
+    return hdTexturePackages.emplace(dir,std::move(names)).first->second;
+}
+struct SResolvedResource
+{
+    string path;
+    IFilesPackage *package = 0;
+    bool found = false;
+};
+// A higher layer always wins, whether its asset is loose or packed. Within a
+// layer loose patch files still override that layer's archive. Both loading
+// paths and existence checks share this resolver (caller holds packageWork).
+static SResolvedResource ResolveResource( const char *name, int id )
+{
+    SResolvedResource result;
+    const string suffix = string(name) + "/" + std::to_string(id);
+    for ( int k = int(szDirs.size()) - 1; k >= 0; --k )
+    {
+        if ( szDirs[k] == hdDirectory && !HDTexturesEnabled() ) continue;
+        if ( szDirs[k] == hdDirectory && strcmp(name, "Textures") != 0 && strcmp(name, "LRTextures") != 0 )
+            continue;
+        string resolved;
+        if ( S2FileIO::ResolveGameResourcePath(szDirs[k] + suffix, &resolved) )
+        {
+            if ( IsResourcePath(resolved, false) )
+            {
+                result.path = resolved; result.found = true; return result;
+            }
+        }
+        IFilesPackage *pack = GetLayerPackage(szDirs[k], name);
+        if ( pack && DoesFileExist(pack, id) )
+        {
+            result.package = pack; result.found = true; return result;
+        }
+        if(szDirs[k]==hdDirectory && strcmp(name,"Textures")==0)
+            for(const string& shard:GetHDTexturePackages(szDirs[k]))
+            {
+                IFilesPackage* extra=GetLayerPackage(szDirs[k],shard.c_str());
+                if(extra && DoesFileExist(extra,id))
+                {
+                    result.package=extra;result.found=true;return result;
+                }
+            }
+    }
+    result.path = (szDirs.empty() ? string() : szDirs.front()) + suffix;
+    return result;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void WaitAllPendingLoad();
@@ -113,6 +214,7 @@ void CloseAllResources()
 	WaitAllPendingLoad();
 	NWin32Helper::CCriticalSectionLock l( packageWork );
 	packages.clear();
+	hdTexturePackages.clear();
 	list<CResourceTracker*> &t = GetTrackers();
 	for ( list<CResourceTracker*>::iterator i = t.begin(); i != t.end(); ++i )
 		(*i)->Clear();
@@ -123,82 +225,11 @@ static int GetID( const SPartKey &key )
 	return key.nID + (key.nPart << 16);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-inline string GetFileResourceName( const char *pszResName, FILE_ID nFileID )
+CFileResource::CFileResource( const char *name, FILE_ID id )
 {
-#if !defined(_WIN32)
-	const std::string suffix = std::string(pszResName) + "/" + std::to_string(nFileID);
-	if ( szDirs.empty() )
-		return suffix;
-	for ( int i = (int)szDirs.size() - 1; i >= 0; --i )
-	{
-		std::string resolved;
-		if ( S2FileIO::ResolveGameResourcePath(szDirs[i] + suffix, &resolved) )
-			return resolved;
-	}
-	return szDirs.front() + suffix;
-#else
-	// Prefix a resource dir (e.g. ".\res\") so a loose file resolves as "<dir><ResName>\<id>" -
-	// matching the release's GetFileResourceName(dir,name,id). With several dirs registered the
-	// release probes them LAST-TO-FIRST for the loose file (NGScene::DoesFileExist @0x157780 --
-	// mod dirs override ".\res"); mirror that, falling back to the first (base) dir when no dir
-	// carries the file. With the usual single dir this compiles down to the old single sprintf.
-	char szBuf[1024];
-	if ( szDirs.empty() )
-	{
-		sprintf( szBuf, "%s\\%d", pszResName, nFileID );
-		return szBuf;
-	}
-	for ( int i = (int)szDirs.size() - 1; i > 0; --i )
-	{
-		sprintf( szBuf, "%s%s\\%d", szDirs[i].c_str(), pszResName, nFileID );
-		HANDLE h = CreateFile( szBuf, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0 );
-		if ( h != INVALID_HANDLE_VALUE )
-		{
-			CloseHandle( h );
-			return szBuf;
-		}
-	}
-	sprintf( szBuf, "%s%s\\%d", szDirs[0].c_str(), pszResName, nFileID );
-	return szBuf;
-#endif
+    NWin32Helper::CCriticalSectionLock lock(packageWork);
+    f.OpenRead( ResolveResource(name, id).path.c_str() );
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Does a LOOSE on-disk file exist for this resource? The release checks this BEFORE the package
-// (loose overrides package) - that's how the shipped 1.2 patch's updated loose assets take effect.
-inline bool DoesLooseFileExist( const char *pszResName, int nID )
-{
-#if !defined(_WIN32)
-	std::error_code error;
-	return std::filesystem::is_regular_file(GetFileResourceName(pszResName, nID), error) && !error;
-#else
-	HANDLE h = CreateFile( GetFileResourceName( pszResName, nID ).c_str(),
-		GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0 );
-	if ( h == INVALID_HANDLE_VALUE )
-		return false;
-	CloseHandle( h );
-	return true;
-#endif
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CFileResource
-////////////////////////////////////////////////////////////////////////////////////////////////////
-CFileResource::CFileResource( const char *pszResName, FILE_ID nFileID )
-{
-	f.OpenRead( GetFileResourceName( pszResName, nFileID ).c_str() );
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CResourceFileOpener
-////////////////////////////////////////////////////////////////////////////////////////////////////
-inline bool DoesPackageFileExist( const char *pszResName, int nID )
-{
-	return GetPackage( pszResName, nID ) != 0;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-inline bool DoesPackageFileExist( const char *pszResName, const SPartKey &key )
-{
-	return GetPackage( pszResName, GetID( key ) ) != 0;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 static void TypeReq( const char *pszResName, int nID )
 {
 	char szBuf[1024];
@@ -206,64 +237,23 @@ static void TypeReq( const char *pszResName, int nID )
 	OutputDebugString( szBuf );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CResourceFileOpener::CResourceFileOpener( const char *pszResName, int nID )
+CResourceFileOpener::CResourceFileOpener( const char *name, int id )
 {
-	//TypeReq( pszResName, nID );
-	NWin32Helper::CCriticalSectionLock l( packageWork );
-	// loose-overrides-package (matches release CResourceFileOpener)
-	if ( DoesLooseFileExist( pszResName, nID ) )
-		pf = new CFileResource( pszResName, nID );
-	else if ( DoesPackageFileExist( pszResName, nID ) )
-		pf = new CPackageResource( GetPackage( pszResName, nID ), nID );
-	else
-		pf = new CFileResource( pszResName, nID );
+    NWin32Helper::CCriticalSectionLock lock(packageWork);
+    const SResolvedResource resource = ResolveResource(name, id);
+    if ( resource.package ) pf = new CPackageResource(resource.package, id);
+    else pf = new CFileResource(resource.path);
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-CResourceFileOpener::CResourceFileOpener( const char *pszResName, const SPartKey &key )
+CResourceFileOpener::CResourceFileOpener( const char *name, const SPartKey &key )
+    : CResourceFileOpener(name, GetID(key)) {}
+bool CResourceFileOpener::DoesExist( const char *name, int id )
 {
-	NWin32Helper::CCriticalSectionLock l( packageWork );
-	const int nID = GetID( key );
-	//TypeReq( pszResName, nID );
-	// loose-overrides-package (matches release CResourceFileOpener)
-	if ( DoesLooseFileExist( pszResName, nID ) )
-		pf = new CFileResource( pszResName, nID );
-	else if ( DoesPackageFileExist( pszResName, nID ) )
-		pf = new CPackageResource( GetPackage( pszResName, nID ), nID );
-	else
-		pf = new CFileResource( pszResName, nID );
+    NWin32Helper::CCriticalSectionLock lock(packageWork);
+    return ResolveResource(name, id).found;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-bool CResourceFileOpener::DoesExist( const char *pszResName, int nID )
+bool CResourceFileOpener::DoesExist( const char *name, const SPartKey &key )
 {
-	NWin32Helper::CCriticalSectionLock l( packageWork );
-	if ( DoesPackageFileExist( pszResName, nID ) )
-		return true;
-#ifdef _MAPEDIT
-	HANDLE h = CreateFile( GetFileResourceName( pszResName, nID ).c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0 );
-	CloseHandle( h );
-	return h != INVALID_HANDLE_VALUE;
-//	CFileStream file;
-//	return file.TryOpenRead( GetFileResourceName( pszResName, nID ).c_str() );
-#else
-	return false;
-#endif
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-bool CResourceFileOpener::DoesExist( const char *pszResName, const SPartKey &key )
-{
-	NWin32Helper::CCriticalSectionLock l( packageWork );
-	if ( DoesPackageFileExist( pszResName, key ) )
-		return true;
-#ifdef _MAPEDIT
-	string szName = GetFileResourceName( pszResName, GetID( key ) ).c_str();
-	HANDLE h = CreateFile( szName.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0 );
-	CloseHandle( h );
-	return h != INVALID_HANDLE_VALUE;
-	//CFileStream file;
-	//return file.TryOpenRead( GetFileResourceName( pszResName, GetID( key ) ).c_str() );
-#else
-	return false;
-#endif
+    return DoesExist(name, GetID(key));
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CResourceTracker
@@ -318,18 +308,18 @@ void CFileRequest::Read()
 	//TypeReq( pszResName, nID );
 	try
 	{
-		// loose-overrides-package (matches release: loose on-disk file wins over the .res package)
-		if ( DoesLooseFileExist( pszResName, nID ) )
-		{
-			CFileStream f;
-			f.OpenRead( GetFileResourceName( pszResName, nID ).c_str() );
-			f.ReadTo( data, f.GetSize() );
-		}
-		else if ( DoesPackageFileExist( pszResName, nID ) )
-		{
-			CPackageStream f( GetPackage( pszResName, nID ), nID );
-			f.ReadTo( data, f.GetSize() );
-		}
+        const SResolvedResource resource = ResolveResource(pszResName, nID);
+        if ( resource.package )
+        {
+            CPackageStream f(resource.package, nID);
+            f.ReadTo(data, f.GetSize());
+        }
+        else if ( resource.found )
+        {
+            CFileStream f;
+            f.OpenRead(resource.path.c_str());
+            f.ReadTo(data, f.GetSize());
+        }
 		data.Seek(0);
 	}
 	catch (...) 

@@ -20,6 +20,20 @@ namespace NGScene
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 extern bool bTextureStreaming;
 static bool bAllWasReady = true;
+static int nTerrainTexelDensity = 1;
+// Opt-in material audit: lists sources actually submitted to the compositor,
+// including spot layers that can cover an upscaled base tile completely.
+static void AuditTerrainSource( const char *role, int id )
+{
+	const char *enabled = std::getenv("S2_TERRAIN_AUDIT");
+	if ( !enabled || *enabled != '1' ) return;
+	static vector<string> seen;
+	const string key = string(role) + " " + std::to_string(id);
+	if ( find(seen.begin(), seen.end(), key) != seen.end() ) return;
+	seen.push_back(key);
+	FILE *file = fopen("_terrain_sources.log", "a");
+	if ( file ) { fprintf(file, "%s\n", key.c_str()); fclose(file); }
+}
 static bool bIsStress = false;
 static bool bIsLoading = false;
 // retail: when set (by CTerrainTextureBlend::NeedUpdate @0x17b180 while it refreshes its child
@@ -38,6 +52,11 @@ CPtrFuncBase<CSWTextureData>* GetSWTexture( NDb::CTexture *pTex )
 		bAllWasReady = false;
 		return 0;
 	}
+	const CSWTextureData *data = pResult->GetValue();
+	// Per-patch density follows the actual selected resources, including mod overrides.
+	int density = 1;
+	while ( density < 4 && density < Max(data->texelScaleX, data->texelScaleY) ) density *= 2;
+	nTerrainTexelDensity = Max(nTerrainTexelDensity, density);
 	return pResult;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,6 +256,7 @@ bool CTerrainTexture::GetSpotTextures( NDb::CMaterial *pMat, SSpotTextures *pRes
 		return false;
 	}
 	pRes->pTex = GetSWTexture( pMat->pTexture );
+	if ( !bBumpTexture ) AuditTerrainSource("spot", pMat->pTexture->GetRecordID());
 	if ( bBumpTexture && pMat->pBump )
 		pRes->pBump = GetSWTexture( pMat->pBump );
 	else
@@ -278,6 +298,8 @@ void CTerrainTexture::DrawGrassSpots( ISW2DScene *p2DScene )
 	for ( int k = 0; k < nGrassLayers; ++k )
 	{
 		NDb::CGrass *pDBGrass = pGrass->GetGrass( k );
+		if ( !bBumpTexture && pDBGrass->pTexture )
+			AuditTerrainSource("grass-sprite", pDBGrass->pTexture->GetRecordID());
 		layerInfo.push_back( SGrassSpotInfo( pGrass->GetSpotMaterial(k), pDBGrass->fSpotScale, pDBGrass->fScaleRange ) );
 	}
 	for ( int nY = 0; nY < nYSize; ++nY )
@@ -344,6 +366,7 @@ void CTerrainTexture::DrawSpots( ISW2DScene *p2DScene, const STerrainInfo &info 
 bool CTerrainTexture::CalcNewTexture( int nSize )
 {
 	bAllWasReady = true;
+	nTerrainTexelDensity = 1;
 
 	pInfo.Refresh();
 	const STerrainInfo *ptiInfo = &pInfo->GetValue();
@@ -578,6 +601,7 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 
 		if ( !rLayout.rects.empty() )
 		{
+			if ( !bBumpTexture ) AuditTerrainSource("tile", pTile->pTexture->GetRecordID());
 			CCSWRectLayout *prLayout = new CCSWRectLayout( rLayout );
 			
 			if ( !bBumpTexture )
@@ -587,6 +611,7 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 		}
 		if ( !rLayoutMasked.rects.empty() )
 		{
+			if ( !bBumpTexture ) AuditTerrainSource("masked-tile", pTile->pTexture->GetRecordID());
 			CCSWRectLayout *prLayout = new CCSWRectLayout( rLayoutMasked );
 
 			if ( !bBumpTexture )
@@ -598,15 +623,21 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 	DrawSpots( p2DScene, *ptiInfo );
 	DrawGrassSpots( p2DScene );
 	if ( !bBumpTexture )
+		nSize *= nTerrainTexelDensity;
+	if ( !bBumpTexture )
 		CreateColorMask( p2DScene, nSize );//nSize < 256 ? nSize / 4 : nSize );
 	
 	if ( bAllWasReady )
 	{
 		// Full-quality terrain owns its buffer; the 70-slot legacy pool cannot
 		// replace a texture still referenced by another visible patch.
-		if ( !bTextureStreaming && (!bOwnedTexture || !IsValid(pValue)) )
+		CDynamicCast<NGfx::I2DBuffer> oldBuffer(pValue);
+		if ( (!bTextureStreaming || nSize > 256) &&
+			(!bOwnedTexture || !oldBuffer || oldBuffer->GetXSize() != nSize) )
 		{
-			pValue = NGfx::MakeTexture(nSize,nSize,5,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+			int mips = 1;
+			for ( int size = nSize; size > 16; size /= 2 ) ++mips;
+			pValue = NGfx::MakeTexture(nSize,nSize,mips,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
 			bOwnedTexture = true;
 		}
 		if ( !IsValid(pValue) )
@@ -619,7 +650,7 @@ bool CTerrainTexture::CalcNewTexture( int nSize )
 		}
 		if ( !IsValid( pValue ) )
 			return false;
-		if(S2TextureDiag::Enabled()) { if(nSize==256) ++S2TextureDiag::Get().generated256; else ++S2TextureDiag::Get().generated128; }
+		if(S2TextureDiag::Enabled()) { if(nSize>256) ++S2TextureDiag::Get().generatedHD; else if(nSize==256) ++S2TextureDiag::Get().generated256; else ++S2TextureDiag::Get().generated128; }
 		if ( !bBumpTexture )
 			p2DScene->Draw( pValue, CTPoint<int>( N_VSPACE_SIZE, N_VSPACE_SIZE ) );
 		else
@@ -681,7 +712,10 @@ bool CTerrainTexture::NeedUpdate()
 {
 	bool bInfo = pInfo.Refresh();
 	bool bRegion = pUpdateRegion.Refresh();
-	return bRegion || bInfo;
+	const unsigned revision = GetTextureResourceRevision();
+	const bool changed = resourceRevision != revision;
+	resourceRevision = revision;
+	return changed || bRegion || bInfo;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // @0x17b2f0: single cached slot now.

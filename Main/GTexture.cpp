@@ -115,6 +115,7 @@ static NGfx::CTexture* MakeTexture( const SMMPFileHeader &hdr, NGfx::ETextureUsa
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CFileTexture::Recalc()
 {
+	resourceRevision = GetTextureResourceRevision();
 	if ( IsValid(pRequest) && !pRequest->IsReady() && IsValid( pValue ) )
 		return;
 
@@ -193,6 +194,13 @@ void CFileTexture::Recalc()
 bool CFileTexture::NeedUpdate()
 {
 	bool bRes = TParent::NeedUpdate();
+	if ( resourceRevision != GetTextureResourceRevision() )
+	{
+		pRequest = 0;
+		pValue = 0;
+		bIsFakeTexture = false;
+		return true;
+	}
 	int width=0;
 	if(S2TextureDiag::Enabled() && IsValid(pValue)) { CDynamicCast<NGfx::I2DBuffer> buffer(pValue); if(buffer) width=buffer->GetXSize(); }
 	S2TextureDiag::Observe(false,this,nDGCurrentFrame,width,false,bIsFakeTexture);

@@ -10,6 +10,7 @@
 //#include "GfxRender.h"
 #include "GfxBuffersInternal.h"
 #include "../diagnostics/FrameProfiler.h"
+#include "GResource.h"
 
 const int N_SYSMEM_TEXTURES = 2;
 const int N_SYSMEM_TEXTURE_SIZE = 1024;
@@ -1234,6 +1235,15 @@ static CRTCache rtCache;
 typedef unordered_map<int, CCubemapBufferSet> CCMCache;
 static CCMCache cmCache;
 static CTextureCache textureCache, transparentCache;
+static void EnsureTransparentTextureCache()
+{
+	// Crowns, grass sheets and other sprites share one texture in the renderer.
+	// HD sheets need room to coexist; opt-out restores the original cache size.
+	const int size=NGScene::HDTexturesEnabled()?4096:1024;
+	CTB* existing=transparentCache.GetTB();
+	if(!IsValid(existing) || existing->GetXSize()!=size)
+		transparentCache.Init(new CTB(size,size,4,PixelID2D3DFormat(SPixel8888::ID),REGULAR));
+}
 typedef unordered_map<SGeometryType, CObj<CGeometryBuffer>,SGeometryTypeHash > CGeometryCacheHash;
 static CGeometryCacheHash geometries;
 typedef unordered_map<SGeometryType, vector<CObj<CGeometryBuffer> >, SGeometryTypeHash> CRetainedGeometryCache;
@@ -1352,7 +1362,7 @@ void AddGeometryCache( int nSize, EBufferUsage usage, ETrueBufferUsage trueUsage
 void InitBuffers()
 {
 	textureCache.Init( new CTB( 1024, 1024, 1, PixelID2D3DFormat(SPixel8888::ID), REGULAR ) );
-	transparentCache.Init( new CTB( 1024, 1024, 4, PixelID2D3DFormat(SPixel8888::ID), REGULAR ) );
+	EnsureTransparentTextureCache();
 
 	for (unordered_map<int,int>::iterator i = rtInfo.targets.begin(); i != rtInfo.targets.end(); ++i )
 		rtCache[ i->first ].Init( i->first, i->second );
@@ -1461,6 +1471,7 @@ CTexture* GetTextureCache()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CTexture* GetTransparentTextureCache()
 {
+	EnsureTransparentTextureCache();
 	return transparentCache.GetTexture();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1491,6 +1502,7 @@ CTexture* MakeTexture( int nXSize, int nYSize, int nMipLevels, int nPixelID, ETe
 	}
 	if ( eUsage == TRANSPARENT_TEXTURE )
 	{
+		EnsureTransparentTextureCache();
 		D3DFORMAT fmt = PixelID2D3DFormat( nPixelID );
 		ASSERT( fmt == D3DFMT_A8R8G8B8 );
 		return transparentCache.Alloc( nXSize, nYSize );

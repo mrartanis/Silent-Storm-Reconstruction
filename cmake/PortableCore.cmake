@@ -1138,6 +1138,9 @@ target_include_directories(s2_game_resource_loader PRIVATE
   "${root}/Main" "${root}/FileIO" "${root}/Misc")
 target_link_libraries(s2_game_resource_loader PUBLIC
   s2_game_resource_package s2_game_dg s2_game_structure)
+if(UNIX)
+  target_link_libraries(s2_game_resource_loader PUBLIC pthread)
+endif()
 target_compile_features(s2_game_resource_loader PUBLIC cxx_std_17)
 target_compile_options(s2_game_resource_loader PRIVATE -ffunction-sections -fdata-sections)
 add_library(s2_game_mod_manager STATIC "${root}/Main/ModManager.cpp")

@@ -381,3 +381,13 @@ Binary/
 *.idb
 
 build/
+
+# Texture coverage is an asset manifest, not a code-coverage test output.
+!assets/terrain-hd/expanded/coverage.json
+
+# HD images are distributed as deduplicated ZIP release assets.
+# These files remain available locally and can be restored with archive_assets.py.
+assets/terrain-hd/**/*.png
+assets/terrain-hd/archives/*.zip
+# Deterministic native payloads are rebuilt from the archived calibrated images.
+res-hd/*.res

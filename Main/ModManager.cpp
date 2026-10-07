@@ -175,7 +175,7 @@ bool CModManager::Activate( const vector<SModInfo> &mods )
 #endif
 		return false;
 	}
-	NGScene::AddResourceDir( ".\\res" );		// release @0x685fb1: literal ".\res"
+	NGScene::AddBaseResourceDirs();
 	// per-mod overlay (release @0x685fbb-0x6860a3): layer "<dir>\game.db" over the database, then
 	// register <dir> as a resource dir. A throwing load is swallowed (release funclet @0x686083)
 	// and the loop continues -- the failed mod's dir is STILL added, exactly like the release.

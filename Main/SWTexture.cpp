@@ -25,8 +25,8 @@ void LoadTextureData( CSWTextureData *pTexture, int _nMips, int _nSizeX, int _nS
 		pTexture->mips[nMip].SetSizes( nXSize, nYSize );
 		for ( int y = 0; y < nYSize; ++y )
 			pFile->Read( &pTexture->mips[nMip][y][0], nXSize * sizeof(TPixel) );
-		nXSize >>= 1;
-		nYSize >>= 1;
+		nXSize = Max(1, nXSize >> 1);
+		nYSize = Max(1, nYSize >> 1);
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +48,7 @@ static void CreateChecker( CSWTextureData *pTexture )
 bool CSWTexture::IsReady()
 { 
 	Touch();
+	if ( SyncResourceRevision() ) Updated();
 	if ( bIsReady )
 		return true;
 	if ( IsValid(pRequest) )
@@ -77,6 +78,9 @@ void CSWTexture::LoadTexture()
 		CFileRequest &file = *pRequest;
 		SMMPFileHeader hdr;
 		file->Read( &hdr, sizeof(hdr) );
+		if ( hdr.dwSignature != MMP_SIGNATURE || hdr.nSizeX <= 0 || hdr.nSizeY <= 0 ||
+			hdr.nSizeX > 8192 || hdr.nSizeY > 8192 || hdr.nNumMipLevels <= 0 || hdr.nNumMipLevels > 14 )
+			throw std::runtime_error( "invalid software texture header" );
 
 		// fill with data
 		switch ( hdr.format )
@@ -95,6 +99,11 @@ void CSWTexture::LoadTexture()
 		case NGfx::CF_A8R8G8B8: LoadTextureData<NGfx::SPixel8888>( pValue, hdr.nNumMipLevels, hdr.nSizeX, hdr.nSizeY, file.GetStream() ); break;
 		default: ASSERT( 0 ); CreateChecker( pValue ); break;
 		}
+		if ( hdr.format == NGfx::CF_A8R8G8B8 && logicalWidth > 0 && logicalHeight > 0 )
+		{
+			pValue->texelScaleX = float(hdr.nSizeX) / logicalWidth;
+			pValue->texelScaleY = float(hdr.nSizeY) / logicalHeight;
+		}
 	}
 	catch(...)
 	{
@@ -104,7 +113,6 @@ void CSWTexture::LoadTexture()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSWTexture::Recalc()
 {
-	ASSERT(0);
 	while ( !IsReady() )
 		Sleep(0);
 }
@@ -256,6 +264,21 @@ void CBilinearTexture::Recalc()
 		nVPos += nDV;
 	}
 	#endif
+}
+bool CSWTexture::SyncResourceRevision()
+{
+	const unsigned revision = GetTextureResourceRevision();
+	if ( resourceRevision == revision ) return false;
+	resourceRevision = revision;
+	pRequest = 0;
+	pValue = 0;
+	bIsReady = false;
+	return true;
+}
+bool CSWTexture::NeedUpdate()
+{
+	Touch();
+	return SyncResourceRevision();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace

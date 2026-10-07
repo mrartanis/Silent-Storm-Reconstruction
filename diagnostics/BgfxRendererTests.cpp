@@ -10,6 +10,7 @@
 #include "../Main/VectorFonts.h"
 #include "../Main/GfxUtils.h"
 #include "../Main/SWTexture.h"
+#include "../Main/2DSceneSW.h"
 #include "../Main/Interface.h"
 #include "../Main/UICommCtrls.h"
 #include "../Main/GInit.h"
@@ -21,9 +22,143 @@
 #include "FrameProfiler.h"
 
 namespace {
+class FixtureSWTexture : public CPtrFuncBase<NGScene::CSWTextureData> {
+  void Recalc() override {}
+public:
+  explicit FixtureSWTexture(NGScene::CSWTextureData* data) { pValue=data; }
+};
+int RunTerrainHD(const char* packDir) {
+  using namespace NGScene;
+  NGfx::SRenderTargetsInfo renderTargets;
+  if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),renderTargets))return 169;
+  NGScene::AddResourceDir(packDir);
+  NGScene::RunResourceLoadingThread();
+  // Exercise native atlas loading, both DXT keys and rectangular mip chains.
+  for(int id:{1970,1971,1970|0x01000000,1971|0x01000000}) {
+    CObj<CSWTexture> source=new CSWTexture;
+    source->SetKey(id);source->SetLogicalSize(256,64);
+    while(!source->IsReady())SDL_Delay(1);
+    auto* d=source->GetValue();
+    if(d->GetXSize()!=1024 || d->GetYSize()!=256 || d->texelScaleX!=4 || d->texelScaleY!=4 ||
+       d->mips.size()!=9 || d->mips.back().GetXSize()!=4 || d->mips.back().GetYSize()!=1) return 170;
+  }
+  for(int id:{3242,6286,1906})for(int alias:{0,0x01000000}) {
+    const int logical=id==1906?256:512,physical=logical*4;
+    CObj<CSWTexture> source=new CSWTexture;
+    source->SetKey(id|alias);source->SetLogicalSize(logical,logical);
+    while(!source->IsReady())SDL_Delay(1);
+    auto* d=source->GetValue();
+    if(d->GetXSize()!=physical || d->GetYSize()!=physical ||
+       d->texelScaleX!=4 || d->texelScaleY!=4 ||
+       d->mips.size()!=(id==1906?11:12) || d->mips.back().GetXSize()!=1) return 175;
+    if(id==1906) {
+      int transparent=0,visible=0;
+      for(int y=0;y<physical;++y)for(int x=0;x<physical;++x) {
+        const auto& p=d->mips[0][y][x];
+        transparent+=p.a==0;visible+=p.a>127;
+        if(p.r>p.a || p.g>p.a || p.b>p.a)return 176;
+      }
+      if(transparent<physical*physical/2 || visible==0)return 177;
+    }
+  }
+  CObj<CSWTextureData> hd=new CSWTextureData;
+  hd->texelScaleX=hd->texelScaleY=4;hd->mips.resize(1);hd->mips[0].SetSizes(1024,256);
+  for(int y=0;y<256;++y)for(int x=0;x<1024;++x)
+    hd->mips[0][y][x]=NGfx::SPixel8888(20+50*(x/256),y/2,(x%256)/2,255);
+  CObj<CSWTextureData> original=new CSWTextureData;
+  original->mips.resize(1);original->mips[0].SetSizes(64,64);
+  for(int y=0;y<64;++y)for(int x=0;x<64;++x)original->mips[0][y][x]=NGfx::SPixel8888(220,x*2,y*2,255);
+  CObj<CSWTextureData> mask=new CSWTextureData;
+  mask->mips.resize(1);mask->mips[0].SetSizes(64,64);
+  for(int y=0;y<64;++y)for(int x=0;x<64;++x)mask->mips[0][y][x]=NGfx::SPixel8888(255,255,255,255);
+  CObj<FixtureSWTexture> h=new FixtureSWTexture(hd),o=new FixtureSWTexture(original),m=new FixtureSWTexture(mask);
+  CPtr<ISW2DScene> scene=Make2DSWScene();
+  for(int variant=0;variant<4;++variant) {
+    CSWRectLayout layout;
+    layout.AddRect((variant%2)*64,(variant/2)*64,
+      CSWRectLayout::STextureCoord(CTRect<short>(variant*64,0,(variant+1)*64,64),
+                                 CSWRectLayout::ERectOrient(variant)),
+      CSWRectLayout::STextureCoord(CTRect<short>(0,0,64,64)));
+    scene->CreateRects(h,m,new CCSWRectLayout(layout));
+  }
+  CSWRectLayout fallback;
+  fallback.AddRect(128,0,CSWRectLayout::STextureCoord(CTRect<short>(0,0,64,64)));
+  scene->CreateRects(o,new CCSWRectLayout(fallback));
+  // Same logical scene at old and HD density; all output pixels must be covered.
+  for(int density:{1,4}) {
+    CObj<NGfx::CTexture> target=NGfx::MakeTexture(256*density,256*density,5,
+      NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+    scene->Draw(target,CTPoint<int>(256,256));
+    NGfx::CTextureLock<NGfx::SPixel8888> pixels(target,0,NGfx::INPLACE);
+    for(int variant=0;variant<4;++variant) {
+      const auto& pixel=pixels[(variant/2*64+32)*density][(variant%2*64+32)*density];
+      if(abs(int(pixel.r)-(20+50*variant))>2 || abs(int(pixel.g)-64)>4 || abs(int(pixel.b)-64)>4) {
+        fprintf(stderr,"terrain center density=%d variant=%d rgb=%d,%d,%d\n",density,variant,pixel.r,pixel.g,pixel.b);return 171;
+      }
+      // Off-centre coordinates prove each quarter turn retained the original scale.
+      const auto& q=pixels[(variant/2*64+16)*density][(variant%2*64+8)*density];
+      const int expectedG[]={32,16,96,112},expectedB[]={16,96,112,32};
+      if(abs(int(q.g)-expectedG[variant])>5 || abs(int(q.b)-expectedB[variant])>5) {
+        fprintf(stderr,"terrain rotation density=%d variant=%d gb=%d,%d expected=%d,%d\n",density,variant,q.g,q.b,expectedG[variant],expectedB[variant]);return 172;
+      }
+    }
+    const auto& f=pixels[32*density][160*density];
+    if(f.r!=220 || abs(int(f.g)-64)>2 || abs(int(f.b)-64)>2)return 173;
+    // A sub-texel detail survives at density four instead of collapsing to 64px.
+    if(density==4) {
+      const auto& a=pixels[32][32];const auto& b=pixels[32][36];
+      if(abs(int(b.b)-int(a.b))<1)return 174;
+    }
+  }
+  // An original-size spot with an HD alpha mask must map the whole mask,
+  // including when the bump compositor uses this same path.
+  CObj<CSWTextureData> alpha=new CSWTextureData;
+  alpha->mips.resize(1);alpha->mips[0].SetSizes(256,256);
+  for(int y=0;y<256;++y)for(int x=0;x<256;++x)
+    alpha->mips[0][y][x]=NGfx::SPixel8888(0,0,0,x<128?255:0);
+  CObj<FixtureSWTexture> a=new FixtureSWTexture(alpha);
+  CPtr<ISW2DScene> spots=Make2DSWScene();
+  CObj<CSWTextureData> black=new CSWTextureData;
+  black->mips.resize(1);black->mips[0].SetSizes(64,64);
+  for(int y=0;y<64;++y)for(int x=0;x<64;++x)black->mips[0][y][x]=NGfx::SPixel8888(0,0,0,255);
+  CObj<FixtureSWTexture> background=new FixtureSWTexture(black);
+  spots->CreateSpot(background,0,CVec2(0,0),CVec2(256,256),0);
+  spots->CreateSpot(o,a,CVec2(0,0),CVec2(256,256),0);
+  CObj<NGfx::CTexture> target=NGfx::MakeTexture(256,256,1,
+    NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
+  { NGfx::CTextureLock<NGfx::SPixel8888> p(target,0,NGfx::INPLACE);
+    for(int y=0;y<256;++y)for(int x=0;x<256;++x)p[y][x]=NGfx::SPixel8888(0,0,0,255); }
+  spots->Draw(target,CTPoint<int>(256,256));
+  { NGfx::CTextureLock<NGfx::SPixel8888> p(target,0,NGfx::INPLACE);
+    if(p[64][64].r<215 || p[64][192].r!=0)return 178; }
+  // The bump path must use the same normalized mask coordinates.
+  CObj<CSWTextureData> flat=new CSWTextureData;
+  flat->mips.resize(1);flat->mips[0].SetSizes(64,64);
+  for(int y=0;y<64;++y)for(int x=0;x<64;++x)flat->mips[0][y][x]=NGfx::SPixel8888(128,128,255,255);
+  CObj<FixtureSWTexture> neutral=new FixtureSWTexture(flat);
+  CObj<CSWTextureData> slope=new CSWTextureData;
+  slope->mips.resize(1);slope->mips[0].SetSizes(64,64);
+  for(int y=0;y<64;++y)for(int x=0;x<64;++x)slope->mips[0][y][x]=NGfx::SPixel8888(192,128,255,255);
+  CObj<FixtureSWTexture> tilted=new FixtureSWTexture(slope);
+  CPtr<ISW2DScene> bumps=Make2DSWScene();
+  bumps->CreateSpot(neutral,0,CVec2(0,0),CVec2(256,256),0);
+  bumps->CreateSpot(tilted,a,CVec2(0,0),CVec2(256,256),0);
+  bumps->DrawBump(target,CTPoint<int>(256,256),1);
+  { NGfx::CTextureLock<NGfx::SPixel8888> p(target,0,NGfx::INPLACE);
+    if(p[64][64].r<=160 || abs(int(p[64][192].r)-128)>1 || abs(int(p[64][192].g)-128)>1) {
+      fprintf(stderr,"spot bump normals left=%u,%u,%u right=%u,%u,%u\n",p[64][64].r,p[64][64].g,p[64][64].b,p[64][192].r,p[64][192].g,p[64][192].b);return 179;
+    } }
+  CObj<NGfx::CTexture> grass=NGfx::MakeTexture(1024,1024,4,NGfx::SPixel8888::ID,NGfx::TRANSPARENT_TEXTURE,NGfx::CLAMP);
+  CObj<NGfx::CTexture> effect=NGfx::MakeTexture(256,256,4,NGfx::SPixel8888::ID,NGfx::TRANSPARENT_TEXTURE,NGfx::CLAMP);
+  if(!IsValid(grass) || !IsValid(effect))return 180;
+  NGScene::CloseAllResources();NGScene::StopResourceLoadingThread();NGScene::ClearResourceDirs();
+  printf("HD terrain: five native assets, both texture keys, mip chains, rotations, mixed densities, color/bump masks, transparent cache coexistence and full coverage passed\n");
+  return 0;
+}
 CObj<NGfx::CGeometry> Quad(float left,float top,float right,float bottom,float z);
 void Draw(NGfx::CRenderContext& context,NGfx::CGeometry* geometry);
 int RunGraphicsOptions() {
+  if(NGlobal::GetVar("gfx_hd_textures",0).GetInt()!=1 || !NGScene::HDTexturesEnabled())return 181;
   // Existing profiles must not retain the removed low-quality presets.
   NGlobal::SetVar("gfx_resolution",wstring(L"1024x768"));
   NGlobal::SetVar("gfx_fullscreen",0);
@@ -40,6 +175,15 @@ int RunGraphicsOptions() {
      NGlobal::GetVar("gfx_cl_cube_resolution",0).GetInt()!=256)return 52;
   NGfx::SRenderTargetsInfo targets;
   if(!NGfx::SetMode(NGfx::SVideoMode(128,128,32,NGfx::WINDOWED),targets))return 53;
+  const unsigned hdRevision=NGScene::GetTextureResourceRevision();
+  NGlobal::SetVar("gfx_hd_textures",0);
+  { CDynamicCast<NGfx::I2DBuffer> cache(NGfx::GetTransparentTextureCache());
+    if(NGScene::HDTexturesEnabled() || NGScene::GetTextureResourceRevision()!=hdRevision+1 ||
+       !cache || cache->GetXSize()!=1024)return 182; }
+  NGlobal::SetVar("gfx_hd_textures",1);
+  { CDynamicCast<NGfx::I2DBuffer> cache(NGfx::GetTransparentTextureCache());
+    if(!NGScene::HDTexturesEnabled() || NGScene::GetTextureResourceRevision()!=hdRevision+2 ||
+       !cache || cache->GetXSize()!=4096)return 183; }
   NGlobal::SetVar("gfx_anisotropic_filter",1);
   NGfx::Flip();
   if(NGfx::pDevice->PresentationResetFlags()&(BGFX_RESET_VSYNC|BGFX_RESET_MAXANISOTROPY))return 54;
@@ -728,7 +872,8 @@ int main(int argc,char** argv) {
   S2Platform::SetErrorDialogs(false);
   if(!S2Platform::Init("Silent Storm bgfx regression",128,128,true))return 1;
   if(!NGfx::Init3D(static_cast<HWND>(S2Platform::NativeWindow()))) {S2Platform::Done();return 2;}
-  int result=argc>1 && std::string(argv[1])=="--focus-restore" ? RunFocusRestore() :
+  int result=argc>2 && std::string(argv[1])=="--terrain-hd" ? RunTerrainHD(argv[2]) :
+             argc>1 && std::string(argv[1])=="--focus-restore" ? RunFocusRestore() :
              argc>1 && std::string(argv[1])=="--display" ? RunDisplay() :
              argc>1 && std::string(argv[1])=="--geometry" ? RunGeometry() :
              argc>1 && std::string(argv[1])=="--partial" ? RunPartialGeometry() :
