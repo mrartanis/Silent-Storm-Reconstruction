@@ -1,0 +1,602 @@
+{
+  "audited_ids": [
+    5280,
+    5281,
+    5282,
+    5283,
+    5284,
+    5285,
+    5286,
+    5287,
+    5288,
+    5289,
+    5290,
+    5291,
+    5292,
+    5293,
+    5294,
+    5295,
+    5296
+  ],
+  "selected_ids": [
+    5288
+  ],
+  "ready_ids": [],
+  "pending_ids": [
+    5288
+  ],
+  "source_only_deferred_ids": [
+    5280,
+    5281,
+    5282,
+    5283,
+    5284,
+    5285,
+    5286,
+    5287,
+    5289,
+    5290,
+    5291,
+    5292,
+    5293,
+    5294,
+    5295,
+    5296
+  ],
+  "source_audition_report": "assets/terrain-hd/expanded/review-clues-first-source-auditions.json",
+  "actual_builtin_generation_calls": 2,
+  "stable_import_jobs_count": 0,
+  "shared_metadata_modified": false,
+  "native_pack_built_by_child": false,
+  "numerical_calibration_performed_by_child": false,
+  "artistic_numeric_changes_performed": false,
+  "source_record": {
+    "id": 5288,
+    "texture": {
+      "ID": 5288,
+      "Width": 64,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -14408408,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Clues\\ReelFilm.tga",
+      "Format": "dxt1",
+      "UserName": "ReelFilm",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "clues",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3438,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2205,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5516,
+              "field": "Material0",
+              "material_template_id": 2205,
+              "geometry_id": 3358,
+              "geometry": "Clues\\clues.mb",
+              "model_template_id": 3636,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_sha256": "66289a50ba5a3e3375472f9ba1a6072a241b4dfb24a16739376eecc83773097c",
+    "source_rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+    "release_rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5288.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "fresh_audit": "Read-only actual DB audit from same current database hash verified before source extraction; Materials.TemplateID matches Models.Material slots.",
+      "source_only_guide": "assets/terrain-hd/expanded/generated/5288-clues-first-source-reference.png",
+      "guide_resampling": "Nearest original reference only"
+    }
+  },
+  "original_and_guides_inspected_before_generation": true,
+  "fullraw_and4x_inspected_both_attempts": true,
+  "source_detail_counts": {
+    "reel_round_apertures": 4,
+    "center_rectangles": 1,
+    "internal_ribs_top_bottom_left_right": [
+      4,
+      4,
+      5,
+      5
+    ],
+    "top_rib_source_pixel_centers_y": [
+      16.5,
+      18.5,
+      20.5,
+      22.5
+    ],
+    "bottom_rib_source_pixel_centers_y": [
+      44.5,
+      46.5,
+      48.5,
+      50.5
+    ],
+    "left_rib_source_pixel_centers_x": [
+      7.5,
+      9.5,
+      11.5,
+      13.5,
+      15.5
+    ],
+    "right_rib_source_pixel_centers_x": [
+      37.5,
+      39.5,
+      41.5,
+      43.5,
+      45.5
+    ],
+    "film_perforations_per_column": 32,
+    "film_perforation_source_columns_x": [
+      55,
+      61
+    ],
+    "film_perforation_source_y": "1,3,5,...,63 pitch2",
+    "film_frame_repetitions": 16
+  },
+  "attempts": [
+    {
+      "id": 5288,
+      "status": "finished",
+      "builtin": true,
+      "started_utc": "2026-10-07T22:57:30.797041+00:00",
+      "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL game DIFFUSE UV ATLAS into faithful HD painted dark blue-gray film-reel metal and film texture. Image2 is only nearest enlarged ORIGINAL reference, not pixelblock art style. Full canvas square, logical64x64; final4x256x256, layout1x1. Preserve ALL normalized UV coordinates, outer clipping, every material island, black unused spaces, whole opaque alpha255; never crop/pad/repack/assemble/render a 3D object. Flat unlit hand-painted game albedo, original low contrast and dark blue-gray palette, no photographic reflection, exaggerated specularity, damage, scratches, rust, extra text/symbol/hardware. Source large left reel has FOUR round dark apertures at original approximate(x26,y19),(11,33),(41,33),(26,47), and ONE tiny black rectangular center at(x23..29,y32..35). Preserve exact shapes, sizes, coordinates. Existing faint internal ribs: TOP FOUR horizontal light lines at logicaly16,18,20,22; BOTTOM FOUR at y44,46,48,50; LEFT FIVE vertical light lines at x7,9,11,13,15; RIGHT FIVE at x37,39,41,43,45. Preserve original faintness, count, pitch2 and phase; these are subtle original details, not permission to add screws/grilles/rings. Outer circular rim stays same diameter, clips original left bound; top left horizontal material strip retains original wide shading bands. Right narrow film strip at logicalx54..63 retains TWO columns of exactly32 tiny black perforations EACH, original x55 andx61 and logicaly1,3,5,...,63 pitch2, same1px source footprint and phase. Middle film-frame division16 repetitions pitch4 at y0,4,...,60 with original faint shading. No additional sprockets or resized counts, no digits, labels, lens/glass, bolts or new hardware. Smooth original contours to HD while preserving all source repeat scale and counts. Brightness will be corrected numerically later; preserve local tonal hierarchy.",
+      "references": [
+        "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\original\\5288.png",
+        "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-clues-first-large-source-reference.png"
+      ],
+      "transparent_background": false,
+      "finished_utc": "2026-10-07T22:57:52.560784+00:00",
+      "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-88061523-cb76-4342-9d7e-9edd2d561359.png",
+      "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-raw.png",
+      "raw_sha256": "7674358a558442aca64f1386745c3a5f247bb4d3d5e59ee1278c2f59896ae128",
+      "metadata_file": "assets/terrain-hd/expanded/generated/5288-generation-call.json",
+      "raw_dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": 5288,
+      "status": "finished",
+      "builtin": true,
+      "started_utc": "2026-10-07T22:59:48.303041+00:00",
+      "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL game DIFFUSE UV ATLAS into faithful HD painted dark blue-gray film-reel metal and film texture. Image2 is only nearest enlarged ORIGINAL reference, not pixelblock art style. Full canvas square, logical64x64; final4x256x256, layout1x1. Preserve ALL normalized UV coordinates, outer clipping, every material island, black unused spaces, whole opaque alpha255; never crop/pad/repack/assemble/render a 3D object. Flat unlit hand-painted game albedo, original low contrast and dark blue-gray palette, no photographic reflection, exaggerated specularity, damage, scratches, rust, extra text/symbol/hardware. Source large left reel has FOUR round dark apertures at original approximate(x26,y19),(11,33),(41,33),(26,47), and ONE tiny black rectangular center at(x23..29,y32..35). Preserve exact shapes, sizes, coordinates. Existing faint internal ribs: TOP FOUR horizontal light lines at logicaly16,18,20,22; BOTTOM FOUR at y44,46,48,50; LEFT FIVE vertical light lines at x7,9,11,13,15; RIGHT FIVE at x37,39,41,43,45. Preserve original faintness, count, pitch2 and phase; these are subtle original details, not permission to add screws/grilles/rings. Outer circular rim stays same diameter, clips original left bound; top left horizontal material strip retains original wide shading bands. Right narrow film strip at logicalx54..63 retains TWO columns of exactly32 tiny black perforations EACH, original x55 andx61 and logicaly1,3,5,...,63 pitch2, same1px source footprint and phase. Middle film-frame division16 repetitions pitch4 at y0,4,...,60 with original faint shading. No additional sprockets or resized counts, no digits, labels, lens/glass, bolts or new hardware. Smooth original contours to HD while preserving all source repeat scale and counts. Brightness will be corrected numerically later; preserve local tonal hierarchy. LOCAL CORRECTION: image1 is original full canvas authority, image2 is first HD draft, image3 is original-only enlarged guide. Keep draft whole canvas coordinates and correct only excessive raised material and top/bottom rib PHASE. Draft top four ridge centers are logicaly15.34,17.38,19.42,21.46, whereas ORIGINAL pixel-center targets are y16.5,18.5,20.5,22.5. Move those four faint horizontal marks DOWN by about1.1 sourcepixels, keeping FOUR count and pitch2. Draft bottom four centers y43.20,45.24,47.23,49.28; source exact targets44.5,46.5,48.5,50.5: move DOWN about1.25 sourcepixels. Left/right FIVE vertical marks count and phase stay original. Reduce all internal marks from thick raised grille bars to very faint almost-flat original painted lines; no bevel or hardware rails. Reduce heavy raised aperture rims to the subtle source dark contour, no new lip rings. Preserve four round apertures, existing rectangle, both32-hole film perforation columns and full canvas UV at exact source position. Do NOT create new details or change repeat count/scale. This is painted diffuse, not strongly dimensional fabricated equipment.",
+      "references": [
+        "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\original\\5288.png",
+        "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-raw.png",
+        "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-clues-first-large-source-reference.png"
+      ],
+      "transparent_background": false,
+      "attempt": 2,
+      "finished_utc": "2026-10-07T23:00:10.390580+00:00",
+      "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-55620109-7205-472e-91e8-5ffd8b9b68b3.png",
+      "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-raw-clues-first-v2.png",
+      "raw_sha256": "b96270d609ffd9333ab56945940e227547afc3832c278b0bc0369f5072196755",
+      "metadata_file": "assets/terrain-hd/expanded/generated/5288-generation-call-clues-first-v2.json",
+      "raw_dimensions": [
+        1254,
+        1254
+      ]
+    }
+  ],
+  "rejected_attempt_reasons": [
+    {
+      "attempt": 1,
+      "raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-raw.png",
+      "reason": "4 apertures and rib counts4/4/5/5 preserved; film perforation counts32/32. Top/bottom rib phase shifted upward about1.2 logicalpixels; faint painted ribs become thick raised hardware and extra emphasized ring lips."
+    },
+    {
+      "attempt": 2,
+      "raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\5288-raw-clues-first-v2.png",
+      "reason": "Ribs thinner and lip relief reduced, but source phase still wrong: measured top centers about16.00,17.84,19.73,21.61 and bottom43.66,45.55,47.49,49.38 versus source16.5/18.5/20.5/22.5 and44.5/46.5/48.5/50.5. Pitch compressed1.89 versus2, right ribs shift left and repeat width changes; strict UV/detail phase not preserved. No additional correction or numeric art patch."
+    }
+  ],
+  "detail_measurements_diagnostic": {
+    "v1": {
+      "top": [
+        [
+          13.856,
+          9.006
+        ],
+        [
+          15.337,
+          42.536
+        ],
+        [
+          17.378,
+          49.074
+        ],
+        [
+          19.419,
+          52.86
+        ],
+        [
+          21.461,
+          45.302
+        ],
+        [
+          22.686,
+          12.311
+        ],
+        [
+          23.911,
+          8.291
+        ]
+      ],
+      "bottom": [
+        [
+          43.203,
+          43.168
+        ],
+        [
+          45.244,
+          50.456
+        ],
+        [
+          47.234,
+          52.362
+        ],
+        [
+          49.276,
+          49.271
+        ],
+        [
+          50.399,
+          14.692
+        ],
+        [
+          51.624,
+          9.501
+        ]
+      ],
+      "left": [
+        [
+          6.507,
+          9.823
+        ],
+        [
+          7.681,
+          43.481
+        ],
+        [
+          9.62,
+          51.726
+        ],
+        [
+          11.56,
+          51.253
+        ],
+        [
+          13.499,
+          51.582
+        ],
+        [
+          15.439,
+          39.523
+        ]
+      ],
+      "right": [
+        [
+          37.18,
+          44.384
+        ],
+        [
+          39.12,
+          53.333
+        ],
+        [
+          41.008,
+          49.831
+        ],
+        [
+          42.998,
+          45.848
+        ],
+        [
+          44.887,
+          40.236
+        ],
+        [
+          46.826,
+          42.338
+        ]
+      ],
+      "film55": [
+        1.148,
+        3.088,
+        5.078,
+        7.069,
+        9.059,
+        11.1,
+        13.193,
+        15.234,
+        17.225,
+        19.215,
+        21.461,
+        23.145,
+        25.136,
+        27.126,
+        29.116,
+        31.311,
+        33.148,
+        35.139,
+        37.129,
+        39.783,
+        41.62,
+        43.152,
+        45.142,
+        47.132,
+        49.123,
+        51.419,
+        53.104,
+        55.145,
+        57.136,
+        59.126,
+        61.116,
+        63.26
+      ],
+      "film61": [
+        1.148,
+        3.343,
+        5.384,
+        7.069,
+        9.059,
+        11.1,
+        13.091,
+        15.234,
+        17.123,
+        19.113,
+        21.104,
+        23.145,
+        25.136,
+        27.126,
+        29.116,
+        31.362,
+        33.148,
+        35.241,
+        37.384,
+        39.12,
+        41.11,
+        43.152,
+        45.142,
+        47.132,
+        49.123,
+        51.113,
+        53.104,
+        55.094,
+        57.136,
+        59.126,
+        61.116,
+        63.26
+      ]
+    },
+    "v2": {
+      "top": [
+        [
+          13.295,
+          41.128
+        ],
+        [
+          14.775,
+          11.752
+        ],
+        [
+          16.0,
+          40.991
+        ],
+        [
+          17.837,
+          44.521
+        ],
+        [
+          19.726,
+          40.781
+        ],
+        [
+          21.614,
+          42.137
+        ],
+        [
+          22.788,
+          12.701
+        ]
+      ],
+      "bottom": [
+        [
+          42.488,
+          12.037
+        ],
+        [
+          43.662,
+          39.125
+        ],
+        [
+          45.55,
+          46.128
+        ],
+        [
+          47.49,
+          47.405
+        ],
+        [
+          49.378,
+          43.396
+        ],
+        [
+          50.501,
+          13.479
+        ],
+        [
+          51.624,
+          11.972
+        ]
+      ],
+      "left": [
+        [
+          6.405,
+          11.494
+        ],
+        [
+          7.579,
+          42.278
+        ],
+        [
+          9.467,
+          45.489
+        ],
+        [
+          11.356,
+          43.717
+        ],
+        [
+          13.244,
+          44.392
+        ],
+        [
+          15.183,
+          37.418
+        ]
+      ],
+      "right": [
+        [
+          36.925,
+          38.819
+        ],
+        [
+          38.813,
+          45.152
+        ],
+        [
+          40.651,
+          45.27
+        ],
+        [
+          42.59,
+          40.485
+        ],
+        [
+          44.376,
+          37.536
+        ],
+        [
+          46.469,
+          39.046
+        ]
+      ],
+      "film55": [
+        0.128,
+        2.016,
+        4.006,
+        5.997,
+        9.059,
+        11.254,
+        12.632,
+        14.061,
+        16.051,
+        19.113,
+        21.716,
+        23.656,
+        25.136,
+        27.126,
+        29.372,
+        31.464,
+        34.118,
+        36.108,
+        38.099,
+        41.11,
+        43.356,
+        46.112,
+        48.102,
+        49.48,
+        51.113,
+        53.308,
+        56.064,
+        57.697,
+        59.126,
+        61.525,
+        63.158
+      ],
+      "film61": [
+        1.352,
+        3.445,
+        5.384,
+        7.069,
+        9.059,
+        11.1,
+        13.193,
+        15.132,
+        17.123,
+        19.113,
+        21.104,
+        23.145,
+        25.136,
+        27.126,
+        29.116,
+        31.362,
+        33.506,
+        35.292,
+        37.18,
+        39.171,
+        41.11,
+        43.152,
+        45.295,
+        47.132,
+        49.123,
+        51.113,
+        53.104,
+        55.196,
+        57.136,
+        59.126,
+        61.116,
+        63.158
+      ]
+    }
+  },
+  "measurement_note": "Read-only source/raw profile diagnostic, auxiliary edge/rim peaks may occur; main internal ridge centers manually verified on full raw and4x. No numeric output transformation except supported whole-canvas4x resize."
+}

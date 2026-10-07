@@ -113,7 +113,8 @@ def import_jobs(jobs, replace=False):
         else:
             image.resize(target_size, Image.Resampling.LANCZOS).save(normalized)
         prompt = out / f'{id}-prompt.txt'
-        prompt.write_text(job['prompt'] + '\n', encoding='utf-8')
+        # Preserve CRLF already present in exact service arguments on Windows.
+        prompt.write_bytes((job['prompt'] + '\n').encode('utf-8'))
         grid = [4, 1] if item['role'] == 'base-tile' else [1, 1]
         if item['role'] == 'grass-sprite':
             grid = [item.get('layout', {}).get('SideSize', 4)] * 2

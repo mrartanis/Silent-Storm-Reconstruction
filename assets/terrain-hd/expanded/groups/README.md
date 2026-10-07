@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 246 of these verified originals are accepted in the shared
+As of 2026-10-08, 258 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-tenth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-eleventh-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,554 IDs: clothing 235, equipment 200, weapons
-62, heads 184, UI 676, effects 164, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,542 IDs: clothing 235, equipment 194, weapons
+62, heads 184, UI 675, effects 159, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -190,3 +190,5 @@ reviewed premultiplied RGBA. Full validation, actual-menu HD on/off/on and
 normal isolated quit: `../new-groups-tenth-{batch,live}-check.json`.
 5842 and all8 heads-third attempts held; originals remain. Do not regenerate
 accepted IDs. Next independent raw packets require coordinator review.
+
+Eleventh accepted packet: `../jobs-new-groups-eleventh.json` adds6 equipment,5 additive effect frames and UI5842 direct-original v3:2,220 textures/4,440 aliases/117 archives/7,118,248,712 bytes. Prior2,208 source/PNG/native hashes unchanged. Six opaque native RGBA equal reviewed PNG; five effects retain original zero alpha and exact calibrated RGB. UI5842 retains full source alpha, wholecanvas UV and reviewed premultiplied RGBA; localized RGB review resolved the earlier conservative v3 edge-color hold as original brown frame/gold X. v1/v2 remain rejected. Full validation and actual-menu HD on/off/on, normal isolated quit: `../new-groups-eleventh-{batch,live}-check.json`. UI1995 original107x39/native428x156 is held by the packer's NPOT assert; its original stays unchanged. All17 clues-first remain original:16 text/diagram/uncertain and5288 two shifted-rib attempts. Raw/prompt/provenance retained. Exact serviceCRLF prompt writing now avoids Windows CR duplication;12 byte comparisons passed before Git normalization. Do not regenerate accepted IDs.

@@ -1,0 +1,86 @@
+[
+  {
+    "id": 5288,
+    "texture": {
+      "ID": 5288,
+      "Width": 64,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -14408408,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Clues\\ReelFilm.tga",
+      "Format": "dxt1",
+      "UserName": "ReelFilm",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "clues",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3438,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2205,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5516,
+              "field": "Material0",
+              "material_template_id": 2205,
+              "geometry_id": 3358,
+              "geometry": "Clues\\clues.mb",
+              "model_template_id": 3636,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_sha256": "66289a50ba5a3e3375472f9ba1a6072a241b4dfb24a16739376eecc83773097c",
+    "source_rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+    "release_rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5288.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "d3a8ea730134eade0e5ff88f189936eeda5dbf8cd12023337cf773f315a9f9a7",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "fresh_audit": "Read-only actual DB audit from same current database hash verified before source extraction; Materials.TemplateID matches Models.Material slots.",
+      "source_only_guide": "assets/terrain-hd/expanded/generated/5288-clues-first-source-reference.png",
+      "guide_resampling": "Nearest original reference only"
+    }
+  }
+]
