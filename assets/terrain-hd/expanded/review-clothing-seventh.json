@@ -1,0 +1,1791 @@
+{
+  "packet": "clothing-seventh",
+  "status": "completed-art-review-stable-subset-awaiting-coordinator-import",
+  "ready_ids": [
+    3850,
+    3870,
+    3871,
+    3904
+  ],
+  "pending_ids": [
+    2011,
+    3865,
+    3894,
+    3895,
+    3896,
+    3897,
+    3899,
+    3905
+  ],
+  "private_review_complete": true,
+  "generation_calls": {
+    "initial_per_selected_asset": 12,
+    "successful_initial_raws": 12,
+    "local_correction_calls": 1,
+    "total_calls": 13,
+    "successful_outputs_saved": 13,
+    "failed_calls": 0
+  },
+  "source_checks": "Fresh read-only actual historical DB typed audit4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c; exact historicalMMP/release/originalPNG decodedRGBA dimensions+alpha checked anew. Each selected Ordinary opaque asset is exclusive diffuse via Materials.TextureID->MaterialTemplates->Models. Source-only originals/guides inspected before separate builtin calls. Accepted/sharedqueue/all oldselected/raw excluded, no accepted exactsource duplicates.",
+  "fullcanvas_normalization": "Original dimensions4x, wholecanvas Lanczos only; no crop/bbox/island registration or sourceRGB restoration. Coordinator handles numeric brightness, native build, pack/game QA and Git.",
+  "registration": {
+    "register_alpha_bbox": false,
+    "register_rgb_bbox": false,
+    "source_rgb_regions": null,
+    "content_replacement": false
+  },
+  "brightness_correction": "Not performed by child; numeric correction follows root import only ready IDs.",
+  "shared_metadata_modified": false,
+  "git_modified": false,
+  "build_or_game_launched": false,
+  "source_only_auditions": "review-clothing-seventh-source-auditions.json holds4 additional newly inspected ID-card/sourceglyph assets without calls; not part of selected12.",
+  "entries": [
+    {
+      "id": 2011,
+      "status": "pending-artwork",
+      "reason": "Angular camouflage and original3 upper-right lace crossbars preserved. Main vertical binding was made more regular/brighter, adding visible bars through source suppressed intervals; exact source count/phase not certified. Held.",
+      "source": {
+        "id": 2011,
+        "texture": {
+          "ID": 2011,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14081249,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Classes\\GerScout\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "LegsArms",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1387,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 945,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1390,
+                  "field": "Material2",
+                  "material_template_id": 945,
+                  "geometry_id": 1518,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerScout_100.mb",
+                  "model_template_id": 1029,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1467,
+                  "field": "Material2",
+                  "material_template_id": 945,
+                  "geometry_id": 1518,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerScout_100.mb",
+                  "model_template_id": 1100,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "bf5dfebd258a4aee5b011c389349b973fa90545dddf7917953722f8285969ddf",
+        "source_rgba_sha256": "8cb056ebf26087f845309d908085b7ae8a04d7e63dc27998651bfcdd726a3e04",
+        "release_rgba_sha256": "8cb056ebf26087f845309d908085b7ae8a04d7e63dc27998651bfcdd726a3e04",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/2011.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "8cb056ebf26087f845309d908085b7ae8a04d7e63dc27998651bfcdd726a3e04",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "62f5d7f87e4186c3a4ff5b3d7b169da96b393733c224ce32967e6662ad064d57",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/2011-raw.png",
+          "raw_sha256": "127e32241c9e8e1cd29377f26144262169c26ffd67676153a20f8cfaf3f15540",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/2011-prompt.txt",
+          "prompt_sha256": "84bed147d1e44c66b3e156223e9ade8930182af3710c5969131d71bfae3d1e62",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/2011-generation-call.json",
+          "call_metadata": {
+            "id": 2011,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:22:11.202Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape grey-green/brown camouflage trouser atlas. Original left and middle large cloth fields retain every broad angular camouflage patch at exactly the same coordinates and scale, plus source rectangular pocket outlines/seams. Upper/right dark brown/black boot fragments retain source leather creases and ONLY original small lace/loop marks at the rightedge: trace every segment, exact count, spacing and phase; never add stitching rows or eyelets. Original circular dark boot end fragments bottomright and unused black margins remain unchanged. Camouflage is angular patch paint, NO ornamental curls, leaves, mottling or invented scratches. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/2011.png",
+              "expanded/generated/2011-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:22:37.763027+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-812c1962-1990-4726-bd43-faaf331fb62f.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\2011-raw.png",
+            "raw_sha256": "127e32241c9e8e1cd29377f26144262169c26ffd67676153a20f8cfaf3f15540"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "19a3a20e514d230c3197bccee567d0100a49058156259f273f6e222aef083ee2",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/2011-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3850,
+      "status": "art-reviewed-ready",
+      "reason": "Full source/fullraw/full4x privately inspected. Original ochre/brown angular-blobby camouflage patch scale/positions, two major trouser fields, dark brown leather strip and rightedge boot fragment retain UV/materials. Top two larger loose end fragments and FIVE smaller pale/brown independent fragments match source count. No added ornate textile pattern, damage or hardware.",
+      "source": {
+        "id": 3850,
+        "texture": {
+          "ID": 3850,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14279150,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\German\\Soldier\\Elite\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2423,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1597,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2335,
+                  "field": "Material2",
+                  "material_template_id": 1597,
+                  "geometry_id": 344,
+                  "geometry": "Characters\\Skeletons01\\Skins\\German\\Soldier01.mb",
+                  "model_template_id": 1751,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "353b48b4e7c874603c23e27f783cd22dac3d3cecfbb2b8604a42f58b30bdac1b",
+        "source_rgba_sha256": "2b16efc38b9f407213bce8a3927b35af95b74ae97e64db2c1ea5e9c99f82ac0c",
+        "release_rgba_sha256": "2b16efc38b9f407213bce8a3927b35af95b74ae97e64db2c1ea5e9c99f82ac0c",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3850.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "2b16efc38b9f407213bce8a3927b35af95b74ae97e64db2c1ea5e9c99f82ac0c",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3850-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "b4b91a45faa20d89fa6b1e89770ddab01961d71e7a16a7d90d66eb5c87e62c94",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3850-raw.png",
+          "raw_sha256": "6f8c307a054f990b0d7939b23886bf2b0943afec973563f9c234fde7d1a076b7",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3850-prompt.txt",
+          "prompt_sha256": "5e73640b5f67990ff712ca4650c03790d6ad1e028914e75c4d67a14495209ca7",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3850-generation-call.json",
+          "call_metadata": {
+            "id": 3850,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:22:38.246Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape warm brown/ochre/olive angular camouflage trousers with a dark brown leather boot strip across upperleft, and long leather/cloth fragment on rightedge. Preserve each camouflage patch size/location and original seams/pocket panels; existing tiny fastening/tab and lace marks at upperboot/rightedge must keep EXACT source count, pitch, topology and coordinates. Source original plain fields remain fine plaincloth, camouflage never ornamental curls/leaves. No added damage/stitches or hardware. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3850.png",
+              "expanded/generated/3850-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:22:57.128750+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-59967ccd-3495-4baa-b2fc-e6d6001075b1.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3850-raw.png",
+            "raw_sha256": "6f8c307a054f990b0d7939b23886bf2b0943afec973563f9c234fde7d1a076b7"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3850-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "74550bce0ce55d97d50b4e238b099e43db22c2c8141e16e01f5ac4b71173e643",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 3865,
+      "status": "pending-artwork",
+      "reason": "Source6 upper-right lacebar main peaks y26,31,35,39,43,47 retained. FIVE tiny lower zigzag apices at source x110,116,122,128,134 were measured in raw as110,116,122,129,135 at source logical y118. Last2 shifted +1logical pixel, so exact source pitch/phase fails. Camo silhouettes/plain twill material otherwise retained; no furthercall.",
+      "source": {
+        "id": 3865,
+        "texture": {
+          "ID": 3865,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14673142,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Terror\\TerEliteSoldier\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2920,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1878,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2339,
+                  "field": "Material2",
+                  "material_template_id": 1878,
+                  "geometry_id": 3014,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Terror\\TerEliteSoldier_100.mb",
+                  "model_template_id": 1753,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "5fc62d765cb0bb6d6571e3ced68e4b9dc46215545d6969b4ae4858c557185c43",
+        "source_rgba_sha256": "d91ba46b74eae28e434900e0ca22653bfb191691b04bae44b159e0057b5a8ebc",
+        "release_rgba_sha256": "d91ba46b74eae28e434900e0ca22653bfb191691b04bae44b159e0057b5a8ebc",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3865.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "d91ba46b74eae28e434900e0ca22653bfb191691b04bae44b159e0057b5a8ebc",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "2e1f0d927587c2f9d51d3696d85e7dbcf977b90824495857998f194396545165",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3865-raw.png",
+          "raw_sha256": "4f41bd5e15eb412414812d78604a0a99c55333039134debf9f259207b8acefd2",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3865-prompt.txt",
+          "prompt_sha256": "33052fdfae8c0f7e106647d724d79656ca70b45d7b6ed901da081d3317dd4816",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3865-generation-call.json",
+          "call_metadata": {
+            "id": 3865,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:22:57.619Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape dark yellow-olive cloth atlas: source left large rectangle and central large polygon retain irregular broad angular dark camouflage motifs exactly; upper/right brown-black boot fragments with shallow leather creases preserve original geometry, exact lace/eyelet and small rectangular marks. Middle cloth lowerleft tiny pale zigzag stitch segment is original: trace exact existing segments/count/phase only, do NOT expand to embroidery or pattern. Rightgrey-black patch retains original one central black oval and muted shading; unused black spaces fixed. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3865.png",
+              "expanded/generated/3865-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:23:24.060032+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-80a06a72-1f0d-4bc8-9322-fa25e0d92006.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3865-raw.png",
+            "raw_sha256": "4f41bd5e15eb412414812d78604a0a99c55333039134debf9f259207b8acefd2"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "7a77646081cc9dd78b4d4152ca8fc66feacbdeba0fd3fc517f2de5982d240117",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3865-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3870,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/full4x/source privately inspected. FOUR original pocket buttons2top+2lower, TWO central placket buttonmarks, one original belt buckle, SIX beltpuncture marks2rowsx3, source3dark diagonalstrap marks and source collar/cutouts preserved. Plain brown finecloth and leatherstrap materials refined without ornamental curl motif, added hardware/damage or extra loops.",
+      "source": {
+        "id": 3870,
+        "texture": {
+          "ID": 3870,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -11520216,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\UK\\Officer\\GermanAgent#2\\Body.tga",
+          "Format": "dxt1",
+          "UserName": "Body",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2442,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1605,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2343,
+                  "field": "Material0",
+                  "material_template_id": 1605,
+                  "geometry_id": 1920,
+                  "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+                  "model_template_id": 1755,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "ddee163fab3b01901e63388341021910bd89328c4c38b9c6ee9ade58ab389c05",
+        "source_rgba_sha256": "1e14f2596b38226d19b1a88a4748fbea80ad1073a40344622508008a0a4413d7",
+        "release_rgba_sha256": "1e14f2596b38226d19b1a88a4748fbea80ad1073a40344622508008a0a4413d7",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3870.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "1e14f2596b38226d19b1a88a4748fbea80ad1073a40344622508008a0a4413d7",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3870-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "3b3c0f3ac5817ffafa8221573d5201739ac06141d2580bed383c94980f9c44a7",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3870-raw.png",
+          "raw_sha256": "4b389539b9212af6c5da4d7943eb63505508a3aef5f1333aa9a2a1ddde2cfc73",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3870-prompt.txt",
+          "prompt_sha256": "1ad4d36193aa1511ec4e15251aa113ccf78d12a9f17c0f60a89fc24bdf8491ff",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3870-generation-call.json",
+          "call_metadata": {
+            "id": 3870,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:23:24.537Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Square brown uniform atlas. Source upperhalf two large rectangular pocket faces with two angular lowerflaps and one small pale button per flap; lowerhalf two further original pocket/flap faces each with one pale button. Thus FOUR pocket buttons at source exactcoordinates. Preserve horizontal brown belt and one original plain rectangular pale buckle near original(x39,y41), existing small punched beltmarks only source. Source central placket buttonmarks keep EXACT original count/coordinate; do not guess/add buttons. Original two diagonal brown straps/collar lines, dark collar openings and lower-right dark patch preserved. Brown textile PLAIN finewoven, absolutely no swirls/floral/paisley/engraving or extra stitchribbons. Logical original128x128, final4x512x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3870.png",
+              "expanded/generated/3870-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:23:53.108154+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-8b0e17f3-4226-4d95-aa7a-6dea85881a0f.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3870-raw.png",
+            "raw_sha256": "4b389539b9212af6c5da4d7943eb63505508a3aef5f1333aa9a2a1ddde2cfc73"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3870-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "997297c1e6e4830ad349b00170186a1e8214a07f80168d4aa4a163d1bc9ab429",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 3871,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/full4x/source and full lacecrop privately inspected. Four source boot lacecrossbars and their clipped eyelet endpoints retained; TWO original rectangular fastening tabs in uppercenter panel retained with original linked line; ONE source tiny pale mark in leftmidcloth retained. Original brown plaincloth folds and dark leather silhouettes/fullcanvasUV fixed; no added ornate curl pattern or extra hardware.",
+      "source": {
+        "id": 3871,
+        "texture": {
+          "ID": 3871,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12111325,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\UK\\Officer\\GermanAgent#2\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2444,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1606,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2343,
+                  "field": "Material2",
+                  "material_template_id": 1606,
+                  "geometry_id": 1920,
+                  "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+                  "model_template_id": 1755,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "763d6760564dcdb34f08a7ba1696108cb0618b31213469ce0c94ef393f3731b4",
+        "source_rgba_sha256": "64e0bebce8e111289d1b92c61f674f29e0930354e996cf9b5f6686c717640c25",
+        "release_rgba_sha256": "64e0bebce8e111289d1b92c61f674f29e0930354e996cf9b5f6686c717640c25",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3871.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "64e0bebce8e111289d1b92c61f674f29e0930354e996cf9b5f6686c717640c25",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3871-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "9f1d79fa03db3f8a4e12d0651a9310c77cf0106c7a2a99bd119be78632286819",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3871-raw.png",
+          "raw_sha256": "670a10086d23e684288fbbb0b19310d0709cb386676c0cee1290f155f3af05c9",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3871-prompt.txt",
+          "prompt_sha256": "11b78f8c0567c36370f865234d15acafced2be32bad3238d465ea17023bf9594",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3871-generation-call.json",
+          "call_metadata": {
+            "id": 3871,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:23:53.573Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape brown trouser/leather atlas. Leftedge long black leather boot fragment with its existing seams/lace/loop marks retains precise silhouette and exact source small hardware count. Small upper-left brown outlined end face stays brown with source single pale outline. Adjacent topmid rectangular brown tab retains original two small pale outlined fastening rectangles linked by source short dark line: exact two, unchanged shape/position. Large center/right brown plaincloth panels stay matte finewoven with source folds and one tiny pale point on left field; no ornamental curls/paisley, new grain rings, loops, holes or new seams. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3871.png",
+              "expanded/generated/3871-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:24:11.427196+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-5f900c63-a2b4-49f4-8c5b-49f118f8aa38.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3871-raw.png",
+            "raw_sha256": "670a10086d23e684288fbbb0b19310d0709cb386676c0cee1290f155f3af05c9"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3871-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "b072eb2bca443dc93fd1454f84984c2e7062ee5d2a3bf6fd8573ed63605c34ae",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 3894,
+      "status": "pending-artwork",
+      "reason": "Initial5button count/UV preserved but generator rendered source tiny pale softmarks as faceted shiny lumps/gem-like details. Localv2 softened5marks but changed entire original plaincloth into maze/curl-like microtexture. Both attempts held; no sourceRGB artistic restoration and no furtherretry.",
+      "source": {
+        "id": 3894,
+        "texture": {
+          "ID": 3894,
+          "Width": 64,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14673651,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\Body.tga",
+          "Format": "dxt1",
+          "UserName": "Body",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2482,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1626,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2366,
+                  "field": "Material0",
+                  "material_template_id": 1626,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 1767,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 4132,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2528,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6297,
+                  "field": "Material0",
+                  "material_template_id": 2528,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 4041,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          128
+        ],
+        "source_sha256": "5d62d38cd805d034d3eb57e6004a99ad7bed347fc34bd016c5973291f17edbee",
+        "source_rgba_sha256": "80c12e99670a2c7039354809348131483c7050384c0b64a1289091f3cc8c317b",
+        "release_rgba_sha256": "80c12e99670a2c7039354809348131483c7050384c0b64a1289091f3cc8c317b",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3894.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "80c12e99670a2c7039354809348131483c7050384c0b64a1289091f3cc8c317b",
+          "dimensions": [
+            64,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "3edf78c8af3ba16a104a2272393bf75130d69ab7dc0f7de2c936769d3800c676",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3894-raw.png",
+          "raw_sha256": "ab8e2c864ae529e60e8a4e10bbf0dc4acddea2e0d22744a5123823244f1270e9",
+          "raw_size": [
+            887,
+            1774
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3894-prompt.txt",
+          "prompt_sha256": "fb0ff1320dd2bfe789f73b57ff5415b6a35ad72c07fe3dc50740a5e10e8efd18",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3894-generation-call.json",
+          "call_metadata": {
+            "id": 3894,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:24:11.931Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Portrait1:2 brown civilian coat torso diffuse. Preserve source five small pale button marks down central placket at exact heights/pitch and exact source shape, never add rim holes/four-hole buttons. Source top small pale collar/band shape and bottom pale grey collar with dark inner patch remain at sourcecoordinates; original black margins/silhouette fixed. Brown cloth is fine PLAIN matte weave with broad soft folds only: no decorative curls/paisley/embroidery, added pockets/straps/damage/buttons. The source is flat painted UV texture, NOT photograph/garment mockup. Logical original64x128, final4x256x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3894.png",
+              "expanded/generated/3894-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:24:29.785361+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-30eed8aa-30fe-4eb7-91c4-e946e99ac974.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3894-raw.png",
+            "raw_sha256": "ab8e2c864ae529e60e8a4e10bbf0dc4acddea2e0d22744a5123823244f1270e9"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "02e58c78d05a38e53729257aa1f93dca4bd059afa243e4d76f86c52170eeebf4",
+          "normalized_size": [
+            256,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        },
+        {
+          "attempt": "local-correction-v2",
+          "raw": "assets/terrain-hd/expanded/generated/3894-raw-clothing-seventh-v2.png",
+          "raw_sha256": "808d46d4e9a4362bcfaba40b79c2407ab25db3001642b024c7c5db72bc96b5af",
+          "raw_size": [
+            887,
+            1774
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3894-prompt-clothing-seventh-v2.txt",
+          "prompt_sha256": "8381ed95fbea2538646e5d35d338459ebef049e3ac242776ea143950ba209526",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3894-generation-call-clothing-seventh-v2.json",
+          "call_metadata": {
+            "id": 3894,
+            "status": "finished",
+            "builtin": true,
+            "attempt": "local-correction-v2",
+            "prompt": "Use case: precise-object-edit. Image1 ORIGINAL64x128 diffuse is SOLE detail/layout authority; image2 its exact original source-only nearest guide; image3 CURRENT HD atlas EDIT TARGET. One localized correction ONLY to the FIVE small pale buttonmarks down central placket at original logical centers (31,25),(31,42),(31,59),(31,76),(31,92). Current image3 rendered them as faceted shiny gemstones/pixelblock lumps. Replace JUST those tiny marks with soft shallow plain pale grey/cream flat button-like painted marks matching original footprint/color; smoothly rounded edges, no gemstone facets, blocky faces, metallic rim, hole, engraving or extra shine. Do not add dots or stitchholes; same FIVE, same coordinate/count/pitch/size/phase. Preserve original dark adjoining short horizontal marks/shadows as source. Keep EVERY other pixel-region of image3 unchanged: existing plain brown matte cloth/folds, placket seam, black unusedspace, top pale collar/band and bottom palegrey collar/dark inside shape. Do not alter their geometry/material/UV or add any stitchlines/text/ornament/swirl/pattern/part. Flat painted diffuse, not garmentphoto. Entire portrait1:2 opaque alpha255 fullcanvas; no crop/padding/repack. Numerical brightness later.",
+            "references": [
+              "expanded/original/3894.png",
+              "expanded/generated/3894-clothing-seventh-source-reference.png",
+              "expanded/generated/3894-raw.png"
+            ],
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-6acbe56e-d61a-4a92-9642-9a32ae80d4e2.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3894-raw-clothing-seventh-v2.png",
+            "raw_sha256": "808d46d4e9a4362bcfaba40b79c2407ab25db3001642b024c7c5db72bc96b5af"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-normalized-review-v2.png",
+          "normalized_sha256": "cf719c9a434efdbfbd43cd586413698cdf004607cf57d8d66c79130c393ffa3b",
+          "normalized_size": [
+            256,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-raw-rejected-v2.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-prompt-rejected-v2.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-generation-call-rejected-v2.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3894-clothing-seventh-normalized-review-rejected-v2.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3895,
+      "status": "pending-artwork",
+      "reason": "Source FOUR pale buttonpoints and major cloth UV panels retained; bootsole motif topology/pad count and fine central lattice reinterpretation could not be certified against original: raw introduces larger cross-shaped pads. Held, no retry.",
+      "source": {
+        "id": 3895,
+        "texture": {
+          "ID": 3895,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -15066859,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2484,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1627,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2366,
+                  "field": "Material2",
+                  "material_template_id": 1627,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 1767,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 4134,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2529,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6297,
+                  "field": "Material2",
+                  "material_template_id": 2529,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 4041,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7764,
+                  "field": "Material2",
+                  "material_template_id": 2529,
+                  "geometry_id": 4269,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+                  "model_template_id": 4664,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "7af9f326d2db62eda9905a3d95484bcf71dc385bff012eb0039d5da99015486b",
+        "source_rgba_sha256": "7f25773f3400ed267a7e5d2ac572e74e26afe336b7ce1deb522d728ad9c9e1c0",
+        "release_rgba_sha256": "7f25773f3400ed267a7e5d2ac572e74e26afe336b7ce1deb522d728ad9c9e1c0",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3895.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "7f25773f3400ed267a7e5d2ac572e74e26afe336b7ce1deb522d728ad9c9e1c0",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "60227e349c7960218cca859d9081bfa4cc285e6add09035cd8e6400cd820a83b",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3895-raw.png",
+          "raw_sha256": "ee2bccc9d75288199676cc6655ea109ce95921ca8cf57fca362e777ed5020fa5",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3895-prompt.txt",
+          "prompt_sha256": "753a8d6d6431ae1af8a1c252e3922ee8c50ba92d5deed5784b80ee1d3a245fce",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3895-generation-call.json",
+          "call_metadata": {
+            "id": 3895,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:24:30.223Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape civilian trouser/boot atlas. Original very dark navy-grey pants panels in left+middle retain original seams, pocket shapes, exact FOUR tiny pale buttonpoints (two on left field, two on uppermiddle field). Rightthird olivegreen cloth panel retains smooth existing foldshading and source vertical seam. Long brownblack leather strip at farleft and TWO circular dark sole/end fragments bottomleft keep original silhouettes and fine checker/lattice tread pattern: exact scale, repetition pitch/phase/rowcolumn count, no larger hexagonal tread or invented hardware. Plain fabric, no ornamental curls or new stitches/damage. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3895.png",
+              "expanded/generated/3895-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:24:47.218847+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-fb420a73-2f5f-43ac-af5b-676e370fadb3.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3895-raw.png",
+            "raw_sha256": "ee2bccc9d75288199676cc6655ea109ce95921ca8cf57fca362e777ed5020fa5"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "52ab0aa1ff0c4204d99b93cd1d6f0d8a4d088971d224c83dc0a3785312fdcc77",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3895-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3896,
+      "status": "pending-artwork",
+      "reason": "Plain darkcloth mainpanel remains without addedbuttons, but bottom original irregular pale/dark collar inside was reinterpreted as a strongly outlined circular/oval lightshirt insert. Source internal footprint/material continuity not retained. Held, no retry.",
+      "source": {
+        "id": 3896,
+        "texture": {
+          "ID": 3896,
+          "Width": 64,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14935269,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\DoubleAgent\\Body.tga",
+          "Format": "dxt1",
+          "UserName": "Body",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2486,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1628,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2364,
+                  "field": "Material0",
+                  "material_template_id": 1628,
+                  "geometry_id": 4254,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+                  "model_template_id": 1766,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7764,
+                  "field": "Material0",
+                  "material_template_id": 1628,
+                  "geometry_id": 4269,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+                  "model_template_id": 4664,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          128
+        ],
+        "source_sha256": "fbfa73a8974be18857a74bf66808d347d4c809fae9745e6e6f896cec703aa67d",
+        "source_rgba_sha256": "494ba2d73f3ea8d4346a70cef0f7fa333675c747f2e133cdefbb8cd3eb5a9dd7",
+        "release_rgba_sha256": "494ba2d73f3ea8d4346a70cef0f7fa333675c747f2e133cdefbb8cd3eb5a9dd7",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3896.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "494ba2d73f3ea8d4346a70cef0f7fa333675c747f2e133cdefbb8cd3eb5a9dd7",
+          "dimensions": [
+            64,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "756c4f3df9e646791ad49e1365c5eeb1bbd81e7604a6efd36cadebe675c3e06a",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3896-raw.png",
+          "raw_sha256": "df0569a27d148c2c74b05303aadfc7f2ccdeef70c2aba8070a8bdf58d4d287a5",
+          "raw_size": [
+            887,
+            1774
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3896-prompt.txt",
+          "prompt_sha256": "77fdc134964b83541f08adab44e0262f39ca2afb58b64956c5c7ecbcc9760e24",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3896-generation-call.json",
+          "call_metadata": {
+            "id": 3896,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:24:47.685Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Portrait1:2 entirely dark grey PLAIN civilian cloth torso. Preserve source elongated rectangle/black silhouette and broad smooth vertical foldshading; source has NO row of visible buttons on main cloth, NO pocket, NO tie/strap. Do NOT add any. Preserve original bottom palegrey collar/opening with its irregular source dark/pale inner areas EXACTLY, no new face/head/portrait. Very fine plain matte cloth weave only, NO decorative curls/paisley/checker/embroidery, no new seams or lines. Source original unusedblack canvas margins unchanged. Logical original64x128, final4x256x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3896.png",
+              "expanded/generated/3896-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:25:06.154914+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-748103c3-6201-4bc1-8580-f891ee2933cd.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3896-raw.png",
+            "raw_sha256": "df0569a27d148c2c74b05303aadfc7f2ccdeef70c2aba8070a8bdf58d4d287a5"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "0b0d661f2e0427abbf60c3c949b74c917ecda6c868a19b770db1ac3b8ebd31c8",
+          "normalized_size": [
+            256,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3896-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3897,
+      "status": "pending-artwork",
+      "reason": "Source FOUR pale buttonpoints and cloth majorUV retained; bootsole tiny lattice motifs reinterpreted as larger cross-shaped pads with differing arrangement/count. Exact original tread pitch/topology not certified. Held, no retry.",
+      "source": {
+        "id": 3897,
+        "texture": {
+          "ID": 3897,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14936559,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\DoubleAgent\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2488,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1629,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2364,
+                  "field": "Material2",
+                  "material_template_id": 1629,
+                  "geometry_id": 4254,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+                  "model_template_id": 1766,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7768,
+                  "field": "Material2",
+                  "material_template_id": 1629,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 4666,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "697abced72205e0b707c828e21408ef817221ecae175cf3fc1748b532c937355",
+        "source_rgba_sha256": "675f65a1b29c546bda931cb6a1f0efaea70d715f14c4f99f91ceacdb86eaabdc",
+        "release_rgba_sha256": "675f65a1b29c546bda931cb6a1f0efaea70d715f14c4f99f91ceacdb86eaabdc",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3897.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "675f65a1b29c546bda931cb6a1f0efaea70d715f14c4f99f91ceacdb86eaabdc",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "2b7c3ded23decb266ad82254d4b3ebc466fee77b9f0b272a831e42f799ec1567",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3897-raw.png",
+          "raw_sha256": "9753b92689a38b2d11eeaa216aebf900552a5bb7e175f99925774a59079b74af",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3897-prompt.txt",
+          "prompt_sha256": "24b08b4536381d72973c4b21e7bbd3fad7f6f4f9403317d9ed60d3e30dd40537",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3897-generation-call.json",
+          "call_metadata": {
+            "id": 3897,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:25:06.610Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape civilian trouser/boot atlas. Original very dark navy-grey pants panels left+middle with original seams/pocket shapes, EXACT FOUR tiny pale buttonpoints (two on left field and two uppermiddle). Rightthird warm brown plaincloth panel keeps source folds/seam. Leftedge leather strip and TWO circular bottomleft dark bootend/sole fragments retain their original finechecker/lattice tread pattern at source scale/count/pitch/phase; no new tread geometry, laces, buckles, stitches or damage. Plaincloth no swirls/ornament. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3897.png",
+              "expanded/generated/3897-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:25:34.088021+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-088c1579-da6b-4f35-83a1-01796f9b8d96.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3897-raw.png",
+            "raw_sha256": "9753b92689a38b2d11eeaa216aebf900552a5bb7e175f99925774a59079b74af"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "09d1766d7e9eaf7af85a2df5d85d4c736058c9b58703d7a174137383b158128a",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3897-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3899,
+      "status": "pending-artwork",
+      "reason": "Original maincloth/source4pale point count retained but new dark centerhole marks added to4buttons and bootsole central pattern changed. Held: no new holes/hardware or redesigned tread allowed. No retry.",
+      "source": {
+        "id": 3899,
+        "texture": {
+          "ID": 3899,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -15658735,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\CapturedAgent\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2492,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1631,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2362,
+                  "field": "Material2",
+                  "material_template_id": 1631,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 1765,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "0a92afe0ea50a7cd72566e4115830fb0fb4cebbaa111c7342f5310badaf0508a",
+        "source_rgba_sha256": "1dab912cf718c55b9b5b4057dbebc2b8526672d845c9b145d2b836cddb761f29",
+        "release_rgba_sha256": "1dab912cf718c55b9b5b4057dbebc2b8526672d845c9b145d2b836cddb761f29",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3899.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "1dab912cf718c55b9b5b4057dbebc2b8526672d845c9b145d2b836cddb761f29",
+          "dimensions": [
+            256,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "4009f85686ebb7a4a67a9cc702870ae61e676aa14f4f73d8673c63d480813ae1",
+          "source_guide_scale": 4,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3899-raw.png",
+          "raw_sha256": "f01f7d5d32d1e858d0867f7215a18285c5c978f8eb36abbec5b0a96a374be01b",
+          "raw_size": [
+            1774,
+            887
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3899-prompt.txt",
+          "prompt_sha256": "00d0c65ddf67bf00e7b7099c8caee131ff67164e9dccffcf0a3d1e7999e1e27a",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3899-generation-call.json",
+          "call_metadata": {
+            "id": 3899,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:25:34.555Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Landscape dark grey/black civilian trousers and black leather atlas. Source left/middle trouser panels retain seams/pocket silhouettes and FOUR pale buttonpoints at original coordinates: two leftfield and two uppermiddle. Rightthird darkblackcloth field retains original foldshading and existing seam. Leftedge leather strip and TWO circular bottomleft sole/end fragments keep original exact fine checker/lattice pattern pitch/phase/count; no enlarged tread, new eyelets/straps or damage. Every original blackgap/clippedfragment preserved, plain finecloth no curls. Logical original256x128, final4x1024x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3899.png",
+              "expanded/generated/3899-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:25:52.135450+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-73eb8b74-989e-4c35-af8e-ace1494e992e.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3899-raw.png",
+            "raw_sha256": "f01f7d5d32d1e858d0867f7215a18285c5c978f8eb36abbec5b0a96a374be01b"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "98b08b930b35b3866947c8ee18162c27bee01826d985419cb8dc4803a5654069",
+          "normalized_size": [
+            1024,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3899-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3904,
+      "status": "art-reviewed-ready",
+      "reason": "Fullraw/full4x/source privately inspected. One original tiny pale square point at logical106,66 and original mainbrown plaincloth flap/folds, blue-grey sleeve islands, tiny leftside skin fragment and blackcutouts preserved. Fine plain woven material refined; no newface/anatomy/damage, ornamental curls or extra buttons/hardware.",
+      "source": {
+        "id": 3904,
+        "texture": {
+          "ID": 3904,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13095646,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilFemale\\Body.tga",
+          "Format": "dxt1",
+          "UserName": "Body_Euro",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2494,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1632,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2368,
+                  "field": "Material0",
+                  "material_template_id": 1632,
+                  "geometry_id": 2501,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+                  "model_template_id": 1768,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "ee3e5f889fde6ae331e45520653b0cedb047cf66741aea43b57be8c1cfab3799",
+        "source_rgba_sha256": "35c518ad554c6dacc64844920716077789cd4a95fe6685d96ce4eb36dcbfaeff",
+        "release_rgba_sha256": "35c518ad554c6dacc64844920716077789cd4a95fe6685d96ce4eb36dcbfaeff",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3904.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "35c518ad554c6dacc64844920716077789cd4a95fe6685d96ce4eb36dcbfaeff",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3904-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "5d7a2d566fe3b28ca438b0c62f83d24981aa268f6ac51329a00d9c97177478ab",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3904-raw.png",
+          "raw_sha256": "b39a8722f134db848f74bb48f4ee5fbdfa1c7695e7cdb34daccebd7b603836d7",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3904-prompt.txt",
+          "prompt_sha256": "3197920a916e2d6e24f0cab54260acfcbedc7cd0eca3c526a5547a79bfe76e15",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3904-generation-call.json",
+          "call_metadata": {
+            "id": 3904,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:25:52.654Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Square civilian female clothing atlas. Source left grey-blue elongated sleeve/cloth islands and small warm skin patch at leftmid remain unchanged in shape/colors, no extra skin exposure/newbody/face. Main center/right warm brown cloth islands preserve original broad folds, seams, pocket flap and EXACT source ONE small pale point within mid-right outlined panel at source(x106,y66). Source black unused gaps/cutouts fixed. Brown cloth plainfinewoven, no ornamental curls/paisley/embroidery, new buttons/straps/hardware/damage. Logical original128x128, final4x512x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3904.png",
+              "expanded/generated/3904-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:26:13.818641+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-e2ef6dd4-9b5d-4b8e-b13f-933d17f93ff1.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3904-raw.png",
+            "raw_sha256": "b39a8722f134db848f74bb48f4ee5fbdfa1c7695e7cdb34daccebd7b603836d7"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3904-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "1588e3d78b5b7d6ea0cfe26bfecf9b021ecbee128fc423ad67376fe8d6c3e9f9",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": true
+        }
+      ]
+    },
+    {
+      "id": 3905,
+      "status": "pending-artwork",
+      "reason": "Nine complete upper stripe periods retain source dark intervals/pitch8 and source clipped endings; no stripe-count failure asserted. Other region fails: generator adds a strong vertical brown paneldivider seam absent from original and reinterprets source small lowerleft angular pale loop into new raised hardware/keyshape. Brown microtexture also differs from plain sourcecloth. Held, no retry.",
+      "source": {
+        "id": 3905,
+        "texture": {
+          "ID": 3905,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13095901,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilFemale\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs_Euro",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2496,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1633,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2368,
+                  "field": "Material2",
+                  "material_template_id": 1633,
+                  "geometry_id": 2501,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+                  "model_template_id": 1768,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "245e3539acd0b9c8bebcdb87f0ca0998035ed565e9d208159630dc3c71af6fd3",
+        "source_rgba_sha256": "684128490ca5e2c59caf5e423ad0cf52564be1aefba932777c5a6dedadebf1bf",
+        "release_rgba_sha256": "684128490ca5e2c59caf5e423ad0cf52564be1aefba932777c5a6dedadebf1bf",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3905.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "684128490ca5e2c59caf5e423ad0cf52564be1aefba932777c5a6dedadebf1bf",
+          "dimensions": [
+            128,
+            128
+          ],
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "source_guide": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-source-reference.png",
+          "source_guide_sha256": "6cac87b982f0c8a03aae53f27580611c3c06b8a9975188a2ed40a6c1ceeb5dd4",
+          "source_guide_scale": 8,
+          "guide_resampling": "Nearest neighbor original only; no image content edit"
+        }
+      },
+      "attempts": [
+        {
+          "attempt": "initial",
+          "raw": "assets/terrain-hd/expanded/generated/3905-raw.png",
+          "raw_sha256": "d9efee60dac929e441a8d4cfdaa651b16fe37f255970a0601c63431c54038133",
+          "raw_size": [
+            1254,
+            1254
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "exact_prompt_file": "assets/terrain-hd/expanded/generated/3905-prompt.txt",
+          "prompt_sha256": "68761ea5ec7f9ac6c13f42b551b0193395e70b558a2d17aafadf39382e8dea79",
+          "call_metadata_file": "assets/terrain-hd/expanded/generated/3905-generation-call.json",
+          "call_metadata": {
+            "id": 3905,
+            "status": "finished",
+            "builtin": true,
+            "started_utc": "2026-10-07T22:26:14.267Z",
+            "prompt": "Use case: precise-object-edit. Create faithful HD historical-game DIFFUSE texture by editing image1 ORIGINAL. Image1 is SOLE artwork/layout authority; image2 is source-only nearest enlarged guide of SAME original, not desired pixelblock output. Smooth existing contour continuity and refine original material into HD, preserving EVERY normalized UV coordinate, canvas bound, cutout, silhouette, island width/height, rotation, clipping, black unusedspace, source folds/seams and all detail counts/pitch/phase. Flat unlit painted UV atlas, NEVER assembled garment/photo/3D render. Match material hue/tonal hierarchy; brightness will be corrected NUMERICALLY afterward. Preserve actual camouflage/stripe/checker scale exactly. Plain cloth remains PLAIN matte finewoven; leather only original broad creases. No invented ornate swirls/curls/paisley/floral pattern, no new stitchlines/eyelets/buttons/loops/straps/emblems/text/digits/holes/bolts/knots/scratches/rips/rust/damage. Do not reinterpret DXT pixelblocks as hardware. All source tiny existing marks are layout details, not permission to invent. Fully opaque alpha255 entire canvas, full original aspect, no crop/padding/letterboxing/repacking. Square mixed civilian female clothing atlas. Upper/left blueblack vertically striped cloth keeps EVERY original stripe count/width/pitch/phase; dark stripe pattern continues through original interrupted/cropped patches, no added pinstripes. Preserve original tiny pale outlined buckle-like fragment at lowerleft around(x3,y83), black shoe fragment centerleft with original shallow shine, and source grey horizontal band upperright. Upperright warm skin-color rectangle remains flatshaded same boundaries/color, no new anatomy/skinmarks. Bottom/right brown cloth retains original plainmaterial and ONE source tiny pale point around(x114,y116). No ornamentcurls/newseams/new hardware; same fullsquare UV. Logical original128x128, final4x512x512; fullcanvas layout1x1, preserve sourceaspect.",
+            "references": [
+              "expanded/original/3905.png",
+              "expanded/generated/3905-clothing-seventh-source-reference.png"
+            ],
+            "finished_utc": "2026-10-07T22:26:35.919799+00:00",
+            "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-51badd87-dd0e-40b4-a41a-c2999391333d.png",
+            "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\3905-raw.png",
+            "raw_sha256": "d9efee60dac929e441a8d4cfdaa651b16fe37f255970a0601c63431c54038133"
+          },
+          "normalized_review": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-normalized-review.png",
+          "normalized_sha256": "c7391e3b82d435fa1b2d0be1f4447b913b181c4d505ee53e66c6cc598e773045",
+          "normalized_size": [
+            512,
+            512
+          ],
+          "private_fullraw_and_normalized_review_complete": true,
+          "selected_for_jobs": false,
+          "preserved_rejected": {
+            "raw": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-raw-rejected-v1.png",
+            "prompt": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-prompt-rejected-v1.txt",
+            "generation-call": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-generation-call-rejected-v1.json",
+            "normalized-review": "assets/terrain-hd/expanded/generated/3905-clothing-seventh-normalized-review-rejected-v1.png"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,178 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 48 clothing, 49 equipment, 64 weapons,
-2 heads, 20 interface icons, 27 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,208 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 52 clothing, 59 equipment, 64 weapons,
+2 heads, 21 interface icons, 42 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,583 records, including 216 accepted new-group textures, the original
+contains 2,613 records, including 246 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,584 verified originals outside the shared queue, including next
+validation. There remain 1,554 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -122,8 +122,19 @@ exact reviewed RGB without premultiplication, original UV and all typed bindings
 Actual-menu HD on/off/on and normal isolated quit recorded in
 `expanded/new-groups-ninth-live-check.json`. Disputed raw variants unaccepted.
 
-All 11,183 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,024,308,277 bytes before Git deduplication/compression).
+Tenth accepted packet: `expanded/jobs-new-groups-tenth.json` adds4 clothing,
+10 equipment,15 additive effect frames and UI3131 direct-original v2.
+2,208 textures/4,416 aliases/116 archives/7,016,536,166 bytes. Prior2,178
+source/PNG/native hashes unchanged. All14 opaque native RGBA equal privately
+reviewed PNG; all15 effects retain original zero alpha and calibrated RGB
+without premultiplication. UI3131 retains exact full original alpha and privately
+reviewed premultiplied RGBA. Full validation, actual-menu HD on/off/on and
+normal isolated quit: `expanded/new-groups-tenth-{batch,live}-check.json`.
+5842 and all8 heads-third attempts held; originals remain. Do not regenerate
+accepted IDs. Next independent raw packets require coordinator review.
+
+All 11,424 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,208,150,189 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

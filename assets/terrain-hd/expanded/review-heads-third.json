@@ -1,0 +1,1212 @@
+{
+  "ids": [
+    1900,
+    2176,
+    2177,
+    2178,
+    2179,
+    2180,
+    2181,
+    2182
+  ],
+  "ready_ids": [],
+  "pending_ids": [
+    1900,
+    2176,
+    2177,
+    2178,
+    2179,
+    2180,
+    2181,
+    2182
+  ],
+  "actual_builtin_generation_calls": 8,
+  "tool": "built-in image_gen",
+  "originals_inspected_before_generation": true,
+  "full_raw_source_alpha_and_dental_reviews_inspected": true,
+  "shared_metadata_modified": false,
+  "native_pack_built_by_child": false,
+  "numerical_calibration_performed_by_child": false,
+  "art_tooth_source_rgb_restore_performed": false,
+  "reason_no_ready_jobs": "All eight generated dental regions differ from the source merged pale clumps / tooth separation pattern; strict dental fidelity cannot be certified. Preserved raws and exact actual prompts, no speculative anatomical tooth counts or numeric artistic patches.",
+  "reviews": [
+    {
+      "id": 1900,
+      "status": "pending",
+      "reason": "Source merged upper/lower pale dental clumps become many separate regular bright anatomical crowns; original bright central connected pale mass becomes divided teeth. Added photographic-like skin/hair grain, grid remains16 cells but eye-cell appearance standardized, not exact source variation. Colored boundary fringe survives source-alpha preview. No numeric fixes.",
+      "source_record": {
+        "id": 1900,
+        "texture": {
+          "ID": 1900,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -2024192194,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\11.testWomen\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1302,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 864,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 11,
+                  "field": "Material0",
+                  "material_template_id": 864,
+                  "head_source": "Heads\\GDP\\ttest.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "4060457ebdb406abdc11b515c3bae4fe9f3d65a3284d2e657645936f2350691c",
+        "source_rgba_sha256": "1e6a90cbb850387fbdb979d79ee0aa4adfb6f93f9bd46827a4047eb6b97d2f40",
+        "release_rgba_sha256": "1e6a90cbb850387fbdb979d79ee0aa4adfb6f93f9bd46827a4047eb6b97d2f40",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/1900.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "1e6a90cbb850387fbdb979d79ee0aa4adfb6f93f9bd46827a4047eb6b97d2f40",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/1900-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/1900-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/1900-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 30797,
+          "alpha_partial": 0,
+          "alpha255": 34739,
+          "bbox_gt8": [
+            0,
+            0,
+            250,
+            256
+          ],
+          "right_half_alpha_mean": 30.4742431640625,
+          "dental_rgba_sha256": "0c8da0c3e0b2b15094c0a3d9f5fc0c295626aec7010b8255221f675871ce9ca3",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "f193d04df28b75f9fe7d678d7d0480d37482fa894c0525684944665ad9eb7eab",
+            "rgb_mean": 3.677662037037037,
+            "alpha_mean": 89.86979166666667
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/1900-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1900-raw.png",
+      "raw_sha256": "462cc20c5927113c1e78e7f2915373c4636dcd3cea8ed41464ebbf4b74c60469",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; image3 is original-only dental crop for fidelity. Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Special female test-head atlas: bottom-left inverted peach female face with soft dark brows/eyes, muted rose lips and smooth painted skin. Upper-left pale dental motif brighter than male sources. Upper-mid small brown hair fragment unchanged. Source eye atlas at logicalx64..128,y64..128 is exactly FOUR by FOUR small eye variants, SIXTEEN cells with pitch16x16, preserve every cell and original variation. Separate original brown hair island across right-upper region around x128..250,y48..99 MUST remain in exact coordinates/silhouette; other right regions transparent. No added fringe or eye cells.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1900.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1900-heads-third-source-reference.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1900-heads-third-source-dental-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Source merged upper/lower pale dental clumps become many separate regular bright anatomical crowns; original bright central connected pale mass becomes divided teeth. Added photographic-like skin/hair grain, grid remains16 cells but eye-cell appearance standardized, not exact source variation. Colored boundary fringe survives source-alpha preview. No numeric fixes."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/1900-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/1900-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/1900-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        10.48904079861111,
+        8.22146267361111,
+        8.451714409722221
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2176,
+      "status": "pending",
+      "reason": "Source faint irregular merged dental clumps become distinct separate regular crown rows; dark technical upper margin becomes more visible brown vertical columns. Color fringe at source-alpha restored boundaries. Identity/layout broad match but dental count/phase cannot be certified.",
+      "source_record": {
+        "id": 2176,
+        "texture": {
+          "ID": 2176,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731206934,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\20.FritzWagner\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1455,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 995,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 20,
+                  "field": "Material0",
+                  "material_template_id": 995,
+                  "head_source": "Heads\\GDP\\Axis\\FritzWagner.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "491260e4e9af1706407533bafdd2f19ef1955728308aba91bb0719f61bf85eb1",
+        "source_rgba_sha256": "67e50b60402e634d78d2c871321618a9fec052a69186534a93dd8e51e8c5e843",
+        "release_rgba_sha256": "67e50b60402e634d78d2c871321618a9fec052a69186534a93dd8e51e8c5e843",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2176.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "67e50b60402e634d78d2c871321618a9fec052a69186534a93dd8e51e8c5e843",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2176-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2176-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2176-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "566844a08ce1dc930d45d3a2382afead251a9bbf00c27aa0d25f277299bae459",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "e222aa7b6f315c6d1c6facbd24b4e932f3e0d91c4826646fea641ee6bc4684b6",
+            "rgb_mean": 0.953125,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2176-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2176-raw.png",
+      "raw_sha256": "92088f0420d61db71fbc4d14dc2334a23fc6d8cab661f605f7a41162a222660b",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; image3 is original-only dental crop for fidelity. Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Fritz Wagner inverted male face, source golden-brown side-combed hair, warm tan smooth painted skin, broad original nose, muted closed lips; no added beard or facial hair. Standalone brown iris eye patch at x64..128,y64..128. Dental source faint gray-brown pale motif, never bright white teeth.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2176.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2176-heads-third-source-reference.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2176-heads-third-source-dental-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Source faint irregular merged dental clumps become distinct separate regular crown rows; dark technical upper margin becomes more visible brown vertical columns. Color fringe at source-alpha restored boundaries. Identity/layout broad match but dental count/phase cannot be certified."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2176-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2176-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2176-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        7.816080729166667,
+        3.3755967881944446,
+        2.7002495659722223
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2177,
+      "status": "pending",
+      "reason": "Source faint merged dental pale masses become regular separated pointed crowns, especially lower row. Upper margin adds brown toothlike pillars; colored RGB fringe persists in source-alpha preview. Existing stubble is rendered as much more regular dotted clusters, need source style review; dental already fatal.",
+      "source_record": {
+        "id": 2177,
+        "texture": {
+          "ID": 2177,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731010071,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\21.GariKovacs\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1456,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 996,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 21,
+                  "field": "Material0",
+                  "material_template_id": 996,
+                  "head_source": "Heads\\GDP\\Axis\\GariKovacs.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "1354d42295007afcb78008a1d8f03855c8fe2bb26737bd5a9b5413e35fd0b02f",
+        "source_rgba_sha256": "7a1032a15842d418128e27b85aff4870d1b899b8bbfcb980ad6c41f59ec92ef2",
+        "release_rgba_sha256": "7a1032a15842d418128e27b85aff4870d1b899b8bbfcb980ad6c41f59ec92ef2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2177.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "7a1032a15842d418128e27b85aff4870d1b899b8bbfcb980ad6c41f59ec92ef2",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2177-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2177-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2177-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "566844a08ce1dc930d45d3a2382afead251a9bbf00c27aa0d25f277299bae459",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "e222aa7b6f315c6d1c6facbd24b4e932f3e0d91c4826646fea641ee6bc4684b6",
+            "rgb_mean": 0.953125,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2177-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2177-raw.png",
+      "raw_sha256": "5bf7c53f6c63db674e9f56cf226fb7e131d2094e2126ae3f6cfdd3e3df0f4251",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Gari Kovacs inverted male face with dark brown short side-parted hair, gray-blue standalone iris; tan smooth painted skin. Preserve ONLY source existing muted dark stubble shading around chin/mouth, no new beard strands or enlarged beard. Dental source faint gray-brown motif stays faint. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2177.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2177-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Source faint merged dental pale masses become regular separated pointed crowns, especially lower row. Upper margin adds brown toothlike pillars; colored RGB fringe persists in source-alpha preview. Existing stubble is rendered as much more regular dotted clusters, need source style review; dental already fatal."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2177-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2177-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2177-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        4.854166666666667,
+        1.8466796875,
+        1.7134874131944444
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2178,
+      "status": "pending",
+      "reason": "Regular separate upper/lower crowns are invented from source faint merged clumps; central lower pale mass is divided and margins acquire red fringe/brown pillars. Broad beardlike face shading and hair grain strengthened beyond original painted softness. Dental exact source topology fails.",
+      "source_record": {
+        "id": 2178,
+        "texture": {
+          "ID": 2178,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731141143,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\22.GunnarZumwald\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1457,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 997,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 22,
+                  "field": "Material0",
+                  "material_template_id": 997,
+                  "head_source": "Heads\\GDP\\Axis\\GunnarZumwald.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "f2e3f9ea8e1b54e9b98606aab7e01bd2a60fc20e58b14ed4df809a116a7bac72",
+        "source_rgba_sha256": "30d13439048d2a7757152da3eedbb81dc4e4fecbd772727aa001273647d85ec9",
+        "release_rgba_sha256": "30d13439048d2a7757152da3eedbb81dc4e4fecbd772727aa001273647d85ec9",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2178.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "30d13439048d2a7757152da3eedbb81dc4e4fecbd772727aa001273647d85ec9",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2178-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2178-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2178-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "1d1252a08cca1d38d29155119d49fdfb893108b1298d14b21d8d7f607c42604a",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+            "rgb_mean": 0.75,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2178-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2178-raw.png",
+      "raw_sha256": "f0052fdc50df502b7a01b31b5c4155bb15aedf4d44f2c657eda28f5cbe751982",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Gunnar Zumwald inverted older male face, short dark golden/brown combed hair and broad original mouth/chin dark shading; retain that exact shading extent without new beard hairs. Original iris muted gray/brown-gray. Tan painted features and closed lips unchanged. Dental source faint muted gray-pink clumps. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2178.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2178-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Regular separate upper/lower crowns are invented from source faint merged clumps; central lower pale mass is divided and margins acquire red fringe/brown pillars. Broad beardlike face shading and hair grain strengthened beyond original painted softness. Dental exact source topology fails."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2178-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2178-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2178-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        9.462076822916666,
+        0.5176866319444444,
+        0.3248155381944444
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2179,
+      "status": "pending",
+      "reason": "Dental motif softened versus other generations yet lower clumps still subdivided into regular individual crowns; central pale mass separation differs source. Red/colored RGB fringes remain after actual source alpha preview. Source hair/face identity broad match, cannot certify tooth counts/contours.",
+      "source_record": {
+        "id": 2179,
+        "texture": {
+          "ID": 2179,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731010068,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\23.JavierVivas\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1458,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 998,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 23,
+                  "field": "Material0",
+                  "material_template_id": 998,
+                  "head_source": "Heads\\GDP\\Axis\\JavierVivas.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "95aab7a88236b23c249a5bbf7967768165227c9fa5e36500532ab9bf73c95ee0",
+        "source_rgba_sha256": "3eea5d1aba3a1133ba452146f702961205716145d85e332bcdcfaed9f1a3ddd8",
+        "release_rgba_sha256": "3eea5d1aba3a1133ba452146f702961205716145d85e332bcdcfaed9f1a3ddd8",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2179.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "3eea5d1aba3a1133ba452146f702961205716145d85e332bcdcfaed9f1a3ddd8",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2179-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2179-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2179-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "566844a08ce1dc930d45d3a2382afead251a9bbf00c27aa0d25f277299bae459",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "e222aa7b6f315c6d1c6facbd24b4e932f3e0d91c4826646fea641ee6bc4684b6",
+            "rgb_mean": 0.953125,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2179-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2179-raw.png",
+      "raw_sha256": "64af544ea8b989056d3108f9f8f5eecce72cc33f42104bd4ac6e4f95358b2d4a",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Javier Vivas inverted male face with broad dark brown swept hair, original dark brown moustache/stubble shading around mouth/chin retains exact source extent. Warm golden-brown standalone iris. Tan smooth painted skin, exact nose and closed-lip contours. Dental source faint gray-brown clumps. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2179.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2179-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Dental motif softened versus other generations yet lower clumps still subdivided into regular individual crowns; central pale mass separation differs source. Red/colored RGB fringes remain after actual source alpha preview. Source hair/face identity broad match, cannot certify tooth counts/contours."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2179-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2179-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2179-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        3.2547200520833335,
+        0.9276801215277778,
+        0.83349609375
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2180,
+      "status": "pending",
+      "reason": "Dental lower masses divided into regular separated crowns and upper margin forms strong brown pillars from near-black original. Gray facial hair extends beneath both eyes as newly pale eyebrow/eye-adjacent streaks absent original; original beard extent/material not preserved. Color fringes persist after native source-alpha diagnostic.",
+      "source_record": {
+        "id": 2180,
+        "texture": {
+          "ID": 2180,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731207450,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\24.KenkoHarada\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1459,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 999,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 24,
+                  "field": "Material0",
+                  "material_template_id": 999,
+                  "head_source": "Heads\\GDP\\Axis\\KenkoHarada.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "702e90d4ba262c7004e2f1d749096cd832fe57ef564266d459fec707c4ed0cc9",
+        "source_rgba_sha256": "f9356e06295bfafb65f9180981ac0a8bc11e490cfd1277ff11c392f4c414b5db",
+        "release_rgba_sha256": "f9356e06295bfafb65f9180981ac0a8bc11e490cfd1277ff11c392f4c414b5db",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2180.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "f9356e06295bfafb65f9180981ac0a8bc11e490cfd1277ff11c392f4c414b5db",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2180-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2180-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2180-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "566844a08ce1dc930d45d3a2382afead251a9bbf00c27aa0d25f277299bae459",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "e222aa7b6f315c6d1c6facbd24b4e932f3e0d91c4826646fea641ee6bc4684b6",
+            "rgb_mean": 0.953125,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2180-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2180-raw.png",
+      "raw_sha256": "d288c63edac7a4cf8eb6d8212091c065aa74c0d75b08ae55ee0d59cc34294ece",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Kenko Harada inverted older male face with source gray hair at both sides of the largely bare upper scalp and existing gray-white beard shading around chin/mouth. Preserve original gray beard region without extra beard strands/length, hair coverage unchanged. Dark blue-gray standalone iris. Warm tan painted features/age contours, no beautification. Dental source faint gray-brown motif. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2180.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2180-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Dental lower masses divided into regular separated crowns and upper margin forms strong brown pillars from near-black original. Gray facial hair extends beneath both eyes as newly pale eyebrow/eye-adjacent streaks absent original; original beard extent/material not preserved. Color fringes persist after native source-alpha diagnostic."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2180-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2180-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2180-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        5.944064670138889,
+        2.526150173611111,
+        1.9193250868055556
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2181,
+      "status": "pending",
+      "reason": "Dental source merged pale shapes turn into regular anatomical crowns and dark technical margin into much stronger brown pillars. Source faint nose/inner-eye marks elaborated into vivid red scar details; original detail scale/style not preserved. Color fringes also visible after source-alpha diagnostic. Dental count/phase fidelity fails.",
+      "source_record": {
+        "id": 2181,
+        "texture": {
+          "ID": 2181,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731338263,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\25.KlausSchmidt\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1460,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 1000,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 25,
+                  "field": "Material0",
+                  "material_template_id": 1000,
+                  "head_source": "Heads\\GDP\\Axis\\KlausSchmidt.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "76068177b779db62ea1f00124efc7dc4002d0ddd63634e2b8856cbe6b44163fd",
+        "source_rgba_sha256": "9e0f615d9358dc5b83961964abb783a67ab57e98e0b3e1f5a3270ae58362d2af",
+        "release_rgba_sha256": "9e0f615d9358dc5b83961964abb783a67ab57e98e0b3e1f5a3270ae58362d2af",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2181.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "9e0f615d9358dc5b83961964abb783a67ab57e98e0b3e1f5a3270ae58362d2af",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2181-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2181-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2181-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "566844a08ce1dc930d45d3a2382afead251a9bbf00c27aa0d25f277299bae459",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "e222aa7b6f315c6d1c6facbd24b4e932f3e0d91c4826646fea641ee6bc4684b6",
+            "rgb_mean": 0.953125,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2181-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2181-raw.png",
+      "raw_sha256": "95abb1093d3e82d37f1530e9e891dcb8926fc07fa9b85c5b174e78f721950ef4",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Klaus Schmidt inverted male face with two dark brown side-hair regions and large original bare central scalp, brown standalone iris. Smooth warm tan painted skin, original pointed nose/mouth and small source chin shading; no new beard. Preserve exact source receding hair boundaries. Dental source faint gray-brown motif. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2181.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2181-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Dental source merged pale shapes turn into regular anatomical crowns and dark technical margin into much stronger brown pillars. Source faint nose/inner-eye marks elaborated into vivid red scar details; original detail scale/style not preserved. Color fringes also visible after source-alpha diagnostic. Dental count/phase fidelity fails."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2181-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2181-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2181-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        4.644802517361111,
+        1.3153754340277777,
+        0.81103515625
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    },
+    {
+      "id": 2182,
+      "status": "pending",
+      "reason": "Source central dental pale mass divided into anatomical lower incisors; all pale rows become much more regular separated tooth crowns and near-black top margin becomes brown pillars. Original soft source tooth contour/count/phase cannot be certified. Colored edge fringe persists after source-alpha preview; face/hair broad identity retained.",
+      "source_record": {
+        "id": 2182,
+        "texture": {
+          "ID": 2182,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731009814,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\26.Mitica-Mike-Caslaru\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1461,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 1001,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 26,
+                  "field": "Material0",
+                  "material_template_id": 1001,
+                  "head_source": "Heads\\GDP\\Axis\\Mitica-Mike-Caslaru.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "5ed624efee02b1cecf8e62458ec71adfbc3528b8444327dd7427112e3ecc2a44",
+        "source_rgba_sha256": "c51a45341d7d97b389bc0d5731107d29ded0d6969165dd24a5ac91e2a8f91487",
+        "release_rgba_sha256": "c51a45341d7d97b389bc0d5731107d29ded0d6969165dd24a5ac91e2a8f91487",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2182.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "c51a45341d7d97b389bc0d5731107d29ded0d6969165dd24a5ac91e2a8f91487",
+          "dimensions": [
+            256,
+            256
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "fresh_audit": "Read-only actual DB audit from same current database verified again by SHA256 before selection. Materials.TemplateID matches Heads/Models.Material slots.",
+          "source_only_guides": {
+            "full": "assets/terrain-hd/expanded/generated/2182-heads-third-source-reference.png",
+            "dental": "assets/terrain-hd/expanded/generated/2182-heads-third-source-dental-reference.png",
+            "face": "assets/terrain-hd/expanded/generated/2182-heads-third-source-face-reference.png"
+          },
+          "guide_resampling": "Nearest only original reference previews; no alpha/RGB artistic changes"
+        },
+        "source_alpha_stats": {
+          "alpha_zero": 39072,
+          "alpha_partial": 0,
+          "alpha255": 26464,
+          "bbox_gt8": [
+            0,
+            16,
+            128,
+            256
+          ],
+          "right_half_alpha_mean": 0.0,
+          "dental_rgba_sha256": "1d1252a08cca1d38d29155119d49fdfb893108b1298d14b21d8d7f607c42604a",
+          "dark_upper_dental_margin": {
+            "bbox": [
+              0,
+              16,
+              64,
+              34
+            ],
+            "rgba_sha256": "d076b5271895656dc2871bfefea83ba96f9ac46175e74919432fe5119036a149",
+            "rgb_mean": 0.75,
+            "alpha_mean": 41.171875
+          }
+        }
+      },
+      "call_metadata": "assets/terrain-hd/expanded/generated/2182-generation-call.json",
+      "raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2182-raw.png",
+      "raw_sha256": "4b278f97f7933eada863e64164bea5971aedb214c0fa5474169e763c54e2fe2b",
+      "exact_actual_prompt": "Use case: precise-object-edit. Faithful HD upgrade of the supplied historical GAME DIFFUSE UV ATLAS, edit image1 ORIGINAL. Image2 is full original-only nearest enlarged reference; Only image1 defines full canvas/layout; NEVER output a crop, portrait, assembled head, or arrange these references into a collage. Output square full atlas1024x1024, logical source256x256, layout1x1, preserve every normalized UV coordinate, island silhouette/bounds, rotations, clipping, transparent unused region and original alpha. Keep the upside-down painted face upside down. Preserve source character identity, features, age, expression, nose/lip/ear contours, eye iris color, eyebrow and existing hair shape and amount. Hand-painted early-2000s game albedo with soft brushed tonal transitions; no photographic skin/pores, anatomy beautification, invented facial lines/stubble/hairs, makeup or modern portrait treatment. Refine source painterly edges/material subtly without changing count/pitch/phase of any atlas detail. Dental patch is an existing PAINTED texture motif, not permission to invent dentistry: trace the EXACT two irregular faint pale horizontal clump bands and their exact uneven source separations. Preserve all existing merged clumps and the dark horizontal gaps with the central connected pale area. Do NOT split blurred source clumps into anatomical teeth, add crowns, regular teeth, third rows, white molars, shiny enamel or pink gums. Keep dental palette muted source tones, and top margin original near-black with its original narrow faint marks. Dark gap and top margin stay dark, no colored fill or new dental detail. Preserve flat red-brown mouth rectangle and one eye patch except source1900 explicit eye-grid. Transparency is actual empty canvas, do not paint a checkerboard or background. Brightness will be corrected numerically later; maintain source local tonal hierarchy. No source RGB replacement or artistic numeric fix will be applied; generation itself must be faithful. Mitica Mike Caslaru inverted male face, thick original swept dark brown hair, standalone gray-blue iris with original small amber hue at center. Smooth tan painted skin, exact nose/mouth/ear shapes and source faint chin shading, no invented beard or wrinkles. Dental source faint muted gray-pink motif. Highest priority: the upper-left dental region must remain soft indistinct SOURCE PAINTED BLOCKS with merged pale masses, not a newly illustrated mouth. Do NOT sharpen it, subdivide it, resolve individual teeth or add anatomical detail. Preserve its low-contrast softness while improving only the surrounding original painted material. The source dental crop was inspected privately; output must follow the faint original full atlas, not imagined dentition.",
+      "reference_images": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2182.png",
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2182-heads-third-source-reference.png"
+      ],
+      "raw_dimensions": [
+        1254,
+        1254
+      ],
+      "raw_alpha_extrema": [
+        0,
+        255
+      ],
+      "fullraw_private_QA": {
+        "fullraw_inspected": true,
+        "source_alpha_preview_inspected": true,
+        "dental_review_inspected": true,
+        "reason": "Source central dental pale mass divided into anatomical lower incisors; all pale rows become much more regular separated tooth crowns and near-black top margin becomes brown pillars. Original soft source tooth contour/count/phase cannot be certified. Colored edge fringe persists after source-alpha preview; face/hair broad identity retained."
+      },
+      "normalized_preview": "assets/terrain-hd/expanded/generated/2182-heads-third-normalized.png",
+      "source_alpha_preview": "assets/terrain-hd/expanded/generated/2182-heads-third-source-alpha-preview.png",
+      "dental_review": "assets/terrain-hd/expanded/generated/2182-heads-third-generated-dental-review.png",
+      "dark_dental_margin_rgb_mean_raw_normalized": [
+        3.3003472222222223,
+        0.5211046006944444,
+        0.3150499131944444
+      ],
+      "native_alpha_preview_only": "Source A restored at4x with LANCZOS exactly as native builder alpha method, diagnostic only; NO sourceRGB restored, NO art changes, NO brightness correction, NOT native-pack validation."
+    }
+  ]
+}

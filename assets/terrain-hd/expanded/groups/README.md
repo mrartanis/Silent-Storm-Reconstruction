@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 216 of these verified originals are accepted in the shared
+As of 2026-10-08, 246 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-ninth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-tenth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,584 IDs: clothing 239, equipment 210, weapons
-62, heads 184, UI 677, effects 179, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,554 IDs: clothing 235, equipment 200, weapons
+62, heads 184, UI 676, effects 164, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -179,3 +179,14 @@ all10 effects keep original uniformly zero alpha and exact reviewed RGB without
 premultiplication. Actual-menu HD on/off/on and normal quit recorded in
 `../new-groups-ninth-live-check.json`. Snow5189/5190 and disputed effect/weapon
 variants remain unaccepted provenance. Next raw packets require root review.
+
+Tenth accepted packet: `../jobs-new-groups-tenth.json` adds4 clothing,
+10 equipment,15 additive effect frames and UI3131 direct-original v2.
+2,208 textures/4,416 aliases/116 archives/7,016,536,166 bytes. Prior2,178
+source/PNG/native hashes unchanged. All14 opaque native RGBA equal privately
+reviewed PNG; all15 effects retain original zero alpha and calibrated RGB
+without premultiplication. UI3131 retains exact full original alpha and privately
+reviewed premultiplied RGBA. Full validation, actual-menu HD on/off/on and
+normal isolated quit: `../new-groups-tenth-{batch,live}-check.json`.
+5842 and all8 heads-third attempts held; originals remain. Do not regenerate
+accepted IDs. Next independent raw packets require coordinator review.
