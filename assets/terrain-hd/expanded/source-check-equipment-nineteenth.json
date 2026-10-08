@@ -1,0 +1,446 @@
+[
+  {
+    "id": 5330,
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_rgba_sha256": "7975bbb69cf252170ec54a3b86299a105fece543babb069d5fca284fbc4e923b",
+    "source_binary_sha256": "7ccc9ef39b481ed083a70285da97fc983fecb1e06a4b7a3a0088e17bbf7343b7",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 3465,
+          "TextureID": 5330,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2226,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 2226,
+          "UserName": "PMD_6M"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 5599,
+              "Material0": 2226,
+              "Material1": 0,
+              "GeometryID": 3416,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 3689,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 3416,
+              "AIGeometryID": 2269,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.25953489542007446,
+              "SizeY": 0.08906947821378708,
+              "SizeZ": 0.07997450232505798,
+              "CenterX": 0.0326407253742218,
+              "CenterY": 0.0,
+              "CenterZ": 0.03998725116252899,
+              "SrcName": "Characters\\Equipment\\Items\\Mines.mb",
+              "UserName": "PMD_6M",
+              "RootJoint": "PMD_6M"
+            },
+            "model_template": {
+              "ID": 3689,
+              "UserName": "PMD_6M"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        0,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3465,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5330.png",
+      "operations": "ENTIRE native storedRGB NEAREST4x only; opaqueRGBguide with originalA separately restored. No crop/padding/recenter/rotation/fitting/BBox/artRGBcomposite. ENTIREoutput inverseoriginal4x.",
+      "source_size": [
+        128,
+        128
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5330-equipment-nineteenth-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Complete source128square/sourceRGB NEAREST4x512square/fullraw1254square/native512square originalRGBA/storedRGB+sourceA privately viewed. Major wood fields, one black rectangular window, one ring opening and one vertical metal field preserve normalized fullcanvas locations and broad component count. However irregular mottled painted-metal ring became regular concentric raised rim; fine woodgrain became more regular elongated horizontal striations. Source ring black-core threshold5 area192/bbox[44,25,60,41] versus candidate area176/bbox[44,25,60,40] at native inverse128: this diagnostic suggests one-native-pixel edge change, not registration proof. Vertical metal area gains up to36; weak-source gain531, stored native correlation .969630. Hold native material/pattern/contour review, no accepted claim. SourceA255 byte-exact, physicalPOT512square, wholeinverse only/no source-artRGB/composite/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/5330-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 5330,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "counts": "One original dark graymetalring withone black opening, one separate narrow vertical graymetal field, one black rectangular window within rightwoodfield. All woodplane fields/seamshading and blackgaps fullsource fixed; no repeatedcell/grid claim.",
+      "strict_native_phase_claim": "No manufactured periodicpattern; fullwholecanvas original128square reference/inverse512square, preserve all original contours/scale."
+    }
+  },
+  {
+    "id": 5332,
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_rgba_sha256": "1d49d7dc61c104031175aac3a3ffd15de2c42797236309a1e3cf8a20c14f1aa5",
+    "source_binary_sha256": "743a220c1a0847a7e08d74430b98a4bc7521bc6a3cbc1592f38bf1f382cd5c8f",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 3467,
+          "TextureID": 5332,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2228,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 2228,
+          "UserName": "SchuMi_42"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 5601,
+              "Material0": 2228,
+              "Material1": 0,
+              "GeometryID": 3419,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 3691,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 3419,
+              "AIGeometryID": 2272,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.18524301052093506,
+              "SizeY": 0.09676239639520645,
+              "SizeZ": 0.0505569726228714,
+              "CenterX": 0.027996014803647995,
+              "CenterY": 0.0,
+              "CenterZ": 0.025278490036725998,
+              "SrcName": "Characters\\Equipment\\Items\\Mines.mb",
+              "UserName": "SchuMi_42",
+              "RootJoint": "SchuMi_42"
+            },
+            "model_template": {
+              "ID": 3691,
+              "UserName": "SchuMi_42"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        0,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3467,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5332.png",
+      "operations": "ENTIRE native storedRGB NEAREST4x only; opaqueRGBguide with originalA separately restored. No crop/padding/recenter/rotation/fitting/BBox/artRGBcomposite. ENTIREoutput inverseoriginal4x.",
+      "source_size": [
+        128,
+        128
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5332-equipment-nineteenth-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Complete source128square/sourceRGB NEAREST4x512square/fullraw1254square/native512square originalRGBA/storedRGB+sourceA privately viewed. Wood planes, one ring opening, existing lowerleft bar localized pale left tip and dim upper patch retain major counts and wholecanvas normalized positions. However irregular soft metal ring becomes a regular concentric raised rim; original mottled wood paint becomes uniform horizontal streaks and weak wood regions strengthen (weak-source gain2156). Native inverse ring threshold5 black-core area670/bbox[85,49,114,79] versus area660/bbox[86,49,114,79]: one-native-pixel edge change diagnostic. Stored native correlation .951271/maxlocal+27. Hold native material/pattern review despite broad UV/count retained, no accepted claim. SourceA255 byte-exact/POT512square, fullinverse/no artistic insert/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/5332-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 5332,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "counts": "One dark graymetalring/opening, one lower-left narrow graybar with localized original palelefttip, one tiny dim gray sourcepatch in upper-right darkrectangle. All woodfields original edges/gaps/sourcegrain scale fixed; no new fastener/rivet/screw.",
+      "strict_native_phase_claim": "No manufactured regularwoodgrain grid or extra grainstripecount; existing irregular painttexture fullsource reference only."
+    }
+  },
+  {
+    "id": 5381,
+    "logical_size": [
+      64,
+      32
+    ],
+    "source_rgba_sha256": "eb6760c1aeb136dc1e56458ef8ad0c5f3c15843268e2c0bc9230d871d7935790",
+    "source_binary_sha256": "aa5420055e0413ad99d7ab355bd63ee9f7a4528549e12eee7ddcf4b4ea00d90b",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 3506,
+          "TextureID": 5381,
+          "BRDFID": 0,
+          "BumpID": 5445,
+          "SpecColor": 6776679,
+          "TemplateID": 2247,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.30000001192092896,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.20000000298023224,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 2247,
+          "UserName": "Pincers"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 5628,
+              "Material0": 2247,
+              "Material1": 0,
+              "GeometryID": 3456,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 3711,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 3456,
+              "AIGeometryID": 2310,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.251977801322937,
+              "SizeY": 0.05129166319966316,
+              "SizeZ": 0.01493625994771719,
+              "CenterX": 0.043879635632038116,
+              "CenterY": 0.0,
+              "CenterZ": 0.007522227708250284,
+              "SrcName": "Characters\\Equipment\\Items\\MedicineStuff.mb",
+              "UserName": "Pincers",
+              "RootJoint": "Pincers"
+            },
+            "model_template": {
+              "ID": 3711,
+              "UserName": "Pincers"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3506,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5381.png",
+      "operations": "ENTIRE native storedRGB NEAREST8x only; opaqueRGBguide with originalA separately restored. No crop/padding/recenter/rotation/fitting/BBox/artRGBcomposite. ENTIREoutput inverseoriginal4x.",
+      "source_size": [
+        64,
+        32
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        32
+      ],
+      "helper_size": [
+        512,
+        256
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        256
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5381-equipment-nineteenth-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Complete source128x64/sourceRGB NEAREST4x512x256/fullraw1774x887/native512x256 sourceRGBA/storedRGB+sourceA privately viewed. Dim gray metal palette and broad upper pincer fields/middle and bottom horizontal rectangles remain, without new bright plates/glyph/hardware. Yet upper stepped irregular contour becomes a smoother oval opening and several original small dark internal patches/steps disappear in the rectangular fields. This loses source material silhouette/shadow detail despite stored native correlation .922290/maxlocal+25/weak-source gain17. Hold native contour/detail-material review, no accepted claim. SourceA255 byte-exact/POT512x256, wholeinverse/no artistRGB/BBox/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/5381-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 5381,
+      "source_dimensions": [
+        128,
+        64
+      ],
+      "counts": "Only original faint upper curved metalfields, original long horizontal middle/bottom rectangle fields and existing dark flat sourcepatches; original counts/contours kept without interpreting faintdarkpaint as added holes. No exact repeatedcell/teeth count claim.",
+      "strict_native_phase_claim": "Full128x64 originalaspect reference512x256, all source edge/shadow patches stay normalizedUV; no invented repeatingdetails."
+    }
+  }
+]

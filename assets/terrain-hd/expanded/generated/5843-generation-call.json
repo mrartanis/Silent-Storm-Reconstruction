@@ -1,0 +1,204 @@
+{
+  "id": 5843,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-29375460-7381-45a7-890d-1ad50c3b15cf.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: faithful original 2D game UI color texture HD repaint.\r\nInput image1 is the exact original artwork entire canvas, enlarged nearest and whole affine3:1 to1536x512, never cropped or padded. Edit only this artwork with fine smooth source-scale painted transitions. Output the same entire 3:1 canvas; it will be inverse whole resized to original logical4x. Preserve each shape, edge, UV location, full-canvas margin, relative shading, material, pattern count/pitch/phase and detail scale. Match the source broad color hierarchy closely; overall brightness is adjusted numerically afterwards, so do not whiten rims or brighten edges relative to the center. Flat regions must remain flat. Retain the source soft low-contrast appearance; do not interpret faint pixels as new details. No crop, padding, bounding-box fitting, reframing, recentering, rotation, extra border, letterboxing, new objects, text, symbols, bolts, bevels, ornaments, pores, coarse grain, stone/fabric texture, repeated curls or hatching. No scene generation, mockup, perspective or lighting redesign.\r\nExact source artwork: One flat soft beige-gray painted panel with exactly one dark plain rectangular outer rim and exactly ONE vertical divider near the right edge. Two inset fields, very large left field and narrow right field, same exact widths and relative phase. Preserve the thin gray-brown rim, all existing outer margin rows/columns and divider position, subtle low-contrast beige/gray broad painted wash. Preserve the soft nearly flat fields: no new grain, paper fibers, brush hatching, stains, folds, marks or symbols. No second divider or inner rim. Original logical543x41 shown via whole source-only affine3:1 guide; inverse whole output2172x164.\r\n",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5843-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original RGBA entire canvas nearest source-only whole affine3:1 guide1536x512; no crop/padding/bbox/artistic edits. Raw entire-canvas normalized to logical4x Lanczos only, source alpha/numeric brightness handled by root.",
+  "artifact_sha256": {
+    "raw": "2fd972f6ed7d6ceab173a4bcb64127089c4a6227c9a919e18d746ee59c0b597e",
+    "exact_prompt_file": "f6864a30b91e334e780a487d135b7d2d4b5af9e2d2f1b9f60befd2402e237a6a",
+    "reference_png": "6c79c87c37ae57ec52c9f5301f4a437a6bdbe0bd43e2cb3d9159d21e22212dcb"
+  },
+  "saved_at_utc": "2026-10-08T02:43:49.462871+00:00",
+  "status": "artistically-ready-coordinator-QA-production-pending-root-NPOT-fix",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "raw_saved": true,
+  "source_record": {
+    "id": 5843,
+    "texture": {
+      "ID": 5843,
+      "Width": 543,
+      "Height": 41,
+      "NMips": 1,
+      "AverageColor": -5198693,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\ObjectivePanel\\Intr0095_10.tga",
+      "Format": "8888",
+      "UserName": "LineSmall - 1",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 698,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "LineSmall - 1 "
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 698,
+          "name": "LineSmall - 1 ",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            543,
+            41
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2118,
+              "field": "Texture0",
+              "control_name": "",
+              "type": 2,
+              "rect": [
+                0,
+                0,
+                580,
+                41
+              ],
+              "container": 386,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 2168,
+              "field": "Texture0",
+              "control_name": "background",
+              "type": 2,
+              "rect": [
+                37,
+                0,
+                580,
+                41
+              ],
+              "container": 391,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      543,
+      41
+    ],
+    "source_sha256": "b9336788cde2cbf9bb12de38069fa0321c4e7960be70e576c83d52c5cf5e5154",
+    "source_rgba_sha256": "c086e1a6650c9606b169b4f09e29762aea1de6e6fbe9f4381b1903d714b4e2b4",
+    "release_rgba_sha256": "c086e1a6650c9606b169b4f09e29762aea1de6e6fbe9f4381b1903d714b4e2b4",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5843.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "3eb0e8c3b6cf864fd0bea68a12441031e26be812a310e859145bb4bab3d19ba0",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: faithful original 2D game UI color texture HD repaint.\r\nInput image1 is the exact original artwork entire canvas, enlarged nearest and whole affine3:1 to1536x512, never cropped or padded. Edit only this artwork with fine smooth source-scale painted transitions. Output the same entire 3:1 canvas; it will be inverse whole resized to original logical4x. Preserve each shape, edge, UV location, full-canvas margin, relative shading, material, pattern count/pitch/phase and detail scale. Match the source broad color hierarchy closely; overall brightness is adjusted numerically afterwards, so do not whiten rims or brighten edges relative to the center. Flat regions must remain flat. Retain the source soft low-contrast appearance; do not interpret faint pixels as new details. No crop, padding, bounding-box fitting, reframing, recentering, rotation, extra border, letterboxing, new objects, text, symbols, bolts, bevels, ornaments, pores, coarse grain, stone/fabric texture, repeated curls or hatching. No scene generation, mockup, perspective or lighting redesign.\r\nExact source artwork: One flat soft beige-gray painted panel with exactly one dark plain rectangular outer rim and exactly ONE vertical divider near the right edge. Two inset fields, very large left field and narrow right field, same exact widths and relative phase. Preserve the thin gray-brown rim, all existing outer margin rows/columns and divider position, subtle low-contrast beige/gray broad painted wash. Preserve the soft nearly flat fields: no new grain, paper fibers, brush hatching, stains, folds, marks or symbols. No second divider or inner rim. Original logical543x41 shown via whole source-only affine3:1 guide; inverse whole output2172x164.\r\n",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5843-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      543,
+      41
+    ],
+    "guide_dimensions": [
+      1536,
+      512
+    ],
+    "filter": "nearest entire canvas affine3:1",
+    "logical4x_dimensions": [
+      2172,
+      164
+    ],
+    "raw_normalization": "Entire canvas Lanczos inverse tological4x",
+    "padding": false,
+    "crop": false,
+    "bbox": false,
+    "registration": false,
+    "artistic_RGB_source_composite": false
+  },
+  "actual_source_alpha_mask": {
+    "id": 5843,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "center_RGBA": [
+      186,
+      181,
+      165,
+      255
+    ],
+    "alpha_zero_count": 0,
+    "alpha_positive_count": 22263,
+    "alpha255_count": 22263,
+    "alpha_positive_RGB000_count": 0,
+    "border_alpha_top_bottom_left_right_extrema": [
+      [
+        255,
+        255
+      ],
+      [
+        255,
+        255
+      ],
+      [
+        255,
+        255
+      ],
+      [
+        255,
+        255
+      ]
+    ],
+    "center_is_transparent": false,
+    "mask_inference": "Actual alpha bytes, never inferred from RGB0 or TypeTransparent."
+  },
+  "raw_dimensions": [
+    2172,
+    724
+  ],
+  "private_numeric_proof": {
+    "id": 5843,
+    "gain": 1.0027313232421875,
+    "source_stored_luma": 171.32521632304721,
+    "actual_stored_luma": 171.3084468905808,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": true,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      2172,
+      164
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "private_numeric_scope": "Pure sourceA/uniformscalar preview, no production RGB padding invoked; root verifies native pipeline separately. Source black is not transparency.",
+  "review_reason": "Private full source/raw/scalar-sourceA4x/native comparison preserves one simple gray-brown rectangular rim, exactly ONE vertical divider and TWO beige-gray softly shaded nearly flat fields. Native divider minimum source/raw both x504. Whole margin/rim footprint and field widths retained; no new marks/fibers/grain/hatching/objects/second divider. Raw/sourceAall255, zero hidden-alpha RGB and zero final highchroma texels. Slight native meanRGB175.57/171.75/154.65→177.35/171.22/153.92 recorded for coordinator QA. No RGB artistic repair."
+}

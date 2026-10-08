@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 354 of these verified originals are accepted in the shared
+As of 2026-10-08, 362 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-nineteenth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twentieth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,415 IDs: clothing 223, equipment 151, weapons
-57, heads 184, UI 640, effects 136, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,401 IDs: clothing 223, equipment 149, weapons
+57, heads 184, UI 628, effects 136, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -232,3 +232,24 @@ were not imported due to material/local detail drift. Exact accepted-donor audit
 of1433 remaining sources against2303 eligible donors (authorized book covers
 excluded) found0 matches and made0 new calls. UI13/equipment17 are subsequent
 independent packets; inspect saved raw/jobs before generating again.
+
+Twentieth accepted packet: eight textures 609/1995/2034/2200/5111/5843/7455/7664,
+two equipment and six interface textures. Pack: 2,324 textures / 4,648 aliases /
+126 archives / 7,604,289,534 bytes. All prior 2,316 source/PNG/native
+hashes are unchanged. Eight complete nativeRGBA images exactly match privately
+reviewed production4x predictions. Full source alpha, UV, materials and pattern
+scale remain intact. 1995/5111 reuse saved raw with no regeneration. Whole NPOT
+dimensions are neither rounded nor padded. 7455 retains four upper and four lower
+cuts; 5843 retains its sole divider at original x504. Accepted detail/contrast
+changes are disclosed in ../coordinator-art-review-twentieth.json; exact
+local RGB palette identity is not claimed. 2033 remains held: its incorrectly
+prompted transparent center and colored edge flecks were not repaired with RGB insertion.
+Six structural UI fills 2122..2125/7412/7413 retain originals after individual
+whole-source inspection and actual UI binding checks, without excluding other UI/alpha/NPOT art.
+Full native validation, actual-menu HD switching and isolated normal quit are
+recorded in ../new-groups-twentieth-{batch,live}-check.json. Separate real GPU
+5843 on/off/on testing covers whole 2172x164, middle/reverse UV and clipping:
+../new-groups-twentieth-ui-runtime-check.json. All frames were privately
+reviewed; integration testing does not certify every new element. All declared
+PNG/prompt stages are ordinary Git files, ../accepted-git-stage-completeness-twentieth.json.
+Held independent attempts preserve exact raw/prompt/reason provenance. Never regenerate accepted IDs.

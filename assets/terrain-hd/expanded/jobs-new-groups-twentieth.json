@@ -1,0 +1,94 @@
+[
+  {
+    "id": 7664,
+    "generated": "assets/terrain-hd/expanded/generated/7664-raw.png",
+    "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original82x105 entirely opaque complete vertical canvas, exact8x nearest656x840 guide. One plain rectangular dark neutral gray painted UI panel with softly mottled existing gray/brown/olive patches and faint original edge shading. Preserve all original mottling positions and SOURCE pattern scale, all source dark/light patches and original four canvas boundaries. The surface is subtly painted matte gray, not woven cloth, masonry, camouflage or scratched steel. No newly resolved grid, fabric weave, stone cracks, curls, coarse granular pattern, stripes, folds, damage, seams, bevel rings, holes or objects. Preserve full opaque canvas, no alpha cutout or empty margins.\r\n"
+  },
+  {
+    "id": 1995,
+    "generated": "assets/terrain-hd/expanded/generated/1995-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nThe reference is the EXACT ORIGINAL Silent Storm UI button, full native107x39 canvas, enlarged8x nearest neighbor using ONLY its original native RGB channels. Original variable alpha will be restored by root final pack; return original-faithful RGB painting on the same very dark surround, not a new transparent cutout. Do not manufacture colors in alpha-zero corners. Original full canvas aspect ratio is107:39.\r\nEdit the ORIGINAL into one faithful HD painted interface button, preserving full normalized UV layout, every existing contour/edge width/bevel/shadow/worn patch position, exact original relative texture/material scale and source black corner pixels. Preserve the full rectangular107:39 canvas and original very narrow margins. Button spans exactly the original width and height; no framing, extra background space, recentering, crop, zoom, shift, repacking or scale change. Do not expand the bevel or occupied footprint. No text, letters, numbers, symbols, icon, logo, screw, rivet, button, hole, new crack, mark or extra component.\r\nKeep the original restrained gray/brown worn matte painted surface and its actual subdued mottling/wear patches, with exact large dark/light patch arrangement and source-scale fine grain. Resolve coarse pixels into restrained fine material; do not add decorative curls, grids, noisy speckle clusters, shiny metallic sparkles, new scratches, engraved lines or random objects. Keep all existing shadow/highlight edges at their source coordinates and original thickness. No relighting/color redesign; numeric brightness correction happens later. No photoreal scene,3D object render, mockup, perspective view or new rounded rectangle. Exact straight source frame segments and rounded source corners are preserved. No added border. Do not change the pressed/raised state.\r\nSource-specific constraints: This is UnitTab Down. Its exact narrow top bevel is relatively lighter gray/brown, dark narrow side edges and original subtly rounded corners. The inset face is dark gray/brown, with the original darker horizontal band in upper-middle and scattered understated wear/mottle. Keep the exact top/side/bottom lighting and depressed state from the reference, including source speckle density. No replacement texture or new hardware."
+  },
+  {
+    "id": 7455,
+    "generated": "assets/terrain-hd/expanded/generated/7455-raw.png",
+    "prompt": "Use case: faithfulHD game diffuseUV texture edit, exact original artwork/topology/material.\r\nReference is ENTIRE ORIGINAL64x64 storedRGB enlarged NEAREST8x to512square only, no artistic modification. Original fullcanvas alpha255 stays separate. Edit the WHOLE original UV square in place. Every normalized position/size/orientation of shaded material fields, black gaps, clipped edges, source shapes and relative dark/light tones stays EXACT. No crop/padding/fitting/recenter/rotate/zoom/atlas arrangement/border, no assembled hat/object, scene or photo.\r\nKeep original muted warm dark-brown plain painted cloth/leather body fields: the broad smooth rounded/tapered main field, its original softly shaded center with ONE existing dark tonal spot at native around24,36 (keep the flat soft dark source tone, do NOT create a new geometric hole/rim/button), original two lighter curved side fragments at left and upper-right, original small lower-right dark rounded patch, and original long upper band/strip. Preserve original broad smooth shading and all black gaps/edge clipping, not new seams/folds. Preserve the SINGLE existing upper-right rectangular dark field with its TWO pale end/side fields, exact source dark center and every subtle flat tone. Its upper edge has EXACTLY FOUR original narrow dark cuts centered at nativeX41,46,51,56 over nativeY1..2, pitch5native; lower edge has EXACTLY FOUR original narrow dark cuts at SAME nativeX41,46,51,56 overY11..12. Keep all EIGHT source cuts and exact count/pitch/phase/width/softness; preserve the original clipped top source row and irregular faint DXT shading without adding/reordering cuts. Attached guide is8x those native coordinates. Do not interpret them as new hardware, letters or teeth. All source-coordinate numbers are constraints only, NEVER text drawn.\r\nOnly smooth coarse pixel steps into restrained source-like fine softly painted diffuse material at SAME pattern scale. Plain cloth/leather areas remain plain smooth matte, no new grain rows/weave grid, raised stitches, engraved detail, leather cracks, coarse scratches/mottling/rust/pits/curls, seams/straps/rivets/holes/buttons/extra parts, decorative glowing outlines/glints or stronger source weak highlights. Keep the original soft tonal hierarchy and dark material; numeric brightness handled afterward, never brighten central spot or pale fragments. No invented text, logo, glyph, letters/numbers or ornament. Output ENTIRE original square UV as opaqueRGB only, no labels/comparison.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/7455.png",
+      "operations": "Native storedRGBA to opaqueRGB, ENTIRE64x64 canvas NEAREST8x to512square, no crop/padding/rotate/fit/composite/unpremultiply/art insert. SourceA separate. ENTIRE output inverse original4x256square.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/7455-equipment-seventeenth-source-rgb-support.png"
+    }
+  },
+  {
+    "id": 2034,
+    "generated": "assets/terrain-hd/expanded/generated/2034-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nAsset type: faithful original 2D game UI color texture HD repaint.\r\nInput image1 is the exact original artwork entire canvas, enlarged nearest and whole affine3:1 to1536x512, never cropped or padded. Edit only this artwork with fine smooth source-scale painted transitions. Output the same entire 3:1 canvas; it will be inverse whole resized to original logical4x. Preserve each shape, edge, UV location, full-canvas margin, relative shading, material, pattern count/pitch/phase and detail scale. Match the source broad color hierarchy closely; overall brightness is adjusted numerically afterwards, so do not whiten rims or brighten edges relative to the center. Flat regions must remain flat. Retain the source soft low-contrast appearance; do not interpret faint pixels as new details. No crop, padding, bounding-box fitting, reframing, recentering, rotation, extra border, letterboxing, new objects, text, symbols, bolts, bevels, ornaments, pores, coarse grain, stone/fabric texture, repeated curls or hatching. No scene generation, mockup, perspective or lighting redesign.\r\nExact source artwork: One very dark charcoal brown recessed painted rectangular panel. Exactly one plain straight gray-brown rim: darker upper/right face, pale lower/left face. Keep the original black outer margins, flat dark inset and subtle original brown shading. No added inner highlight edge. Original logical canvas73x14, complete wide panel shown via whole affine3:1 guide; inverse whole output to292x56.\r\n"
+  },
+  {
+    "id": 2200,
+    "generated": "assets/terrain-hd/expanded/generated/2200-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nAsset type: faithful original 2D game UI color texture HD repaint.\r\nInput image1 is the exact original artwork entire canvas, enlarged nearest and whole affine3:1 to1536x512, never cropped or padded. Edit only this artwork with fine smooth source-scale painted transitions. Output the same entire 3:1 canvas; it will be inverse whole resized to original logical4x. Preserve each shape, edge, UV location, full-canvas margin, relative shading, material, pattern count/pitch/phase and detail scale. Match the source broad color hierarchy closely; overall brightness is adjusted numerically afterwards, so do not whiten rims or brighten edges relative to the center. Flat regions must remain flat. Retain the source soft low-contrast appearance; do not interpret faint pixels as new details. No crop, padding, bounding-box fitting, reframing, recentering, rotation, extra border, letterboxing, new objects, text, symbols, bolts, bevels, ornaments, pores, coarse grain, stone/fabric texture, repeated curls or hatching. No scene generation, mockup, perspective or lighting redesign.\r\nExact source artwork: One very dark charcoal-brown recessed painted rectangular panel. Exactly one plain straight gray-brown rim: dark upper/right face, pale lower/left face. Preserve the narrow whole-canvas edge rows, flat dark inset and very subtle broad brown shading, source plain smooth matte paint. No added inner highlight edge. Original logical canvas132x18; whole affine3:1 guide, inverse whole output528x72.\r\n"
+  },
+  {
+    "id": 5843,
+    "generated": "assets/terrain-hd/expanded/generated/5843-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nAsset type: faithful original 2D game UI color texture HD repaint.\r\nInput image1 is the exact original artwork entire canvas, enlarged nearest and whole affine3:1 to1536x512, never cropped or padded. Edit only this artwork with fine smooth source-scale painted transitions. Output the same entire 3:1 canvas; it will be inverse whole resized to original logical4x. Preserve each shape, edge, UV location, full-canvas margin, relative shading, material, pattern count/pitch/phase and detail scale. Match the source broad color hierarchy closely; overall brightness is adjusted numerically afterwards, so do not whiten rims or brighten edges relative to the center. Flat regions must remain flat. Retain the source soft low-contrast appearance; do not interpret faint pixels as new details. No crop, padding, bounding-box fitting, reframing, recentering, rotation, extra border, letterboxing, new objects, text, symbols, bolts, bevels, ornaments, pores, coarse grain, stone/fabric texture, repeated curls or hatching. No scene generation, mockup, perspective or lighting redesign.\r\nExact source artwork: One flat soft beige-gray painted panel with exactly one dark plain rectangular outer rim and exactly ONE vertical divider near the right edge. Two inset fields, very large left field and narrow right field, same exact widths and relative phase. Preserve the thin gray-brown rim, all existing outer margin rows/columns and divider position, subtle low-contrast beige/gray broad painted wash. Preserve the soft nearly flat fields: no new grain, paper fibers, brush hatching, stains, folds, marks or symbols. No second divider or inner rim. Original logical543x41 shown via whole source-only affine3:1 guide; inverse whole output2172x164.\r\n"
+  },
+  {
+    "id": 609,
+    "generated": "assets/terrain-hd/expanded/generated/609-raw.png",
+    "prompt": "Use case: faithfulHD game diffuseUV edit, exact original paint/material/tonal pattern.\r\nReference is ENTIRE original source storedRGB enlarged NEAREST only, no artwork changes. Original full alpha retained separately. Edit WHOLE original canvas IN PLACE with exact original aspect and every normalizedUV position, field/blackgap/edgeclipping, materialboundary and shape/count/scale. No crop/padding/recenter/rotate/zoom/repack/BBox/fitting/border, no assembled object/scene or photo. Native coordinate numbers below are constraints only, NEVER text drawn.\r\nOriginal native128x64 source, wholeNEAREST4x guide512x256, final whole512x256. Keep muted gray-green painted metal shell fields: the original broad lower rounded green shaded area, original upper gray-green background and curved green wear/edge contour, original SINGLE very dark right oval/crescent field clipped at right edge. Preserve all the original soft painted edgewear and pale outline patches ONLY where source has them, exact original shape/scale, no new rim or corrosion geometry. In main greenfield retain EXACTLY TWO tiny faint source pale specks: native[30,29,31,31] and[38,34,40,36], original size/location/relative faintness; no extra specks/dots/pits anywhere. Do not make these into white scratches/bolts/holes/glints. Keep original muted gray/green palette, smooth diffuse shade and every irregular source mark. No glossy/photographic hammered/rough metal or new bright chipped patches.\r\nOnly replace coarse pixel steps with very restrained fine soft paint matching original material/scale; existing fine grain can gain resolution, but smooth fields stay smooth. Preserve original relative brightpatch strength, palette/chroma and dark shading; NO stronger shine/new pale or white plates, amplified weak marks, brighter beveled rims, added sharp raised stitches, repeating weave/grid, crust/pits/rough photograin, ornamental scratches/curls/rays or new parts. Keep all original component counts/folds/holes/cutouts and original soft tonalhierarchy. Numeric wholecanvas brightness is handled afterward; do not brighten source details. No invented letters/numbers/logo/emblem/mark/engraving. Output only ENTIRE originalaspect UV texture as opaqueRGB, without labels/comparison.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/609.png",
+      "operations": "Entire source storedRGBA to opaqueRGB NEAREST4x only; no crop/pad/rotate/fit/composite/unpremultiply/artinsert. OriginalA separate. Wholeinverse4xoriginal.",
+      "source_size": [
+        128,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        64
+      ],
+      "helper_size": [
+        512,
+        256
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        256
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/609-equipment-eighteenth-source-rgb-support.png"
+    }
+  },
+  {
+    "id": 5111,
+    "generated": "assets/terrain-hd/expanded/generated/5111-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nAsset type: Silent Storm original painted UI texture 5111, complete 38 by 46 pixel UV canvas.\r\nInput image: edit target is a nearest-enlarged RGB-only view of the ORIGINAL COMPLETE texture. It is the exact geometry and material reference, not an inspiration image.\r\nPrimary request: faithfully refine only the original painted surface into an HD texture. Preserve every existing shape and the complete original canvas. Keep the original aspect ratio 38:46, canvas framing and all normalized UV coordinates EXACTLY. Return the full image edge-to-edge, without fitting the painted object into another aspect ratio, padding, crop, rotation, relocation or redesign.\r\nSubject and invariants: The source is one small dark grey matte metal slider frame with one black inset. Inside are exactly TWO orange arrows: one points UP in the upper half and one points DOWN in the lower half, their tips separate and their shape and spacing exactly match the source. Preserve the full rectangular frame, original little metal highlights, dark edge shading, orange shade and original empty black surround. No extra arrow, cross, numeral, screw or ornamental detail.\r\nMaterials: keep the source's quiet fine grain and original broad shading. Do not enlarge the pattern or turn the texture into polished chrome, dramatic scratches, chunky grain or outlined decoration. Match original material and soft highlights. Brightness will be calibrated numerically later; preserve the relative source shading.\r\nConstraints: every region remains at its existing UV location and size. Keep the exact original number and geometry of details. Black empty/cut-out areas remain black. This is a plain painted GAME TEXTURE, not a scene or product rendering. Return opaque RGB; the source alpha is restored separately. No text, fonts, labels, logos, flags, portraits, invented symbols, decorative curls, screws, extra hardware, new cells or grids. No artificial transparent cut-out or color fringe. No artistic additions. Only refine the existing painting."
+  }
+]

@@ -1,0 +1,167 @@
+{
+  "id": 3455,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-ced7fdc7-d5f1-4260-9896-7b28510ea1e4.png",
+  "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original515x130 entirely opaque complete horizontal canvas. The attached1536x512 guide is the exact whole source affinely prewarped to3:1 by nearest resampling solely for the image service; restore the final result to the original515:130 whole-canvas UV aspect numerically later, no bbox/crop/padding. Exactly one dark charcoal-brown painted/mottled panel with a single slim rounded rectangular outer rim. Preserve existing subtle fine irregular mottling, source isolated tiny dark specks at exact source UV/count, dark lower/left edge and narrow muted pale top/right bevel. The source contains no letters, symbols, bolts, new cracks or repeated weave. Preserve one rim and identical corner curvature, border thickness and all source-scale mottling distribution. No extra material grain, stippling clusters, diagonal hatch, curls, damage or new hardware. Preserve full opaque canvas.\r\n",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/3455-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original RGBA entire canvas nearest source-only guide (8x or explicitly whole affine3:1 for3455); no crop/padding/bbox/artistic edits. Raw entire-canvas normalized to logical4x Lanczos only, source alpha/numeric brightness handled by root.",
+  "artifact_sha256": {
+    "raw": "328ce1e70d860b8739a5a9324aa4b69558a680a32d1c17e2d3fd0bcc1c687f43",
+    "exact_prompt_file": "18e76b1cf3c10f140f6eabcee0e952792bf989ca983841c174e3da3c0eb5abad",
+    "reference_png": "aa832f0f8c66bf239ad3d8aec5e72d5e12938576adc7aaf8e735d52f31111386"
+  },
+  "saved_at_utc": "2026-10-08T02:32:54.591927+00:00",
+  "status": "raw-held-original-artwork-pending",
+  "raw_saved": true,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 3455,
+    "texture": {
+      "ID": 3455,
+      "Width": 515,
+      "Height": 130,
+      "NMips": 1,
+      "AverageColor": -14607079,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\UnitPanel\\Intr0034.tga",
+      "Format": "8888",
+      "UserName": "SlotBig Background",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 507,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "SlotBig Background"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 507,
+          "name": "SlotBig Background",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            515,
+            130
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 1470,
+              "field": "Texture0",
+              "control_name": "",
+              "type": 2,
+              "rect": [
+                0,
+                0,
+                515,
+                130
+              ],
+              "container": 308,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 2617,
+              "field": "Texture0",
+              "control_name": "",
+              "type": 2,
+              "rect": [
+                0,
+                0,
+                515,
+                130
+              ],
+              "container": 445,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      515,
+      130
+    ],
+    "source_sha256": "819e870086cc307582c98dc98f3481fd7c94b2c6837cd747ed3cec8e79dab9be",
+    "source_rgba_sha256": "2ce0bb6b95b8227b5118fb45ca8e6e0293463fa970550971925ce5510c5aed64",
+    "release_rgba_sha256": "2ce0bb6b95b8227b5118fb45ca8e6e0293463fa970550971925ce5510c5aed64",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/3455.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "8c7dbdfa8ec6c5ebcff06b1a88325bbfff8f0d76432ed580e2ef38c094b1e3b7",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original515x130 entirely opaque complete horizontal canvas. The attached1536x512 guide is the exact whole source affinely prewarped to3:1 by nearest resampling solely for the image service; restore the final result to the original515:130 whole-canvas UV aspect numerically later, no bbox/crop/padding. Exactly one dark charcoal-brown painted/mottled panel with a single slim rounded rectangular outer rim. Preserve existing subtle fine irregular mottling, source isolated tiny dark specks at exact source UV/count, dark lower/left edge and narrow muted pale top/right bevel. The source contains no letters, symbols, bolts, new cracks or repeated weave. Preserve one rim and identical corner curvature, border thickness and all source-scale mottling distribution. No extra material grain, stippling clusters, diagonal hatch, curls, damage or new hardware. Preserve full opaque canvas.\r\n",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/3455-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      515,
+      130
+    ],
+    "guide_dimensions": [
+      1536,
+      512
+    ],
+    "resize_filter": "nearest",
+    "whole_canvas": true,
+    "affine_aspect_prewarp": true,
+    "logical4x_dimensions": [
+      2060,
+      520
+    ],
+    "raw_normalization_filter": "Lanczos entire canvas",
+    "bbox": false,
+    "padding": false,
+    "cropping": false,
+    "source_RGB_art_composite": false
+  },
+  "raw_dimensions": [
+    2172,
+    724
+  ],
+  "numeric_private_proof": {
+    "id": 3455,
+    "gain": 0.7325439453125,
+    "source_stored_luma": 29.1690758476475,
+    "actual_stored_luma": 29.163934423263626,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      2060,
+      520
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held: source panel material/mottling and whole-canvas broad layout preserved, but scalar cannot restore relative rim shading. Center luma28.11748→28.10611; upper y0 luma34.77763→67.14878 and y1 peak91.19587→106.86457, bottom final row58.77489→36.82949. Whole affine nearest3:1/inverse2060x520 used without crop/padding/bbox; no clear extra frame/object/count asserted. Tonal edge drift remains original artwork pending, no retry or RGB repair."
+}

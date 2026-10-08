@@ -1,0 +1,63 @@
+{
+  "id": 2816,
+  "batch": "effects-sixteenth",
+  "status": "finished",
+  "builtin": true,
+  "tool": "image_gen.imagegen",
+  "started_utc": "2026-10-08T02:55:41.345671+00:00",
+  "exact_prompt": "Use case: precise-object-edit. Faithfully enhance the ORIGINAL complete historical painted-game color texture to HD. Image1 is the full original asset; image2 is exactly the same complete storedRGB canvas enlarged only with nearest-neighbor to expose existing artwork, not a different composition. Preserve full square canvas and exact normalized positions, orientation, scale, shape/contour, count, overlap and relative palette of every existing part. Original full source alpha is restored separately in native packing; preserve its footprint and softness in RGB. Output the same original black RGB background and existing artwork only, no new canvas, crop, padding, zoom, registration, repack or scene. Painted game material and soft baked shading, no photograph, cinematic render, sharpened hard outlines or artistic relighting. Existing codec pixelblocks are color/shading, never new seams, geometry, hardware or repeated objects. Slight finer faithful grain only at original pattern scale; do not add new flecks, sparks, holes, curls, cracks, borders, text or ornaments. Exact existing native material/blend/frame/UV bindings remain unchanged. Global scalar brightness correction only later; no artistic RGB repair. Return one complete texture with no comparisons or labels. 32x32 single upright golden/brass baked fragment sprite, production128x128. Preserve exactly ONE existing narrow vertical brass form centered in the canvas, with source narrow horizontal upper lip, small dark shoulders, existing long vertical amber band and broad soft rounded pale lower highlight. Keep the original full footprint and source relative proportions/scale, smooth low-detail baked game shading. Source tiny square cells along upper strip are shading/codec artifacts: never turn them into added teeth, screws, holes, ridges or knurling. No new rim, circular base, engraved marks, damage, separate pieces or hardware.",
+  "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2816-prompt.txt",
+  "prompt_sha256": "d744b4cd263247702aba024c22f212688b7110cb3032a0c6476a1c37203b8235",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2816.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2816-effects-sixteenth-source-rgb-support.png"
+  ],
+  "reference_recipe": {
+    "type": "complete-original-storedRGB-nearest",
+    "source_size": [
+      32,
+      32
+    ],
+    "guide_size": [
+      512,
+      512
+    ],
+    "source_bbox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "guide_bbox": [
+      0,
+      0,
+      512,
+      512
+    ],
+    "affine_prewarp": null,
+    "operations": "RGBA->storedRGB; integer wholecanvas512x512 NEAREST. No unpremultiply/crop/padding/registration/newRGB; inverse ENTIRE raw LANCZOS exact original4x; authoritative whole sourceA restored later.",
+    "references_sha256": [
+      "5cc79e411575acfe943bc185aa260b91cbeb9970d2da0fbda41ee38fd72e0710",
+      "3c8f09be07e0c2e0ffb3068e062b26c1aee74c02c8ca5adcdb4ba95e0b7ffd9c"
+    ]
+  },
+  "target_size": [
+    128,
+    128
+  ],
+  "transparent_background": false,
+  "accepted_snapshot_at_call": 2316,
+  "actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Faithfully enhance the ORIGINAL complete historical painted-game color texture to HD. Image1 is the full original asset; image2 is exactly the same complete storedRGB canvas enlarged only with nearest-neighbor to expose existing artwork, not a different composition. Preserve full square canvas and exact normalized positions, orientation, scale, shape/contour, count, overlap and relative palette of every existing part. Original full source alpha is restored separately in native packing; preserve its footprint and softness in RGB. Output the same original black RGB background and existing artwork only, no new canvas, crop, padding, zoom, registration, repack or scene. Painted game material and soft baked shading, no photograph, cinematic render, sharpened hard outlines or artistic relighting. Existing codec pixelblocks are color/shading, never new seams, geometry, hardware or repeated objects. Slight finer faithful grain only at original pattern scale; do not add new flecks, sparks, holes, curls, cracks, borders, text or ornaments. Exact existing native material/blend/frame/UV bindings remain unchanged. Global scalar brightness correction only later; no artistic RGB repair. Return one complete texture with no comparisons or labels. 32x32 single upright golden/brass baked fragment sprite, production128x128. Preserve exactly ONE existing narrow vertical brass form centered in the canvas, with source narrow horizontal upper lip, small dark shoulders, existing long vertical amber band and broad soft rounded pale lower highlight. Keep the original full footprint and source relative proportions/scale, smooth low-detail baked game shading. Source tiny square cells along upper strip are shading/codec artifacts: never turn them into added teeth, screws, holes, ridges or knurling. No new rim, circular base, engraved marks, damage, separate pieces or hardware.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2816.png",
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2816-effects-sixteenth-source-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "finished_utc": "2026-10-08T02:56:03.746900+00:00",
+  "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-2ba16804-f732-4db8-81f0-e552e70e5e1b.png",
+  "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2816-raw.png",
+  "raw_sha256": "dc5f50388d69d3c795d7a95f17123347ae6ced97fe7d98d662815d5a9fe3dc69",
+  "raw_saved": true
+}

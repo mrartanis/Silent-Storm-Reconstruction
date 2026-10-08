@@ -1,0 +1,63 @@
+{
+  "id": 2331,
+  "batch": "effects-sixteenth",
+  "status": "finished",
+  "builtin": true,
+  "tool": "image_gen.imagegen",
+  "started_utc": "2026-10-08T02:48:01.844889+00:00",
+  "exact_prompt": "Use case: precise-object-edit. Faithfully enhance the ORIGINAL complete historical painted-game color texture to HD. Image1 is the full original asset; image2 is exactly the same complete storedRGB canvas enlarged only with nearest-neighbor to expose existing artwork, not a different composition. Preserve full square canvas and exact normalized positions, orientation, scale, shape/contour, count, overlap and relative palette of every existing part. Original full source alpha is restored separately in native packing; preserve its footprint and softness in RGB. Output the same original black RGB background and existing artwork only, no new canvas, crop, padding, zoom, registration, repack or scene. Painted game material and soft baked shading, no photograph, cinematic render, sharpened hard outlines or artistic relighting. Existing codec pixelblocks are color/shading, never new seams, geometry, hardware or repeated objects. Slight finer faithful grain only at original pattern scale; do not add new flecks, sparks, holes, curls, cracks, borders, text or ornaments. Exact existing native material/blend/frame/UV bindings remain unchanged. Global scalar brightness correction only later; no artistic RGB repair. Return one complete texture with no comparisons or labels. 64x64 original smoky gray soft cloud sprite, production256x256. Keep the original main irregular low-left gray wispy mass and existing small separate upper-right pale puff in exactly their original relative positions/sizes, with the original dark gap/halo and dark thin lower tendrils. Preserve the restrained gray/charcoal palette and relative diffuse brightness; keep cloud softly painted and coarse source masses, no extra puffs, white sparks, round bubble pattern, vortex or explosion flames.",
+  "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2331-prompt.txt",
+  "prompt_sha256": "296a4addcbcbb6aab121d95a8792def02412f72dba36f1e19ca3ed970b2bde9f",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2331.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2331-effects-sixteenth-source-rgb-support.png"
+  ],
+  "reference_recipe": {
+    "type": "complete-original-storedRGB-nearest",
+    "source_size": [
+      64,
+      64
+    ],
+    "guide_size": [
+      512,
+      512
+    ],
+    "source_bbox": [
+      0,
+      0,
+      64,
+      64
+    ],
+    "guide_bbox": [
+      0,
+      0,
+      512,
+      512
+    ],
+    "affine_prewarp": null,
+    "operations": "RGBA->storedRGB; integer wholecanvas512x512 NEAREST. No unpremultiply/crop/padding/registration/newRGB; inverse ENTIRE raw LANCZOS exact original4x; authoritative whole sourceA restored later.",
+    "references_sha256": [
+      "2dfcd3d5edcc995b6971b72f16c4de5b959c42c9544c590891582f648f1e5806",
+      "c772a5d3089ebf2afbb45b291f4089ee26d9e88957d2ed995e297d4e9c2cb7e4"
+    ]
+  },
+  "target_size": [
+    256,
+    256
+  ],
+  "transparent_background": false,
+  "accepted_snapshot_at_call": 2316,
+  "actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Faithfully enhance the ORIGINAL complete historical painted-game color texture to HD. Image1 is the full original asset; image2 is exactly the same complete storedRGB canvas enlarged only with nearest-neighbor to expose existing artwork, not a different composition. Preserve full square canvas and exact normalized positions, orientation, scale, shape/contour, count, overlap and relative palette of every existing part. Original full source alpha is restored separately in native packing; preserve its footprint and softness in RGB. Output the same original black RGB background and existing artwork only, no new canvas, crop, padding, zoom, registration, repack or scene. Painted game material and soft baked shading, no photograph, cinematic render, sharpened hard outlines or artistic relighting. Existing codec pixelblocks are color/shading, never new seams, geometry, hardware or repeated objects. Slight finer faithful grain only at original pattern scale; do not add new flecks, sparks, holes, curls, cracks, borders, text or ornaments. Exact existing native material/blend/frame/UV bindings remain unchanged. Global scalar brightness correction only later; no artistic RGB repair. Return one complete texture with no comparisons or labels. 64x64 original smoky gray soft cloud sprite, production256x256. Keep the original main irregular low-left gray wispy mass and existing small separate upper-right pale puff in exactly their original relative positions/sizes, with the original dark gap/halo and dark thin lower tendrils. Preserve the restrained gray/charcoal palette and relative diffuse brightness; keep cloud softly painted and coarse source masses, no extra puffs, white sparks, round bubble pattern, vortex or explosion flames.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2331.png",
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2331-effects-sixteenth-source-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "finished_utc": "2026-10-08T02:48:31.121298+00:00",
+  "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-1e57897d-0d57-4693-885f-6be54dd15e79.png",
+  "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2331-raw.png",
+  "raw_sha256": "cf5ece77c67d2d9d880d8138ee9713117242dad0763c2420eb8fa93283c785be",
+  "raw_saved": true
+}

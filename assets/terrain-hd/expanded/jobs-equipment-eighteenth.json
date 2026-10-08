@@ -1,0 +1,33 @@
+[
+  {
+    "id": 609,
+    "generated": "assets/terrain-hd/expanded/generated/609-raw.png",
+    "prompt": "Use case: faithfulHD game diffuseUV edit, exact original paint/material/tonal pattern.\r\nReference is ENTIRE original source storedRGB enlarged NEAREST only, no artwork changes. Original full alpha retained separately. Edit WHOLE original canvas IN PLACE with exact original aspect and every normalizedUV position, field/blackgap/edgeclipping, materialboundary and shape/count/scale. No crop/padding/recenter/rotate/zoom/repack/BBox/fitting/border, no assembled object/scene or photo. Native coordinate numbers below are constraints only, NEVER text drawn.\r\nOriginal native128x64 source, wholeNEAREST4x guide512x256, final whole512x256. Keep muted gray-green painted metal shell fields: the original broad lower rounded green shaded area, original upper gray-green background and curved green wear/edge contour, original SINGLE very dark right oval/crescent field clipped at right edge. Preserve all the original soft painted edgewear and pale outline patches ONLY where source has them, exact original shape/scale, no new rim or corrosion geometry. In main greenfield retain EXACTLY TWO tiny faint source pale specks: native[30,29,31,31] and[38,34,40,36], original size/location/relative faintness; no extra specks/dots/pits anywhere. Do not make these into white scratches/bolts/holes/glints. Keep original muted gray/green palette, smooth diffuse shade and every irregular source mark. No glossy/photographic hammered/rough metal or new bright chipped patches.\r\nOnly replace coarse pixel steps with very restrained fine soft paint matching original material/scale; existing fine grain can gain resolution, but smooth fields stay smooth. Preserve original relative brightpatch strength, palette/chroma and dark shading; NO stronger shine/new pale or white plates, amplified weak marks, brighter beveled rims, added sharp raised stitches, repeating weave/grid, crust/pits/rough photograin, ornamental scratches/curls/rays or new parts. Keep all original component counts/folds/holes/cutouts and original soft tonalhierarchy. Numeric wholecanvas brightness is handled afterward; do not brighten source details. No invented letters/numbers/logo/emblem/mark/engraving. Output only ENTIRE originalaspect UV texture as opaqueRGB, without labels/comparison.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/609.png",
+      "operations": "Entire source storedRGBA to opaqueRGB NEAREST4x only; no crop/pad/rotate/fit/composite/unpremultiply/artinsert. OriginalA separate. Wholeinverse4xoriginal.",
+      "source_size": [
+        128,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        64
+      ],
+      "helper_size": [
+        512,
+        256
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        256
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/609-equipment-eighteenth-source-rgb-support.png"
+    }
+  }
+]

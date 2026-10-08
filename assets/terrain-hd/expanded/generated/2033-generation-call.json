@@ -1,0 +1,98 @@
+{
+  "id": 2033,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-6ee9a36a-2b4d-4d3b-b1fe-b4d5c0209eae.png",
+  "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original27x27 RGBA canvas, exact8x nearest216x216 source guide. Exactly one small dark matte gray square frame with rounded outer corners, single inset rectangular transparent center and the original broader pale lower bevel. Preserve the thin dark top/right rim, gray left face, pale bottom face, original corner rounding, all face thicknesses and source asymmetry. Source material is smooth plain softly painted gray, without metallic sparkle, granularity, new reflection stripes or beveled concentric rings. Center and unused outer corners must remain transparent. Preserve exact source alpha footprint; do not make a 3D perspective object or fill the hole. Output RGBA transparent.\r\n",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2033-enlarged-source.png"
+  ],
+  "transparent_background": true,
+  "reference_recipe": "Exact original27x27 RGBA entire canvas nearest8x to216x216; whole raw inverseLanczos to108x108; scalar gain only/sourceA4x byteexact; TypeTransparent native premultiplied encoding accounted. No crop/padding/bbox/artistic RGB edit/source composite.",
+  "artifact_sha256": {
+    "raw": "76a7b4c90cdff59fdacd3af797a64221532982bc8e7970c8ffa7f9baba3d75ab",
+    "exact_prompt_file": "5d93ecb69c058c6589ad77032c273bedd28e294baa1f0aad1b05531c1258e436",
+    "reference_png": "8a2ed8da5aa576bfb287d97d9ac1c63510da409a36e990f176665a3e754f4fa7"
+  },
+  "saved_at_utc": "2026-10-08T02:10:43.063216+00:00",
+  "package": "ui-thirteenth",
+  "exact_service_arguments": {
+    "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original27x27 RGBA canvas, exact8x nearest216x216 source guide. Exactly one small dark matte gray square frame with rounded outer corners, single inset rectangular transparent center and the original broader pale lower bevel. Preserve the thin dark top/right rim, gray left face, pale bottom face, original corner rounding, all face thicknesses and source asymmetry. Source material is smooth plain softly painted gray, without metallic sparkle, granularity, new reflection stripes or beveled concentric rings. Center and unused outer corners must remain transparent. Preserve exact source alpha footprint; do not make a 3D perspective object or fill the hole. Output RGBA transparent.\r\n",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2033-enlarged-source.png"
+    ],
+    "transparent_background": true
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-ui-thirteenth.json",
+  "source_check_sha256": "8c7dbdfa8ec6c5ebcff06b1a88325bbfff8f0d76432ed580e2ef38c094b1e3b7",
+  "source_record": {
+    "id": 2033,
+    "texture": {
+      "ID": 2033,
+      "Width": 27,
+      "Height": 27,
+      "NMips": 1,
+      "AverageColor": -65004003,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\Common\\Intr0015_BB.tga",
+      "Format": "8888",
+      "UserName": "Up",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 365,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Up"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 365,
+          "name": "Up",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            27,
+            27
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      27,
+      27
+    ],
+    "source_sha256": "e0601ad400c2cc2edf7b2f9b916e643131406c491fe38f7f966cc45fc0670ae6",
+    "source_rgba_sha256": "c072525a467d2eb2f7583cff32b0101fee307b1e0de1bf84dda01b3a696d893b",
+    "release_rgba_sha256": "c072525a467d2eb2f7583cff32b0101fee307b1e0de1bf84dda01b3a696d893b",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/2033.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "raw_saved": true,
+  "attempt_count": 1,
+  "retry_count": 0,
+  "status": "artistically-ready-production-pending-npot-runtime-audit",
+  "pipeline_reason": "Coordinator pack_hd.py current POTassert rejects genuine NPOT4x; read-only runtime support audit underway. No claim productionready/imported/nativevalidated."
+}

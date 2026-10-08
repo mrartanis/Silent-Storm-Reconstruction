@@ -1,0 +1,136 @@
+{
+  "id": 7664,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-c0d26307-79b1-491a-9a68-f8afc6b1e2ac.png",
+  "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original82x105 entirely opaque complete vertical canvas, exact8x nearest656x840 guide. One plain rectangular dark neutral gray painted UI panel with softly mottled existing gray/brown/olive patches and faint original edge shading. Preserve all original mottling positions and SOURCE pattern scale, all source dark/light patches and original four canvas boundaries. The surface is subtly painted matte gray, not woven cloth, masonry, camouflage or scratched steel. No newly resolved grid, fabric weave, stone cracks, curls, coarse granular pattern, stripes, folds, damage, seams, bevel rings, holes or objects. Preserve full opaque canvas, no alpha cutout or empty margins.\r\n",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7664-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original RGBA entire canvas nearest source-only guide (8x or explicitly whole affine3:1 for3455); no crop/padding/bbox/artistic edits. Raw entire-canvas normalized to logical4x Lanczos only, source alpha/numeric brightness handled by root.",
+  "artifact_sha256": {
+    "raw": "3937f5c9f56611bb30cd04f0590492b8609b2ae8bdb8a8e097b6ea56d4fdd31d",
+    "exact_prompt_file": "eed459ea27764e400cf18de63d3eae4db5bbd98252ed25de3cf13f470eb754ca",
+    "reference_png": "44bdd91908c9b64c7b2cd8bbb3f2970b33c87317334515870513a239b226fc6c"
+  },
+  "saved_at_utc": "2026-10-08T02:33:32.599654+00:00",
+  "status": "artistically-ready-production-pending-NPOT-root-fix",
+  "raw_saved": true,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 7664,
+    "texture": {
+      "ID": 7664,
+      "Width": 82,
+      "Height": 105,
+      "NMips": 1,
+      "AverageColor": -12567498,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\UnitPanel\\FaceSwitch.tga",
+      "Format": "8888",
+      "UserName": "AckSwitch",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 951,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "AckSwitch"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 951,
+          "name": "AckSwitch",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            82,
+            105
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      82,
+      105
+    ],
+    "source_sha256": "59f59f696ba692fefc73f0e159a7fdc0685085ccd2a58008969a9fb757fab16e",
+    "source_rgba_sha256": "c80ddfd286860acbcc72ac73d809d224648ab97ba795c350b412ebbcdb5b6dbc",
+    "release_rgba_sha256": "c80ddfd286860acbcc72ac73d809d224648ab97ba795c350b412ebbcdb5b6dbc",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7664.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "8c7dbdfa8ec6c5ebcff06b1a88325bbfff8f0d76432ed580e2ef38c094b1e3b7",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit. Edit the attached COMPLETE original Silent Storm 2D UI texture into faithful HD painted game artwork. It is the exact edit target, not inspiration. Preserve every complete-canvas UV coordinate, boundary, corner, source shading, number of shapes and pattern scale. Do not crop, add margins, pad, letterbox, rotate, zoom, repack or add objects, text, symbols, grain, ornaments, stitches, scratches, outlines, screws or new hardware. Keep plain flat color fields plain and retain source relative brightness/color hierarchy. Smooth only existing painted contours; never turn the source pixel grid into a coarse lattice or invented material. Return only one complete texture.\nSource lock: Original82x105 entirely opaque complete vertical canvas, exact8x nearest656x840 guide. One plain rectangular dark neutral gray painted UI panel with softly mottled existing gray/brown/olive patches and faint original edge shading. Preserve all original mottling positions and SOURCE pattern scale, all source dark/light patches and original four canvas boundaries. The surface is subtly painted matte gray, not woven cloth, masonry, camouflage or scratched steel. No newly resolved grid, fabric weave, stone cracks, curls, coarse granular pattern, stripes, folds, damage, seams, bevel rings, holes or objects. Preserve full opaque canvas, no alpha cutout or empty margins.\r\n",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7664-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      82,
+      105
+    ],
+    "guide_dimensions": [
+      656,
+      840
+    ],
+    "resize_filter": "nearest",
+    "whole_canvas": true,
+    "affine_aspect_prewarp": false,
+    "logical4x_dimensions": [
+      328,
+      420
+    ],
+    "raw_normalization_filter": "Lanczos entire canvas",
+    "bbox": false,
+    "padding": false,
+    "cropping": false,
+    "source_RGB_art_composite": false
+  },
+  "raw_dimensions": [
+    1108,
+    1420
+  ],
+  "numeric_private_proof": {
+    "id": 7664,
+    "gain": 0.9443359375,
+    "source_stored_luma": 60.373404227642276,
+    "actual_stored_luma": 60.36233746370499,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": true,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      328,
+      420
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically ready for coordinator review: private full source, full raw, normalized4x, scalar/sourceA4x and same-scale native source/numeric diagnostics preserve one plain soft gray/brown painted rectangular color overlay, original mottling locations, dark perimeter and faint lower-left light wash. No letters, objects, ornaments, hardware, fabric weave or new pattern. Native mean RGB64.23/59.89/53.76→66.13/59.64/50.88 records modest warm palette drift for coordinator QA. Fine pixel dither resolves into soft painted shading; no photographic grain or invented objects. Exact original alpha, whole UV and logical4x328x420; no RGB artist repair or source composite."
+}
