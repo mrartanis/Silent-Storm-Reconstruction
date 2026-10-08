@@ -33,16 +33,16 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,649 HD textures**: 178 terrain assets, 30 tree
-assets, 1,758 building/environment assets, 95 clothing, 145 equipment, 71 weapons,
+The completed pack contains **2,817 HD textures**: 178 terrain assets, 30 tree
+assets, 1,758 building/environment assets, 263 clothing, 145 equipment, 71 weapons,
 176 head/hair textures, 103 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 3,129 records, including 683 accepted new-group textures, the original
+contains 3,320 records, including 851 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-141 structural/solid masks, 63 unavailable historical sources, one release mismatch
-and seventeen resource IDs whose original-preserving image generation was unavailable
-(sixteen distinct source images). No entries in that queue remain pending.
+157 structural/solid masks, 63 unavailable historical sources, one release mismatch
+and 24 resource IDs whose original-preserving image generation was unavailable
+(including three new actual refusals and four related resources without separate calls). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
 by the old format filter: 5076, 5168, 5169, 6997 and 7581–7586. They are genuine
 bark, clock and medical-bed artwork, and all ten exactly match release pixels.
@@ -53,7 +53,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,038 verified originals outside the shared queue, including next
+validation. There remain 847 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -1067,3 +1067,21 @@ publication manifest explicitly excludes those private montages/previews.
 World and heads/hair are complete. Clothing168 new artworks are worker-ready
 and await the next single whole-category build/publication. Other categories
 remain paused.
+
+
+## Whole clothing category completed, 9 October 2026
+
+All300 IDs accounted:168 new HD,95 accepted preserved,37 individually qualified
+originals (17 functional,13 missing,3 actual service refusals,4 related without
+separate calls). Eligible artwork remaining0. All168 actual native RGBA match
+worker-reviewed forecasts; full selected sourceA, both aliases and every mip pass.
+Whole Game pack:2,817 textures/5,634 aliases/146 archives/8,875,782,518 bytes.
+Previous2,649 source objects/PNG/native unchanged. Six representative clothing
+GPU maps pass actual menu on/off/on; both workers reviewed all22 actual frames.
+Own process quit0 and absent. Native scope covers all168; live scope certifies
+representatives and this scene, not every300 clothing mesh. PNGs are ordinary
+Git files; generated res archives are built with Game. See expanded/new-groups-clothing-complete-20261008-batch-check.json
+and expanded/coordinator-category-final-clothing-complete-20261008.json.
+World, heads/hair and clothing are complete for available artwork; the remaining
+847 verified group sources belong to paused categories. Older ready/held reports
+remain frozen history; authoritative whole-category reports supersede them.
