@@ -1,0 +1,21 @@
+[
+  {
+    "id": 5656,
+    "exact_prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative256x128 complete2:1 canvas, whole nearest8x2048x1024 reference, finalwhole1024x512. Sourcealpha255 everywhere. Preserve the exact original dim grayboots left[0,0,32,128), upper black/grayfield[62,0,142,51), middle plainbrown cloth[31,51,142,128), and right tan/olive camouflage printedcloth[144,0,256,128); every original camo patch silhouette/position/scale must follow source, no added or regularized camouflage. Upper darkfield has exactly9 horizontal gray crossbars at native y5,10,15,20,25,30,35,40,45 with pitch5native pixels. Within this source paint there are2 complete rectangulargray loop washes at[114,15,126,21),[114,30,126,36), plus1 lower PARTIAL rectangularwash[114,45,126,51). y50 is only a weakpartialedge, NOTa tenth crossbar, don't draw a closing bottom bridge. Leftboottiny diagonal checker/lacewash has9 stronger source highlight pixels at[24,23],[28,27],[19,28],[30,29],[21,30],[32,31],[23,32],[25,34],[27,36]; a faint intervening source gray wash at[26,25] is present andmustremain faint. These9diagnostic paintpips are NOTa license to invent9rings/holes/eyelets: retain the entire originalsoftchecker trace as paint, exact nativepixelcadence without mechanical reinterpretation. Upperrightbootedgegraypatch at31..34/y22..23 is an existing borderwash, notadditional lace. Preserve one upperleft original grayUframe motif andall original sourceboot wash shapes. No newhardlace/raisedbuckles or darkthreadshadow.",
+    "prompt_constraints": {
+      "width": 256,
+      "height": 128,
+      "new_hardware_weave_seams_anatomy_allowed": 0,
+      "upper_darkfield_horizontal_crossbars": 9,
+      "crossbar_pitch_native": 5,
+      "closed_rectangular_gray_loop_washes": 2,
+      "bottom_partial_rectangular_loop_washes": 1,
+      "left_boot_diag_highlight_pips_at_native_classifier": 9,
+      "faint_left_boot_checker_lace_wash_fields": 1,
+      "upper_left_gray_U_frame_motifs": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T06:10:32.834798+00:00",
+    "source_proof_sha256": "943cf3c50215c449a436359b9bec70c8e8b50cac254347a234a8149f2e166c96"
+  }
+]

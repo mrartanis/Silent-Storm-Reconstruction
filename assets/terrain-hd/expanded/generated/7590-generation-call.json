@@ -1,0 +1,148 @@
+{
+  "id": 7590,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-3b551912-b5f7-4727-be8e-4392554ee2ec.png",
+  "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative256x128, complete2:1 canvas enlarged nearest8x2048x1024; finalwholecanvas1024x512. Sourcealpha255 everywhere, including2032 blackwashed/background areas; do not cut out blackregions. Keep two dim darkbrown maincloth fields native[30,0,105,128) and[105,7,170,128), narrow farleftbrown strip[0,0,29,128), and right bluegray softcloth[170,7,256,128) in the exact source colors. Exactly5 pale SOURCEpaint groups: two tiny left markers at[40,36,42,37) and[40,52,42,53), two uppermiddle markers at[156,12,157,13) and[156,18,157,19), and one weak farleft wash at[12,73,13,75). The fifth is faintwash within an existing longangular painted contour, not another button: retain its dim source nature. Keep the original small muted zigwash[40,69,53,101) and soft lower bootwash[57,103,104,128), their source outlines and turns without newly resolvedlaces/eyelets/stitching. All flat/dim brown gradients stay matte andlowcontrast, bluecloth preserves softexistingfolds withoutnewweave or sharpcreasegeometry.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7590-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "98506963dbbbbec634807f2b84235fe81a1a350ed834d1a777aef03c45ec1eec",
+    "exact_prompt_file": "489d6ad672ad93d26d95c3080e6c95d85bfd82f25f2087345553a2ed5dfc2243",
+    "reference_png": "98b49b630eeae14b482f810b1e33ef93fb6bf1dc0ec980ed19a9fdebc6fb2c0b"
+  },
+  "saved_at_utc": "2026-10-08T06:14:37.132529+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 7590,
+    "texture": {
+      "ID": 7590,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14804971,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilMale\\CivilMale#3\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5763,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3087,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7691,
+              "field": "Material2",
+              "material_template_id": 3087,
+              "geometry_id": 4254,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+              "model_template_id": 4643,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7762,
+              "field": "Material2",
+              "material_template_id": 3087,
+              "geometry_id": 4269,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+              "model_template_id": 4663,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "412ff6101c8dda34a0e7d45ee0e9910797f2fdbf63817b8961036686403cf01e",
+    "source_rgba_sha256": "bb46ea2830739510a14642406e55a66c438b516a10017f85e47b0fb373fa23c9",
+    "release_rgba_sha256": "bb46ea2830739510a14642406e55a66c438b516a10017f85e47b0fb373fa23c9",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7590.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "5ca4b191e5ce47bd075ee4338bd28701879e661021958eba0959cfad5e9eecd1",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-sixth-7590.json",
+  "source_count_phase_proof_sha256": "9c38c54c2b95b8eba572132f0ce5bc0bea77e9be8ba6de5c9dc13d1db8687574",
+  "precall_constraints_sha256": "9b904ee3b25f41f072bf2ecc40a3947d953e19d2b8a586edeccfbc8791a5832d",
+  "exact_service_args": {
+    "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative256x128, complete2:1 canvas enlarged nearest8x2048x1024; finalwholecanvas1024x512. Sourcealpha255 everywhere, including2032 blackwashed/background areas; do not cut out blackregions. Keep two dim darkbrown maincloth fields native[30,0,105,128) and[105,7,170,128), narrow farleftbrown strip[0,0,29,128), and right bluegray softcloth[170,7,256,128) in the exact source colors. Exactly5 pale SOURCEpaint groups: two tiny left markers at[40,36,42,37) and[40,52,42,53), two uppermiddle markers at[156,12,157,13) and[156,18,157,19), and one weak farleft wash at[12,73,13,75). The fifth is faintwash within an existing longangular painted contour, not another button: retain its dim source nature. Keep the original small muted zigwash[40,69,53,101) and soft lower bootwash[57,103,104,128), their source outlines and turns without newly resolvedlaces/eyelets/stitching. All flat/dim brown gradients stay matte andlowcontrast, bluecloth preserves softexistingfolds withoutnewweave or sharpcreasegeometry.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7590-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 7590,
+    "gain": 0.824951171875,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 24.633696850585938,
+    "actual_stored_luma": 24.629046183013916,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically ready candidate, root whole/native/material review pending. Four primary pale motifs retain native phase at[156,12],[156,18],[40,36],[40,52]; one weak farleftwash at[12,73..74] remains part of original angularpaint, not fifthbutton. SourceA255 everywhere, defaultpad0, whole256x128→1024x512, scalar.824951171875/sourceL24.633697→24.629046. Native leftbrown29.78/21.38/12.50→31.66/22.40/13.09 Lstd12.56→12.64;middlebrown32.70/24.17/14.53→31.86/23.00/13.81 Lstd7.79→8.23;rightnavy29.00/28.93/36.95→27.03/28.09/36.54 Lstd9.19→9.42. Darkleft23.01/15.92/9.34→25.36/18.09/11.23 Lstd13.16→15.25: disclosed modestpaintlift. Main4pale groups source165/156/137→151/141/118,131/120/96→135/122/94,123/112/93→127/117/95,131/120/104→127/118/99; weakfarleft99/85/74→120/106/89 and114/100/85 remains softwash. Fullraw more resolved original zigwash and boot sole paint, postcallnative boot/trace crops confirm original fullpattern layout/phase rather than new object; preprompt soleproof onlyfieldcount1, no claim exhaustive microscopic treadcount beforecall. BootRGB23.35/14.40/5.66→24.18/15.78/7.80 Lstd14.91→14.19, zig40.28/31.58/19.53→42.87/31.78/19.67 Lstd8.89→9.60. TopRGB6.91/6.14/4.61→7.44/5.95/5.29, bottom5.91/5.13/4.82→4.85/4.05/3.14; no broad addedmargin/fill. Soft outlines/paint strength disclosed for root finer4x review, no claimed production acceptance."
+}

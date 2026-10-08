@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,361 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 70 clothing, 124 equipment, 65 weapons,
-13 head/hair textures, 48 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,371 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 73 clothing, 129 equipment, 65 weapons,
+14 head/hair textures, 49 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,823 records, including 399 accepted new-group textures, the original
+contains 2,833 records, including 409 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
 125 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,344 verified originals outside the shared queue, including next
+validation. There remain 1,334 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -330,8 +330,28 @@ twenty-seventh-runtime-check.json; expanded/coordinator-pattern-check-twenty-sev
 OrdinaryGit PNG/exactprompts and4 frozen workerreviews. Inspect next readyjobs
 before imagegen; do not regenerate accepted IDs.
 
-All 12,703 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (11,051,077,196 bytes before Git deduplication/compression).
+Twenty-eighth accepted packet: equipment676/2968/4257/1821/1827,
+clothing5469/7590, dynamic eye6686, UI4659 and exact2932 reuse of accepted1869.
+Nine separate builtin generations, one reused result with no new call.
+Pack:2,371 textures/4,742 aliases/127 archives/7,679,774,288 bytes.
+Prior2,361 source/PNG/native hashes unchanged; all10 nativeRGBA equal privately
+viewed whole4x predictions. Full sourcealpha/UV/material/count/scale retained;
+localpaint changes disclosed in expanded/coordinator-art-review-twenty-eighth.json.
+Only numericalbrightness, no artisticRGB inserts. Two4659 wall repeats retain
+sourcephase; modest finepaint differences betweenhalves disclosed, no forced tilecopy.
+2932/1869 fullsourceRGBA/dimensions/alphatype/layout match, productionnative2932
+equals accepted1869 byteexact: expanded/coordinator-reuse-check-twenty-eighth.json.
+Actual6686 SWloader/CPU blending on/off/on matches independent integeralpha/Vflip/FNV;
+nine actualhead94 bakes/roundtrips passed. Fixed diagnostic quadrant does not
+certify eyeGPU placement. Actual4659 GPU whole/middle/reverse/clipped draws reviewed.
+GameEXE/code unchanged since verified25. Full nativevalidation/realmenu/fourprivate
+frames/normalquit: expanded/new-groups-twenty-eighth-batch-check.json and
+expanded/new-groups-twenty-eighth-live-check.json; eye/UI integration:
+expanded/new-groups-twenty-eighth-runtime-check.json. Six workerreviews frozen
+beforeimport, ordinaryGit PNG/exactprompts. Check next readyjobs before imagegen.
+
+All 12,756 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (11,082,841,244 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

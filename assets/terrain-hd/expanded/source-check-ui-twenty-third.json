@@ -1,0 +1,4775 @@
+{
+  "batch": "ui-twenty-third",
+  "accepted_snapshot": 2361,
+  "remaining_interface_scope": 623,
+  "fresh_uncalled_count": 565,
+  "checked_utc": "2026-10-08T06:06:42.766627+00:00",
+  "source_checks": [
+    {
+      "id": 4652,
+      "source_record": {
+        "id": 4652,
+        "texture": {
+          "ID": 4652,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -15131876,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+          "Format": "dxt1",
+          "UserName": "M1_Element01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2896,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1861,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4849,
+                  "field": "Material0",
+                  "material_template_id": 1861,
+                  "geometry_id": 3006,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3223,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "source_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+        "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+        "release_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4652.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4652,
+        "texture": {
+          "ID": 4652,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -15131876,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+          "Format": "dxt1",
+          "UserName": "M1_Element01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            1024,
+            1024
+          ],
+          "mips": 1,
+          "file_bytes": 524312,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2896,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1861,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4849,
+                "field": "Material0",
+                "material_template_id": 1861,
+                "geometry_id": 3006,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3223,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2896,
+            "TextureID": 4652,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1861,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1861,
+            "UserName": "M1_Element01"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4849,
+                "Material0": 1861,
+                "Material1": 0,
+                "GeometryID": 3006,
+                "Material2": 1870,
+                "Material3": 1860,
+                "SkeletonID": 0,
+                "TemplateID": 3223,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3223,
+                "UserName": "M1_Element01"
+              },
+              "geometry": {
+                "ID": 3006,
+                "AIGeometryID": 1894,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 11.632479667663574,
+                "SizeY": 3.0047082901000977,
+                "SizeZ": 3.7875607013702393,
+                "CenterX": 16.22315216064453,
+                "CenterY": 7.610145568847656,
+                "CenterZ": 0.7473998069763184,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M1_Element01",
+                "RootJoint": "M1_Element01"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+      "release_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+      "original_png_sha256": "79efbe54ebb029c1f3b0c2cf1e93066c2bd27a7e0833a98178522ef2fdf8a2e9",
+      "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+      "source_rgb_sha256": "13d8353182c276a709739d36dc4e0a7b4ffae79e2572bd22b28ccad5e26a887b",
+      "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4654,
+      "source_record": {
+        "id": 4654,
+        "texture": {
+          "ID": 4654,
+          "Width": 1024,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -15066078,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+          "Format": "dxt1",
+          "UserName": "M1_Element02_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2898,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1863,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4850,
+                  "field": "Material0",
+                  "material_template_id": 1863,
+                  "geometry_id": 3007,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3224,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          512
+        ],
+        "source_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+        "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+        "release_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4654.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4654,
+        "texture": {
+          "ID": 4654,
+          "Width": 1024,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -15066078,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+          "Format": "dxt1",
+          "UserName": "M1_Element02_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            1024,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 262168,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2898,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1863,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4850,
+                "field": "Material0",
+                "material_template_id": 1863,
+                "geometry_id": 3007,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3224,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2898,
+            "TextureID": 4654,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1863,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1863,
+            "UserName": "M1_Element02_02"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4850,
+                "Material0": 1863,
+                "Material1": 1862,
+                "GeometryID": 3007,
+                "Material2": 1870,
+                "Material3": 1860,
+                "SkeletonID": 0,
+                "TemplateID": 3224,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3224,
+                "UserName": "M1_Element02"
+              },
+              "geometry": {
+                "ID": 3007,
+                "AIGeometryID": 1895,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 3.696290969848633,
+                "SizeY": 3.1087942123413086,
+                "SizeZ": 1.4050687551498413,
+                "CenterX": 21.554906845092773,
+                "CenterY": 2.503478527069092,
+                "CenterZ": 0.6654185056686401,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M1_Element02",
+                "RootJoint": "M1_Element02"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+      "release_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+      "original_png_sha256": "c2430427e3a7fa5e10a723519464752562039dc09930fcbc0bc9ca1f84e7b95a",
+      "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+      "source_rgb_sha256": "151c78fc5075aae9b8725c5f3c2c7d68aae515b570208779bc072b89414ed88b",
+      "source_alpha_sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f",
+      "dimensions": [
+        1024,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4656,
+      "source_record": {
+        "id": 4656,
+        "texture": {
+          "ID": 4656,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -10134190,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element01_01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2900,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1865,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material1",
+                  "material_template_id": 1865,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+        "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+        "release_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4656.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4656,
+        "texture": {
+          "ID": 4656,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -10134190,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element01_01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2900,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1865,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4853,
+                "field": "Material1",
+                "material_template_id": 1865,
+                "geometry_id": 3010,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3227,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2900,
+            "TextureID": 4656,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1865,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1865,
+            "UserName": "M2_Element01_01"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 4853,
+                "Material0": 1866,
+                "Material1": 1865,
+                "GeometryID": 3010,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3227,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3227,
+                "UserName": "M2_Elem01"
+              },
+              "geometry": {
+                "ID": 3010,
+                "AIGeometryID": 1897,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.5203418731689453,
+                "SizeY": 1.2838611602783203,
+                "SizeZ": 0.12072756141424179,
+                "CenterX": 9.155016899108887,
+                "CenterY": 6.119791030883789,
+                "CenterZ": 0.050201527774333954,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M2_Elem01",
+                "RootJoint": "M2_Elem01"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+      "release_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+      "original_png_sha256": "590751b99998388fc7417ac7a6b05d9c304adb11ec9d8e66fbdda4ab88233852",
+      "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+      "source_rgb_sha256": "c6fbebe79a7f555620bec6ece97e83c9ce151e6164a1c048dd94bb603738eedf",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4657,
+      "source_record": {
+        "id": 4657,
+        "texture": {
+          "ID": 4657,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -7963797,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element01_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2901,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1866,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material0",
+                  "material_template_id": 1866,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          512
+        ],
+        "source_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+        "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+        "release_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4657.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4657,
+        "texture": {
+          "ID": 4657,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -7963797,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element01_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 131096,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2901,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1866,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4853,
+                "field": "Material0",
+                "material_template_id": 1866,
+                "geometry_id": 3010,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3227,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2901,
+            "TextureID": 4657,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1866,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1866,
+            "UserName": "M2_Element01_02"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4853,
+                "Material0": 1866,
+                "Material1": 1865,
+                "GeometryID": 3010,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3227,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3227,
+                "UserName": "M2_Elem01"
+              },
+              "geometry": {
+                "ID": 3010,
+                "AIGeometryID": 1897,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.5203418731689453,
+                "SizeY": 1.2838611602783203,
+                "SizeZ": 0.12072756141424179,
+                "CenterX": 9.155016899108887,
+                "CenterY": 6.119791030883789,
+                "CenterZ": 0.050201527774333954,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M2_Elem01",
+                "RootJoint": "M2_Elem01"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+      "release_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+      "original_png_sha256": "c106f15925ce2bcccf4516d00396b365d85de1d31fc15ff0b425e4a0f8695f64",
+      "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+      "source_rgb_sha256": "399a7bb5a5942b26dd32f47702a0fe6d2ed66b3d566434cabb2cc14ec89fd483",
+      "source_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4658,
+      "source_record": {
+        "id": 4658,
+        "texture": {
+          "ID": 4658,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -15197670,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element02_01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2902,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1867,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4854,
+                  "field": "Material0",
+                  "material_template_id": 1867,
+                  "geometry_id": 3011,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3228,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+        "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+        "release_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4658.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4658,
+        "texture": {
+          "ID": 4658,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -15197670,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element02_01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2902,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1867,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4854,
+                "field": "Material0",
+                "material_template_id": 1867,
+                "geometry_id": 3011,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3228,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2902,
+            "TextureID": 4658,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1867,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1867,
+            "UserName": "M2_Element02_01"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4854,
+                "Material0": 1867,
+                "Material1": 1868,
+                "GeometryID": 3011,
+                "Material2": 1870,
+                "Material3": 1860,
+                "SkeletonID": 0,
+                "TemplateID": 3228,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3228,
+                "UserName": "M2_Elem02"
+              },
+              "geometry": {
+                "ID": 3011,
+                "AIGeometryID": 1898,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 2.684504985809326,
+                "SizeY": 0.8950905799865723,
+                "SizeZ": 1.0216953754425049,
+                "CenterX": 8.770269393920898,
+                "CenterY": 7.3346662521362305,
+                "CenterZ": 0.26485341787338257,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M2_Elem02",
+                "RootJoint": "M2_Elem02"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+      "release_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+      "original_png_sha256": "a9096bec7dd36bceaabd2f8b8fad06e492e317bce6a35e86db69112fcaf1a4d9",
+      "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+      "source_rgb_sha256": "43114a9139f7a52c94e81e3122e6e8cbbe8e9784ca82c4599e577e29895a57a9",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4659,
+      "source_record": {
+        "id": 4659,
+        "texture": {
+          "ID": 4659,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -14146012,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_02.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element02_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2903,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1868,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4854,
+                  "field": "Material1",
+                  "material_template_id": 1868,
+                  "geometry_id": 3011,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3228,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "ff7f52f773ad182cd49555707bdc005e1dc84c39f64bbf1e8f3b416fd7c6b0d9",
+        "source_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "release_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4659.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4659,
+        "texture": {
+          "ID": 4659,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -14146012,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_02.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element02_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2903,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1868,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4854,
+                "field": "Material1",
+                "material_template_id": 1868,
+                "geometry_id": 3011,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3228,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2903,
+            "TextureID": 4659,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1868,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1868,
+            "UserName": "M2_Element02_02"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 4854,
+                "Material0": 1867,
+                "Material1": 1868,
+                "GeometryID": 3011,
+                "Material2": 1870,
+                "Material3": 1860,
+                "SkeletonID": 0,
+                "TemplateID": 3228,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3228,
+                "UserName": "M2_Elem02"
+              },
+              "geometry": {
+                "ID": 3011,
+                "AIGeometryID": 1898,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 2.684504985809326,
+                "SizeY": 0.8950905799865723,
+                "SizeZ": 1.0216953754425049,
+                "CenterX": 8.770269393920898,
+                "CenterY": 7.3346662521362305,
+                "CenterZ": 0.26485341787338257,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M2_Elem02",
+                "RootJoint": "M2_Elem02"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "ff7f52f773ad182cd49555707bdc005e1dc84c39f64bbf1e8f3b416fd7c6b0d9",
+      "release_mmp_sha256": "ff7f52f773ad182cd49555707bdc005e1dc84c39f64bbf1e8f3b416fd7c6b0d9",
+      "original_png_sha256": "3d84276aef11362d77fdbf69ad262b70f2bbb208ab0852321aec0b61bbbaea97",
+      "source_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+      "source_rgb_sha256": "8f8ba059ae8f67d645c8c0b44ce340b24bb2a0e7ad57e6c785e8a959c97f2977",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source512x256, production2048x1024. Genuine opaque diffuse of the main-menu model: a dim matte graybrown irregular worn wall paint, without a background scene. EXACTLY TWO source-identical256x256 painted repeat fields side by side: original horizontal phase at x0 and x256, split at x256. All corresponding broad dark vertical streaks, restrained grayolive patches and vague existing masonry-like marks must have the same phase/shape in both halves, without adding or deciding extra bricks, mortar seams or chipped stones. Preserve original dense but soft nonuniform painted wash and low contrast. Existing irregular dark strokes are not a regular new grid. Resolve only very fine old paint tones, not new gritty stone photography or new sharp masonry blocks.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          512,
+          256
+        ],
+        "guide_size": [
+          768,
+          384
+        ],
+        "source_bbox": [
+          0,
+          0,
+          512,
+          256
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+        "references_sha256": [
+          "3d84276aef11362d77fdbf69ad262b70f2bbb208ab0852321aec0b61bbbaea97",
+          "998bd57e0a8e62b547becaa59fa11552525a2780fe2772601d00e5f3a801d4e7"
+        ]
+      },
+      "actual_runtime_qualification": "Fresh actual Materials.TextureID → MaterialTemplates.ID → Models.MaterialN / named historical MainMenu geometry proved. This independent source/art package does not claim an actual live rendered selected model instance/GPU proof; root owns final native/runtime gate.",
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4676,
+      "source_record": {
+        "id": 4676,
+        "texture": {
+          "ID": 4676,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": -14082796,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+          "Format": "dxt1",
+          "UserName": "Man_Hat",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2910,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1873,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4856,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3013,
+                  "geometry": "Interface\\ManFromMainMenu.mb",
+                  "model_template_id": 3230,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5910,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3627,
+                  "geometry": "Interface\\ManHat-Harmonica.mb",
+                  "model_template_id": 3845,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+        "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+        "release_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4676.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4676,
+        "texture": {
+          "ID": 4676,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": -14082796,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+          "Format": "dxt1",
+          "UserName": "Man_Hat",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 8216,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2910,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1873,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4856,
+                "field": "Material3",
+                "material_template_id": 1873,
+                "geometry_id": 3013,
+                "geometry": "Interface\\ManFromMainMenu.mb",
+                "model_template_id": 3230,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 5910,
+                "field": "Material3",
+                "material_template_id": 1873,
+                "geometry_id": 3627,
+                "geometry": "Interface\\ManHat-Harmonica.mb",
+                "model_template_id": 3845,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2910,
+            "TextureID": 4676,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1873,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1873,
+            "UserName": "Man_Hat"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material3",
+              "model": {
+                "ID": 4856,
+                "Material0": 1874,
+                "Material1": 952,
+                "GeometryID": 3013,
+                "Material2": 1875,
+                "Material3": 1873,
+                "SkeletonID": 75,
+                "TemplateID": 3230,
+                "RPGArmorID": 1,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3230,
+                "UserName": "Man"
+              },
+              "geometry": {
+                "ID": 3013,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.7477363348007202,
+                "SizeY": 0.40274518728256226,
+                "SizeZ": 1.5502821207046509,
+                "CenterX": 0.09152019023895264,
+                "CenterY": -0.05623369663953781,
+                "CenterZ": 1.2940154075622559,
+                "SrcName": "Interface\\ManFromMainMenu.mb",
+                "UserName": "Man",
+                "RootJoint": "skinCluster1"
+              }
+            },
+            {
+              "slot": "Material3",
+              "model": {
+                "ID": 5910,
+                "Material0": 0,
+                "Material1": 0,
+                "GeometryID": 3627,
+                "Material2": 0,
+                "Material3": 1873,
+                "SkeletonID": 0,
+                "TemplateID": 3845,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3845,
+                "UserName": "Hat-Harmonica"
+              },
+              "geometry": {
+                "ID": 3627,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.28542327880859375,
+                "SizeY": 0.20636701583862305,
+                "SizeZ": 0.3376394510269165,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\ManHat-Harmonica.mb",
+                "UserName": "Hat-Harmonica",
+                "RootJoint": "Body"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+      "release_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+      "original_png_sha256": "bb22de0156e78cba4098c46f871540657df8f2b07f52fda07c8032c1a14af947",
+      "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+      "source_rgb_sha256": "487b4e19e8470cac639d3098baeb70a921615b534de4a3494b3185e5bea5fcf7",
+      "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4729,
+      "source_record": {
+        "id": 4729,
+        "texture": {
+          "ID": 4729,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -15330284,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+          "Format": "dxt1",
+          "UserName": "Platform",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2993,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1924,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4951,
+                  "field": "Material0",
+                  "material_template_id": 1924,
+                  "geometry_id": 3083,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3296,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+        "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+        "release_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4729.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4729,
+        "texture": {
+          "ID": 4729,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -15330284,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+          "Format": "dxt1",
+          "UserName": "Platform",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2993,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1924,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4951,
+                "field": "Material0",
+                "material_template_id": 1924,
+                "geometry_id": 3083,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3296,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2993,
+            "TextureID": 4729,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1924,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1924,
+            "UserName": "Platform"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4951,
+                "Material0": 1924,
+                "Material1": 0,
+                "GeometryID": 3083,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3296,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3296,
+                "UserName": "M1_Element_Platform"
+              },
+              "geometry": {
+                "ID": 3083,
+                "AIGeometryID": 1967,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.770026683807373,
+                "SizeY": 3.715916633605957,
+                "SizeZ": 0.47305479645729065,
+                "CenterX": 3.750000238418579,
+                "CenterY": 5.437720775604248,
+                "CenterZ": 0.30238860845565796,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M1_Element_Platform",
+                "RootJoint": "M1_Element_Platform"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+      "release_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+      "original_png_sha256": "a650d41d67a65a61885a993098d9cac87948e03a68ffdf6664d25dd84dc88328",
+      "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+      "source_rgb_sha256": "f7d75853e185f8356aa5db5e2ecf6c95073c49568d86a32ac88923854b40dba9",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4731,
+      "source_record": {
+        "id": 4731,
+        "texture": {
+          "ID": 4731,
+          "Width": 64,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": -14016492,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Sleepers.tga",
+          "Format": "dxt1",
+          "UserName": "Sleepers",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2997,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1926,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4953,
+                  "field": "Material1",
+                  "material_template_id": 1926,
+                  "geometry_id": 3084,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3297,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          128
+        ],
+        "source_sha256": "c3d6cfc6fdcdbf2a9ce7e0436ede7cd9e40e7bd16509483b7f40c3908bcd5e8a",
+        "source_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "release_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4731.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4731,
+        "texture": {
+          "ID": 4731,
+          "Width": 64,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": -14016492,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Sleepers.tga",
+          "Format": "dxt1",
+          "UserName": "Sleepers",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 4120,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2997,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1926,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4953,
+                "field": "Material1",
+                "material_template_id": 1926,
+                "geometry_id": 3084,
+                "geometry": "Interface\\MainMenu.mb",
+                "model_template_id": 3297,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2997,
+            "TextureID": 4731,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1926,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1926,
+            "UserName": "Sleepers"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 4953,
+                "Material0": 1925,
+                "Material1": 1926,
+                "GeometryID": 3084,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3297,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3297,
+                "UserName": "M1_Element_Rails"
+              },
+              "geometry": {
+                "ID": 3084,
+                "AIGeometryID": 1968,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.46770215034484863,
+                "SizeY": 5.843520164489746,
+                "SizeZ": 0.03652798384428024,
+                "CenterX": 3.749997854232788,
+                "CenterY": 6.604658603668213,
+                "CenterZ": 0.03105553425848484,
+                "SrcName": "Interface\\MainMenu.mb",
+                "UserName": "M1_Element_Rails",
+                "RootJoint": "M1_Element_Rails"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c3d6cfc6fdcdbf2a9ce7e0436ede7cd9e40e7bd16509483b7f40c3908bcd5e8a",
+      "release_mmp_sha256": "c3d6cfc6fdcdbf2a9ce7e0436ede7cd9e40e7bd16509483b7f40c3908bcd5e8a",
+      "original_png_sha256": "6ac3cf19c7659b3b51f9b8dfe751237b9c6fbf8d3266ddd35fee903f1b05cc46",
+      "source_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+      "source_rgb_sha256": "2c5c73d47be6cb953a1c2893c259dd45bc25712de00ae58bd87fea26d6fe5f1d",
+      "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+      "dimensions": [
+        64,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source64x128, production256x512. Genuine opaque main-menu railway-sleepers diffuse. EXACTLY TWO elongated muted darkbrown wood-painted fields side by side, running vertically, with the existing narrow nearblack central gap and black outer margin. EXACTLY FOUR existing dark rectangular painted patches, two near the top and two near the bottom, one at each end of each long field. Preserve all four patch rims and the existing small dim square-like tonal marks inside them at their exact source positions: these ambiguous marks remain softly painted highlights/shadows, do not turn them into independent screwheads, nail holes, bolts, rail chairs or extra hardware. Approximate native patch footprints are upperleft x12..26,y7..27, upperright x40..58,y8..27, lowerleft x12..26,y98..118, lowerright x41..58,y98..118; full references define exact outlines, never move them to these approximate boxes. Preserve subdued narrow vertical brown/taupe grain washes and dark long edges, source broad scale and simple matte game-paint material. No new bright grain fibers, cuts, white specular rims, realistic wood knots or photoreal carved boards.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          64,
+          128
+        ],
+        "guide_size": [
+          384,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          64,
+          128
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+        "references_sha256": [
+          "6ac3cf19c7659b3b51f9b8dfe751237b9c6fbf8d3266ddd35fee903f1b05cc46",
+          "fd05cecf51122fa1e8ae76c4ab926c4aeed25aa3e0d0813bd90d1771dbb680c1"
+        ]
+      },
+      "actual_runtime_qualification": "Fresh actual Materials.TextureID → MaterialTemplates.ID → Models.MaterialN / named historical MainMenu geometry proved. This independent source/art package does not claim an actual live rendered selected model instance/GPU proof; root owns final native/runtime gate.",
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4801,
+      "source_record": {
+        "id": 4801,
+        "texture": {
+          "ID": 4801,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": 588517903,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Cl_00.tga",
+          "Format": "8888",
+          "UserName": "Clouds",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3054,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1957,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5001,
+                  "field": "Material0",
+                  "material_template_id": 1957,
+                  "geometry_id": 3108,
+                  "geometry": "Interface\\MainMenuClouds.mb",
+                  "model_template_id": 3330,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "a389549ea770cdaefd41d9ba1923cd1724a38de9b342003fda4fed61eb91347c",
+        "source_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "release_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          66
+        ],
+        "original_png": "expanded/original/4801.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4801,
+        "texture": {
+          "ID": 4801,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": 588517903,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Cl_00.tga",
+          "Format": "8888",
+          "UserName": "Clouds",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 524312,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3054,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1957,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5001,
+                "field": "Material0",
+                "material_template_id": 1957,
+                "geometry_id": 3108,
+                "geometry": "Interface\\MainMenuClouds.mb",
+                "model_template_id": 3330,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3054,
+            "TextureID": 4801,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1957,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1957,
+            "UserName": "Clouds"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5001,
+                "Material0": 1957,
+                "Material1": 0,
+                "GeometryID": 3108,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 83,
+                "TemplateID": 3330,
+                "RPGArmorID": 4,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3330,
+                "UserName": "Clouds"
+              },
+              "geometry": {
+                "ID": 3108,
+                "AIGeometryID": 721,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.2304860353469849,
+                "SizeY": 30.0,
+                "SizeZ": 3.380732297897339,
+                "CenterX": -0.5127025246620178,
+                "CenterY": 2.5,
+                "CenterZ": 3.963803768157959,
+                "SrcName": "Interface\\MainMenuClouds.mb",
+                "UserName": "Clouds",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "a389549ea770cdaefd41d9ba1923cd1724a38de9b342003fda4fed61eb91347c",
+      "release_mmp_sha256": "a389549ea770cdaefd41d9ba1923cd1724a38de9b342003fda4fed61eb91347c",
+      "original_png_sha256": "181605403142f182254b3349a2e883cb903880d2240cff7e6585cb29013a9eab",
+      "source_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+      "source_rgb_sha256": "ad38b758260400b74eb0374569e6303e232a17cafb69f401cd84903cf92f8434",
+      "source_alpha_sha256": "11d7946f3a618180928cc889226dfbf756ef572bcd2d7e86d0977964aca683fa",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        0,
+        66
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source512x256, production2048x1024. Genuine transparent diffuse of the actual MainMenuClouds model, original alpha0..66 is authoritative. ONE continuous soft painted cloud band spans the lower/middle whole canvas, with overlapping connected source cloud lobes, not separate new clouds. Retain the precise existing irregular silhouette and broad source lobe phase: left muted bluegreen mass, center dim teal trough/wash, right soft browncharcoal mass, each connected exactly as in the references. Keep source dark nearblack top/bottom fields, restrained warmbrown atmosphere above and all very dim internal shadow washes. The image2 RGB guide is the exact stored historical RGB, not a request to invent an opaque sky. Preserve its whole existing color map and softness; native premultiplied brightness is handled numerically with complete original alpha afterward. Do not introduce additional countable clouds, new sun/moon/horizon/landscape, hard smoky curls, bright white edges, new light cores, photographic volumetric billows, sharp borders or higher-contrast relief. Fine soft paint only; source cloud scale and all existing outline positions remain unchanged.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          512,
+          256
+        ],
+        "guide_size": [
+          768,
+          384
+        ],
+        "source_bbox": [
+          0,
+          0,
+          512,
+          256
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+        "references_sha256": [
+          "181605403142f182254b3349a2e883cb903880d2240cff7e6585cb29013a9eab",
+          "00dcb6474cd42914b0047d110668b3ac1d055b7fd193db994d737bc6e1732191"
+        ]
+      },
+      "actual_runtime_qualification": "Fresh actual Materials.TextureID → MaterialTemplates.ID → Models.MaterialN / named historical MainMenu geometry proved. This independent source/art package does not claim an actual live rendered selected model instance/GPU proof; root owns final native/runtime gate.",
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5256,
+      "source_record": {
+        "id": 5256,
+        "texture": {
+          "ID": 5256,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1580674065,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+          "Format": "8888",
+          "UserName": "Logo Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 641,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 641,
+              "name": "Logo Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2030,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+        "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+        "release_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5256.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5256,
+        "texture": {
+          "ID": 5256,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1580674065,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+          "Format": "8888",
+          "UserName": "Logo Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 131096,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 641,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Logo Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 641,
+            "name": "Logo Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              256,
+              128
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2030,
+                "field": "Texture0",
+                "control_name": "background",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  256,
+                  128
+                ],
+                "container": 372,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+      "release_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+      "original_png_sha256": "d421c6e3bedb33de48658471b7707af0c7db62c6c503becf5af880b74254c593",
+      "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+      "source_rgb_sha256": "5db34004d2151caa68df5cd866e9962ec512229c34233832138c0c5cb95f3b87",
+      "source_alpha_sha256": "050b02b8f01d9d8afa2e50d586af22da5ce06ad70584af0e148c6a35505ca78f",
+      "dimensions": [
+        256,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5257,
+      "source_record": {
+        "id": 5257,
+        "texture": {
+          "ID": 5257,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1715483930,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+          "Format": "8888",
+          "UserName": "Logo Active",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 642,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Active"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 642,
+              "name": "Logo Active",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2031,
+                  "field": "Texture0",
+                  "control_name": "active",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+        "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+        "release_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5257.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5257,
+        "texture": {
+          "ID": 5257,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1715483930,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+          "Format": "8888",
+          "UserName": "Logo Active",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 131096,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 642,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Logo Active"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 642,
+            "name": "Logo Active",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              256,
+              128
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2031,
+                "field": "Texture0",
+                "control_name": "active",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  256,
+                  128
+                ],
+                "container": 372,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+      "release_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+      "original_png_sha256": "d288f71a3745312c4093686b8c6740211d2951d8e6780f1b8cc90e1609bd1f18",
+      "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+      "source_rgb_sha256": "519ae5c4a5f629dad529f4637c250fb4836e92021238c62d2ed80f1706dc51af",
+      "source_alpha_sha256": "a87cee5902f6aeb015430689d82cb0a58f8b597ef407c0adf4f2a7b23c5d4380",
+      "dimensions": [
+        256,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    }
+  ],
+  "shared_modified": false,
+  "source_parity_count": 12,
+  "imagegen_calls_at_selection": 0,
+  "finalized_utc": "2026-10-08T06:17:27.071680+00:00",
+  "builtin_generation_calls": 3,
+  "source_only_deferred": [
+    {
+      "id": 4652,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque compound MainMenu diffuse UV: dim wall/window/slat-like marks, several horizontal stair/band regions and separate bottom fields. Whole original RGB/A/history-release/material-model chain inspected. Need individual exact window/stair/slat count, band phase and compound UV material boundaries before prompt; no guessed counts or structural classification, no call.",
+      "source_check": {
+        "id": 4652,
+        "source_record": {
+          "id": 4652,
+          "texture": {
+            "ID": 4652,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -15131876,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2896,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1861,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4849,
+                    "field": "Material0",
+                    "material_template_id": 1861,
+                    "geometry_id": 3006,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3223,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "source_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+          "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+          "release_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4652.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4652,
+          "texture": {
+            "ID": 4652,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -15131876,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              1024,
+              1024
+            ],
+            "mips": 1,
+            "file_bytes": 524312,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2896,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1861,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4849,
+                  "field": "Material0",
+                  "material_template_id": 1861,
+                  "geometry_id": 3006,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3223,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2896,
+              "TextureID": 4652,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1861,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1861,
+              "UserName": "M1_Element01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4849,
+                  "Material0": 1861,
+                  "Material1": 0,
+                  "GeometryID": 3006,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3223,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3223,
+                  "UserName": "M1_Element01"
+                },
+                "geometry": {
+                  "ID": 3006,
+                  "AIGeometryID": 1894,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 11.632479667663574,
+                  "SizeY": 3.0047082901000977,
+                  "SizeZ": 3.7875607013702393,
+                  "CenterX": 16.22315216064453,
+                  "CenterY": 7.610145568847656,
+                  "CenterZ": 0.7473998069763184,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element01",
+                  "RootJoint": "M1_Element01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+        "release_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+        "original_png_sha256": "79efbe54ebb029c1f3b0c2cf1e93066c2bd27a7e0833a98178522ef2fdf8a2e9",
+        "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+        "source_rgb_sha256": "13d8353182c276a709739d36dc4e0a7b4ffae79e2572bd22b28ccad5e26a887b",
+        "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+        "dimensions": [
+          1024,
+          1024
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4654,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu diffuse containing many overlapping rubble-like painted fragments and right/bottom long wood-painted strips. Whole source/parity/typedmodel inspected; exact fragment/strip count and silhouette/UV boundaries need own proof before call, not labelled analytical/technical because complex.",
+      "source_check": {
+        "id": 4654,
+        "source_record": {
+          "id": 4654,
+          "texture": {
+            "ID": 4654,
+            "Width": 1024,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -15066078,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element02_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2898,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1863,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4850,
+                    "field": "Material0",
+                    "material_template_id": 1863,
+                    "geometry_id": 3007,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3224,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            512
+          ],
+          "source_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+          "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+          "release_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4654.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4654,
+          "texture": {
+            "ID": 4654,
+            "Width": 1024,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -15066078,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element02_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              1024,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 262168,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2898,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1863,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4850,
+                  "field": "Material0",
+                  "material_template_id": 1863,
+                  "geometry_id": 3007,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3224,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2898,
+              "TextureID": 4654,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1863,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1863,
+              "UserName": "M1_Element02_02"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4850,
+                  "Material0": 1863,
+                  "Material1": 1862,
+                  "GeometryID": 3007,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3224,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3224,
+                  "UserName": "M1_Element02"
+                },
+                "geometry": {
+                  "ID": 3007,
+                  "AIGeometryID": 1895,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 3.696290969848633,
+                  "SizeY": 3.1087942123413086,
+                  "SizeZ": 1.4050687551498413,
+                  "CenterX": 21.554906845092773,
+                  "CenterY": 2.503478527069092,
+                  "CenterZ": 0.6654185056686401,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element02",
+                  "RootJoint": "M1_Element02"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+        "release_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+        "original_png_sha256": "c2430427e3a7fa5e10a723519464752562039dc09930fcbc0bc9ca1f84e7b95a",
+        "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+        "source_rgb_sha256": "151c78fc5075aae9b8725c5f3c2c7d68aae515b570208779bc072b89414ed88b",
+        "source_alpha_sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f",
+        "dimensions": [
+          1024,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4656,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu diffuse with two framed soldier engravings and existing small label/text panels. Whole source/parity/typedmodel inspected; exact figure/engraving/label glyph shapes and frame phase need detailed source-preserving reconstruction. No invented letters/symbols, source-only pending and zero calls, not technical fallback.",
+      "source_check": {
+        "id": 4656,
+        "source_record": {
+          "id": 4656,
+          "texture": {
+            "ID": 4656,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10134190,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2900,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1865,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4853,
+                    "field": "Material1",
+                    "material_template_id": 1865,
+                    "geometry_id": 3010,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3227,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+          "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+          "release_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4656.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4656,
+          "texture": {
+            "ID": 4656,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10134190,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2900,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1865,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material1",
+                  "material_template_id": 1865,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2900,
+              "TextureID": 4656,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1865,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1865,
+              "UserName": "M2_Element01_01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4853,
+                  "Material0": 1866,
+                  "Material1": 1865,
+                  "GeometryID": 3010,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3227,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3227,
+                  "UserName": "M2_Elem01"
+                },
+                "geometry": {
+                  "ID": 3010,
+                  "AIGeometryID": 1897,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.5203418731689453,
+                  "SizeY": 1.2838611602783203,
+                  "SizeZ": 0.12072756141424179,
+                  "CenterX": 9.155016899108887,
+                  "CenterY": 6.119791030883789,
+                  "CenterZ": 0.050201527774333954,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem01",
+                  "RootJoint": "M2_Elem01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+        "release_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+        "original_png_sha256": "590751b99998388fc7417ac7a6b05d9c304adb11ec9d8e66fbdda4ab88233852",
+        "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+        "source_rgb_sha256": "c6fbebe79a7f555620bec6ece97e83c9ce151e6164a1c048dd94bb603738eedf",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4657,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu atlas of six existing poster/diagram/text rectangles. Whole source/parity/typedmodel inspected, six large cells visible; each fine glyph/diagram/form/orientation requires individual exact source proof before prompting. No guessed tiny characters or counts, no structural-only classification/call.",
+      "source_check": {
+        "id": 4657,
+        "source_record": {
+          "id": 4657,
+          "texture": {
+            "ID": 4657,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -7963797,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2901,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1866,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4853,
+                    "field": "Material0",
+                    "material_template_id": 1866,
+                    "geometry_id": 3010,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3227,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            512
+          ],
+          "source_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+          "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+          "release_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4657.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4657,
+          "texture": {
+            "ID": 4657,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -7963797,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2901,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1866,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material0",
+                  "material_template_id": 1866,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2901,
+              "TextureID": 4657,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1866,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1866,
+              "UserName": "M2_Element01_02"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4853,
+                  "Material0": 1866,
+                  "Material1": 1865,
+                  "GeometryID": 3010,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3227,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3227,
+                  "UserName": "M2_Elem01"
+                },
+                "geometry": {
+                  "ID": 3010,
+                  "AIGeometryID": 1897,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.5203418731689453,
+                  "SizeY": 1.2838611602783203,
+                  "SizeZ": 0.12072756141424179,
+                  "CenterX": 9.155016899108887,
+                  "CenterY": 6.119791030883789,
+                  "CenterZ": 0.050201527774333954,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem01",
+                  "RootJoint": "M2_Elem01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+        "release_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+        "original_png_sha256": "c106f15925ce2bcccf4516d00396b365d85de1d31fc15ff0b425e4a0f8695f64",
+        "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+        "source_rgb_sha256": "399a7bb5a5942b26dd32f47702a0fe6d2ed66b3d566434cabb2cc14ec89fd483",
+        "source_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "dimensions": [
+          512,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4658,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu compound painted wall/rubble/wood UV with existing black gaps. Whole source/parity/typedmodel inspected; exact fragment count, outlines and material-island phase need independent detail proof. No blanket complex-pixels exclusion/technical fallback/call.",
+      "source_check": {
+        "id": 4658,
+        "source_record": {
+          "id": 4658,
+          "texture": {
+            "ID": 4658,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15197670,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element02_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2902,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1867,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4854,
+                    "field": "Material0",
+                    "material_template_id": 1867,
+                    "geometry_id": 3011,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3228,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+          "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+          "release_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4658.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4658,
+          "texture": {
+            "ID": 4658,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15197670,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element02_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2902,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1867,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4854,
+                  "field": "Material0",
+                  "material_template_id": 1867,
+                  "geometry_id": 3011,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3228,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2902,
+              "TextureID": 4658,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1867,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1867,
+              "UserName": "M2_Element02_01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4854,
+                  "Material0": 1867,
+                  "Material1": 1868,
+                  "GeometryID": 3011,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3228,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3228,
+                  "UserName": "M2_Elem02"
+                },
+                "geometry": {
+                  "ID": 3011,
+                  "AIGeometryID": 1898,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 2.684504985809326,
+                  "SizeY": 0.8950905799865723,
+                  "SizeZ": 1.0216953754425049,
+                  "CenterX": 8.770269393920898,
+                  "CenterY": 7.3346662521362305,
+                  "CenterZ": 0.26485341787338257,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem02",
+                  "RootJoint": "M2_Elem02"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+        "release_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+        "original_png_sha256": "a9096bec7dd36bceaabd2f8b8fad06e492e317bce6a35e86db69112fcaf1a4d9",
+        "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+        "source_rgb_sha256": "43114a9139f7a52c94e81e3122e6e8cbbe8e9784ca82c4599e577e29895a57a9",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4676,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu man-hat diffuse128 square: one broad dark brown front field, side/fold-like fields, central dark mark and upperright small rectangular patterned badge/glyph-like marks. Whole source/parity/typedmodel inspected; exact tiny emblem/mark/fold identity and phase unresolved. No new badge lettering/hardware, honest art-pending no call.",
+      "source_check": {
+        "id": 4676,
+        "source_record": {
+          "id": 4676,
+          "texture": {
+            "ID": 4676,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": -14082796,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+            "Format": "dxt1",
+            "UserName": "Man_Hat",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2910,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1873,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4856,
+                    "field": "Material3",
+                    "material_template_id": 1873,
+                    "geometry_id": 3013,
+                    "geometry": "Interface\\ManFromMainMenu.mb",
+                    "model_template_id": 3230,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 5910,
+                    "field": "Material3",
+                    "material_template_id": 1873,
+                    "geometry_id": 3627,
+                    "geometry": "Interface\\ManHat-Harmonica.mb",
+                    "model_template_id": 3845,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+          "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+          "release_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4676.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4676,
+          "texture": {
+            "ID": 4676,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": -14082796,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+            "Format": "dxt1",
+            "UserName": "Man_Hat",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 8216,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2910,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1873,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4856,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3013,
+                  "geometry": "Interface\\ManFromMainMenu.mb",
+                  "model_template_id": 3230,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5910,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3627,
+                  "geometry": "Interface\\ManHat-Harmonica.mb",
+                  "model_template_id": 3845,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2910,
+              "TextureID": 4676,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1873,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1873,
+              "UserName": "Man_Hat"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4856,
+                  "Material0": 1874,
+                  "Material1": 952,
+                  "GeometryID": 3013,
+                  "Material2": 1875,
+                  "Material3": 1873,
+                  "SkeletonID": 75,
+                  "TemplateID": 3230,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3230,
+                  "UserName": "Man"
+                },
+                "geometry": {
+                  "ID": 3013,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7477363348007202,
+                  "SizeY": 0.40274518728256226,
+                  "SizeZ": 1.5502821207046509,
+                  "CenterX": 0.09152019023895264,
+                  "CenterY": -0.05623369663953781,
+                  "CenterZ": 1.2940154075622559,
+                  "SrcName": "Interface\\ManFromMainMenu.mb",
+                  "UserName": "Man",
+                  "RootJoint": "skinCluster1"
+                }
+              },
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 5910,
+                  "Material0": 0,
+                  "Material1": 0,
+                  "GeometryID": 3627,
+                  "Material2": 0,
+                  "Material3": 1873,
+                  "SkeletonID": 0,
+                  "TemplateID": 3845,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3845,
+                  "UserName": "Hat-Harmonica"
+                },
+                "geometry": {
+                  "ID": 3627,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.28542327880859375,
+                  "SizeY": 0.20636701583862305,
+                  "SizeZ": 0.3376394510269165,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0,
+                  "SrcName": "Interface\\ManHat-Harmonica.mb",
+                  "UserName": "Hat-Harmonica",
+                  "RootJoint": "Body"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+        "release_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+        "original_png_sha256": "bb22de0156e78cba4098c46f871540657df8f2b07f52fda07c8032c1a14af947",
+        "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+        "source_rgb_sha256": "487b4e19e8470cac639d3098baeb70a921615b534de4a3494b3185e5bea5fcf7",
+        "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4729,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu platform diffuse512x256 with long upper dark field/bands, woodgrain-painted inset, lower/right/left mechanical-like UV patches. Whole source/parity/typedmodel inspected; exact hardware/contour/island count/roles not yet proved. No inventing rail gears/bolts/loops; no analyticalmap claim/call.",
+      "source_check": {
+        "id": 4729,
+        "source_record": {
+          "id": 4729,
+          "texture": {
+            "ID": 4729,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15330284,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+            "Format": "dxt1",
+            "UserName": "Platform",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2993,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1924,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4951,
+                    "field": "Material0",
+                    "material_template_id": 1924,
+                    "geometry_id": 3083,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3296,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+          "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+          "release_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4729.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4729,
+          "texture": {
+            "ID": 4729,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15330284,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+            "Format": "dxt1",
+            "UserName": "Platform",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2993,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1924,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4951,
+                  "field": "Material0",
+                  "material_template_id": 1924,
+                  "geometry_id": 3083,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3296,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2993,
+              "TextureID": 4729,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1924,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1924,
+              "UserName": "Platform"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4951,
+                  "Material0": 1924,
+                  "Material1": 0,
+                  "GeometryID": 3083,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3296,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3296,
+                  "UserName": "M1_Element_Platform"
+                },
+                "geometry": {
+                  "ID": 3083,
+                  "AIGeometryID": 1967,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.770026683807373,
+                  "SizeY": 3.715916633605957,
+                  "SizeZ": 0.47305479645729065,
+                  "CenterX": 3.750000238418579,
+                  "CenterY": 5.437720775604248,
+                  "CenterZ": 0.30238860845565796,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element_Platform",
+                  "RootJoint": "M1_Element_Platform"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+        "release_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+        "original_png_sha256": "a650d41d67a65a61885a993098d9cac87948e03a68ffdf6664d25dd84dc88328",
+        "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+        "source_rgb_sha256": "f7d75853e185f8356aa5db5e2ecf6c95073c49568d86a32ac88923854b40dba9",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5256,
+      "status": "source-only-deferred",
+      "reason": "Genuine transparent actual UITextures641 Logo Background/control type2 binding, source256x128 with yellow outlined upside-down Silent Storm/S2-like logo and sourceA0..255. Whole RGB/A/parity/freshactualUI links inspected. Exact original stylized glyph/emblem strokes, inverted orientation, border placement and state luminosity require independent exact reconstruction proof. No guessed text or generic glyph ban/technical fallback/call.",
+      "source_check": {
+        "id": 5256,
+        "source_record": {
+          "id": 5256,
+          "texture": {
+            "ID": 5256,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1580674065,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+            "Format": "8888",
+            "UserName": "Logo Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 641,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Logo Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 641,
+                "name": "Logo Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  256,
+                  128
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 2030,
+                    "field": "Texture0",
+                    "control_name": "background",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      256,
+                      128
+                    ],
+                    "container": 372,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            128
+          ],
+          "source_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+          "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+          "release_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5256.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5256,
+          "texture": {
+            "ID": 5256,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1580674065,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+            "Format": "8888",
+            "UserName": "Logo Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              256,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 641,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 641,
+              "name": "Logo Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2030,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+        "release_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+        "original_png_sha256": "d421c6e3bedb33de48658471b7707af0c7db62c6c503becf5af880b74254c593",
+        "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+        "source_rgb_sha256": "5db34004d2151caa68df5cd866e9962ec512229c34233832138c0c5cb95f3b87",
+        "source_alpha_sha256": "050b02b8f01d9d8afa2e50d586af22da5ce06ad70584af0e148c6a35505ca78f",
+        "dimensions": [
+          256,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5257,
+      "status": "source-only-deferred",
+      "reason": "Genuine transparent actual UITextures642 Logo Active/control type2 binding, source256x128 with brighter yellow-white outlined upside-down logo, sourceA0..255. Whole RGB/A/parity/freshactualUI links inspected. Preserve this individual active-state glyph/emblem/border phase and glow; exact stroke/content proof not completed here, so genuine pending no call, not analytical or structural original-only.",
+      "source_check": {
+        "id": 5257,
+        "source_record": {
+          "id": 5257,
+          "texture": {
+            "ID": 5257,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1715483930,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+            "Format": "8888",
+            "UserName": "Logo Active",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 642,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Logo Active"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 642,
+                "name": "Logo Active",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  256,
+                  128
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 2031,
+                    "field": "Texture0",
+                    "control_name": "active",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      256,
+                      128
+                    ],
+                    "container": 372,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            128
+          ],
+          "source_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+          "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+          "release_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5257.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5257,
+          "texture": {
+            "ID": 5257,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1715483930,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+            "Format": "8888",
+            "UserName": "Logo Active",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              256,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 642,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Active"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 642,
+              "name": "Logo Active",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2031,
+                  "field": "Texture0",
+                  "control_name": "active",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+        "release_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+        "original_png_sha256": "d288f71a3745312c4093686b8c6740211d2951d8e6780f1b8cc90e1609bd1f18",
+        "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+        "source_rgb_sha256": "519ae5c4a5f629dad529f4637c250fb4836e92021238c62d2ed80f1706dc51af",
+        "source_alpha_sha256": "a87cee5902f6aeb015430689d82cb0a58f8b597ef407c0adf4f2a7b23c5d4380",
+        "dimensions": [
+          256,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ]
+}

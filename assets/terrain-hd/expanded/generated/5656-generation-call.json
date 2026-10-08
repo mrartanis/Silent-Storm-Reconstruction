@@ -1,0 +1,138 @@
+{
+  "id": 5656,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-56ab208b-8b57-43ec-9c20-fa8bf886d04c.png",
+  "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative256x128 complete2:1 canvas, whole nearest8x2048x1024 reference, finalwhole1024x512. Sourcealpha255 everywhere. Preserve the exact original dim grayboots left[0,0,32,128), upper black/grayfield[62,0,142,51), middle plainbrown cloth[31,51,142,128), and right tan/olive camouflage printedcloth[144,0,256,128); every original camo patch silhouette/position/scale must follow source, no added or regularized camouflage. Upper darkfield has exactly9 horizontal gray crossbars at native y5,10,15,20,25,30,35,40,45 with pitch5native pixels. Within this source paint there are2 complete rectangulargray loop washes at[114,15,126,21),[114,30,126,36), plus1 lower PARTIAL rectangularwash[114,45,126,51). y50 is only a weakpartialedge, NOTa tenth crossbar, don't draw a closing bottom bridge. Leftboottiny diagonal checker/lacewash has9 stronger source highlight pixels at[24,23],[28,27],[19,28],[30,29],[21,30],[32,31],[23,32],[25,34],[27,36]; a faint intervening source gray wash at[26,25] is present andmustremain faint. These9diagnostic paintpips are NOTa license to invent9rings/holes/eyelets: retain the entire originalsoftchecker trace as paint, exact nativepixelcadence without mechanical reinterpretation. Upperrightbootedgegraypatch at31..34/y22..23 is an existing borderwash, notadditional lace. Preserve one upperleft original grayUframe motif andall original sourceboot wash shapes. No newhardlace/raisedbuckles or darkthreadshadow.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5656-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "8452132fc5d9a8d73bdcc9d4e57729defac9e20fabe8de912433af5fd4e4fc22",
+    "exact_prompt_file": "9938b7cc44da8b87828964f6ca92b4e7397b97b6a688a9d12fd0f0b869d74ce0",
+    "reference_png": "b758050f12d1e110d80d9a9b6c427257ea7578e696d03a52cb601ce049e0a68b"
+  },
+  "saved_at_utc": "2026-10-08T06:15:42.638112+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 5656,
+    "texture": {
+      "ID": 5656,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13293800,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\UK\\Officer\\SaboteurOffcer\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3705,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2358,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6059,
+              "field": "Material2",
+              "material_template_id": 2358,
+              "geometry_id": 1920,
+              "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+              "model_template_id": 3908,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "11d771ae0fd420d581b59495d31f28c60a1d7c108bd07fbe729e7cf93667d33f",
+    "source_rgba_sha256": "472541d1c8e1c418c7403815cdcbe5c4677c713fc41e1bd6463f20e49954455e",
+    "release_rgba_sha256": "472541d1c8e1c418c7403815cdcbe5c4677c713fc41e1bd6463f20e49954455e",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5656.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "5ca4b191e5ce47bd075ee4338bd28701879e661021958eba0959cfad5e9eecd1",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-sixth-5656.json",
+  "source_count_phase_proof_sha256": "943cf3c50215c449a436359b9bec70c8e8b50cac254347a234a8149f2e166c96",
+  "precall_constraints_sha256": "d1e56060aeaef24e45d4e82bf58ab74df190fa6885771742943792a6a1aaa94d",
+  "exact_service_args": {
+    "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative256x128 complete2:1 canvas, whole nearest8x2048x1024 reference, finalwhole1024x512. Sourcealpha255 everywhere. Preserve the exact original dim grayboots left[0,0,32,128), upper black/grayfield[62,0,142,51), middle plainbrown cloth[31,51,142,128), and right tan/olive camouflage printedcloth[144,0,256,128); every original camo patch silhouette/position/scale must follow source, no added or regularized camouflage. Upper darkfield has exactly9 horizontal gray crossbars at native y5,10,15,20,25,30,35,40,45 with pitch5native pixels. Within this source paint there are2 complete rectangulargray loop washes at[114,15,126,21),[114,30,126,36), plus1 lower PARTIAL rectangularwash[114,45,126,51). y50 is only a weakpartialedge, NOTa tenth crossbar, don't draw a closing bottom bridge. Leftboottiny diagonal checker/lacewash has9 stronger source highlight pixels at[24,23],[28,27],[19,28],[30,29],[21,30],[32,31],[23,32],[25,34],[27,36]; a faint intervening source gray wash at[26,25] is present andmustremain faint. These9diagnostic paintpips are NOTa license to invent9rings/holes/eyelets: retain the entire originalsoftchecker trace as paint, exact nativepixelcadence without mechanical reinterpretation. Upperrightbootedgegraypatch at31..34/y22..23 is an existing borderwash, notadditional lace. Preserve one upperleft original grayUframe motif andall original sourceboot wash shapes. No newhardlace/raisedbuckles or darkthreadshadow.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5656-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 5656,
+    "gain": 0.8050537109375,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 40.54860689086914,
+    "actual_stored_luma": 40.5485403301239,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for new closing bottombridge: beforeprompt exactsource2full rectangulargrayloops+1partial lowerwash. Raw turns lower partial into third fullyclosed rectangularloop. Source nativebridge y50,x116..123 RGB3.75/4.125/3.75→15.375/15.875/16.125 with continuous new4x graybar; private source/native crop proves difference. This is actual changed loop topology, not moderate localpaintlift or1pixel codecsoftedge. All9 maincrossbars retain native peaks y5,10,15,20,25,30,35,40,45/pitch5, so no incorrect 9vs10 barclaim. Fullraw also sharpens tiny sourcebootcheckerpaint into distinct mechanical eyelet/lace assembly; source9diagnostic highlightpips explicitly not nine holes. WholeA255, defaultpad0, gain.8050537109375 and full4x luma match do notrepair topology. TanprintedRGB73.59/54.25/30.30→77.44/56.40/29.14 Lstd11.71→11.70, brown40.73/25.18/12.00→41.09/24.33/9.49 Lstd5.61→5.50; colorlift alone is nothold. No RGB patch/optout/retry. Genuine artwork pending."
+}

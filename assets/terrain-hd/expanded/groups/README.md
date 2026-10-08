@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 399 of these verified originals are accepted in the shared
+As of 2026-10-08, 409 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-seventh-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-eighth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,344 IDs: clothing 216, equipment 133, weapons
-57, heads 173, UI 623, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,334 IDs: clothing 213, equipment 128, weapons
+57, heads 172, UI 622, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -387,3 +387,23 @@ twenty-seventh-{batch,live}-check.json; actuallayer/UI proof: ../new-groups-
 twenty-seventh-runtime-check.json; ../coordinator-pattern-check-twenty-seventh.json.
 OrdinaryGit PNG/exactprompts and4 frozen workerreviews. Inspect next readyjobs
 before imagegen; do not regenerate accepted IDs.
+
+Twenty-eighth accepted packet: equipment676/2968/4257/1821/1827,
+clothing5469/7590, dynamic eye6686, UI4659 and exact2932 reuse of accepted1869.
+Nine separate builtin generations, one reused result with no new call.
+Pack:2,371 textures/4,742 aliases/127 archives/7,679,774,288 bytes.
+Prior2,361 source/PNG/native hashes unchanged; all10 nativeRGBA equal privately
+viewed whole4x predictions. Full sourcealpha/UV/material/count/scale retained;
+localpaint changes disclosed in ../coordinator-art-review-twenty-eighth.json.
+Only numericalbrightness, no artisticRGB inserts. Two4659 wall repeats retain
+sourcephase; modest finepaint differences betweenhalves disclosed, no forced tilecopy.
+2932/1869 fullsourceRGBA/dimensions/alphatype/layout match, productionnative2932
+equals accepted1869 byteexact: ../coordinator-reuse-check-twenty-eighth.json.
+Actual6686 SWloader/CPU blending on/off/on matches independent integeralpha/Vflip/FNV;
+nine actualhead94 bakes/roundtrips passed. Fixed diagnostic quadrant does not
+certify eyeGPU placement. Actual4659 GPU whole/middle/reverse/clipped draws reviewed.
+GameEXE/code unchanged since verified25. Full nativevalidation/realmenu/fourprivate
+frames/normalquit: ../new-groups-twenty-eighth-batch-check.json and
+../new-groups-twenty-eighth-live-check.json; eye/UI integration:
+../new-groups-twenty-eighth-runtime-check.json. Six workerreviews frozen
+beforeimport, ordinaryGit PNG/exactprompts. Check next readyjobs before imagegen.

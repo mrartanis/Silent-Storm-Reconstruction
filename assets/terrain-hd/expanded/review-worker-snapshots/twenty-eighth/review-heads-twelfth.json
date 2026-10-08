@@ -1,0 +1,4407 @@
+{
+  "batch": "heads-twelfth",
+  "finalized_utc": "2026-10-08T05:59:59.640101+00:00",
+  "accepted_snapshot_at_discovery": 2354,
+  "ready_ids": [
+    6686
+  ],
+  "ready": [
+    {
+      "id": 6686,
+      "status": "art-reviewed-ready",
+      "source_record": {
+        "id": 6686,
+        "texture": {
+          "ID": 6686,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9675189,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_03.png",
+          "Format": "8888",
+          "UserName": "03",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 3,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_03",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_03"
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "8df50bf026cd47d4a6087759a01fd2d759fff4720e33fc7eae93fd7ffa3c3577",
+        "source_rgba_sha256": "d8040e8d2ba321ab953502e22ed3997c1a3a4a94e747e7db2f078722c56205bb",
+        "release_rgba_sha256": "d8040e8d2ba321ab953502e22ed3997c1a3a4a94e747e7db2f078722c56205bb",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6686.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Exact Eyes_03.png full64x64 historical gamepainted eyeCOLOR UV: ONE muted olive/yellow-green iris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), TWO existing paintedlight patches only: upperpalevertical patch near[31,21,35,27) and small muted OLIVE/YELLOW lowerpatch near[29,35,34,39). Source lowerreflectionpixel(31,36) RGB157/146/111 is tinted/dim, not a white photoglare; preserveexactphase/color/strength and do not add a brightwhite lowercatchlight. Keep originalgreen/olive mottledtone distribution/pupilratio/iriscenter/radius and softdarkrim at sourcefrequency, no neon/jewelgloss/veins/photoirisradialfibers/newrings/catches/noise. Complete originalgraybrown sclera/filler/softlightwash preserved at whole64UV scale. No newface/eyelid/anatomy. FullA255/dynamicEye mode unchanged; normalizewhole256x256.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "c9e3b8050d43c83eb231b2d31c65d58797eda9bdb5cd2e005eb4922e15192c74",
+            "6b31b4c26be2a8fc59c018dfa2bf8160faa16b0c6ea6d6801a61a7bca6b0fea2"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6686,
+        "batch": "heads-twelfth",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T05:53:20.528311+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_03.png full64x64 historical gamepainted eyeCOLOR UV: ONE muted olive/yellow-green iris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), TWO existing paintedlight patches only: upperpalevertical patch near[31,21,35,27) and small muted OLIVE/YELLOW lowerpatch near[29,35,34,39). Source lowerreflectionpixel(31,36) RGB157/146/111 is tinted/dim, not a white photoglare; preserveexactphase/color/strength and do not add a brightwhite lowercatchlight. Keep originalgreen/olive mottledtone distribution/pupilratio/iriscenter/radius and softdarkrim at sourcefrequency, no neon/jewelgloss/veins/photoirisradialfibers/newrings/catches/noise. Complete originalgraybrown sclera/filler/softlightwash preserved at whole64UV scale. No newface/eyelid/anatomy. FullA255/dynamicEye mode unchanged; normalizewhole256x256.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6686-prompt.txt",
+        "prompt_sha256": "5f2995ec4f4cc50044788d6d4e2d272cfa9feb209698a81cf2fb6950d74c8408",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6686.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6686-heads-twelfth-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "c9e3b8050d43c83eb231b2d31c65d58797eda9bdb5cd2e005eb4922e15192c74",
+            "6b31b4c26be2a8fc59c018dfa2bf8160faa16b0c6ea6d6801a61a7bca6b0fea2"
+          ]
+        },
+        "target_size": [
+          256,
+          256
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2354,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_03.png full64x64 historical gamepainted eyeCOLOR UV: ONE muted olive/yellow-green iris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), TWO existing paintedlight patches only: upperpalevertical patch near[31,21,35,27) and small muted OLIVE/YELLOW lowerpatch near[29,35,34,39). Source lowerreflectionpixel(31,36) RGB157/146/111 is tinted/dim, not a white photoglare; preserveexactphase/color/strength and do not add a brightwhite lowercatchlight. Keep originalgreen/olive mottledtone distribution/pupilratio/iriscenter/radius and softdarkrim at sourcefrequency, no neon/jewelgloss/veins/photoirisradialfibers/newrings/catches/noise. Complete originalgraybrown sclera/filler/softlightwash preserved at whole64UV scale. No newface/eyelid/anatomy. FullA255/dynamicEye mode unchanged; normalizewhole256x256.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6686.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6686-heads-twelfth-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T05:55:31.651666+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-ceeb0b84-a92a-434b-a268-3143d970eec8.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6686-raw.png",
+        "raw_sha256": "6dd3d48fe7002e9239f314adc7736fdbdbe0071bab2d1763c79164d3cb36bab2",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6686,
+        "batch": "heads-twelfth",
+        "checked_utc": "2026-10-08T05:53:23.977146+00:00",
+        "sources_count": 2354,
+        "queue_count": 2816,
+        "sources_sha256": "20abc28ebb2521250e6578b495948e5ef2f80c4e31b7115d883ec515d6a74d97",
+        "queue_sha256": "52f255de0af2d6419574c6ba3470a836285b405a158d463ea73350dc3844892f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "d8040e8d2ba321ab953502e22ed3997c1a3a4a94e747e7db2f078722c56205bb",
+        "prompt_sha256": "5f2995ec4f4cc50044788d6d4e2d272cfa9feb209698a81cf2fb6950d74c8408",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "c9e3b8050d43c83eb231b2d31c65d58797eda9bdb5cd2e005eb4922e15192c74",
+            "6b31b4c26be2a8fc59c018dfa2bf8160faa16b0c6ea6d6801a61a7bca6b0fea2"
+          ]
+        },
+        "started_metadata_sha256": "9ca9325060ba336277a8608ef2a1d60920c51b9c4bf0e727ef4d0c41b85c4d00",
+        "shared_modified": false
+      },
+      "all_existing_jobs_and_prompts_guard_timing": "Explicit alljobs/priorprompts/accepted/aliases/allraw/calls/selected/held/exactRGBA beforetool; ownfresh exactprompt path alone excluded from priorprompt-ID scan, metadata/refSHA verified.",
+      "source_count_phase_before_prompt": {
+        "id": 6686,
+        "source_size": [
+          64,
+          64
+        ],
+        "source_native_RGBA_sha256": "d8040e8d2ba321ab953502e22ed3997c1a3a4a94e747e7db2f078722c56205bb",
+        "source_RGB_max": [
+          189,
+          170,
+          155
+        ],
+        "source_RGB_mean": [
+          107.70703125,
+          93.591552734375,
+          74.927490234375
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_whole_corner_RGBA": {
+          "0,0": [
+            140,
+            127,
+            111,
+            255
+          ],
+          "63,0": [
+            132,
+            119,
+            103,
+            255
+          ],
+          "0,63": [
+            148,
+            134,
+            119,
+            255
+          ],
+          "63,63": [
+            155,
+            141,
+            124,
+            255
+          ]
+        },
+        "source_count_phase_constraints": "Exact Eyes_03.png full64x64 historical gamepainted eyeCOLOR UV: ONE muted olive/yellow-green iris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), TWO existing paintedlight patches only: upperpalevertical patch near[31,21,35,27) and small muted OLIVE/YELLOW lowerpatch near[29,35,34,39). Source lowerreflectionpixel(31,36) RGB157/146/111 is tinted/dim, not a white photoglare; preserveexactphase/color/strength and do not add a brightwhite lowercatchlight. Keep originalgreen/olive mottledtone distribution/pupilratio/iriscenter/radius and softdarkrim at sourcefrequency, no neon/jewelgloss/veins/photoirisradialfibers/newrings/catches/noise. Complete originalgraybrown sclera/filler/softlightwash preserved at whole64UV scale. No newface/eyelid/anatomy. FullA255/dynamicEye mode unchanged; normalizewhole256x256.",
+        "region_diagnostics": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "RGB_max": [
+              189,
+              170,
+              155
+            ],
+            "RGB_mean": [
+              85.400548696845,
+              71.60219478737997,
+              40.135802469135804
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "RGB_max": [
+              189,
+              170,
+              155
+            ],
+            "RGB_mean": [
+              39.45454545454545,
+              28.972727272727273,
+              12.190909090909091
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "RGB_max": [
+              189,
+              170,
+              155
+            ],
+            "RGB_mean": [
+              92.20833333333333,
+              74.75,
+              52.375
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "RGB_max": [
+              157,
+              146,
+              111
+            ],
+            "RGB_mean": [
+              107.9,
+              100.3,
+              44.45
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "RGB_max": [
+              189,
+              170,
+              155
+            ],
+            "RGB_mean": [
+              107.70703125,
+              93.591552734375,
+              74.927490234375
+            ]
+          }
+        },
+        "phase_basis": "FullsourceRGBA/RGB/A/whole sourceNN privately viewed beforeprompt; exactly measured sourcefeature referenceextents/statistics only, not cropped refs/registration/alphaoptout/artistRGBrepair. All sourceA255.",
+        "native_iris_existing_bright_paint_components_luma110": [
+          {
+            "pixels": 37,
+            "bbox": [
+              20,
+              35,
+              31,
+              43
+            ]
+          },
+          {
+            "pixels": 6,
+            "bbox": [
+              32,
+              23,
+              34,
+              26
+            ]
+          },
+          {
+            "pixels": 6,
+            "bbox": [
+              30,
+              36,
+              34,
+              38
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              27,
+              30,
+              28,
+              31
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              20,
+              33,
+              21,
+              34
+            ]
+          }
+        ]
+      },
+      "numeric_preview": {
+        "id": 6686,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6686-raw.png",
+        "raw_sha256": "6dd3d48fe7002e9239f314adc7736fdbdbe0071bab2d1763c79164d3cb36bab2",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          256,
+          256
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "native_premultiplied": false,
+        "scalar_gain": 1.00555419921875,
+        "target_stored_luma": 95.24495815429687,
+        "actual_stored_luma": 95.24080350646972,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9904010008707093,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 116,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6686-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6686-native-stored-RGB.png"
+      },
+      "actual_alpha_blend_preview": {
+        "id": 6686,
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "source_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            107.70703125,
+            93.591552734375,
+            74.927490234375
+          ],
+          "alpha_weighted_RGB_peak": [
+            189.0,
+            170.0,
+            155.0
+          ],
+          "visible_weighted_RGB_mean": [
+            107.70703125,
+            93.591552734375,
+            74.927490234375
+          ]
+        },
+        "production_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            108.99191284179688,
+            93.275146484375,
+            74.22074890136719
+          ],
+          "alpha_weighted_RGB_peak": [
+            214.0,
+            194.0,
+            177.0
+          ],
+          "visible_weighted_RGB_mean": [
+            108.99191284179688,
+            93.275146484375,
+            74.22074890136719
+          ]
+        },
+        "production_RGBA_alpha_extrema": [
+          255,
+          255
+        ],
+        "private_actual_sourcealpha_preview_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6686-private-native-sourceA-over-dark.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6686-private-native-sourceA-over-light.png"
+        ],
+        "diagnostic_recipe": "ProductionRGBA with exact fullsourceA numerically composited over uniform diagnostic dark/light backgrounds only; no artistRGB repair/sourceRGB patch, no imagegen/art output change.",
+        "actual_source_RGB_hidden_A0_mean": null,
+        "actual_production_RGB_hidden_A0_mean": null
+      },
+      "local_palette_and_source_landmark_diagnostic": {
+        "id": 6686,
+        "source_RGB_max": [
+          189,
+          170,
+          155
+        ],
+        "production_RGB_max": [
+          214,
+          194,
+          177
+        ],
+        "source_RGB_mean": [
+          107.70703125,
+          93.591552734375,
+          74.927490234375
+        ],
+        "production_RGB_mean": [
+          108.99191284179688,
+          93.275146484375,
+          74.22074890136719
+        ],
+        "source_RGBA_corner_diagnostics": {
+          "0,0": [
+            140,
+            127,
+            111,
+            255
+          ],
+          "63,0": [
+            132,
+            119,
+            103,
+            255
+          ],
+          "0,63": [
+            148,
+            134,
+            119,
+            255
+          ],
+          "63,63": [
+            155,
+            141,
+            124,
+            255
+          ]
+        },
+        "production_RGBA_corner_diagnostics": {
+          "0,0": [
+            143,
+            129,
+            113,
+            255
+          ],
+          "63,0": [
+            133,
+            119,
+            104,
+            255
+          ],
+          "0,63": [
+            147,
+            134,
+            119,
+            255
+          ],
+          "63,63": [
+            157,
+            143,
+            126,
+            255
+          ]
+        },
+        "original_native_feature_regions": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "source_RGB_mean": [
+              85.400548696845,
+              71.60219478737997,
+              40.135802469135804
+            ],
+            "production_RGB_mean": [
+              87.8170438957476,
+              72.57904663923182,
+              38.32321673525377
+            ],
+            "source_RGB_max": [
+              189.0,
+              170.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              214.0,
+              194.0,
+              177.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 172.9564,
+            "production_luma_max": 197.0246,
+            "production_minus_source_mean_RGB": [
+              2.4164951989026093,
+              0.9768518518518476,
+              -1.812585733882031
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "source_RGB_mean": [
+              39.45454545454545,
+              28.972727272727273,
+              12.190909090909091
+            ],
+            "production_RGB_mean": [
+              41.46363636363636,
+              30.666477272727274,
+              11.610795454545455
+            ],
+            "source_RGB_max": [
+              189.0,
+              170.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              214.0,
+              194.0,
+              177.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 172.9564,
+            "production_luma_max": 197.0246,
+            "production_minus_source_mean_RGB": [
+              2.009090909090908,
+              1.6937500000000014,
+              -0.5801136363636363
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "source_RGB_mean": [
+              92.20833333333333,
+              74.75,
+              52.375
+            ],
+            "production_RGB_mean": [
+              105.37760416666667,
+              83.53645833333333,
+              57.760416666666664
+            ],
+            "source_RGB_max": [
+              189.0,
+              170.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              214.0,
+              194.0,
+              177.0
+            ],
+            "source_luma_min": 8.6246,
+            "production_luma_min": 3.9908,
+            "source_luma_max": 172.9564,
+            "production_luma_max": 197.0246,
+            "production_minus_source_mean_RGB": [
+              13.169270833333343,
+              8.786458333333329,
+              5.385416666666664
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "source_RGB_mean": [
+              107.9,
+              100.3,
+              44.45
+            ],
+            "production_RGB_mean": [
+              111.859375,
+              104.765625,
+              42.490625
+            ],
+            "source_RGB_max": [
+              157.0,
+              146.0,
+              111.0
+            ],
+            "production_RGB_max": [
+              177.0,
+              166.0,
+              123.0
+            ],
+            "source_luma_min": 68.6628,
+            "production_luma_min": 64.277,
+            "source_luma_max": 145.81159999999997,
+            "production_luma_max": 165.23399999999998,
+            "production_minus_source_mean_RGB": [
+              3.9593749999999943,
+              4.465625000000003,
+              -1.9593750000000014
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "source_RGB_mean": [
+              107.70703125,
+              93.591552734375,
+              74.927490234375
+            ],
+            "production_RGB_mean": [
+              108.99191284179688,
+              93.275146484375,
+              74.22074890136719
+            ],
+            "source_RGB_max": [
+              189.0,
+              170.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              214.0,
+              194.0,
+              177.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 172.9564,
+            "production_luma_max": 197.0246,
+            "production_minus_source_mean_RGB": [
+              1.284881591796875,
+              -0.31640625,
+              -0.7067413330078125
+            ]
+          }
+        },
+        "diagnostic_recipe": "Read-only whole-source and whole-native arrays. Per-source landmarker rectangle summaries are private numeric measurements only; production/ref images never cropped/registered/sourceRGBrepaired. Entire exact original alpha preserved. Global mean match alone does not prove identity/material/count/phase; full original/raw/native viewing decides."
+      },
+      "source_colored_reflection_point_diagnostic": {
+        "id": 6686,
+        "source_lower_existing_reflection_pixel_xy": [
+          31,
+          36
+        ],
+        "source_RGBA": [
+          157,
+          146,
+          111,
+          255
+        ],
+        "production_corresponding_center_xy": [
+          126,
+          146
+        ],
+        "production_RGBA": [
+          175,
+          164,
+          121,
+          255
+        ],
+        "recipe": "Private sourcepoint/wholeproductionpoint diagnostic only; no RGB restoration/patch, fullA255 unchanged. Lowerreflection sourcecolor is individual warmtan/olive/bluegray, never generically assumedneutralwhite."
+      },
+      "dynamic_runtime_gate": {
+        "actual_source_database_specific_Eye_layer_and_head_binding_verified": true,
+        "actual_runtime_BuildTexLayers_eye_entry_verified": true,
+        "actual_HD_dynamic_sampling_of_these_selected_layers_verified": false,
+        "status": "root-final-native64-logical-mip-and-actual-selected-layer-runtime-QA",
+        "qualification": "Root owns current LogicalSourceMip/BlendLayer fix, nativepack/actualbake/GPU proof. This independentart package does not claim existing FaceGen probe establishes newselectedEye variants. Fixedatlas256/sourceA/straightRGB/retailVflip/materialflags remain unchanged."
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Fullsource64RGBA/RGB/A/nearest/raw/native256 privately inspected. ONE source olive/yellow-green iris, ONE centraldarkpupil and exactlyTWO existing tinted paintedreflectionpatches at the upper/lower measuredpositions remain sourceproportion/center/phase/scale. Lowerpoint retains source olive/tan tint, not newneutralwhite glare; source(31,36)RGB157/146/111 recorded alongside actual4xpoint. Smoothfine painted existing mottledtone, originalsoftdarkrim and fullgraybrown sclera/fill/lightwash retain style; no photoiris radialfibers/veins/newcatchlight/neonhardring/anatomy/cells. Moderateupperpeak189/170/155→214/194/177 (13–14%) explicit, not an automatic hold: source overallRGBmeans107.707/93.592/74.927→108.992/93.275/74.221, irisROI R+2.42/G+.98/B−1.81 and lowerreflectionROI R+3.96/G+4.47/B−1.96 show no largepaint-field lift. UpperreflectionROI R+13.17/G+8.79/B+5.39 retainedasrootfinal localmaterialgate. ActualEyeTexture3→THMID1→Head/eyeowner proved, fullA255/defaultpad0/whole64→256/purescalar. Artready rootfinalnative/selectedeye64 logicalmip/runtime gate.",
+        "no_new_teeth_pupils_veins_photopores_beautification": true,
+        "artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "source_mask_rgb_padding_default": true,
+        "retry_performed": false
+      }
+    }
+  ],
+  "held_ids": [
+    6685,
+    6687
+  ],
+  "held": [
+    {
+      "id": 6685,
+      "status": "held-rectilinear-pixel-cell-material",
+      "source_record": {
+        "id": 6685,
+        "texture": {
+          "ID": 6685,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9938872,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_02.png",
+          "Format": "8888",
+          "UserName": "02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 2,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_02",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_02"
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "1a6482830b56483fbd1016a2633ff2bac3f29bb46460d05caf6e737133faac74",
+        "source_rgba_sha256": "339f3ad9d7bf71cbd228579cf08693240f234d45fec3bb39490244eeae0773a8",
+        "release_rgba_sha256": "339f3ad9d7bf71cbd228579cf08693240f234d45fec3bb39490244eeae0773a8",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6685.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Exact Eyes_02.png complete64x64 historical gamepainted eyeCOLOR UV: ONE muted amber/brown-gold circulariris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), exactly TWO EXISTING painted reflectionpatches at sourcepositions: upperpalevertical patch near[31,21,35,27) and smaller muted WARM TAN patch near[29,35,34,39). The lower existing reflectionpixel(31,36) is RGB160/137/110, deliberately warm/dim, NOT neutralwhite; preserve this sourcecolor/strength, do not create a new bright white catchlight. Keep original pupilproportion/irisradius/center, mottled amber/ochre/brown paintedtone and original soft darkerlimbal margin, no added rim/radialfibers/veins/newlights/hardrings/checker pattern. Preserve surrounding entiregraybrown sclera/authoringfill and original lower/right diffuse lightwash at exactUV/materialscale. No face/eyelid/anatomy added. FullsourceA255/actualdynamicEye binding retained; normalizewhole256x256.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "778109b25f709ac89d5998ac2b3dbfd400a5f7d672ad0176664256991a14faba",
+            "c0114efc1d327a57b2fe965b602733108fa72429440062ca1e3b17ffb5db064b"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6685,
+        "batch": "heads-twelfth",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T05:52:00.063122+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_02.png complete64x64 historical gamepainted eyeCOLOR UV: ONE muted amber/brown-gold circulariris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), exactly TWO EXISTING painted reflectionpatches at sourcepositions: upperpalevertical patch near[31,21,35,27) and smaller muted WARM TAN patch near[29,35,34,39). The lower existing reflectionpixel(31,36) is RGB160/137/110, deliberately warm/dim, NOT neutralwhite; preserve this sourcecolor/strength, do not create a new bright white catchlight. Keep original pupilproportion/irisradius/center, mottled amber/ochre/brown paintedtone and original soft darkerlimbal margin, no added rim/radialfibers/veins/newlights/hardrings/checker pattern. Preserve surrounding entiregraybrown sclera/authoringfill and original lower/right diffuse lightwash at exactUV/materialscale. No face/eyelid/anatomy added. FullsourceA255/actualdynamicEye binding retained; normalizewhole256x256.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6685-prompt.txt",
+        "prompt_sha256": "c76fb3b062a45d24e60c9434880eb162201ddde2fe2a60c303f9b2e58c13f8c7",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6685.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6685-heads-twelfth-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "778109b25f709ac89d5998ac2b3dbfd400a5f7d672ad0176664256991a14faba",
+            "c0114efc1d327a57b2fe965b602733108fa72429440062ca1e3b17ffb5db064b"
+          ]
+        },
+        "target_size": [
+          256,
+          256
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2354,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_02.png complete64x64 historical gamepainted eyeCOLOR UV: ONE muted amber/brown-gold circulariris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), exactly TWO EXISTING painted reflectionpatches at sourcepositions: upperpalevertical patch near[31,21,35,27) and smaller muted WARM TAN patch near[29,35,34,39). The lower existing reflectionpixel(31,36) is RGB160/137/110, deliberately warm/dim, NOT neutralwhite; preserve this sourcecolor/strength, do not create a new bright white catchlight. Keep original pupilproportion/irisradius/center, mottled amber/ochre/brown paintedtone and original soft darkerlimbal margin, no added rim/radialfibers/veins/newlights/hardrings/checker pattern. Preserve surrounding entiregraybrown sclera/authoringfill and original lower/right diffuse lightwash at exactUV/materialscale. No face/eyelid/anatomy added. FullsourceA255/actualdynamicEye binding retained; normalizewhole256x256.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6685.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6685-heads-twelfth-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T05:53:16.248178+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-1b5d5de4-fea5-4c54-804b-da31b6fee9b9.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6685-raw.png",
+        "raw_sha256": "f7c69529502edfd47b75a27722b122940abdc9d06e655b05e129975bcf241093",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6685,
+        "batch": "heads-twelfth",
+        "checked_utc": "2026-10-08T05:52:03.449489+00:00",
+        "sources_count": 2354,
+        "queue_count": 2816,
+        "sources_sha256": "20abc28ebb2521250e6578b495948e5ef2f80c4e31b7115d883ec515d6a74d97",
+        "queue_sha256": "52f255de0af2d6419574c6ba3470a836285b405a158d463ea73350dc3844892f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "339f3ad9d7bf71cbd228579cf08693240f234d45fec3bb39490244eeae0773a8",
+        "prompt_sha256": "c76fb3b062a45d24e60c9434880eb162201ddde2fe2a60c303f9b2e58c13f8c7",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "778109b25f709ac89d5998ac2b3dbfd400a5f7d672ad0176664256991a14faba",
+            "c0114efc1d327a57b2fe965b602733108fa72429440062ca1e3b17ffb5db064b"
+          ]
+        },
+        "started_metadata_sha256": "0535a79b0067081f8dd49fccfe3cf25ccb88aaac6ea4426fc3bf4ca95c214c70",
+        "shared_modified": false
+      },
+      "all_existing_jobs_and_prompts_guard_timing": "Explicit alljobs/priorprompts/accepted/aliases/allraw/calls/selected/held/exactRGBA beforetool; ownfresh exactprompt path alone excluded from priorprompt-ID scan, metadata/refSHA verified.",
+      "source_count_phase_before_prompt": {
+        "id": 6685,
+        "source_size": [
+          64,
+          64
+        ],
+        "source_native_RGBA_sha256": "339f3ad9d7bf71cbd228579cf08693240f234d45fec3bb39490244eeae0773a8",
+        "source_RGB_max": [
+          187,
+          172,
+          155
+        ],
+        "source_RGB_mean": [
+          103.412353515625,
+          88.12158203125,
+          71.536376953125
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_whole_corner_RGBA": {
+          "0,0": [
+            133,
+            120,
+            107,
+            255
+          ],
+          "63,0": [
+            126,
+            113,
+            98,
+            255
+          ],
+          "0,63": [
+            139,
+            128,
+            112,
+            255
+          ],
+          "63,63": [
+            147,
+            134,
+            116,
+            255
+          ]
+        },
+        "source_count_phase_constraints": "Exact Eyes_02.png complete64x64 historical gamepainted eyeCOLOR UV: ONE muted amber/brown-gold circulariris near native[20,16,47,43), ONE central darkroundedpupil near[28,24,38,35), exactly TWO EXISTING painted reflectionpatches at sourcepositions: upperpalevertical patch near[31,21,35,27) and smaller muted WARM TAN patch near[29,35,34,39). The lower existing reflectionpixel(31,36) is RGB160/137/110, deliberately warm/dim, NOT neutralwhite; preserve this sourcecolor/strength, do not create a new bright white catchlight. Keep original pupilproportion/irisradius/center, mottled amber/ochre/brown paintedtone and original soft darkerlimbal margin, no added rim/radialfibers/veins/newlights/hardrings/checker pattern. Preserve surrounding entiregraybrown sclera/authoringfill and original lower/right diffuse lightwash at exactUV/materialscale. No face/eyelid/anatomy added. FullsourceA255/actualdynamicEye binding retained; normalizewhole256x256.",
+        "region_diagnostics": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "RGB_max": [
+              187,
+              172,
+              155
+            ],
+            "RGB_mean": [
+              84.42249657064473,
+              61.87928669410151,
+              39.97119341563786
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "RGB_max": [
+              187,
+              172,
+              155
+            ],
+            "RGB_mean": [
+              39.19090909090909,
+              23.936363636363637,
+              12.518181818181818
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "RGB_max": [
+              187,
+              172,
+              155
+            ],
+            "RGB_mean": [
+              91.25,
+              68.20833333333333,
+              52.791666666666664
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "RGB_max": [
+              160,
+              137,
+              110
+            ],
+            "RGB_mean": [
+              110.2,
+              82.3,
+              45.65
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "RGB_max": [
+              187,
+              172,
+              155
+            ],
+            "RGB_mean": [
+              103.412353515625,
+              88.12158203125,
+              71.536376953125
+            ]
+          }
+        },
+        "phase_basis": "FullsourceRGBA/RGB/A/whole sourceNN privately viewed beforeprompt; exactly measured sourcefeature referenceextents/statistics only, not cropped refs/registration/alphaoptout/artistRGBrepair. All sourceA255.",
+        "native_iris_existing_bright_paint_components_luma110": [
+          {
+            "pixels": 6,
+            "bbox": [
+              32,
+              23,
+              34,
+              26
+            ]
+          },
+          {
+            "pixels": 5,
+            "bbox": [
+              20,
+              36,
+              23,
+              39
+            ]
+          },
+          {
+            "pixels": 4,
+            "bbox": [
+              31,
+              36,
+              33,
+              38
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              24,
+              39,
+              25,
+              40
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              27,
+              41,
+              28,
+              42
+            ]
+          }
+        ]
+      },
+      "numeric_preview": {
+        "id": 6685,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6685-raw.png",
+        "raw_sha256": "f7c69529502edfd47b75a27722b122940abdc9d06e655b05e129975bcf241093",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          256,
+          256
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "native_premultiplied": false,
+        "scalar_gain": 0.99456787109375,
+        "target_stored_luma": 90.1749482421875,
+        "actual_stored_luma": 90.18132567749024,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9861341795446038,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 116,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6685-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6685-native-stored-RGB.png"
+      },
+      "actual_alpha_blend_preview": {
+        "id": 6685,
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "source_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            103.412353515625,
+            88.12158203125,
+            71.536376953125
+          ],
+          "alpha_weighted_RGB_peak": [
+            187.0,
+            172.0,
+            155.0
+          ],
+          "visible_weighted_RGB_mean": [
+            103.412353515625,
+            88.12158203125,
+            71.536376953125
+          ]
+        },
+        "production_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            103.57131958007812,
+            88.09371948242188,
+            71.4326171875
+          ],
+          "alpha_weighted_RGB_peak": [
+            217.0,
+            201.0,
+            183.0
+          ],
+          "visible_weighted_RGB_mean": [
+            103.57131958007812,
+            88.09371948242188,
+            71.4326171875
+          ]
+        },
+        "production_RGBA_alpha_extrema": [
+          255,
+          255
+        ],
+        "private_actual_sourcealpha_preview_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6685-private-native-sourceA-over-dark.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6685-private-native-sourceA-over-light.png"
+        ],
+        "diagnostic_recipe": "ProductionRGBA with exact fullsourceA numerically composited over uniform diagnostic dark/light backgrounds only; no artistRGB repair/sourceRGB patch, no imagegen/art output change.",
+        "actual_source_RGB_hidden_A0_mean": null,
+        "actual_production_RGB_hidden_A0_mean": null
+      },
+      "local_palette_and_source_landmark_diagnostic": {
+        "id": 6685,
+        "source_RGB_max": [
+          187,
+          172,
+          155
+        ],
+        "production_RGB_max": [
+          217,
+          201,
+          183
+        ],
+        "source_RGB_mean": [
+          103.412353515625,
+          88.12158203125,
+          71.536376953125
+        ],
+        "production_RGB_mean": [
+          103.57131958007812,
+          88.09371948242188,
+          71.4326171875
+        ],
+        "source_RGBA_corner_diagnostics": {
+          "0,0": [
+            133,
+            120,
+            107,
+            255
+          ],
+          "63,0": [
+            126,
+            113,
+            98,
+            255
+          ],
+          "0,63": [
+            139,
+            128,
+            112,
+            255
+          ],
+          "63,63": [
+            147,
+            134,
+            116,
+            255
+          ]
+        },
+        "production_RGBA_corner_diagnostics": {
+          "0,0": [
+            128,
+            116,
+            100,
+            255
+          ],
+          "63,0": [
+            127,
+            115,
+            100,
+            255
+          ],
+          "0,63": [
+            145,
+            133,
+            117,
+            255
+          ],
+          "63,63": [
+            146,
+            134,
+            117,
+            255
+          ]
+        },
+        "original_native_feature_regions": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "source_RGB_mean": [
+              84.42249657064473,
+              61.87928669410151,
+              39.97119341563786
+            ],
+            "production_RGB_mean": [
+              87.64557613168725,
+              63.43758573388203,
+              39.30761316872428
+            ],
+            "source_RGB_max": [
+              187.0,
+              172.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              217.0,
+              201.0,
+              183.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 173.9616,
+            "production_luma_max": 203.102,
+            "production_minus_source_mean_RGB": [
+              3.2230795610425247,
+              1.5582990397805219,
+              -0.6635802469135825
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "source_RGB_mean": [
+              39.19090909090909,
+              23.936363636363637,
+              12.518181818181818
+            ],
+            "production_RGB_mean": [
+              40.97329545454546,
+              24.953977272727272,
+              12.370454545454546
+            ],
+            "source_RGB_max": [
+              187.0,
+              172.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              217.0,
+              201.0,
+              183.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 173.9616,
+            "production_luma_max": 203.102,
+            "production_minus_source_mean_RGB": [
+              1.7823863636363697,
+              1.0176136363636346,
+              -0.1477272727272716
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "source_RGB_mean": [
+              91.25,
+              68.20833333333333,
+              52.791666666666664
+            ],
+            "production_RGB_mean": [
+              97.98958333333333,
+              72.86979166666667,
+              55.583333333333336
+            ],
+            "source_RGB_max": [
+              187.0,
+              172.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              217.0,
+              201.0,
+              183.0
+            ],
+            "source_luma_min": 8.6246,
+            "production_luma_min": 7.271599999999999,
+            "source_luma_max": 173.9616,
+            "production_luma_max": 203.102,
+            "production_minus_source_mean_RGB": [
+              6.739583333333329,
+              4.661458333333343,
+              2.7916666666666714
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "source_RGB_mean": [
+              110.2,
+              82.3,
+              45.65
+            ],
+            "production_RGB_mean": [
+              120.2375,
+              88.778125,
+              47.003125
+            ],
+            "source_RGB_max": [
+              160.0,
+              137.0,
+              110.0
+            ],
+            "production_RGB_max": [
+              179.0,
+              153.0,
+              122.0
+            ],
+            "source_luma_min": 54.7158,
+            "production_luma_min": 54.7106,
+            "source_luma_max": 139.9404,
+            "production_luma_max": 156.2894,
+            "production_minus_source_mean_RGB": [
+              10.037499999999994,
+              6.478125000000006,
+              1.3531249999999986
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "source_RGB_mean": [
+              103.412353515625,
+              88.12158203125,
+              71.536376953125
+            ],
+            "production_RGB_mean": [
+              103.57131958007812,
+              88.09371948242188,
+              71.4326171875
+            ],
+            "source_RGB_max": [
+              187.0,
+              172.0,
+              155.0
+            ],
+            "production_RGB_max": [
+              217.0,
+              201.0,
+              183.0
+            ],
+            "source_luma_min": 0.0,
+            "production_luma_min": 0.0,
+            "source_luma_max": 173.9616,
+            "production_luma_max": 203.102,
+            "production_minus_source_mean_RGB": [
+              0.158966064453125,
+              -0.027862548828125,
+              -0.103759765625
+            ]
+          }
+        },
+        "diagnostic_recipe": "Read-only whole-source and whole-native arrays. Per-source landmarker rectangle summaries are private numeric measurements only; production/ref images never cropped/registered/sourceRGBrepaired. Entire exact original alpha preserved. Global mean match alone does not prove identity/material/count/phase; full original/raw/native viewing decides."
+      },
+      "source_colored_reflection_point_diagnostic": {
+        "id": 6685,
+        "source_lower_existing_reflection_pixel_xy": [
+          31,
+          36
+        ],
+        "source_RGBA": [
+          160,
+          137,
+          110,
+          255
+        ],
+        "production_corresponding_center_xy": [
+          126,
+          146
+        ],
+        "production_RGBA": [
+          179,
+          153,
+          122,
+          255
+        ],
+        "recipe": "Private sourcepoint/wholeproductionpoint diagnostic only; no RGB restoration/patch, fullA255 unchanged. Lowerreflection sourcecolor is individual warmtan/olive/bluegray, never generically assumedneutralwhite."
+      },
+      "dynamic_runtime_gate": {
+        "actual_source_database_specific_Eye_layer_and_head_binding_verified": true,
+        "actual_runtime_BuildTexLayers_eye_entry_verified": true,
+        "actual_HD_dynamic_sampling_of_these_selected_layers_verified": false,
+        "status": "root-final-native64-logical-mip-and-actual-selected-layer-runtime-QA",
+        "qualification": "Root owns current LogicalSourceMip/BlendLayer fix, nativepack/actualbake/GPU proof. This independentart package does not claim existing FaceGen probe establishes newselectedEye variants. Fixedatlas256/sourceA/straightRGB/retailVflip/materialflags remain unchanged."
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Fullsource64RGBA/RGB/A/nearest/raw/native256 privately inspected. Oneiris/pupil/two existing upperpale/lowerwarm reflectionpatches preserve sourcepositions/count; fullA255 and wholeUV unchanged. Moderatepeak187/172/155→217/201/183 is NOT an automatic hold. Actualwhole raw visibly copies/strengthens a rectilinear grid of broad quad/pixelcells acrossiris and surrounding authoring-sclera tones, instead of resolving original lowresolution sampler-coded paint into softfine gamepaint. Repeated cell edges read as a coarse matrix/mosaic texture; this material-frequency/softness is the hold, not a rejection of existing iris mottling or eyeart. WholeRGBmean103.412/88.122/71.536→103.571/88.094/71.433 is close, but lowerreflectionROI R+10/G+6.48/B+1.35 and upperR+6.74 are explicit. No artistRGB repair/retry.",
+        "no_new_teeth_pupils_veins_photopores_beautification": true,
+        "artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "source_mask_rgb_padding_default": true,
+        "retry_performed": false
+      }
+    },
+    {
+      "id": 6687,
+      "status": "held-coarse-pixel-cell-mosaic-material",
+      "source_record": {
+        "id": 6687,
+        "texture": {
+          "ID": 6687,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -10462625,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_04.png",
+          "Format": "8888",
+          "UserName": "04",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 4,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_04",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_04"
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "1af2b4b2714caeff40fbe920003653f8917d9070a2982ef3f07b3db58b3abcc4",
+        "source_rgba_sha256": "ec93589c3747be534fe1adade80caea5b22b5959ecb71b5785482d97a9a1a309",
+        "release_rgba_sha256": "ec93589c3747be534fe1adade80caea5b22b5959ecb71b5785482d97a9a1a309",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6687.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Exact Eyes_04.png full64x64 historical painted-game eyeCOLOR UV: ONE muted cyan/blue-gray iris near[20,16,47,43), ONE darkroundedpupil near[28,24,38,35), TWO existing bluegray/pale paintedlight patches at upper[31,21,35,27) and lower[29,35,34,39) only. Loweroriginalpixel(31,36) RGB147/150/168 is a subdued bluegrayreflection, do not brighten or neutralize it to white or add anothercatchlight. Keep original soft irregular bluemottled paintedtones, darker upperrim and redbrown-dark pupil tint; samecenter/irisradius/pupilratio and original lowcontrastlight hierarchy. No photographicradialfibers/stars/newhardoutline/neongloss/veins/checkerblocks. Full gray/lavender sclera/authoringfill and original source lower/right diffuse lightfield remain exactwholecanvaspositions/material/scale. No addedface/eyelid/anatomy. OriginalA255/actualdynamicEye semantics retained; normalizewhole256x256.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "1aaf5f54baa12de7d89b9d47ab339fb0f64b0f7230a6a411def36d7013c93f47",
+            "196df6cd59cbc51fb188f503550dd23f9f6352435c09053e8b0ca45233749bd4"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6687,
+        "batch": "heads-twelfth",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T05:55:35.980297+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_04.png full64x64 historical painted-game eyeCOLOR UV: ONE muted cyan/blue-gray iris near[20,16,47,43), ONE darkroundedpupil near[28,24,38,35), TWO existing bluegray/pale paintedlight patches at upper[31,21,35,27) and lower[29,35,34,39) only. Loweroriginalpixel(31,36) RGB147/150/168 is a subdued bluegrayreflection, do not brighten or neutralize it to white or add anothercatchlight. Keep original soft irregular bluemottled paintedtones, darker upperrim and redbrown-dark pupil tint; samecenter/irisradius/pupilratio and original lowcontrastlight hierarchy. No photographicradialfibers/stars/newhardoutline/neongloss/veins/checkerblocks. Full gray/lavender sclera/authoringfill and original source lower/right diffuse lightfield remain exactwholecanvaspositions/material/scale. No addedface/eyelid/anatomy. OriginalA255/actualdynamicEye semantics retained; normalizewhole256x256.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6687-prompt.txt",
+        "prompt_sha256": "33ad192a6c032e6e99c8c1c3e8170ed3a8832d2c4499beda25f6dfab0748e9d1",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6687.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6687-heads-twelfth-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "1aaf5f54baa12de7d89b9d47ab339fb0f64b0f7230a6a411def36d7013c93f47",
+            "196df6cd59cbc51fb188f503550dd23f9f6352435c09053e8b0ca45233749bd4"
+          ]
+        },
+        "target_size": [
+          256,
+          256
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2354,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithful subtle HD resolution ONLY of this exact complete painted-game EYE COLOR UV LAYER. Image1 exact historical64x64RGBA; image2 identical whole storedRGB nearest12. Full squareUV/normalizedsource positions/count/phase/paintscale/palette/material/lowhighlightstrength unchanged. Fine softly painted existingtone only, no photorealistic eye/irisfibers/veins/newglint/gloss/noise/checkerpattern/detailinvention. Do not add anatomy/eyelids/face/teeth. Actual dynamicTransformableEyeTextures→THMID1→Heads binding, not facecolor/staticopaque/alpha_test. FullauthoritativeA255 restored separately; entirewhole4x256x256 normalization/purescalarbrightness. No crop/BBox/cutout/padding/registration/repack or enlargingindividualiris. Exact Eyes_04.png full64x64 historical painted-game eyeCOLOR UV: ONE muted cyan/blue-gray iris near[20,16,47,43), ONE darkroundedpupil near[28,24,38,35), TWO existing bluegray/pale paintedlight patches at upper[31,21,35,27) and lower[29,35,34,39) only. Loweroriginalpixel(31,36) RGB147/150/168 is a subdued bluegrayreflection, do not brighten or neutralize it to white or add anothercatchlight. Keep original soft irregular bluemottled paintedtones, darker upperrim and redbrown-dark pupil tint; samecenter/irisradius/pupilratio and original lowcontrastlight hierarchy. No photographicradialfibers/stars/newhardoutline/neongloss/veins/checkerblocks. Full gray/lavender sclera/authoringfill and original source lower/right diffuse lightfield remain exactwholecanvaspositions/material/scale. No addedface/eyelid/anatomy. OriginalA255/actualdynamicEye semantics retained; normalizewhole256x256.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6687.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6687-heads-twelfth-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T05:57:37.240894+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-73ff51ac-d6c6-4328-8c6e-f70acfa790c1.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6687-raw.png",
+        "raw_sha256": "d16b2d466056e45b07b942467ae0f0c580003f89607c89d640bdfb0e2879c275",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6687,
+        "batch": "heads-twelfth",
+        "checked_utc": "2026-10-08T05:55:39.527188+00:00",
+        "sources_count": 2354,
+        "queue_count": 2816,
+        "sources_sha256": "20abc28ebb2521250e6578b495948e5ef2f80c4e31b7115d883ec515d6a74d97",
+        "queue_sha256": "52f255de0af2d6419574c6ba3470a836285b405a158d463ea73350dc3844892f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "ec93589c3747be534fe1adade80caea5b22b5959ecb71b5785482d97a9a1a309",
+        "prompt_sha256": "33ad192a6c032e6e99c8c1c3e8170ed3a8832d2c4499beda25f6dfab0748e9d1",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            64
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "affine_prewarp": null,
+          "operations": "Complete exactsourceRGBA + identicalwhole storedRGBNN only; no crop/BBox/registration/padding/unpremultiply/artRGBrepair/optout. Raw wholeLanczosnative4x, fullsourceA/defaultpad/purescalarbrightness.",
+          "references_sha256": [
+            "1aaf5f54baa12de7d89b9d47ab339fb0f64b0f7230a6a411def36d7013c93f47",
+            "196df6cd59cbc51fb188f503550dd23f9f6352435c09053e8b0ca45233749bd4"
+          ]
+        },
+        "started_metadata_sha256": "c638e39ec19b972cf30f52b8330ef4d9c3e0b799490562805905b742f0cc33ea",
+        "shared_modified": false
+      },
+      "all_existing_jobs_and_prompts_guard_timing": "Explicit alljobs/priorprompts/accepted/aliases/allraw/calls/selected/held/exactRGBA beforetool; ownfresh exactprompt path alone excluded from priorprompt-ID scan, metadata/refSHA verified.",
+      "source_count_phase_before_prompt": {
+        "id": 6687,
+        "source_size": [
+          64,
+          64
+        ],
+        "source_native_RGBA_sha256": "ec93589c3747be534fe1adade80caea5b22b5959ecb71b5785482d97a9a1a309",
+        "source_RGB_max": [
+          184,
+          185,
+          180
+        ],
+        "source_RGB_mean": [
+          95.417236328125,
+          89.59033203125,
+          94.570556640625
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_whole_corner_RGBA": {
+          "0,0": [
+            117,
+            112,
+            114,
+            255
+          ],
+          "63,0": [
+            111,
+            106,
+            111,
+            255
+          ],
+          "0,63": [
+            122,
+            116,
+            120,
+            255
+          ],
+          "63,63": [
+            122,
+            117,
+            121,
+            255
+          ]
+        },
+        "source_count_phase_constraints": "Exact Eyes_04.png full64x64 historical painted-game eyeCOLOR UV: ONE muted cyan/blue-gray iris near[20,16,47,43), ONE darkroundedpupil near[28,24,38,35), TWO existing bluegray/pale paintedlight patches at upper[31,21,35,27) and lower[29,35,34,39) only. Loweroriginalpixel(31,36) RGB147/150/168 is a subdued bluegrayreflection, do not brighten or neutralize it to white or add anothercatchlight. Keep original soft irregular bluemottled paintedtones, darker upperrim and redbrown-dark pupil tint; samecenter/irisradius/pupilratio and original lowcontrastlight hierarchy. No photographicradialfibers/stars/newhardoutline/neongloss/veins/checkerblocks. Full gray/lavender sclera/authoringfill and original source lower/right diffuse lightfield remain exactwholecanvaspositions/material/scale. No addedface/eyelid/anatomy. OriginalA255/actualdynamicEye semantics retained; normalizewhole256x256.",
+        "region_diagnostics": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "RGB_max": [
+              184,
+              185,
+              180
+            ],
+            "RGB_mean": [
+              73.0,
+              70.66255144032922,
+              81.480109739369
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "RGB_max": [
+              184,
+              185,
+              180
+            ],
+            "RGB_mean": [
+              49.6,
+              37.36363636363637,
+              44.25454545454546
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "RGB_max": [
+              184,
+              185,
+              180
+            ],
+            "RGB_mean": [
+              83.41666666666667,
+              80.04166666666667,
+              102.04166666666667
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "RGB_max": [
+              147,
+              150,
+              168
+            ],
+            "RGB_mean": [
+              95.6,
+              97.55,
+              110.95
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "RGB_max": [
+              184,
+              185,
+              180
+            ],
+            "RGB_mean": [
+              95.417236328125,
+              89.59033203125,
+              94.570556640625
+            ]
+          }
+        },
+        "phase_basis": "FullsourceRGBA/RGB/A/whole sourceNN privately viewed beforeprompt; exactly measured sourcefeature referenceextents/statistics only, not cropped refs/registration/alphaoptout/artistRGBrepair. All sourceA255.",
+        "native_iris_existing_bright_paint_components_luma110": [
+          {
+            "pixels": 102,
+            "bbox": [
+              20,
+              33,
+              47,
+              43
+            ]
+          },
+          {
+            "pixels": 6,
+            "bbox": [
+              32,
+              23,
+              34,
+              26
+            ]
+          },
+          {
+            "pixels": 5,
+            "bbox": [
+              30,
+              36,
+              33,
+              38
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              38,
+              32,
+              39,
+              33
+            ]
+          },
+          {
+            "pixels": 1,
+            "bbox": [
+              25,
+              34,
+              26,
+              35
+            ]
+          }
+        ]
+      },
+      "numeric_preview": {
+        "id": 6687,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6687-raw.png",
+        "raw_sha256": "d16b2d466056e45b07b942467ae0f0c580003f89607c89d640bdfb0e2879c275",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          256,
+          256
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "native_premultiplied": false,
+        "scalar_gain": 0.978790283203125,
+        "target_stored_luma": 91.1887041015625,
+        "actual_stored_luma": 91.18801708984375,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9921676867189438,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 0,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6687-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6687-native-stored-RGB.png"
+      },
+      "actual_alpha_blend_preview": {
+        "id": 6687,
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "source_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            95.417236328125,
+            89.59033203125,
+            94.570556640625
+          ],
+          "alpha_weighted_RGB_peak": [
+            184.0,
+            185.0,
+            180.0
+          ],
+          "visible_weighted_RGB_mean": [
+            95.417236328125,
+            89.59033203125,
+            94.570556640625
+          ]
+        },
+        "production_blend_diagnostic": {
+          "alpha_weighted_RGB_fullcanvas_mean": [
+            95.19287109375,
+            89.4837646484375,
+            96.27734375
+          ],
+          "alpha_weighted_RGB_peak": [
+            184.0,
+            193.0,
+            194.0
+          ],
+          "visible_weighted_RGB_mean": [
+            95.19287109375,
+            89.4837646484375,
+            96.27734375
+          ]
+        },
+        "production_RGBA_alpha_extrema": [
+          255,
+          255
+        ],
+        "private_actual_sourcealpha_preview_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6687-private-native-sourceA-over-dark.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-twelfth/native4x/6687-private-native-sourceA-over-light.png"
+        ],
+        "diagnostic_recipe": "ProductionRGBA with exact fullsourceA numerically composited over uniform diagnostic dark/light backgrounds only; no artistRGB repair/sourceRGB patch, no imagegen/art output change.",
+        "actual_source_RGB_hidden_A0_mean": null,
+        "actual_production_RGB_hidden_A0_mean": null
+      },
+      "local_palette_and_source_landmark_diagnostic": {
+        "id": 6687,
+        "source_RGB_max": [
+          184,
+          185,
+          180
+        ],
+        "production_RGB_max": [
+          184,
+          193,
+          194
+        ],
+        "source_RGB_mean": [
+          95.417236328125,
+          89.59033203125,
+          94.570556640625
+        ],
+        "production_RGB_mean": [
+          95.19287109375,
+          89.4837646484375,
+          96.27734375
+        ],
+        "source_RGBA_corner_diagnostics": {
+          "0,0": [
+            117,
+            112,
+            114,
+            255
+          ],
+          "63,0": [
+            111,
+            106,
+            111,
+            255
+          ],
+          "0,63": [
+            122,
+            116,
+            120,
+            255
+          ],
+          "63,63": [
+            122,
+            117,
+            121,
+            255
+          ]
+        },
+        "production_RGBA_corner_diagnostics": {
+          "0,0": [
+            115,
+            110,
+            116,
+            255
+          ],
+          "63,0": [
+            107,
+            102,
+            107,
+            255
+          ],
+          "0,63": [
+            121,
+            115,
+            122,
+            255
+          ],
+          "63,63": [
+            118,
+            113,
+            119,
+            255
+          ]
+        },
+        "original_native_feature_regions": {
+          "iris": {
+            "native_bbox": [
+              20,
+              16,
+              47,
+              43
+            ],
+            "source_RGB_mean": [
+              73.0,
+              70.66255144032922,
+              81.480109739369
+            ],
+            "production_RGB_mean": [
+              72.8377914951989,
+              71.80847050754458,
+              84.79226680384087
+            ],
+            "source_RGB_max": [
+              184.0,
+              185.0,
+              180.0
+            ],
+            "production_RGB_max": [
+              184.0,
+              193.0,
+              194.0
+            ],
+            "source_luma_min": 6.2572,
+            "production_luma_min": 13.1168,
+            "source_luma_max": 184.4264,
+            "production_luma_max": 191.15879999999999,
+            "production_minus_source_mean_RGB": [
+              -0.16220850480110016,
+              1.1459190672153596,
+              3.312157064471876
+            ]
+          },
+          "pupil": {
+            "native_bbox": [
+              28,
+              24,
+              38,
+              35
+            ],
+            "source_RGB_mean": [
+              49.6,
+              37.36363636363637,
+              44.25454545454546
+            ],
+            "production_RGB_mean": [
+              49.38181818181818,
+              37.60511363636363,
+              45.86988636363636
+            ],
+            "source_RGB_max": [
+              184.0,
+              185.0,
+              180.0
+            ],
+            "production_RGB_max": [
+              184.0,
+              193.0,
+              194.0
+            ],
+            "source_luma_min": 6.2572,
+            "production_luma_min": 13.1168,
+            "source_luma_max": 184.4264,
+            "production_luma_max": 191.15879999999999,
+            "production_minus_source_mean_RGB": [
+              -0.2181818181818187,
+              0.24147727272726627,
+              1.6153409090909037
+            ]
+          },
+          "top_existing_reflection": {
+            "native_bbox": [
+              31,
+              21,
+              35,
+              27
+            ],
+            "source_RGB_mean": [
+              83.41666666666667,
+              80.04166666666667,
+              102.04166666666667
+            ],
+            "production_RGB_mean": [
+              77.625,
+              75.4453125,
+              104.23958333333333
+            ],
+            "source_RGB_max": [
+              184.0,
+              185.0,
+              180.0
+            ],
+            "production_RGB_max": [
+              184.0,
+              193.0,
+              194.0
+            ],
+            "source_luma_min": 27.052599999999998,
+            "production_luma_min": 22.908199999999997,
+            "source_luma_max": 184.4264,
+            "production_luma_max": 191.15879999999999,
+            "production_minus_source_mean_RGB": [
+              -5.791666666666671,
+              -4.596354166666671,
+              2.197916666666657
+            ]
+          },
+          "lower_existing_reflection": {
+            "native_bbox": [
+              29,
+              35,
+              34,
+              39
+            ],
+            "source_RGB_mean": [
+              95.6,
+              97.55,
+              110.95
+            ],
+            "production_RGB_mean": [
+              86.74375,
+              93.14375,
+              110.83125
+            ],
+            "source_RGB_max": [
+              147.0,
+              150.0,
+              168.0
+            ],
+            "production_RGB_max": [
+              121.0,
+              130.0,
+              162.0
+            ],
+            "source_luma_min": 63.1288,
+            "production_luma_min": 54.7232,
+            "source_luma_max": 150.6618,
+            "production_luma_max": 130.397,
+            "production_minus_source_mean_RGB": [
+              -8.856249999999989,
+              -4.40625,
+              -0.11875000000000568
+            ]
+          },
+          "whole_surrounding_authoring_RGB": {
+            "native_bbox": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "source_RGB_mean": [
+              95.417236328125,
+              89.59033203125,
+              94.570556640625
+            ],
+            "production_RGB_mean": [
+              95.19287109375,
+              89.4837646484375,
+              96.27734375
+            ],
+            "source_RGB_max": [
+              184.0,
+              185.0,
+              180.0
+            ],
+            "production_RGB_max": [
+              184.0,
+              193.0,
+              194.0
+            ],
+            "source_luma_min": 6.2572,
+            "production_luma_min": 13.1168,
+            "source_luma_max": 184.4264,
+            "production_luma_max": 191.15879999999999,
+            "production_minus_source_mean_RGB": [
+              -0.224365234375,
+              -0.1065673828125,
+              1.706787109375
+            ]
+          }
+        },
+        "diagnostic_recipe": "Read-only whole-source and whole-native arrays. Per-source landmarker rectangle summaries are private numeric measurements only; production/ref images never cropped/registered/sourceRGBrepaired. Entire exact original alpha preserved. Global mean match alone does not prove identity/material/count/phase; full original/raw/native viewing decides."
+      },
+      "source_colored_reflection_point_diagnostic": {
+        "id": 6687,
+        "source_lower_existing_reflection_pixel_xy": [
+          31,
+          36
+        ],
+        "source_RGBA": [
+          147,
+          150,
+          168,
+          255
+        ],
+        "production_corresponding_center_xy": [
+          126,
+          146
+        ],
+        "production_RGBA": [
+          115,
+          126,
+          159,
+          255
+        ],
+        "recipe": "Private sourcepoint/wholeproductionpoint diagnostic only; no RGB restoration/patch, fullA255 unchanged. Lowerreflection sourcecolor is individual warmtan/olive/bluegray, never generically assumedneutralwhite."
+      },
+      "dynamic_runtime_gate": {
+        "actual_source_database_specific_Eye_layer_and_head_binding_verified": true,
+        "actual_runtime_BuildTexLayers_eye_entry_verified": true,
+        "actual_HD_dynamic_sampling_of_these_selected_layers_verified": false,
+        "status": "root-final-native64-logical-mip-and-actual-selected-layer-runtime-QA",
+        "qualification": "Root owns current LogicalSourceMip/BlendLayer fix, nativepack/actualbake/GPU proof. This independentart package does not claim existing FaceGen probe establishes newselectedEye variants. Fixedatlas256/sourceA/straightRGB/retailVflip/materialflags remain unchanged."
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Fullsource64RGBA/RGB/A/nearest/raw/native256 privately inspected. Source ONEbluegrayiris/ONEpupil/TWO existing subdued coloredreflectionpatches retain broadsourcephase/fullA255/wholeUV. RGBmean95.417/89.590/94.571→95.193/89.484/96.277, peak184/185/180→184/193/194 and irisROI R−.16/G+1.15/B+3.31 are modest; brightness/softedgepeak is NOT the hold. Actualwhole raw resolves/copies referencepixel tone into newly conspicuous regular rounded/quad mosaic cells in cyaniris and distinct stepped cell outlines at pupil/outerrim, rather than smoothly painted old mottledtone. LowerreflectionROI R−8.86/G−4.41/B−.12 is recorded but style/frequency is primary. No photoveins/newanatomy/newcatchlight and no retry/artRGB patch.",
+        "no_new_teeth_pupils_veins_photopores_beautification": true,
+        "artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "source_mask_rgb_padding_default": true,
+        "retry_performed": false
+      }
+    }
+  ],
+  "source_only_ids": [
+    6688,
+    6689,
+    6690,
+    6691,
+    6702,
+    6703,
+    6704,
+    6705,
+    6706
+  ],
+  "source_only_deferred": [
+    {
+      "id": 6688,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamic64x64 EyeColor variant with fullA255; exactwholeRGBA/history-release/typedHead chain privatelyviewed. Owngray/green/blue iris/pupil/tintedcatchlight and mottledpaint differs fromselectedvariants; preciseindividualcoloredpattern/phase/catchlight sourceproof required beforeprompt. DeferredownQA, no technical/analytic/eye typeban or imagegen call.",
+      "source_check": {
+        "id": 6688,
+        "source_record": {
+          "id": 6688,
+          "texture": {
+            "ID": 6688,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10593955,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_05.png",
+            "Format": "8888",
+            "UserName": "05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableEyeTextures",
+                "id": 5,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Eyes_05",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Eyes_05"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            64,
+            64
+          ],
+          "source_sha256": "0225e3ab2482ccc771338482a6ba28cd6c8f359545dea8888f3b4d25d7433a4e",
+          "source_rgba_sha256": "dcfe344caa2239b5ff971a22437f0f03f4b31685037991108d96bc8b5ebc7e91",
+          "release_rgba_sha256": "dcfe344caa2239b5ff971a22437f0f03f4b31685037991108d96bc8b5ebc7e91",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6688.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6688,
+          "texture": {
+            "ID": 6688,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10593955,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_05.png",
+            "Format": "8888",
+            "UserName": "05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            64,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              64,
+              64
+            ],
+            "mips": 7,
+            "file_bytes": 21868,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 5,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_05",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_05"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "0225e3ab2482ccc771338482a6ba28cd6c8f359545dea8888f3b4d25d7433a4e",
+        "release_mmp_sha256": "0225e3ab2482ccc771338482a6ba28cd6c8f359545dea8888f3b4d25d7433a4e",
+        "original_png_sha256": "8f8277255f8b39d6c456e9069c1a81e6ecfbad10ac0ddc5c424658f88298a1b1",
+        "source_rgba_sha256": "dcfe344caa2239b5ff971a22437f0f03f4b31685037991108d96bc8b5ebc7e91",
+        "source_rgb_sha256": "4a99e5c5cdc49560fe77193adb382a0272997f60f09167cebcc3837c41c43506",
+        "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+        "dimensions": [
+          64,
+          64
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableEyeTextures",
+          "owner_vector": "eye",
+          "layer_records": [
+            {
+              "ID": 5,
+              "TextureID": 6688,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Eyes_05",
+              "TextureName": "Eyes_05"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1119,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1252,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6689,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamic64x64 EyeColor variant with fullA255; exactwholeRGBA/history-release/typedHead chain privatelyviewed. Owngray/green/blue iris/pupil/tintedcatchlight and mottledpaint differs fromselectedvariants; preciseindividualcoloredpattern/phase/catchlight sourceproof required beforeprompt. DeferredownQA, no technical/analytic/eye typeban or imagegen call.",
+      "source_check": {
+        "id": 6689,
+        "source_record": {
+          "id": 6689,
+          "texture": {
+            "ID": 6689,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10396580,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_06.png",
+            "Format": "8888",
+            "UserName": "06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableEyeTextures",
+                "id": 6,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Eyes_06",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Eyes_06"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            64,
+            64
+          ],
+          "source_sha256": "2c9e0c1e0a38894001538a8f454f1527e7528c11ffeb893077b3b7397b99d20c",
+          "source_rgba_sha256": "eebe95e489a5eb8e28b21ac80b9e5789f5040449863756655e4b447fbdcbd9eb",
+          "release_rgba_sha256": "eebe95e489a5eb8e28b21ac80b9e5789f5040449863756655e4b447fbdcbd9eb",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6689.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6689,
+          "texture": {
+            "ID": 6689,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10396580,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_06.png",
+            "Format": "8888",
+            "UserName": "06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            64,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              64,
+              64
+            ],
+            "mips": 7,
+            "file_bytes": 21868,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 6,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_06",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_06"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "2c9e0c1e0a38894001538a8f454f1527e7528c11ffeb893077b3b7397b99d20c",
+        "release_mmp_sha256": "2c9e0c1e0a38894001538a8f454f1527e7528c11ffeb893077b3b7397b99d20c",
+        "original_png_sha256": "e227ee4be18f1ea567233133a2f9725f8f22aa80af8109c53659b8854c14d451",
+        "source_rgba_sha256": "eebe95e489a5eb8e28b21ac80b9e5789f5040449863756655e4b447fbdcbd9eb",
+        "source_rgb_sha256": "785f626eb432bb5e879087c30fe2aec8a25c19a1a8ae116e8404ec97a8239ec6",
+        "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+        "dimensions": [
+          64,
+          64
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableEyeTextures",
+          "owner_vector": "eye",
+          "layer_records": [
+            {
+              "ID": 6,
+              "TextureID": 6689,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Eyes_06",
+              "TextureName": "Eyes_06"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1119,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1252,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6690,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamic64x64 EyeColor variant with fullA255; exactwholeRGBA/history-release/typedHead chain privatelyviewed. Owngray/green/blue iris/pupil/tintedcatchlight and mottledpaint differs fromselectedvariants; preciseindividualcoloredpattern/phase/catchlight sourceproof required beforeprompt. DeferredownQA, no technical/analytic/eye typeban or imagegen call.",
+      "source_check": {
+        "id": 6690,
+        "source_record": {
+          "id": 6690,
+          "texture": {
+            "ID": 6690,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10594990,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_07.png",
+            "Format": "8888",
+            "UserName": "07",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableEyeTextures",
+                "id": 7,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Eyes_07",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Eyes_07"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            64,
+            64
+          ],
+          "source_sha256": "eec881d32d90e0163fcc9d51f074dc65d16787ed2ead1185f361302e757e9d60",
+          "source_rgba_sha256": "e53fa0ecfad3e4924e9cc336b4b8b24134866bf5360fdbe62affaa07865673e9",
+          "release_rgba_sha256": "e53fa0ecfad3e4924e9cc336b4b8b24134866bf5360fdbe62affaa07865673e9",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6690.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6690,
+          "texture": {
+            "ID": 6690,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10594990,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\EyesColor\\Eyes_07.png",
+            "Format": "8888",
+            "UserName": "07",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            64,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              64,
+              64
+            ],
+            "mips": 7,
+            "file_bytes": 21868,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 7,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_07",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Eyes_07"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "eec881d32d90e0163fcc9d51f074dc65d16787ed2ead1185f361302e757e9d60",
+        "release_mmp_sha256": "eec881d32d90e0163fcc9d51f074dc65d16787ed2ead1185f361302e757e9d60",
+        "original_png_sha256": "ed5ef996bcc4bc2e1b55a9ce564a16a1038523d1be04c74f3262ed044fad4305",
+        "source_rgba_sha256": "e53fa0ecfad3e4924e9cc336b4b8b24134866bf5360fdbe62affaa07865673e9",
+        "source_rgb_sha256": "2cab63b9e6971e72e5ce946a7ae9c71ab6ebbb502bda503431d25b747296d110",
+        "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+        "dimensions": [
+          64,
+          64
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableEyeTextures",
+          "owner_vector": "eye",
+          "layer_records": [
+            {
+              "ID": 7,
+              "TextureID": 6690,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Eyes_07",
+              "TextureName": "Eyes_07"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1119,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1252,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6691,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualTransformableEyeTextures Eyes_Old64x64 source. WholefullA255/RGB/history-release/headchain inspected. Source contains smoothgray authoring-sclera/lenswash and existinglightpatches without a clearly painted normaliris/pupil. Exact intendedold-eye layer/material/blend role and sourcephase need further proof before enhancing; not labelledtechnical solely because smooth/noiris, no newiris/pupil invented and no call.",
+      "source_check": {
+        "id": 6691,
+        "source_record": {
+          "id": 6691,
+          "texture": {
+            "ID": 6691,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -9871782,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\Eyes_Old.png",
+            "Format": "8888",
+            "UserName": "Old_Eye",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableEyeTextures",
+                "id": 8,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Eyes_Old",
+                "THMID": 1,
+                "Priority": 0,
+                "TextureName": "Eyes_Old"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            64,
+            64
+          ],
+          "source_sha256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+          "source_rgba_sha256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+          "release_rgba_sha256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6691.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6691,
+          "texture": {
+            "ID": 6691,
+            "Width": 64,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -9871782,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\Eyes_Old.png",
+            "Format": "8888",
+            "UserName": "Old_Eye",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            64,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              64,
+              64
+            ],
+            "mips": 7,
+            "file_bytes": 21868,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 8,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_Old",
+              "THMID": 1,
+              "Priority": 0,
+              "TextureName": "Eyes_Old"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+        "release_mmp_sha256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+        "original_png_sha256": "4959fbdeb8cb8b39becc6e7bafc40ad785c455c825be0f3b9e36895d90c43ff9",
+        "source_rgba_sha256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+        "source_rgb_sha256": "e5c575ab4e9222a1c6bbb3951e16bb446fe184b665fb92e25ba6457f63a1748f",
+        "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+        "dimensions": [
+          64,
+          64
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableEyeTextures",
+          "owner_vector": "eye",
+          "layer_records": [
+            {
+              "ID": 8,
+              "TextureID": 6691,
+              "THMID": 1,
+              "Priority": 0,
+              "UserName": "Eyes_Old",
+              "TextureName": "Eyes_Old"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1119,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1252,
+            "excerpt": "BuildTexLayers( eye,     pTT->eye );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6702,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamicFaceColor layer with several dimolive diagonalpaintfragments and originalA0..255 authoredmatching fragmentmask plus nativecornerpoint. Fullsource/history-release/headbinding inspected. Exactfragmentcount/outline/phase and relativepainttone require independentproof; no guessedcounts/hardware/teeth/alphaoptout or call. Sourceonlygenuinepending, nottechnical.",
+      "source_check": {
+        "id": 6702,
+        "source_record": {
+          "id": 6702,
+          "texture": {
+            "ID": 6702,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 152114954,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\01.png",
+            "Format": "8888",
+            "UserName": "01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 32,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "01",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "01"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "5aff8a0ea2b90bd3348cc9b3662e33b8ab057954b699dea8470b834d8a0d5d86",
+          "source_rgba_sha256": "f96d67b16e9ae8935b5e28cc16976ba2b6525a0b5adc5c08770b45172c142a93",
+          "release_rgba_sha256": "f96d67b16e9ae8935b5e28cc16976ba2b6525a0b5adc5c08770b45172c142a93",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6702.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6702,
+          "texture": {
+            "ID": 6702,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 152114954,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\01.png",
+            "Format": "8888",
+            "UserName": "01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 32,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "01",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "01"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "5aff8a0ea2b90bd3348cc9b3662e33b8ab057954b699dea8470b834d8a0d5d86",
+        "release_mmp_sha256": "5aff8a0ea2b90bd3348cc9b3662e33b8ab057954b699dea8470b834d8a0d5d86",
+        "original_png_sha256": "f99a8c0e4c85d4e6981d897557b90fa8a90774d08b98796d898e16d5b2b40b45",
+        "source_rgba_sha256": "f96d67b16e9ae8935b5e28cc16976ba2b6525a0b5adc5c08770b45172c142a93",
+        "source_rgb_sha256": "03f271a153c566b1667efb3e69ddd1a9afb09c3a8064df5b0d708e96d017ab1a",
+        "source_alpha_sha256": "85503418c9b2c942e3459110bf38613564d471a108759b401a4c878c59082feb",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableFaceTextures",
+          "owner_vector": "face",
+          "layer_records": [
+            {
+              "ID": 32,
+              "TextureID": 6702,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "01",
+              "TextureName": "01"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1118,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1251,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6703,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamicFaceColor shading source, varyingalpha irregularface-region field with two dark cutout-like regions and originalcornerpoint. RGB essentiallyblack; artwork authoredmainlyinA. Fullsource/history-release/headbinding inspected. Need sourcepreserving alpha-paint/materialrole workflow, not new coloredRGB fields; no blanketalpha exclusion/technicalfallback/call.",
+      "source_check": {
+        "id": 6703,
+        "source_record": {
+          "id": 6703,
+          "texture": {
+            "ID": 6703,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 134217728,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\02.png",
+            "Format": "8888",
+            "UserName": "02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 33,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "02",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "02"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "77bd88737af6b88f122a8f4de9c295c1e346a7b684f760c472c496d927b4ef2b",
+          "source_rgba_sha256": "df3daebb1813906588aea3907614a0f857db1c16a337296b90d9f3886ad1e479",
+          "release_rgba_sha256": "df3daebb1813906588aea3907614a0f857db1c16a337296b90d9f3886ad1e479",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6703.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6703,
+          "texture": {
+            "ID": 6703,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 134217728,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\02.png",
+            "Format": "8888",
+            "UserName": "02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 33,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "02",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "02"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "77bd88737af6b88f122a8f4de9c295c1e346a7b684f760c472c496d927b4ef2b",
+        "release_mmp_sha256": "77bd88737af6b88f122a8f4de9c295c1e346a7b684f760c472c496d927b4ef2b",
+        "original_png_sha256": "fae489f8442f5240673c45efccae716865f00845116380c1d277077666c5f996",
+        "source_rgba_sha256": "df3daebb1813906588aea3907614a0f857db1c16a337296b90d9f3886ad1e479",
+        "source_rgb_sha256": "2aae7dc846aaf25f1cadf55f1666862046c6db9d65d84bdc07fa039dac405606",
+        "source_alpha_sha256": "69b10ca8330b8b255be3cce69c0df0a30550aea741efd5f595e24b4a2195dce4",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableFaceTextures",
+          "owner_vector": "face",
+          "layer_records": [
+            {
+              "ID": 33,
+              "TextureID": 6703,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "02",
+              "TextureName": "02"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1118,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1251,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6704,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamicFaceColor source with maroonauthoringfill, small paleangledpaintpatch, faintdiagonalmark and originalcornerpoint/A0..255. Exactsmallmark role/count/nativealpha phase and sourcecolor must be proven forownprompt; no semanticguess that patchisteeth/hardware or newsharp anatomy. Deferredno call/nottechnical.",
+      "source_check": {
+        "id": 6704,
+        "source_record": {
+          "id": 6704,
+          "texture": {
+            "ID": 6704,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 21370133,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\03.png",
+            "Format": "8888",
+            "UserName": "03",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 34,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "03",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "03"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "397b65ddd66ab4cd8f870dd7288610961a40b467566e6123fdf68fed624b0619",
+          "source_rgba_sha256": "d5ddb8eee8076f825d9697289bd4125bb80b376e5d631097c5c075be83fa08df",
+          "release_rgba_sha256": "d5ddb8eee8076f825d9697289bd4125bb80b376e5d631097c5c075be83fa08df",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6704.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6704,
+          "texture": {
+            "ID": 6704,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 21370133,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\03.png",
+            "Format": "8888",
+            "UserName": "03",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 34,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "03",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "03"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "397b65ddd66ab4cd8f870dd7288610961a40b467566e6123fdf68fed624b0619",
+        "release_mmp_sha256": "397b65ddd66ab4cd8f870dd7288610961a40b467566e6123fdf68fed624b0619",
+        "original_png_sha256": "89a3520e3c4f7ad34d9ff10a8ce0bbe0980f937b05c151a7e031f834220fd4e4",
+        "source_rgba_sha256": "d5ddb8eee8076f825d9697289bd4125bb80b376e5d631097c5c075be83fa08df",
+        "source_rgb_sha256": "ed11e51a8124c4b012364b1300749d2b2a131a80be7fea6aaa1eac6a99f95b1a",
+        "source_alpha_sha256": "3c5b42c9ecbc366d90aba6f39a767683d218e1d0f914556b761dcd14a819a768",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableFaceTextures",
+          "owner_vector": "face",
+          "layer_records": [
+            {
+              "ID": 34,
+              "TextureID": 6704,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "03",
+              "TextureName": "03"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1118,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1251,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6705,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamicFaceColor source with tinygroupedlightmarks/redauthoringfill/nativeA0..255 and originalcornerpoint. FullRGB/A/history-release/headbinding viewed, but exacttiny pattern count/role/localpaint/nativephase not yet proven. No artificialtooth count/dentalgroupban/technicalfallback, no call.",
+      "source_check": {
+        "id": 6705,
+        "source_record": {
+          "id": 6705,
+          "texture": {
+            "ID": 6705,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 22413313,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\04.png",
+            "Format": "8888",
+            "UserName": "04",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 35,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "04",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "04"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "b41affcc986868f57b5abca3deb0169ac09994d2097caee6b92fb57fdce45496",
+          "source_rgba_sha256": "2464a5210a3705cce58cd11271765d53f3e697b001484abb7280abf92d8463c6",
+          "release_rgba_sha256": "2464a5210a3705cce58cd11271765d53f3e697b001484abb7280abf92d8463c6",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6705.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6705,
+          "texture": {
+            "ID": 6705,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 22413313,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\04.png",
+            "Format": "8888",
+            "UserName": "04",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 35,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "04",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "04"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "b41affcc986868f57b5abca3deb0169ac09994d2097caee6b92fb57fdce45496",
+        "release_mmp_sha256": "b41affcc986868f57b5abca3deb0169ac09994d2097caee6b92fb57fdce45496",
+        "original_png_sha256": "9659b12206ad1f9e7ed0e2adacd0470448fd356be6377a574bd2b1418f054665",
+        "source_rgba_sha256": "2464a5210a3705cce58cd11271765d53f3e697b001484abb7280abf92d8463c6",
+        "source_rgb_sha256": "59392927cc74c9bcb63a76d3d32c6811399a5ea2abecf25eb2f155ab376d97dc",
+        "source_alpha_sha256": "f93a7cee306dbd67877e20bebc21ceecd50636bbf5bc654ed071728bc06ef3d9",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableFaceTextures",
+          "owner_vector": "face",
+          "layer_records": [
+            {
+              "ID": 35,
+              "TextureID": 6705,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "04",
+              "TextureName": "04"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1118,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1251,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6706,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualdynamicFaceColor source with one thindiagonalpaintmark/cyanhiddenauthoringfill/originalcornerpoint and A0..255. WholeRGBA/history-release/headbinding inspected. Exactlinephase, nativealpha/color composition and materialstrength need ownproof beforeprompt. No newscar/anatomy/glyph/falsemode/alphaoptout; deferredno call/nottechnical.",
+      "source_check": {
+        "id": 6706,
+        "source_record": {
+          "id": 6706,
+          "texture": {
+            "ID": 6706,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 546647,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\05.png",
+            "Format": "8888",
+            "UserName": "05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 36,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "05",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "05"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "9ad312b067f36e0086fa30fabdd0f8e8dd73025076121423dd407719d47161ca",
+          "source_rgba_sha256": "084f063bba6881417e554cb791254c768fcbd0e55a436bfe159528886d6269eb",
+          "release_rgba_sha256": "084f063bba6881417e554cb791254c768fcbd0e55a436bfe159528886d6269eb",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6706.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6706,
+          "texture": {
+            "ID": 6706,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 546647,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\05.png",
+            "Format": "8888",
+            "UserName": "05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 36,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "05",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "05"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "9ad312b067f36e0086fa30fabdd0f8e8dd73025076121423dd407719d47161ca",
+        "release_mmp_sha256": "9ad312b067f36e0086fa30fabdd0f8e8dd73025076121423dd407719d47161ca",
+        "original_png_sha256": "eb0c5ec0507beee9168791b26e5592dfe94c277cc4740a61397ee48317abd870",
+        "source_rgba_sha256": "084f063bba6881417e554cb791254c768fcbd0e55a436bfe159528886d6269eb",
+        "source_rgb_sha256": "f67a24aa4abf4ab5234f9bbeb55f605f325499d929ce16d782aa92227b25357c",
+        "source_alpha_sha256": "2425ba3934c3801e19d09e54a2b7a3ede6ae6683aab0159c70181214fdd33a36",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected": true,
+        "actual_dynamic_texture_layer_head_consumer_chain": {
+          "table": "TransformableFaceTextures",
+          "owner_vector": "face",
+          "layer_records": [
+            {
+              "ID": 36,
+              "TextureID": 6706,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "05",
+              "TextureName": "05"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Actual specificdynamic colorlayer/headbinding, no inventedstaticMaterial/Models mode. Actualnative/runtime proof supplied onlybyroot; this independentartproof does not claimGPUverification."
+        },
+        "actual_dynamic_runtime_entry_refs": [
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1118,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          },
+          {
+            "file": "Main/LSHead.cpp",
+            "line": 1251,
+            "excerpt": "BuildTexLayers( face,    pTT->face );"
+          }
+        ],
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    }
+  ],
+  "generation_unavailable_ids": [],
+  "source_parity_count": 12,
+  "builtin_generation_calls": 3,
+  "dynamic_runtime_gate": {
+    "actual_source_database_specific_Eye_layer_and_head_binding_verified": true,
+    "actual_runtime_BuildTexLayers_eye_entry_verified": true,
+    "actual_HD_dynamic_sampling_of_these_selected_layers_verified": false,
+    "status": "root-final-native64-logical-mip-and-actual-selected-layer-runtime-QA",
+    "qualification": "Root owns current LogicalSourceMip/BlendLayer fix, nativepack/actualbake/GPU proof. This independentart package does not claim existing FaceGen probe establishes newselectedEye variants. Fixedatlas256/sourceA/straightRGB/retailVflip/materialflags remain unchanged."
+  },
+  "guard_timing_note": "Discovery2354, all3percallfresh2354/q2816/alljobs/priorprompts/aliases/raw/calls/held/selected/exactRGBA beforebuiltin. Exactprompts/refrecipe/SHA/call/raw immediatelypersisted. FullsourceRGB/wholeNN references, individualsource reflectioncolors/count/phase beforeprompt, no genericwhiteglint/teethcount invention.",
+  "scope_note": "12 freshwhole sources from146uncalled of175remaining; other134uncalled notinspected inthispackage/notdeclaredunsuitable. Allselected genuine64EyeColor layer/Head chains. Whole64→256/defaultpad/fullA255/puregain only, noartistRGB/crop/BBox/registration/optout/retry. Moderatepeak/finepaint notautomaticallyheld;6685/6687 specific rectilinear/mosaic material-frequency drift. OtherEye/layer/mark sources genuinepending individualproof, notblanketgroup/alpha/type exclusion. OldHeads11/10/9 frozen; rootalone shared/native/runtime/build/C++/Git.",
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false
+}

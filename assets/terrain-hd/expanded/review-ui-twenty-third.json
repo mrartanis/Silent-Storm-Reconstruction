@@ -1,0 +1,3242 @@
+{
+  "batch": "ui-twenty-third",
+  "finalized_utc": "2026-10-08T06:17:27.071680+00:00",
+  "accepted_snapshot_at_discovery": 2361,
+  "accepted_snapshots_before_calls": [
+    2361,
+    2361,
+    2361
+  ],
+  "queue_snapshots_before_calls": [
+    2823,
+    2823,
+    2823
+  ],
+  "ready_ids": [
+    4659
+  ],
+  "ready": [
+    {
+      "id": 4659,
+      "status": "art-reviewed-ready",
+      "source_record": {
+        "id": 4659,
+        "texture": {
+          "ID": 4659,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -14146012,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_02.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element02_02",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2903,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1868,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4854,
+                  "field": "Material1",
+                  "material_template_id": 1868,
+                  "geometry_id": 3011,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3228,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "ff7f52f773ad182cd49555707bdc005e1dc84c39f64bbf1e8f3b416fd7c6b0d9",
+        "source_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "release_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4659.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source512x256, production2048x1024. Genuine opaque diffuse of the main-menu model: a dim matte graybrown irregular worn wall paint, without a background scene. EXACTLY TWO source-identical256x256 painted repeat fields side by side: original horizontal phase at x0 and x256, split at x256. All corresponding broad dark vertical streaks, restrained grayolive patches and vague existing masonry-like marks must have the same phase/shape in both halves, without adding or deciding extra bricks, mortar seams or chipped stones. Preserve original dense but soft nonuniform painted wash and low contrast. Existing irregular dark strokes are not a regular new grid. Resolve only very fine old paint tones, not new gritty stone photography or new sharp masonry blocks.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "3d84276aef11362d77fdbf69ad262b70f2bbb208ab0852321aec0b61bbbaea97",
+            "998bd57e0a8e62b547becaa59fa11552525a2780fe2772601d00e5f3a801d4e7"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 4659,
+        "batch": "ui-twenty-third",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T06:09:48.117202+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source512x256, production2048x1024. Genuine opaque diffuse of the main-menu model: a dim matte graybrown irregular worn wall paint, without a background scene. EXACTLY TWO source-identical256x256 painted repeat fields side by side: original horizontal phase at x0 and x256, split at x256. All corresponding broad dark vertical streaks, restrained grayolive patches and vague existing masonry-like marks must have the same phase/shape in both halves, without adding or deciding extra bricks, mortar seams or chipped stones. Preserve original dense but soft nonuniform painted wash and low contrast. Existing irregular dark strokes are not a regular new grid. Resolve only very fine old paint tones, not new gritty stone photography or new sharp masonry blocks.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4659-prompt.txt",
+        "prompt_sha256": "7a6ab78f707f1cb16732e6092ae7a44b40fb945f0bf45f20aa5d3aeefe7209ab",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4659.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4659-ui-twenty-third-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "3d84276aef11362d77fdbf69ad262b70f2bbb208ab0852321aec0b61bbbaea97",
+            "998bd57e0a8e62b547becaa59fa11552525a2780fe2772601d00e5f3a801d4e7"
+          ]
+        },
+        "target_size": [
+          2048,
+          1024
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2361,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source512x256, production2048x1024. Genuine opaque diffuse of the main-menu model: a dim matte graybrown irregular worn wall paint, without a background scene. EXACTLY TWO source-identical256x256 painted repeat fields side by side: original horizontal phase at x0 and x256, split at x256. All corresponding broad dark vertical streaks, restrained grayolive patches and vague existing masonry-like marks must have the same phase/shape in both halves, without adding or deciding extra bricks, mortar seams or chipped stones. Preserve original dense but soft nonuniform painted wash and low contrast. Existing irregular dark strokes are not a regular new grid. Resolve only very fine old paint tones, not new gritty stone photography or new sharp masonry blocks.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4659.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4659-ui-twenty-third-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T06:10:55.191781+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-85566ec3-2781-4e5b-8cfc-cb6203a0ed46.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4659-raw.png",
+        "raw_sha256": "b9ec23e4e3f6c7d029283b90eee025baf953e5f791a62c8a2da9bf6cfd4c01b8",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 4659,
+        "batch": "ui-twenty-third",
+        "checked_utc": "2026-10-08T06:09:51.291332+00:00",
+        "sources_count": 2361,
+        "queue_count": 2823,
+        "sources_sha256": "87dfce4c301a4098405df1fa8a272606a2319f16eb317eccb82a7e8ed91bc5dc",
+        "queue_sha256": "0175e0b41cb791ba0e2d50e073e30b0fec68eab8b861a1c2b7b1031081dbb92a",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "prompt_sha256": "7a6ab78f707f1cb16732e6092ae7a44b40fb945f0bf45f20aa5d3aeefe7209ab",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "3d84276aef11362d77fdbf69ad262b70f2bbb208ab0852321aec0b61bbbaea97",
+            "998bd57e0a8e62b547becaa59fa11552525a2780fe2772601d00e5f3a801d4e7"
+          ]
+        },
+        "started_metadata_sha256": "a516434c3fda0e1850faab21d413f5129f0741843b9d1bb7725bc15c2c76407f",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 4659,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source512x256, production2048x1024. Genuine opaque diffuse of the main-menu model: a dim matte graybrown irregular worn wall paint, without a background scene. EXACTLY TWO source-identical256x256 painted repeat fields side by side: original horizontal phase at x0 and x256, split at x256. All corresponding broad dark vertical streaks, restrained grayolive patches and vague existing masonry-like marks must have the same phase/shape in both halves, without adding or deciding extra bricks, mortar seams or chipped stones. Preserve original dense but soft nonuniform painted wash and low contrast. Existing irregular dark strokes are not a regular new grid. Resolve only very fine old paint tones, not new gritty stone photography or new sharp masonry blocks.",
+        "source_RGBA_sha256": "c7d60e384d4b4edc3682b25b15b2d4f4b1c5ad342b5f4c0465528ed32032482a",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "whole_original_RGB_reference": true,
+        "exact_repeats": 2,
+        "horizontal_phase_pixels": [
+          0,
+          256
+        ],
+        "period_pixels": 256,
+        "split_x": 256,
+        "entire_RGBA_repeat_halves_pixel_identical": true,
+        "maximum_RGBA_difference": 0,
+        "repeat_RGBA_sha256": "5e537b65236dfed983de6baee849da4d301ae9f08b703f2616762eba36f22d22",
+        "ambiguous_masonry_units_not_counted_or_invented": true
+      },
+      "numeric_preview": {
+        "id": 4659,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4659-raw.png",
+        "raw_sha256": "b9ec23e4e3f6c7d029283b90eee025baf953e5f791a62c8a2da9bf6cfd4c01b8",
+        "raw_size": [
+          1774,
+          887
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          2048,
+          1024
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "4bda3a28f4ffe603c0ec1258c0034d65a1a0d35ab7bd523a834608adabf03cc5",
+        "native_premultiplied": false,
+        "scalar_gain": 0.86083984375,
+        "target_stored_luma": 38.306998834228516,
+        "actual_stored_luma": 38.2977568865776,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9238182596474062,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 18,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4659-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4659-native-stored-RGB.png"
+      },
+      "source_material_local_diagnostics": {
+        "id": 4659,
+        "source_mean_RGB": [
+          39.74568176269531,
+          38.114166259765625,
+          35.98081970214844
+        ],
+        "production_stored_mean_RGB": [
+          41.096426486968994,
+          38.01643896102905,
+          32.843482971191406
+        ],
+        "source_max_RGB": [
+          99.0,
+          97.0,
+          90.0
+        ],
+        "production_stored_max_RGB": [
+          99.0,
+          101.0,
+          93.0
+        ],
+        "source_alpha_weighted_RGB": [
+          39.74568176269531,
+          38.114166259765625,
+          35.98081970214844
+        ],
+        "production_stored_alpha_weighted_RGB": [
+          41.096426486968994,
+          38.01643896102905,
+          32.843482971191406
+        ],
+        "source_alpha_weighted_RGB_is_diagnostic_only": true,
+        "no_artist_RGB_patch": true,
+        "source_exact_horizontal_repeat_period": 256,
+        "production_repeat_period": 1024,
+        "generated_repeat_halves_pixel_identical": false,
+        "production_repeat_half_mean_absolute_RGB_difference": 2.011480967203776,
+        "production_repeat_half_spatial_correlation": 0.9761679358864404,
+        "diagnostic_qualification": "Source requires two corresponding whole256 repeat-field shapes/phase. Numerical half differences are reported, not repaired/copied/repeated or arbitrary rejection thresholds. Actual repeat scale/shape/material assessed by private whole reference/raw/native inspection."
+      },
+      "private_QA": {
+        "whole_source_original_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Whole source512x256RGBA/RGB/A and wholeNN inspected before prompt; whole raw and native2048x1024 inspected. Exactly two source whole256 paint repetitions were numerically proved identical before call; generated two corresponding dark-streak/mottled matte wall fields preserve period1024 in physical4x and broad source phase/layout, with no extra clear bricks, grout, holes, hardware or photographic grit. Fine new mottled painted tone remains source-scale and irregular, not a regular new geometric grid. Production repeat halves are NOT pixel-identical: mean absoluteRGB difference2.01148 and half spatial correlation.97617 are reported transparently, no copying/repair to force repetition. Root final repeat/material gate remains. Scalar.86083984375: storedluma38.3069988→38.2977569; RGBmean39.7457/38.1142/35.9808→41.0964/38.0164/32.8435, slight warming / B−3.14 explicit. Max99/97/90→99/101/93 modest, not an automatic hold. Whole sourceA255 exact/defaultpad0/opaque material/template/model proved.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Actual typed historical DB menu-model material chain proved; root alone imports/packs/builds and verifies live selected native/GPU; independent art QA does not assert selected actual live model rendered."
+    }
+  ],
+  "held_ids": [
+    4731,
+    4801
+  ],
+  "held": [
+    {
+      "id": 4731,
+      "status": "held-hard-square-relief-and-mosaic-material",
+      "source_record": {
+        "id": 4731,
+        "texture": {
+          "ID": 4731,
+          "Width": 64,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": -14016492,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Sleepers.tga",
+          "Format": "dxt1",
+          "UserName": "Sleepers",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2997,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1926,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4953,
+                  "field": "Material1",
+                  "material_template_id": 1926,
+                  "geometry_id": 3084,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3297,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          128
+        ],
+        "source_sha256": "c3d6cfc6fdcdbf2a9ce7e0436ede7cd9e40e7bd16509483b7f40c3908bcd5e8a",
+        "source_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "release_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4731.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source64x128, production256x512. Genuine opaque main-menu railway-sleepers diffuse. EXACTLY TWO elongated muted darkbrown wood-painted fields side by side, running vertically, with the existing narrow nearblack central gap and black outer margin. EXACTLY FOUR existing dark rectangular painted patches, two near the top and two near the bottom, one at each end of each long field. Preserve all four patch rims and the existing small dim square-like tonal marks inside them at their exact source positions: these ambiguous marks remain softly painted highlights/shadows, do not turn them into independent screwheads, nail holes, bolts, rail chairs or extra hardware. Approximate native patch footprints are upperleft x12..26,y7..27, upperright x40..58,y8..27, lowerleft x12..26,y98..118, lowerright x41..58,y98..118; full references define exact outlines, never move them to these approximate boxes. Preserve subdued narrow vertical brown/taupe grain washes and dark long edges, source broad scale and simple matte game-paint material. No new bright grain fibers, cuts, white specular rims, realistic wood knots or photoreal carved boards.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            128
+          ],
+          "guide_size": [
+            384,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "6ac3cf19c7659b3b51f9b8dfe751237b9c6fbf8d3266ddd35fee903f1b05cc46",
+            "fd05cecf51122fa1e8ae76c4ab926c4aeed25aa3e0d0813bd90d1771dbb680c1"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 4731,
+        "batch": "ui-twenty-third",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T06:11:07.855630+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source64x128, production256x512. Genuine opaque main-menu railway-sleepers diffuse. EXACTLY TWO elongated muted darkbrown wood-painted fields side by side, running vertically, with the existing narrow nearblack central gap and black outer margin. EXACTLY FOUR existing dark rectangular painted patches, two near the top and two near the bottom, one at each end of each long field. Preserve all four patch rims and the existing small dim square-like tonal marks inside them at their exact source positions: these ambiguous marks remain softly painted highlights/shadows, do not turn them into independent screwheads, nail holes, bolts, rail chairs or extra hardware. Approximate native patch footprints are upperleft x12..26,y7..27, upperright x40..58,y8..27, lowerleft x12..26,y98..118, lowerright x41..58,y98..118; full references define exact outlines, never move them to these approximate boxes. Preserve subdued narrow vertical brown/taupe grain washes and dark long edges, source broad scale and simple matte game-paint material. No new bright grain fibers, cuts, white specular rims, realistic wood knots or photoreal carved boards.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4731-prompt.txt",
+        "prompt_sha256": "8c9f2e5c92a5e491012f10750ec2e912d7c2637cd4824de3a68ec5b01c8a3865",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4731.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4731-ui-twenty-third-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            128
+          ],
+          "guide_size": [
+            384,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "6ac3cf19c7659b3b51f9b8dfe751237b9c6fbf8d3266ddd35fee903f1b05cc46",
+            "fd05cecf51122fa1e8ae76c4ab926c4aeed25aa3e0d0813bd90d1771dbb680c1"
+          ]
+        },
+        "target_size": [
+          256,
+          512
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2361,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source64x128, production256x512. Genuine opaque main-menu railway-sleepers diffuse. EXACTLY TWO elongated muted darkbrown wood-painted fields side by side, running vertically, with the existing narrow nearblack central gap and black outer margin. EXACTLY FOUR existing dark rectangular painted patches, two near the top and two near the bottom, one at each end of each long field. Preserve all four patch rims and the existing small dim square-like tonal marks inside them at their exact source positions: these ambiguous marks remain softly painted highlights/shadows, do not turn them into independent screwheads, nail holes, bolts, rail chairs or extra hardware. Approximate native patch footprints are upperleft x12..26,y7..27, upperright x40..58,y8..27, lowerleft x12..26,y98..118, lowerright x41..58,y98..118; full references define exact outlines, never move them to these approximate boxes. Preserve subdued narrow vertical brown/taupe grain washes and dark long edges, source broad scale and simple matte game-paint material. No new bright grain fibers, cuts, white specular rims, realistic wood knots or photoreal carved boards.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4731.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4731-ui-twenty-third-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T06:12:25.491254+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-f2c91f94-a7c0-40d7-a1d4-5994253f22e8.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4731-raw.png",
+        "raw_sha256": "d73f9d562649ad108601e24bc51c8db5bca8b4b35dcfbd34c6122e5cc2a32ae0",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 4731,
+        "batch": "ui-twenty-third",
+        "checked_utc": "2026-10-08T06:11:10.988482+00:00",
+        "sources_count": 2361,
+        "queue_count": 2823,
+        "sources_sha256": "87dfce4c301a4098405df1fa8a272606a2319f16eb317eccb82a7e8ed91bc5dc",
+        "queue_sha256": "b3af90cce956826d8efdf2d2eef6542d829026a7a3d1cd6b14c56f81b4e0e293",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "prompt_sha256": "8c9f2e5c92a5e491012f10750ec2e912d7c2637cd4824de3a68ec5b01c8a3865",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            64,
+            128
+          ],
+          "guide_size": [
+            384,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            64,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "6ac3cf19c7659b3b51f9b8dfe751237b9c6fbf8d3266ddd35fee903f1b05cc46",
+            "fd05cecf51122fa1e8ae76c4ab926c4aeed25aa3e0d0813bd90d1771dbb680c1"
+          ]
+        },
+        "started_metadata_sha256": "a3733fb790564a4ce6689fe68e8b9958becb167b77edc42f19e1d5ad89de8b0c",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 4731,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source64x128, production256x512. Genuine opaque main-menu railway-sleepers diffuse. EXACTLY TWO elongated muted darkbrown wood-painted fields side by side, running vertically, with the existing narrow nearblack central gap and black outer margin. EXACTLY FOUR existing dark rectangular painted patches, two near the top and two near the bottom, one at each end of each long field. Preserve all four patch rims and the existing small dim square-like tonal marks inside them at their exact source positions: these ambiguous marks remain softly painted highlights/shadows, do not turn them into independent screwheads, nail holes, bolts, rail chairs or extra hardware. Approximate native patch footprints are upperleft x12..26,y7..27, upperright x40..58,y8..27, lowerleft x12..26,y98..118, lowerright x41..58,y98..118; full references define exact outlines, never move them to these approximate boxes. Preserve subdued narrow vertical brown/taupe grain washes and dark long edges, source broad scale and simple matte game-paint material. No new bright grain fibers, cuts, white specular rims, realistic wood knots or photoreal carved boards.",
+        "source_RGBA_sha256": "b83e4034ef2fde4668ebcd71bd84bcb62e80813e34908c0d67283c97866f3207",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "whole_original_RGB_reference": true,
+        "long_painted_fields": 2,
+        "rectangular_painted_patches": 4,
+        "patch_approximate_bounds": [
+          [
+            12,
+            7,
+            26,
+            27
+          ],
+          [
+            40,
+            8,
+            58,
+            27
+          ],
+          [
+            12,
+            98,
+            26,
+            118
+          ],
+          [
+            41,
+            98,
+            58,
+            118
+          ]
+        ],
+        "ambiguous_highlight_marks_no_hardware_semantic_claim": true
+      },
+      "numeric_preview": {
+        "id": 4731,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4731-raw.png",
+        "raw_sha256": "d73f9d562649ad108601e24bc51c8db5bca8b4b35dcfbd34c6122e5cc2a32ae0",
+        "raw_size": [
+          887,
+          1774
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          256,
+          512
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "native_premultiplied": false,
+        "scalar_gain": 1.017333984375,
+        "target_stored_luma": 32.578066235351564,
+        "actual_stored_luma": 32.58966914978027,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9051383641766199,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 3768,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4731-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4731-native-stored-RGB.png"
+      },
+      "source_material_local_diagnostics": {
+        "id": 4731,
+        "source_mean_RGB": [
+          41.4764404296875,
+          31.2757568359375,
+          19.2763671875
+        ],
+        "production_stored_mean_RGB": [
+          44.09021759033203,
+          30.875572204589844,
+          15.704704284667969
+        ],
+        "source_max_RGB": [
+          107.0,
+          81.0,
+          57.0
+        ],
+        "production_stored_max_RGB": [
+          132.0,
+          101.0,
+          71.0
+        ],
+        "source_alpha_weighted_RGB": [
+          41.4764404296875,
+          31.2757568359375,
+          19.2763671875
+        ],
+        "production_stored_alpha_weighted_RGB": [
+          44.09021759033203,
+          30.875572204589844,
+          15.704704284667969
+        ],
+        "source_alpha_weighted_RGB_is_diagnostic_only": true,
+        "no_artist_RGB_patch": true,
+        "source_relative_patch_material_ROI_diagnostics": [
+          {
+            "name": "upper-left-painted-patch",
+            "native_original_bounds": [
+              12,
+              7,
+              26,
+              27
+            ],
+            "source_mean_RGB": [
+              39.61071428571429,
+              29.339285714285715,
+              16.810714285714287
+            ],
+            "production_stored_mean_RGB": [
+              42.50982142857143,
+              29.626116071428573,
+              13.636607142857143
+            ],
+            "delta_mean_RGB": [
+              2.89910714285714,
+              0.28683035714285765,
+              -3.174107142857144
+            ]
+          },
+          {
+            "name": "upper-right-painted-patch",
+            "native_original_bounds": [
+              40,
+              8,
+              58,
+              27
+            ],
+            "source_mean_RGB": [
+              44.119883040935676,
+              32.707602339181285,
+              20.29824561403509
+            ],
+            "production_stored_mean_RGB": [
+              44.56944444444444,
+              30.758954678362574,
+              15.366776315789474
+            ],
+            "delta_mean_RGB": [
+              0.44956140350876694,
+              -1.948647660818711,
+              -4.931469298245615
+            ]
+          },
+          {
+            "name": "lower-left-painted-patch",
+            "native_original_bounds": [
+              12,
+              98,
+              26,
+              118
+            ],
+            "source_mean_RGB": [
+              43.82142857142857,
+              32.77857142857143,
+              18.867857142857144
+            ],
+            "production_stored_mean_RGB": [
+              42.925,
+              30.010267857142857,
+              14.231026785714286
+            ],
+            "delta_mean_RGB": [
+              -0.8964285714285722,
+              -2.768303571428575,
+              -4.636830357142857
+            ]
+          },
+          {
+            "name": "lower-right-painted-patch",
+            "native_original_bounds": [
+              41,
+              98,
+              58,
+              118
+            ],
+            "source_mean_RGB": [
+              43.85,
+              32.22941176470588,
+              18.56764705882353
+            ],
+            "production_stored_mean_RGB": [
+              44.099264705882355,
+              30.52169117647059,
+              14.323529411764707
+            ],
+            "delta_mean_RGB": [
+              0.2492647058823536,
+              -1.70772058823529,
+              -4.244117647058822
+            ]
+          },
+          {
+            "name": "left-long-field",
+            "native_original_bounds": [
+              6,
+              30,
+              29,
+              96
+            ],
+            "source_mean_RGB": [
+              48.95652173913044,
+              38.320816864295125,
+              22.552042160737813
+            ],
+            "production_stored_mean_RGB": [
+              54.83057476943347,
+              39.87969367588933,
+              19.711668313570488
+            ],
+            "delta_mean_RGB": [
+              5.874053030303031,
+              1.558876811594203,
+              -2.8403738471673243
+            ]
+          },
+          {
+            "name": "right-long-field",
+            "native_original_bounds": [
+              36,
+              30,
+              60,
+              96
+            ],
+            "source_mean_RGB": [
+              46.48737373737374,
+              35.994949494949495,
+              23.633838383838384
+            ],
+            "production_stored_mean_RGB": [
+              50.36880523989899,
+              36.047861426767675,
+              19.667100694444443
+            ],
+            "delta_mean_RGB": [
+              3.8814315025252526,
+              0.05291193181817988,
+              -3.9667376893939412
+            ]
+          }
+        ]
+      },
+      "private_QA": {
+        "whole_source_original_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Whole source64x128RGBA/RGB/A/wholeNN, raw887x1774 and full native256x512 inspected. Two long fields and four end patches remain, fullA255/defaultpad0. Raw promotes dim ambiguous inner source tonal marks to distinctly raised dark-rimmed square fastener-like relief and hard inset panel borders, together with conspicuous regular block/mosaic cells across the long wood-painted fields. This is an actual material/relief reinterpretation rather than gently resolving muted old wood/gamepaint; no unsupported exact fastener count was asserted before prompt and no invented-count claim is used as the hold. Peak107/81/57→132/101/71 and slight warming are recorded but NOT independent automatic hold rules. Scalar1.017333984375 matchesluma32.5780662→32.5896691; wholeRGB41.4764/31.2758/19.2764→44.0902/30.8756/15.7047. Source relativepatch/field ROI shifts recorded. No retry or artistRGB repair.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Actual typed historical DB menu-model material chain proved; root alone imports/packs/builds and verifies live selected native/GPU; independent art QA does not assert selected actual live model rendered."
+    },
+    {
+      "id": 4801,
+      "status": "held-native-local-tone-hierarchy-drift",
+      "source_record": {
+        "id": 4801,
+        "texture": {
+          "ID": 4801,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": 588517903,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\Cl_00.tga",
+          "Format": "8888",
+          "UserName": "Clouds",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3054,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1957,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5001,
+                  "field": "Material0",
+                  "material_template_id": 1957,
+                  "geometry_id": 3108,
+                  "geometry": "Interface\\MainMenuClouds.mb",
+                  "model_template_id": 3330,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "a389549ea770cdaefd41d9ba1923cd1724a38de9b342003fda4fed61eb91347c",
+        "source_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "release_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          66
+        ],
+        "original_png": "expanded/original/4801.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source512x256, production2048x1024. Genuine transparent diffuse of the actual MainMenuClouds model, original alpha0..66 is authoritative. ONE continuous soft painted cloud band spans the lower/middle whole canvas, with overlapping connected source cloud lobes, not separate new clouds. Retain the precise existing irregular silhouette and broad source lobe phase: left muted bluegreen mass, center dim teal trough/wash, right soft browncharcoal mass, each connected exactly as in the references. Keep source dark nearblack top/bottom fields, restrained warmbrown atmosphere above and all very dim internal shadow washes. The image2 RGB guide is the exact stored historical RGB, not a request to invent an opaque sky. Preserve its whole existing color map and softness; native premultiplied brightness is handled numerically with complete original alpha afterward. Do not introduce additional countable clouds, new sun/moon/horizon/landscape, hard smoky curls, bright white edges, new light cores, photographic volumetric billows, sharp borders or higher-contrast relief. Fine soft paint only; source cloud scale and all existing outline positions remain unchanged.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "181605403142f182254b3349a2e883cb903880d2240cff7e6585cb29013a9eab",
+            "00dcb6474cd42914b0047d110668b3ac1d055b7fd193db994d737bc6e1732191"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 4801,
+        "batch": "ui-twenty-third",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T06:12:55.805525+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source512x256, production2048x1024. Genuine transparent diffuse of the actual MainMenuClouds model, original alpha0..66 is authoritative. ONE continuous soft painted cloud band spans the lower/middle whole canvas, with overlapping connected source cloud lobes, not separate new clouds. Retain the precise existing irregular silhouette and broad source lobe phase: left muted bluegreen mass, center dim teal trough/wash, right soft browncharcoal mass, each connected exactly as in the references. Keep source dark nearblack top/bottom fields, restrained warmbrown atmosphere above and all very dim internal shadow washes. The image2 RGB guide is the exact stored historical RGB, not a request to invent an opaque sky. Preserve its whole existing color map and softness; native premultiplied brightness is handled numerically with complete original alpha afterward. Do not introduce additional countable clouds, new sun/moon/horizon/landscape, hard smoky curls, bright white edges, new light cores, photographic volumetric billows, sharp borders or higher-contrast relief. Fine soft paint only; source cloud scale and all existing outline positions remain unchanged.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4801-prompt.txt",
+        "prompt_sha256": "66fa36781fd4fccb594eec9aa2e67ce06458a65661f01a0bd17c0150efe2485c",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4801.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4801-ui-twenty-third-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "181605403142f182254b3349a2e883cb903880d2240cff7e6585cb29013a9eab",
+            "00dcb6474cd42914b0047d110668b3ac1d055b7fd193db994d737bc6e1732191"
+          ]
+        },
+        "target_size": [
+          2048,
+          1024
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2361,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing complete Silent Storm painted-game diffuse texture. Image1 is the exact historical ORIGINAL full RGBA; image2 is the same entire stored RGB enlarged only by nearest-neighbor as a phase/shape guide. Edit the full source canvas edge to edge at the original aspect ratio; preserve the exact normalized UV positions, orientation, scale of every existing painted form, dark fields and material boundaries. Only gentle finer painted tone resolving the existing shading at the original feature scale, with the source muted local brightness and palette hierarchy. Do not reinterpret nearest-neighbor pixelcodec blocks as new geometry or retain a newly enlarged mosaic/pixel-cell surface. No photographic material, sharp new relief, extra holes, screws, hardware, knots, scratches, rust, bright white highlights, grain speckles, new frames, glyphs or ornaments. Do not crop/pad/rotate/repack/recenter/register or replace the full canvas. Authoritative complete original alpha is restored separately, numeric global brightness only. Keep all RGB authoring fields across the complete image. No comparisons, labels or multiple pictures. Source512x256, production2048x1024. Genuine transparent diffuse of the actual MainMenuClouds model, original alpha0..66 is authoritative. ONE continuous soft painted cloud band spans the lower/middle whole canvas, with overlapping connected source cloud lobes, not separate new clouds. Retain the precise existing irregular silhouette and broad source lobe phase: left muted bluegreen mass, center dim teal trough/wash, right soft browncharcoal mass, each connected exactly as in the references. Keep source dark nearblack top/bottom fields, restrained warmbrown atmosphere above and all very dim internal shadow washes. The image2 RGB guide is the exact stored historical RGB, not a request to invent an opaque sky. Preserve its whole existing color map and softness; native premultiplied brightness is handled numerically with complete original alpha afterward. Do not introduce additional countable clouds, new sun/moon/horizon/landscape, hard smoky curls, bright white edges, new light cores, photographic volumetric billows, sharp borders or higher-contrast relief. Fine soft paint only; source cloud scale and all existing outline positions remain unchanged.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/4801.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4801-ui-twenty-third-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T06:13:58.978175+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-d1987443-c5a3-482e-a7ad-3bf93fd2b6cf.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4801-raw.png",
+        "raw_sha256": "4e06039242fe3f34f20af63e2fc051e5c559610711f39a3cdfc0da5ea89cbdad",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 4801,
+        "batch": "ui-twenty-third",
+        "checked_utc": "2026-10-08T06:12:58.984838+00:00",
+        "sources_count": 2361,
+        "queue_count": 2823,
+        "sources_sha256": "87dfce4c301a4098405df1fa8a272606a2319f16eb317eccb82a7e8ed91bc5dc",
+        "queue_sha256": "b3af90cce956826d8efdf2d2eef6542d829026a7a3d1cd6b14c56f81b4e0e293",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "prompt_sha256": "66fa36781fd4fccb594eec9aa2e67ce06458a65661f01a0bd17c0150efe2485c",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            512,
+            256
+          ],
+          "guide_size": [
+            768,
+            384
+          ],
+          "source_bbox": [
+            0,
+            0,
+            512,
+            256
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole stored originalRGB nearest enlarged entire canvas at unchanged aspect; no crop/padding/registration/unpremultiply or RGB repair. Whole generated RGBA Lanczos source4x; full sourceA restored; default padding and pure global scalar only; native Transparent premultiplies once.",
+          "references_sha256": [
+            "181605403142f182254b3349a2e883cb903880d2240cff7e6585cb29013a9eab",
+            "00dcb6474cd42914b0047d110668b3ac1d055b7fd193db994d737bc6e1732191"
+          ]
+        },
+        "started_metadata_sha256": "e2e896c90e83d4449aec57ae70b187fb0460abc77b93acd990e5cfa82aacb8b1",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 4801,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source512x256, production2048x1024. Genuine transparent diffuse of the actual MainMenuClouds model, original alpha0..66 is authoritative. ONE continuous soft painted cloud band spans the lower/middle whole canvas, with overlapping connected source cloud lobes, not separate new clouds. Retain the precise existing irregular silhouette and broad source lobe phase: left muted bluegreen mass, center dim teal trough/wash, right soft browncharcoal mass, each connected exactly as in the references. Keep source dark nearblack top/bottom fields, restrained warmbrown atmosphere above and all very dim internal shadow washes. The image2 RGB guide is the exact stored historical RGB, not a request to invent an opaque sky. Preserve its whole existing color map and softness; native premultiplied brightness is handled numerically with complete original alpha afterward. Do not introduce additional countable clouds, new sun/moon/horizon/landscape, hard smoky curls, bright white edges, new light cores, photographic volumetric billows, sharp borders or higher-contrast relief. Fine soft paint only; source cloud scale and all existing outline positions remain unchanged.",
+        "source_RGBA_sha256": "3c0f0062ee17f3a0d488d9d2972ab243d3e7dd245e10aa6ff8004a8804130e9d",
+        "source_alpha_extrema": [
+          0,
+          66
+        ],
+        "whole_original_RGB_reference": true,
+        "connected_soft_painted_cloud_band": 1,
+        "internal_overlapping_lobes_not_arbitrarily_counted": true,
+        "actual_material_id": 3054,
+        "actual_material_template_id": 1957,
+        "actual_model_id": 5001,
+        "actual_geometry_id": 3108,
+        "actual_geometry_source": "Interface\\MainMenuClouds.mb",
+        "actual_material_mode": "transparent",
+        "full_source_alpha_authoritative": true
+      },
+      "numeric_preview": {
+        "id": 4801,
+        "source_native_type": "Transparent",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4801-raw.png",
+        "raw_sha256": "4e06039242fe3f34f20af63e2fc051e5c559610711f39a3cdfc0da5ea89cbdad",
+        "raw_size": [
+          1774,
+          887
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          2048,
+          1024
+        ],
+        "source_alpha_extrema": [
+          0,
+          66
+        ],
+        "production_alpha_sha256": "da8f0c27d28e62a6b0d92fd743f3cb5d183b35bd2c55b66df1929560d364bce5",
+        "native_premultiplied": true,
+        "scalar_gain": 4.41259765625,
+        "target_stored_luma": 18.36308691558838,
+        "actual_stored_luma": 18.361766550445555,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9745826915235094,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 90624,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4801-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-third/native4x/4801-native-stored-RGB.png"
+      },
+      "source_material_local_diagnostics": {
+        "id": 4801,
+        "source_mean_RGB": [
+          20.20891571044922,
+          18.16704559326172,
+          14.86981201171875
+        ],
+        "production_stored_mean_RGB": [
+          19.742374420166016,
+          18.327829360961914,
+          14.632606506347656
+        ],
+        "source_max_RGB": [
+          59.0,
+          51.0,
+          42.0
+        ],
+        "production_stored_max_RGB": [
+          66.0,
+          66.0,
+          52.0
+        ],
+        "source_alpha_weighted_RGB": [
+          4.124588341804881,
+          3.631567472569455,
+          2.889183493220284
+        ],
+        "production_stored_alpha_weighted_RGB": [
+          4.4092639848316155,
+          4.078413213475683,
+          3.2115393975304687
+        ],
+        "source_alpha_weighted_RGB_is_diagnostic_only": true,
+        "no_artist_RGB_patch": true,
+        "source_relative_cloud_material_ROI_diagnostics": [
+          {
+            "name": "upper-warm-atmosphere",
+            "native_original_bounds": [
+              0,
+              60,
+              512,
+              110
+            ],
+            "source_mean_RGB": [
+              34.282265625,
+              28.9426171875,
+              19.9882421875
+            ],
+            "production_stored_mean_RGB": [
+              38.57884521484375,
+              32.43035888671875,
+              22.2317333984375
+            ],
+            "delta_mean_RGB": [
+              4.296579589843752,
+              3.4877416992187484,
+              2.243491210937499
+            ]
+          },
+          {
+            "name": "left-cloud-mass",
+            "native_original_bounds": [
+              35,
+              115,
+              175,
+              225
+            ],
+            "source_mean_RGB": [
+              21.58948051948052,
+              22.741623376623377,
+              22.23487012987013
+            ],
+            "production_stored_mean_RGB": [
+              19.517134740259742,
+              21.04396103896104,
+              20.744301948051948
+            ],
+            "delta_mean_RGB": [
+              -2.072345779220779,
+              -1.6976623376623365,
+              -1.4905681818181833
+            ]
+          },
+          {
+            "name": "center-teal-wash",
+            "native_original_bounds": [
+              180,
+              165,
+              300,
+              230
+            ],
+            "source_mean_RGB": [
+              17.043846153846154,
+              20.265897435897436,
+              20.39
+            ],
+            "production_stored_mean_RGB": [
+              9.986057692307693,
+              12.538709935897437,
+              12.656530448717948
+            ],
+            "delta_mean_RGB": [
+              -7.057788461538461,
+              -7.727187499999999,
+              -7.733469551282052
+            ]
+          },
+          {
+            "name": "right-browncharcoal-mass",
+            "native_original_bounds": [
+              330,
+              140,
+              490,
+              225
+            ],
+            "source_mean_RGB": [
+              19.732279411764704,
+              17.23029411764706,
+              16.095955882352943
+            ],
+            "production_stored_mean_RGB": [
+              17.030932904411763,
+              14.690712316176471,
+              13.356047794117647
+            ],
+            "delta_mean_RGB": [
+              -2.701346507352941,
+              -2.5395818014705878,
+              -2.739908088235296
+            ]
+          }
+        ],
+        "actual_stored_native_source_over_preview_recipe": "Source stored historicalRGB and production once-premultiplied storedRGB + background*(1-entire originalA). Dark24/light192. Numerical diagnostics only, sourceRGB never composited/repaired into production."
+      },
+      "private_QA": {
+        "whole_source_original_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Genuine actual transparent Clouds diffuse512x256, Material3054→Template1957→Model5001→Geometry3108/MainMenuClouds.mb. Whole sourceRGBA/RGB/A/wholeNN, whole raw1774x887, full2048x1024 straightRGBA, once-premultiplied storedRGB and dark/light actual source-over previews inspected. One connected source cloud band/broad lobe phase and whole originalA0..66 retained exactly; no alpha/type group exclusion, no added separate clouds/photographic geometry. Raw softly resolves original cloudpaint, but default native fullA/pure scalar4.41259765625 does not preserve source local tonal hierarchy: central muted teal wash meanRGB17.0438/20.2659/20.3900→9.9861/12.5387/12.6565 (−7.06/−7.73/−7.73), while upper warm atmosphere34.2823/28.9426/19.9882→38.5788/32.4304/22.2317 rises; source soft connected dim paint field becomes materially more contrasted/rebalanced after native composition. Wholeluma18.3630869→18.3617666 and RGBmean20.2089/18.1670/14.8698→19.7424/18.3278/14.6326 alone do not establish local material fidelity. Slight gray/olive impression at brighter warmgap recorded visually, but explicit regional tonal loss/rebalance is primary. Max59/51/42→66/66/52, source-weightedRGB4.1246/3.6316/2.8892→4.4093/4.0784/3.2115 recorded. No blanket padding opt-out, alpha change, unpremultiply/sourceRGB repair/retry.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Actual typed historical DB menu-model material chain proved; root alone imports/packs/builds and verifies live selected native/GPU; independent art QA does not assert selected actual live model rendered."
+    }
+  ],
+  "source_only_ids": [
+    4652,
+    4654,
+    4656,
+    4657,
+    4658,
+    4676,
+    4729,
+    5256,
+    5257
+  ],
+  "source_only_deferred": [
+    {
+      "id": 4652,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque compound MainMenu diffuse UV: dim wall/window/slat-like marks, several horizontal stair/band regions and separate bottom fields. Whole original RGB/A/history-release/material-model chain inspected. Need individual exact window/stair/slat count, band phase and compound UV material boundaries before prompt; no guessed counts or structural classification, no call.",
+      "source_check": {
+        "id": 4652,
+        "source_record": {
+          "id": 4652,
+          "texture": {
+            "ID": 4652,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -15131876,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2896,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1861,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4849,
+                    "field": "Material0",
+                    "material_template_id": 1861,
+                    "geometry_id": 3006,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3223,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "source_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+          "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+          "release_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4652.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4652,
+          "texture": {
+            "ID": 4652,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -15131876,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element01.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              1024,
+              1024
+            ],
+            "mips": 1,
+            "file_bytes": 524312,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2896,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1861,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4849,
+                  "field": "Material0",
+                  "material_template_id": 1861,
+                  "geometry_id": 3006,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3223,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2896,
+              "TextureID": 4652,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1861,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1861,
+              "UserName": "M1_Element01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4849,
+                  "Material0": 1861,
+                  "Material1": 0,
+                  "GeometryID": 3006,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3223,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3223,
+                  "UserName": "M1_Element01"
+                },
+                "geometry": {
+                  "ID": 3006,
+                  "AIGeometryID": 1894,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 11.632479667663574,
+                  "SizeY": 3.0047082901000977,
+                  "SizeZ": 3.7875607013702393,
+                  "CenterX": 16.22315216064453,
+                  "CenterY": 7.610145568847656,
+                  "CenterZ": 0.7473998069763184,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element01",
+                  "RootJoint": "M1_Element01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+        "release_mmp_sha256": "34e1580f1b788d33c3ea7350bdc5840873edc73010cf709eed20d75d2343925f",
+        "original_png_sha256": "79efbe54ebb029c1f3b0c2cf1e93066c2bd27a7e0833a98178522ef2fdf8a2e9",
+        "source_rgba_sha256": "191886d9deccb948121b908479a8bb38b7ade70e423f9624efc9e5923f527eeb",
+        "source_rgb_sha256": "13d8353182c276a709739d36dc4e0a7b4ffae79e2572bd22b28ccad5e26a887b",
+        "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+        "dimensions": [
+          1024,
+          1024
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4654,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu diffuse containing many overlapping rubble-like painted fragments and right/bottom long wood-painted strips. Whole source/parity/typedmodel inspected; exact fragment/strip count and silhouette/UV boundaries need own proof before call, not labelled analytical/technical because complex.",
+      "source_check": {
+        "id": 4654,
+        "source_record": {
+          "id": 4654,
+          "texture": {
+            "ID": 4654,
+            "Width": 1024,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -15066078,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element02_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2898,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1863,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4850,
+                    "field": "Material0",
+                    "material_template_id": 1863,
+                    "geometry_id": 3007,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3224,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            512
+          ],
+          "source_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+          "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+          "release_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4654.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4654,
+          "texture": {
+            "ID": 4654,
+            "Width": 1024,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -15066078,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M1_Element02_02.tga",
+            "Format": "dxt1",
+            "UserName": "M1_Element02_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              1024,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 262168,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2898,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1863,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4850,
+                  "field": "Material0",
+                  "material_template_id": 1863,
+                  "geometry_id": 3007,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3224,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2898,
+              "TextureID": 4654,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1863,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1863,
+              "UserName": "M1_Element02_02"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4850,
+                  "Material0": 1863,
+                  "Material1": 1862,
+                  "GeometryID": 3007,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3224,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3224,
+                  "UserName": "M1_Element02"
+                },
+                "geometry": {
+                  "ID": 3007,
+                  "AIGeometryID": 1895,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 3.696290969848633,
+                  "SizeY": 3.1087942123413086,
+                  "SizeZ": 1.4050687551498413,
+                  "CenterX": 21.554906845092773,
+                  "CenterY": 2.503478527069092,
+                  "CenterZ": 0.6654185056686401,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element02",
+                  "RootJoint": "M1_Element02"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+        "release_mmp_sha256": "f338a95af48482440181791c362555d8ae70245308068a35895d2cfca3f99975",
+        "original_png_sha256": "c2430427e3a7fa5e10a723519464752562039dc09930fcbc0bc9ca1f84e7b95a",
+        "source_rgba_sha256": "431e611c7b5ef5c7ea4da1d73c6b0dc82c49eec851d6c755b91055ebae81af23",
+        "source_rgb_sha256": "151c78fc5075aae9b8725c5f3c2c7d68aae515b570208779bc072b89414ed88b",
+        "source_alpha_sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f",
+        "dimensions": [
+          1024,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4656,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu diffuse with two framed soldier engravings and existing small label/text panels. Whole source/parity/typedmodel inspected; exact figure/engraving/label glyph shapes and frame phase need detailed source-preserving reconstruction. No invented letters/symbols, source-only pending and zero calls, not technical fallback.",
+      "source_check": {
+        "id": 4656,
+        "source_record": {
+          "id": 4656,
+          "texture": {
+            "ID": 4656,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10134190,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2900,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1865,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4853,
+                    "field": "Material1",
+                    "material_template_id": 1865,
+                    "geometry_id": 3010,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3227,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+          "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+          "release_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4656.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4656,
+          "texture": {
+            "ID": 4656,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10134190,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2900,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1865,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material1",
+                  "material_template_id": 1865,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2900,
+              "TextureID": 4656,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1865,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1865,
+              "UserName": "M2_Element01_01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4853,
+                  "Material0": 1866,
+                  "Material1": 1865,
+                  "GeometryID": 3010,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3227,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3227,
+                  "UserName": "M2_Elem01"
+                },
+                "geometry": {
+                  "ID": 3010,
+                  "AIGeometryID": 1897,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.5203418731689453,
+                  "SizeY": 1.2838611602783203,
+                  "SizeZ": 0.12072756141424179,
+                  "CenterX": 9.155016899108887,
+                  "CenterY": 6.119791030883789,
+                  "CenterZ": 0.050201527774333954,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem01",
+                  "RootJoint": "M2_Elem01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+        "release_mmp_sha256": "c67d764c63a4696dab7c9e027b30eaa620b313b842cac89b3d4fb469a60fa565",
+        "original_png_sha256": "590751b99998388fc7417ac7a6b05d9c304adb11ec9d8e66fbdda4ab88233852",
+        "source_rgba_sha256": "8d4bcdca3bcf64bb56c19dac0c5df0edb7a99fd399fa629bab6b2eac0b6cd001",
+        "source_rgb_sha256": "c6fbebe79a7f555620bec6ece97e83c9ce151e6164a1c048dd94bb603738eedf",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4657,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu atlas of six existing poster/diagram/text rectangles. Whole source/parity/typedmodel inspected, six large cells visible; each fine glyph/diagram/form/orientation requires individual exact source proof before prompting. No guessed tiny characters or counts, no structural-only classification/call.",
+      "source_check": {
+        "id": 4657,
+        "source_record": {
+          "id": 4657,
+          "texture": {
+            "ID": 4657,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -7963797,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2901,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1866,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4853,
+                    "field": "Material0",
+                    "material_template_id": 1866,
+                    "geometry_id": 3010,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3227,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            512
+          ],
+          "source_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+          "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+          "release_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4657.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4657,
+          "texture": {
+            "ID": 4657,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -7963797,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element01_02.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element01_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2901,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1866,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4853,
+                  "field": "Material0",
+                  "material_template_id": 1866,
+                  "geometry_id": 3010,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3227,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2901,
+              "TextureID": 4657,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1866,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1866,
+              "UserName": "M2_Element01_02"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4853,
+                  "Material0": 1866,
+                  "Material1": 1865,
+                  "GeometryID": 3010,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3227,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3227,
+                  "UserName": "M2_Elem01"
+                },
+                "geometry": {
+                  "ID": 3010,
+                  "AIGeometryID": 1897,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.5203418731689453,
+                  "SizeY": 1.2838611602783203,
+                  "SizeZ": 0.12072756141424179,
+                  "CenterX": 9.155016899108887,
+                  "CenterY": 6.119791030883789,
+                  "CenterZ": 0.050201527774333954,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem01",
+                  "RootJoint": "M2_Elem01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+        "release_mmp_sha256": "843eb72279978236238f9a3fd1403b32f75918496acf473f875c72226b570600",
+        "original_png_sha256": "c106f15925ce2bcccf4516d00396b365d85de1d31fc15ff0b425e4a0f8695f64",
+        "source_rgba_sha256": "25cf65034d7daa311d2242c3852fd595445aef7e8a4dac8e1106558b11fd55a1",
+        "source_rgb_sha256": "399a7bb5a5942b26dd32f47702a0fe6d2ed66b3d566434cabb2cc14ec89fd483",
+        "source_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "dimensions": [
+          512,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4658,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu compound painted wall/rubble/wood UV with existing black gaps. Whole source/parity/typedmodel inspected; exact fragment count, outlines and material-island phase need independent detail proof. No blanket complex-pixels exclusion/technical fallback/call.",
+      "source_check": {
+        "id": 4658,
+        "source_record": {
+          "id": 4658,
+          "texture": {
+            "ID": 4658,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15197670,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element02_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2902,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1867,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4854,
+                    "field": "Material0",
+                    "material_template_id": 1867,
+                    "geometry_id": 3011,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3228,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+          "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+          "release_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4658.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4658,
+          "texture": {
+            "ID": 4658,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15197670,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M2_Element02_01.tga",
+            "Format": "dxt1",
+            "UserName": "M2_Element02_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2902,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1867,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4854,
+                  "field": "Material0",
+                  "material_template_id": 1867,
+                  "geometry_id": 3011,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3228,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2902,
+              "TextureID": 4658,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1867,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1867,
+              "UserName": "M2_Element02_01"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4854,
+                  "Material0": 1867,
+                  "Material1": 1868,
+                  "GeometryID": 3011,
+                  "Material2": 1870,
+                  "Material3": 1860,
+                  "SkeletonID": 0,
+                  "TemplateID": 3228,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3228,
+                  "UserName": "M2_Elem02"
+                },
+                "geometry": {
+                  "ID": 3011,
+                  "AIGeometryID": 1898,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 2.684504985809326,
+                  "SizeY": 0.8950905799865723,
+                  "SizeZ": 1.0216953754425049,
+                  "CenterX": 8.770269393920898,
+                  "CenterY": 7.3346662521362305,
+                  "CenterZ": 0.26485341787338257,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M2_Elem02",
+                  "RootJoint": "M2_Elem02"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+        "release_mmp_sha256": "ea962b41c5ef91620b74cf121e2e6fde4811d2cf43d5b23180aa8bdbaa429988",
+        "original_png_sha256": "a9096bec7dd36bceaabd2f8b8fad06e492e317bce6a35e86db69112fcaf1a4d9",
+        "source_rgba_sha256": "1a62a0a7d0a0300a22a1ce1fd3dc1f71b1ae77cbdb8db2c4b0d416e7a6dedde8",
+        "source_rgb_sha256": "43114a9139f7a52c94e81e3122e6e8cbbe8e9784ca82c4599e577e29895a57a9",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4676,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu man-hat diffuse128 square: one broad dark brown front field, side/fold-like fields, central dark mark and upperright small rectangular patterned badge/glyph-like marks. Whole source/parity/typedmodel inspected; exact tiny emblem/mark/fold identity and phase unresolved. No new badge lettering/hardware, honest art-pending no call.",
+      "source_check": {
+        "id": 4676,
+        "source_record": {
+          "id": 4676,
+          "texture": {
+            "ID": 4676,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": -14082796,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+            "Format": "dxt1",
+            "UserName": "Man_Hat",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2910,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1873,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4856,
+                    "field": "Material3",
+                    "material_template_id": 1873,
+                    "geometry_id": 3013,
+                    "geometry": "Interface\\ManFromMainMenu.mb",
+                    "model_template_id": 3230,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 5910,
+                    "field": "Material3",
+                    "material_template_id": 1873,
+                    "geometry_id": 3627,
+                    "geometry": "Interface\\ManHat-Harmonica.mb",
+                    "model_template_id": 3845,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+          "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+          "release_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4676.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4676,
+          "texture": {
+            "ID": 4676,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": -14082796,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\ManFromMainMenu\\shapka.tga",
+            "Format": "dxt1",
+            "UserName": "Man_Hat",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 8216,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2910,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1873,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4856,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3013,
+                  "geometry": "Interface\\ManFromMainMenu.mb",
+                  "model_template_id": 3230,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5910,
+                  "field": "Material3",
+                  "material_template_id": 1873,
+                  "geometry_id": 3627,
+                  "geometry": "Interface\\ManHat-Harmonica.mb",
+                  "model_template_id": 3845,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2910,
+              "TextureID": 4676,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1873,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1873,
+              "UserName": "Man_Hat"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4856,
+                  "Material0": 1874,
+                  "Material1": 952,
+                  "GeometryID": 3013,
+                  "Material2": 1875,
+                  "Material3": 1873,
+                  "SkeletonID": 75,
+                  "TemplateID": 3230,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3230,
+                  "UserName": "Man"
+                },
+                "geometry": {
+                  "ID": 3013,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7477363348007202,
+                  "SizeY": 0.40274518728256226,
+                  "SizeZ": 1.5502821207046509,
+                  "CenterX": 0.09152019023895264,
+                  "CenterY": -0.05623369663953781,
+                  "CenterZ": 1.2940154075622559,
+                  "SrcName": "Interface\\ManFromMainMenu.mb",
+                  "UserName": "Man",
+                  "RootJoint": "skinCluster1"
+                }
+              },
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 5910,
+                  "Material0": 0,
+                  "Material1": 0,
+                  "GeometryID": 3627,
+                  "Material2": 0,
+                  "Material3": 1873,
+                  "SkeletonID": 0,
+                  "TemplateID": 3845,
+                  "RPGArmorID": 4,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3845,
+                  "UserName": "Hat-Harmonica"
+                },
+                "geometry": {
+                  "ID": 3627,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.28542327880859375,
+                  "SizeY": 0.20636701583862305,
+                  "SizeZ": 0.3376394510269165,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0,
+                  "SrcName": "Interface\\ManHat-Harmonica.mb",
+                  "UserName": "Hat-Harmonica",
+                  "RootJoint": "Body"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+        "release_mmp_sha256": "8e113cb37b335535a72b4b6adc11e426b9c7bf14e16aacf7a14de2d5136fbd79",
+        "original_png_sha256": "bb22de0156e78cba4098c46f871540657df8f2b07f52fda07c8032c1a14af947",
+        "source_rgba_sha256": "c160bda9c04e63d03eb40ba958d3439f8752ddf8dba18e2abd5f7fed662d5ce1",
+        "source_rgb_sha256": "487b4e19e8470cac639d3098baeb70a921615b534de4a3494b3185e5bea5fcf7",
+        "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4729,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu platform diffuse512x256 with long upper dark field/bands, woodgrain-painted inset, lower/right/left mechanical-like UV patches. Whole source/parity/typedmodel inspected; exact hardware/contour/island count/roles not yet proved. No inventing rail gears/bolts/loops; no analyticalmap claim/call.",
+      "source_check": {
+        "id": 4729,
+        "source_record": {
+          "id": 4729,
+          "texture": {
+            "ID": 4729,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15330284,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+            "Format": "dxt1",
+            "UserName": "Platform",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2993,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1924,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4951,
+                    "field": "Material0",
+                    "material_template_id": 1924,
+                    "geometry_id": 3083,
+                    "geometry": "Interface\\MainMenu.mb",
+                    "model_template_id": 3296,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+          "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+          "release_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4729.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4729,
+          "texture": {
+            "ID": 4729,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -15330284,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\platform.tga",
+            "Format": "dxt1",
+            "UserName": "Platform",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2993,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1924,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4951,
+                  "field": "Material0",
+                  "material_template_id": 1924,
+                  "geometry_id": 3083,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3296,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2993,
+              "TextureID": 4729,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1924,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1924,
+              "UserName": "Platform"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4951,
+                  "Material0": 1924,
+                  "Material1": 0,
+                  "GeometryID": 3083,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3296,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3296,
+                  "UserName": "M1_Element_Platform"
+                },
+                "geometry": {
+                  "ID": 3083,
+                  "AIGeometryID": 1967,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.770026683807373,
+                  "SizeY": 3.715916633605957,
+                  "SizeZ": 0.47305479645729065,
+                  "CenterX": 3.750000238418579,
+                  "CenterY": 5.437720775604248,
+                  "CenterZ": 0.30238860845565796,
+                  "SrcName": "Interface\\MainMenu.mb",
+                  "UserName": "M1_Element_Platform",
+                  "RootJoint": "M1_Element_Platform"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+        "release_mmp_sha256": "8702473be8f7f18ec82c364c6f7911b91bda15643d91ae68918e79058cde7633",
+        "original_png_sha256": "a650d41d67a65a61885a993098d9cac87948e03a68ffdf6664d25dd84dc88328",
+        "source_rgba_sha256": "30c6c8370e2a7acf50bc19e25bed4359d720b0bfc9df4903fc04190cc2acc6dc",
+        "source_rgb_sha256": "f7d75853e185f8356aa5db5e2ecf6c95073c49568d86a32ac88923854b40dba9",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5256,
+      "status": "source-only-deferred",
+      "reason": "Genuine transparent actual UITextures641 Logo Background/control type2 binding, source256x128 with yellow outlined upside-down Silent Storm/S2-like logo and sourceA0..255. Whole RGB/A/parity/freshactualUI links inspected. Exact original stylized glyph/emblem strokes, inverted orientation, border placement and state luminosity require independent exact reconstruction proof. No guessed text or generic glyph ban/technical fallback/call.",
+      "source_check": {
+        "id": 5256,
+        "source_record": {
+          "id": 5256,
+          "texture": {
+            "ID": 5256,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1580674065,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+            "Format": "8888",
+            "UserName": "Logo Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 641,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Logo Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 641,
+                "name": "Logo Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  256,
+                  128
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 2030,
+                    "field": "Texture0",
+                    "control_name": "background",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      256,
+                      128
+                    ],
+                    "container": 372,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            128
+          ],
+          "source_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+          "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+          "release_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5256.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5256,
+          "texture": {
+            "ID": 5256,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1580674065,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_01.tga",
+            "Format": "8888",
+            "UserName": "Logo Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              256,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 641,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 641,
+              "name": "Logo Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2030,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+        "release_mmp_sha256": "59d2f5bba4ba6d6ceb6b222bf6b2f6920dec833857340cd77e4671deec130e0b",
+        "original_png_sha256": "d421c6e3bedb33de48658471b7707af0c7db62c6c503becf5af880b74254c593",
+        "source_rgba_sha256": "a8d4dfb3e487b4f0dc80c044dfbe9376ffa9c27e76f22796208423ffbbb81cb1",
+        "source_rgb_sha256": "5db34004d2151caa68df5cd866e9962ec512229c34233832138c0c5cb95f3b87",
+        "source_alpha_sha256": "050b02b8f01d9d8afa2e50d586af22da5ce06ad70584af0e148c6a35505ca78f",
+        "dimensions": [
+          256,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5257,
+      "status": "source-only-deferred",
+      "reason": "Genuine transparent actual UITextures642 Logo Active/control type2 binding, source256x128 with brighter yellow-white outlined upside-down logo, sourceA0..255. Whole RGB/A/parity/freshactualUI links inspected. Preserve this individual active-state glyph/emblem/border phase and glow; exact stroke/content proof not completed here, so genuine pending no call, not analytical or structural original-only.",
+      "source_check": {
+        "id": 5257,
+        "source_record": {
+          "id": 5257,
+          "texture": {
+            "ID": 5257,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1715483930,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+            "Format": "8888",
+            "UserName": "Logo Active",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 642,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Logo Active"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 642,
+                "name": "Logo Active",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  256,
+                  128
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 2031,
+                    "field": "Texture0",
+                    "control_name": "active",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      256,
+                      128
+                    ],
+                    "container": 372,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            128
+          ],
+          "source_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+          "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+          "release_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5257.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5257,
+          "texture": {
+            "ID": 5257,
+            "Width": 256,
+            "Height": 128,
+            "NMips": 1,
+            "AverageColor": 1715483930,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MainMenu\\M_002_02.tga",
+            "Format": "8888",
+            "UserName": "Logo Active",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              256,
+              128
+            ],
+            "mips": 1,
+            "file_bytes": 131096,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 642,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Logo Active"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 642,
+              "name": "Logo Active",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                256,
+                128
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2031,
+                  "field": "Texture0",
+                  "control_name": "active",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    256,
+                    128
+                  ],
+                  "container": 372,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+        "release_mmp_sha256": "61012969c2c1cd2bdcf8d61b847cd43ef29d0115c30709375d08129df00ea91f",
+        "original_png_sha256": "d288f71a3745312c4093686b8c6740211d2951d8e6780f1b8cc90e1609bd1f18",
+        "source_rgba_sha256": "742bcdb3fc80124783d298fe6340a9d632cdaead754a5032ee84da81f51f61e2",
+        "source_rgb_sha256": "519ae5c4a5f629dad529f4637c250fb4836e92021238c62d2ed80f1706dc51af",
+        "source_alpha_sha256": "a87cee5902f6aeb015430689d82cb0a58f8b597ef407c0adf4f2a7b23c5d4380",
+        "dimensions": [
+          256,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ],
+  "generation_unavailable_ids": [],
+  "source_parity_count": 12,
+  "builtin_generation_calls": 3,
+  "recommended_original_only_ids": [],
+  "scope_note": "Fresh interface remaining623, uncalled565 after actual accepted2361 and prior raw/call/alljobs/allprompts/selected/held/alias/sameRGBA guards. 12 full source audits,3 one-attempt builtin calls; other553uncalled notinspected in thispackage, not declared unsuitable. No NPOT/alpha/complexpixels/type/materials-only blanket exclusion; selected4801 genuine transparent art andheld only actual native localtone hierarchy drift. All provenance immediate; no sourceRGB artwork repair, geometry repack, crop/BBox, mask optout or retry. Moderate peaks/finepaint not arbitrary hold. OldHeads12/11 and rootUI22=4655 frozen. Root sole shared/native/build/Game/C++/Git.",
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false
+}

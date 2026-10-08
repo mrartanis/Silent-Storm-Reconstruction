@@ -1,0 +1,138 @@
+{
+  "id": 3890,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-6c4a91cb-5f27-4113-877b-7c2f705029fb.png",
+  "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative128x128 whole squareRGBA atlas enlarged nearest8x1024x1024, finalwhole512x512. Actual material is Ordinary RGB diffuse with mixedsourceA:1684trueA0/RGB0 texels, other RGBblackpaintfields alpha-positive. Edit the COMPLETE diffuse RGB canvas; don't make a cutout of all blackareas. The exact originalA is restored in production, preserving the specific sourceA0 mask and alpha-positiveblack separately. Preserve original blackRGB at bothtrueempty andpaintedblack locations; no hiddencolored ornaments or fringe. Upper chain artwork contains exactly9 COMPLETE existing angular round ring silhouettes with centers native x23,35,47,59,71,83,95,107,119 andnative pitch12; full9x10 ring footprints atx19+12k..28+12k/y4..14. Keep same nine sourcealpha/silhouette footprints, sameoverlap/crossbarphase. Preserve2 terminalconnector fields: left hook/bridge[0,4,19,14), right edgeclippedconnector[124,7,128,11); neither becomes an extra complete ring. Brown cloth mainfield remains dim mattepaint, with exactly2long dark straps[26,42,35,103),[65,42,74,103), exactly2lower smallgray rectangularpainted frames[26,102,35,107),[65,102,74,107) and1upper OPEN angular bracketwash[41,42,49,51); do not close the bracket or add a prong/new clasp. Middle narrow originalzipperwash[48,51,52,106) has18native shadow minima at y52,55,58,61,63,67,70,73,76,79,82,85,88,91,94,97,100,103; lower13shadows use pitch3 fromy67. Preserve these sourcepaint phases and original softness, don't convert the faint alternating wash into new visibly separated raised zipperteeth. Upper horizontal darkwashedfield[0,17,128,42) remains indistinct shade with sourceblobs intact, no new hardware interpretation. No scratchedphoto leather, checkerweave or embroideredcloth.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/3890-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "78219d32bbc6f66a3d35e072be0c24b40febae1b8dce6587ddff505677e7c66e",
+    "exact_prompt_file": "755d1848c41422b7f06c791fd477d674441727ff8463ff9cd08db92fed976e0d",
+    "reference_png": "e12ddc9f3b20d7e1e0e041be3124feadd6475f28483307a39fc856cd9cf46713"
+  },
+  "saved_at_utc": "2026-10-08T06:16:32.154591+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 3890,
+    "texture": {
+      "ID": 3890,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -434695409,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\Engineer\\Terror\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2474,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 1622,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 2360,
+              "field": "Material0",
+              "material_template_id": 1622,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 1764,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "529cf70a6e784b12cfbbeb9e400586a7a297db98bdb0919121b9353ef9c19bf4",
+    "source_rgba_sha256": "6ef17291c7e00742314040441cb0c90ae359542c919f2ac5384ad0bb89b9dd39",
+    "release_rgba_sha256": "6ef17291c7e00742314040441cb0c90ae359542c919f2ac5384ad0bb89b9dd39",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/3890.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "5ca4b191e5ce47bd075ee4338bd28701879e661021958eba0959cfad5e9eecd1",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-sixth-3890.json",
+  "source_count_phase_proof_sha256": "87c2737d098700020a77fef27d2165854d863f7007e25157ce74d614029116aa",
+  "precall_constraints_sha256": "8f63f3d4d95956983e4dd9340c20fb4a1ae5a4963672de5a211edd633a13263c",
+  "exact_service_args": {
+    "prompt": "Use case: precise original diffuse texture edit. Image1 is the ONLY complete original game UV texture, nearest enlarged from its native size. Preserve the exact whole canvas aspect and every original painted island/boundary, count and phase, source material identity, native physical pattern scale, and subdued relative palette. Refine existing low-resolution painted shading into fine HD matte painted transitions at4x; retain weak folds/marks as weak washes. Output the same complete flat UV atlas, not a rendered garment, scene or newly designed object. Fine irregular painted grain can refine existing grain without new regular weave, hatching, quilting, embroidery, scratches, photographic pores/leather, bevels, brightspecular lights or ornamental patterns. No new dots/hardware, new dark seams, changes to anatomy, glyphs/labels/badges/letters or new objects. No cropping/padding/BBox/registration/recentering/border/letterbox. Keep original dim shading strength: do not turn washed darkareas into sharply outlined mechanical parts. Preserve full source canvas including alpha-positive RGBblack painted fields; blackRGB alone never means transparentcutout.\r\nNative128x128 whole squareRGBA atlas enlarged nearest8x1024x1024, finalwhole512x512. Actual material is Ordinary RGB diffuse with mixedsourceA:1684trueA0/RGB0 texels, other RGBblackpaintfields alpha-positive. Edit the COMPLETE diffuse RGB canvas; don't make a cutout of all blackareas. The exact originalA is restored in production, preserving the specific sourceA0 mask and alpha-positiveblack separately. Preserve original blackRGB at bothtrueempty andpaintedblack locations; no hiddencolored ornaments or fringe. Upper chain artwork contains exactly9 COMPLETE existing angular round ring silhouettes with centers native x23,35,47,59,71,83,95,107,119 andnative pitch12; full9x10 ring footprints atx19+12k..28+12k/y4..14. Keep same nine sourcealpha/silhouette footprints, sameoverlap/crossbarphase. Preserve2 terminalconnector fields: left hook/bridge[0,4,19,14), right edgeclippedconnector[124,7,128,11); neither becomes an extra complete ring. Brown cloth mainfield remains dim mattepaint, with exactly2long dark straps[26,42,35,103),[65,42,74,103), exactly2lower smallgray rectangularpainted frames[26,102,35,107),[65,102,74,107) and1upper OPEN angular bracketwash[41,42,49,51); do not close the bracket or add a prong/new clasp. Middle narrow originalzipperwash[48,51,52,106) has18native shadow minima at y52,55,58,61,63,67,70,73,76,79,82,85,88,91,94,97,100,103; lower13shadows use pitch3 fromy67. Preserve these sourcepaint phases and original softness, don't convert the faint alternating wash into new visibly separated raised zipperteeth. Upper horizontal darkwashedfield[0,17,128,42) remains indistinct shade with sourceblobs intact, no new hardware interpretation. No scratchedphoto leather, checkerweave or embroideredcloth.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/3890-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 3890,
+    "gain": 0.83935546875,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 19.049852221679686,
+    "actual_stored_luma": 19.057420779418944,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for concretized finer4x hardware/zip artwork, not sourcealpha or chaincount. Nine complete sourcechainrings andtwo terminalconnector fields retain whole12nativepixelpitch, sourcefullA including1684trueA0 andotheralpha-positiveRGBblack restoredexact, defaultpad0 with transparent_backgroundfalse/fullordinaryRGBcanvas support; gain.83935546875, luma19.049852→19.057421. Source zipperwashed diagonalpaint with18shadowminima becomes conspicuous pale knotted/rosette-like repeatedunits in fullraw and4x. Source upper openCgraybracket plusweakdarkrightwash is sharpened into outlined arrow-shaped raisedplate; lowergrayframepaint/strap ends also stronglyresolved beveledhardware. Do notclaim newly inventedringcount or wholly absentsourcebroadsilhouette: source9rings/counts proved beforeprompt and native means preserved. Native zip18minima remain [52,55,58,61,64,67,70,73,76,79,82,85,88,91,94,97,100,103], source63→64 alone soft1pxnotautomatichold. Native zipper52.27/42.85/35.05→50.06/40.19/31.33 Lstd20.01→20.75; mainbrown24.91/19.51/13.74→26.31/19.70/12.68 Lstd9.66→9.12; globalnumericpass cannot undo actual finepattern/mechanical reinterpretation. Sourceonlygenuinepending, no RGB repair/optout/retry and no blanket chainfamily exclusion."
+}

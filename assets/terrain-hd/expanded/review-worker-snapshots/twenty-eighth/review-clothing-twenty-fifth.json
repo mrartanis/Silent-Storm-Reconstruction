@@ -1,0 +1,1822 @@
+{
+  "version": 1,
+  "package": "clothing-twenty-fifth",
+  "finalized_utc": "2026-10-08T05:59:05.644281+00:00",
+  "selected_ids": [
+    1884,
+    5469,
+    6432
+  ],
+  "source_qa_audition_ids": [
+    1884,
+    3849,
+    4502,
+    4875,
+    5683,
+    5688,
+    5695,
+    6430,
+    6432,
+    5469,
+    5482,
+    7641
+  ],
+  "fullsource_reaudit_note": "All12freshlyreauditeduncalled genuine; no blanketclaimneverviewed before.",
+  "ready_ids": [
+    5469
+  ],
+  "artistically_ready_ids": [
+    5469
+  ],
+  "held_raw_ids": [
+    1884,
+    6432
+  ],
+  "source_only_ids": [
+    3849,
+    4502,
+    4875,
+    5482,
+    5683,
+    5688,
+    5695,
+    6430,
+    7641
+  ],
+  "pipeline_pending_ids": [],
+  "accepted_ids": [],
+  "tool_calls_attempted": 3,
+  "raw_success_count": 3,
+  "retry_count": 0,
+  "items": [
+    {
+      "id": 1884,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for lost source alpha-positive black canvas and resulting defaultedge fill, not minorpaintlift. Source416A0/RGB0 pixels are only irregular middlepanel bottom[96,101,152,110); source2118 otherRGB0 pixels A255. Sole builtin transparent_backgroundtrue was explicitly instructed to retain alpha255 black paint, but rawcutout made mostblackcanvas empty. Required defaultpad fills33347texels andclears265; fullsourceA restored exactly andgain.8773193359/sourceL35.082608→35.079678 numericalpass, yet1536native sourceopaque-black pixels now RGBmax>5 withmean15.02/13.14/7.30. Whole topRGB13.93/12.30/7.55→28.77/26.66/13.76 andbottom10.53/9.10/3.18→20.08/16.31/9.02. Fullraw additionallyresolves sourcegraycloth/sole edges morestrongly. AcceptableA alone cannotrestore originalblackfield/material withoutartRGB repair; no optout/patch/retry. Source/countproof genuine20shadowbands/6solebars/3clasp motifs was beforeprompt; counts notblanketcomplexityhold.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 1884,
+        "texture": {
+          "ID": 1884,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -47832041,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Classes\\GerSoldier\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "LegsArms",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1277,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 849,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1302,
+                  "field": "Material2",
+                  "material_template_id": 849,
+                  "geometry_id": 1793,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerSoldier_100.mb",
+                  "model_template_id": 951,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4817,
+                  "field": "Material2",
+                  "material_template_id": 849,
+                  "geometry_id": 2779,
+                  "geometry": "Interface\\CharScreen\\Ger_Soldier.mb",
+                  "model_template_id": 3206,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5643,
+                  "field": "Material2",
+                  "material_template_id": 849,
+                  "geometry_id": 3466,
+                  "geometry": "HeadShotTest1.mb",
+                  "model_template_id": 3723,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5645,
+                  "field": "Material2",
+                  "material_template_id": 849,
+                  "geometry_id": 3467,
+                  "geometry": "HeadShotTest2.mb",
+                  "model_template_id": 3724,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "f347bb61fbb14f1802a2b78dad8c921951254f7efdfa29f76c74844cd3f5121a",
+        "source_rgba_sha256": "c7d4fef7d759448a96fa090740911bde25a3a7861ba72ba6b97d631a23d04ad5",
+        "release_rgba_sha256": "c7d4fef7d759448a96fa090740911bde25a3a7861ba72ba6b97d631a23d04ad5",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/1884.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "69a47a05dc4f413b439ec65bf20d2a819dac084c877683e1320716aa645dcc8e",
+      "exact_prompt_sha256": "567d308550646c499931553846b6291020fee755b98bc731b6eb3276265eb463",
+      "reference_sha256": "d49370a74e2b8d4240ff9f02f1203ce18f33cfc0d40277c0aa703a6e717b07bb",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/1884-generation-call.json",
+      "generation_call_sha256": "07a5a40f7c10d25bf0f5bdb407bf6756e510e5f407b3c6e389c418a6d697e2da",
+      "source_count_phase_proof": {
+        "id": 1884,
+        "source_rgba_sha256": "c7d4fef7d759448a96fa090740911bde25a3a7861ba72ba6b97d631a23d04ad5",
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "source_alpha0_pixels": 416,
+        "source_Apositive_RGBblack_pixels": 2118,
+        "source_center_RGBA": [
+          35,
+          30,
+          24,
+          255
+        ],
+        "source_corner_RGBA": [
+          [
+            21,
+            17,
+            10,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            22,
+            13,
+            5,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:51:35.478299+00:00",
+        "sourceonly_cropped_diagnostics_not_generation_reference": true,
+        "leftedge_shadow_band_phases_native": [
+          6,
+          10,
+          14,
+          18,
+          22,
+          26,
+          30,
+          34,
+          38,
+          42,
+          46,
+          50,
+          54,
+          58,
+          62,
+          66,
+          70,
+          74,
+          78,
+          82
+        ],
+        "leftedge_minimum_lumaprominence": [
+          4.608550000000001,
+          4.001975000000002,
+          1.8700750000000035,
+          3.7311499999999995,
+          6.438424999999999,
+          5.4284,
+          6.357199999999999,
+          6.856099999999998,
+          9.42935,
+          10.498600000000003,
+          11.392599999999995,
+          10.747900000000001,
+          10.291225000000004,
+          8.428199999999997,
+          8.906049999999993,
+          5.4374249999999975,
+          6.704975000000005,
+          4.810575,
+          6.654049999999998,
+          5.501525000000001
+        ],
+        "sole_light_band_native_phases": [
+          59,
+          63,
+          68,
+          72,
+          76,
+          79
+        ],
+        "sole_horizontal_full_luma_profile_y50to87": [
+          41.91886315789473,
+          45.73476842105263,
+          59.42685263157895,
+          62.243747368421054,
+          59.07645263157895,
+          54.53626315789473,
+          41.07023157894736,
+          22.022884210526314,
+          22.150463157894738,
+          45.095147368421046,
+          39.48103157894736,
+          28.309315789473683,
+          35.69756842105263,
+          40.4364947368421,
+          37.748231578947355,
+          22.868915789473682,
+          33.33644210526317,
+          50.74793684210527,
+          55.829063157894744,
+          41.59355789473684,
+          33.59862105263157,
+          43.61337894736842,
+          49.35894736842105,
+          40.97236842105263,
+          20.866863157894738,
+          49.35894736842105,
+          51.41014736842105,
+          35.588842105263154,
+          24.77963157894737,
+          40.29977894736842,
+          36.25318947368421,
+          27.201768421052627,
+          31.00093684210527,
+          49.643010526315784,
+          63.46825263157895,
+          81.15535789473684,
+          79.05368421052631,
+          85.05237894736841
+        ],
+        "source_fields_native": {
+          "leftedgeprint": [
+            0,
+            0,
+            9,
+            85
+          ],
+          "largeleftolivecloth": [
+            10,
+            0,
+            93,
+            99
+          ],
+          "middlelongbrownfield": [
+            97,
+            0,
+            150,
+            110
+          ],
+          "rightolivecloth": [
+            154,
+            0,
+            256,
+            128
+          ],
+          "soleoval": [
+            199,
+            57,
+            243,
+            83
+          ],
+          "middleclasp": [
+            45,
+            46,
+            49,
+            51
+          ],
+          "twoUclasps": [
+            [
+              104,
+              92,
+              113,
+              100
+            ],
+            [
+              132,
+              92,
+              141,
+              100
+            ]
+          ]
+        },
+        "source_alpha0_bounds": [
+          96,
+          101,
+          152,
+          110
+        ],
+        "alpha_note": "416actualA0texels, allRGB0, occupy irregular bottom edge ofmiddlepanel; 2118other RGBblacktexelsarealpha255. TypeOrdinary doesnotmean sourceAall255. Preserve complete originalA, do not infer transparency from blackRGB.",
+        "proved_source_counts": {
+          "width": 256,
+          "height": 128,
+          "new_hardware_seams_weave_anatomy_allowed": 0,
+          "leftedge_horizontal_shadow_bands": 20,
+          "leftedge_band_pitch_native": 4,
+          "sole_interior_horizontal_light_bands": 6,
+          "main_middle_small_gray_clasp_motifs": 1,
+          "uppermiddle_panel_lower_U_clasp_motifs": 2
+        }
+      },
+      "numeric_private_proof": {
+        "id": 1884,
+        "gain": 0.8773193359375,
+        "defaultpad_padded_texels": 33347,
+        "defaultpad_cleared_texels": 265,
+        "defaultpad_applied": true,
+        "source_stored_luma": 35.08260834960937,
+        "actual_stored_luma": 35.0796783378601,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          1024,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 1884,
+        "sourceA_exact4x": true,
+        "defaultnumeric": {
+          "id": 1884,
+          "gain": 0.8773193359375,
+          "defaultpad_padded_texels": 33347,
+          "defaultpad_cleared_texels": 265,
+          "defaultpad_applied": true,
+          "source_stored_luma": 35.08260834960937,
+          "actual_stored_luma": 35.0796783378601,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            1024,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "oliveleft": {
+            "bounds": [
+              10,
+              0,
+              93,
+              99
+            ],
+            "sourceRGB": [
+              52.653036387976144,
+              47.83400267737617,
+              35.859072654253374
+            ],
+            "targetRGB": [
+              51.240233661920406,
+              46.04052573932092,
+              34.46598515273214
+            ],
+            "sourceLstd": 24.675122228396983,
+            "targetLstd": 22.277053509725945
+          },
+          "brownmiddle": {
+            "bounds": [
+              97,
+              0,
+              150,
+              100
+            ],
+            "sourceRGB": [
+              31.641320754716983,
+              26.765094339622642,
+              20.725094339622643
+            ],
+            "targetRGB": [
+              30.81,
+              25.4688679245283,
+              19.68433962264151
+            ],
+            "sourceLstd": 9.615592922281182,
+            "targetLstd": 8.06849417014583
+          },
+          "rightolive": {
+            "bounds": [
+              154,
+              0,
+              256,
+              128
+            ],
+            "sourceRGB": [
+              38.81265318627451,
+              39.407705269607845,
+              18.966222426470587
+            ],
+            "targetRGB": [
+              40.392616421568626,
+              39.25919117647059,
+              21.30062806372549
+            ],
+            "sourceLstd": 22.3971425135973,
+            "targetLstd": 19.846104620222594
+          }
+        },
+        "whole_top_sourceRGB": [
+          13.92578125,
+          12.30078125,
+          7.5546875
+        ],
+        "whole_top_targetRGB": [
+          28.76953125,
+          26.6640625,
+          13.7578125
+        ],
+        "whole_bottom_sourceRGB": [
+          10.53125,
+          9.09765625,
+          3.18359375
+        ],
+        "whole_bottom_targetRGB": [
+          20.078125,
+          16.3125,
+          9.015625
+        ],
+        "source_opaque_black_pixels": 2118,
+        "target_nonblack_native_over_source_opaque_black": 1536,
+        "targetRGBmean_on_original_opaque_black": [
+          15.018885741265345,
+          13.143059490084985,
+          7.299338999055713
+        ],
+        "status": "raw-held-original-artwork-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Held for lost source alpha-positive black canvas and resulting defaultedge fill, not minorpaintlift. Source416A0/RGB0 pixels are only irregular middlepanel bottom[96,101,152,110); source2118 otherRGB0 pixels A255. Sole builtin transparent_backgroundtrue was explicitly instructed to retain alpha255 black paint, but rawcutout made mostblackcanvas empty. Required defaultpad fills33347texels andclears265; fullsourceA restored exactly andgain.8773193359/sourceL35.082608→35.079678 numericalpass, yet1536native sourceopaque-black pixels now RGBmax>5 withmean15.02/13.14/7.30. Whole topRGB13.93/12.30/7.55→28.77/26.66/13.76 andbottom10.53/9.10/3.18→20.08/16.31/9.02. Fullraw additionallyresolves sourcegraycloth/sole edges morestrongly. AcceptableA alone cannotrestore originalblackfield/material withoutartRGB repair; no optout/patch/retry. Source/countproof genuine20shadowbands/6solebars/3clasp motifs was beforeprompt; counts notblanketcomplexityhold.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    },
+    {
+      "id": 5469,
+      "status": "artistically-ready-coordinator-review-pending",
+      "reason": "Artistically ready candidate pendingrootwhole/native/material review. Fulloriginal256x128→1024x512, sourceA255/defaultpad0, scalar1.0250244141. Four clearer originalpale motifs retain positions, shape/cadence; four weak border/fold/hem/foot groups remain softlypainted atoriginalpositions ratherthan addedbuttons. Native weak foldtip181/178/189→167/164/175, hem181/178/189→164/160/172 andfoot181/174/189→170/167/180 disclosed assoftcodec/highlight attenuation, not missinghardware claim. Primary2left and2uppermiddle palegroups remain. Leftgray94.72/91.28/98.28→93.80/91.56/99.13,Lstd26.83→26.92;rightgray101.62/99.10/105.86→101.43/99.58/107.10,Lstd21.79→21.79. Middlegray98.51/95.29/102.30→98.17/96.35/103.82,Lstd13.01→14.70. Originalleftzigtrace/leftdark longangularwash aremoreclearlyoutlinedfinepaint at4x but stay existing sourcecontours/countphase: localzig116.34/113.90/122.93→115.25/113.76/123.08,Lstd25.57→23.27. Darkleft24.38/23.12/20.94→26.89/25.08/23.68,Lstd17.43→19.63, modestexistingpaintlift disclosedforroot;no new weave/parts inferred. All sourcebeforecall nativecrops/sourcecount proof complete; sourceA/raw/native4x/fullframes inspected. Do notclaimproductionaccepted.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 5469,
+        "texture": {
+          "ID": 5469,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -11317163,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilMale\\Evil#2\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3567,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2288,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5719,
+                  "field": "Material2",
+                  "material_template_id": 2288,
+                  "geometry_id": 2500,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                  "model_template_id": 3773,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "e4da802a702a5128cfcdf368f01d7c1caabd6c0414c4e59d741289b06196513d",
+        "source_rgba_sha256": "38b43666fb011d6274041cc02532d02d3073fdf7368d139894067e60ed9593f3",
+        "release_rgba_sha256": "38b43666fb011d6274041cc02532d02d3073fdf7368d139894067e60ed9593f3",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5469.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "44a9a108bf808fad9e763a5c0b0934af986b1e16113a0ab690bad0b9abf5a59d",
+      "exact_prompt_sha256": "9cf7b9475b308e2d03c41509cfee9103a437b1d37cc8a742e93b277efc2b2fa6",
+      "reference_sha256": "e28d3c361c00002a8a72137067aa353b0daa09468eefe28b93dfc59ae17e0109",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/5469-generation-call.json",
+      "generation_call_sha256": "e15b2bbffc9199dabb863079fa66df9077a8c1b6d592f89469fe922434ddc72c",
+      "source_count_phase_proof": {
+        "id": 5469,
+        "source_rgba_sha256": "38b43666fb011d6274041cc02532d02d3073fdf7368d139894067e60ed9593f3",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_alpha0_pixels": 0,
+        "source_Apositive_RGBblack_pixels": 302,
+        "source_center_RGBA": [
+          82,
+          77,
+          82,
+          255
+        ],
+        "source_corner_RGBA": [
+          [
+            68,
+            59,
+            57,
+            255
+          ],
+          [
+            16,
+            16,
+            16,
+            255
+          ],
+          [
+            82,
+            77,
+            82,
+            255
+          ],
+          [
+            49,
+            48,
+            49,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:51:35.478299+00:00",
+        "sourceonly_cropped_diagnostics_not_generation_reference": true,
+        "all8_pale_native_groups": [
+          {
+            "pixels_native": [
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                0
+              ]
+            ],
+            "bounds_native": [
+              4,
+              0,
+              6,
+              1
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                155,
+                11
+              ],
+              [
+                156,
+                12
+              ],
+              [
+                156,
+                11
+              ],
+              [
+                155,
+                12
+              ]
+            ],
+            "bounds_native": [
+              155,
+              11,
+              157,
+              13
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                189,
+                16
+              ]
+            ],
+            "bounds_native": [
+              189,
+              16,
+              190,
+              17
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                156,
+                17
+              ],
+              [
+                156,
+                18
+              ],
+              [
+                155,
+                18
+              ]
+            ],
+            "bounds_native": [
+              155,
+              17,
+              157,
+              19
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                40,
+                36
+              ],
+              [
+                41,
+                37
+              ],
+              [
+                41,
+                36
+              ],
+              [
+                40,
+                37
+              ]
+            ],
+            "bounds_native": [
+              40,
+              36,
+              42,
+              38
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                40,
+                52
+              ],
+              [
+                41,
+                53
+              ],
+              [
+                41,
+                52
+              ],
+              [
+                40,
+                53
+              ]
+            ],
+            "bounds_native": [
+              40,
+              52,
+              42,
+              54
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                45,
+                96
+              ],
+              [
+                46,
+                96
+              ],
+              [
+                45,
+                97
+              ]
+            ],
+            "bounds_native": [
+              45,
+              96,
+              47,
+              98
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                181,
+                114
+              ],
+              [
+                181,
+                115
+              ]
+            ],
+            "bounds_native": [
+              181,
+              114,
+              182,
+              116
+            ]
+          }
+        ],
+        "source_fields_native": {
+          "leftdarkstrip": [
+            0,
+            0,
+            30,
+            128
+          ],
+          "leftgraycloth": [
+            30,
+            0,
+            105,
+            128
+          ],
+          "middlegraycloth": [
+            105,
+            7,
+            170,
+            128
+          ],
+          "rightgraycloth": [
+            170,
+            7,
+            256,
+            128
+          ],
+          "leftzigwash": [
+            40,
+            69,
+            53,
+            101
+          ],
+          "lowerbootwash": [
+            57,
+            103,
+            104,
+            128
+          ]
+        },
+        "method": "Exactly8high-pale diagnostic sourcecomponents, but4are weak fold/tail/borderwash, not new buttons. Four clearer motifs: left[40,36,42,38]/[40,52,42,54] and uppermiddle[155,11,157,13]/[155,17,157,19]. Other original bright wash traces remain faint, including upperedge[4,0,6,1], rightfoldtip[189,16,190,17], lefthamtail[45,96,47,98], footwash[181,114,182,116]. Gray/lavender painted cloth and original zig wash are not glyphs or license for newly outlined mechanisms/laces.",
+        "proved_source_counts": {
+          "width": 256,
+          "height": 128,
+          "new_hardware_seams_weave_anatomy_allowed": 0,
+          "all_pale_source_paint_components_at_native_classifier": 8,
+          "clear_left_small_pale_motifs": 2,
+          "clear_upper_middle_pale_motifs": 2,
+          "left_washed_zigzag_traces": 1,
+          "lower_soft_boot_wash_fields": 1
+        }
+      },
+      "numeric_private_proof": {
+        "id": 5469,
+        "gain": 1.0250244140625,
+        "defaultpad_padded_texels": 0,
+        "defaultpad_cleared_texels": 0,
+        "defaultpad_applied": true,
+        "source_stored_luma": 80.85346081542968,
+        "actual_stored_luma": 80.86366676635743,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          1024,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 5469,
+        "sourceA_exact4x": true,
+        "defaultnumeric": {
+          "id": 5469,
+          "gain": 1.0250244140625,
+          "defaultpad_padded_texels": 0,
+          "defaultpad_cleared_texels": 0,
+          "defaultpad_applied": true,
+          "source_stored_luma": 80.85346081542968,
+          "actual_stored_luma": 80.86366676635743,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            1024,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "leftgray": {
+            "bounds": [
+              30,
+              0,
+              105,
+              101
+            ],
+            "sourceRGB": [
+              94.72,
+              91.28448844884488,
+              98.2819801980198
+            ],
+            "targetRGB": [
+              93.79947194719472,
+              91.55630363036303,
+              99.12937293729372
+            ],
+            "sourceLstd": 26.831748646750516,
+            "targetLstd": 26.915173598593995
+          },
+          "middlegray": {
+            "bounds": [
+              105,
+              7,
+              170,
+              110
+            ],
+            "sourceRGB": [
+              98.50784167289022,
+              95.29395070948469,
+              102.29798356982823
+            ],
+            "targetRGB": [
+              98.16624346527259,
+              96.34757281553398,
+              103.82419716206124
+            ],
+            "sourceLstd": 13.013020691570144,
+            "targetLstd": 14.698224626036284
+          },
+          "rightgray": {
+            "bounds": [
+              170,
+              7,
+              256,
+              101
+            ],
+            "sourceRGB": [
+              101.61924789708065,
+              99.09896091044038,
+              105.86046511627907
+            ],
+            "targetRGB": [
+              101.42714002968827,
+              99.5813953488372,
+              107.09908461157843
+            ],
+            "sourceLstd": 21.789902040136475,
+            "targetLstd": 21.793412633408025
+          },
+          "leftdark": {
+            "bounds": [
+              0,
+              0,
+              29,
+              128
+            ],
+            "sourceRGB": [
+              24.37580818965517,
+              23.12446120689655,
+              20.940193965517242
+            ],
+            "targetRGB": [
+              26.89143318965517,
+              25.07677801724138,
+              23.681573275862068
+            ],
+            "sourceLstd": 17.4279825331446,
+            "targetLstd": 19.62734120558963
+          },
+          "zig": {
+            "bounds": [
+              40,
+              69,
+              53,
+              101
+            ],
+            "sourceRGB": [
+              116.3389423076923,
+              113.90384615384616,
+              122.92788461538461
+            ],
+            "targetRGB": [
+              115.2451923076923,
+              113.76201923076923,
+              123.08413461538461
+            ],
+            "sourceLstd": 25.5722609563473,
+            "targetLstd": 23.269043760903127
+          }
+        },
+        "whole_top_sourceRGB": [
+          34.2578125,
+          34.53515625,
+          33.74609375
+        ],
+        "whole_top_targetRGB": [
+          30.89453125,
+          30.31640625,
+          30.953125
+        ],
+        "whole_bottom_sourceRGB": [
+          51.8984375,
+          50.3984375,
+          51.3046875
+        ],
+        "whole_bottom_targetRGB": [
+          49.24609375,
+          48.98046875,
+          49.9296875
+        ],
+        "all8_source_pale_groups_target_native_pixels": [
+          {
+            "bounds_source_native": [
+              4,
+              0,
+              6,
+              1
+            ],
+            "source_pixelRGB": [
+              [
+                214,
+                190,
+                189
+              ],
+              [
+                214,
+                190,
+                189
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                214,
+                198,
+                197
+              ],
+              [
+                208,
+                190,
+                191
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              155,
+              11,
+              157,
+              13
+            ],
+            "source_pixelRGB": [
+              [
+                181,
+                182,
+                181
+              ],
+              [
+                214,
+                207,
+                214
+              ],
+              [
+                214,
+                215,
+                222
+              ],
+              [
+                255,
+                255,
+                255
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                195,
+                188,
+                200
+              ],
+              [
+                226,
+                218,
+                231
+              ],
+              [
+                221,
+                213,
+                226
+              ],
+              [
+                197,
+                190,
+                202
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              189,
+              16,
+              190,
+              17
+            ],
+            "source_pixelRGB": [
+              [
+                181,
+                178,
+                189
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                167,
+                164,
+                175
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              155,
+              17,
+              157,
+              19
+            ],
+            "source_pixelRGB": [
+              [
+                231,
+                223,
+                231
+              ],
+              [
+                231,
+                223,
+                231
+              ],
+              [
+                239,
+                235,
+                247
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                237,
+                230,
+                242
+              ],
+              [
+                217,
+                210,
+                220
+              ],
+              [
+                194,
+                189,
+                198
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              40,
+              36,
+              42,
+              38
+            ],
+            "source_pixelRGB": [
+              [
+                231,
+                231,
+                239
+              ],
+              [
+                231,
+                231,
+                239
+              ],
+              [
+                231,
+                231,
+                239
+              ],
+              [
+                231,
+                231,
+                239
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                219,
+                212,
+                223
+              ],
+              [
+                216,
+                208,
+                220
+              ],
+              [
+                225,
+                217,
+                230
+              ],
+              [
+                209,
+                202,
+                213
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              40,
+              52,
+              42,
+              54
+            ],
+            "source_pixelRGB": [
+              [
+                247,
+                243,
+                247
+              ],
+              [
+                247,
+                243,
+                247
+              ],
+              [
+                247,
+                243,
+                247
+              ],
+              [
+                247,
+                243,
+                247
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                219,
+                213,
+                223
+              ],
+              [
+                221,
+                214,
+                224
+              ],
+              [
+                226,
+                220,
+                229
+              ],
+              [
+                213,
+                207,
+                216
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              45,
+              96,
+              47,
+              98
+            ],
+            "source_pixelRGB": [
+              [
+                181,
+                178,
+                189
+              ],
+              [
+                181,
+                178,
+                189
+              ],
+              [
+                181,
+                178,
+                189
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                164,
+                160,
+                172
+              ],
+              [
+                164,
+                160,
+                170
+              ],
+              [
+                162,
+                159,
+                170
+              ]
+            ]
+          },
+          {
+            "bounds_source_native": [
+              181,
+              114,
+              182,
+              116
+            ],
+            "source_pixelRGB": [
+              [
+                181,
+                174,
+                189
+              ],
+              [
+                181,
+                174,
+                189
+              ]
+            ],
+            "target_pixelRGB": [
+              [
+                170,
+                167,
+                180
+              ],
+              [
+                175,
+                171,
+                184
+              ]
+            ]
+          }
+        ],
+        "status": "artistically-ready-coordinator-review-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Artistically ready candidate pendingrootwhole/native/material review. Fulloriginal256x128→1024x512, sourceA255/defaultpad0, scalar1.0250244141. Four clearer originalpale motifs retain positions, shape/cadence; four weak border/fold/hem/foot groups remain softlypainted atoriginalpositions ratherthan addedbuttons. Native weak foldtip181/178/189→167/164/175, hem181/178/189→164/160/172 andfoot181/174/189→170/167/180 disclosed assoftcodec/highlight attenuation, not missinghardware claim. Primary2left and2uppermiddle palegroups remain. Leftgray94.72/91.28/98.28→93.80/91.56/99.13,Lstd26.83→26.92;rightgray101.62/99.10/105.86→101.43/99.58/107.10,Lstd21.79→21.79. Middlegray98.51/95.29/102.30→98.17/96.35/103.82,Lstd13.01→14.70. Originalleftzigtrace/leftdark longangularwash aremoreclearlyoutlinedfinepaint at4x but stay existing sourcecontours/countphase: localzig116.34/113.90/122.93→115.25/113.76/123.08,Lstd25.57→23.27. Darkleft24.38/23.12/20.94→26.89/25.08/23.68,Lstd17.43→19.63, modestexistingpaintlift disclosedforroot;no new weave/parts inferred. All sourcebeforecall nativecrops/sourcecount proof complete; sourceA/raw/native4x/fullframes inspected. Do notclaimproductionaccepted.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    },
+    {
+      "id": 6432,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for substantial fullcanvas topUV fill andchanged paintedpanel identity, not subtlethresholdedge/count variation. Source6dim verticalpaintbands/5internal darkseparators are still atx81/89/94/98/106 minima, so noincorrectclaimmore/fewerstripes. But fullraw turns verydark faintpurpleprintedbands into individuallyraised boxed mechanicalribs withstrong border, darkpanelmean12.75/10.29/12.45→17.33/14.30/17.48 aftergain.8054199. Mainbrown/sourcecamouflage/localcolorhierarchy changes, rightgray43.65/40.08/43.12→38.74/35.48/36.37. Moreconclusive frameproof: sourcewholetoprowRGB1.03/.84/.61→25.79/21.08/15.50, formerlyblacktop field filledwithbrowncloth acrosslargewidth ratherthan1pixelsoftening;bottom6.90/6.43/5.47→11.45/11.26/10.58. SourceA255/defaultpad0 andscalar globallumapass donot repairUVfield fill/material. Originalpocket1pale point interpretedraisedbutton too. NoartRGBpatch/optout/crop/retry;genuineartpending nottechnical.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 6432,
+        "texture": {
+          "ID": 6432,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14410472,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Italy\\Soldier\\Legs.tga",
+          "Format": "8888",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4456,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2643,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6446,
+                  "field": "Material2",
+                  "material_template_id": 2643,
+                  "geometry_id": 3881,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Italy\\Soldier.mb",
+                  "model_template_id": 4118,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "131e7112174615d7aa7cafe85b017c7b0575e927e75287a6abe3144e1a75dae0",
+        "source_rgba_sha256": "9bde1f7fcc73432ae8aae6e0a5db6bb1f329a2031467ad8b6582aaf9f342e63e",
+        "release_rgba_sha256": "9bde1f7fcc73432ae8aae6e0a5db6bb1f329a2031467ad8b6582aaf9f342e63e",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6432.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "d8421c4983cef860897ca8c299e712aa6cedda1643e6b446606f18939c0106a2",
+      "exact_prompt_sha256": "57f82cc4bccaec9328579ee09c78507bdc5d8832397d9d87509403da4b4739b8",
+      "reference_sha256": "09b95ddc2c84a1729996836493d79c5c483054f45acf21c8a8e2f4bf3d8febbd",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6432-generation-call.json",
+      "generation_call_sha256": "9422c3a6748bb35d95c76769d23d1848f3a953a42c2da4604e7706ddf0c81d74",
+      "source_count_phase_proof": {
+        "id": 6432,
+        "source_rgba_sha256": "9bde1f7fcc73432ae8aae6e0a5db6bb1f329a2031467ad8b6582aaf9f342e63e",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_alpha0_pixels": 0,
+        "source_Apositive_RGBblack_pixels": 1870,
+        "source_center_RGBA": [
+          24,
+          17,
+          7,
+          255
+        ],
+        "source_corner_RGBA": [
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            3,
+            0,
+            255
+          ],
+          [
+            28,
+            16,
+            12,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:51:35.478299+00:00",
+        "sourceonly_cropped_diagnostics_not_generation_reference": true,
+        "dim_vertical_band_intervals_native": [
+          [
+            73,
+            81
+          ],
+          [
+            82,
+            89
+          ],
+          [
+            90,
+            94
+          ],
+          [
+            95,
+            98
+          ],
+          [
+            99,
+            106
+          ],
+          [
+            107,
+            110
+          ]
+        ],
+        "dark_separator_phases_native": [
+          81,
+          89,
+          94,
+          98,
+          106
+        ],
+        "darkpanel_full_col_lumaprofile_x65to114": [
+          49.42404,
+          48.11496799999999,
+          48.109975999999996,
+          48.704136,
+          48.48393599999999,
+          45.122136,
+          24.808312000000004,
+          5.401928000000001,
+          9.004135999999999,
+          9.979863999999997,
+          10.825415999999997,
+          13.872840000000004,
+          16.256975999999998,
+          16.137056,
+          12.81908,
+          7.190967999999999,
+          2.5283119999999997,
+          7.655592,
+          10.093391999999996,
+          10.181383999999994,
+          20.442096,
+          18.931935999999997,
+          11.058671999999996,
+          7.2692,
+          2.2016159999999996,
+          4.740896000000002,
+          16.614896,
+          14.659864,
+          4.69776,
+          1.4007040000000002,
+          9.644039999999995,
+          17.821535999999995,
+          5.334407999999999,
+          2.111792,
+          6.962719999999999,
+          7.193223999999999,
+          9.072312000000002,
+          9.555487999999995,
+          6.881168,
+          5.392887999999999,
+          4.136647999999999,
+          0.9452560000000004,
+          6.250664,
+          3.9413199999999993,
+          12.749263999999997,
+          28.146192,
+          25.595856000000005,
+          24.115255999999995,
+          22.574552000000004,
+          25.292336
+        ],
+        "rightpale_group": [
+          {
+            "pixels_native": [
+              [
+                249,
+                29
+              ]
+            ],
+            "bounds_native": [
+              249,
+              29,
+              250,
+              30
+            ]
+          }
+        ],
+        "source_fields_native": {
+          "browncloth": [
+            0,
+            0,
+            154,
+            128
+          ],
+          "darkstripepanel": [
+            71,
+            5,
+            111,
+            66
+          ],
+          "rightgraycamocloth": [
+            167,
+            0,
+            256,
+            98
+          ],
+          "lowerredbrownbootwash": [
+            170,
+            98,
+            256,
+            128
+          ]
+        },
+        "method": "Native darkpanel has6dimblueviolet painted bands and5internal darkseparators with unequal spacing; boundaryline x72 isnot sixthinternal separator. Preserve exact spacing/silhouette notregularized pinstripe. Whole right camouflage originalbrown/ochre irregularwash silhouettes aresoft and fixed, no procedural pattern or new blob count. One explicit pale pocket point249,29; lowerfootwash preserves softoriginal boundaries without mechanical interpretation.",
+        "proved_source_counts": {
+          "width": 256,
+          "height": 128,
+          "new_hardware_seams_weave_anatomy_allowed": 0,
+          "dark_panel_dim_vertical_paint_bands": 6,
+          "dark_panel_internal_dark_separators": 5,
+          "right_pocket_pale_markers": 1,
+          "middle_bottom_boot_wash_fields": 1
+        }
+      },
+      "numeric_private_proof": {
+        "id": 6432,
+        "gain": 0.805419921875,
+        "defaultpad_padded_texels": 0,
+        "defaultpad_cleared_texels": 0,
+        "defaultpad_applied": true,
+        "source_stored_luma": 30.242015185546872,
+        "actual_stored_luma": 30.23575951080322,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          1024,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 6432,
+        "sourceA_exact4x": true,
+        "defaultnumeric": {
+          "id": 6432,
+          "gain": 0.805419921875,
+          "defaultpad_padded_texels": 0,
+          "defaultpad_cleared_texels": 0,
+          "defaultpad_applied": true,
+          "source_stored_luma": 30.242015185546872,
+          "actual_stored_luma": 30.23575951080322,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            1024,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "browncloth": {
+            "bounds": [
+              0,
+              0,
+              154,
+              128
+            ],
+            "sourceRGB": [
+              34.466923701298704,
+              26.63260957792208,
+              16.834415584415584
+            ],
+            "targetRGB": [
+              36.84593141233766,
+              28.843242694805195,
+              19.08096590909091
+            ],
+            "sourceLstd": 21.965976920468936,
+            "targetLstd": 15.31522178971296
+          },
+          "darkpanel": {
+            "bounds": [
+              71,
+              5,
+              111,
+              66
+            ],
+            "sourceRGB": [
+              12.749180327868853,
+              10.289754098360655,
+              12.447540983606558
+            ],
+            "targetRGB": [
+              17.33155737704918,
+              14.299180327868852,
+              17.481147540983606
+            ],
+            "sourceLstd": 8.761487616742997,
+            "targetLstd": 9.398002730994705
+          },
+          "rightcamogray": {
+            "bounds": [
+              167,
+              0,
+              256,
+              98
+            ],
+            "sourceRGB": [
+              43.65260261407934,
+              40.076587938546204,
+              43.12497133684935
+            ],
+            "targetRGB": [
+              38.74214629672093,
+              35.483375372620955,
+              36.373194221508825
+            ],
+            "sourceLstd": 14.998640354487485,
+            "targetLstd": 12.436436964702882
+          },
+          "footbrown": {
+            "bounds": [
+              170,
+              98,
+              256,
+              128
+            ],
+            "sourceRGB": [
+              35.149612403100775,
+              24.598062015503874,
+              22.167441860465118
+            ],
+            "targetRGB": [
+              30.439922480620154,
+              21.23062015503876,
+              18.90736434108527
+            ],
+            "sourceLstd": 12.628065844053308,
+            "targetLstd": 9.001354478251912
+          }
+        },
+        "whole_top_sourceRGB": [
+          1.03125,
+          0.84375,
+          0.60546875
+        ],
+        "whole_top_targetRGB": [
+          25.78515625,
+          21.078125,
+          15.5
+        ],
+        "whole_bottom_sourceRGB": [
+          6.8984375,
+          6.4296875,
+          5.47265625
+        ],
+        "whole_bottom_targetRGB": [
+          11.453125,
+          11.2578125,
+          10.58203125
+        ],
+        "targetdarkseparator_phase_Lneighbortriples": {
+          "81": [
+            13.059640000000002,
+            2.549056,
+            10.415288
+          ],
+          "89": [
+            10.03828,
+            1.1662239999999995,
+            13.767896000000002
+          ],
+          "94": [
+            5.229359999999999,
+            3.3207360000000006,
+            20.539448000000004
+          ],
+          "98": [
+            5.600480000000001,
+            3.8668720000000008,
+            13.330808000000001
+          ],
+          "106": [
+            8.933215999999998,
+            5.2467359999999985,
+            11.519079999999997
+          ]
+        },
+        "darkpanel_targetfullprofile_x65to114": [
+          41.94046399999999,
+          41.557792,
+          42.471488,
+          43.705439999999996,
+          45.817216,
+          44.87832,
+          14.542591999999996,
+          7.601328000000002,
+          11.268768,
+          13.463280000000003,
+          16.184983999999996,
+          20.684415999999995,
+          24.640679999999993,
+          23.995176,
+          21.021583999999997,
+          13.059640000000002,
+          2.549056,
+          10.415288,
+          16.729575999999994,
+          21.958768000000006,
+          29.167311999999992,
+          25.346175999999996,
+          17.123543999999995,
+          10.03828,
+          1.1662239999999995,
+          13.767896000000002,
+          27.422535999999994,
+          20.504584,
+          5.229359999999999,
+          3.3207360000000006,
+          20.539448000000004,
+          23.02176,
+          5.600480000000001,
+          3.8668720000000008,
+          13.330808000000001,
+          13.947816000000003,
+          14.744512000000002,
+          14.070224000000001,
+          12.736248,
+          11.159175999999997,
+          8.933215999999998,
+          5.2467359999999985,
+          11.519079999999997,
+          8.455472,
+          19.370712000000005,
+          36.536248,
+          32.168952000000004,
+          31.324711999999998,
+          30.222631999999997,
+          29.575872
+        ],
+        "status": "raw-held-original-artwork-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Held for substantial fullcanvas topUV fill andchanged paintedpanel identity, not subtlethresholdedge/count variation. Source6dim verticalpaintbands/5internal darkseparators are still atx81/89/94/98/106 minima, so noincorrectclaimmore/fewerstripes. But fullraw turns verydark faintpurpleprintedbands into individuallyraised boxed mechanicalribs withstrong border, darkpanelmean12.75/10.29/12.45→17.33/14.30/17.48 aftergain.8054199. Mainbrown/sourcecamouflage/localcolorhierarchy changes, rightgray43.65/40.08/43.12→38.74/35.48/36.37. Moreconclusive frameproof: sourcewholetoprowRGB1.03/.84/.61→25.79/21.08/15.50, formerlyblacktop field filledwithbrowncloth acrosslargewidth ratherthan1pixelsoftening;bottom6.90/6.43/5.47→11.45/11.26/10.58. SourceA255/defaultpad0 andscalar globallumapass donot repairUVfield fill/material. Originalpocket1pale point interpretedraisedbutton too. NoartRGBpatch/optout/crop/retry;genuineartpending nottechnical.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    }
+  ],
+  "source_check_sha256": "15d5813c52855cf2aeaca99783f015055f82f4948f97487c8c746d44e3fee7aa",
+  "scope": "Twelve fullgenuine typed/history-release-originalRGBA audited diffuse atlases, three independent onecall source-onlywholeoriginal edits. Beforeprompt sourcecount/phase/localpaint/A proofs immutable. Exactprompt/raw/refSHA immediatelysaved. Numeric scalar/fullsourceA/defaultpad/wholeinverse4x only;1884defaultpad33347fills held, other2pad0; no artRGBrepair/Falseflag/sourceRGBcomposite/crop/BBox/padding/retry. Localchromalift/softcodec boundaries disclosed not automatic rejection. Remainingunviewed art nevercalled unsuitable. One workerartready candidate needsrootfullnative/palette/materialQA, notproduction acceptance.",
+  "shared_metadata_Game_Git_Cpp": "Untouched; rootonly. All previousstable untouched."
+}
