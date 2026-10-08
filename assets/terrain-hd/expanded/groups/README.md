@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 501 of these verified originals are accepted in the shared
+As of 2026-10-08, 503 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-fourth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-fifth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,231 IDs: clothing 194, equipment 110, weapons
-57, heads 157, UI 584, effects 105, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,227 IDs: clothing 194, equipment 110, weapons
+57, heads 155, UI 583, effects 104, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -707,3 +707,24 @@ Source6SHA25 unchanged/current707EXE exact/no newFaceGenbake. Menu11/0/11/pendin
 Performanceacceptanceclaim:false;prior41independentoriginalandHDslow qualification retained/causeunestablished.
 Proofs:../new-groups-forty-fourth-{batch,live,runtime}-check.json.
 OrdinaryGitPNG/RESbuiltwithGame;1,231verified originals remain.
+
+Forty-fifth accepted packet:UI2249/effect5935,2 separate builtin calls.
+Pack2,465textures/4,930aliases/130archives/7,824,784,186bytes; prior2,463source/PNG/nativehashes exact.
+Two wholeactualnativeRGBA equal private4x predictions/fullsourceA/UV/material/count/nativepaintscale/globalgain/defaultpad0.
+2249oldgraydiagonalshaft/head/fullgraybackground retained;rounder/darkerhead andbroaderoldpalewash disclosed.
+5935oldsoftcyanbluehalo/flatwhiteinterior retained;5008oldwhitepixels mean248.49/248.11/248.04vs255,
+centroid(−.308,−.468)nativepx/slightquantization disclosed;no exactwhiteplateauidentity/newrings/rays/surfaces.
+Original-only6703constantblackartRGB+variableA and6783blackRGB16383+onewhiteopaqueauthorcorner/variableA/twobrows:
+NOTconstantRGBA/fulloriginalRGBA retained/noAI/noHDartentries/no familyoralpha ban.
+ActualFaceGen33/43THMID1 withallsource siblinglayers/unknownweights;6SWonoffon checks independentintegeralpha/Vflip/FNV,
+original128/mip0/fixed256atlas;no newbake/fullGPUheadclaim.
+GPU2249/5935sixwholeprivateonoffonframes/whole+middle+reverse+clippedUV/placement/density4vs1/pending0;
+2249TransparentpremulonceA255/5935AddA0usefulRGBnoPremul. ActualUI424CreateButton384/424disabledgrenadeattack and
+ParticleInstance4111allTextureN/sibling4737unknown audited;genericGPU notactivewidget/particleappearance.
+Threeworkerreviews frozen/fourheld preserved;known5935prompt exactargument+oneadditionalserviceLF independentlyproven,
+originalmanifest frozen/raw/call/ref/BEFORE/reviews immutable/customUI53 allfilesverified.
+Source6SHA25/current707EXE exact;menu11/0/11/pending0/fourprivateframes/120frames3.73FPS/
+p95278.43ms/normalquit/ownedGameabsent. Performanceacceptanceclaim:false;
+prior41independentoriginalandHDslow qualified/causeunestablished.
+Proofs:../new-groups-forty-fifth-{batch,live,runtime}-check.json.
+OrdinaryGitPNG/RESbuiltwithGame;1,227verified originals remain.
