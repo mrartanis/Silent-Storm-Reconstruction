@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,254 HD textures**: 178 terrain assets, 30 tree
+The completed pack contains **2,263 HD textures**: 178 terrain assets, 30 tree
 assets, 1,754 building/environment assets, 58 clothing, 86 equipment, 64 weapons,
-2 heads, 25 interface icons, 51 effects, 4 camp atlases and 2 training targets.
+2 heads, 31 interface icons, 51 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,662 records, including 292 accepted new-group textures, the original
+contains 2,671 records, including 301 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,505 verified originals outside the shared queue, including next
+validation. There remain 1,496 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -139,8 +139,10 @@ Twelfth accepted packet: `expanded/jobs-new-groups-twelfth.json` adds6 clothing,
 
 Thirteenth accepted packet: `expanded/jobs-new-groups-thirteenth.json` adds11 equipment and4 effects:2,254 textures/4,508 aliases/119 archives/7,188,854,696 bytes. Prior2,239 source/PNG/native hashes unchanged. All11 opaque native RGBA equal privately reviewed calibrated PNG;4 additive frames preserve complete original alpha0 and exact calibrated native RGB. Full validation, actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-thirteenth-{batch,live}-check.json`. Weapons1953/1968/1974 retain originals after actual service refusals, with request IDs/exact arguments/fresh RGBA parity and no retries. Nine other weapon attempts, equipment4858 and8 effect attempts remain reviewed artwork holds, with full raw provenance; they are not accepted HD.
 
-All 11,787 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,430,004,217 bytes before Git deduplication/compression).
+Fourteenth accepted packet: `expanded/jobs-new-groups-fourteenth.json` adds six UI (2940,3958,3959,4049,4438v2,7226) and three miscellaneous artwork maps (1727,7475,7695):2,263 textures/4,526 aliases/123 archives/7,439,814,418 bytes. Prior2,254 source/PNG/native hashes unchanged. Seven opaque native RGBA equal reviewed PNG;2940/4049 retain complete source alpha and exact premultiplied RGBA.2940 uses a wholecanvas source-only affine guide and full inverse without crop/padding/BBox.4438v2 uses direct original builtin generation with quiet original gray fields;v1 archived. Full validation and actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-fourteenth-{batch,live}-check.json`. UI6658/five other UI remain artwork holds; three Final sky/Earth/cloud maps remain genuine source artwork without generation. Miscellaneous technical candidates await separate disposition. Do not regenerate accepted IDs.
+
+All 11,836 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,497,998,873 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

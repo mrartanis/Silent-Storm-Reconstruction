@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 292 of these verified originals are accepted in the shared
+As of 2026-10-08, 301 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirteenth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-fourteenth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,505 IDs: clothing 229, equipment 173, weapons
-59, heads 184, UI 672, effects 155, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,496 IDs: clothing 229, equipment 173, weapons
+59, heads 184, UI 666, effects 155, clues 17, final 3 and miscellaneous 10.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -196,3 +196,5 @@ Eleventh accepted packet: `../jobs-new-groups-eleventh.json` adds6 equipment,5 a
 Twelfth accepted packet: `../jobs-new-groups-twelfth.json` adds6 clothing,10 equipment and3 UI:2,239 textures/4,478 aliases/118 archives/7,176,096,190 bytes. Prior2,220 source/PNG/native hashes unchanged. All17 opaque native RGBA equal privately reviewed calibrated PNG; UI7115/7116 retain complete original alpha and exact premultiplied RGBA. Their source-only wholecanvas nearest affine3:1 helpers inverse-resize the complete raw to original4x, without crop/padding/BBox. Full validation, actual-menu HD on/off/on, normal isolated quit: `../new-groups-twelfth-{batch,live}-check.json`. UI5111 original38x46 is held for NPOT support;5 otherUI,6 clothing and2 equipment attempts remain outside the pack as reviewed. Source/raw/exactprompt provenance retained and initial4010v1 archived before canonicalv2. Do not regenerate accepted IDs.
 
 Thirteenth accepted packet: `../jobs-new-groups-thirteenth.json` adds11 equipment and4 effects:2,254 textures/4,508 aliases/119 archives/7,188,854,696 bytes. Prior2,239 source/PNG/native hashes unchanged. All11 opaque native RGBA equal privately reviewed calibrated PNG;4 additive frames preserve complete original alpha0 and exact calibrated native RGB. Full validation, actual-menu HD on/off/on, normal isolated quit: `../new-groups-thirteenth-{batch,live}-check.json`. Weapons1953/1968/1974 retain originals after actual service refusals, with request IDs/exact arguments/fresh RGBA parity and no retries. Nine other weapon attempts, equipment4858 and8 effect attempts remain reviewed artwork holds, with full raw provenance; they are not accepted HD.
+
+Fourteenth accepted packet: `../jobs-new-groups-fourteenth.json` adds six UI (2940,3958,3959,4049,4438v2,7226) and three miscellaneous artwork maps (1727,7475,7695):2,263 textures/4,526 aliases/123 archives/7,439,814,418 bytes. Prior2,254 source/PNG/native hashes unchanged. Seven opaque native RGBA equal reviewed PNG;2940/4049 retain complete source alpha and exact premultiplied RGBA.2940 uses a wholecanvas source-only affine guide and full inverse without crop/padding/BBox.4438v2 uses direct original builtin generation with quiet original gray fields;v1 archived. Full validation and actual-menu HD on/off/on, normal isolated quit: `../new-groups-fourteenth-{batch,live}-check.json`. UI6658/five other UI remain artwork holds; three Final sky/Earth/cloud maps remain genuine source artwork without generation. Miscellaneous technical candidates await separate disposition. Do not regenerate accepted IDs.

@@ -1,0 +1,120 @@
+[
+  {
+    "id": 6658,
+    "source_binary_sha256": "ba7d6dc0aa725e9a5a6da61047d95b5ca632802bde366feeb5b6376134644ffd",
+    "source_rgba_sha256": "9a45fab1f3bccf94f959cfed933f975f97677f5b196d226518ed1250b4d343bd",
+    "logical_size": [
+      1024,
+      1024
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "source_parity": "Fresh actual historical MMP == actual release resource == original PNG decoded RGBA bytes and dimensions. Physical size exactlyDBtexture logical size. No crop/padding parity shortcut.",
+    "fresh_typed_chain": [
+      {
+        "actual_ui_texture": {
+          "ID": 863,
+          "R_800x600": 0,
+          "R_1024x768": 6658,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_005"
+        },
+        "actual_resolution_field": "R_1024x768",
+        "actual_texture_record": {
+          "ID": 6658,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -12633551,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\AdvFaceGen\\M_005.tga",
+          "Format": "8888",
+          "UserName": "M_005",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "actual_controls": [
+          {
+            "binding_field": "Texture0",
+            "actual_control": {
+              "ID": 2386,
+              "Type": 2,
+              "Left": 0,
+              "Top": 0,
+              "Right": 1024,
+              "Bottom": 768,
+              "Texture0": 863,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 398,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "",
+              "ToolTipAnchorType": ""
+            }
+          }
+        ],
+        "complete_actual_control_binding_count": 1
+      }
+    ],
+    "uv_proof": "DBFormat/DataInterface.cpp121-156 loads UITexture resolution rows and computes UI logical dimensions from1024x768 texture. Main/UIBaseCtrls.cpp237 binds CImage from actual CUIControl Texture0; Main/UIWrap.cpp222-245 selects resolution and maps default entire logical texture rectangle. Selected controls retain complete source rectangular texture; no inferred atlas and no fitting/repacking. UI control rectangles are drawing extents, never used as generated art crop.",
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/6658.png",
+      "operations": "Source RGBA to native stored RGB only. Wholecanvas NEAREST resize to recorded helper_size. Aspect>3 uses exact1536x512 source-only fullcanvas affine3:1; all others native aspect nearest2x. Root-authorized inverse entire raw to original4x. NO crop/padding/rotation/BBox/UV fitting/inpainting/unpremultiplication/art insertion. Original source alpha separately restored by root.",
+      "source_size": [
+        1024,
+        1024
+      ],
+      "source_bbox": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "helper_size": [
+        2048,
+        2048
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "fullcanvas_affine_prewarp": false,
+      "inverse": "Entire raw LANCZOS to exact original.width*4,original.height*4; no crop/padding/autoBBox/composite.",
+      "output": "assets/terrain-hd/expanded/generated/6658-ui-ninth-original-rgb-support.png"
+    }
+  }
+]
