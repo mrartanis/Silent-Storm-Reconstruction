@@ -1,0 +1,341 @@
+[
+  {
+    "fresh_DB_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "id": 5432,
+    "logical_size": [
+      128,
+      32
+    ],
+    "source_rgba_sha256": "933cd16f6a10ec9b85fafbe174d61469cc5f668a5fc603e61f2c5e3cce12570f",
+    "source_binary_sha256": "9f998f6f7f8ba205505607c0f9dfa39a2be9b9707767d449b7951281103828dc",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 3544,
+          "TextureID": 5432,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2273,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 2273,
+          "UserName": "DemolitionCord"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 5706,
+              "Material0": 2273,
+              "Material1": 0,
+              "GeometryID": 3505,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 3763,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 3505,
+              "AIGeometryID": 2348,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.23811161518096924,
+              "SizeY": 0.11696896702051163,
+              "SizeZ": 0.023492075502872467,
+              "CenterX": 0.010115381330251694,
+              "CenterY": -0.0039351098239421844,
+              "CenterZ": 0.011342644691467285,
+              "SrcName": "Characters\\Equipment\\Items\\Explosions.mb",
+              "UserName": "DemolitionCord",
+              "RootJoint": "DemolitionCord"
+            },
+            "model_template": {
+              "ID": 3763,
+              "UserName": "DemolitionCord"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3544,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5432.png",
+      "operations": "Native original storedRGBA→opaqueRGB, ENTIRE source128x32 nearest affine to1536x5123:1. No crop/padding/rotation/BBox/fitting/unpremultiply/art inserts. Same normalized positions; final ENTIREraw inverse to original4x512x128/sourceA separate root.",
+      "source_size": [
+        128,
+        32
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        32
+      ],
+      "helper_size": [
+        1536,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        1536,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS resize to exact original4x512x128 (inverse originalaspect4:1), no crop/pad/fitting; sourceA LANCZOS4x separate, scalarbrightness root.",
+      "output": "assets/terrain-hd/expanded/generated/5432-equipment-twenty-fourth-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Full native128x32/ENTIRE originalRGB nearest-affine1536x5123:1 guide/fullraw2172x7243:1/ENTIREinverse native4x512x128 originalaspect4:1/sourceRGBA/sourceA/storedRGB privately viewed. Original nearblack matte brownpurple broad field/two left dimgray painted fields/right grayfield with two original darklight paintmarks retain normalized wholeUV positions and materialscale; RGB0 preserved as original shadowpaint, no new physicalhole/hardware interpretation. Actual upperright brightpaint peak123,6 source156/154/165→154/150/159 sameposition and weaker, no added glints/rust/weave/geometry. Existing left gray broad highlight locally stronger+38 at8,15 source107/105/115→147/147/153; review flag broadfield hierarchy and modest finepaint variation, corr .9690/weak-sourcegain34. Ready only coordinator final native material/leftlight review, not accepted claim. SourceA255 byte-exact/POT512x128; inverseENTIREraw only, source-only fullaffine/no crop/padding/BBox/registration/artRGB/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/5432-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 5432,
+      "source_pattern_proof": "assets/terrain-hd/expanded/pattern_equipment_twenty_fourth.py genuinely executed/asserted BEFORE prompt/call.",
+      "source_pattern_metrics_before_call": {
+        "id": 5432,
+        "periodic_pattern": "No ideal periodic count/phase claimed; whole smooth painted fields reference.",
+        "source_upperright_peak_domain": [
+          118,
+          0,
+          128,
+          16
+        ],
+        "source_upperright_peak_xy": [
+          123,
+          6
+        ],
+        "source_upperright_peak_RGB": [
+          156,
+          154,
+          165
+        ],
+        "source_assertion_before_prompt": "Sourcebrightpeak position asserted, no hidden semantic inference. Exactlytwo original right dark/light painted marks are preserved as paint; original blackRGB is shadowcolor, not automatically a physicalhole.",
+        "input_whole_affine": "Original128x32→opaqueRGB fullnearest1536x5123:1 sourceguide; inverseENTIREraw→original4x512x128, normalized UV no crop/padding."
+      },
+      "material": "Muted original finepaint. No added bevel/rust/weave/gloss/brightedge; keep original broadcontrast and faint paintpatches. AllblackRGB retained as original shadowpaint, no physicalhole interpretation."
+    }
+  },
+  {
+    "fresh_DB_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "id": 1822,
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_rgba_sha256": "889b19c7bf212ca9f10622d62c52bd1ccecf5d7f839195210aa2224e638e84d1",
+    "source_binary_sha256": "5f1323ae854fbb2146381d5904e2c9305bedbf980645960d3eb52144a61ff82a",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 1214,
+          "TextureID": 1822,
+          "BRDFID": 0,
+          "BumpID": 2619,
+          "SpecColor": 1051657,
+          "TemplateID": 798,
+          "GlossID": 2714,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 798,
+          "UserName": "MauserM712Clip02"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 1236,
+              "Material0": 798,
+              "Material1": 0,
+              "GeometryID": 1471,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 882,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 1471,
+              "AIGeometryID": 1071,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.061099231243133545,
+              "SizeY": 0.02494085021317005,
+              "SizeZ": 0.1101466491818428,
+              "CenterX": -0.0012663863599300385,
+              "CenterY": 0.0,
+              "CenterZ": 0.0014255233108997345,
+              "SrcName": "Characters\\Equipment\\Items\\PistolsClips.mb",
+              "UserName": "MauserM712Clip02",
+              "RootJoint": "MauserM712Clip02"
+            },
+            "model_template": {
+              "ID": 882,
+              "UserName": "MauserM712Clip10"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 1214,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/1822.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/1822-equipment-twenty-fourth-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Full native64square/sourceRGB NEAREST8x512square/fullraw1254square/native256square originalRGBA/sourceA/storedRGB privately viewed. Full centralgray panel/left softer stripepaint field/right darkfield/bottom ambermarks retain broad positions, no glyph. Yet source irregular tonal mean-profile14maxima[1,3,8,12,16,18,21,24,28,32,34,37,40,44] become candidate10[3,8,12,15,18,24,32,34,40,44]; these are measured painttones, NOT14physical ribs, no invented count claim. Original weak irregular shading becomes more regular broad paintedbands and several tone phases disappear. Bottom small amberpatches redistribute into coarser paint, existing thin lightframe stronger. Hold native pattern/material/detailstrength despite corr .9789/maxlocal+31/weak-sourcegain78. SourceA255 byte-exact/POT256square; wholeinverse only/no BBox/artRGB/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/1822-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 1822,
+      "source_pattern_proof": "assets/terrain-hd/expanded/pattern_equipment_twenty_fourth.py genuinely executed/asserted BEFORE prompt/call.",
+      "source_pattern_metrics_before_call": {
+        "id": 1822,
+        "native_readonly_profile_domain": [
+          0,
+          0,
+          13,
+          51
+        ],
+        "source_painted_row_profile_maxima_y": [
+          1,
+          3,
+          8,
+          12,
+          16,
+          18,
+          21,
+          24,
+          28,
+          32,
+          34,
+          37,
+          40,
+          44
+        ],
+        "source_profile_peak_count": 14,
+        "source_pattern_interpretation": "Genuinely asserted before prompt/call. These14local tonal mean-profile maxima are exact measured paint positions, NOT14physical ribs or ideal periodic repeat. Original irregular shaded strip remains flat painted material, never regularize to an invented grid/count.",
+        "diagnostic_only": "Source fixed-domain mean profiles, no toolreference crop/BBox/composite/UV fitting."
+      },
+      "material": "Muted original finepaint. No added bevel/rust/weave/gloss/brightedge; keep original broadcontrast and faint paintpatches. AllblackRGB retained as original shadowpaint, no physicalhole interpretation."
+    }
+  }
+]

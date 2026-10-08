@@ -8,14 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,332 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 65 clothing, 113 equipment, 65 weapons,
-2 heads, 46 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,336 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 66 clothing, 115 equipment, 65 weapons,
+3 head/hair textures, 46 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,792 records, including 370 accepted new-group textures, the original
+contains 2,797 records, including 374 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-123 structural/solid masks, 63 unavailable historical sources, one release mismatch
+124 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and fifteen resource IDs whose original-preserving image generation was unavailable
 (fourteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,375 verified originals outside the shared queue, including next
+validation. There remain 1,370 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -237,8 +237,34 @@ Git files: expanded/accepted-git-stage-completeness-twenty-second.json.
 retained. Never regenerate accepted IDs; inspect current independent jobs/reviews
 before new calls.
 
-All 12,454 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,901,308,465 bytes before Git deduplication/compression).
+Twenty-third accepted packet: 5376/5432/5648/3321, two equipment,
+one clothing and one hair diffuse texture. Pack: 2,336 textures / 4,672 aliases /
+126 archives / 7,615,896,618 bytes. All prior 2,332 source/PNG/native
+hashes unchanged; four nativeRGBA images exactly match privately reviewed whole
+production4x predictions. Full source alpha/UV/material/count/pattern scale
+preserved:16 lowerleft bands5376,15 lines/two diagonal straps5648,two main hair
+lobes/central part3321. Existing paint/marks/strand refinement and moderate local
+peak lifts disclosed in expanded/coordinator-art-review-twenty-third.json, without
+claiming exact localRGB identity. Scalar brightness only, no artisticRGB insertion,
+crop/BBox or accepted regeneration. Full native validation, real-menu HD on/off/on,
+all frames privately viewed and isolated normal quit:
+expanded/new-groups-twenty-third-{batch,live}-check.json. Scene certifies layer/menu,
+not every new model. All declared PNG/prompt stages are ordinary Git:
+expanded/accepted-git-stage-completeness-twenty-third.json. Exact original worker
+reviews frozen separately; later ancillary additions preserve reviewed artwork.
+Canonical imported prompt is exact actual argument+one serviceLF:
+expanded/coordinator-review-provenance-twenty-third.json.
+
+1998 retains exact original constantblack Slot Fade/authoredA0..128 with21 alpha
+levels/rounded corners, actualUI348/controls975/1029 after wholeRGB/A review:
+expanded/coordinator-original-only-ui-nineteenth.json. No globalUI/alpha/NPOT
+exclusion. Remaining1,370 exact source metadata screened against2,328 eligible
+accepted donors with sourceRGBA/dimensions/nativeType:0 matches/0calls, authorized
+book-cover content replacements excluded. 1822/6239/5666/3319/5740 remain held,
+raw/exactprompts/proof retained. Inspect subsequent jobs/reviews before new calls.
+
+All 12,485 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,921,106,401 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

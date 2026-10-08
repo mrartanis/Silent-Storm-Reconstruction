@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 370 of these verified originals are accepted in the shared
+As of 2026-10-08, 374 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-second-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-third-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,375 IDs: clothing 221, equipment 145, weapons
-57, heads 184, UI 626, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,370 IDs: clothing 220, equipment 143, weapons
+57, heads 183, UI 625, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -294,3 +294,29 @@ Git files: ../accepted-git-stage-completeness-twenty-second.json.
 6832/6815 remain held for palette and local shape/UV drift; exact raw/prompt/proofs
 retained. Never regenerate accepted IDs; inspect current independent jobs/reviews
 before new calls.
+
+Twenty-third accepted packet: 5376/5432/5648/3321, two equipment,
+one clothing and one hair diffuse texture. Pack: 2,336 textures / 4,672 aliases /
+126 archives / 7,615,896,618 bytes. All prior 2,332 source/PNG/native
+hashes unchanged; four nativeRGBA images exactly match privately reviewed whole
+production4x predictions. Full source alpha/UV/material/count/pattern scale
+preserved:16 lowerleft bands5376,15 lines/two diagonal straps5648,two main hair
+lobes/central part3321. Existing paint/marks/strand refinement and moderate local
+peak lifts disclosed in ../coordinator-art-review-twenty-third.json, without
+claiming exact localRGB identity. Scalar brightness only, no artisticRGB insertion,
+crop/BBox or accepted regeneration. Full native validation, real-menu HD on/off/on,
+all frames privately viewed and isolated normal quit:
+../new-groups-twenty-third-{batch,live}-check.json. Scene certifies layer/menu,
+not every new model. All declared PNG/prompt stages are ordinary Git:
+../accepted-git-stage-completeness-twenty-third.json. Exact original worker
+reviews frozen separately; later ancillary additions preserve reviewed artwork.
+Canonical imported prompt is exact actual argument+one serviceLF:
+../coordinator-review-provenance-twenty-third.json.
+
+1998 retains exact original constantblack Slot Fade/authoredA0..128 with21 alpha
+levels/rounded corners, actualUI348/controls975/1029 after wholeRGB/A review:
+../coordinator-original-only-ui-nineteenth.json. No globalUI/alpha/NPOT
+exclusion. Remaining1,370 exact source metadata screened against2,328 eligible
+accepted donors with sourceRGBA/dimensions/nativeType:0 matches/0calls, authorized
+book-cover content replacements excluded. 1822/6239/5666/3319/5740 remain held,
+raw/exactprompts/proof retained. Inspect subsequent jobs/reviews before new calls.

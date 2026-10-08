@@ -1,0 +1,115 @@
+[
+  {
+    "id": 5666,
+    "prompt_constraints": {
+      "source_width": 256,
+      "source_height": 128,
+      "left_olive_brown_paint_patches": 16,
+      "complete_patches": 15,
+      "bottom_clipped_patches": 1,
+      "patch_native_bounds": [
+        [
+          24,
+          7,
+          51,
+          28
+        ],
+        [
+          56,
+          7,
+          84,
+          32
+        ],
+        [
+          8,
+          20,
+          21,
+          48
+        ],
+        [
+          45,
+          25,
+          57,
+          39
+        ],
+        [
+          64,
+          39,
+          85,
+          62
+        ],
+        [
+          33,
+          49,
+          47,
+          66
+        ],
+        [
+          13,
+          50,
+          28,
+          74
+        ],
+        [
+          51,
+          51,
+          63,
+          63
+        ],
+        [
+          48,
+          61,
+          56,
+          72
+        ],
+        [
+          35,
+          71,
+          45,
+          86
+        ],
+        [
+          72,
+          78,
+          84,
+          93
+        ],
+        [
+          41,
+          80,
+          72,
+          114
+        ],
+        [
+          15,
+          83,
+          29,
+          101
+        ],
+        [
+          73,
+          99,
+          89,
+          124
+        ],
+        [
+          35,
+          110,
+          55,
+          128
+        ],
+        [
+          7,
+          113,
+          30,
+          125
+        ]
+      ],
+      "new_hardware_allowed": 0,
+      "new_print_patches_allowed": 0
+    },
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: Silent Storm original diffuse garment/boot UV texture, ID5666.\r\nInput image1 is the exact whole original256x128 RGBA atlas enlarged nearest8x2048x1024; it is the sole edit target and geometry/material reference. Improve this same flat painted texture at four times original resolution, not a garment photograph or scene. Output the entire identical2:1 canvas. Preserve every outer edge, native UV region boundary, source shading phase, color hierarchy and original opaque alpha. Black and dark pixels are opaque paint, not holes.\r\nVerified source pattern: the LEFT gray cloth native x0..95 has exactly16 existing separate olive-brown angular paint patches:15 complete patches and1 patch clipped at the bottom edge. Their exact source bounds (native x0,y0,x1,y1) are [24,7,51,28], [56,7,84,32], [8,20,21,48], [45,25,57,39], [64,39,85,62], [33,49,47,66], [13,50,28,74], [51,51,63,63], [48,61,56,72], [35,71,45,86], [72,78,84,93], [41,80,72,114], [15,83,29,101], [73,99,89,124], [35,110,55,128], [7,113,30,125]. Retain all16 exact original irregular angular silhouettes and their separation, scale and phase. Do not add, split, join, round or shift these shapes; none are symbols, embroidery or new equipment. The brown strip at native x96 is the existing field edge, not a seventeenth patch.\r\nKeep the middle gray washed cloth panel and its brown side fields, the dark right footwear fields and low-contrast bottom footwear wash exactly at their original source boundaries. Keep all existing broad dim folds and incomplete dark/light traces soft and indistinct where the source is indistinct. Do not turn faint pixels into new eyelets, laces, straps, buckles, buttons, seams or anatomy. Improve only the original soft transitions and fine matte painted variation; retain subdued low-contrast gray/olive/dark-brown palette and source-relative lightness. No photographic leather, cloth weave, scratches, curls, crosshatching, thick brush grain, sharp bevels or raised stitched outlines. No new garment objects or crisp invented detail.\r\nConstraints: whole canvas only; no cropping, padding, letterbox, bbox recentering, layout redesign or new border. Preserve the source paint style, original shape count, native pattern scale and phase, all uncertain soft washes and material identity. No text, labels, symbols, watermark or scene.",
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:15:00.801489+00:00"
+  }
+]

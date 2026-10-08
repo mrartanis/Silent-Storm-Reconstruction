@@ -1,0 +1,193 @@
+[
+  {
+    "fresh_DB_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "id": 5376,
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_rgba_sha256": "511d471a5a5fe91fd260c6aacb5efb5fada5191d9217046e6c90000b4ddb679e",
+    "source_binary_sha256": "d6b444d3dfd42b2faa4080326657a3df931a701873345d4eb173718c1b19d123",
+    "source_parity": "Actual historicalMMP == release resource == existing original PNG RGBA bytes/dims/hash; fresh actual Texture row exact sourcequeue row.",
+    "fresh_typed_usage": [],
+    "fresh_nonparticle_usage": [
+      {
+        "table": "Materials",
+        "texture_field": "TextureID",
+        "actual_record": {
+          "ID": 3501,
+          "TextureID": 5376,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 6776679,
+          "TemplateID": 2242,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.30000001192092896,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.20000000298023224,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "runtime_unknowns": "Actual typed resource binding is proven. No inferred model mesh UV, dynamic overlay dispatch or absent particle definition semantics.",
+        "actual_material_template": {
+          "ID": 2242,
+          "UserName": "Flask"
+        },
+        "all_actual_model_consumers": [
+          {
+            "texture_reference_field": "Material0",
+            "model": {
+              "ID": 5623,
+              "Material0": 2242,
+              "Material1": 0,
+              "GeometryID": 3451,
+              "Material2": 0,
+              "Material3": 0,
+              "SkeletonID": 0,
+              "TemplateID": 3706,
+              "RPGArmorID": 28,
+              "RndWeight": 1.0,
+              "Flags": ""
+            },
+            "geometry": {
+              "ID": 3451,
+              "AIGeometryID": 2305,
+              "AIGeometry2ID": 0,
+              "TriCountMaterial1": 0,
+              "TriCountMaterial2": 0,
+              "SizeX": 0.1845470666885376,
+              "SizeY": 0.062008023262023926,
+              "SizeZ": 0.2966451942920685,
+              "CenterX": 0.0,
+              "CenterY": -0.0015269117429852486,
+              "CenterZ": 0.1481446772813797,
+              "SrcName": "Characters\\Equipment\\Items\\MedicineStuff.mb",
+              "UserName": "Flask",
+              "RootJoint": "Flask"
+            },
+            "model_template": {
+              "ID": 3706,
+              "UserName": "Flask"
+            }
+          }
+        ],
+        "model_consumer_count": 1
+      }
+    ],
+    "material_evidence": {
+      "actual_source_native_type": "Ordinary",
+      "source_alpha_extrema": [
+        255,
+        255
+      ],
+      "actual_instance_alpha_blend_values": [],
+      "resolved_only_particle_Wrap_pairs": [],
+      "all_instance_IsCrown_values": [],
+      "unresolved_particle_definitions": [],
+      "missing_sibling_Texture_rows": [],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3501,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "unknowns": "Material Alpha/AddressMode enums are actual values, not inferred numerical renderer blend factors. Absent Particles definitions and model mesh UV remain unknown. Entire resource replacement retains every DB/runtime binding unchanged."
+    },
+    "full_source_RGB_private_view": true,
+    "source_only_reason": null,
+    "imagegen_call_count": 1,
+    "UV_proof": {
+      "image_canvas": "One ENTIRE original rectangle, all content positions/count/scale retained. Fullcanvas calibration[1,1] refers to image processing only; no inference of model mesh UV/overlay dispatch. No crop/padding/autobbox/generated fitting/art inserts."
+    },
+    "helper_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5376.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5376-equipment-twenty-third-source-rgb-support.png"
+    },
+    "full_original_private_view_before_call": true,
+    "full_helper_private_view_before_call": true,
+    "full_raw_private_view": true,
+    "full_native4x_original_RGBA_RGB_and_candidate_nativeA_storedRGB_private_view": true,
+    "source_visual_review": "Full native64square/sourceRGB NEAREST8x512square/fullraw1254square/native256square originalRGBA+sourceA+storedRGB privately viewed. Entire dark finely mottled painted upperfield, exactly16lowerleft gray native1pixel bands with1pixel black separators, and original very faint lower-right circular paintpatch preserve fullcanvas positions/count/phase/materialscale. Native source maxima x1,3,...31 were genuinely asserted BEFORE prompt/call and exactly equal candidate inverse-native profiles; no invented new grid/weave/holes/raisedmetal/creases/glyph. Pure scalar root-style native correlation .9788/maxlocal positive-source+6/weaksourcegain0. Upper original field mean/std22.9704/8.8587→22.0879/8.4429, lower faint patch2.8012/2.3421→2.5076/2.1812: subdued material/hierarchy retained, no brightening weakfragment. Review concern: fine black band separators soften under whole4x/nativeinverse resampling; source original4x-roundtrip antialiasing also measured separately, no source RGB patch. Ready only root final native material/phase/separator review, not accepted claim. SourceA255 byte-exact/POT256square/fullinverse only/no crop/BBox/artRGB/retry.",
+    "generated_artifacts": [
+      "assets/terrain-hd/expanded/generated/5376-raw.png"
+    ],
+    "pattern_constraints": {
+      "id": 5376,
+      "pattern_count": 16,
+      "source_stripe_maxima_x": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        19,
+        21,
+        23,
+        25,
+        27,
+        29,
+        31
+      ],
+      "source_stripe_pitch": 2,
+      "source_profile_domain": [
+        0,
+        50,
+        35,
+        64
+      ],
+      "source_black_separator_columns": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "source_pattern_proof": "assets/terrain-hd/expanded/pattern_equipment_twenty_third.py executed/asserted BEFORE prompt/call.",
+      "source_fields": "Entire64square; large upper-left faint nearlyblack finely mottled painted field; exactly16existing narrow lowerleft gray vertical bands; original separate faint lowerright circular patch; blackgaps unchanged. No invented weave/grid/grain/holes.",
+      "material": "Subdued nearlyblack graygreen matte finepaint, weak original tonal hierarchy. RGB0 pixels remain original shadows, not technical autoexclusion."
+    }
+  }
+]

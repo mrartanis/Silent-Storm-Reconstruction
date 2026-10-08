@@ -1,0 +1,33 @@
+[
+  {
+    "id": 5432,
+    "generated": "assets/terrain-hd/expanded/generated/5432-raw.png",
+    "prompt": "Edit this exact entire game diffuse texture into a very modest HD hand-painted version. This reference is made ONLY from the original128x32 native stored RGB: the ENTIRE original canvas is nearest-resized to1536x512 (3:1) to make a full UV guide. Return the ENTIRE3:1canvas, not a cropped object, at precisely the same normalized UV positions, part widths/heights, outlines, source patterns, gaps and weak lightpatches. The whole result will be inversely resized back to the original4:1 canvas. No crop, padding, whitespace, frame, zoom, fitting, recentering, rearrangement or element aspect correction within the reference.\r\n\r\nKeep the original almost-black subtly brown-purple matte painted central field and its original extremely faint broad shading. Keep the separate two dim gray vertical painted fields at far left, with the existing unequal weak source lightpatches. Preserve the narrow right gray painted field with EXACTLY TWO original dark/light marks: the smaller upper source mark and larger lower source mark, their source dimensions/shape and position. Source upper-right brightpaint maximum is native x123,y6 in the full128x32 original; preserve its weak original local intensity/footprint. These dark paintmarks must NOT be interpreted into new physicalholes, screws, rivets or sharp circular hardware. Original RGBblack is a shadow color, not an invitation to cut material.\r\n\r\nOnly gently resolve the existing very fine subdued painted texture. Almost-flat dark regions must stay almost-flat and nearlyblack, not become new velvet/cloth weave, wire, metal etching, woodgrain, rust, scratches, grain or raised geometry. Retain every broad source lightfield and its original relative strength. No new whiteedge, thick bevel, shine, ring, crease, border, notch, bolt, lettering, symbol or decorative curl. Output opaque ENTIRE3:1UVguide without newly visible components. Original source alpha will be restored separately.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5432.png",
+      "operations": "Native original storedRGBA→opaqueRGB, ENTIRE source128x32 nearest affine to1536x5123:1. No crop/padding/rotation/BBox/fitting/unpremultiply/art inserts. Same normalized positions; final ENTIREraw inverse to original4x512x128/sourceA separate root.",
+      "source_size": [
+        128,
+        32
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        32
+      ],
+      "helper_size": [
+        1536,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        1536,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS resize to exact original4x512x128 (inverse originalaspect4:1), no crop/pad/fitting; sourceA LANCZOS4x separate, scalarbrightness root.",
+      "output": "assets/terrain-hd/expanded/generated/5432-equipment-twenty-fourth-source-rgb-support.png"
+    }
+  }
+]

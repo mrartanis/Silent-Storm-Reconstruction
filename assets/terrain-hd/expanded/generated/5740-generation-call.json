@@ -1,0 +1,57 @@
+{
+  "id": 5740,
+  "batch": "heads-fifth",
+  "status": "finished",
+  "builtin": true,
+  "tool": "image_gen.imagegen",
+  "started_utc": "2026-10-08T04:17:44.924019+00:00",
+  "exact_prompt": "Use case: precise-object-edit. Faithfully enhance ONLY the existing complete painted-game HAIR DIFFUSE UV TEXTURE. Image1 is the exact historical128x128 full originalRGBA; image2 is exactly the same full storedRGB enlarged only with nearest-neighbor. Keep entire square UV canvas and all source field boundaries, normalized positions, count, phase, source wave direction/spacing, hairline/part flow and scale. Fine resolve only existing soft painted hair shading, no new hairy geometry or clumps. This is a flat game material atlas, not a wig photograph, head portrait or new hairstyle. No skin, ears, eyes, nose, lips, teeth, head anatomy, ribbons, clips, new braid/curls, extra strands outside source fields or new parting. Original entire sourceA is restored separately; material/UV are unchanged. Source codec samples are paint/shading, never new physical blocks. Keep native black/dark backdrop and existing low-contrast local color/brightness hierarchy. No photographic fibers/pores, beautify, shiny gloss, white highlights, new grain/noise, relighting, brighter tips, extra ring/rim or hard edge. Entire output will be normalized to512x512. No crop/padding/rotation/repack/registration/individual-part enlargement or labels/comparison. HairHelen: exactly TWO separated very dim cool blueblack painted hair-fan fields on the native nearblack backdrop. Main visible tone cores measured on original storedRGB max>=10: upper-right footprint[38,14,116,62), lower-left footprint[8,82,81,124), with additional original faint shading outside those cores retained exactly. Preserve their inward-curving/fanning direction, relative size, faint original streak spacing, orientation and black gap; do not add a third patch or join them. Keep VERY DIM blue-charcoal colors (source maximaRGB24,27,30), no bright blue/white glossy strands or newly visible ribbons. Finer painted tone within existing faint flow only. Source full alpha is constant80 and actual opaque material; alpha is restored separately, do not turn this into a cutout.",
+  "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5740-prompt.txt",
+  "prompt_sha256": "e8cb0663229deb7be3aecd582e9ca2c6a2a3bda22366c48c31aa8f639231293b",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5740.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5740-heads-fifth-source-rgb-support.png"
+  ],
+  "reference_recipe": {
+    "type": "whole-original-storedRGB-nearest",
+    "source_size": [
+      128,
+      128
+    ],
+    "guide_size": [
+      768,
+      768
+    ],
+    "source_bbox": [
+      0,
+      0,
+      128,
+      128
+    ],
+    "affine_prewarp": null,
+    "operations": "Full sourceRGB nearest6 only, no crop/padding/registration/unpremultiply. Entire raw Lanczos512x512, authoritative whole originalA restored, pure scalar native brightness only.",
+    "references_sha256": [
+      "62e3d687f291917e8ee2f72eb685b4a23c04fe88d5be42bf85513b8a9eba2b26",
+      "3cd143101780d087b5a5db7f9240b3e100106cc53ae11b71706a45c0b8ff5946"
+    ]
+  },
+  "target_size": [
+    512,
+    512
+  ],
+  "transparent_background": false,
+  "accepted_snapshot_at_call": 2332,
+  "actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Faithfully enhance ONLY the existing complete painted-game HAIR DIFFUSE UV TEXTURE. Image1 is the exact historical128x128 full originalRGBA; image2 is exactly the same full storedRGB enlarged only with nearest-neighbor. Keep entire square UV canvas and all source field boundaries, normalized positions, count, phase, source wave direction/spacing, hairline/part flow and scale. Fine resolve only existing soft painted hair shading, no new hairy geometry or clumps. This is a flat game material atlas, not a wig photograph, head portrait or new hairstyle. No skin, ears, eyes, nose, lips, teeth, head anatomy, ribbons, clips, new braid/curls, extra strands outside source fields or new parting. Original entire sourceA is restored separately; material/UV are unchanged. Source codec samples are paint/shading, never new physical blocks. Keep native black/dark backdrop and existing low-contrast local color/brightness hierarchy. No photographic fibers/pores, beautify, shiny gloss, white highlights, new grain/noise, relighting, brighter tips, extra ring/rim or hard edge. Entire output will be normalized to512x512. No crop/padding/rotation/repack/registration/individual-part enlargement or labels/comparison. HairHelen: exactly TWO separated very dim cool blueblack painted hair-fan fields on the native nearblack backdrop. Main visible tone cores measured on original storedRGB max>=10: upper-right footprint[38,14,116,62), lower-left footprint[8,82,81,124), with additional original faint shading outside those cores retained exactly. Preserve their inward-curving/fanning direction, relative size, faint original streak spacing, orientation and black gap; do not add a third patch or join them. Keep VERY DIM blue-charcoal colors (source maximaRGB24,27,30), no bright blue/white glossy strands or newly visible ribbons. Finer painted tone within existing faint flow only. Source full alpha is constant80 and actual opaque material; alpha is restored separately, do not turn this into a cutout.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5740.png",
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5740-heads-fifth-source-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "finished_utc": "2026-10-08T04:20:34.172245+00:00",
+  "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-fd80bb2c-35cd-4a2c-9ee9-b78cd8a7f832.png",
+  "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5740-raw.png",
+  "raw_sha256": "c71497d7abfe2a3efe44929e7acf4ef89c210d6e0c5524ba8d6c97b0fae05fd6",
+  "raw_saved": true
+}
