@@ -1,0 +1,116 @@
+{
+  "id": 3085,
+  "utc": "2026-10-08T21:13:12.097475+00:00",
+  "recommendation": "original-only-source-control",
+  "source_purpose": "Native stored RGB is an entire white line UV wireframe on black; primary RGB is its DXT compressed equivalent. No painted face/skin/hair canvas exists in either actual alias. Preserve exact original rather than invent facial artwork. This is an individual visual source-purpose decision, not a claim it is invisible or unused.",
+  "private_whole_images_viewed": [
+    "assets/terrain-hd/expanded/private-clothing-complete-20261008/sources/3085-resource-16780301-nativeRGB.png",
+    "assets/terrain-hd/expanded/private-clothing-complete-20261008/sources/3085-resource-16780301-nativeA.png",
+    "assets/terrain-hd/expanded/private-clothing-complete-20261008/sources/3085-resource-16780301-fullRGBA.png",
+    "assets/terrain-hd/expanded/private-clothing-complete-20261008/sources/3085-resource-3085-nativeRGB.png",
+    "assets/terrain-hd/expanded/private-clothing-complete-20261008/sources/3085-resource-3085-nativeA.png"
+  ],
+  "selected_resource_id": 16780301,
+  "selector_reason": "Actual Textures.Format dxt1 sets CTexture.Import bIsDXT; GetRealTextureID with current gfx_texture_usedxt0 selects ID|0x01000000=16780301. Full actual UC RGBA supplies source; no primary-alpha substitution.",
+  "selected_fullRGBA_SHA256": "ec9bc95280dbbb96cdf36c70a0a80aa3825186c26ee25b9e68a1f30f1ca8bafd",
+  "selected_file_SHA256": "89d8ee03b24ddbcd66e26b07822562aea8dff1412e62da5ec64b85abffa713b9",
+  "selected_RGBA_extrema": [
+    [
+      0,
+      254
+    ],
+    [
+      0,
+      254
+    ],
+    [
+      0,
+      254
+    ],
+    [
+      0,
+      254
+    ]
+  ],
+  "selected_native_size": [
+    128,
+    128
+  ],
+  "A_not_zero": true,
+  "RGB_channels_equal": true,
+  "source_historical_and_release_exact": true,
+  "native_Type": "Ordinary",
+  "actual_Texture": {
+    "ID": 3085,
+    "Width": 128,
+    "Height": 128,
+    "NMips": 0,
+    "AverageColor": 151587081,
+    "InstantLoad": 0,
+    "MappingSize": 2.0,
+    "BumpGain": 1.0,
+    "SrcName": "Characters\\Skins\\USSR\\Officer\\Face.tga",
+    "Format": "dxt1",
+    "UserName": "Face",
+    "Type": "Ordinary",
+    "AddrType": "Clamp",
+    "StorageType": "Ordinary"
+  },
+  "actual_Material": {
+    "ID": 1897,
+    "TextureID": 3085,
+    "BRDFID": 0,
+    "BumpID": 0,
+    "SpecColor": 0,
+    "TemplateID": 1271,
+    "GlossID": 0,
+    "MirrorID": 0,
+    "CastShadow": 1,
+    "SpecFactor": 0.0,
+    "RndWeight": 1.0,
+    "MetalMirror": 0.0,
+    "DielMirror": 0.0,
+    "Alpha": "opaque",
+    "AddressMode": "Clamp",
+    "Flags": ""
+  },
+  "actual_Template": {
+    "ID": 1271,
+    "UserName": "Face"
+  },
+  "typed_consumers": [
+    {
+      "material": {
+        "table": "Materials",
+        "id": 1897,
+        "canonical_record_SHA256": "fa86720ee5463e47894a738f4bb968f049a5e238ca94336dcff84e6631d26738"
+      },
+      "material_template": {
+        "table": "MaterialTemplates",
+        "id": 1271,
+        "canonical_record_SHA256": "abbfa163ce94841c8abd1213c73e62b197fdf73d5d1e8c2cf8d142bec23ecbd7"
+      },
+      "Alpha": "opaque",
+      "AddressMode": "Clamp",
+      "Models": [],
+      "Races": [],
+      "Heads": []
+    }
+  ],
+  "Models_Races_Heads_bindings_in_individual_source_audit": {
+    "Models": [],
+    "Races": [],
+    "Heads": []
+  },
+  "limitations": "Source-audit binding lists empty; this does not establish global absence of runtime consumers. Material opaque, no zero-alpha discard argument. No mesh screenshot or direct runtime visual claim.",
+  "source_audit_ref": {
+    "path": "assets/terrain-hd/expanded/source-check-clothing-complete-20261008.json",
+    "SHA256": "cdbdc39882302b81d2688d06d64253afca97706f711b3c24ac1d0edfc9751572"
+  },
+  "actual_db_ref": {
+    "path": "assets/terrain-hd/expanded/actual-records-clothing-complete-20261008.json",
+    "SHA256": "afd3a148ff1c836c13314660b66d9e28c81e388df2563505928d7e408fc67581"
+  },
+  "new_imagegen_calls": 0,
+  "coordinator_confirmation_required": true
+}

@@ -1,0 +1,92 @@
+{
+  "id": 6137,
+  "status": "original-source-unavailable",
+  "source_audit": {
+    "path": "assets/terrain-hd/expanded/source-check-clothing-complete-20261008.json",
+    "SHA256": "cdbdc39882302b81d2688d06d64253afca97706f711b3c24ac1d0edfc9751572"
+  },
+  "actual_typed_audit": {
+    "id": 6137,
+    "source_queue_status": "missing-historical",
+    "original_available": false,
+    "prior_history": {
+      "raws": [],
+      "calls": [],
+      "prompts": [],
+      "reviews": []
+    },
+    "actual_Texture_ref": {
+      "table": "Textures",
+      "id": 6137,
+      "canonical_record_SHA256": "8d2703c7bad2f54d813c873061d0f3dd31bf33a8a98147bb75e8ddffef257b76"
+    },
+    "shared_queue_record": {
+      "id": 6137,
+      "texture": {
+        "ID": 6137,
+        "Width": 256,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -14016238,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\CivilMale\\CivilMale#1\\Legs.tga",
+        "Format": "dxt1",
+        "UserName": "Legs",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "missing-historical",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4130,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2527,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6295,
+                "field": "Material2",
+                "material_template_id": 2527,
+                "geometry_id": 2500,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+                "model_template_id": 4040,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 7766,
+                "field": "Material2",
+                "material_template_id": 2527,
+                "geometry_id": 4269,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+                "model_template_id": 4665,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "reason": "Historical MMP file unavailable"
+    },
+    "initial_status": "unavailable-source",
+    "reason": "Historical MMP file unavailable"
+  },
+  "new_generation_calls": 0,
+  "reason": "Individual historical/release source resource unavailable in audited inventory; no usable original RGB/A canvas to preserve."
+}
