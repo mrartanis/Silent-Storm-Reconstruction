@@ -1,0 +1,21 @@
+{
+  "batch": "ui-sixty-third",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 561,
+      "last_line": 587,
+      "source_excerpt": "561: \t\tfloat fSolidPart = pGeometry->pAIGeometry->fSolidPart;\n562: \t\treturn ( fVolume * fSolidPart ) * nArmorVP;\n563: \t}\n564: \telse\n565: \t\treturn 1;\n566: }\n567: ////////////////////////////////////////////////////////////////////////////////////////////////////\n568: // CRndModel\n569: ////////////////////////////////////////////////////////////////////////////////////////////////////\n570: void CRndModel::Import()\n571: {\n572: \tASSERT( 4 == N_MODEL_MATERIALS );\n573: \tNDatabase::ImportField( \"Material0\", &pMaterials[0] );\n574: \tNDatabase::ImportField( \"Material1\", &pMaterials[1] );\n575: \tNDatabase::ImportField( \"Material2\", &pMaterials[2] );\n576: \tNDatabase::ImportField( \"Material3\", &pMaterials[3] );\n577: \tNDatabase::ImportField( \"GeometryID\", &pGeometry );\n578: \tNDatabase::ImportField( \"SkeletonID\", &pSkeleton );\n579: \tNDatabase::ImportField( \"TemplateID\", &pTemplate );\n580: \tNDatabase::ImportField( \"RPGArmorID\", &pRPGArmor );\n581: \tstring szFlags;\n582: \tNDatabase::ImportField( \"Flags\", &szFlags );\n583: \tUnpackVariantFlags( szFlags, &flags );\n584: \t//\n585: \tif ( IsValid( pTemplate ) )\n586: \t{\n587: \t\tpTemplate->variants.push_back( this );",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 998,
+      "last_line": 1023,
+      "source_excerpt": "998: \treturn 0;\n999: }\n1000: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1001: // CMaterial\n1002: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1003: void CMaterial::Import()\n1004: {\n1005: \tstring szAlpha, szAddrMode;\n1006: \tNDatabase::ImportField( \"BRDFID\", &pBRDF );\n1007: \tNDatabase::ImportField( \"TextureID\", &pTexture );\n1008: \tNDatabase::ImportField( \"BumpID\", &pBump );\n1009: \tNDatabase::ImportField( \"GlossID\", &pGloss );\n1010: \tNDatabase::ImportField( \"MirrorID\", &pMirror );\n1011: \tNDatabase::ImportField( \"SpecFactor\", &fSpecFactor );\n1012: \tint dwColor;\n1013: \tNDatabase::ImportField( \"SpecColor\", &dwColor );\n1014: \tvSpecColor = GetColor( dwColor );\n1015: \t\n1016: \tNDatabase::ImportField( \"Alpha\", &szAlpha );\n1017: \tif ( szAlpha == \"opaque\" )\n1018: \t\talpha = A_OPAQUE;\n1019: \telse if ( szAlpha == \"alpha_test\" )\n1020: \t\talpha = A_ALPHA_TEST;\n1021: \telse if ( szAlpha == \"transparent\" )\n1022: \t\talpha = A_TRANSPARENT;\n1023: \telse if ( szAlpha == \"transparent_2sided\" )",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    }
+  ],
+  "qualification": "Actual material/model import plus fresh actualModels/ContainerModels/Objects records. No worker liveScene/GPU or new original-purpose technical classification."
+}

@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2480,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 632839190,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 572044634,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 735288646,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 59.96194683844337,
+  "frame_ms_mean": 16.591606666666667,
+  "frame_ms_p95": 16.8433,
+  "normal_exit_code": 0,
+  "process_id": 32904,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2480-on",
+      "sha256": "ba6a7436f00503cc34f9eada09db51ab9273240f90d4391e0480f97becd99345"
+    },
+    {
+      "name": "hd2480-options",
+      "sha256": "48a037ede13f596d12bd699b0311ace4322e007922ba9d8fb9f83983fe80e4f5"
+    },
+    {
+      "name": "hd2480-off",
+      "sha256": "8a3c8e87923932def2ebff5e6a9df8b1b403f6d91c0289647b7af5b7d0fa2bdc"
+    },
+    {
+      "name": "hd2480-restored",
+      "sha256": "a320db6013f37abb6f782f5b58d0b7849b5e01611e12e9f8e10ec75ec61d50d4"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "current_120frame_fps": 59.96194683844337,
+    "current_frame_ms_p95": 16.8433,
+    "performance_acceptance_claim": false,
+    "limitation": "SingleHD120frame measured. Historical41independentoriginal+HDslow/42–45slow and46–48near60 kept. Causeoftransitionunestablished/no source-driver-systemchangesbyroot/no causalfix/generalperformanceacceptanceclaim."
+  }
+}

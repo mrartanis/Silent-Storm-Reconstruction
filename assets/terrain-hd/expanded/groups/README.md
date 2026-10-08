@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 512 of these verified originals are accepted in the shared
+As of 2026-10-08, 518 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-eighth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-ninth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,215 IDs: clothing 191, equipment 110, weapons
-54, heads 155, UI 578, effects 103, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,209 IDs: clothing 191, equipment 110, weapons
+50, heads 155, UI 576, effects 103, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -789,3 +789,27 @@ no oldmanifest/childfreeze refresh; CustomUI57/58/59 allfilesverified. Menu11/0/
 causeoftransitionunestablished/no source-driver-systemchangesbyroot/no causalfix/generalperformanceacceptanceclaim.
 Proofs:../new-groups-forty-eighth-{batch,live,runtime}-check.json andcoordinator-original-only-forty-eighth.json.
 OrdinaryGitPNG/RESbuiltwithGame;1,215verifiedoriginalsremain.
+
+Forty-ninth accepted packet:1932/1939/1940/1951 weaponUV,4729 darkplatformUV and6543grayicon,
+six separatebuiltin calls. Pack2,480textures/4,960aliases/130archives/7,850,737,210bytes;
+prior2,474sourceobjects/PNG/nativehashes immutable; sixactualnativeRGBA equalprivate4xpredictions.
+OrdinaryfullsourceA0..255weapons/A255UI/straightRGB/scalar/defaultpad0. Fourwhole4:1weapons->NEAREST3:1guide
+exactinverseRGB->ENTIRErawinverse4:1/no crop/pad/fit/register/artistRGB. Oldbrown-graypaint/weakmarks/nativecounts
+keptmaterial/sourceblur/paintscale withcleareroldoutlines/localpalette-lightstrength/weakphase caveats.
+1932two dimopaque pixels becameblack;1951two dimpixels lostRGB; wholeartreview notautomaticthresholdacceptance.
+1939THREEoldstrokes/1940olddarklines+THREElightmarks clearer, brightnessmaxima notgeometry/components.
+No newhardware/glyphs/photo fibers/abrasive machining.4729ONEslanted oldgrain-paintedpanel/topstrip/leftring/lowergrayfields
+keptmattematerial; existinggrain/frameedgesmoredefined/localmottlechanging.6543FOURnotchedarms/EIGHTtips/FOURdiagonalbars/
+oldtriangularlines/lowerdarkwash retained, cleareroldedges/softnotchphase disclosed. WholeoriginalRGB/NN/A/raw/pure/native
+privatelyviewed; GPU18wholeonoffon/full,middle,reverse,clippedUV/placement/density4vs1/pending0.
+FreshactualDBMaterials/Templates/Models proveconsumers; genericGPU notactiveweapon/MainMenu/modelappearance.
+No newFaceGenbake/source6SHA25/current707EXE+fixtureexact. Twelvefrozenreviews/eightworkerholds immutable,
+no rootwholeallheldviewclaim. Source-onlypurpose recommendations andunavailable4620/7189 originalfallback individuallyrootpending;
+no originaldispositions thisportion/no blanketalpha-type-name-familyban. Bothactualerrors savedwithhonestcapturelimitations,
+no raw/retry/bypass. Allsix alreadycanonical actualarg+ONE LF/knownLF0/raw-call-ref-BEFORE-SHA-frozen unchanged.
+CustomUI60–64/sevenflatmanifests verified; oversizedJSON losslessportable-large-proof-forty-ninth.json/
+verify_portable_large_forty_ninth.py --restore forabsentoriginalsonly. PNGordinaryGit/RESbuiltwithGame.
+Menu11/0/11/pending0/fourwholeprivateframes/120HDframes:59.96FPS/p9516.84ms/
+normalquit/ownGameabsent. Prior41independentoriginal+HDslow/42–45slow and46–48near60 retained/causeunestablished/
+no source-driver-systemchangesbyroot/no causalfix/generalperformanceacceptanceclaim.
+Proofs:../new-groups-forty-ninth-{batch,live,runtime}-check.json;1,209verifiedoriginalsremain.

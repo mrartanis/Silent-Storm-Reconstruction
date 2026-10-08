@@ -1,0 +1,56 @@
+{
+  "batch": "ui-sixty-second",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 561,
+      "last_line": 587,
+      "source_excerpt": "561: \t\tfloat fSolidPart = pGeometry->pAIGeometry->fSolidPart;\n562: \t\treturn ( fVolume * fSolidPart ) * nArmorVP;\n563: \t}\n564: \telse\n565: \t\treturn 1;\n566: }\n567: ////////////////////////////////////////////////////////////////////////////////////////////////////\n568: // CRndModel\n569: ////////////////////////////////////////////////////////////////////////////////////////////////////\n570: void CRndModel::Import()\n571: {\n572: \tASSERT( 4 == N_MODEL_MATERIALS );\n573: \tNDatabase::ImportField( \"Material0\", &pMaterials[0] );\n574: \tNDatabase::ImportField( \"Material1\", &pMaterials[1] );\n575: \tNDatabase::ImportField( \"Material2\", &pMaterials[2] );\n576: \tNDatabase::ImportField( \"Material3\", &pMaterials[3] );\n577: \tNDatabase::ImportField( \"GeometryID\", &pGeometry );\n578: \tNDatabase::ImportField( \"SkeletonID\", &pSkeleton );\n579: \tNDatabase::ImportField( \"TemplateID\", &pTemplate );\n580: \tNDatabase::ImportField( \"RPGArmorID\", &pRPGArmor );\n581: \tstring szFlags;\n582: \tNDatabase::ImportField( \"Flags\", &szFlags );\n583: \tUnpackVariantFlags( szFlags, &flags );\n584: \t//\n585: \tif ( IsValid( pTemplate ) )\n586: \t{\n587: \t\tpTemplate->variants.push_back( this );",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 998,
+      "last_line": 1023,
+      "source_excerpt": "998: \treturn 0;\n999: }\n1000: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1001: // CMaterial\n1002: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1003: void CMaterial::Import()\n1004: {\n1005: \tstring szAlpha, szAddrMode;\n1006: \tNDatabase::ImportField( \"BRDFID\", &pBRDF );\n1007: \tNDatabase::ImportField( \"TextureID\", &pTexture );\n1008: \tNDatabase::ImportField( \"BumpID\", &pBump );\n1009: \tNDatabase::ImportField( \"GlossID\", &pGloss );\n1010: \tNDatabase::ImportField( \"MirrorID\", &pMirror );\n1011: \tNDatabase::ImportField( \"SpecFactor\", &fSpecFactor );\n1012: \tint dwColor;\n1013: \tNDatabase::ImportField( \"SpecColor\", &dwColor );\n1014: \tvSpecColor = GetColor( dwColor );\n1015: \t\n1016: \tNDatabase::ImportField( \"Alpha\", &szAlpha );\n1017: \tif ( szAlpha == \"opaque\" )\n1018: \t\talpha = A_OPAQUE;\n1019: \telse if ( szAlpha == \"alpha_test\" )\n1020: \t\talpha = A_ALPHA_TEST;\n1021: \telse if ( szAlpha == \"transparent\" )\n1022: \t\talpha = A_TRANSPARENT;\n1023: \telse if ( szAlpha == \"transparent_2sided\" )",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "Main/UIInterface.cpp",
+      "first_line": 209,
+      "last_line": 211,
+      "source_excerpt": "209: \t\t\tcase NDb::UI_IMAGE:\n210: \t\t\t\tpWindow = new CImage( sInfo );\n211: \t\t\t\tbreak;",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4"
+    },
+    {
+      "file": "Main/UIBaseCtrls.cpp",
+      "first_line": 230,
+      "last_line": 250,
+      "source_excerpt": "230: bool CImage::ProcessMessage( const SEvent &sEvent )\n231: {\n232: \tif ( sEvent.nEvent == EVENT_TEMPLATECREATE )\n233: \t{\n234: \t\tNGfx::SPixel8888 sColor;\n235: \t\tsColor.color = sEvent.pControl->nColor;\n236: \t\tSetColor( sColor );\n237: \t\tSetImage( sEvent.pControl->pTextures[0] );\n238: \t}\n239: \n240: \treturn CWindow::ProcessMessage( sEvent );\n241: }\n242: ////////////////////////////////////////////////////////////////////////////////////////////////////\n243: void CImage::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n244: {\n245: \tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y ) );\n246: \tpImage->Draw( this, sTime, pView );\n247: \n248: \tCWindow::Draw( sTime, pView );\n249: }\n250: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+      "sha256": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 163,
+      "last_line": 177,
+      "source_excerpt": "163: {\n164: \tswitch( sEvent.nEvent )\n165: \t{\n166: \tcase EVENT_TEMPLATELOAD:\n167: \t\t{\n168: \t\t\tpTextNormal = new CText( sEvent.pLoader->GetControl( \"text_normal\" ) );\n169: \t\t\tpTextHilighted = new CText( sEvent.pLoader->GetControl( \"text_hilighted\" ) );\n170: \n171: \t\t\tbreak;\n172: \t\t}\n173: \tcase EVENT_TEMPLATELOADCOMPLETE:\n174: \t\t{\n175: \t\t\tpZoneNormal = GetUIWindow<CImage>( this, \"zone_normal\" );\n176: \t\t\tpZoneDisabled = GetUIWindow<CImage>( this, \"zone_disabled\" );\n177: ",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 205,
+      "last_line": 209,
+      "source_excerpt": "205: \tpZoneNormal->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );\n206: \tpZoneDisabled->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );\n207: \n208: \tpZoneNormal->SetStyle( STYLE_VISIBLE, !pGlobal->IsGlobalMapShowMode() );\n209: \tpZoneDisabled->SetStyle( STYLE_VISIBLE, pGlobal->IsGlobalMapShowMode() );",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 267,
+      "last_line": 281,
+      "source_excerpt": "267: \t\t\t{\n268: \t\t\t\tSGlobalSector &sGlobalSector = pInfo->sectorsSet[nTemp];\n269: \t\t\t\tif ( sGlobalSector.pointsSet.empty() )\n270: \t\t\t\t\tcontinue;\n271: \n272: \t\t\t\tbool bVisible = false, bRecommended = false;\n273: \t\t\t\tGetGlobalSectorInfo( sGlobalSector, &bVisible, &bRecommended );\n274: \t\t\t\tif ( bVisible )\n275: \t\t\t\t{\n276: \t\t\t\t\tSPoint sPosition;\n277: \t\t\t\t\tScreenToClient( SPoint( sGlobalSector.vImagePos.x, sGlobalSector.vImagePos.y ), &sPosition );\n278: \t\t\t\t\tCGlobalSector* pSector = new CZoneGlobalSector( SWindowInfo( this, sPosition, SPoint( 0, 0 ), \"\", STYLE_ENABLED | STYLE_VISIBLE | STYLE_TOPMOST | STYLE_TRANSPARENT ), pGlobal, sGlobalSector, bRecommended );\n279: \t\t\t\t\tLoadTemplate( pSector, NDb::GetUIContainer( sGlobalSector.nImageID ) );\n280: \n281: \t\t\t\t\tsectorsSet.push_back( pSector );",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    }
+  ],
+  "qualification": "Real typed models/material import and real CImage/zone_normal runtime behavior. Source3815 geographic-overlay control purpose proven; no current Game rendering exercised by worker."
+}

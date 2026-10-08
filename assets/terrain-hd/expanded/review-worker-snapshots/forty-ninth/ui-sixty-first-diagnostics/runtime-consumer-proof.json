@@ -1,0 +1,42 @@
+{
+  "batch": "ui-sixty-first",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 561,
+      "last_line": 587,
+      "source_excerpt": "561: \t\tfloat fSolidPart = pGeometry->pAIGeometry->fSolidPart;\n562: \t\treturn ( fVolume * fSolidPart ) * nArmorVP;\n563: \t}\n564: \telse\n565: \t\treturn 1;\n566: }\n567: ////////////////////////////////////////////////////////////////////////////////////////////////////\n568: // CRndModel\n569: ////////////////////////////////////////////////////////////////////////////////////////////////////\n570: void CRndModel::Import()\n571: {\n572: \tASSERT( 4 == N_MODEL_MATERIALS );\n573: \tNDatabase::ImportField( \"Material0\", &pMaterials[0] );\n574: \tNDatabase::ImportField( \"Material1\", &pMaterials[1] );\n575: \tNDatabase::ImportField( \"Material2\", &pMaterials[2] );\n576: \tNDatabase::ImportField( \"Material3\", &pMaterials[3] );\n577: \tNDatabase::ImportField( \"GeometryID\", &pGeometry );\n578: \tNDatabase::ImportField( \"SkeletonID\", &pSkeleton );\n579: \tNDatabase::ImportField( \"TemplateID\", &pTemplate );\n580: \tNDatabase::ImportField( \"RPGArmorID\", &pRPGArmor );\n581: \tstring szFlags;\n582: \tNDatabase::ImportField( \"Flags\", &szFlags );\n583: \tUnpackVariantFlags( szFlags, &flags );\n584: \t//\n585: \tif ( IsValid( pTemplate ) )\n586: \t{\n587: \t\tpTemplate->variants.push_back( this );",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 998,
+      "last_line": 1017,
+      "source_excerpt": "998: \treturn 0;\n999: }\n1000: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1001: // CMaterial\n1002: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1003: void CMaterial::Import()\n1004: {\n1005: \tstring szAlpha, szAddrMode;\n1006: \tNDatabase::ImportField( \"BRDFID\", &pBRDF );\n1007: \tNDatabase::ImportField( \"TextureID\", &pTexture );\n1008: \tNDatabase::ImportField( \"BumpID\", &pBump );\n1009: \tNDatabase::ImportField( \"GlossID\", &pGloss );\n1010: \tNDatabase::ImportField( \"MirrorID\", &pMirror );\n1011: \tNDatabase::ImportField( \"SpecFactor\", &fSpecFactor );\n1012: \tint dwColor;\n1013: \tNDatabase::ImportField( \"SpecColor\", &dwColor );\n1014: \tvSpecColor = GetColor( dwColor );\n1015: \t\n1016: \tNDatabase::ImportField( \"Alpha\", &szAlpha );\n1017: \tif ( szAlpha == \"opaque\" )",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "Main/iMainMenu.cpp",
+      "first_line": 38,
+      "last_line": 43,
+      "source_excerpt": "38: const int\n39: \tN_MAINMENU_CAMERA = 26,\n40: \tN_MAINMENU_TEMPLATE = 2425,\n41: \tN_MAINMENU_SCRIPT = 85,\t\t\t// game.db \"MainMenu\" script: PlayMenuMan animates the background \"Man\"\n42: \tN_LOGO_FLASHTIME = 2000,\n43: \tN_TUTORIAL_HERO = 730,\t\t\t// release @0x1f7540: the tutorial global player's single pers id (0x2da)",
+      "sha256": "43477c2dbdb808a7a2ea7bf772cd850516100ed02776cc78794feb0073853f37"
+    },
+    {
+      "file": "Main/iMainMenu.cpp",
+      "first_line": 209,
+      "last_line": 220,
+      "source_excerpt": "209: void CMainMenuInterface::Initialize()\n210: {\n211: \tS2Net::StartupLog(\"main-menu-world-begin\");\n212: \tCRenderBaseInterface::Initialize( N_MAINMENU_TEMPLATE );\n213: \tS2Net::StartupLog(\"main-menu-world-ready\");\n214: \n215: \tCPtr<NDb::CDBCamera> pDBCamera = NDb::GetDBCamera( N_MAINMENU_CAMERA );\n216: \tICamera::SCameraPos sCameraPos( pDBCamera->vAnchor, pDBCamera->fDistance, pDBCamera->fPitch, pDBCamera->fYaw, pDBCamera->fRoll, pDBCamera->fFOV );\n217: \tGetCamera()->SetPlacement( sCameraPos );\n218: \n219: \tpMainMenuUI = new NUI::CMainMenuUI( NUI::SWindowInfo( GetInterface(), NUI::SPoint( 0, 0 ), NUI::SPoint( 1024, 768 ), \"mainmenuUI\" ) );\n220: \tNUI::LoadTemplate( pMainMenuUI, NDb::GetUIContainer( 347 ) );",
+      "sha256": "43477c2dbdb808a7a2ea7bf772cd850516100ed02776cc78794feb0073853f37"
+    },
+    {
+      "file": "Main/iRenderWorld.cpp",
+      "first_line": 36,
+      "last_line": 61,
+      "source_excerpt": "36: void CRenderBaseInterface::Initialize( int nTemplateID )\n37: {\n38: \tSRandomSeed sSeed;\n39: \tconst vector<string> params;\n40: \tCObj<NWorld::CPostWorldCreateInfo> pPostInfo;\n41: \tlist< CPtr<NScenario::CScenarioClue> > clues;\n42: \n43: \tint nVariantID = -1;\n44: \tCPtr<NDb::CTemplate> pTemplate = NDb::GetTemplate( nTemplateID );\n45: \tif ( IsValid( pTemplate ) )\n46: \t{\n47: \t\tSRand sRand( sSeed );\n48: \t\tvector<int> dummyTemp;\n49: \t\tnVariantID = NDb::GetTemplVariant( pTemplate, dummyTemp, -1, &sRand )->GetRecordID();\n50: \t}\n51: \n52: \tpWorld = NWorld::CreateWorld( NRPG::CreateGlobalGame() );\n53: \tpWorld->CreateRandom( nVariantID, params, false, clues, 0, &pPostInfo, sSeed, true );\n54: \n55: \tpCommander = new NWorld::CCommander;\n56: \tpPlayer = pWorld->AddPlayer( L\"Goga mega player\", NRPG::CreateGlobalPlayer(), pCommander );\n57: \n58: \t// retail semantics: ambient is a MusicTemplates POOL (default GetTMusic(1), variant override),\n59: \t// the track is a roulette pick from it -- see CMission::Initialize for the mainline version.\n60: \tNDb::CTMusic *pAmbientPool = NDb::GetTMusic( 1 );\n61: \tCPtr<NDb::CTemplVariant> pVar = NDb::GetTemplVariant( nVariantID );",
+      "sha256": "da0a21a2d1bf0bb20fc3f0d30b073b9b3e8e3d6067e7468d96c517534168f25a"
+    }
+  ],
+  "qualification": "Fresh actual Material→Template→Model chain proven. Generic import/runtime excerpts and main-menu world2425 shown; an exact instance visible in current Game is not asserted or exercised by worker."
+}

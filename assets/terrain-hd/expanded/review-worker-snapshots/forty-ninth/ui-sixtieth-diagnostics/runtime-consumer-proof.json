@@ -1,0 +1,98 @@
+{
+  "batch": "ui-sixtieth",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "Main/UIInterface.cpp",
+      "first_line": 209,
+      "last_line": 211,
+      "source_excerpt": "209: \t\t\tcase NDb::UI_IMAGE:\n210: \t\t\t\tpWindow = new CImage( sInfo );\n211: \t\t\t\tbreak;",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4"
+    },
+    {
+      "file": "Main/UIBaseCtrls.cpp",
+      "first_line": 230,
+      "last_line": 250,
+      "source_excerpt": "230: bool CImage::ProcessMessage( const SEvent &sEvent )\n231: {\n232: \tif ( sEvent.nEvent == EVENT_TEMPLATECREATE )\n233: \t{\n234: \t\tNGfx::SPixel8888 sColor;\n235: \t\tsColor.color = sEvent.pControl->nColor;\n236: \t\tSetColor( sColor );\n237: \t\tSetImage( sEvent.pControl->pTextures[0] );\n238: \t}\n239: \n240: \treturn CWindow::ProcessMessage( sEvent );\n241: }\n242: ////////////////////////////////////////////////////////////////////////////////////////////////////\n243: void CImage::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n244: {\n245: \tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y ) );\n246: \tpImage->Draw( this, sTime, pView );\n247: \n248: \tCWindow::Draw( sTime, pView );\n249: }\n250: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+      "sha256": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd"
+    },
+    {
+      "file": "Main/iTopPanel.cpp",
+      "first_line": 119,
+      "last_line": 135,
+      "source_excerpt": "119: \t\t{\n120: \t\t\tpAllyTurn = new CAITurnProgressBar( sEvent.pLoader->GetControl( \"allyturn\" ), pMission, true );\n121: \t\t\tpEnemyTurn = new CAITurnProgressBar( sEvent.pLoader->GetControl( \"enemyturn\" ), pMission, false );\n122: \t\t\tbreak;\n123: \t\t}\n124: \tcase EVENT_TEMPLATELOADCOMPLETE:\n125: \t\t{\n126: \t\t\t// NOTE: retail has no \"minimap\" control here (confirmed absent from both retail iTopPanel.c\n127: \t\t\t// and the release gamedata); the old minimap fetch only emitted a UI-ERROR + dummy control.\n128: \t\t\tpEndMission = GetUIWindow<CButton>( this, \"endmission\" );\n129: \t\t\tpEndMission->AddImageState( EENDMISSTATE_OK, NDb::GetUITexture( 602 ) );\n130: \t\t\tpEndMission->AddImageState( EENDMISSTATE_WARNING, NDb::GetUITexture( 601 ) );\n131: \t\t\tpEndMission->AddImageState( EENDMISSTATE_UNAVAILABLE, NDb::GetUITexture( 600 ) );\n132: \n133: \t\t\tpText = GetUIWindow<CText>( this, \"text\" );\n134: \t\t\tpFlash = GetUIWindow<CWindow>( this, \"flash\" );\n135: \t\t\tpPlayerTurn = GetUIWindow<CWindow>( this, \"playerturn\" );",
+      "sha256": "128e21f6febff4a20f707b85af60537523f02a2eaccb9f3e1087f8ba4c9fdf55"
+    },
+    {
+      "file": "Main/iTopPanel.cpp",
+      "first_line": 232,
+      "last_line": 247,
+      "source_excerpt": "232: \n233: \t// retail @0x24d010: reset all turn indicators, then light the one matching the current mode.\n234: \tpFlash->SetStyle( STYLE_VISIBLE, false );\n235: \tpAllyTurn->SetStyle( STYLE_VISIBLE, false );\n236: \tpEnemyTurn->SetStyle( STYLE_VISIBLE, false );\n237: \tpPlayerTurn->SetStyle( STYLE_VISIBLE, false );\n238: \n239: \tif ( pMission->GetWorld()->IsInterrupt() && ( ( sTime - sModeTime ) < N_FLASH_TIME ) )\n240: \t\tpFlash->SetStyle( STYLE_VISIBLE, true );\n241: \telse if ( ( eMode == REALTIME ) || ( eMode == PLAYER_TURN ) )\n242: \t\tpPlayerTurn->SetStyle( STYLE_VISIBLE, true );\n243: \telse if ( eMode == ALLY_TURN )\n244: \t\tpAllyTurn->SetStyle( STYLE_VISIBLE, true );\n245: \telse if ( eMode == ENEMY_TURN )\n246: \t\tpEnemyTurn->SetStyle( STYLE_VISIBLE, true );\n247: ",
+      "sha256": "128e21f6febff4a20f707b85af60537523f02a2eaccb9f3e1087f8ba4c9fdf55"
+    },
+    {
+      "file": "Main/iMultiPlayerMenu.cpp",
+      "first_line": 54,
+      "last_line": 58,
+      "source_excerpt": "54: ////////////////////////////////////////////////////////////////////////////////////////////////////\n55: // GetUIContainer id for the multiplayer setup screen (release 0x1c1).\n56: const int N_MULTIPLAYER_CONTAINER = 449;\n57: ////////////////////////////////////////////////////////////////////////////////////////////////////\n58: // CPlayerLine -- one row of the multiplayer lobby player list: a name edit, team-manage / weapons",
+      "sha256": "280e4306c04d01a7d97f1ab193f940c9e6137e0fa240f7d6bb81998ee6a2394f"
+    },
+    {
+      "file": "Main/iMultiPlayerMenu.cpp",
+      "first_line": 252,
+      "last_line": 266,
+      "source_excerpt": "252: \t\t\t// one CPlayerLine row per lobby player slot (release enumerates the mission's players).\n253: \t\t\tplayerLines.clear();\n254: \t\t\tif ( IsValid( pGame ) )\n255: \t\t\t{\n256: \t\t\t\tfor ( int i = 0; i < pGame->players.size(); i++ )\n257: \t\t\t\t{\n258: \t\t\t\t\tchar szID[16] = \"player0\";\n259: \t\t\t\t\tszID[6] = (char)( '0' + i );           // four slots -> single digit\n260: \t\t\t\t\tWCHAR wsName[64];\n261: \t\t\t\t\tswprintf( wsName, sizeof(wsName) / sizeof(wsName[0]), L\"Player #%d\", i + 1 );\n262: \t\t\t\t\tCObj<CPlayerLine> pLine = new CPlayerLine( sEvent.pLoader->GetControl( szID ), wsName, pGame->players[i] );\n263: \t\t\t\t\tplayerLines.push_back( pLine );\n264: \t\t\t\t}\n265: \t\t\t}\n266: \t\t\tbreak;",
+      "sha256": "280e4306c04d01a7d97f1ab193f940c9e6137e0fa240f7d6bb81998ee6a2394f"
+    },
+    {
+      "file": "Main/iMultiPlayerMenu.cpp",
+      "first_line": 373,
+      "last_line": 380,
+      "source_excerpt": "373: \tpGlobalGame = NRPG::CreateGlobalGame();\n374: \tfor ( int i = 0; i < 4; i++ )\n375: \t\tpGlobalGame->players.push_back( NRPG::CreateGlobalPlayer() );\n376: \n377: \tpMenuUI = new NUI::CMultiPlayerUI( NUI::SWindowInfo( pInterface, NUI::SPoint( 0, 0 ), NUI::SPoint( 1024, 768 ), \"multiPlayerUI\", NUI::STYLE_ENABLED ), pGlobalGame );\n378: \tNUI::LoadTemplate( pMenuUI, NDb::GetUIContainer( NUI::N_MULTIPLAYER_CONTAINER ) );\n379: \tpMenuUI->ShowWindow( NUI::SWTYPE_SHOW );\n380: }",
+      "sha256": "280e4306c04d01a7d97f1ab193f940c9e6137e0fa240f7d6bb81998ee6a2394f"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 163,
+      "last_line": 177,
+      "source_excerpt": "163: {\n164: \tswitch( sEvent.nEvent )\n165: \t{\n166: \tcase EVENT_TEMPLATELOAD:\n167: \t\t{\n168: \t\t\tpTextNormal = new CText( sEvent.pLoader->GetControl( \"text_normal\" ) );\n169: \t\t\tpTextHilighted = new CText( sEvent.pLoader->GetControl( \"text_hilighted\" ) );\n170: \n171: \t\t\tbreak;\n172: \t\t}\n173: \tcase EVENT_TEMPLATELOADCOMPLETE:\n174: \t\t{\n175: \t\t\tpZoneNormal = GetUIWindow<CImage>( this, \"zone_normal\" );\n176: \t\t\tpZoneDisabled = GetUIWindow<CImage>( this, \"zone_disabled\" );\n177: ",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 205,
+      "last_line": 209,
+      "source_excerpt": "205: \tpZoneNormal->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );\n206: \tpZoneDisabled->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );\n207: \n208: \tpZoneNormal->SetStyle( STYLE_VISIBLE, !pGlobal->IsGlobalMapShowMode() );\n209: \tpZoneDisabled->SetStyle( STYLE_VISIBLE, pGlobal->IsGlobalMapShowMode() );",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    },
+    {
+      "file": "Main/iGlobalMapUI.cpp",
+      "first_line": 267,
+      "last_line": 281,
+      "source_excerpt": "267: \t\t\t{\n268: \t\t\t\tSGlobalSector &sGlobalSector = pInfo->sectorsSet[nTemp];\n269: \t\t\t\tif ( sGlobalSector.pointsSet.empty() )\n270: \t\t\t\t\tcontinue;\n271: \n272: \t\t\t\tbool bVisible = false, bRecommended = false;\n273: \t\t\t\tGetGlobalSectorInfo( sGlobalSector, &bVisible, &bRecommended );\n274: \t\t\t\tif ( bVisible )\n275: \t\t\t\t{\n276: \t\t\t\t\tSPoint sPosition;\n277: \t\t\t\t\tScreenToClient( SPoint( sGlobalSector.vImagePos.x, sGlobalSector.vImagePos.y ), &sPosition );\n278: \t\t\t\t\tCGlobalSector* pSector = new CZoneGlobalSector( SWindowInfo( this, sPosition, SPoint( 0, 0 ), \"\", STYLE_ENABLED | STYLE_VISIBLE | STYLE_TOPMOST | STYLE_TRANSPARENT ), pGlobal, sGlobalSector, bRecommended );\n279: \t\t\t\t\tLoadTemplate( pSector, NDb::GetUIContainer( sGlobalSector.nImageID ) );\n280: \n281: \t\t\t\t\tsectorsSet.push_back( pSector );",
+      "sha256": "121a5d9f3795016c32f9abfbddda9830ea0de8baf6c3f9447b3e9c6e91f765da"
+    },
+    {
+      "file": "Main/iShowObjectives.cpp",
+      "first_line": 222,
+      "last_line": 224,
+      "source_excerpt": "222: \t\t\tpType            = GetUIWindow<CImage>( this, \"type\" );\n223: \t\t\tpState           = GetUIWindow<CImage>( this, \"state\" );\n224: \t\t\tpBackgroundImage = GetUIWindow<CImage>( this, \"background\" );",
+      "sha256": "4ab7d97ea5b43933fff757f415de8478b11e167c91f5b2a2c8495dd672867099"
+    },
+    {
+      "file": "Main/iShowObjectives.cpp",
+      "first_line": 312,
+      "last_line": 313,
+      "source_excerpt": "312: \t\t\tpState           = GetUIWindow<CImage>( this, \"state\" );\n313: \t\t\tpBackgroundImage = GetUIWindow<CImage>( this, \"background\" );",
+      "sha256": "4ab7d97ea5b43933fff757f415de8478b11e167c91f5b2a2c8495dd672867099"
+    },
+    {
+      "file": "Main/iShowObjectives.cpp",
+      "first_line": 406,
+      "last_line": 436,
+      "source_excerpt": "406: \t\t\tfor ( vector< NScenario::SGoalDescription >::const_iterator iGoal = goals.begin(); iGoal != goals.end(); ++iGoal )\n407: \t\t\t{\n408: \t\t\t\t// Retail v1.2 0x61fe41..0x61fea2 measures at 489 virtual pixels wide;\n409: \t\t\t\t// text taller than 20 pixels uses the double-line frame and background.\n410: \t\t\t\tpTextCalc->SetSize( SPoint( 489, -1 ) );\n411: \t\t\t\tpTextCalc->SetText( IsValid( iGoal->pString ) ? GetDBString( iGoal->pString ) : wstring() );\n412: \t\t\t\tbool bDoubleLine = pTextCalc->GetSize( GetInterface()->GetView() ).y > 20;\n413: \t\t\t\tCClueLine *pClueRow = new CClueLine(\n414: \t\t\t\t\tSWindowInfo( pObjectives, SPoint( 0, 0 ), SPoint( 0, 0 ), \"item\", STYLE_ENABLED | STYLE_VISIBLE ),\n415: \t\t\t\t\tpMission, *iGoal, bDoubleLine );\n416: \t\t\t\tLoadTemplate( pClueRow, NDb::GetUIContainer( bDoubleLine ? 0x1c6 : 0x185 ) );\n417: \t\t\t\tpObjectives->AddItem( nCount++, pClueRow );\n418: \n419: \t\t\t\tint nTask = 1;\n420: \t\t\t\tconst vector< NScenario::STaskDescription > &tasks = iGoal->tasks;\n421: \t\t\t\tfor ( int t = 0; t < tasks.size(); ++t )\n422: \t\t\t\t{\n423: \t\t\t\t\tWCHAR wsNumber[32];\n424: \t\t\t\t\tswprintf( wsNumber, sizeof(wsNumber) / sizeof(wsNumber[0]), L\"%d. \", nTask );\n425: \t\t\t\t\twstring wsText = wsNumber;\n426: \t\t\t\t\tif ( IsValid( tasks[t].pString ) )\n427: \t\t\t\t\t\twsText += GetDBString( tasks[t].pString );\n428: \t\t\t\t\tpTextCalc->SetSize( SPoint( 489, -1 ) );\n429: \t\t\t\t\tpTextCalc->SetText( wsText );\n430: \t\t\t\t\tbDoubleLine = pTextCalc->GetSize( GetInterface()->GetView() ).y > 20;\n431: \t\t\t\t\tCTaskLine *pTaskRow = new CTaskLine(\n432: \t\t\t\t\t\tSWindowInfo( pObjectives, SPoint( 0, 0 ), SPoint( 0, 0 ), \"task\", STYLE_ENABLED | STYLE_VISIBLE ),\n433: \t\t\t\t\t\tpMission, tasks[ t ], nTask++, bDoubleLine );\n434: \t\t\t\t\tLoadTemplate( pTaskRow, NDb::GetUIContainer( bDoubleLine ? 0x1c7 : 0x187 ) );\n435: \t\t\t\t\tpObjectives->AddItem( nCount++, pTaskRow );\n436: \t\t\t\t}",
+      "sha256": "4ab7d97ea5b43933fff757f415de8478b11e167c91f5b2a2c8495dd672867099"
+    }
+  ],
+  "qualification": "Fresh actualUIControl records/nested template chains plus actual code purpose proven. This worker does not run Game/GPU or assert currently visible scene. Purpose recommendations require coordinator final classification; no shared disposition set."
+}

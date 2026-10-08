@@ -1,0 +1,42 @@
+{
+  "batch": "ui-sixty-fourth",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 561,
+      "last_line": 587,
+      "source_excerpt": "561: \t\tfloat fSolidPart = pGeometry->pAIGeometry->fSolidPart;\n562: \t\treturn ( fVolume * fSolidPart ) * nArmorVP;\n563: \t}\n564: \telse\n565: \t\treturn 1;\n566: }\n567: ////////////////////////////////////////////////////////////////////////////////////////////////////\n568: // CRndModel\n569: ////////////////////////////////////////////////////////////////////////////////////////////////////\n570: void CRndModel::Import()\n571: {\n572: \tASSERT( 4 == N_MODEL_MATERIALS );\n573: \tNDatabase::ImportField( \"Material0\", &pMaterials[0] );\n574: \tNDatabase::ImportField( \"Material1\", &pMaterials[1] );\n575: \tNDatabase::ImportField( \"Material2\", &pMaterials[2] );\n576: \tNDatabase::ImportField( \"Material3\", &pMaterials[3] );\n577: \tNDatabase::ImportField( \"GeometryID\", &pGeometry );\n578: \tNDatabase::ImportField( \"SkeletonID\", &pSkeleton );\n579: \tNDatabase::ImportField( \"TemplateID\", &pTemplate );\n580: \tNDatabase::ImportField( \"RPGArmorID\", &pRPGArmor );\n581: \tstring szFlags;\n582: \tNDatabase::ImportField( \"Flags\", &szFlags );\n583: \tUnpackVariantFlags( szFlags, &flags );\n584: \t//\n585: \tif ( IsValid( pTemplate ) )\n586: \t{\n587: \t\tpTemplate->variants.push_back( this );",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 950,
+      "last_line": 966,
+      "source_excerpt": "950: ////////////////////////////////////////////////////////////////////////////////////////////////////\n951: void CTexture::Import()\n952: {\n953: \tNDatabase::ImportField( \"Width\", &nWidth );\n954: \tNDatabase::ImportField( \"Height\", &nHeight );\n955: \tNDatabase::ImportField( \"BumpGain\", &fGain );\n956: \tstring szType;\n957: \tNDatabase::ImportField( \"Type\", &szType );\n958: \tif ( szType == \"2D\" )\n959: \t\tusage = TEXTURE_USAGE_2D;\n960: \telse if ( szType == \"Transparent\" )\n961: \t\tusage = TEXTURE_USAGE_TRANSPARENT;\n962: \telse if ( szType == \"TransparentAdd\" )\n963: \t\tusage = TEXTURE_USAGE_TRANSPARENT;\n964: \telse\n965: \t\tusage = TEXTURE_USAGE_ORDINARY;\n966: \tint nAverageColor = 0;",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "first_line": 998,
+      "last_line": 1023,
+      "source_excerpt": "998: \treturn 0;\n999: }\n1000: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1001: // CMaterial\n1002: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1003: void CMaterial::Import()\n1004: {\n1005: \tstring szAlpha, szAddrMode;\n1006: \tNDatabase::ImportField( \"BRDFID\", &pBRDF );\n1007: \tNDatabase::ImportField( \"TextureID\", &pTexture );\n1008: \tNDatabase::ImportField( \"BumpID\", &pBump );\n1009: \tNDatabase::ImportField( \"GlossID\", &pGloss );\n1010: \tNDatabase::ImportField( \"MirrorID\", &pMirror );\n1011: \tNDatabase::ImportField( \"SpecFactor\", &fSpecFactor );\n1012: \tint dwColor;\n1013: \tNDatabase::ImportField( \"SpecColor\", &dwColor );\n1014: \tvSpecColor = GetColor( dwColor );\n1015: \t\n1016: \tNDatabase::ImportField( \"Alpha\", &szAlpha );\n1017: \tif ( szAlpha == \"opaque\" )\n1018: \t\talpha = A_OPAQUE;\n1019: \telse if ( szAlpha == \"alpha_test\" )\n1020: \t\talpha = A_ALPHA_TEST;\n1021: \telse if ( szAlpha == \"transparent\" )\n1022: \t\talpha = A_TRANSPARENT;\n1023: \telse if ( szAlpha == \"transparent_2sided\" )",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "file": "Main/UnitTracker.cpp",
+      "first_line": 229,
+      "last_line": 249,
+      "source_excerpt": "229: \n230: \t\tSFBTransform sTransform;\n231: \t\tMakeMatrix( &sTransform, 0, 0, 0, vTargetPos + CVec3( 0, 0, 0.1f ) );\n232: \n233: \t\tCPtr<NDb::CModel> pCross = NDb::GetModel( 1578 );\n234: \t\tif ( !pMission->IsRealTime() )\n235: \t\t{\n236: \t\t\tif ( bHilightTarget )\n237: \t\t\t\tpCross = NDb::GetModel( 1559 );\n238: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP ) )\n239: \t\t\t\tpCross = NDb::GetModel( 1634 );\n240: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n241: \t\t\t\tpCross = NDb::GetModel( 1635 );\n242: \t\t}\n243: \n244: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n245: \t\tgroupsSet.push_back( pGroup );\n246: \t\tnodesSet.push_back( pScene->CreateMesh( pCross, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );\n247: \n248: \t\tbPathVisible = true;\n249: \t}",
+      "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+    },
+    {
+      "file": "Main/UnitTracker.cpp",
+      "first_line": 303,
+      "last_line": 357,
+      "source_excerpt": "303: \n304: \tint nValue = nTargetAP;\n305: \tCVec2 vSize( 0, 0 );\n306: \tdo\n307: \t{\n308: \t\tint nDigit = nValue % 10;\n309: \t\tnValue /= 10;\n310: \n311: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n312: \t\tif ( !IsValid( pDigit->pGeometry ) )\n313: \t\t\tcontinue;\n314: \n315: \t\tvSize.x += pDigit->pGeometry->boundSize.x;\n316: \t\tvSize.y = Max( vSize.y, pDigit->pGeometry->boundSize.y );\n317: \t} while( nValue > 0 );\n318: \n319: \tnValue = nTargetAP;\n320: \tCVec2 vShift = vSize / 2;\n321: \tdo\n322: \t{\n323: \t\tint nDigit = nValue % 10;\n324: \t\tnValue /= 10;\n325: \n326: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n327: \t\tif ( !pMission->IsRealTime() )\n328: \t\t{\n329: \t\t\tif ( !pRPG->CanSpendAP( points.back().nAP ) )\n330: \t\t\t\tpDigit = NDb::GetModel( 3454 + nDigit );\n331: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n332: \t\t\t\tpDigit = NDb::GetModel( 3444 + nDigit );\n333: \t\t}\n334: \n335: \t\tif ( !IsValid( pDigit->pGeometry ) )\n336: \t\t\tcontinue;\n337: \n338: \t\tconst CVec3 &vBounds = pDigit->pGeometry->boundSize;\n339: \n340: \t\tSHMatrix sTranslate, sRotate;\n341: \t\tIdentity( &sTranslate );\n342: \t\tsTranslate._14 = vShift.x - vBounds.x;\n343: \t\tsTranslate._24 = vShift.y;\n344: \t\tsTranslate._34 = 0.20f;\n345: \t\tMakeMatrix( &sRotate, CVec3( 0, 0, 0 ), vDir );\n346: \n347: \t\tSFBTransform sTransform;\n348: \t\tMultiply( &sTransform.forward, sRotate, sTranslate );\n349: \t\tsTransform.forward._14 += vTargetPos.x;\n350: \t\tsTransform.forward._24 += vTargetPos.y;\n351: \t\tsTransform.forward._34 += vTargetPos.z;\n352: \t\tInvertMatrix( &sTransform.backward, sTransform.forward );\n353: \n354: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n355: \t\tdigidGroupsSet.push_back( pGroup );\n356: \t\tdigidNodesSet.push_back( pScene->CreateMesh( pDigit, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );\n357: ",
+      "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+    }
+  ],
+  "qualification": "Actual UnitTracker target/AP ring model IDs and digit4 model arithmetic proven; originalpurpose individualrecommendations rootclassification. SourceA0 additiveRGB not treatedunused, no flag/shader/alpha modification. No workerGame/GPU."
+}

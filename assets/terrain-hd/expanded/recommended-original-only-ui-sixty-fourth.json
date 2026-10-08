@@ -1,0 +1,2809 @@
+[
+  {
+    "id": 3481,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate1559 selected by UnitTracker237 when bHilightTarget: one green targethighlight ring. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 3481,
+      "source_record": {
+        "id": 3481,
+        "texture": {
+          "ID": 3481,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 989958,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1.tga",
+          "Format": "8888",
+          "UserName": "Circle Green",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2180,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1458,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2065,
+                  "field": "Material0",
+                  "material_template_id": 1458,
+                  "geometry_id": 2295,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 1559,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "86fdf670d8a03471f19a1369e8285192fc4d611b498c1e15479c0f0d4b4ce32c",
+        "source_rgba_sha256": "194e0fe261e102b335728941dfe9088b996008e15dc84c0b68e0ee30d5d6c75f",
+        "release_rgba_sha256": "194e0fe261e102b335728941dfe9088b996008e15dc84c0b68e0ee30d5d6c75f",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          0
+        ],
+        "original_png": "expanded/original/3481.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3481,
+        "texture": {
+          "ID": 3481,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 989958,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1.tga",
+          "Format": "8888",
+          "UserName": "Circle Green",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2180,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1458,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2065,
+                "field": "Material0",
+                "material_template_id": 1458,
+                "geometry_id": 2295,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 1559,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2180,
+            "TextureID": 3481,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1458,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1458,
+            "UserName": "Circle Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2065,
+                "Material0": 1458,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1559,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1559,
+                "UserName": "Circle Green"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "86fdf670d8a03471f19a1369e8285192fc4d611b498c1e15479c0f0d4b4ce32c",
+      "release_mmp_sha256": "86fdf670d8a03471f19a1369e8285192fc4d611b498c1e15479c0f0d4b4ce32c",
+      "original_png_sha256": "b8a859cb216ecc6b6db7c0f4f91a91f26c9ef880a8e02e36ab11788781dd45ed",
+      "source_rgba_sha256": "194e0fe261e102b335728941dfe9088b996008e15dc84c0b68e0ee30d5d6c75f",
+      "source_rgb_sha256": "63e5f51760119b390d5dbd7c72a44ad67b9d8a97927df8fd6e00f176c2bd457f",
+      "source_alpha_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 3481,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2180,
+            "TextureID": 3481,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1458,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1458,
+            "UserName": "Circle Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2065,
+                "Material0": 1458,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1559,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1559,
+                "UserName": "Circle Green"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 3481,
+      "known_native_count_weak_phase": "Exactly ONE smooth monochrome circular ring on black full128square field, no literal/picture marks. Native sampled radial edge/constant-thickness phase retained. Actual target/AP marker runtime proven; original-purpose recommendation individually. Original TypeTransparentAdd/sourceA0 is not unused: authored RGB remains operative and must not be cleared/premultiplied away.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "194e0fe261e102b335728941dfe9088b996008e15dc84c0b68e0ee30d5d6c75f",
+      "sourceA_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "sourcePNG_sha256": "b8a859cb216ecc6b6db7c0f4f91a91f26c9ef880a8e02e36ab11788781dd45ed",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceA_extrema": [
+        0,
+        0
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 2180,
+            "TextureID": 3481,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1458,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1458,
+            "UserName": "Circle Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2065,
+                "Material0": 1458,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1559,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1559,
+                "UserName": "Circle Green"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 3527,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate1578 default UnitTracker233: one dim green destinationring. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 3527,
+      "source_record": {
+        "id": 3527,
+        "texture": {
+          "ID": 3527,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 659972,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_S.tga",
+          "Format": "8888",
+          "UserName": "Circle Dark",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2208,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1477,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2094,
+                  "field": "Material0",
+                  "material_template_id": 1477,
+                  "geometry_id": 2295,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 1578,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "6e30c930212458b9ee1bfc7aba198d18bba8f7cefbe19647de4a7dcc92d9031a",
+        "source_rgba_sha256": "da4e126353070d32d4f8da1907957ee276d1f3c4f5fa08ecd9d9bf456880ff57",
+        "release_rgba_sha256": "da4e126353070d32d4f8da1907957ee276d1f3c4f5fa08ecd9d9bf456880ff57",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          0
+        ],
+        "original_png": "expanded/original/3527.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3527,
+        "texture": {
+          "ID": 3527,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 659972,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_S.tga",
+          "Format": "8888",
+          "UserName": "Circle Dark",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2208,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1477,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2094,
+                "field": "Material0",
+                "material_template_id": 1477,
+                "geometry_id": 2295,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 1578,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2208,
+            "TextureID": 3527,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1477,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1477,
+            "UserName": "Circle Dark"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2094,
+                "Material0": 1477,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1578,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1578,
+                "UserName": "Circle Dark"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "6e30c930212458b9ee1bfc7aba198d18bba8f7cefbe19647de4a7dcc92d9031a",
+      "release_mmp_sha256": "6e30c930212458b9ee1bfc7aba198d18bba8f7cefbe19647de4a7dcc92d9031a",
+      "original_png_sha256": "601babbd7b3f189221342f3345c56e1c75888f812a20debf03c613c0ee955f3c",
+      "source_rgba_sha256": "da4e126353070d32d4f8da1907957ee276d1f3c4f5fa08ecd9d9bf456880ff57",
+      "source_rgb_sha256": "021e255cecc40989b08ec40ce017ed330abe6449518840fe31151556811f11f7",
+      "source_alpha_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 3527,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2208,
+            "TextureID": 3527,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1477,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1477,
+            "UserName": "Circle Dark"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2094,
+                "Material0": 1477,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1578,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1578,
+                "UserName": "Circle Dark"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 3527,
+      "known_native_count_weak_phase": "Exactly ONE smooth monochrome circular ring on black full128square field, no literal/picture marks. Native sampled radial edge/constant-thickness phase retained. Actual target/AP marker runtime proven; original-purpose recommendation individually. Original TypeTransparentAdd/sourceA0 is not unused: authored RGB remains operative and must not be cleared/premultiplied away.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "da4e126353070d32d4f8da1907957ee276d1f3c4f5fa08ecd9d9bf456880ff57",
+      "sourceA_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "sourcePNG_sha256": "601babbd7b3f189221342f3345c56e1c75888f812a20debf03c613c0ee955f3c",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceA_extrema": [
+        0,
+        0
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 2208,
+            "TextureID": 3527,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1477,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1477,
+            "UserName": "Circle Dark"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2094,
+                "Material0": 1477,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1578,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1578,
+                "UserName": "Circle Dark"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 3618,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate1634 selected byUnitTracker239 when CanSpendAP(targetAP) false: one red destinationring. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 3618,
+      "source_record": {
+        "id": 3618,
+        "texture": {
+          "ID": 3618,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1704448,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_2.tga",
+          "Format": "8888",
+          "UserName": "Circle Red",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2259,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1518,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2158,
+                  "field": "Material0",
+                  "material_template_id": 1518,
+                  "geometry_id": 2295,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 1634,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "248ae9e7ce473d1d22dce2b1867349521e64973a8d707288d3e6cce94812fd55",
+        "source_rgba_sha256": "6f4cf8032879c97d6c416bc04ae1a7f91c82139edc889db5182f95a0822bbc8d",
+        "release_rgba_sha256": "6f4cf8032879c97d6c416bc04ae1a7f91c82139edc889db5182f95a0822bbc8d",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          0
+        ],
+        "original_png": "expanded/original/3618.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3618,
+        "texture": {
+          "ID": 3618,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1704448,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_2.tga",
+          "Format": "8888",
+          "UserName": "Circle Red",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2259,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1518,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2158,
+                "field": "Material0",
+                "material_template_id": 1518,
+                "geometry_id": 2295,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 1634,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2259,
+            "TextureID": 3618,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1518,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1518,
+            "UserName": "Circle Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2158,
+                "Material0": 1518,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1634,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1634,
+                "UserName": "Circle Red"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "248ae9e7ce473d1d22dce2b1867349521e64973a8d707288d3e6cce94812fd55",
+      "release_mmp_sha256": "248ae9e7ce473d1d22dce2b1867349521e64973a8d707288d3e6cce94812fd55",
+      "original_png_sha256": "0631ab312de9cbc7a5ab09f9f0049b2592795f114e03c4edb6fa1640920de940",
+      "source_rgba_sha256": "6f4cf8032879c97d6c416bc04ae1a7f91c82139edc889db5182f95a0822bbc8d",
+      "source_rgb_sha256": "d19f274a6b9126b9b56ddd8eb4f8f76fcc397a622b8a50e5267c872df9f9cbca",
+      "source_alpha_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 3618,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2259,
+            "TextureID": 3618,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1518,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1518,
+            "UserName": "Circle Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2158,
+                "Material0": 1518,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1634,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1634,
+                "UserName": "Circle Red"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 3618,
+      "known_native_count_weak_phase": "Exactly ONE smooth monochrome circular ring on black full128square field, no literal/picture marks. Native sampled radial edge/constant-thickness phase retained. Actual target/AP marker runtime proven; original-purpose recommendation individually. Original TypeTransparentAdd/sourceA0 is not unused: authored RGB remains operative and must not be cleared/premultiplied away.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "6f4cf8032879c97d6c416bc04ae1a7f91c82139edc889db5182f95a0822bbc8d",
+      "sourceA_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "sourcePNG_sha256": "0631ab312de9cbc7a5ab09f9f0049b2592795f114e03c4edb6fa1640920de940",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceA_extrema": [
+        0,
+        0
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 2259,
+            "TextureID": 3618,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1518,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1518,
+            "UserName": "Circle Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2158,
+                "Material0": 1518,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1634,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1634,
+                "UserName": "Circle Red"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 3619,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate1635 selected byUnitTracker241 when CanSpendAP(targetAP+attackAP) false: one yellow destinationring. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 3619,
+      "source_record": {
+        "id": 3619,
+        "texture": {
+          "ID": 3619,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1840385,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_1.tga",
+          "Format": "8888",
+          "UserName": "Circle Yellow",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2260,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1519,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2159,
+                  "field": "Material0",
+                  "material_template_id": 1519,
+                  "geometry_id": 2295,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 1635,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "6638305253bd5a66d0dcd1137577edca8711c7b0995f7d8c3d45737b302b8ef0",
+        "source_rgba_sha256": "c43526147da5be9960180c20b9e79e4aaef2447c8a6d095440a6656c579a0a6a",
+        "release_rgba_sha256": "c43526147da5be9960180c20b9e79e4aaef2447c8a6d095440a6656c579a0a6a",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          0
+        ],
+        "original_png": "expanded/original/3619.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3619,
+        "texture": {
+          "ID": 3619,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 1,
+          "AverageColor": 1840385,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Path\\1_1.tga",
+          "Format": "8888",
+          "UserName": "Circle Yellow",
+          "Type": "TransparentAdd",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2260,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1519,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2159,
+                "field": "Material0",
+                "material_template_id": 1519,
+                "geometry_id": 2295,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 1635,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2260,
+            "TextureID": 3619,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1519,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1519,
+            "UserName": "Circle Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2159,
+                "Material0": 1519,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1635,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1635,
+                "UserName": "Circle Yellow"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "6638305253bd5a66d0dcd1137577edca8711c7b0995f7d8c3d45737b302b8ef0",
+      "release_mmp_sha256": "6638305253bd5a66d0dcd1137577edca8711c7b0995f7d8c3d45737b302b8ef0",
+      "original_png_sha256": "7805ee1897d240b875ebc09e38a7e4d4d3b7c56f40fdd4239ebc1fbc55aed2e6",
+      "source_rgba_sha256": "c43526147da5be9960180c20b9e79e4aaef2447c8a6d095440a6656c579a0a6a",
+      "source_rgb_sha256": "bfe033fd61075a17ee8390bb275da3b09c2fd765d9ff4b3c85ced26403ac060b",
+      "source_alpha_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 3619,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2260,
+            "TextureID": 3619,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1519,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1519,
+            "UserName": "Circle Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2159,
+                "Material0": 1519,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1635,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1635,
+                "UserName": "Circle Yellow"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 3619,
+      "known_native_count_weak_phase": "Exactly ONE smooth monochrome circular ring on black full128square field, no literal/picture marks. Native sampled radial edge/constant-thickness phase retained. Actual target/AP marker runtime proven; original-purpose recommendation individually. Original TypeTransparentAdd/sourceA0 is not unused: authored RGB remains operative and must not be cleared/premultiplied away.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "c43526147da5be9960180c20b9e79e4aaef2447c8a6d095440a6656c579a0a6a",
+      "sourceA_sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+      "sourcePNG_sha256": "7805ee1897d240b875ebc09e38a7e4d4d3b7c56f40fdd4239ebc1fbc55aed2e6",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceA_extrema": [
+        0,
+        0
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 2260,
+            "TextureID": 3619,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1519,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1519,
+            "UserName": "Circle Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2159,
+                "Material0": 1519,
+                "Material1": 0,
+                "GeometryID": 2295,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1635,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1635,
+                "UserName": "Circle Yellow"
+              },
+              "geometry": {
+                "ID": 2295,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6201414465904236,
+                "SizeY": 0.6201414465904236,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Circle",
+                "RootJoint": "Circle"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 3564,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate1589=1585+digit4, UnitTracker311/326; authored exactgreen4 movementAP glyph. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 3564,
+      "source_record": {
+        "id": 3564,
+        "texture": {
+          "ID": 3564,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1950109979,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4.tga",
+          "Format": "8888",
+          "UserName": "4 Green",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2230,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1491,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 2110,
+                  "field": "Material0",
+                  "material_template_id": 1491,
+                  "geometry_id": 2323,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 1589,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          32,
+          64
+        ],
+        "source_sha256": "ef2db1a29ad5665782c9f0caa38807df5860cbbd44161902fe75882ec0c0f95b",
+        "source_rgba_sha256": "623e3504862b69891556b2168e17226ce519a57e7800e026ca76848049bfe152",
+        "release_rgba_sha256": "623e3504862b69891556b2168e17226ce519a57e7800e026ca76848049bfe152",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/3564.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3564,
+        "texture": {
+          "ID": 3564,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1950109979,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4.tga",
+          "Format": "8888",
+          "UserName": "4 Green",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          32,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            32,
+            64
+          ],
+          "mips": 1,
+          "file_bytes": 8216,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2230,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1491,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2110,
+                "field": "Material0",
+                "material_template_id": 1491,
+                "geometry_id": 2323,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 1589,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2230,
+            "TextureID": 3564,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1491,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1491,
+            "UserName": "4 Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2110,
+                "Material0": 1491,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1589,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1589,
+                "UserName": "4 Green"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "ef2db1a29ad5665782c9f0caa38807df5860cbbd44161902fe75882ec0c0f95b",
+      "release_mmp_sha256": "ef2db1a29ad5665782c9f0caa38807df5860cbbd44161902fe75882ec0c0f95b",
+      "original_png_sha256": "f9d637b040f1a8c04f225c91891651b0810845f2589eb736bfbc1c4c4dd02377",
+      "source_rgba_sha256": "623e3504862b69891556b2168e17226ce519a57e7800e026ca76848049bfe152",
+      "source_rgb_sha256": "841bec67f2bdc1a5f5c126b666d9ae0c38d702cba8c820ee0c39d4218e22011f",
+      "source_alpha_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "dimensions": [
+        32,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 3564,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2230,
+            "TextureID": 3564,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1491,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1491,
+            "UserName": "4 Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2110,
+                "Material0": 1491,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1589,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1589,
+                "UserName": "4 Green"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 3564,
+      "known_native_count_weak_phase": "Exactly ONE authored digit form corresponding to literal4, vertically inverted in STORED bitmap, green/yellow/red bysource respectively. One thick stem/one crossbar/one diagonal sloping bar and one interior triangular counter, original sampled contour+weakglow+wholeA. ActualShowPathDigits digit4 function proven, exactoriginal glyph/palette/phase recommendation individually; no learned retyping.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "623e3504862b69891556b2168e17226ce519a57e7800e026ca76848049bfe152",
+      "sourceA_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "sourcePNG_sha256": "f9d637b040f1a8c04f225c91891651b0810845f2589eb736bfbc1c4c4dd02377",
+      "dimensions": [
+        32,
+        64
+      ],
+      "sourceA_extrema": [
+        0,
+        255
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 2230,
+            "TextureID": 3564,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1491,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1491,
+            "UserName": "4 Green"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 2110,
+                "Material0": 1491,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1589,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1589,
+                "UserName": "4 Green"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 5045,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate3448=3444+digit4, UnitTracker332; authored yellow4 when moving consumes attackAP margin. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 5045,
+      "source_record": {
+        "id": 5045,
+        "texture": {
+          "ID": 5045,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1951350285,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4_1.tga",
+          "Format": "8888",
+          "UserName": "4 Yellow",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3191,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 2044,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5174,
+                  "field": "Material0",
+                  "material_template_id": 2044,
+                  "geometry_id": 2323,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 3448,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          32,
+          64
+        ],
+        "source_sha256": "b2da8c5fc51d8a2f3ca851ca686981887489b88e8d70d7a7ee0092fc84c558a5",
+        "source_rgba_sha256": "630ff69684c7b51589ea62db86ce8e1597a97336b8d1dee1a0437e1d891a9198",
+        "release_rgba_sha256": "630ff69684c7b51589ea62db86ce8e1597a97336b8d1dee1a0437e1d891a9198",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5045.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5045,
+        "texture": {
+          "ID": 5045,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1951350285,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4_1.tga",
+          "Format": "8888",
+          "UserName": "4 Yellow",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          32,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            32,
+            64
+          ],
+          "mips": 1,
+          "file_bytes": 8216,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3191,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 2044,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5174,
+                "field": "Material0",
+                "material_template_id": 2044,
+                "geometry_id": 2323,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 3448,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3191,
+            "TextureID": 5045,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2044,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2044,
+            "UserName": "4 Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5174,
+                "Material0": 2044,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3448,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3448,
+                "UserName": "4 Yellow"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "b2da8c5fc51d8a2f3ca851ca686981887489b88e8d70d7a7ee0092fc84c558a5",
+      "release_mmp_sha256": "b2da8c5fc51d8a2f3ca851ca686981887489b88e8d70d7a7ee0092fc84c558a5",
+      "original_png_sha256": "0ebd3f550dab87dcad097375de55c9e68834c654dc37e9c72d33c0eb884fa8ff",
+      "source_rgba_sha256": "630ff69684c7b51589ea62db86ce8e1597a97336b8d1dee1a0437e1d891a9198",
+      "source_rgb_sha256": "c902601deb5fc4f94853b52ed8b4df63afe6ec02b5851f5891ae6d87764e18c9",
+      "source_alpha_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "dimensions": [
+        32,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 5045,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3191,
+            "TextureID": 5045,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2044,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2044,
+            "UserName": "4 Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5174,
+                "Material0": 2044,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3448,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3448,
+                "UserName": "4 Yellow"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 5045,
+      "known_native_count_weak_phase": "Exactly ONE authored digit form corresponding to literal4, vertically inverted in STORED bitmap, green/yellow/red bysource respectively. One thick stem/one crossbar/one diagonal sloping bar and one interior triangular counter, original sampled contour+weakglow+wholeA. ActualShowPathDigits digit4 function proven, exactoriginal glyph/palette/phase recommendation individually; no learned retyping.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "630ff69684c7b51589ea62db86ce8e1597a97336b8d1dee1a0437e1d891a9198",
+      "sourceA_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "sourcePNG_sha256": "0ebd3f550dab87dcad097375de55c9e68834c654dc37e9c72d33c0eb884fa8ff",
+      "dimensions": [
+        32,
+        64
+      ],
+      "sourceA_extrema": [
+        0,
+        255
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 3191,
+            "TextureID": 5045,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2044,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2044,
+            "UserName": "4 Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5174,
+                "Material0": 2044,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3448,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3448,
+                "UserName": "4 Yellow"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  },
+  {
+    "id": 5055,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "reason": "ModelTemplate3458=3454+digit4, UnitTracker330; authored red4 when targetAP cannotbespent. Fullsourceindividualanalytic/glyphpixels +actualruntimepurpose, not name/color/alpha-only inference. Retain native storedRGB/A/sourceblur/fullUV without learned contour/glyph normalization.",
+    "source_check": {
+      "id": 5055,
+      "source_record": {
+        "id": 5055,
+        "texture": {
+          "ID": 5055,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1950090752,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4_2.tga",
+          "Format": "8888",
+          "UserName": "4 Red",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3201,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 2054,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5184,
+                  "field": "Material0",
+                  "material_template_id": 2054,
+                  "geometry_id": 2323,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 3458,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          32,
+          64
+        ],
+        "source_sha256": "59d235f377ddc6c7d504ff5df380da542d472fac244d0066f975c3206f78587c",
+        "source_rgba_sha256": "05931127adad0259d760c785fa245d64fca208a78bfe8752a1f699a7c94c3349",
+        "release_rgba_sha256": "05931127adad0259d760c785fa245d64fca208a78bfe8752a1f699a7c94c3349",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5055.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5055,
+        "texture": {
+          "ID": 5055,
+          "Width": 32,
+          "Height": 64,
+          "NMips": 1,
+          "AverageColor": 1950090752,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TacticView\\Digits\\4_2.tga",
+          "Format": "8888",
+          "UserName": "4 Red",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          32,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            32,
+            64
+          ],
+          "mips": 1,
+          "file_bytes": 8216,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3201,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 2054,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5184,
+                "field": "Material0",
+                "material_template_id": 2054,
+                "geometry_id": 2323,
+                "geometry": "Interface\\Cursors\\CursorFace.mb",
+                "model_template_id": 3458,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3201,
+            "TextureID": 5055,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2054,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2054,
+            "UserName": "4 Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5184,
+                "Material0": 2054,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3458,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3458,
+                "UserName": "4 Red"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "59d235f377ddc6c7d504ff5df380da542d472fac244d0066f975c3206f78587c",
+      "release_mmp_sha256": "59d235f377ddc6c7d504ff5df380da542d472fac244d0066f975c3206f78587c",
+      "original_png_sha256": "e9b7a65265aaf057ab014a91761696b95498621fce5c030ff181fb72a0fb2d19",
+      "source_rgba_sha256": "05931127adad0259d760c785fa245d64fca208a78bfe8752a1f699a7c94c3349",
+      "source_rgb_sha256": "3a657a2ddde61f0b8d5bd314792bacfbc7c8238f2c77cbd6b7aada27f50c4df9",
+      "source_alpha_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "dimensions": [
+        32,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "actual_consumer_proof": {
+      "id": 5055,
+      "actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3201,
+            "TextureID": 5055,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2054,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2054,
+            "UserName": "4 Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5184,
+                "Material0": 2054,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3458,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3458,
+                "UserName": "4 Red"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains. Actual existing diffuseModels consumers; literal UnitTracker GetModel templates linked below where proven. No currentlyvisible marker/flag claim."
+    },
+    "source_count_phase": {
+      "id": 5055,
+      "known_native_count_weak_phase": "Exactly ONE authored digit form corresponding to literal4, vertically inverted in STORED bitmap, green/yellow/red bysource respectively. One thick stem/one crossbar/one diagonal sloping bar and one interior triangular counter, original sampled contour+weakglow+wholeA. ActualShowPathDigits digit4 function proven, exactoriginal glyph/palette/phase recommendation individually; no learned retyping.",
+      "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+      "sourceRGBA_sha256": "05931127adad0259d760c785fa245d64fca208a78bfe8752a1f699a7c94c3349",
+      "sourceA_sha256": "ab5e2d1d264f50a56d2e7ee1153daadd833d7fa2a655906165f7d677cfbbd6bb",
+      "sourcePNG_sha256": "e9b7a65265aaf057ab014a91761696b95498621fce5c030ff181fb72a0fb2d19",
+      "dimensions": [
+        32,
+        64
+      ],
+      "sourceA_extrema": [
+        0,
+        255
+      ],
+      "actual_typed_consumer_chains": [
+        {
+          "actual_material": {
+            "ID": 3201,
+            "TextureID": 5055,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2054,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2054,
+            "UserName": "4 Red"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5184,
+                "Material0": 2054,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3458,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3458,
+                "UserName": "4 Red"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "current_live_scene_verified": false,
+      "prior_source_only_audit_files": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_attempts": 0
+    },
+    "runtime_sourceproof": "G:/SS/Silent-Storm-Reconstruction/build/ui-sixty-fourth-private/runtime-consumer-proof.json",
+    "shared_disposition_written": false
+  }
+]

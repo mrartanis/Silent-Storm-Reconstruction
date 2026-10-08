@@ -1,0 +1,2730 @@
+{
+  "batch": "ui-sixty-third",
+  "accepted_snapshot": 2474,
+  "remaining_interface_scope": 578,
+  "fresh_uncalled_count": 478,
+  "checked_utc": "2026-10-08T16:23:15.134274+00:00",
+  "source_checks": [
+    {
+      "id": 6540,
+      "source_record": {
+        "id": 6540,
+        "texture": {
+          "ID": 6540,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -12439252,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\IronCross_2cl.tga",
+          "Format": "8888",
+          "UserName": "IronCross_2cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4535,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2671,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6473,
+                  "field": "Material0",
+                  "material_template_id": 2671,
+                  "geometry_id": 3890,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4131,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "e2e3be8e874dfb2a532dfdf020e9241db6c761329cc9f26818e21a0fefccdea0",
+        "source_rgba_sha256": "5fa4da22cba4746b91f219be5430f672ff50440cf72bc675aa507506bc031408",
+        "release_rgba_sha256": "5fa4da22cba4746b91f219be5430f672ff50440cf72bc675aa507506bc031408",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6540.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6540,
+        "texture": {
+          "ID": 6540,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -12439252,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\IronCross_2cl.tga",
+          "Format": "8888",
+          "UserName": "IronCross_2cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4535,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2671,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6473,
+                "field": "Material0",
+                "material_template_id": 2671,
+                "geometry_id": 3890,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4131,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4535,
+            "TextureID": 6540,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2671,
+            "GlossID": 6571,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2671,
+            "UserName": "IronCross_2cl"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6473,
+                "Material0": 2671,
+                "Material1": 0,
+                "GeometryID": 3890,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4131,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4131,
+                "UserName": "IronCross_2cl"
+              },
+              "geometry": {
+                "ID": 3890,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.9963374137878418,
+                "SizeY": 0.17227321863174438,
+                "SizeZ": 2.101923942565918,
+                "CenterX": 0.0,
+                "CenterY": -0.023288507014513016,
+                "CenterZ": 0.04883819818496704,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "IronCross_2cl",
+                "RootJoint": "IronCross_2cl"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "e2e3be8e874dfb2a532dfdf020e9241db6c761329cc9f26818e21a0fefccdea0",
+      "release_mmp_sha256": "e2e3be8e874dfb2a532dfdf020e9241db6c761329cc9f26818e21a0fefccdea0",
+      "original_png_sha256": "4df602d1e9628e19a6263631001bbb420228eff7567244eae3b3fdd11b28b44b",
+      "source_rgba_sha256": "5fa4da22cba4746b91f219be5430f672ff50440cf72bc675aa507506bc031408",
+      "source_rgb_sha256": "2e7a62ed1679b21e50fdd65baa3ac247aa621c53ad24150d361944766e8db447",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6542,
+      "source_record": {
+        "id": 6542,
+        "texture": {
+          "ID": 6542,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -14538711,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\WarMeritCross_1cl.tga",
+          "Format": "8888",
+          "UserName": "WarMeritCross_1cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4537,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2672,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6476,
+                  "field": "Material0",
+                  "material_template_id": 2672,
+                  "geometry_id": 3891,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4133,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6484,
+                  "field": "Material1",
+                  "material_template_id": 2672,
+                  "geometry_id": 3896,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4137,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "abc93e58ec6a3dc62fb21decfdd6b2bd102d1c9308b924e809fca64656e6cd97",
+        "source_rgba_sha256": "e5d28b3a525126c7a4a20e35bb2d6e0aa82f952e053db664e1f30990089f8dca",
+        "release_rgba_sha256": "e5d28b3a525126c7a4a20e35bb2d6e0aa82f952e053db664e1f30990089f8dca",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6542.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6542,
+        "texture": {
+          "ID": 6542,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -14538711,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\WarMeritCross_1cl.tga",
+          "Format": "8888",
+          "UserName": "WarMeritCross_1cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4537,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2672,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6476,
+                "field": "Material0",
+                "material_template_id": 2672,
+                "geometry_id": 3891,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4133,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6484,
+                "field": "Material1",
+                "material_template_id": 2672,
+                "geometry_id": 3896,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4137,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4537,
+            "TextureID": 6542,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2672,
+            "GlossID": 6594,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2672,
+            "UserName": "WarMeritCross_1cl"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6476,
+                "Material0": 2672,
+                "Material1": 2673,
+                "GeometryID": 3891,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4133,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4133,
+                "UserName": "WarMeritCross_1cl"
+              },
+              "geometry": {
+                "ID": 3891,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.0809166431427002,
+                "SizeY": 0.13715052604675293,
+                "SizeZ": 1.0809166431427002,
+                "CenterX": 0.0,
+                "CenterY": -0.011066216975450516,
+                "CenterZ": 0.0009447038173675537,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "WarMeritCross_1cl",
+                "RootJoint": "WarMeritCross_1cl"
+              }
+            },
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 6484,
+                "Material0": 2682,
+                "Material1": 2672,
+                "GeometryID": 3896,
+                "Material2": 2703,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4137,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4137,
+                "UserName": "GermanCross_Silver"
+              },
+              "geometry": {
+                "ID": 3896,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.2427672147750854,
+                "SizeY": 0.089530810713768,
+                "SizeZ": 1.242767572402954,
+                "CenterX": 0.0,
+                "CenterY": -0.0008537161047570407,
+                "CenterZ": -0.008086726069450378,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "GermanCross_Silver",
+                "RootJoint": "GermanCross_Silver"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "abc93e58ec6a3dc62fb21decfdd6b2bd102d1c9308b924e809fca64656e6cd97",
+      "release_mmp_sha256": "abc93e58ec6a3dc62fb21decfdd6b2bd102d1c9308b924e809fca64656e6cd97",
+      "original_png_sha256": "f0e339d56d75240f9094b7021d44c27328379988d6b507c8f89be3b4506a6956",
+      "source_rgba_sha256": "e5d28b3a525126c7a4a20e35bb2d6e0aa82f952e053db664e1f30990089f8dca",
+      "source_rgb_sha256": "ee1c315afd50e1f2720795b89e1a25cbb78a51bbc8ca7c1f15999b43d27d60bc",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6544,
+      "source_record": {
+        "id": 6544,
+        "texture": {
+          "ID": 6544,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11649739,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\WarMeritCross_2cl.tga",
+          "Format": "8888",
+          "UserName": "WarMeritCross_2cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4541,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2674,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6478,
+                  "field": "Material0",
+                  "material_template_id": 2674,
+                  "geometry_id": 3892,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4134,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "f0d8cdde660832ea9dcbaccc6b2c08827bab48f48cc8537a742af70dd9533deb",
+        "source_rgba_sha256": "8313b728db98aee02e21e8d5e582635800aa27e1aea5f3ea5bbe4bbfaab62b8c",
+        "release_rgba_sha256": "8313b728db98aee02e21e8d5e582635800aa27e1aea5f3ea5bbe4bbfaab62b8c",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6544.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6544,
+        "texture": {
+          "ID": 6544,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11649739,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\WarMeritCross_2cl.tga",
+          "Format": "8888",
+          "UserName": "WarMeritCross_2cl",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4541,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2674,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6478,
+                "field": "Material0",
+                "material_template_id": 2674,
+                "geometry_id": 3892,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4134,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4541,
+            "TextureID": 6544,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2674,
+            "GlossID": 6593,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2674,
+            "UserName": "WarMeritCross_2cl"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6478,
+                "Material0": 2674,
+                "Material1": 0,
+                "GeometryID": 3892,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4134,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4134,
+                "UserName": "WarMeritCross_2cl"
+              },
+              "geometry": {
+                "ID": 3892,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.0809166431427002,
+                "SizeY": 0.17773345112800598,
+                "SizeZ": 2.157045364379883,
+                "CenterX": 0.0,
+                "CenterY": -0.02402663603425026,
+                "CenterZ": 0.019613683223724365,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "WarMeritCross_2cl",
+                "RootJoint": "WarMeritCross_2cl"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "f0d8cdde660832ea9dcbaccc6b2c08827bab48f48cc8537a742af70dd9533deb",
+      "release_mmp_sha256": "f0d8cdde660832ea9dcbaccc6b2c08827bab48f48cc8537a742af70dd9533deb",
+      "original_png_sha256": "57c1b993748fe66aa6bf5972706323a6527b8a1c0968ef97fa3a9d342357d668",
+      "source_rgba_sha256": "8313b728db98aee02e21e8d5e582635800aa27e1aea5f3ea5bbe4bbfaab62b8c",
+      "source_rgb_sha256": "d74d01ca0bc3a31ab71eab570625740ad241a8127b159f2485b211e6b0fd9aae",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6572,
+      "source_record": {
+        "id": 6572,
+        "texture": {
+          "ID": 6572,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -211855274,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\GermanCroos_Silver.tga",
+          "Format": "8888",
+          "UserName": "GermanCross_Silver",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4568,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 2682,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6484,
+                  "field": "Material0",
+                  "material_template_id": 2682,
+                  "geometry_id": 3896,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4137,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "a7368c9cb0d87de51cfdbc98daab8b7624db31db609e6559b18f5661ff1ed420",
+        "source_rgba_sha256": "e5b67d782d500daecaafa33297ee4a298da6ecbaaf4c7ff90723eed56851216a",
+        "release_rgba_sha256": "e5b67d782d500daecaafa33297ee4a298da6ecbaaf4c7ff90723eed56851216a",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/6572.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6572,
+        "texture": {
+          "ID": 6572,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -211855274,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\GermanCroos_Silver.tga",
+          "Format": "8888",
+          "UserName": "GermanCross_Silver",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4568,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 2682,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6484,
+                "field": "Material0",
+                "material_template_id": 2682,
+                "geometry_id": 3896,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4137,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4568,
+            "TextureID": 6572,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2682,
+            "GlossID": 6657,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2682,
+            "UserName": "GermanCross_Silver"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6484,
+                "Material0": 2682,
+                "Material1": 2672,
+                "GeometryID": 3896,
+                "Material2": 2703,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4137,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4137,
+                "UserName": "GermanCross_Silver"
+              },
+              "geometry": {
+                "ID": 3896,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.2427672147750854,
+                "SizeY": 0.089530810713768,
+                "SizeZ": 1.242767572402954,
+                "CenterX": 0.0,
+                "CenterY": -0.0008537161047570407,
+                "CenterZ": -0.008086726069450378,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "GermanCross_Silver",
+                "RootJoint": "GermanCross_Silver"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "alpha_test"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "a7368c9cb0d87de51cfdbc98daab8b7624db31db609e6559b18f5661ff1ed420",
+      "release_mmp_sha256": "a7368c9cb0d87de51cfdbc98daab8b7624db31db609e6559b18f5661ff1ed420",
+      "original_png_sha256": "1a56963a1b32e76b9ad6e2d108032e1290f92b64bc87f66c214c63bb09f59577",
+      "source_rgba_sha256": "e5b67d782d500daecaafa33297ee4a298da6ecbaaf4c7ff90723eed56851216a",
+      "source_rgb_sha256": "60532ec145f1b7fe91d93b3d862a6324dddb5672dfa27780b1916e88126cacd3",
+      "source_alpha_sha256": "b22f708f616e2e19526d2582aace6fc9287496bb03dba980883091bebfe04995",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6574,
+      "source_record": {
+        "id": 6574,
+        "texture": {
+          "ID": 6574,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11716037,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\DCM.tga",
+          "Format": "8888",
+          "UserName": "DCM",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4572,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2684,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6488,
+                  "field": "Material0",
+                  "material_template_id": 2684,
+                  "geometry_id": 3894,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4139,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "98bf0e2d52f06d57980a418ec5ccf40c873a91e003b86c17b7d44b87f10d4db0",
+        "source_rgba_sha256": "5e938802f4a73e4e2f1bcb59aec64ac33fc905895e5a0cd25c81b18ba0092b9c",
+        "release_rgba_sha256": "5e938802f4a73e4e2f1bcb59aec64ac33fc905895e5a0cd25c81b18ba0092b9c",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6574.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6574,
+        "texture": {
+          "ID": 6574,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11716037,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\DCM.tga",
+          "Format": "8888",
+          "UserName": "DCM",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4572,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2684,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6488,
+                "field": "Material0",
+                "material_template_id": 2684,
+                "geometry_id": 3894,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4139,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4572,
+            "TextureID": 6574,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2684,
+            "GlossID": 6614,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2684,
+            "UserName": "DCM"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6488,
+                "Material0": 2684,
+                "Material1": 0,
+                "GeometryID": 3894,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4139,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4139,
+                "UserName": "DCM"
+              },
+              "geometry": {
+                "ID": 3894,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.7902016043663025,
+                "SizeY": 0.11980103701353073,
+                "SizeZ": 2.023599147796631,
+                "CenterX": 2.9802322387695312e-08,
+                "CenterY": -0.010448720306158066,
+                "CenterZ": 0.07698768377304077,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "DCM_MM",
+                "RootJoint": "DCM"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "98bf0e2d52f06d57980a418ec5ccf40c873a91e003b86c17b7d44b87f10d4db0",
+      "release_mmp_sha256": "98bf0e2d52f06d57980a418ec5ccf40c873a91e003b86c17b7d44b87f10d4db0",
+      "original_png_sha256": "4e79eb53e5c4bf93473dbc16312b5f7bd34ff184314f7555d3eaaf39ed68d1c8",
+      "source_rgba_sha256": "5e938802f4a73e4e2f1bcb59aec64ac33fc905895e5a0cd25c81b18ba0092b9c",
+      "source_rgb_sha256": "6579783a725ab2249eadba519efec0b80aa50490367e7931b4082221b0771532",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6575,
+      "source_record": {
+        "id": 6575,
+        "texture": {
+          "ID": 6575,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -12238267,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\MilitaryMedal.tga",
+          "Format": "8888",
+          "UserName": "MilitaryMedal",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4574,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2685,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6490,
+                  "field": "Material0",
+                  "material_template_id": 2685,
+                  "geometry_id": 3894,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4140,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "c5f0b959ed4aaea6d55cfda93443a8ebebeabe35f42f7cf46d73dcb7a4676a5f",
+        "source_rgba_sha256": "101632336ed0c83c7769da0dc685c9a913c8ac3ef7fd8c9ce689b46c05969d0b",
+        "release_rgba_sha256": "101632336ed0c83c7769da0dc685c9a913c8ac3ef7fd8c9ce689b46c05969d0b",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6575.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6575,
+        "texture": {
+          "ID": 6575,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -12238267,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\MilitaryMedal.tga",
+          "Format": "8888",
+          "UserName": "MilitaryMedal",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4574,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2685,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6490,
+                "field": "Material0",
+                "material_template_id": 2685,
+                "geometry_id": 3894,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4140,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4574,
+            "TextureID": 6575,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2685,
+            "GlossID": 6597,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2685,
+            "UserName": "MilitaryMedal"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6490,
+                "Material0": 2685,
+                "Material1": 0,
+                "GeometryID": 3894,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4140,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4140,
+                "UserName": "MilitaryMedal"
+              },
+              "geometry": {
+                "ID": 3894,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.7902016043663025,
+                "SizeY": 0.11980103701353073,
+                "SizeZ": 2.023599147796631,
+                "CenterX": 2.9802322387695312e-08,
+                "CenterY": -0.010448720306158066,
+                "CenterZ": 0.07698768377304077,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "DCM_MM",
+                "RootJoint": "DCM"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c5f0b959ed4aaea6d55cfda93443a8ebebeabe35f42f7cf46d73dcb7a4676a5f",
+      "release_mmp_sha256": "c5f0b959ed4aaea6d55cfda93443a8ebebeabe35f42f7cf46d73dcb7a4676a5f",
+      "original_png_sha256": "cd7cb42478c03e4e9c1414973d3cda1083ff23ed1a3b9300a6827932375ec3ed",
+      "source_rgba_sha256": "101632336ed0c83c7769da0dc685c9a913c8ac3ef7fd8c9ce689b46c05969d0b",
+      "source_rgb_sha256": "a01e762cbb0af00474b7bdbff21adf2a84614d98a72dea6f320e37fe0b4b3594",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6576,
+      "source_record": {
+        "id": 6576,
+        "texture": {
+          "ID": 6576,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -13356489,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\DSO.tga",
+          "Format": "8888",
+          "UserName": "DSO",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4576,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2686,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6492,
+                  "field": "Material0",
+                  "material_template_id": 2686,
+                  "geometry_id": 3897,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4141,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "0688e26d59b8df0e8fbb4cd9ec0e41a3ed7fdc2482715e21b3676d94d61a4f82",
+        "source_rgba_sha256": "7cbd124a40456d2d70067a61ed42d2a2e3ce1cb94cf27eebbdb433d466e1bcb3",
+        "release_rgba_sha256": "7cbd124a40456d2d70067a61ed42d2a2e3ce1cb94cf27eebbdb433d466e1bcb3",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6576.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6576,
+        "texture": {
+          "ID": 6576,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -13356489,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\DSO.tga",
+          "Format": "8888",
+          "UserName": "DSO",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4576,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2686,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6492,
+                "field": "Material0",
+                "material_template_id": 2686,
+                "geometry_id": 3897,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4141,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4576,
+            "TextureID": 6576,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2686,
+            "GlossID": 6596,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2686,
+            "UserName": "DSO"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6492,
+                "Material0": 2686,
+                "Material1": 0,
+                "GeometryID": 3897,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4141,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4141,
+                "UserName": "DSO"
+              },
+              "geometry": {
+                "ID": 3897,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.9094700217247009,
+                "SizeY": 0.1833592653274536,
+                "SizeZ": 2.0672097206115723,
+                "CenterX": 0.0,
+                "CenterY": -0.040357351303100586,
+                "CenterZ": 0.05196717381477356,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "DSO",
+                "RootJoint": "DSO"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "0688e26d59b8df0e8fbb4cd9ec0e41a3ed7fdc2482715e21b3676d94d61a4f82",
+      "release_mmp_sha256": "0688e26d59b8df0e8fbb4cd9ec0e41a3ed7fdc2482715e21b3676d94d61a4f82",
+      "original_png_sha256": "af9b5a3c9257c1163a87d91a02358b74dcd6e8ed82c74c716546d833809ce144",
+      "source_rgba_sha256": "7cbd124a40456d2d70067a61ed42d2a2e3ce1cb94cf27eebbdb433d466e1bcb3",
+      "source_rgb_sha256": "b6154d619672442791bb3139ea79fc8173ac01e3aea21ad1638deea0f02b329d",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6599,
+      "source_record": {
+        "id": 6599,
+        "texture": {
+          "ID": 6599,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11257559,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\Legion_Merit.tga",
+          "Format": "8888",
+          "UserName": "Legion_Merit",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4577,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2687,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6494,
+                  "field": "Material0",
+                  "material_template_id": 2687,
+                  "geometry_id": 3898,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4142,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "6e6d79592b1597dd4775adac4bf39a56191bfa5e61b9a54490f5cfc8465ec469",
+        "source_rgba_sha256": "05910cdb6f7e5061c9f4f6c8d4e8cf752e2a99c85e4d6624dfd61bd7140dc05d",
+        "release_rgba_sha256": "05910cdb6f7e5061c9f4f6c8d4e8cf752e2a99c85e4d6624dfd61bd7140dc05d",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6599.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6599,
+        "texture": {
+          "ID": 6599,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -11257559,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\Legion_Merit.tga",
+          "Format": "8888",
+          "UserName": "Legion_Merit",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4577,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2687,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6494,
+                "field": "Material0",
+                "material_template_id": 2687,
+                "geometry_id": 3898,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4142,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4577,
+            "TextureID": 6599,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2687,
+            "GlossID": 6636,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2687,
+            "UserName": "Legion_Merit"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6494,
+                "Material0": 2687,
+                "Material1": 0,
+                "GeometryID": 3898,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4142,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4142,
+                "UserName": "Legion_Merit"
+              },
+              "geometry": {
+                "ID": 3898,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1478323936462402,
+                "SizeY": 0.22525432705879211,
+                "SizeZ": 2.2211437225341797,
+                "CenterX": 0.0,
+                "CenterY": -0.019409816712141037,
+                "CenterZ": 0.01841074228286743,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "Legion_Merit",
+                "RootJoint": "Legion_Merit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "6e6d79592b1597dd4775adac4bf39a56191bfa5e61b9a54490f5cfc8465ec469",
+      "release_mmp_sha256": "6e6d79592b1597dd4775adac4bf39a56191bfa5e61b9a54490f5cfc8465ec469",
+      "original_png_sha256": "4fc684c7bc3a3bc4b997558d556ede951ed10f2b91934afe66606759261212c6",
+      "source_rgba_sha256": "05910cdb6f7e5061c9f4f6c8d4e8cf752e2a99c85e4d6624dfd61bd7140dc05d",
+      "source_rgb_sha256": "750e9450a8a44f9dd2f69ddde6d04897fdf1c56e4cbca60607ebc8cf1a1e8f81",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6601,
+      "source_record": {
+        "id": 6601,
+        "texture": {
+          "ID": 6601,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -13223105,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\MilitaryCross.tga",
+          "Format": "8888",
+          "UserName": "MilitaryCross",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4579,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2688,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6496,
+                  "field": "Material0",
+                  "material_template_id": 2688,
+                  "geometry_id": 3899,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4143,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "834467d2db1f8ba3b1be734edc7b67bdba40673b15e547ec9f54ab28afaa3873",
+        "source_rgba_sha256": "1d982b190cedf04c0488285a10e53064cfdc9c21bd8b63cc693d51578fc82b4a",
+        "release_rgba_sha256": "1d982b190cedf04c0488285a10e53064cfdc9c21bd8b63cc693d51578fc82b4a",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6601.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6601,
+        "texture": {
+          "ID": 6601,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -13223105,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\MilitaryCross.tga",
+          "Format": "8888",
+          "UserName": "MilitaryCross",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4579,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2688,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6496,
+                "field": "Material0",
+                "material_template_id": 2688,
+                "geometry_id": 3899,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4143,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4579,
+            "TextureID": 6601,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2688,
+            "GlossID": 6598,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2688,
+            "UserName": "MilitaryCross"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6496,
+                "Material0": 2688,
+                "Material1": 0,
+                "GeometryID": 3899,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4143,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4143,
+                "UserName": "MilitaryCross"
+              },
+              "geometry": {
+                "ID": 3899,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.9389294981956482,
+                "SizeY": 0.14098989963531494,
+                "SizeZ": 2.0597901344299316,
+                "CenterX": 0.0,
+                "CenterY": 0.0001457110047340393,
+                "CenterZ": 0.02071934938430786,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "MilitaryCross",
+                "RootJoint": "MilitaryCross"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "834467d2db1f8ba3b1be734edc7b67bdba40673b15e547ec9f54ab28afaa3873",
+      "release_mmp_sha256": "834467d2db1f8ba3b1be734edc7b67bdba40673b15e547ec9f54ab28afaa3873",
+      "original_png_sha256": "a5e69cd38189c132ac744514cf7778051241f8b8c89996dc2af73b57606bb246",
+      "source_rgba_sha256": "1d982b190cedf04c0488285a10e53064cfdc9c21bd8b63cc693d51578fc82b4a",
+      "source_rgb_sha256": "0845d58eec581fc7f4934f4aad8b0adfde3ce38cbfa66472c3821207f590e3db",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 6643,
+      "source_record": {
+        "id": 6643,
+        "texture": {
+          "ID": 6643,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -211263916,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\GermanCroos_Gold.tga",
+          "Format": "8888",
+          "UserName": "GermanCross_Gold",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4570,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 2683,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6486,
+                  "field": "Material0",
+                  "material_template_id": 2683,
+                  "geometry_id": 3895,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4138,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "8a57aa817c5edb08a1289b2168cae3874a090237b53c70a95d3ea7cc1b277455",
+        "source_rgba_sha256": "7742568012cad4cf75c80b96351869091d0b15af7c3340746541db2c2cc9f1bb",
+        "release_rgba_sha256": "7742568012cad4cf75c80b96351869091d0b15af7c3340746541db2c2cc9f1bb",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/6643.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6643,
+        "texture": {
+          "ID": 6643,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -211263916,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Medals\\GermanCroos_Gold.tga",
+          "Format": "8888",
+          "UserName": "GermanCross_Gold",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 9,
+          "file_bytes": 349548,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4570,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 2683,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6486,
+                "field": "Material0",
+                "material_template_id": 2683,
+                "geometry_id": 3895,
+                "geometry": "Interface\\Medals\\medals.mb",
+                "model_template_id": 4138,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 4570,
+            "TextureID": 6643,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2683,
+            "GlossID": 6657,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2683,
+            "UserName": "GermanCross_Gold"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6486,
+                "Material0": 2683,
+                "Material1": 2670,
+                "GeometryID": 3895,
+                "Material2": 2703,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4138,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4138,
+                "UserName": "GermanCross_Gold"
+              },
+              "geometry": {
+                "ID": 3895,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.2427672147750854,
+                "SizeY": 0.089530810713768,
+                "SizeZ": 1.242767572402954,
+                "CenterX": 0.0,
+                "CenterY": -0.002013426274061203,
+                "CenterZ": -0.008086726069450378,
+                "SrcName": "Interface\\Medals\\medals.mb",
+                "UserName": "GermanCross_Gold",
+                "RootJoint": "GermanCross_Gold"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "alpha_test"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "8a57aa817c5edb08a1289b2168cae3874a090237b53c70a95d3ea7cc1b277455",
+      "release_mmp_sha256": "8a57aa817c5edb08a1289b2168cae3874a090237b53c70a95d3ea7cc1b277455",
+      "original_png_sha256": "fb11002199afb6d6a3353420ca4a2c8edb0b14885a1a16bebc32ef5ddd8ccfb2",
+      "source_rgba_sha256": "7742568012cad4cf75c80b96351869091d0b15af7c3340746541db2c2cc9f1bb",
+      "source_rgb_sha256": "dbb53952a64e3c2c6576b87e88918149946a82a46a4204d248aa5873c64516f6",
+      "source_alpha_sha256": "b22f708f616e2e19526d2582aace6fc9287496bb03dba980883091bebfe04995",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 4620,
+      "source_record": {
+        "id": 4620,
+        "texture": {
+          "ID": 4620,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14415350,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\GR.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_German",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2888,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1856,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4842,
+                  "field": "Material0",
+                  "material_template_id": 1856,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3219,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "abff0e921564db4c56a98e39d26469e4bac975555fb8b99ed71186306c4c8cd7",
+        "source_rgba_sha256": "398473d0a7c40466acac99f77fd08b3712924d25baa9b86c798291f3b7838e2d",
+        "release_rgba_sha256": "398473d0a7c40466acac99f77fd08b3712924d25baa9b86c798291f3b7838e2d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4620.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4620,
+        "texture": {
+          "ID": 4620,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14415350,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\GR.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_German",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2888,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1856,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4842,
+                "field": "Material0",
+                "material_template_id": 1856,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3219,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 2888,
+            "TextureID": 4620,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1856,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1856,
+            "UserName": "Flag_German"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4842,
+                "Material0": 1856,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3219,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3219,
+                "UserName": "Flag_German"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "abff0e921564db4c56a98e39d26469e4bac975555fb8b99ed71186306c4c8cd7",
+      "release_mmp_sha256": "abff0e921564db4c56a98e39d26469e4bac975555fb8b99ed71186306c4c8cd7",
+      "original_png_sha256": "dcd9a85742ddaada9f1adcf0a34271e240243542fd5b36e44f574278e9522f15",
+      "source_rgba_sha256": "398473d0a7c40466acac99f77fd08b3712924d25baa9b86c798291f3b7838e2d",
+      "source_rgb_sha256": "5e59fa74403eb8aeeacff856e38a157b917b6de6193c920688f0897f962c4389",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    {
+      "id": 4751,
+      "source_record": {
+        "id": 4751,
+        "texture": {
+          "ID": 4751,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13953765,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3021,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1939,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4975,
+                  "field": "Material0",
+                  "material_template_id": 1939,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3309,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+        "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+        "release_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4751.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4751,
+        "texture": {
+          "ID": 4751,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13953765,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3021,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1939,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4975,
+                "field": "Material0",
+                "material_template_id": 1939,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3309,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3021,
+            "TextureID": 4751,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1939,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1939,
+            "UserName": "Flag_USA"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4975,
+                "Material0": 1939,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3309,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3309,
+                "UserName": "Flag_USA"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+      "release_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+      "original_png_sha256": "3d045cf5e695c1fedd697885e70b2bbf400d04647293f6ed0513652d4c1cd38c",
+      "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+      "source_rgb_sha256": "d2fd2f775c7b3f84f584fa6e2aa61b00a64448522e139a7b1b9be2043b07b0da",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    }
+  ],
+  "shared_modified": false
+}

@@ -1,0 +1,369 @@
+[
+  {
+    "id": 3815,
+    "recommendation": "retain-exact-original-purpose-review",
+    "coordinator_final_classification_required": true,
+    "genuine_pending_until_coordinator_disposition": true,
+    "builtin_calls": 0,
+    "source_check": {
+      "id": 3815,
+      "source_record": {
+        "id": 3815,
+        "texture": {
+          "ID": 3815,
+          "Width": 97,
+          "Height": 88,
+          "NMips": 1,
+          "AverageColor": 2118524436,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+          "Format": "8888",
+          "UserName": "Zone #1",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 529,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Zone #1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 529,
+              "name": "Zone #1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                97,
+                88
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1671,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 328,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2550,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 424,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          97,
+          88
+        ],
+        "source_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+        "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+        "release_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/3815.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3815,
+        "texture": {
+          "ID": 3815,
+          "Width": 97,
+          "Height": 88,
+          "NMips": 1,
+          "AverageColor": 2118524436,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+          "Format": "8888",
+          "UserName": "Zone #1",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "logical_size": [
+          97,
+          88
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            97,
+            88
+          ],
+          "mips": 1,
+          "file_bytes": 34168,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 529,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Zone #1"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 529,
+            "name": "Zone #1",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              97,
+              88
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 1671,
+                "field": "Texture0",
+                "control_name": "zone_normal",
+                "type": 2,
+                "rect": [
+                  144,
+                  0,
+                  241,
+                  88
+                ],
+                "container": 328,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2550,
+                "field": "Texture0",
+                "control_name": "zone_normal",
+                "type": 2,
+                "rect": [
+                  144,
+                  0,
+                  241,
+                  88
+                ],
+                "container": 424,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+      "release_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+      "original_png_sha256": "ce8c3d55a5ea80949a958a42fad87f84f3ffea964b39f51e6a0b8753fe3fbc22",
+      "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+      "source_rgb_sha256": "6083c4b75699486443d4f901917662150c6cd723b538d2cc4e0794075d292ead",
+      "source_alpha_sha256": "3b0e880bbb7f1dfb23ee6d0601d0c8e5a23b7bddfea096015ccbe4504e79d647",
+      "dimensions": [
+        97,
+        88
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+    },
+    "actual_consumer_proof": {
+      "id": 3815,
+      "actual_typed_material_model_chains": [],
+      "actual_ContainerModels": [],
+      "actual_Objects": [],
+      "actual_UI_consumer_proof": {
+        "id": 3815,
+        "actual_ui_links": [
+          {
+            "ui_texture_id": 529,
+            "name": "Zone #1",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              97,
+              88
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 1671,
+                "field": "Texture0",
+                "control_name": "zone_normal",
+                "type": 2,
+                "rect": [
+                  144,
+                  0,
+                  241,
+                  88
+                ],
+                "container": 328,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2550,
+                "field": "Texture0",
+                "control_name": "zone_normal",
+                "type": 2,
+                "rect": [
+                  144,
+                  0,
+                  241,
+                  88
+                ],
+                "container": 424,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "actual_nationality_records": [],
+        "actual_side_nationality_links": [],
+        "actual_person_nationality_records": [],
+        "actual_UIControls": [
+          {
+            "ID": 1671,
+            "Type": 2,
+            "Left": 144,
+            "Top": 0,
+            "Right": 241,
+            "Bottom": 88,
+            "Texture0": 529,
+            "Texture1": 0,
+            "Texture2": 0,
+            "Texture3": 0,
+            "Texture4": 0,
+            "Model0": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "StringID": 0,
+            "UIContainerID": 328,
+            "NestedUIContainerID": 0,
+            "TooltipID": 0,
+            "Depth": 0,
+            "Color": -1,
+            "Freeze": 1,
+            "Transparent": 1,
+            "Visible": 1,
+            "Topmost": 0,
+            "Texture5": 0,
+            "DefaultWindow": 0,
+            "Bottommost": 1,
+            "Sound0": 0,
+            "Sound1": 0,
+            "Sound2": 0,
+            "Sound3": 0,
+            "Sound4": 0,
+            "ToolTipAnchorX": 0,
+            "ToolTipAnchorY": 0,
+            "Text": "",
+            "IDText": "zone_normal",
+            "ToolTipAnchorType": ""
+          },
+          {
+            "ID": 2550,
+            "Type": 2,
+            "Left": 144,
+            "Top": 0,
+            "Right": 241,
+            "Bottom": 88,
+            "Texture0": 529,
+            "Texture1": 0,
+            "Texture2": 0,
+            "Texture3": 0,
+            "Texture4": 0,
+            "Model0": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "StringID": 0,
+            "UIContainerID": 424,
+            "NestedUIContainerID": 0,
+            "TooltipID": 0,
+            "Depth": 0,
+            "Color": -1,
+            "Freeze": 1,
+            "Transparent": 1,
+            "Visible": 1,
+            "Topmost": 0,
+            "Texture5": 0,
+            "DefaultWindow": 0,
+            "Bottommost": 0,
+            "Sound0": 0,
+            "Sound1": 0,
+            "Sound2": 0,
+            "Sound3": 0,
+            "Sound4": 0,
+            "ToolTipAnchorX": 0,
+            "ToolTipAnchorY": 0,
+            "Text": "",
+            "IDText": "zone_normal",
+            "ToolTipAnchorType": ""
+          }
+        ],
+        "actual_nested_UI_container_ancestry": []
+      },
+      "actual_consumer_not_registration_only": true,
+      "current_live_scene_verified": false,
+      "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+    },
+    "reason": "Fresh actualUI529→CImage Controls1671/2550 IDText zone_normal in containers328/424; source one geographic selection contour. CZoneGlobalSector iGlobalMapUI175 retrieves zone_normal,205 adjusts selection opacity,279 loads sector image template. Exact geographic alpha/contour/fill retain-original recommendation individually proven, not technical inferred from name/red color. Native weakRGB variation is not asserted mathematically constant.",
+    "shared_disposition_written": false
+  }
+]

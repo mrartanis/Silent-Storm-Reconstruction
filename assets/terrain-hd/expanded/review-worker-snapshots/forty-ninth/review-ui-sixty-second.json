@@ -1,0 +1,4726 @@
+{
+  "batch": "ui-sixty-second",
+  "frozen": true,
+  "scope_ids": [
+    3815,
+    3792,
+    4183,
+    4184,
+    4612,
+    4613,
+    4614,
+    4618,
+    4619,
+    6543,
+    6573,
+    6600
+  ],
+  "source_checked_count": 12,
+  "first_sole_builtin_calls": 1,
+  "ready": [
+    {
+      "id": 6543,
+      "status": "art-reviewed-ready-coordinator-finalgate",
+      "source_check": {
+        "id": 6543,
+        "source_record": {
+          "id": 6543,
+          "texture": {
+            "ID": 6543,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": -14407898,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\WarMeritCross_1cl_back.tga",
+            "Format": "8888",
+            "UserName": "WarMeritCross_1cl_back",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 4539,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2673,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 6476,
+                    "field": "Material1",
+                    "material_template_id": 2673,
+                    "geometry_id": 3891,
+                    "geometry": "Interface\\Medals\\medals.mb",
+                    "model_template_id": 4133,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "751f4c7d56e9f2b30dbefea63efb405ebf5ff6f68a8ed062f5c64f0d8b621a76",
+          "source_rgba_sha256": "aa437eb918fdf50ecda4f5df9c5a158060e98197d8e69142f8f7050911166644",
+          "release_rgba_sha256": "aa437eb918fdf50ecda4f5df9c5a158060e98197d8e69142f8f7050911166644",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6543.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6543,
+          "texture": {
+            "ID": 6543,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": -14407898,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\WarMeritCross_1cl_back.tga",
+            "Format": "8888",
+            "UserName": "WarMeritCross_1cl_back",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4539,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2673,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6476,
+                  "field": "Material1",
+                  "material_template_id": 2673,
+                  "geometry_id": 3891,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4133,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4539,
+              "TextureID": 6543,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2673,
+              "GlossID": 6595,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2673,
+              "UserName": "WarMeritCross_1cl_back"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 6476,
+                  "Material0": 2672,
+                  "Material1": 2673,
+                  "GeometryID": 3891,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4133,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4133,
+                  "UserName": "WarMeritCross_1cl"
+                },
+                "geometry": {
+                  "ID": 3891,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.0809166431427002,
+                  "SizeY": 0.13715052604675293,
+                  "SizeZ": 1.0809166431427002,
+                  "CenterX": 0.0,
+                  "CenterY": -0.011066216975450516,
+                  "CenterZ": 0.0009447038173675537,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "WarMeritCross_1cl",
+                  "RootJoint": "WarMeritCross_1cl"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "751f4c7d56e9f2b30dbefea63efb405ebf5ff6f68a8ed062f5c64f0d8b621a76",
+        "release_mmp_sha256": "751f4c7d56e9f2b30dbefea63efb405ebf5ff6f68a8ed062f5c64f0d8b621a76",
+        "original_png_sha256": "949d4293a9e8e4c031a2740b839eb2ef08801590d500fd2527617787132da877",
+        "source_rgba_sha256": "aa437eb918fdf50ecda4f5df9c5a158060e98197d8e69142f8f7050911166644",
+        "source_rgb_sha256": "d97d4ec55d6dbaf7eba8eba94c27fda89ce2713b8ac884f784ed146813872384",
+        "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "actual_consumer_proof": {
+        "id": 6543,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4539,
+              "TextureID": 6543,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2673,
+              "GlossID": 6595,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2673,
+              "UserName": "WarMeritCross_1cl_back"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 6476,
+                  "Material0": 2672,
+                  "Material1": 2673,
+                  "GeometryID": 3891,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4133,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4133,
+                  "UserName": "WarMeritCross_1cl"
+                },
+                "geometry": {
+                  "ID": 3891,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.0809166431427002,
+                  "SizeY": 0.13715052604675293,
+                  "SizeZ": 1.0809166431427002,
+                  "CenterX": 0.0,
+                  "CenterY": -0.011066216975450516,
+                  "CenterZ": 0.0009447038173675537,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "WarMeritCross_1cl",
+                  "RootJoint": "WarMeritCross_1cl"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 6543,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "call_metadata": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6543-generation-call.json",
+      "raw_sha256": "0092bb5d31344452237d3f50dc37e64486f5f9bfded3c74e35f06691ead40583",
+      "reference_recipe": {
+        "method": "Whole native stored original convertRGB no resize/exposure/affine/crop/pad; wholeNN private only; entire raw inverse wholeLANCZOS exact4x.",
+        "original_png": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6543.png",
+        "original_png_sha256": "949d4293a9e8e4c031a2740b839eb2ef08801590d500fd2527617787132da877",
+        "source_rgba_sha256": "aa437eb918fdf50ecda4f5df9c5a158060e98197d8e69142f8f7050911166644",
+        "references_sha256": [
+          "e74185bebd58468e397acd4db11865746639eab182213f0dcdbd92dd612f766c"
+        ],
+        "submitted_canvas": [
+          128,
+          128
+        ],
+        "before_call_proof": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/before-call-ui-sixty-second.json",
+        "before_call_proof_sha256": "0f0417045e935eb6a1784d7f63bf745b474a5792c539611dbb07fd08b5d3d62a"
+      },
+      "numeric_metrics": {
+        "id": 6543,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6543-raw.png",
+        "raw_sha256": "0092bb5d31344452237d3f50dc37e64486f5f9bfded3c74e35f06691ead40583",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          512,
+          512
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "native_premultiplied": false,
+        "scalar_gain": 1.0565185546875,
+        "target_stored_luma": 38.245106872558594,
+        "actual_stored_luma": 38.24929222106933,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9645476432550693,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 109826,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-sixty-second/native4x/6543-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-sixty-second/native4x/6543-native-stored-RGB.png"
+      },
+      "full_raw_native4x_RGBA_privately_viewed": true,
+      "whole_source_A_restored_exact": true,
+      "material_count_UV_review": "Four notched main arms/eight main tips/four short diagonal bars, lower rectangular dark wash and original central broad shaded ridge retained. Full128square fields/black authored margins and matte blue-gray material preserved. Existing upper pale triangular line groups remain in source quadrants; no new glyphs/hardware/holes identified. Pure scalar1.0565/defaultpadding0/fullA255.",
+      "disclosed_caveats": "Source faint triangular line washes are more continuous/clear and several silhouette edge tones are slightly sharper; minor tip/notch/rim softness variation. These are disclosed moderate paint changes, not pixel-identical restoration or invented extra elements. Coordinator must review original weakline strength/material/fullUV before import.",
+      "native_build_GPU_verified_by_worker": false
+    }
+  ],
+  "held": [],
+  "uncalled_genuine_pending": [
+    {
+      "id": 3815,
+      "status": "genuine-source-only-pending",
+      "reason": "One red-brown filled geographic contour on black whole97x88UV with original lobes/concavities, no labels. ExactRGBA and alpha outline phase retained. Individual geographic selection-overlay original-purpose candidate, requires actualconsumer proof/coordinator classification, not inferred technical from red color/name.",
+      "source_check": {
+        "id": 3815,
+        "source_record": {
+          "id": 3815,
+          "texture": {
+            "ID": 3815,
+            "Width": 97,
+            "Height": 88,
+            "NMips": 1,
+            "AverageColor": 2118524436,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+            "Format": "8888",
+            "UserName": "Zone #1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 529,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Zone #1"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 529,
+                "name": "Zone #1",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  97,
+                  88
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1671,
+                    "field": "Texture0",
+                    "control_name": "zone_normal",
+                    "type": 2,
+                    "rect": [
+                      144,
+                      0,
+                      241,
+                      88
+                    ],
+                    "container": 328,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2550,
+                    "field": "Texture0",
+                    "control_name": "zone_normal",
+                    "type": 2,
+                    "rect": [
+                      144,
+                      0,
+                      241,
+                      88
+                    ],
+                    "container": 424,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            97,
+            88
+          ],
+          "source_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+          "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+          "release_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/3815.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 3815,
+          "texture": {
+            "ID": 3815,
+            "Width": 97,
+            "Height": 88,
+            "NMips": 1,
+            "AverageColor": 2118524436,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+            "Format": "8888",
+            "UserName": "Zone #1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            97,
+            88
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              97,
+              88
+            ],
+            "mips": 1,
+            "file_bytes": 34168,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 529,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Zone #1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 529,
+              "name": "Zone #1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                97,
+                88
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1671,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 328,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2550,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 424,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+        "release_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+        "original_png_sha256": "ce8c3d55a5ea80949a958a42fad87f84f3ffea964b39f51e6a0b8753fe3fbc22",
+        "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+        "source_rgb_sha256": "6083c4b75699486443d4f901917662150c6cd723b538d2cc4e0794075d292ead",
+        "source_alpha_sha256": "3b0e880bbb7f1dfb23ee6d0601d0c8e5a23b7bddfea096015ccbe4504e79d647",
+        "dimensions": [
+          97,
+          88
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 3815,
+        "actual_typed_material_model_chains": [],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 3815,
+          "actual_ui_links": [
+            {
+              "ui_texture_id": 529,
+              "name": "Zone #1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                97,
+                88
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1671,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 328,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2550,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 424,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [
+            {
+              "ID": 1671,
+              "Type": 2,
+              "Left": 144,
+              "Top": 0,
+              "Right": 241,
+              "Bottom": 88,
+              "Texture0": 529,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 328,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 1,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "zone_normal",
+              "ToolTipAnchorType": ""
+            },
+            {
+              "ID": 2550,
+              "Type": 2,
+              "Left": 144,
+              "Top": 0,
+              "Right": 241,
+              "Bottom": 88,
+              "Texture0": 529,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 424,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "zone_normal",
+              "ToolTipAnchorType": ""
+            }
+          ],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 3792,
+      "status": "genuine-source-only-pending",
+      "reason": "One oblique curved map-like small painted button field, pale green/tan lattice lines, one diagonal thin pale edge and existing localized warm flash/glow around corners. Fine lattice intersections/line count/phase individually unresolved. Genuine painted button pending, not alpha/glow exclusion.",
+      "source_check": {
+        "id": 3792,
+        "source_record": {
+          "id": 3792,
+          "texture": {
+            "ID": 3792,
+            "Width": 59,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 1765027362,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\16.tga",
+            "Format": "8888",
+            "UserName": "Button - GlobalMap - Flash",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 527,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Button - GlobalMap - Flash"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 527,
+                "name": "Button - GlobalMap - Flash",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  59,
+                  64
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1504,
+                    "field": "Texture0",
+                    "control_name": "light",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      59,
+                      64
+                    ],
+                    "container": 314,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            59,
+            64
+          ],
+          "source_sha256": "fa27ac11fecfeb9c2ba66e0524909ec8319d0b4b51bb8f58ccdb369f336bb659",
+          "source_rgba_sha256": "29de24c9cb20678ea4ecdb2046f62df26d0dfc6a3104d4dbe79111c9237614a3",
+          "release_rgba_sha256": "29de24c9cb20678ea4ecdb2046f62df26d0dfc6a3104d4dbe79111c9237614a3",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/3792.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 3792,
+          "texture": {
+            "ID": 3792,
+            "Width": 59,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 1765027362,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\16.tga",
+            "Format": "8888",
+            "UserName": "Button - GlobalMap - Flash",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            59,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              59,
+              64
+            ],
+            "mips": 1,
+            "file_bytes": 15128,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 527,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Button - GlobalMap - Flash"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 527,
+              "name": "Button - GlobalMap - Flash",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                59,
+                64
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1504,
+                  "field": "Texture0",
+                  "control_name": "light",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    59,
+                    64
+                  ],
+                  "container": 314,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "fa27ac11fecfeb9c2ba66e0524909ec8319d0b4b51bb8f58ccdb369f336bb659",
+        "release_mmp_sha256": "fa27ac11fecfeb9c2ba66e0524909ec8319d0b4b51bb8f58ccdb369f336bb659",
+        "original_png_sha256": "978cf1e51c3f277784e80c4d9a4acb76d08a430209ca78490a54a49b5a68ea6a",
+        "source_rgba_sha256": "29de24c9cb20678ea4ecdb2046f62df26d0dfc6a3104d4dbe79111c9237614a3",
+        "source_rgb_sha256": "8aa8356dbf085f1a3ca670b7b7bdc21f091995755687ea1f524069900f121474",
+        "source_alpha_sha256": "a6c7e4ca5b5709e195724c26889b734358542d3308f318578b4b72c16f398ff7",
+        "dimensions": [
+          59,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 3792,
+        "actual_typed_material_model_chains": [],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 3792,
+          "actual_ui_links": [
+            {
+              "ui_texture_id": 527,
+              "name": "Button - GlobalMap - Flash",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                59,
+                64
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1504,
+                  "field": "Texture0",
+                  "control_name": "light",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    59,
+                    64
+                  ],
+                  "container": 314,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [
+            {
+              "ID": 1504,
+              "Type": 2,
+              "Left": 0,
+              "Top": 0,
+              "Right": 59,
+              "Bottom": 64,
+              "Texture0": 527,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 314,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "light",
+              "ToolTipAnchorType": ""
+            }
+          ],
+          "actual_nested_UI_container_ancestry": [
+            {
+              "child_control_id": 1504,
+              "actual_parent_control": {
+                "ID": 1505,
+                "Type": 13,
+                "Left": 0,
+                "Top": 103,
+                "Right": 59,
+                "Bottom": 167,
+                "Texture0": 0,
+                "Texture1": 0,
+                "Texture2": 0,
+                "Texture3": 0,
+                "Texture4": 0,
+                "Model0": 0,
+                "Model1": 0,
+                "Model2": 0,
+                "Model3": 0,
+                "Model4": 0,
+                "StringID": 0,
+                "UIContainerID": 147,
+                "NestedUIContainerID": 314,
+                "TooltipID": 11128,
+                "Depth": 4,
+                "Color": 0,
+                "Freeze": 1,
+                "Transparent": 0,
+                "Visible": 1,
+                "Topmost": 0,
+                "Texture5": 0,
+                "DefaultWindow": 0,
+                "Bottommost": 0,
+                "Sound0": 0,
+                "Sound1": 0,
+                "Sound2": 0,
+                "Sound3": 0,
+                "Sound4": 0,
+                "ToolTipAnchorX": 0,
+                "ToolTipAnchorY": 0,
+                "Text": "",
+                "IDText": "showglobal",
+                "ToolTipAnchorType": ""
+              },
+              "actual_container": {
+                "ID": 147,
+                "Width": 1024,
+                "Height": 768,
+                "ScriptID": 0,
+                "UserName": "Main"
+              }
+            }
+          ]
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4183,
+      "status": "genuine-source-only-pending",
+      "reason": "One small rectangular beige cartographic paper/map field with old thin double border and irregular fine overlapping drawn network;4184 has brighter existing warm outer halo than4183. Exact thin network and border phase unproven, no invented transcription/map routes. Individual genuine artwork pending.",
+      "source_check": {
+        "id": 4183,
+        "source_record": {
+          "id": 4183,
+          "texture": {
+            "ID": 4183,
+            "Width": 122,
+            "Height": 90,
+            "NMips": 1,
+            "AverageColor": -1622788569,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\GlobalView\\24_01.tga",
+            "Format": "8888",
+            "UserName": "ReturnToChapter - Normal",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 558,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "ReturnToChapter - Normal"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 558,
+                "name": "ReturnToChapter - Normal",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  122,
+                  90
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1669,
+                    "field": "Texture0",
+                    "control_name": "background",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      122,
+                      90
+                    ],
+                    "container": 327,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            122,
+            90
+          ],
+          "source_sha256": "66611f0a93e6c619df388589b113401e9f6b10e7c1d745203a66cfd8df1f65b9",
+          "source_rgba_sha256": "ea2a542ea8c09ee1eea1ac18e0c0cb2e3d9b7babd25a6f59bb768a19e1b31dbc",
+          "release_rgba_sha256": "ea2a542ea8c09ee1eea1ac18e0c0cb2e3d9b7babd25a6f59bb768a19e1b31dbc",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/4183.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4183,
+          "texture": {
+            "ID": 4183,
+            "Width": 122,
+            "Height": 90,
+            "NMips": 1,
+            "AverageColor": -1622788569,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\GlobalView\\24_01.tga",
+            "Format": "8888",
+            "UserName": "ReturnToChapter - Normal",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            122,
+            90
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              122,
+              90
+            ],
+            "mips": 1,
+            "file_bytes": 43944,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 558,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "ReturnToChapter - Normal"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 558,
+              "name": "ReturnToChapter - Normal",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                122,
+                90
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1669,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    122,
+                    90
+                  ],
+                  "container": 327,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "66611f0a93e6c619df388589b113401e9f6b10e7c1d745203a66cfd8df1f65b9",
+        "release_mmp_sha256": "66611f0a93e6c619df388589b113401e9f6b10e7c1d745203a66cfd8df1f65b9",
+        "original_png_sha256": "3827e96739ab83a31b4b154e80c79d5843c878dd2e25a4b65a67da5bcd75272b",
+        "source_rgba_sha256": "ea2a542ea8c09ee1eea1ac18e0c0cb2e3d9b7babd25a6f59bb768a19e1b31dbc",
+        "source_rgb_sha256": "ffbc21aafcd2b1bb045394f8eebd6b376286dbd7d30963ad910a9d700c30265d",
+        "source_alpha_sha256": "5fc87eacbe721307c76fe38177ca931ed8754d0e588ba29ba57a5551756e12ea",
+        "dimensions": [
+          122,
+          90
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4183,
+        "actual_typed_material_model_chains": [],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 4183,
+          "actual_ui_links": [
+            {
+              "ui_texture_id": 558,
+              "name": "ReturnToChapter - Normal",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                122,
+                90
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1669,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    122,
+                    90
+                  ],
+                  "container": 327,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [
+            {
+              "ID": 1669,
+              "Type": 2,
+              "Left": 0,
+              "Top": 0,
+              "Right": 122,
+              "Bottom": 90,
+              "Texture0": 558,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 327,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "background",
+              "ToolTipAnchorType": ""
+            }
+          ],
+          "actual_nested_UI_container_ancestry": [
+            {
+              "child_control_id": 1669,
+              "actual_parent_control": {
+                "ID": 1668,
+                "Type": 13,
+                "Left": 902,
+                "Top": 129,
+                "Right": 1024,
+                "Bottom": 219,
+                "Texture0": 0,
+                "Texture1": 0,
+                "Texture2": 0,
+                "Texture3": 0,
+                "Texture4": 0,
+                "Model0": 0,
+                "Model1": 0,
+                "Model2": 0,
+                "Model3": 0,
+                "Model4": 0,
+                "StringID": 0,
+                "UIContainerID": 175,
+                "NestedUIContainerID": 327,
+                "TooltipID": 11120,
+                "Depth": 2,
+                "Color": 0,
+                "Freeze": 1,
+                "Transparent": 0,
+                "Visible": 1,
+                "Topmost": 1,
+                "Texture5": 0,
+                "DefaultWindow": 0,
+                "Bottommost": 0,
+                "Sound0": 0,
+                "Sound1": 0,
+                "Sound2": 0,
+                "Sound3": 0,
+                "Sound4": 0,
+                "ToolTipAnchorX": 0,
+                "ToolTipAnchorY": 0,
+                "Text": "",
+                "IDText": "cancel",
+                "ToolTipAnchorType": ""
+              },
+              "actual_container": {
+                "ID": 175,
+                "Width": 1024,
+                "Height": 768,
+                "ScriptID": 0,
+                "UserName": "Main"
+              }
+            }
+          ]
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4184,
+      "status": "genuine-source-only-pending",
+      "reason": "One small rectangular beige cartographic paper/map field with old thin double border and irregular fine overlapping drawn network;4184 has brighter existing warm outer halo than4183. Exact thin network and border phase unproven, no invented transcription/map routes. Individual genuine artwork pending.",
+      "source_check": {
+        "id": 4184,
+        "source_record": {
+          "id": 4184,
+          "texture": {
+            "ID": 4184,
+            "Width": 122,
+            "Height": 90,
+            "NMips": 1,
+            "AverageColor": -1537390803,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\GlobalView\\24_02.tga",
+            "Format": "8888",
+            "UserName": "ReturnToChapter - Flash",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 559,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "ReturnToChapter - Flash"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 559,
+                "name": "ReturnToChapter - Flash",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  122,
+                  90
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1670,
+                    "field": "Texture0",
+                    "control_name": "active",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      122,
+                      90
+                    ],
+                    "container": 327,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            122,
+            90
+          ],
+          "source_sha256": "acc33ad8580c097612f7182d0e115e47cf8eba278bf456597f90b5e7e8d923dd",
+          "source_rgba_sha256": "0ee3a68171ed34009977e083abdf8077ef5193ff006bd0da88ff9d0b33007655",
+          "release_rgba_sha256": "0ee3a68171ed34009977e083abdf8077ef5193ff006bd0da88ff9d0b33007655",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/4184.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4184,
+          "texture": {
+            "ID": 4184,
+            "Width": 122,
+            "Height": 90,
+            "NMips": 1,
+            "AverageColor": -1537390803,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\GlobalView\\24_02.tga",
+            "Format": "8888",
+            "UserName": "ReturnToChapter - Flash",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            122,
+            90
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              122,
+              90
+            ],
+            "mips": 1,
+            "file_bytes": 43944,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 559,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "ReturnToChapter - Flash"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 559,
+              "name": "ReturnToChapter - Flash",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                122,
+                90
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1670,
+                  "field": "Texture0",
+                  "control_name": "active",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    122,
+                    90
+                  ],
+                  "container": 327,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "acc33ad8580c097612f7182d0e115e47cf8eba278bf456597f90b5e7e8d923dd",
+        "release_mmp_sha256": "acc33ad8580c097612f7182d0e115e47cf8eba278bf456597f90b5e7e8d923dd",
+        "original_png_sha256": "0483693076dedf37a68332c6f0772371db983fa14313c5a03669b0b48232f511",
+        "source_rgba_sha256": "0ee3a68171ed34009977e083abdf8077ef5193ff006bd0da88ff9d0b33007655",
+        "source_rgb_sha256": "bfdf9928df081549c38808dbedc6ba727a1a12da358a3ae1783867e74bc29b3c",
+        "source_alpha_sha256": "35537997e816fb9be019b59546b83a732ca77823b8087296cd9ea494cdf32c74",
+        "dimensions": [
+          122,
+          90
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4184,
+        "actual_typed_material_model_chains": [],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 4184,
+          "actual_ui_links": [
+            {
+              "ui_texture_id": 559,
+              "name": "ReturnToChapter - Flash",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                122,
+                90
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1670,
+                  "field": "Texture0",
+                  "control_name": "active",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    122,
+                    90
+                  ],
+                  "container": 327,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [
+            {
+              "ID": 1670,
+              "Type": 2,
+              "Left": 0,
+              "Top": 0,
+              "Right": 122,
+              "Bottom": 90,
+              "Texture0": 559,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 327,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 1,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "active",
+              "ToolTipAnchorType": ""
+            }
+          ],
+          "actual_nested_UI_container_ancestry": [
+            {
+              "child_control_id": 1670,
+              "actual_parent_control": {
+                "ID": 1668,
+                "Type": 13,
+                "Left": 902,
+                "Top": 129,
+                "Right": 1024,
+                "Bottom": 219,
+                "Texture0": 0,
+                "Texture1": 0,
+                "Texture2": 0,
+                "Texture3": 0,
+                "Texture4": 0,
+                "Model0": 0,
+                "Model1": 0,
+                "Model2": 0,
+                "Model3": 0,
+                "Model4": 0,
+                "StringID": 0,
+                "UIContainerID": 175,
+                "NestedUIContainerID": 327,
+                "TooltipID": 11120,
+                "Depth": 2,
+                "Color": 0,
+                "Freeze": 1,
+                "Transparent": 0,
+                "Visible": 1,
+                "Topmost": 1,
+                "Texture5": 0,
+                "DefaultWindow": 0,
+                "Bottommost": 0,
+                "Sound0": 0,
+                "Sound1": 0,
+                "Sound2": 0,
+                "Sound3": 0,
+                "Sound4": 0,
+                "ToolTipAnchorX": 0,
+                "ToolTipAnchorY": 0,
+                "Text": "",
+                "IDText": "cancel",
+                "ToolTipAnchorType": ""
+              },
+              "actual_container": {
+                "ID": 175,
+                "Width": 1024,
+                "Height": 768,
+                "ScriptID": 0,
+                "UserName": "Main"
+              }
+            }
+          ]
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4612,
+      "status": "genuine-source-only-pending",
+      "reason": "One lower-left upside-down face/head field, one small iris patch and upper-left thin dental strips; additional native hair/skin/headgear UV fields on black. Fine individual dental separation count/phase unresolved. Preserve original facial identity/hair palette; source-only pending, no group/type ban.",
+      "source_check": {
+        "id": 4612,
+        "source_record": {
+          "id": 4612,
+          "texture": {
+            "ID": 4612,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10929109,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKMedicFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKMedicFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2877,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 1850,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4831,
+                    "field": "Material1",
+                    "material_template_id": 1850,
+                    "geometry_id": 2996,
+                    "geometry": "Interface\\CharScreen\\UKMedicFemale.mb",
+                    "model_template_id": 3213,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "dc37e48e15feab1c96e468864c5f3b7ecf166abad18223df29de9e586f8804f2",
+          "source_rgba_sha256": "1c35bbec6e258bad303c6b38e74a85f5184357feb7e06be22ea54f28af7ae6c0",
+          "release_rgba_sha256": "1c35bbec6e258bad303c6b38e74a85f5184357feb7e06be22ea54f28af7ae6c0",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4612.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4612,
+          "texture": {
+            "ID": 4612,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10929109,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKMedicFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKMedicFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2877,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 1850,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4831,
+                  "field": "Material1",
+                  "material_template_id": 1850,
+                  "geometry_id": 2996,
+                  "geometry": "Interface\\CharScreen\\UKMedicFemale.mb",
+                  "model_template_id": 3213,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2877,
+              "TextureID": 4612,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1850,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1850,
+              "UserName": "UKMedicFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4831,
+                  "Material0": 1822,
+                  "Material1": 1850,
+                  "GeometryID": 2996,
+                  "Material2": 1824,
+                  "Material3": 1825,
+                  "SkeletonID": 73,
+                  "TemplateID": 3213,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3213,
+                  "UserName": "UKMedicFemale"
+                },
+                "geometry": {
+                  "ID": 2996,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7481577396392822,
+                  "SizeY": 0.34257715940475464,
+                  "SizeZ": 1.4945085048675537,
+                  "CenterX": 0.01816355437040329,
+                  "CenterY": -0.02982223965227604,
+                  "CenterZ": 1.1426317691802979,
+                  "SrcName": "Interface\\CharScreen\\UKMedicFemale.mb",
+                  "UserName": "UKMedicFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "dc37e48e15feab1c96e468864c5f3b7ecf166abad18223df29de9e586f8804f2",
+        "release_mmp_sha256": "dc37e48e15feab1c96e468864c5f3b7ecf166abad18223df29de9e586f8804f2",
+        "original_png_sha256": "e4f2cdf07fac4b579e320986785894e79061bf1a5d06e19a755d02bb7641afa2",
+        "source_rgba_sha256": "1c35bbec6e258bad303c6b38e74a85f5184357feb7e06be22ea54f28af7ae6c0",
+        "source_rgb_sha256": "461807b98615ef86967244399724d2db38c7caceaab1c0eb5a8a7acdcac5d341",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4612,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2877,
+              "TextureID": 4612,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1850,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1850,
+              "UserName": "UKMedicFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4831,
+                  "Material0": 1822,
+                  "Material1": 1850,
+                  "GeometryID": 2996,
+                  "Material2": 1824,
+                  "Material3": 1825,
+                  "SkeletonID": 73,
+                  "TemplateID": 3213,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3213,
+                  "UserName": "UKMedicFemale"
+                },
+                "geometry": {
+                  "ID": 2996,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7481577396392822,
+                  "SizeY": 0.34257715940475464,
+                  "SizeZ": 1.4945085048675537,
+                  "CenterX": 0.01816355437040329,
+                  "CenterY": -0.02982223965227604,
+                  "CenterZ": 1.1426317691802979,
+                  "SrcName": "Interface\\CharScreen\\UKMedicFemale.mb",
+                  "UserName": "UKMedicFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [
+          {
+            "ID": 1865,
+            "ModelID": 3213,
+            "ParticleID": 0,
+            "SoundID": 0,
+            "PointLight": 0,
+            "PLightFlareTexture": 0,
+            "PLightShadow": 1,
+            "SpotLight": 0,
+            "SLightFOV": 90,
+            "SLightMaskID": 0,
+            "AmbientColor": 0,
+            "DestructionSoundID": 0,
+            "SoundEffectID": 0,
+            "AttachedGrenade": 0,
+            "ParticlePosX": 0.0,
+            "ParticlePosY": 0.0,
+            "ParticlePosZ": 0.0,
+            "SoundPosX": 0.0,
+            "SoundPosY": 0.0,
+            "SoundPosZ": 0.0,
+            "PLightPosX": 0.0,
+            "PLightPosY": 0.0,
+            "PLightPosZ": 0.0,
+            "PLightRadius": 10.0,
+            "PLightFlareRadius": 0.0,
+            "SLightRadius": 10.0,
+            "SLightPosX": 0.0,
+            "SLightPosY": 0.0,
+            "SLightPosZ": 0.0,
+            "SLightDirX": 0.0,
+            "SLightDirY": 0.0,
+            "SLightDirZ": 1.0,
+            "SoundAvgInterval": 10.0,
+            "PLightFlarePosX": 0.0,
+            "PLightFlarePosY": 0.0,
+            "PLightFlarePosZ": 0.0,
+            "UserName": "UKMedicFemale",
+            "SoundType": "Permanent"
+          }
+        ],
+        "actual_Objects": [
+          {
+            "ID": 1615,
+            "Model0": 1865,
+            "DebrisMaterialID": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "RPGArmor": 0,
+            "Targetable": 0,
+            "IsDeployPoint": 0,
+            "TemplateID": 1247,
+            "ChildID": 0,
+            "KeepDecals": 1,
+            "RPGGrenade": 0,
+            "RPGChestLayout": 0,
+            "DefaultRPGChest": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_UI_consumer_proof": {
+          "id": 4612,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4613,
+      "status": "genuine-source-only-pending",
+      "reason": "One lower-left upside-down face/head field, one small iris patch and upper-left thin dental strips; additional native hair/skin/headgear UV fields on black. Fine individual dental separation count/phase unresolved. Preserve original facial identity/hair palette; source-only pending, no group/type ban.",
+      "source_check": {
+        "id": 4613,
+        "source_record": {
+          "id": 4613,
+          "texture": {
+            "ID": 4613,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -13557223,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKEngeneer_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKEngeneer_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2879,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1851,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4833,
+                    "field": "Material3",
+                    "material_template_id": 1851,
+                    "geometry_id": 2997,
+                    "geometry": "Interface\\CharScreen\\UKEngeneer.mb",
+                    "model_template_id": 3214,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "c28888dfff7b79304cdd1ca68b1e603947fc4eb942998cee3d8a3e9cd092bdfb",
+          "source_rgba_sha256": "903a68b8cef04c37301d86e397c377acb6317ebd56b70891520363ccae82590f",
+          "release_rgba_sha256": "903a68b8cef04c37301d86e397c377acb6317ebd56b70891520363ccae82590f",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4613.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4613,
+          "texture": {
+            "ID": 4613,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -13557223,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKEngeneer_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKEngeneer_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2879,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1851,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4833,
+                  "field": "Material3",
+                  "material_template_id": 1851,
+                  "geometry_id": 2997,
+                  "geometry": "Interface\\CharScreen\\UKEngeneer.mb",
+                  "model_template_id": 3214,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2879,
+              "TextureID": 4613,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1851,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1851,
+              "UserName": "UKEngeneer_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4833,
+                  "Material0": 1058,
+                  "Material1": 1059,
+                  "GeometryID": 2997,
+                  "Material2": 1060,
+                  "Material3": 1851,
+                  "SkeletonID": 73,
+                  "TemplateID": 3214,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3214,
+                  "UserName": "UKEngeneer"
+                },
+                "geometry": {
+                  "ID": 2997,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7479543685913086,
+                  "SizeY": 0.3415798842906952,
+                  "SizeZ": 1.502094030380249,
+                  "CenterX": -9.729806333780289e-05,
+                  "CenterY": -0.024805627763271332,
+                  "CenterZ": 1.295423150062561,
+                  "SrcName": "Interface\\CharScreen\\UKEngeneer.mb",
+                  "UserName": "UKEngeneer",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c28888dfff7b79304cdd1ca68b1e603947fc4eb942998cee3d8a3e9cd092bdfb",
+        "release_mmp_sha256": "c28888dfff7b79304cdd1ca68b1e603947fc4eb942998cee3d8a3e9cd092bdfb",
+        "original_png_sha256": "b320dc2ec3c2d96cc2cf0e1a16f3bf1928d16d7217c7e134a26d0add91342c86",
+        "source_rgba_sha256": "903a68b8cef04c37301d86e397c377acb6317ebd56b70891520363ccae82590f",
+        "source_rgb_sha256": "d8529c90f2cafdf5fb6e90464fec9f51680cd02e19f723f9bda1949d358fe7fc",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4613,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2879,
+              "TextureID": 4613,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1851,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1851,
+              "UserName": "UKEngeneer_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4833,
+                  "Material0": 1058,
+                  "Material1": 1059,
+                  "GeometryID": 2997,
+                  "Material2": 1060,
+                  "Material3": 1851,
+                  "SkeletonID": 73,
+                  "TemplateID": 3214,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3214,
+                  "UserName": "UKEngeneer"
+                },
+                "geometry": {
+                  "ID": 2997,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7479543685913086,
+                  "SizeY": 0.3415798842906952,
+                  "SizeZ": 1.502094030380249,
+                  "CenterX": -9.729806333780289e-05,
+                  "CenterY": -0.024805627763271332,
+                  "CenterZ": 1.295423150062561,
+                  "SrcName": "Interface\\CharScreen\\UKEngeneer.mb",
+                  "UserName": "UKEngeneer",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [
+          {
+            "ID": 1866,
+            "ModelID": 3214,
+            "ParticleID": 0,
+            "SoundID": 0,
+            "PointLight": 0,
+            "PLightFlareTexture": 0,
+            "PLightShadow": 1,
+            "SpotLight": 0,
+            "SLightFOV": 90,
+            "SLightMaskID": 0,
+            "AmbientColor": 0,
+            "DestructionSoundID": 0,
+            "SoundEffectID": 0,
+            "AttachedGrenade": 0,
+            "ParticlePosX": 0.0,
+            "ParticlePosY": 0.0,
+            "ParticlePosZ": 0.0,
+            "SoundPosX": 0.0,
+            "SoundPosY": 0.0,
+            "SoundPosZ": 0.0,
+            "PLightPosX": 0.0,
+            "PLightPosY": 0.0,
+            "PLightPosZ": 0.0,
+            "PLightRadius": 10.0,
+            "PLightFlareRadius": 0.0,
+            "SLightRadius": 10.0,
+            "SLightPosX": 0.0,
+            "SLightPosY": 0.0,
+            "SLightPosZ": 0.0,
+            "SLightDirX": 0.0,
+            "SLightDirY": 0.0,
+            "SLightDirZ": 1.0,
+            "SoundAvgInterval": 10.0,
+            "PLightFlarePosX": 0.0,
+            "PLightFlarePosY": 0.0,
+            "PLightFlarePosZ": 0.0,
+            "UserName": "UKEngeneer",
+            "SoundType": "Permanent"
+          }
+        ],
+        "actual_Objects": [
+          {
+            "ID": 1617,
+            "Model0": 1866,
+            "DebrisMaterialID": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "RPGArmor": 0,
+            "Targetable": 0,
+            "IsDeployPoint": 0,
+            "TemplateID": 1248,
+            "ChildID": 0,
+            "KeepDecals": 1,
+            "RPGGrenade": 0,
+            "RPGChestLayout": 0,
+            "DefaultRPGChest": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_UI_consumer_proof": {
+          "id": 4613,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4614,
+      "status": "genuine-source-only-pending",
+      "reason": "One lower-left upside-down face/head field, one small iris patch and upper-left thin dental strips; additional native hair/skin/headgear UV fields on black. Fine individual dental separation count/phase unresolved. Preserve original facial identity/hair palette; source-only pending, no group/type ban.",
+      "source_check": {
+        "id": 4614,
+        "source_record": {
+          "id": 4614,
+          "texture": {
+            "ID": 4614,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -12639209,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKSniperFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKSniperFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2881,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1852,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4835,
+                    "field": "Material3",
+                    "material_template_id": 1852,
+                    "geometry_id": 2998,
+                    "geometry": "Interface\\CharScreen\\UKSniperFemale.mb",
+                    "model_template_id": 3215,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "e29fbb05d593e795785541ce724dc504fdac58d68f8d43178dda1c78541c62cd",
+          "source_rgba_sha256": "fb9cbc7007e1c6c6969a5d498bffd4ab21a295e8b89c09c71c6fdb4987357ad5",
+          "release_rgba_sha256": "fb9cbc7007e1c6c6969a5d498bffd4ab21a295e8b89c09c71c6fdb4987357ad5",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4614.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4614,
+          "texture": {
+            "ID": 4614,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -12639209,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKSniperFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKSniperFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2881,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1852,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4835,
+                  "field": "Material3",
+                  "material_template_id": 1852,
+                  "geometry_id": 2998,
+                  "geometry": "Interface\\CharScreen\\UKSniperFemale.mb",
+                  "model_template_id": 3215,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2881,
+              "TextureID": 4614,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1852,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1852,
+              "UserName": "UKSniperFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4835,
+                  "Material0": 1826,
+                  "Material1": 1827,
+                  "GeometryID": 2998,
+                  "Material2": 1828,
+                  "Material3": 1852,
+                  "SkeletonID": 73,
+                  "TemplateID": 3215,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3215,
+                  "UserName": "UKSniperFemale"
+                },
+                "geometry": {
+                  "ID": 2998,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7476439476013184,
+                  "SizeY": 0.3934054672718048,
+                  "SizeZ": 1.488407850265503,
+                  "CenterX": -0.00010265223681926727,
+                  "CenterY": -0.016070876270532608,
+                  "CenterZ": 1.304216980934143,
+                  "SrcName": "Interface\\CharScreen\\UKSniperFemale.mb",
+                  "UserName": "UKSniperFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e29fbb05d593e795785541ce724dc504fdac58d68f8d43178dda1c78541c62cd",
+        "release_mmp_sha256": "e29fbb05d593e795785541ce724dc504fdac58d68f8d43178dda1c78541c62cd",
+        "original_png_sha256": "e4b31f8922c62b10a23853579b1fb286bf61d5b7ed7f49ba323e3c3d838ec9cd",
+        "source_rgba_sha256": "fb9cbc7007e1c6c6969a5d498bffd4ab21a295e8b89c09c71c6fdb4987357ad5",
+        "source_rgb_sha256": "c67506f72e166b8f89989bfa170a337f596bc9e05e2175ddcd8ac54919bb9049",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4614,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2881,
+              "TextureID": 4614,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1852,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1852,
+              "UserName": "UKSniperFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4835,
+                  "Material0": 1826,
+                  "Material1": 1827,
+                  "GeometryID": 2998,
+                  "Material2": 1828,
+                  "Material3": 1852,
+                  "SkeletonID": 73,
+                  "TemplateID": 3215,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3215,
+                  "UserName": "UKSniperFemale"
+                },
+                "geometry": {
+                  "ID": 2998,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7476439476013184,
+                  "SizeY": 0.3934054672718048,
+                  "SizeZ": 1.488407850265503,
+                  "CenterX": -0.00010265223681926727,
+                  "CenterY": -0.016070876270532608,
+                  "CenterZ": 1.304216980934143,
+                  "SrcName": "Interface\\CharScreen\\UKSniperFemale.mb",
+                  "UserName": "UKSniperFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [
+          {
+            "ID": 1867,
+            "ModelID": 3215,
+            "ParticleID": 0,
+            "SoundID": 0,
+            "PointLight": 0,
+            "PLightFlareTexture": 0,
+            "PLightShadow": 1,
+            "SpotLight": 0,
+            "SLightFOV": 90,
+            "SLightMaskID": 0,
+            "AmbientColor": 0,
+            "DestructionSoundID": 0,
+            "SoundEffectID": 0,
+            "AttachedGrenade": 0,
+            "ParticlePosX": 0.0,
+            "ParticlePosY": 0.0,
+            "ParticlePosZ": 0.0,
+            "SoundPosX": 0.0,
+            "SoundPosY": 0.0,
+            "SoundPosZ": 0.0,
+            "PLightPosX": 0.0,
+            "PLightPosY": 0.0,
+            "PLightPosZ": 0.0,
+            "PLightRadius": 10.0,
+            "PLightFlareRadius": 0.0,
+            "SLightRadius": 10.0,
+            "SLightPosX": 0.0,
+            "SLightPosY": 0.0,
+            "SLightPosZ": 0.0,
+            "SLightDirX": 0.0,
+            "SLightDirY": 0.0,
+            "SLightDirZ": 1.0,
+            "SoundAvgInterval": 10.0,
+            "PLightFlarePosX": 0.0,
+            "PLightFlarePosY": 0.0,
+            "PLightFlarePosZ": 0.0,
+            "UserName": "UKSniperFemale",
+            "SoundType": "Permanent"
+          }
+        ],
+        "actual_Objects": [
+          {
+            "ID": 1619,
+            "Model0": 1867,
+            "DebrisMaterialID": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "RPGArmor": 0,
+            "Targetable": 0,
+            "IsDeployPoint": 0,
+            "TemplateID": 1249,
+            "ChildID": 0,
+            "KeepDecals": 1,
+            "RPGGrenade": 0,
+            "RPGChestLayout": 0,
+            "DefaultRPGChest": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_UI_consumer_proof": {
+          "id": 4614,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4618,
+      "status": "genuine-source-only-pending",
+      "reason": "One lower-left upside-down face/head field, one small iris patch and upper-left thin dental strips; additional native hair/skin/headgear UV fields on black. Fine individual dental separation count/phase unresolved. Preserve original facial identity/hair palette; source-only pending, no group/type ban.",
+      "source_check": {
+        "id": 4618,
+        "source_record": {
+          "id": 4618,
+          "texture": {
+            "ID": 4618,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -13097444,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKSoldier_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKSoldier_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2884,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1854,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4839,
+                    "field": "Material3",
+                    "material_template_id": 1854,
+                    "geometry_id": 3000,
+                    "geometry": "Interface\\CharScreen\\UKSoldier.mb",
+                    "model_template_id": 3217,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "5feb40a5d49652f83513fc739b1d0648b48ca334d8a832783f9976c56da66e05",
+          "source_rgba_sha256": "75d342a0a594b8ea6bb04de0e8842ea61f83b9bd07cd43257e6182c7a106009e",
+          "release_rgba_sha256": "75d342a0a594b8ea6bb04de0e8842ea61f83b9bd07cd43257e6182c7a106009e",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4618.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4618,
+          "texture": {
+            "ID": 4618,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -13097444,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKSoldier_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKSoldier_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2884,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1854,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4839,
+                  "field": "Material3",
+                  "material_template_id": 1854,
+                  "geometry_id": 3000,
+                  "geometry": "Interface\\CharScreen\\UKSoldier.mb",
+                  "model_template_id": 3217,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2884,
+              "TextureID": 4618,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1854,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1854,
+              "UserName": "UKSoldier_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4839,
+                  "Material0": 851,
+                  "Material1": 852,
+                  "GeometryID": 3000,
+                  "Material2": 853,
+                  "Material3": 1854,
+                  "SkeletonID": 73,
+                  "TemplateID": 3217,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3217,
+                  "UserName": "UKSoldier"
+                },
+                "geometry": {
+                  "ID": 3000,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7476617097854614,
+                  "SizeY": 0.41122323274612427,
+                  "SizeZ": 1.4984575510025024,
+                  "CenterX": -0.002670425921678543,
+                  "CenterY": -0.021283894777297974,
+                  "CenterZ": 1.274247407913208,
+                  "SrcName": "Interface\\CharScreen\\UKSoldier.mb",
+                  "UserName": "UKSoldier",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "5feb40a5d49652f83513fc739b1d0648b48ca334d8a832783f9976c56da66e05",
+        "release_mmp_sha256": "5feb40a5d49652f83513fc739b1d0648b48ca334d8a832783f9976c56da66e05",
+        "original_png_sha256": "e1c808386ff560027ca5998d938ee93ef14d3d9df931bbd4c4147279cea71438",
+        "source_rgba_sha256": "75d342a0a594b8ea6bb04de0e8842ea61f83b9bd07cd43257e6182c7a106009e",
+        "source_rgb_sha256": "c3ae74406b79824175ef493c7e941695530515a6180aaa0ab976610a2fb22224",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4618,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2884,
+              "TextureID": 4618,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1854,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1854,
+              "UserName": "UKSoldier_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4839,
+                  "Material0": 851,
+                  "Material1": 852,
+                  "GeometryID": 3000,
+                  "Material2": 853,
+                  "Material3": 1854,
+                  "SkeletonID": 73,
+                  "TemplateID": 3217,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3217,
+                  "UserName": "UKSoldier"
+                },
+                "geometry": {
+                  "ID": 3000,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7476617097854614,
+                  "SizeY": 0.41122323274612427,
+                  "SizeZ": 1.4984575510025024,
+                  "CenterX": -0.002670425921678543,
+                  "CenterY": -0.021283894777297974,
+                  "CenterZ": 1.274247407913208,
+                  "SrcName": "Interface\\CharScreen\\UKSoldier.mb",
+                  "UserName": "UKSoldier",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [
+          {
+            "ID": 1868,
+            "ModelID": 3217,
+            "ParticleID": 0,
+            "SoundID": 0,
+            "PointLight": 0,
+            "PLightFlareTexture": 0,
+            "PLightShadow": 1,
+            "SpotLight": 0,
+            "SLightFOV": 90,
+            "SLightMaskID": 0,
+            "AmbientColor": 0,
+            "DestructionSoundID": 0,
+            "SoundEffectID": 0,
+            "AttachedGrenade": 0,
+            "ParticlePosX": 0.0,
+            "ParticlePosY": 0.0,
+            "ParticlePosZ": 0.0,
+            "SoundPosX": 0.0,
+            "SoundPosY": 0.0,
+            "SoundPosZ": 0.0,
+            "PLightPosX": 0.0,
+            "PLightPosY": 0.0,
+            "PLightPosZ": 0.0,
+            "PLightRadius": 10.0,
+            "PLightFlareRadius": 0.0,
+            "SLightRadius": 10.0,
+            "SLightPosX": 0.0,
+            "SLightPosY": 0.0,
+            "SLightPosZ": 0.0,
+            "SLightDirX": 0.0,
+            "SLightDirY": 0.0,
+            "SLightDirZ": 1.0,
+            "SoundAvgInterval": 10.0,
+            "PLightFlarePosX": 0.0,
+            "PLightFlarePosY": 0.0,
+            "PLightFlarePosZ": 0.0,
+            "UserName": "UKSoldier",
+            "SoundType": "Permanent"
+          }
+        ],
+        "actual_Objects": [
+          {
+            "ID": 1621,
+            "Model0": 1868,
+            "DebrisMaterialID": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "RPGArmor": 0,
+            "Targetable": 0,
+            "IsDeployPoint": 0,
+            "TemplateID": 1250,
+            "ChildID": 0,
+            "KeepDecals": 1,
+            "RPGGrenade": 0,
+            "RPGChestLayout": 0,
+            "DefaultRPGChest": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_UI_consumer_proof": {
+          "id": 4618,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 4619,
+      "status": "genuine-source-only-pending",
+      "reason": "One lower-left upside-down face/head field, one small iris patch and upper-left thin dental strips; additional native hair/skin/headgear UV fields on black. Fine individual dental separation count/phase unresolved. Preserve original facial identity/hair palette; source-only pending, no group/type ban.",
+      "source_check": {
+        "id": 4619,
+        "source_record": {
+          "id": 4619,
+          "texture": {
+            "ID": 4619,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -1203689448,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKScoutFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKScoutFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 2886,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 1855,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4841,
+                    "field": "Material3",
+                    "material_template_id": 1855,
+                    "geometry_id": 3001,
+                    "geometry": "Interface\\CharScreen\\UKScoutFemale.mb",
+                    "model_template_id": 3218,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "76811ff09f858026b15fdc52264b07b986cd61d42433b2d49183d38c26ef668d",
+          "source_rgba_sha256": "4d9042e7113caa13e31ab7037c110dc8d75013dc91d257cfa51bcd07a7359fec",
+          "release_rgba_sha256": "4d9042e7113caa13e31ab7037c110dc8d75013dc91d257cfa51bcd07a7359fec",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/4619.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4619,
+          "texture": {
+            "ID": 4619,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -1203689448,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UKScoutFemale_Head.tga",
+            "Format": "dxt1",
+            "UserName": "UKScoutFemale_Head",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2886,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 1855,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4841,
+                  "field": "Material3",
+                  "material_template_id": 1855,
+                  "geometry_id": 3001,
+                  "geometry": "Interface\\CharScreen\\UKScoutFemale.mb",
+                  "model_template_id": 3218,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2886,
+              "TextureID": 4619,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1855,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1855,
+              "UserName": "UKScoutFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4841,
+                  "Material0": 1672,
+                  "Material1": 1673,
+                  "GeometryID": 3001,
+                  "Material2": 1674,
+                  "Material3": 1855,
+                  "SkeletonID": 73,
+                  "TemplateID": 3218,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3218,
+                  "UserName": "UKScoutFemale"
+                },
+                "geometry": {
+                  "ID": 3001,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7478196620941162,
+                  "SizeY": 0.31929612159729004,
+                  "SizeZ": 1.5027706623077393,
+                  "CenterX": 0.0005828514695167542,
+                  "CenterY": -0.01616356521844864,
+                  "CenterZ": 1.2782797813415527,
+                  "SrcName": "Interface\\CharScreen\\UKScoutFemale.mb",
+                  "UserName": "UKScoutFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "76811ff09f858026b15fdc52264b07b986cd61d42433b2d49183d38c26ef668d",
+        "release_mmp_sha256": "76811ff09f858026b15fdc52264b07b986cd61d42433b2d49183d38c26ef668d",
+        "original_png_sha256": "8ddcf3646adfac335cbe281e148cd948306a3075f32819c00e46a7fad1ee1ec3",
+        "source_rgba_sha256": "4d9042e7113caa13e31ab7037c110dc8d75013dc91d257cfa51bcd07a7359fec",
+        "source_rgb_sha256": "cd54adc43c174980cd7e098cadc956ac016090e7f86a71c6ae2dc73c2696377e",
+        "source_alpha_sha256": "eba2fb022afea9e414302683f42b022e6e00bda7f5ae6998f28a32db6cd7f8e3",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 4619,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 2886,
+              "TextureID": 4619,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1855,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1855,
+              "UserName": "UKScoutFemale_Head"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material3",
+                "model": {
+                  "ID": 4841,
+                  "Material0": 1672,
+                  "Material1": 1673,
+                  "GeometryID": 3001,
+                  "Material2": 1674,
+                  "Material3": 1855,
+                  "SkeletonID": 73,
+                  "TemplateID": 3218,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3218,
+                  "UserName": "UKScoutFemale"
+                },
+                "geometry": {
+                  "ID": 3001,
+                  "AIGeometryID": 34,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.7478196620941162,
+                  "SizeY": 0.31929612159729004,
+                  "SizeZ": 1.5027706623077393,
+                  "CenterX": 0.0005828514695167542,
+                  "CenterY": -0.01616356521844864,
+                  "CenterZ": 1.2782797813415527,
+                  "SrcName": "Interface\\CharScreen\\UKScoutFemale.mb",
+                  "UserName": "UKScoutFemale",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [
+          {
+            "ID": 1869,
+            "ModelID": 3218,
+            "ParticleID": 0,
+            "SoundID": 0,
+            "PointLight": 0,
+            "PLightFlareTexture": 0,
+            "PLightShadow": 1,
+            "SpotLight": 0,
+            "SLightFOV": 90,
+            "SLightMaskID": 0,
+            "AmbientColor": 0,
+            "DestructionSoundID": 0,
+            "SoundEffectID": 0,
+            "AttachedGrenade": 0,
+            "ParticlePosX": 0.0,
+            "ParticlePosY": 0.0,
+            "ParticlePosZ": 0.0,
+            "SoundPosX": 0.0,
+            "SoundPosY": 0.0,
+            "SoundPosZ": 0.0,
+            "PLightPosX": 0.0,
+            "PLightPosY": 0.0,
+            "PLightPosZ": 0.0,
+            "PLightRadius": 10.0,
+            "PLightFlareRadius": 0.0,
+            "SLightRadius": 10.0,
+            "SLightPosX": 0.0,
+            "SLightPosY": 0.0,
+            "SLightPosZ": 0.0,
+            "SLightDirX": 0.0,
+            "SLightDirY": 0.0,
+            "SLightDirZ": 1.0,
+            "SoundAvgInterval": 10.0,
+            "PLightFlarePosX": 0.0,
+            "PLightFlarePosY": 0.0,
+            "PLightFlarePosZ": 0.0,
+            "UserName": "UKScoutFemale",
+            "SoundType": "Permanent"
+          }
+        ],
+        "actual_Objects": [
+          {
+            "ID": 1623,
+            "Model0": 1869,
+            "DebrisMaterialID": 0,
+            "Model1": 0,
+            "Model2": 0,
+            "Model3": 0,
+            "Model4": 0,
+            "RPGArmor": 0,
+            "Targetable": 0,
+            "IsDeployPoint": 0,
+            "TemplateID": 1251,
+            "ChildID": 0,
+            "KeepDecals": 1,
+            "RPGGrenade": 0,
+            "RPGChestLayout": 0,
+            "DefaultRPGChest": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_UI_consumer_proof": {
+          "id": 4619,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 6573,
+      "status": "genuine-source-only-pending",
+      "reason": "Whole128x64 gray-tan rear hardware atlas: one lower long horizontal rounded bar, one upper-left curved piece, uppermiddle overlapping rectangular patch and upperright tall piece with dark square and split pale base. Small central lower-bar mark has unresolved source glyph/engraving geometry. Genuine painted diffuse pending, no hardware count invented.",
+      "source_check": {
+        "id": 6573,
+        "source_record": {
+          "id": 6573,
+          "texture": {
+            "ID": 6573,
+            "Width": 128,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11383999,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\GemanCross_back.tga",
+            "Format": "dxt1",
+            "UserName": "GermanCross_Back",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 4627,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2703,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 6484,
+                    "field": "Material2",
+                    "material_template_id": 2703,
+                    "geometry_id": 3896,
+                    "geometry": "Interface\\Medals\\medals.mb",
+                    "model_template_id": 4137,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 6486,
+                    "field": "Material2",
+                    "material_template_id": 2703,
+                    "geometry_id": 3895,
+                    "geometry": "Interface\\Medals\\medals.mb",
+                    "model_template_id": 4138,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            64
+          ],
+          "source_sha256": "60b32897effa727471528d04294dc89404fb42dc46f9d9ebd470b58511f3c39b",
+          "source_rgba_sha256": "c57bce7cbf19aa5fc04e8a424090d0a7288d62c6437924d43ee40cf3a3eeb61f",
+          "release_rgba_sha256": "c57bce7cbf19aa5fc04e8a424090d0a7288d62c6437924d43ee40cf3a3eeb61f",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6573.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6573,
+          "texture": {
+            "ID": 6573,
+            "Width": 128,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11383999,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\GemanCross_back.tga",
+            "Format": "dxt1",
+            "UserName": "GermanCross_Back",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              128,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 5480,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4627,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2703,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6484,
+                  "field": "Material2",
+                  "material_template_id": 2703,
+                  "geometry_id": 3896,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4137,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6486,
+                  "field": "Material2",
+                  "material_template_id": 2703,
+                  "geometry_id": 3895,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4138,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4627,
+              "TextureID": 6573,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2703,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2703,
+              "UserName": "GermanCross_Back"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material2",
+                "model": {
+                  "ID": 6484,
+                  "Material0": 2682,
+                  "Material1": 2672,
+                  "GeometryID": 3896,
+                  "Material2": 2703,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4137,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4137,
+                  "UserName": "GermanCross_Silver"
+                },
+                "geometry": {
+                  "ID": 3896,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2427672147750854,
+                  "SizeY": 0.089530810713768,
+                  "SizeZ": 1.242767572402954,
+                  "CenterX": 0.0,
+                  "CenterY": -0.0008537161047570407,
+                  "CenterZ": -0.008086726069450378,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "GermanCross_Silver",
+                  "RootJoint": "GermanCross_Silver"
+                }
+              },
+              {
+                "slot": "Material2",
+                "model": {
+                  "ID": 6486,
+                  "Material0": 2683,
+                  "Material1": 2670,
+                  "GeometryID": 3895,
+                  "Material2": 2703,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4138,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4138,
+                  "UserName": "GermanCross_Gold"
+                },
+                "geometry": {
+                  "ID": 3895,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2427672147750854,
+                  "SizeY": 0.089530810713768,
+                  "SizeZ": 1.242767572402954,
+                  "CenterX": 0.0,
+                  "CenterY": -0.002013426274061203,
+                  "CenterZ": -0.008086726069450378,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "GermanCross_Gold",
+                  "RootJoint": "GermanCross_Gold"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "60b32897effa727471528d04294dc89404fb42dc46f9d9ebd470b58511f3c39b",
+        "release_mmp_sha256": "60b32897effa727471528d04294dc89404fb42dc46f9d9ebd470b58511f3c39b",
+        "original_png_sha256": "76b734706bb57c3ab513e70a6191ef1ab01bdd47928ef86de9764d6f4c447f79",
+        "source_rgba_sha256": "c57bce7cbf19aa5fc04e8a424090d0a7288d62c6437924d43ee40cf3a3eeb61f",
+        "source_rgb_sha256": "360f4845e2ca8053defad87cb76127aceae5dd17eef810670f2b4182e136bab0",
+        "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+        "dimensions": [
+          128,
+          64
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 6573,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4627,
+              "TextureID": 6573,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2703,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2703,
+              "UserName": "GermanCross_Back"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material2",
+                "model": {
+                  "ID": 6484,
+                  "Material0": 2682,
+                  "Material1": 2672,
+                  "GeometryID": 3896,
+                  "Material2": 2703,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4137,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4137,
+                  "UserName": "GermanCross_Silver"
+                },
+                "geometry": {
+                  "ID": 3896,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2427672147750854,
+                  "SizeY": 0.089530810713768,
+                  "SizeZ": 1.242767572402954,
+                  "CenterX": 0.0,
+                  "CenterY": -0.0008537161047570407,
+                  "CenterZ": -0.008086726069450378,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "GermanCross_Silver",
+                  "RootJoint": "GermanCross_Silver"
+                }
+              },
+              {
+                "slot": "Material2",
+                "model": {
+                  "ID": 6486,
+                  "Material0": 2683,
+                  "Material1": 2670,
+                  "GeometryID": 3895,
+                  "Material2": 2703,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4138,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4138,
+                  "UserName": "GermanCross_Gold"
+                },
+                "geometry": {
+                  "ID": 3895,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2427672147750854,
+                  "SizeY": 0.089530810713768,
+                  "SizeZ": 1.242767572402954,
+                  "CenterX": 0.0,
+                  "CenterY": -0.002013426274061203,
+                  "CenterZ": -0.008086726069450378,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "GermanCross_Gold",
+                  "RootJoint": "GermanCross_Gold"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 6573,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    },
+    {
+      "id": 6600,
+      "status": "genuine-source-only-pending",
+      "reason": "Whole256square medal atlas: two upper ribbon fields with dense small horizontal bands and diagonal yellow stripes, lowerleft one round medal face with crossed shapes/printed Cyrillic marks, lowerright one round plain rear field, narrow center/right hardware strips. Exact printed/ribbon repeats phase not proven; source-only pending, no guessed letters or family ban.",
+      "source_check": {
+        "id": 6600,
+        "source_record": {
+          "id": 6600,
+          "texture": {
+            "ID": 6600,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 0,
+            "AverageColor": -11909309,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\Ussr_medal.tga",
+            "Format": "8888",
+            "UserName": "USSR_medal",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 4581,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2689,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 6498,
+                    "field": "Material0",
+                    "material_template_id": 2689,
+                    "geometry_id": 3900,
+                    "geometry": "Interface\\Medals\\medals.mb",
+                    "model_template_id": 4144,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "e49a20245026af52e3bf5bad472cb5f0942e9e0027d1241a816bee3aa5de1dab",
+          "source_rgba_sha256": "bddc4b2e848523103197221f74553c106c6fdbc47216468af13b6bd6a59140b1",
+          "release_rgba_sha256": "bddc4b2e848523103197221f74553c106c6fdbc47216468af13b6bd6a59140b1",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/6600.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6600,
+          "texture": {
+            "ID": 6600,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 0,
+            "AverageColor": -11909309,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Medals\\Ussr_medal.tga",
+            "Format": "8888",
+            "UserName": "USSR_medal",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 9,
+            "file_bytes": 349548,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4581,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2689,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6498,
+                  "field": "Material0",
+                  "material_template_id": 2689,
+                  "geometry_id": 3900,
+                  "geometry": "Interface\\Medals\\medals.mb",
+                  "model_template_id": 4144,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4581,
+              "TextureID": 6600,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2689,
+              "GlossID": 6619,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2689,
+              "UserName": "USSR_medal"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 6498,
+                  "Material0": 2689,
+                  "Material1": 0,
+                  "GeometryID": 3900,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4144,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4144,
+                  "UserName": "USSR_medal"
+                },
+                "geometry": {
+                  "ID": 3900,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.113991141319275,
+                  "SizeY": 0.140953928232193,
+                  "SizeZ": 2.1312994956970215,
+                  "CenterX": 0.0,
+                  "CenterY": 0.00016369670629501343,
+                  "CenterZ": 0.03565734624862671,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "USSR_medal",
+                  "RootJoint": "Ussr_medal"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e49a20245026af52e3bf5bad472cb5f0942e9e0027d1241a816bee3aa5de1dab",
+        "release_mmp_sha256": "e49a20245026af52e3bf5bad472cb5f0942e9e0027d1241a816bee3aa5de1dab",
+        "original_png_sha256": "b5dcb298d888472b05e5861c2e8cae21bbe9842cbc55a32cd70c8157b85319ac",
+        "source_rgba_sha256": "bddc4b2e848523103197221f74553c106c6fdbc47216468af13b6bd6a59140b1",
+        "source_rgb_sha256": "b7934b2522e2630a5f82fcedc646c1a7373f9f22c36003539bae4bdc4c10757b",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "builtin_calls": 0,
+      "actual_consumer_proof": {
+        "id": 6600,
+        "actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 4581,
+              "TextureID": 6600,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2689,
+              "GlossID": 6619,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2689,
+              "UserName": "USSR_medal"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 6498,
+                  "Material0": 2689,
+                  "Material1": 0,
+                  "GeometryID": 3900,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 4144,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4144,
+                  "UserName": "USSR_medal"
+                },
+                "geometry": {
+                  "ID": 3900,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.113991141319275,
+                  "SizeY": 0.140953928232193,
+                  "SizeZ": 2.1312994956970215,
+                  "CenterX": 0.0,
+                  "CenterY": 0.00016369670629501343,
+                  "CenterZ": 0.03565734624862671,
+                  "SrcName": "Interface\\Medals\\medals.mb",
+                  "UserName": "USSR_medal",
+                  "RootJoint": "Ussr_medal"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 6600,
+          "actual_ui_links": [],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "no_technical_disposition_asserted": true
+    }
+  ],
+  "source_only_recommendations": [
+    {
+      "id": 3815,
+      "recommendation": "retain-exact-original-purpose-review",
+      "coordinator_final_classification_required": true,
+      "genuine_pending_until_coordinator_disposition": true,
+      "builtin_calls": 0,
+      "source_check": {
+        "id": 3815,
+        "source_record": {
+          "id": 3815,
+          "texture": {
+            "ID": 3815,
+            "Width": 97,
+            "Height": 88,
+            "NMips": 1,
+            "AverageColor": 2118524436,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+            "Format": "8888",
+            "UserName": "Zone #1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 529,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Zone #1"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 529,
+                "name": "Zone #1",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  97,
+                  88
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1671,
+                    "field": "Texture0",
+                    "control_name": "zone_normal",
+                    "type": 2,
+                    "rect": [
+                      144,
+                      0,
+                      241,
+                      88
+                    ],
+                    "container": 328,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2550,
+                    "field": "Texture0",
+                    "control_name": "zone_normal",
+                    "type": 2,
+                    "rect": [
+                      144,
+                      0,
+                      241,
+                      88
+                    ],
+                    "container": 424,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            97,
+            88
+          ],
+          "source_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+          "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+          "release_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/3815.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 3815,
+          "texture": {
+            "ID": 3815,
+            "Width": 97,
+            "Height": 88,
+            "NMips": 1,
+            "AverageColor": 2118524436,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Globals\\CH_00.tga",
+            "Format": "8888",
+            "UserName": "Zone #1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            97,
+            88
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              97,
+              88
+            ],
+            "mips": 1,
+            "file_bytes": 34168,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 529,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Zone #1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 529,
+              "name": "Zone #1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                97,
+                88
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1671,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 328,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2550,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 424,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+        "release_mmp_sha256": "04fadec8bbbb87b5606a5353beef0adf23dfbdd852398b233ecc2e252e50de2f",
+        "original_png_sha256": "ce8c3d55a5ea80949a958a42fad87f84f3ffea964b39f51e6a0b8753fe3fbc22",
+        "source_rgba_sha256": "876692553135d756283c8bc59719934847b791d6296b10247e803eb549f51278",
+        "source_rgb_sha256": "6083c4b75699486443d4f901917662150c6cd723b538d2cc4e0794075d292ead",
+        "source_alpha_sha256": "3b0e880bbb7f1dfb23ee6d0601d0c8e5a23b7bddfea096015ccbe4504e79d647",
+        "dimensions": [
+          97,
+          88
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true
+      },
+      "actual_consumer_proof": {
+        "id": 3815,
+        "actual_typed_material_model_chains": [],
+        "actual_ContainerModels": [],
+        "actual_Objects": [],
+        "actual_UI_consumer_proof": {
+          "id": 3815,
+          "actual_ui_links": [
+            {
+              "ui_texture_id": 529,
+              "name": "Zone #1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                97,
+                88
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1671,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 328,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2550,
+                  "field": "Texture0",
+                  "control_name": "zone_normal",
+                  "type": 2,
+                  "rect": [
+                    144,
+                    0,
+                    241,
+                    88
+                  ],
+                  "container": 424,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "actual_nationality_records": [],
+          "actual_side_nationality_links": [],
+          "actual_person_nationality_records": [],
+          "actual_UIControls": [
+            {
+              "ID": 1671,
+              "Type": 2,
+              "Left": 144,
+              "Top": 0,
+              "Right": 241,
+              "Bottom": 88,
+              "Texture0": 529,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 328,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 1,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "zone_normal",
+              "ToolTipAnchorType": ""
+            },
+            {
+              "ID": 2550,
+              "Type": 2,
+              "Left": 144,
+              "Top": 0,
+              "Right": 241,
+              "Bottom": 88,
+              "Texture0": 529,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 424,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "zone_normal",
+              "ToolTipAnchorType": ""
+            }
+          ],
+          "actual_nested_UI_container_ancestry": []
+        },
+        "actual_consumer_not_registration_only": true,
+        "current_live_scene_verified": false,
+        "qualification": "Actual ModelTemplates→ContainerModels.ModelID→Objects.Model0..4 use correct domains; actual UIControls resolve UITextures. No currently visible character/scene claim or numeric-domain inference."
+      },
+      "reason": "Fresh actualUI529→CImage Controls1671/2550 IDText zone_normal in containers328/424; source one geographic selection contour. CZoneGlobalSector iGlobalMapUI175 retrieves zone_normal,205 adjusts selection opacity,279 loads sector image template. Exact geographic alpha/contour/fill retain-original recommendation individually proven, not technical inferred from name/red color. Native weakRGB variation is not asserted mathematically constant.",
+      "shared_disposition_written": false
+    }
+  ],
+  "before_proof_sha256": "0f0417045e935eb6a1784d7f63bf745b474a5792c539611dbb07fd08b5d3d62a",
+  "no_family_name_alpha_materialonly_ban": true,
+  "no_scope_exhaustion_claim": true,
+  "shared_modified": false
+}
