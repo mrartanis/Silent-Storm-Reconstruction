@@ -1,0 +1,205 @@
+{
+  "id": 5665,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-8644c474-9bf4-4b6c-a380-19e6d7897fcb.png",
+  "prompt": "Edit this exact complete original painted clothing UV color atlas into a faithful higher-resolution texture. This is a whole square atlas of gray/olive matte camouflage cloth with muted brown irregular patches, dark painted strips, two upper rectangular pocket fields, and one horizontal dark waist band; it is not a scene or a new garment. Keep all source UV edges, original irregular patches, dark support fields, soft blur, local lightness hierarchy, exact pigment shape and original physical pattern scale. Native original is 128 by128; the reference is its exact whole-canvas nearest8x guide. There are four small pale central paint peaks at native (49,55),(49,69),(49,83),(49,97), spacing14nativepixels; last peak also covers y98. Retain these four pigment traces, including faint tails and original surrounding folded gray rim. They are not a request to invent four physical buttons. Preserve the two inner vertical dark traces and two outer diagonal traces exactly, with existing tiny gray marks only. The one waist-center gray wash native x43..56/y39..47 has an irregular angular partially indistinct contour: preserve that actual contour and broad shading faithfully without turning it into an emblem, letter, cross, symmetrical buckle, polished frame, metal plate or new mechanism. Preserve the existing lower gray arch/rim and irregular folds without adding knots, new buckles, stitches or extra glints. Improve only soft painted transitions and restrained fine painted detail at4x source resolution; keep subdued low contrast matte paint with the original gray/brown/olive balance and soft edges. No photo fabric, woven grid, embroidery, ornament, curl grain, bright bevels, sharpening of tiny washes or new objects. All original alpha is255, including99RGB-black support texels: black paint is opaque, not a transparent hole. Preserve complete canvas dimensions/aspect, composition, margins, all original support regions, no crop, padding, recentering or changing pattern phase. Output the entire exact atlas.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5665-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "reference_recipe": "Exact original128square wholeRGBA nearest8x1024square; no crop/padding/BBox/artistic edit; inverse wholeLanczos512square, default numericgain and complete originalA only.",
+  "artifact_sha256": {
+    "raw": "0abe87cb14a063feb36a92885bdc62b2dc591d07fa64915ea5fb01886ebec1cc",
+    "exact_prompt_file": "3b06b20f2c4a997152d275eb5edcc3742e518b36577ad02b444fe45fa1a9f505",
+    "reference_png": "1a887532b1fb5aa16b8888d267cbd853989cf4c37dabbc90be315a0a25d5e439"
+  },
+  "saved_at_utc": "2026-10-08T10:19:13.117521+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "held-material-pigment-shape-drift",
+  "source_record": {
+    "id": 5665,
+    "texture": {
+      "ID": 5665,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -11843257,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\German\\Officer\\OfficerSaboteur\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3713,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2365,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6061,
+              "field": "Material0",
+              "material_template_id": 2365,
+              "geometry_id": 3278,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\GermanGeneral.mb",
+              "model_template_id": 3918,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "825f8cd6865dc9504a8ff0eb12bf2693955249130d83306c985d32fb9aa251cb",
+    "source_rgba_sha256": "d56ae9064af6a711544c9d9cf962b649647f7a3ed8e19f52fbace9a5b7f4d172",
+    "release_rgba_sha256": "d56ae9064af6a711544c9d9cf962b649647f7a3ed8e19f52fbace9a5b7f4d172",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5665.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "7ab9988bfc81afc77afe9b0965e40dcd504ebbaeb18eab508a302bb8553dc98c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-eighth-5665.json",
+  "source_count_phase_proof_sha256": "6460b4a446c4ece1e72c408c32de00106932d8405fd228dca81efed0f744f6e2",
+  "precall_constraints_sha256": "b7da32abba3771db2b9c18165a557f2592c6678baaa03166e6b50352f5951aae",
+  "exact_service_args": {
+    "prompt": "Edit this exact complete original painted clothing UV color atlas into a faithful higher-resolution texture. This is a whole square atlas of gray/olive matte camouflage cloth with muted brown irregular patches, dark painted strips, two upper rectangular pocket fields, and one horizontal dark waist band; it is not a scene or a new garment. Keep all source UV edges, original irregular patches, dark support fields, soft blur, local lightness hierarchy, exact pigment shape and original physical pattern scale. Native original is 128 by128; the reference is its exact whole-canvas nearest8x guide. There are four small pale central paint peaks at native (49,55),(49,69),(49,83),(49,97), spacing14nativepixels; last peak also covers y98. Retain these four pigment traces, including faint tails and original surrounding folded gray rim. They are not a request to invent four physical buttons. Preserve the two inner vertical dark traces and two outer diagonal traces exactly, with existing tiny gray marks only. The one waist-center gray wash native x43..56/y39..47 has an irregular angular partially indistinct contour: preserve that actual contour and broad shading faithfully without turning it into an emblem, letter, cross, symmetrical buckle, polished frame, metal plate or new mechanism. Preserve the existing lower gray arch/rim and irregular folds without adding knots, new buckles, stitches or extra glints. Improve only soft painted transitions and restrained fine painted detail at4x source resolution; keep subdued low contrast matte paint with the original gray/brown/olive balance and soft edges. No photo fabric, woven grid, embroidery, ornament, curl grain, bright bevels, sharpening of tiny washes or new objects. All original alpha is255, including99RGB-black support texels: black paint is opaque, not a transparent hole. Preserve complete canvas dimensions/aspect, composition, margins, all original support regions, no crop, padding, recentering or changing pattern phase. Output the entire exact atlas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5665-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "private_numeric_proof": {
+    "id": 5665,
+    "gain": 0.937744140625,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 72.86426386718749,
+    "actual_stored_luma": 72.87642274856567,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "private_full_material_proof": {
+    "id": 5665,
+    "region_stats": {
+      "waist": {
+        "bounds": [
+          42,
+          38,
+          59,
+          49
+        ],
+        "source_mean_RGB": [
+          66.10160427807487,
+          65.60427807486631,
+          65.76470588235294
+        ],
+        "target_mean_RGB": [
+          67.75401069518716,
+          66.79679144385027,
+          65.94652406417113
+        ],
+        "source_luma_std": 40.053014394830186,
+        "target_luma_std": 40.10604443417886
+      },
+      "lefttrace": {
+        "bounds": [
+          27,
+          50,
+          35,
+          83
+        ],
+        "source_mean_RGB": [
+          49.984848484848484,
+          49.57575757575758,
+          47.265151515151516
+        ],
+        "target_mean_RGB": [
+          51.53409090909091,
+          50.47727272727273,
+          48.24242424242424
+        ],
+        "source_luma_std": 37.382926030559254,
+        "target_luma_std": 37.82779292527776
+      },
+      "placket": {
+        "bounds": [
+          42,
+          50,
+          56,
+          101
+        ],
+        "source_mean_RGB": [
+          81.03781512605042,
+          78.31372549019608,
+          74.09663865546219
+        ],
+        "target_mean_RGB": [
+          83.00420168067227,
+          79.08963585434174,
+          73.28711484593838
+        ],
+        "source_luma_std": 34.60366632002439,
+        "target_luma_std": 34.22538935989861
+      },
+      "cloth": {
+        "bounds": [
+          1,
+          3,
+          40,
+          36
+        ],
+        "source_mean_RGB": [
+          77.64102564102564,
+          75.71095571095572,
+          72.22843822843822
+        ],
+        "target_mean_RGB": [
+          81.58430458430459,
+          78.39160839160839,
+          72.87179487179488
+        ],
+        "source_luma_std": 23.80691819472216,
+        "target_luma_std": 25.030224586671274
+      }
+    },
+    "method": "Pure whole scalar/defaultpad/fulloriginalA only; read-only source and target diagnostics, no art repair."
+  },
+  "review_reason": "Held after soleFIRSTbuiltin edit: exact source four central pale pigment peaks y55/69/83/97 pitch14 retained; no invented extra button count claim. Main actual material/shape violation: original softly continuous irregular angular gray waist wash becomes fragmented discrete pale faceted/star-like speck group, related gray strap washes gain discrete speck-like treatment and stronger weathered grain/high outlined seams. Fulloriginal wholeNN/nativeRGBA/rawwhole/512scalar/sourceA/native privately viewed. Count was explicit paint glints not inferred physical button/buckle topology. SourceA255 including99opaqueRGBblack;defaultpad0;uniformgain0.937744140625;sourceL72.86426386718749 actual72.87642274856567. No repair/retry/sourceRGBpatch.",
+  "full_original_raw_normalized_sourceA4x_native_privately_inspected": true
+}

@@ -1,0 +1,626 @@
+{
+  "id": 7633,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-5dcf7e4f-5b75-4873-82e0-1fb51606b09e.png",
+  "prompt": "Edit this exact complete original painted clothing/boot/skin UV color atlas into a faithful higher-resolution texture, keeping its whole square canvas and all original UV fields. Native source128by128, reference is exact whole nearest8x. Preserve soft dark navy painted cloth at left, the indistinct dark boot in upper middle, muted gray cloth below, and the one soft warm tan skin wash at upper right. Skin remains flat subdued painted shading: no pores, anatomy, wrinkles or photorealism. Proved source count and phase: NINE dark navy vertical painted bands at native starting x0,9,17,25,33,41,49,57,65; eight dark cuts x6..8 then every8nativepixels, last weak band65..71 and existing opaque black edge72. Keep the nine bands including the weak rightmost one, never turn them into thick new seams. The soft dim upper staggered checker paint has THREE columns atnative x91,95,100 and NINE washed light marks in EACHcolumn; outer columns at y0,3,6,9,12,15,18,21,24; middle at y1,4,7,10,13,16,19,22,25, pitch3 and phase0/1. First row clips at top exactly as source. Keep these dim small paint marks, their blur/contrast and exact count, not round beads, holes, laces, chain or hardware. Partial lower dark-boot trace has TWOcolumns x71/72 with THREEfaint light marks each, at y32/35/38 and33/36/39. Preserve the lower single pale gray wash and original grain. Existing gray cloth vertical boundary at x107 with lighter field beginning108 from aboutnative y68 downward is already part of source shading: retain its soft width and phase without raised piping or new panel geometry. Preserve whole original palette hierarchy and material scale, muted navy/gray and warm tan skin. Improve only soft painted transitions and restrained fine paint at4x; no coarse grain, photo weave, stitching, polished edges, strong outlines, new folds, hardware or motifs. Complete sourceA255 including1710opaqueRGB-black texels; black support is opaque, not transparency. Whole canvas only, no crop, padding, recentering, UV fitting or new margins. Output full exact atlas.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7633-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "reference_recipe": "Exact original128square wholeRGBA nearest8x1024square; no crop/padding/BBox/artistic edit; inverse wholeLanczos512square, default numericgain and complete originalA only.",
+  "artifact_sha256": {
+    "raw": "782e44fc7ed69d415a83f1457a772b61824b9d76eeb224c4522a9eddfe9a5ae1",
+    "exact_prompt_file": "d38dfe46845d53274c821c6ee3f34bca28628c3df55062264ec1da364c393184",
+    "reference_png": "7f18251a2c8b50aaa710a199ad9917243f3bbd48e598b22b9aa0dab95b6abb02"
+  },
+  "saved_at_utc": "2026-10-08T10:20:22.398728+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "held-original-single-paint-mark-lost",
+  "source_record": {
+    "id": 7633,
+    "texture": {
+      "ID": 7633,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14606306,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_03\\Legs_Asian.tga",
+      "Format": "8888",
+      "UserName": "Legs_Asia",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5799,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3094,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7735,
+              "field": "Material2",
+              "material_template_id": 3094,
+              "geometry_id": 4255,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+              "model_template_id": 4652,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "9398356059c66d34172a74277c1975865bc45c2400b4196cef5a180b608e21b9",
+    "source_rgba_sha256": "73fa9789ba49786926a268be655cb55aa25d0369790aad869d69c333ad58fc89",
+    "release_rgba_sha256": "73fa9789ba49786926a268be655cb55aa25d0369790aad869d69c333ad58fc89",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7633.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "7ab9988bfc81afc77afe9b0965e40dcd504ebbaeb18eab508a302bb8553dc98c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-eighth-7633.json",
+  "source_count_phase_proof_sha256": "58fd3d016fd1f79833f46e47e2b5fd33849466c88ec8021cd9e31b96a513555b",
+  "precall_constraints_sha256": "3e1d6eca612e0e0df278cd40ea0575e5023a8d4e6fbab29c687e072496c566a4",
+  "exact_service_args": {
+    "prompt": "Edit this exact complete original painted clothing/boot/skin UV color atlas into a faithful higher-resolution texture, keeping its whole square canvas and all original UV fields. Native source128by128, reference is exact whole nearest8x. Preserve soft dark navy painted cloth at left, the indistinct dark boot in upper middle, muted gray cloth below, and the one soft warm tan skin wash at upper right. Skin remains flat subdued painted shading: no pores, anatomy, wrinkles or photorealism. Proved source count and phase: NINE dark navy vertical painted bands at native starting x0,9,17,25,33,41,49,57,65; eight dark cuts x6..8 then every8nativepixels, last weak band65..71 and existing opaque black edge72. Keep the nine bands including the weak rightmost one, never turn them into thick new seams. The soft dim upper staggered checker paint has THREE columns atnative x91,95,100 and NINE washed light marks in EACHcolumn; outer columns at y0,3,6,9,12,15,18,21,24; middle at y1,4,7,10,13,16,19,22,25, pitch3 and phase0/1. First row clips at top exactly as source. Keep these dim small paint marks, their blur/contrast and exact count, not round beads, holes, laces, chain or hardware. Partial lower dark-boot trace has TWOcolumns x71/72 with THREEfaint light marks each, at y32/35/38 and33/36/39. Preserve the lower single pale gray wash and original grain. Existing gray cloth vertical boundary at x107 with lighter field beginning108 from aboutnative y68 downward is already part of source shading: retain its soft width and phase without raised piping or new panel geometry. Preserve whole original palette hierarchy and material scale, muted navy/gray and warm tan skin. Improve only soft painted transitions and restrained fine paint at4x; no coarse grain, photo weave, stitching, polished edges, strong outlines, new folds, hardware or motifs. Complete sourceA255 including1710opaqueRGB-black texels; black support is opaque, not transparency. Whole canvas only, no crop, padding, recentering, UV fitting or new margins. Output full exact atlas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7633-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "private_numeric_proof": {
+    "id": 7633,
+    "gain": 0.752166748046875,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 31.875018127441404,
+    "actual_stored_luma": 31.87469525299072,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "private_full_material_proof": {
+    "id": 7633,
+    "region_stats": {
+      "checker": {
+        "bounds": [
+          89,
+          0,
+          103,
+          28
+        ],
+        "source_mean_RGB": [
+          19.729591836734695,
+          18.477040816326532,
+          16.803571428571427
+        ],
+        "target_mean_RGB": [
+          20.997448979591837,
+          19.602040816326532,
+          18.198979591836736
+        ],
+        "source_luma_std": 16.570897973029723,
+        "target_luma_std": 15.160975600059103
+      },
+      "boot": {
+        "bounds": [
+          32,
+          32,
+          78,
+          66
+        ],
+        "source_mean_RGB": [
+          10.517263427109974,
+          12.707161125319693,
+          14.074808184143222
+        ],
+        "target_mean_RGB": [
+          11.7653452685422,
+          13.069693094629155,
+          14.315856777493606
+        ],
+        "source_luma_std": 12.077829563736998,
+        "target_luma_std": 11.639233331261854
+      },
+      "graycloth": {
+        "bounds": [
+          27,
+          69,
+          104,
+          122
+        ],
+        "source_mean_RGB": [
+          40.54128889977947,
+          43.2193089928939,
+          46.50624846851262
+        ],
+        "target_mean_RGB": [
+          41.7806910071061,
+          44.57706444498897,
+          48.52536143102181
+        ],
+        "source_luma_std": 6.900257885448512,
+        "target_luma_std": 6.006656002005153
+      },
+      "graybottom": {
+        "bounds": [
+          27,
+          120,
+          128,
+          128
+        ],
+        "source_mean_RGB": [
+          37.91212871287129,
+          40.476485148514854,
+          43.48762376237624
+        ],
+        "target_mean_RGB": [
+          35.93316831683168,
+          38.382425742574256,
+          41.97153465346535
+        ],
+        "source_luma_std": 6.665548831225294,
+        "target_luma_std": 6.1786453337180145
+      },
+      "softskin": {
+        "bounds": [
+          80,
+          30,
+          125,
+          65
+        ],
+        "source_mean_RGB": [
+          111.43047619047618,
+          74.00634920634921,
+          40.46920634920635
+        ],
+        "target_mean_RGB": [
+          106.93650793650794,
+          69.54984126984127,
+          35.137142857142855
+        ],
+        "source_luma_std": 26.704573709020103,
+        "target_luma_std": 21.675135065935255
+      }
+    },
+    "method": "Pure whole scalar/defaultpad/fulloriginalA only; read-only source and target diagnostics, no art repair.",
+    "graybottom_rowmeans_source_target": {
+      "118": [
+        40.06666666666667,
+        40.06666666666667
+      ],
+      "119": [
+        39.329166666666666,
+        38.85
+      ],
+      "120": [
+        38.21666666666667,
+        37.69583333333333
+      ],
+      "121": [
+        37.708333333333336,
+        36.55833333333333
+      ],
+      "122": [
+        36.67916666666667,
+        35.525
+      ],
+      "123": [
+        36.47083333333333,
+        34.97083333333333
+      ],
+      "124": [
+        36.1875,
+        34.0625
+      ],
+      "125": [
+        35.9,
+        33.725
+      ],
+      "126": [
+        43.416666666666664,
+        40.36666666666667
+      ],
+      "127": [
+        43.74166666666667,
+        41.170833333333334
+      ]
+    },
+    "upperchecker_source_target_samples": {
+      "91": [
+        [
+          0,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            54,
+            53,
+            53
+          ]
+        ],
+        [
+          3,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            51,
+            51,
+            50
+          ]
+        ],
+        [
+          6,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            53,
+            53,
+            52
+          ]
+        ],
+        [
+          9,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            51,
+            51,
+            51
+          ]
+        ],
+        [
+          12,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            50,
+            49,
+            48
+          ]
+        ],
+        [
+          15,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            49,
+            49,
+            48
+          ]
+        ],
+        [
+          18,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            47,
+            48,
+            47
+          ]
+        ],
+        [
+          21,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            43,
+            43,
+            42
+          ]
+        ],
+        [
+          24,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            43,
+            43,
+            41
+          ]
+        ]
+      ],
+      "95": [
+        [
+          1,
+          [
+            27,
+            27,
+            27
+          ],
+          [
+            37,
+            36,
+            36
+          ]
+        ],
+        [
+          4,
+          [
+            27,
+            29,
+            28
+          ],
+          [
+            35,
+            35,
+            35
+          ]
+        ],
+        [
+          7,
+          [
+            29,
+            29,
+            29
+          ],
+          [
+            36,
+            36,
+            35
+          ]
+        ],
+        [
+          10,
+          [
+            27,
+            28,
+            28
+          ],
+          [
+            36,
+            36,
+            36
+          ]
+        ],
+        [
+          13,
+          [
+            28,
+            28,
+            28
+          ],
+          [
+            38,
+            37,
+            37
+          ]
+        ],
+        [
+          16,
+          [
+            28,
+            29,
+            28
+          ],
+          [
+            37,
+            37,
+            36
+          ]
+        ],
+        [
+          19,
+          [
+            28,
+            28,
+            28
+          ],
+          [
+            40,
+            40,
+            39
+          ]
+        ],
+        [
+          22,
+          [
+            28,
+            29,
+            28
+          ],
+          [
+            41,
+            40,
+            40
+          ]
+        ],
+        [
+          25,
+          [
+            29,
+            29,
+            29
+          ],
+          [
+            42,
+            42,
+            41
+          ]
+        ]
+      ],
+      "100": [
+        [
+          0,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            52,
+            52,
+            51
+          ]
+        ],
+        [
+          3,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            48,
+            48,
+            48
+          ]
+        ],
+        [
+          6,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            51,
+            51,
+            50
+          ]
+        ],
+        [
+          9,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            51,
+            50,
+            50
+          ]
+        ],
+        [
+          12,
+          [
+            37,
+            37,
+            37
+          ],
+          [
+            47,
+            47,
+            47
+          ]
+        ],
+        [
+          15,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            49,
+            49,
+            48
+          ]
+        ],
+        [
+          18,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            50,
+            50,
+            50
+          ]
+        ],
+        [
+          21,
+          [
+            36,
+            37,
+            37
+          ],
+          [
+            42,
+            42,
+            42
+          ]
+        ],
+        [
+          24,
+          [
+            46,
+            47,
+            47
+          ],
+          [
+            40,
+            39,
+            38
+          ]
+        ]
+      ]
+    }
+  },
+  "review_reason": "Held after soleFIRSTbuiltin edit: main bands9/cuts8 and upper3columns x9dimmarks pitch3 phase0/1 retained; no missing band/checker count claim. Wholegrayfield right boundary x107 and lighter field108 already native original, bottom lighter strip nativey126..127 already original; stronger displayed border is not falsely called entirely new panel. Specific actual lost detail: ONE original lower pale wash native(113,117)RGBA123/130/140/255 with neighboring dark cap116 and dark right pixel114 disappears to43/46/50/255 smoothgrayfield. Sourceonly count proof and prompt specifiedsinglelowerwash beforecall; exact complete nativeRGBA already frozen in beforeproof, localized postcalllowerwash proof separately preserves evidence. This is missing paintedmark, not rejection solely of moderategrain/softedge. Softskin warmtanwash preserved with local tone/grain caveats: sourceRGB111.43/74.01/40.47 to106.94/69.55/35.14,sourceLstd26.70 to21.68. Graycloth40.54/43.22/46.51 to41.78/44.58/48.53,Lstd6.90 to6.01. Upperchecker washedmarks somewhatrounder/brighter:actualnative sourceouter36..47,target39..54, middle27..29,target35..42. SourceA255 including1710opaqueRGBblack;defaultpad0;gain0.752166748046875;sourceL31.875018127441404 actual31.87469525299072. No repair/retry/sourceRGBpatch.",
+  "full_original_raw_normalized_sourceA4x_native_privately_inspected": true
+}

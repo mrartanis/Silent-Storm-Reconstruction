@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 474 of these verified originals are accepted in the shared
+As of 2026-10-08, 478 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirty-seventh-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirty-eighth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,269 IDs: clothing 194, equipment 119, weapons
-57, heads 165, UI 595, effects 115, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,265 IDs: clothing 194, equipment 119, weapons
+57, heads 165, UI 593, effects 113, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -559,3 +559,22 @@ currentbuiltEXE707a588b byteexact to testedGame. Nativevalidation/realmenu11/0/1
 normalquit: ../new-groups-thirty-seventh-batch-check.json,
 ../new-groups-thirty-seventh-live-check.json and ../new-groups-thirty-seventh-runtime-check.json.
 Five frozenreviews/held2118and5838/no retries; ordinaryGitPNG/RESbuiltwithGame.
+
+Thirty-eighth accepted packet: effects4095/2577 and UI5808/5749.
+Four separate builtin generations. Pack2,440 textures/4,880 aliases/129 archives/
+7,814,413,248 bytes. Prior2,436 source/PNG/native hashes unchanged. All4 actualnativeRGBA
+equal privately reviewed whole4x predictions/fullsourceA/UV/material/count/paintscale.
+5808 retains EIGHT irregular sourcepaintpeaks/weaksidebands;5749 retains THREE old components.
+4095/2577 oldsoftpaintfields/darkpockets and blackgaps retained. Localpaint caveats disclosed
+in ../coordinator-art-review-thirty-eighth.json; numericalbrightness only/no RGBinserts.
+ActualGPU5808/2577/4095 whole/middle/reverse/clipped on/off/on/placement/density4vs1,
+ninewholeprivateframes reviewed; TransparentAdd2577 keeps usefulRGB withA0/noPremul,
+Transparent4095 fullsourceA0..255/premulonce. UI724 RPGPerks51/52 IconDisabled/DataPerk23/
+iPerksPanel67/68 proven;UI687 registration-only. All ParticleInstances TextureN4095/2577
+audited; missingdefinitions/siblings explicitunknown. Activeeffect/widget/full3Dmodel appearance
+notcertified/noFaceGen38. Code unchanged25/currentbuiltEXE707a588b byteexact to testedGame.
+Nativevalidation/realmenu11/0/11/fourprivateframes/normalquit:
+../new-groups-thirty-eighth-batch-check.json, ../new-groups-thirty-eighth-live-check.json
+and ../new-groups-thirty-eighth-runtime-check.json. Six frozenreviews;rootheld7634
+retains originalcounts butsoftmarks becamebrightbeadlike/newbrownline appeared;no retries/repair.
+OrdinaryGitPNG/RESbuiltwithGame.

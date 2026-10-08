@@ -1,0 +1,247 @@
+[
+  {
+    "id": 7633,
+    "proved_source_counts": {
+      "navy_vertical_bands": 9,
+      "band_start_native_x": [
+        0,
+        9,
+        17,
+        25,
+        33,
+        41,
+        49,
+        57,
+        65
+      ],
+      "dark_separators": 8,
+      "dark_separator_native_x_bounds": [
+        [
+          6,
+          9
+        ],
+        [
+          14,
+          17
+        ],
+        [
+          22,
+          25
+        ],
+        [
+          30,
+          33
+        ],
+        [
+          38,
+          41
+        ],
+        [
+          46,
+          49
+        ],
+        [
+          54,
+          57
+        ],
+        [
+          62,
+          65
+        ]
+      ],
+      "nominal_band_native_pitch": 8,
+      "last_weak_band_native_bounds": [
+        65,
+        0,
+        72,
+        29
+      ],
+      "staggered_checker_light_columns": 3,
+      "upper_checker_light_column_x": [
+        91,
+        95,
+        100
+      ],
+      "upper_checker_marks_each_column": [
+        9,
+        9,
+        9
+      ],
+      "outer_column_mark_y": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24
+      ],
+      "middle_column_mark_y": [
+        1,
+        4,
+        7,
+        10,
+        13,
+        16,
+        19,
+        22,
+        25
+      ],
+      "checker_native_vertical_pitch": 3,
+      "checker_phase_y_outer_middle": [
+        0,
+        1
+      ],
+      "partial_lower_checker_light_columns": 2,
+      "lower_column_native_x": [
+        71,
+        72
+      ],
+      "lower_column_mark_y": [
+        [
+          32,
+          35,
+          38
+        ],
+        [
+          33,
+          36,
+          39
+        ]
+      ],
+      "partial_lower_marks_each_column": [
+        3,
+        3
+      ],
+      "source_checker_material": "Soft dim staggered painted raster, not physical holes/lacing/chain/jewelry; irregular background gray/dark pixels retained.",
+      "softskin_field": 1,
+      "large_gray_cloth_field": 1,
+      "single_lower_pale_wash": 1
+    },
+    "prompt_constraints": {
+      "navy_vertical_bands": 9,
+      "band_start_native_x": [
+        0,
+        9,
+        17,
+        25,
+        33,
+        41,
+        49,
+        57,
+        65
+      ],
+      "dark_separators": 8,
+      "dark_separator_native_x_bounds": [
+        [
+          6,
+          9
+        ],
+        [
+          14,
+          17
+        ],
+        [
+          22,
+          25
+        ],
+        [
+          30,
+          33
+        ],
+        [
+          38,
+          41
+        ],
+        [
+          46,
+          49
+        ],
+        [
+          54,
+          57
+        ],
+        [
+          62,
+          65
+        ]
+      ],
+      "nominal_band_native_pitch": 8,
+      "last_weak_band_native_bounds": [
+        65,
+        0,
+        72,
+        29
+      ],
+      "staggered_checker_light_columns": 3,
+      "upper_checker_light_column_x": [
+        91,
+        95,
+        100
+      ],
+      "upper_checker_marks_each_column": [
+        9,
+        9,
+        9
+      ],
+      "outer_column_mark_y": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24
+      ],
+      "middle_column_mark_y": [
+        1,
+        4,
+        7,
+        10,
+        13,
+        16,
+        19,
+        22,
+        25
+      ],
+      "checker_native_vertical_pitch": 3,
+      "checker_phase_y_outer_middle": [
+        0,
+        1
+      ],
+      "partial_lower_checker_light_columns": 2,
+      "lower_column_native_x": [
+        71,
+        72
+      ],
+      "lower_column_mark_y": [
+        [
+          32,
+          35,
+          38
+        ],
+        [
+          33,
+          36,
+          39
+        ]
+      ],
+      "partial_lower_marks_each_column": [
+        3,
+        3
+      ],
+      "source_checker_material": "Soft dim staggered painted raster, not physical holes/lacing/chain/jewelry; irregular background gray/dark pixels retained.",
+      "softskin_field": 1,
+      "large_gray_cloth_field": 1,
+      "single_lower_pale_wash": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "source_count_proof_path": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-eighth-7633.json",
+    "source_count_proof_sha256": "58fd3d016fd1f79833f46e47e2b5fd33849466c88ec8021cd9e31b96a513555b",
+    "exact_prompt": "Edit this exact complete original painted clothing/boot/skin UV color atlas into a faithful higher-resolution texture, keeping its whole square canvas and all original UV fields. Native source128by128, reference is exact whole nearest8x. Preserve soft dark navy painted cloth at left, the indistinct dark boot in upper middle, muted gray cloth below, and the one soft warm tan skin wash at upper right. Skin remains flat subdued painted shading: no pores, anatomy, wrinkles or photorealism. Proved source count and phase: NINE dark navy vertical painted bands at native starting x0,9,17,25,33,41,49,57,65; eight dark cuts x6..8 then every8nativepixels, last weak band65..71 and existing opaque black edge72. Keep the nine bands including the weak rightmost one, never turn them into thick new seams. The soft dim upper staggered checker paint has THREE columns atnative x91,95,100 and NINE washed light marks in EACHcolumn; outer columns at y0,3,6,9,12,15,18,21,24; middle at y1,4,7,10,13,16,19,22,25, pitch3 and phase0/1. First row clips at top exactly as source. Keep these dim small paint marks, their blur/contrast and exact count, not round beads, holes, laces, chain or hardware. Partial lower dark-boot trace has TWOcolumns x71/72 with THREEfaint light marks each, at y32/35/38 and33/36/39. Preserve the lower single pale gray wash and original grain. Existing gray cloth vertical boundary at x107 with lighter field beginning108 from aboutnative y68 downward is already part of source shading: retain its soft width and phase without raised piping or new panel geometry. Preserve whole original palette hierarchy and material scale, muted navy/gray and warm tan skin. Improve only soft painted transitions and restrained fine paint at4x; no coarse grain, photo weave, stitching, polished edges, strong outlines, new folds, hardware or motifs. Complete sourceA255 including1710opaqueRGB-black texels; black support is opaque, not transparency. Whole canvas only, no crop, padding, recentering, UV fitting or new margins. Output full exact atlas."
+  }
+]
