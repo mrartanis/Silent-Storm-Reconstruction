@@ -1,0 +1,99 @@
+[
+  {
+    "id": 6827,
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted legs/cloth/footwear UV diffuse ID6827.\r\nImage1 is the ONLY edit target/reference: complete original128x128 RGBA atlas enlarged nearest8x1024x1024. Produce the same complete square painted UV texture at4x original resolution. Refine only soft source transitions and existing very fine matte paint variation. Preserve all fullcanvas UV silhouettes, clipped sourceedges, source physical patternscale, dim olive/gray/brown/tan palette and local contrast. Not a clothing photograph, boot product, person or scene.\r\nVerified whole-source pattern: exactly NINE existing broad dim olive vertical painted stripe intervals across the upperleft sourcefield, native x[0,6),[9,14),[17,22),[25,30),[33,38),[41,46),[49,54),[57,62),[65,72). EIGHT intervening dark stripegaps x[6,9),[14,17),[22,25),[30,33),[38,41),[46,49),[54,57),[62,65), eight-native-pixel interior repeatpitch. Keep all9 soft stripes, widths, sourcephase and dim contrast; sourcefirst/last differ inwidth, do NOT equalize them or add a tenth. Keep the irregular original source cutoff contour below and all existing dark boundaries. These are painted stripecolor washes, not raised knit ribs, seams, pleats, wovencloth threads or embroidery.\r\nPreserve upperright existing brown wash[78,0,128,13], thin grayband[78,13,128,17] and one broad softly gradient tan wash[78,17,128,67] exactly in their sourcecolor/UV positions. Tan is a flat painted colorfield with only its original lowcontrast dark lowergradient: do NOT add skin pores, anatomical outlines, folds, beautification or identitychange. Keep lower large gray wash[25,67,108,128] and lowerright darker brown wash[108,67,128,128], original subtle variation and straight field boundaries, no new sewn edge or relief.\r\nPreserve two existing central upper soft brownwash lobes[30,31,53,53] and[52,27,78,56], plus one existing lower brown rectangular wash[33,54,78,67], all with their original irregular dark/light sourcecontours. The incomplete faint angular source marks here remain indistinct paint; do not resolve them into new laces, hinges, holes, eyelets, soles, straps or mechanical/anatomicalparts. These envelopes identify existing colorwash only, NOT rectangles to replace or reshape.\r\nExactly TWO existing tiny pale paintfleck groups: the lowerleft soft fleck whose3brightest connected nativepixels lie in[2,84,5,85], and the single lowerright nativepixel at[113,117,114,118]. Preserve the full faint sourcewash around each and the native count/phase/shape, without splitting, joining, enlarging or completing them into a buckle/button/letter/eye/hardware. No new bright flecks.\r\nMaterial/style: subdued soft hand-painted olive/gray/tan/darkbrown cloth and footwearwashes. Keep original hue/lightness hierarchy and local weak marks. No photo leather/weave, coarse grain, hatching, curls, strong crease ridges, raised borders, crisp stitching, new hardware or anatomy. Improve only existing fine soft transitions at original detailscale.\r\nOriginal alpha255 everywhere, including all1166 opaque RGB0 texels. Black UVfields are opaque solid dark paint, not transparent holes; retain exact boundaries/interiors. Wholecanvas only: no crop/padding/letterbox/bbox recentering/registration, no newmargin, border, labels, text, faces, watermark, objects or scene.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "broad_vertical_olive_painted_stripes": 9,
+      "interior_dark_stripe_gap_groups": 8,
+      "upper_stripe_native_x_intervals": [
+        [
+          0,
+          6
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          17,
+          22
+        ],
+        [
+          25,
+          30
+        ],
+        [
+          33,
+          38
+        ],
+        [
+          41,
+          46
+        ],
+        [
+          49,
+          54
+        ],
+        [
+          57,
+          62
+        ],
+        [
+          65,
+          72
+        ]
+      ],
+      "upper_dark_gap_native_x_intervals": [
+        [
+          6,
+          9
+        ],
+        [
+          14,
+          17
+        ],
+        [
+          22,
+          25
+        ],
+        [
+          30,
+          33
+        ],
+        [
+          38,
+          41
+        ],
+        [
+          46,
+          49
+        ],
+        [
+          54,
+          57
+        ],
+        [
+          62,
+          65
+        ]
+      ],
+      "interior_repeat_pitch_native_x": 8,
+      "pale_paintfleck_groups": 2,
+      "left_lower_pale_fleck_groups": 1,
+      "right_lower_pale_fleck_groups": 1,
+      "lower_large_gray_wash_fields": 1,
+      "lower_right_darkbrown_wash_fields": 1,
+      "upper_right_tan_wash_fields": 1,
+      "upper_right_brown_wash_fields": 1,
+      "upper_right_thin_grayband_fields": 1,
+      "central_upper_brown_wash_lobes": 2,
+      "central_lower_brown_rectanglewash_fields": 1,
+      "new_anatomy_hardware_straps_or_laces_allowed": 0,
+      "new_weave_or_pattern_allowed": 0
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:48:34.296581+00:00"
+  }
+]

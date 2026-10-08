@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,336 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 66 clothing, 115 equipment, 65 weapons,
-3 head/hair textures, 46 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,345 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 67 clothing, 118 equipment, 65 weapons,
+7 head/hair textures, 47 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,797 records, including 374 accepted new-group textures, the original
+contains 2,806 records, including 383 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
 124 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,370 verified originals outside the shared queue, including next
+validation. There remain 1,361 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -263,8 +263,25 @@ accepted donors with sourceRGBA/dimensions/nativeType:0 matches/0calls, authoriz
 book-cover content replacements excluded. 1822/6239/5666/3319/5740 remain held,
 raw/exactprompts/proof retained. Inspect subsequent jobs/reviews before new calls.
 
-All 12,485 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,921,106,401 bytes before Git deduplication/compression).
+Twenty-fourth accepted packet: equipment5406/2448/3051, hair6769/6770/6765/6767,
+neck/hands color6761 and stone-menu4653. Pack:2,345 textures/4,690 aliases/
+126 archives/7,629,266,454 bytes. All prior2,336 source/PNG/native
+hashes unchanged; nine nativeRGBA images exactly match privately viewed whole4x
+predictions. Full originalalpha/UV/material/count/pattern scale retained. 5406
+retains8 square alpha-zero gaps, one large rounded gap and every sourceAA level.
+Hair flow/part retained; moderate existing paint peak lifts disclosed in
+expanded/coordinator-art-review-twenty-fourth.json. 6761 retains3 original soft
+washes/neck-hands color with disclosed weak digital flatfield variation, no new
+anatomy/grain. Scalar brightness only; no artisticRGB insertion/crop/BBox.
+Actual4653 UI sampler HD on/off/on, real graphics menu and isolated normalquit:
+expanded/new-groups-twenty-fourth-{batch,live}-check.json. Frames privately viewed;
+scene certifies layer/menu, not every model. Ordinary Git PNG/prompt stages and
+frozen original worker reviews:expanded/accepted-git-stage-completeness-twenty-fourth.json,
+expanded/coordinator-review-provenance-twenty-fourth.json. Held5405/5388/3041/6768/
+6766/7627/3864/2153/6827 retain raw/reasons. Inspect next jobs before newcalls.
+
+All 12,547 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,964,041,509 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

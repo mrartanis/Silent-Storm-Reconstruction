@@ -1,0 +1,6084 @@
+{
+  "version": 1,
+  "package": "clothing-twentieth",
+  "finalized_utc": "2026-10-08T04:52:06.038780+00:00",
+  "selected_ids": [
+    6761,
+    2153,
+    6827
+  ],
+  "source_qa_audition_ids": [
+    2153,
+    6761,
+    6821,
+    6827,
+    4685,
+    5616
+  ],
+  "ready_ids": [
+    6761
+  ],
+  "artistically_ready_ids": [
+    6761
+  ],
+  "held_raw_ids": [
+    2153,
+    6827
+  ],
+  "source_only_ids": [
+    6821,
+    4685,
+    5616
+  ],
+  "pipeline_pending_ids": [],
+  "accepted_ids": [],
+  "tool_calls_attempted": 3,
+  "raw_success_count": 3,
+  "retry_count": 0,
+  "status": "Stable1art-ready candidate6761 withhonest flatRGBcaveat/2heldraw/3genuine source-only from6fresh fullsources. CoordinatorfinalQA required, no productionacceptanceclaim.",
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twentieth.json",
+  "source_check_sha256": "50bcd26e5114a528a77c6b665480a8635740a1d844d85638dd280b3b87de389c",
+  "items": [
+    {
+      "id": 6761,
+      "status": "artistically-ready-coordinator-material-native-review-required",
+      "reason": "Artistically ready candidate for coordinator whole-source/raw/native4x/material review, not productionaccepted. Fresh actualMaterials4688→Template2734→Races1 and runtimeChooseBodyColor assigns pMaterials[1]neck/hands color beforebody skin submit, so genuine painted diffuse even with no staticModel.MaterialN consumer. Whole128²→512²/sourceA255 exact; scalar1.0059146881103516 with8x8ordered sub-level rounding. Three existing top softwash groups and3right horizontalsoftband minima nativey6/9/13 retained, no new anatomy/pores/face/materialfields or visible newgrain/pattern. HONEST FLATREGION CAVEAT: source whole y36..127 RGB164/107/69 is mathematicallyconstant/std0, raw introduces veryweak~.735RGBstd digitalvariation, normalized flatfield std~.73,min158/103/67,max165/109/74. Calibratedflatmean162.8204/107.0243/70.9817,std.7643/.8871/.8862; orderedscalarrounding contributes additional variation. Not claimed pixelconstant/exactRGB; variation alone is not automatic materialhold when imperceptible and without newgrain/pattern/anatomy, per coordinator clarified task. SlightR-1.18/B+1.98 noted for root native/color review. Sourceflatfield remains perceptuallyuniform warm paintedtone and originalsoft washed palette/lightnesshierarchy preserved. No sourceRGBflattening or artisticcolorrepair performed.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 6761,
+        "texture": {
+          "ID": 6761,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -6067387,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\RaceHands\\hands01.tga",
+          "Format": "dxt1",
+          "UserName": "European",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4688,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2734,
+              "consumers": [
+                {
+                  "table": "Races",
+                  "id": 1,
+                  "field": "MaterialID",
+                  "material_template_id": 2734
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "31b5419e169aa4d4af0e8b227114d33e688f85325c4e1efa24bbb0db1a3fb796",
+        "source_rgba_sha256": "9d95bb932271f7b0e958d64dbce9d9f51e7b1cde16dbea6ff27642ddabf8811e",
+        "release_rgba_sha256": "9d95bb932271f7b0e958d64dbce9d9f51e7b1cde16dbea6ff27642ddabf8811e",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6761.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "632e8ebe2f82ff4be5dfc545c44031c3a001aff538e9ecccab10faf2ddfc04fd",
+      "exact_prompt_sha256": "2036d63f3cbe6dcfba7de8f222e5eae0d27f9dd490293d2f871cef46d255c00b",
+      "reference_sha256": "006cdd59d8c64cc7db062b8b80d34d162316b4703b2c71b689ecaeb2be01d860",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6761-generation-call.json",
+      "generation_call_sha256": "3016b3a02b9c16dd460235a2d4e6c1e9861bfe4d2970720a2825d7bffa9f1aee",
+      "full_material_count_alpha_proof": {
+        "before_call_sourcecount_phase_proof": {
+          "id": 6761,
+          "proved_source_counts": {
+            "source_width": 128,
+            "source_height": 128,
+            "substantial_painted_wash_groups": 3,
+            "left_softpale_wash_groups": 1,
+            "uppermiddle_darksoft_wash_groups": 1,
+            "upperright_softbanded_wash_groups": 1,
+            "background_color_fields": 1,
+            "background_modal_RGBA": [
+              164,
+              107,
+              69,
+              255
+            ],
+            "exactly_constant_lower_field_native_y": 36,
+            "new_anatomy_or_parts_allowed": 0,
+            "new_pores_creases_weave_or_grain_allowed": 0,
+            "upperright_soft_horizontal_darkband_rows": [
+              6,
+              9,
+              13
+            ],
+            "upperright_soft_horizontal_darkband_count": 3
+          },
+          "three_substantial_washes_native": [
+            {
+              "pixels_native": [
+                [
+                  102,
+                  1
+                ],
+                [
+                  103,
+                  2
+                ],
+                [
+                  103,
+                  3
+                ],
+                [
+                  102,
+                  4
+                ],
+                [
+                  103,
+                  5
+                ],
+                [
+                  104,
+                  6
+                ],
+                [
+                  105,
+                  7
+                ],
+                [
+                  106,
+                  8
+                ],
+                [
+                  107,
+                  9
+                ],
+                [
+                  108,
+                  10
+                ],
+                [
+                  109,
+                  11
+                ],
+                [
+                  109,
+                  12
+                ],
+                [
+                  108,
+                  12
+                ],
+                [
+                  107,
+                  13
+                ],
+                [
+                  108,
+                  14
+                ],
+                [
+                  109,
+                  15
+                ],
+                [
+                  110,
+                  16
+                ],
+                [
+                  111,
+                  16
+                ],
+                [
+                  112,
+                  16
+                ],
+                [
+                  113,
+                  16
+                ],
+                [
+                  114,
+                  16
+                ],
+                [
+                  115,
+                  16
+                ],
+                [
+                  116,
+                  15
+                ],
+                [
+                  117,
+                  15
+                ],
+                [
+                  118,
+                  15
+                ],
+                [
+                  117,
+                  14
+                ],
+                [
+                  118,
+                  13
+                ],
+                [
+                  119,
+                  12
+                ],
+                [
+                  119,
+                  11
+                ],
+                [
+                  119,
+                  10
+                ],
+                [
+                  119,
+                  9
+                ],
+                [
+                  119,
+                  8
+                ],
+                [
+                  118,
+                  7
+                ],
+                [
+                  117,
+                  8
+                ],
+                [
+                  117,
+                  9
+                ],
+                [
+                  117,
+                  10
+                ],
+                [
+                  117,
+                  11
+                ],
+                [
+                  116,
+                  12
+                ],
+                [
+                  115,
+                  13
+                ],
+                [
+                  114,
+                  14
+                ],
+                [
+                  113,
+                  14
+                ],
+                [
+                  112,
+                  14
+                ],
+                [
+                  111,
+                  14
+                ],
+                [
+                  111,
+                  13
+                ],
+                [
+                  112,
+                  12
+                ],
+                [
+                  113,
+                  12
+                ],
+                [
+                  114,
+                  11
+                ],
+                [
+                  115,
+                  10
+                ],
+                [
+                  115,
+                  9
+                ],
+                [
+                  115,
+                  8
+                ],
+                [
+                  115,
+                  7
+                ],
+                [
+                  116,
+                  6
+                ],
+                [
+                  117,
+                  5
+                ],
+                [
+                  116,
+                  4
+                ],
+                [
+                  115,
+                  4
+                ],
+                [
+                  114,
+                  5
+                ],
+                [
+                  113,
+                  6
+                ],
+                [
+                  113,
+                  7
+                ],
+                [
+                  113,
+                  8
+                ],
+                [
+                  113,
+                  9
+                ],
+                [
+                  112,
+                  10
+                ],
+                [
+                  111,
+                  10
+                ],
+                [
+                  110,
+                  9
+                ],
+                [
+                  111,
+                  8
+                ],
+                [
+                  111,
+                  7
+                ],
+                [
+                  111,
+                  6
+                ],
+                [
+                  111,
+                  5
+                ],
+                [
+                  112,
+                  4
+                ],
+                [
+                  112,
+                  3
+                ],
+                [
+                  111,
+                  3
+                ],
+                [
+                  110,
+                  3
+                ],
+                [
+                  109,
+                  4
+                ],
+                [
+                  109,
+                  5
+                ],
+                [
+                  108,
+                  5
+                ],
+                [
+                  107,
+                  4
+                ],
+                [
+                  106,
+                  4
+                ],
+                [
+                  105,
+                  3
+                ],
+                [
+                  107,
+                  3
+                ],
+                [
+                  106,
+                  3
+                ],
+                [
+                  108,
+                  4
+                ],
+                [
+                  108,
+                  3
+                ],
+                [
+                  109,
+                  3
+                ],
+                [
+                  111,
+                  4
+                ],
+                [
+                  110,
+                  4
+                ],
+                [
+                  110,
+                  5
+                ],
+                [
+                  110,
+                  6
+                ],
+                [
+                  109,
+                  7
+                ],
+                [
+                  108,
+                  7
+                ],
+                [
+                  110,
+                  7
+                ],
+                [
+                  110,
+                  8
+                ],
+                [
+                  109,
+                  8
+                ],
+                [
+                  111,
+                  9
+                ],
+                [
+                  112,
+                  9
+                ],
+                [
+                  112,
+                  8
+                ],
+                [
+                  112,
+                  7
+                ],
+                [
+                  112,
+                  6
+                ],
+                [
+                  112,
+                  5
+                ],
+                [
+                  113,
+                  5
+                ],
+                [
+                  113,
+                  4
+                ],
+                [
+                  114,
+                  4
+                ],
+                [
+                  116,
+                  5
+                ],
+                [
+                  115,
+                  5
+                ],
+                [
+                  115,
+                  6
+                ],
+                [
+                  114,
+                  6
+                ],
+                [
+                  114,
+                  7
+                ],
+                [
+                  114,
+                  8
+                ],
+                [
+                  114,
+                  9
+                ],
+                [
+                  114,
+                  10
+                ],
+                [
+                  113,
+                  10
+                ],
+                [
+                  113,
+                  11
+                ],
+                [
+                  112,
+                  11
+                ],
+                [
+                  111,
+                  11
+                ],
+                [
+                  111,
+                  12
+                ],
+                [
+                  112,
+                  13
+                ],
+                [
+                  113,
+                  13
+                ],
+                [
+                  114,
+                  13
+                ],
+                [
+                  114,
+                  12
+                ],
+                [
+                  115,
+                  12
+                ],
+                [
+                  115,
+                  11
+                ],
+                [
+                  116,
+                  11
+                ],
+                [
+                  116,
+                  10
+                ],
+                [
+                  116,
+                  9
+                ],
+                [
+                  116,
+                  8
+                ],
+                [
+                  116,
+                  7
+                ],
+                [
+                  117,
+                  7
+                ],
+                [
+                  117,
+                  6
+                ],
+                [
+                  118,
+                  8
+                ],
+                [
+                  118,
+                  9
+                ],
+                [
+                  118,
+                  10
+                ],
+                [
+                  118,
+                  11
+                ],
+                [
+                  118,
+                  12
+                ],
+                [
+                  117,
+                  12
+                ],
+                [
+                  117,
+                  13
+                ],
+                [
+                  116,
+                  13
+                ],
+                [
+                  116,
+                  14
+                ],
+                [
+                  115,
+                  14
+                ],
+                [
+                  115,
+                  15
+                ],
+                [
+                  114,
+                  15
+                ],
+                [
+                  113,
+                  15
+                ],
+                [
+                  112,
+                  15
+                ],
+                [
+                  111,
+                  15
+                ],
+                [
+                  109,
+                  16
+                ],
+                [
+                  108,
+                  16
+                ],
+                [
+                  107,
+                  16
+                ],
+                [
+                  106,
+                  16
+                ],
+                [
+                  105,
+                  16
+                ],
+                [
+                  104,
+                  15
+                ],
+                [
+                  105,
+                  14
+                ],
+                [
+                  105,
+                  13
+                ],
+                [
+                  105,
+                  12
+                ],
+                [
+                  106,
+                  11
+                ],
+                [
+                  105,
+                  10
+                ],
+                [
+                  104,
+                  9
+                ],
+                [
+                  103,
+                  10
+                ],
+                [
+                  102,
+                  10
+                ],
+                [
+                  101,
+                  10
+                ],
+                [
+                  100,
+                  10
+                ],
+                [
+                  99,
+                  10
+                ],
+                [
+                  98,
+                  10
+                ],
+                [
+                  97,
+                  10
+                ],
+                [
+                  96,
+                  9
+                ],
+                [
+                  97,
+                  9
+                ],
+                [
+                  98,
+                  8
+                ],
+                [
+                  99,
+                  8
+                ],
+                [
+                  100,
+                  8
+                ],
+                [
+                  101,
+                  8
+                ],
+                [
+                  102,
+                  8
+                ],
+                [
+                  102,
+                  7
+                ],
+                [
+                  101,
+                  6
+                ],
+                [
+                  100,
+                  6
+                ],
+                [
+                  99,
+                  6
+                ],
+                [
+                  98,
+                  6
+                ],
+                [
+                  97,
+                  6
+                ],
+                [
+                  98,
+                  5
+                ],
+                [
+                  99,
+                  5
+                ],
+                [
+                  100,
+                  4
+                ],
+                [
+                  100,
+                  3
+                ],
+                [
+                  100,
+                  2
+                ],
+                [
+                  100,
+                  5
+                ],
+                [
+                  101,
+                  7
+                ],
+                [
+                  100,
+                  7
+                ],
+                [
+                  99,
+                  7
+                ],
+                [
+                  98,
+                  9
+                ],
+                [
+                  99,
+                  9
+                ],
+                [
+                  100,
+                  9
+                ],
+                [
+                  101,
+                  9
+                ],
+                [
+                  102,
+                  9
+                ],
+                [
+                  103,
+                  9
+                ],
+                [
+                  103,
+                  8
+                ],
+                [
+                  105,
+                  11
+                ],
+                [
+                  104,
+                  11
+                ],
+                [
+                  103,
+                  12
+                ],
+                [
+                  103,
+                  13
+                ],
+                [
+                  102,
+                  13
+                ],
+                [
+                  101,
+                  13
+                ],
+                [
+                  100,
+                  13
+                ],
+                [
+                  99,
+                  13
+                ],
+                [
+                  98,
+                  13
+                ],
+                [
+                  97,
+                  13
+                ],
+                [
+                  98,
+                  12
+                ],
+                [
+                  99,
+                  12
+                ],
+                [
+                  100,
+                  12
+                ],
+                [
+                  101,
+                  12
+                ],
+                [
+                  102,
+                  12
+                ],
+                [
+                  104,
+                  12
+                ],
+                [
+                  104,
+                  13
+                ],
+                [
+                  104,
+                  14
+                ],
+                [
+                  105,
+                  15
+                ],
+                [
+                  106,
+                  15
+                ],
+                [
+                  110,
+                  15
+                ],
+                [
+                  110,
+                  14
+                ],
+                [
+                  108,
+                  15
+                ],
+                [
+                  107,
+                  15
+                ],
+                [
+                  109,
+                  14
+                ],
+                [
+                  107,
+                  14
+                ],
+                [
+                  106,
+                  14
+                ],
+                [
+                  106,
+                  13
+                ],
+                [
+                  106,
+                  12
+                ],
+                [
+                  107,
+                  12
+                ],
+                [
+                  110,
+                  11
+                ],
+                [
+                  110,
+                  10
+                ],
+                [
+                  108,
+                  11
+                ],
+                [
+                  107,
+                  11
+                ],
+                [
+                  109,
+                  10
+                ],
+                [
+                  109,
+                  9
+                ],
+                [
+                  108,
+                  9
+                ],
+                [
+                  108,
+                  8
+                ],
+                [
+                  106,
+                  9
+                ],
+                [
+                  105,
+                  9
+                ],
+                [
+                  107,
+                  8
+                ],
+                [
+                  107,
+                  7
+                ],
+                [
+                  105,
+                  8
+                ],
+                [
+                  106,
+                  7
+                ],
+                [
+                  106,
+                  6
+                ],
+                [
+                  105,
+                  6
+                ],
+                [
+                  105,
+                  5
+                ],
+                [
+                  103,
+                  6
+                ],
+                [
+                  102,
+                  6
+                ],
+                [
+                  104,
+                  5
+                ],
+                [
+                  102,
+                  5
+                ],
+                [
+                  101,
+                  5
+                ],
+                [
+                  101,
+                  4
+                ],
+                [
+                  101,
+                  3
+                ],
+                [
+                  102,
+                  3
+                ],
+                [
+                  102,
+                  2
+                ],
+                [
+                  101,
+                  2
+                ],
+                [
+                  103,
+                  1
+                ]
+              ],
+              "bounds_native": [
+                96,
+                1,
+                120,
+                17
+              ]
+            },
+            {
+              "pixels_native": [
+                [
+                  63,
+                  2
+                ],
+                [
+                  64,
+                  3
+                ],
+                [
+                  65,
+                  4
+                ],
+                [
+                  66,
+                  5
+                ],
+                [
+                  67,
+                  6
+                ],
+                [
+                  68,
+                  7
+                ],
+                [
+                  69,
+                  8
+                ],
+                [
+                  70,
+                  9
+                ],
+                [
+                  71,
+                  10
+                ],
+                [
+                  72,
+                  11
+                ],
+                [
+                  73,
+                  12
+                ],
+                [
+                  74,
+                  13
+                ],
+                [
+                  75,
+                  14
+                ],
+                [
+                  76,
+                  15
+                ],
+                [
+                  77,
+                  16
+                ],
+                [
+                  78,
+                  16
+                ],
+                [
+                  79,
+                  15
+                ],
+                [
+                  80,
+                  15
+                ],
+                [
+                  81,
+                  15
+                ],
+                [
+                  79,
+                  14
+                ],
+                [
+                  80,
+                  13
+                ],
+                [
+                  81,
+                  12
+                ],
+                [
+                  81,
+                  11
+                ],
+                [
+                  81,
+                  10
+                ],
+                [
+                  81,
+                  9
+                ],
+                [
+                  81,
+                  8
+                ],
+                [
+                  81,
+                  7
+                ],
+                [
+                  82,
+                  6
+                ],
+                [
+                  81,
+                  5
+                ],
+                [
+                  80,
+                  5
+                ],
+                [
+                  79,
+                  6
+                ],
+                [
+                  79,
+                  7
+                ],
+                [
+                  79,
+                  8
+                ],
+                [
+                  79,
+                  9
+                ],
+                [
+                  79,
+                  10
+                ],
+                [
+                  79,
+                  11
+                ],
+                [
+                  78,
+                  12
+                ],
+                [
+                  77,
+                  13
+                ],
+                [
+                  76,
+                  12
+                ],
+                [
+                  76,
+                  11
+                ],
+                [
+                  77,
+                  10
+                ],
+                [
+                  77,
+                  9
+                ],
+                [
+                  77,
+                  8
+                ],
+                [
+                  77,
+                  7
+                ],
+                [
+                  77,
+                  6
+                ],
+                [
+                  77,
+                  5
+                ],
+                [
+                  78,
+                  4
+                ],
+                [
+                  79,
+                  3
+                ],
+                [
+                  78,
+                  3
+                ],
+                [
+                  77,
+                  3
+                ],
+                [
+                  76,
+                  3
+                ],
+                [
+                  75,
+                  4
+                ],
+                [
+                  75,
+                  5
+                ],
+                [
+                  75,
+                  6
+                ],
+                [
+                  75,
+                  7
+                ],
+                [
+                  75,
+                  8
+                ],
+                [
+                  75,
+                  9
+                ],
+                [
+                  74,
+                  10
+                ],
+                [
+                  73,
+                  9
+                ],
+                [
+                  73,
+                  8
+                ],
+                [
+                  73,
+                  7
+                ],
+                [
+                  73,
+                  6
+                ],
+                [
+                  73,
+                  5
+                ],
+                [
+                  73,
+                  4
+                ],
+                [
+                  73,
+                  3
+                ],
+                [
+                  74,
+                  2
+                ],
+                [
+                  73,
+                  2
+                ],
+                [
+                  72,
+                  2
+                ],
+                [
+                  71,
+                  3
+                ],
+                [
+                  71,
+                  4
+                ],
+                [
+                  71,
+                  5
+                ],
+                [
+                  71,
+                  6
+                ],
+                [
+                  71,
+                  7
+                ],
+                [
+                  70,
+                  6
+                ],
+                [
+                  69,
+                  5
+                ],
+                [
+                  69,
+                  4
+                ],
+                [
+                  69,
+                  3
+                ],
+                [
+                  69,
+                  2
+                ],
+                [
+                  68,
+                  3
+                ],
+                [
+                  67,
+                  3
+                ],
+                [
+                  66,
+                  2
+                ],
+                [
+                  67,
+                  2
+                ],
+                [
+                  68,
+                  4
+                ],
+                [
+                  70,
+                  5
+                ],
+                [
+                  70,
+                  4
+                ],
+                [
+                  70,
+                  3
+                ],
+                [
+                  70,
+                  2
+                ],
+                [
+                  71,
+                  2
+                ],
+                [
+                  72,
+                  3
+                ],
+                [
+                  72,
+                  4
+                ],
+                [
+                  72,
+                  5
+                ],
+                [
+                  72,
+                  6
+                ],
+                [
+                  72,
+                  7
+                ],
+                [
+                  72,
+                  8
+                ],
+                [
+                  74,
+                  9
+                ],
+                [
+                  74,
+                  8
+                ],
+                [
+                  74,
+                  7
+                ],
+                [
+                  74,
+                  6
+                ],
+                [
+                  74,
+                  5
+                ],
+                [
+                  74,
+                  4
+                ],
+                [
+                  74,
+                  3
+                ],
+                [
+                  75,
+                  3
+                ],
+                [
+                  75,
+                  2
+                ],
+                [
+                  76,
+                  2
+                ],
+                [
+                  77,
+                  4
+                ],
+                [
+                  76,
+                  4
+                ],
+                [
+                  76,
+                  5
+                ],
+                [
+                  76,
+                  6
+                ],
+                [
+                  76,
+                  7
+                ],
+                [
+                  76,
+                  8
+                ],
+                [
+                  76,
+                  9
+                ],
+                [
+                  76,
+                  10
+                ],
+                [
+                  75,
+                  10
+                ],
+                [
+                  75,
+                  11
+                ],
+                [
+                  77,
+                  12
+                ],
+                [
+                  77,
+                  11
+                ],
+                [
+                  78,
+                  11
+                ],
+                [
+                  78,
+                  10
+                ],
+                [
+                  78,
+                  9
+                ],
+                [
+                  78,
+                  8
+                ],
+                [
+                  78,
+                  7
+                ],
+                [
+                  78,
+                  6
+                ],
+                [
+                  78,
+                  5
+                ],
+                [
+                  79,
+                  5
+                ],
+                [
+                  79,
+                  4
+                ],
+                [
+                  81,
+                  4
+                ],
+                [
+                  80,
+                  4
+                ],
+                [
+                  81,
+                  6
+                ],
+                [
+                  80,
+                  6
+                ],
+                [
+                  80,
+                  7
+                ],
+                [
+                  80,
+                  8
+                ],
+                [
+                  80,
+                  9
+                ],
+                [
+                  80,
+                  10
+                ],
+                [
+                  80,
+                  11
+                ],
+                [
+                  80,
+                  12
+                ],
+                [
+                  79,
+                  12
+                ],
+                [
+                  79,
+                  13
+                ],
+                [
+                  78,
+                  13
+                ],
+                [
+                  78,
+                  14
+                ],
+                [
+                  78,
+                  15
+                ],
+                [
+                  76,
+                  16
+                ],
+                [
+                  75,
+                  16
+                ],
+                [
+                  74,
+                  16
+                ],
+                [
+                  73,
+                  16
+                ],
+                [
+                  72,
+                  16
+                ],
+                [
+                  71,
+                  16
+                ],
+                [
+                  70,
+                  16
+                ],
+                [
+                  69,
+                  16
+                ],
+                [
+                  68,
+                  16
+                ],
+                [
+                  67,
+                  16
+                ],
+                [
+                  66,
+                  16
+                ],
+                [
+                  65,
+                  16
+                ],
+                [
+                  64,
+                  16
+                ],
+                [
+                  63,
+                  16
+                ],
+                [
+                  62,
+                  16
+                ],
+                [
+                  62,
+                  15
+                ],
+                [
+                  63,
+                  14
+                ],
+                [
+                  64,
+                  14
+                ],
+                [
+                  65,
+                  14
+                ],
+                [
+                  66,
+                  14
+                ],
+                [
+                  67,
+                  14
+                ],
+                [
+                  68,
+                  14
+                ],
+                [
+                  69,
+                  14
+                ],
+                [
+                  70,
+                  14
+                ],
+                [
+                  71,
+                  14
+                ],
+                [
+                  72,
+                  14
+                ],
+                [
+                  71,
+                  13
+                ],
+                [
+                  70,
+                  12
+                ],
+                [
+                  69,
+                  12
+                ],
+                [
+                  68,
+                  12
+                ],
+                [
+                  67,
+                  12
+                ],
+                [
+                  66,
+                  12
+                ],
+                [
+                  65,
+                  12
+                ],
+                [
+                  64,
+                  12
+                ],
+                [
+                  63,
+                  12
+                ],
+                [
+                  62,
+                  12
+                ],
+                [
+                  61,
+                  13
+                ],
+                [
+                  60,
+                  12
+                ],
+                [
+                  61,
+                  12
+                ],
+                [
+                  62,
+                  11
+                ],
+                [
+                  63,
+                  10
+                ],
+                [
+                  64,
+                  10
+                ],
+                [
+                  65,
+                  10
+                ],
+                [
+                  66,
+                  10
+                ],
+                [
+                  67,
+                  10
+                ],
+                [
+                  68,
+                  10
+                ],
+                [
+                  67,
+                  9
+                ],
+                [
+                  66,
+                  8
+                ],
+                [
+                  65,
+                  8
+                ],
+                [
+                  64,
+                  8
+                ],
+                [
+                  63,
+                  8
+                ],
+                [
+                  62,
+                  8
+                ],
+                [
+                  61,
+                  8
+                ],
+                [
+                  61,
+                  7
+                ],
+                [
+                  62,
+                  6
+                ],
+                [
+                  63,
+                  6
+                ],
+                [
+                  64,
+                  6
+                ],
+                [
+                  63,
+                  5
+                ],
+                [
+                  62,
+                  4
+                ],
+                [
+                  62,
+                  5
+                ],
+                [
+                  61,
+                  6
+                ],
+                [
+                  62,
+                  7
+                ],
+                [
+                  63,
+                  7
+                ],
+                [
+                  64,
+                  7
+                ],
+                [
+                  65,
+                  7
+                ],
+                [
+                  66,
+                  9
+                ],
+                [
+                  65,
+                  9
+                ],
+                [
+                  64,
+                  9
+                ],
+                [
+                  63,
+                  9
+                ],
+                [
+                  62,
+                  9
+                ],
+                [
+                  62,
+                  10
+                ],
+                [
+                  63,
+                  11
+                ],
+                [
+                  64,
+                  11
+                ],
+                [
+                  65,
+                  11
+                ],
+                [
+                  66,
+                  11
+                ],
+                [
+                  67,
+                  11
+                ],
+                [
+                  68,
+                  11
+                ],
+                [
+                  69,
+                  11
+                ],
+                [
+                  70,
+                  13
+                ],
+                [
+                  69,
+                  13
+                ],
+                [
+                  68,
+                  13
+                ],
+                [
+                  67,
+                  13
+                ],
+                [
+                  66,
+                  13
+                ],
+                [
+                  65,
+                  13
+                ],
+                [
+                  64,
+                  13
+                ],
+                [
+                  63,
+                  13
+                ],
+                [
+                  62,
+                  13
+                ],
+                [
+                  63,
+                  15
+                ],
+                [
+                  64,
+                  15
+                ],
+                [
+                  65,
+                  15
+                ],
+                [
+                  66,
+                  15
+                ],
+                [
+                  67,
+                  15
+                ],
+                [
+                  68,
+                  15
+                ],
+                [
+                  69,
+                  15
+                ],
+                [
+                  70,
+                  15
+                ],
+                [
+                  71,
+                  15
+                ],
+                [
+                  72,
+                  15
+                ],
+                [
+                  73,
+                  15
+                ],
+                [
+                  77,
+                  15
+                ],
+                [
+                  77,
+                  14
+                ],
+                [
+                  75,
+                  15
+                ],
+                [
+                  74,
+                  15
+                ],
+                [
+                  76,
+                  14
+                ],
+                [
+                  76,
+                  13
+                ],
+                [
+                  74,
+                  14
+                ],
+                [
+                  73,
+                  14
+                ],
+                [
+                  75,
+                  13
+                ],
+                [
+                  75,
+                  12
+                ],
+                [
+                  73,
+                  13
+                ],
+                [
+                  72,
+                  13
+                ],
+                [
+                  74,
+                  12
+                ],
+                [
+                  74,
+                  11
+                ],
+                [
+                  72,
+                  12
+                ],
+                [
+                  71,
+                  12
+                ],
+                [
+                  73,
+                  11
+                ],
+                [
+                  73,
+                  10
+                ],
+                [
+                  71,
+                  11
+                ],
+                [
+                  70,
+                  11
+                ],
+                [
+                  72,
+                  10
+                ],
+                [
+                  72,
+                  9
+                ],
+                [
+                  70,
+                  10
+                ],
+                [
+                  69,
+                  10
+                ],
+                [
+                  71,
+                  9
+                ],
+                [
+                  71,
+                  8
+                ],
+                [
+                  69,
+                  9
+                ],
+                [
+                  68,
+                  9
+                ],
+                [
+                  70,
+                  8
+                ],
+                [
+                  70,
+                  7
+                ],
+                [
+                  68,
+                  8
+                ],
+                [
+                  67,
+                  8
+                ],
+                [
+                  69,
+                  7
+                ],
+                [
+                  69,
+                  6
+                ],
+                [
+                  67,
+                  7
+                ],
+                [
+                  66,
+                  7
+                ],
+                [
+                  68,
+                  6
+                ],
+                [
+                  68,
+                  5
+                ],
+                [
+                  66,
+                  6
+                ],
+                [
+                  65,
+                  6
+                ],
+                [
+                  67,
+                  5
+                ],
+                [
+                  67,
+                  4
+                ],
+                [
+                  65,
+                  5
+                ],
+                [
+                  64,
+                  5
+                ],
+                [
+                  66,
+                  4
+                ],
+                [
+                  66,
+                  3
+                ],
+                [
+                  64,
+                  4
+                ],
+                [
+                  63,
+                  4
+                ],
+                [
+                  65,
+                  3
+                ],
+                [
+                  65,
+                  2
+                ],
+                [
+                  63,
+                  3
+                ],
+                [
+                  62,
+                  3
+                ],
+                [
+                  64,
+                  2
+                ]
+              ],
+              "bounds_native": [
+                60,
+                2,
+                83,
+                17
+              ]
+            },
+            {
+              "pixels_native": [
+                [
+                  6,
+                  10
+                ],
+                [
+                  7,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  9,
+                  13
+                ],
+                [
+                  10,
+                  14
+                ],
+                [
+                  11,
+                  15
+                ],
+                [
+                  12,
+                  16
+                ],
+                [
+                  11,
+                  17
+                ],
+                [
+                  12,
+                  18
+                ],
+                [
+                  12,
+                  19
+                ],
+                [
+                  12,
+                  20
+                ],
+                [
+                  12,
+                  21
+                ],
+                [
+                  12,
+                  22
+                ],
+                [
+                  12,
+                  23
+                ],
+                [
+                  12,
+                  24
+                ],
+                [
+                  11,
+                  25
+                ],
+                [
+                  10,
+                  25
+                ],
+                [
+                  9,
+                  25
+                ],
+                [
+                  8,
+                  25
+                ],
+                [
+                  7,
+                  25
+                ],
+                [
+                  6,
+                  25
+                ],
+                [
+                  5,
+                  25
+                ],
+                [
+                  4,
+                  25
+                ],
+                [
+                  4,
+                  24
+                ],
+                [
+                  5,
+                  23
+                ],
+                [
+                  6,
+                  23
+                ],
+                [
+                  7,
+                  23
+                ],
+                [
+                  8,
+                  23
+                ],
+                [
+                  9,
+                  23
+                ],
+                [
+                  10,
+                  23
+                ],
+                [
+                  10,
+                  22
+                ],
+                [
+                  10,
+                  21
+                ],
+                [
+                  10,
+                  20
+                ],
+                [
+                  10,
+                  19
+                ],
+                [
+                  9,
+                  18
+                ],
+                [
+                  8,
+                  19
+                ],
+                [
+                  8,
+                  20
+                ],
+                [
+                  8,
+                  21
+                ],
+                [
+                  7,
+                  21
+                ],
+                [
+                  6,
+                  21
+                ],
+                [
+                  5,
+                  21
+                ],
+                [
+                  4,
+                  21
+                ],
+                [
+                  3,
+                  22
+                ],
+                [
+                  2,
+                  21
+                ],
+                [
+                  1,
+                  21
+                ],
+                [
+                  2,
+                  20
+                ],
+                [
+                  3,
+                  19
+                ],
+                [
+                  4,
+                  19
+                ],
+                [
+                  5,
+                  19
+                ],
+                [
+                  6,
+                  19
+                ],
+                [
+                  6,
+                  18
+                ],
+                [
+                  7,
+                  17
+                ],
+                [
+                  8,
+                  16
+                ],
+                [
+                  9,
+                  16
+                ],
+                [
+                  8,
+                  15
+                ],
+                [
+                  7,
+                  14
+                ],
+                [
+                  6,
+                  15
+                ],
+                [
+                  5,
+                  16
+                ],
+                [
+                  4,
+                  17
+                ],
+                [
+                  4,
+                  16
+                ],
+                [
+                  5,
+                  15
+                ],
+                [
+                  5,
+                  14
+                ],
+                [
+                  5,
+                  13
+                ],
+                [
+                  5,
+                  12
+                ],
+                [
+                  6,
+                  14
+                ],
+                [
+                  6,
+                  13
+                ],
+                [
+                  7,
+                  15
+                ],
+                [
+                  7,
+                  16
+                ],
+                [
+                  6,
+                  16
+                ],
+                [
+                  6,
+                  17
+                ],
+                [
+                  5,
+                  17
+                ],
+                [
+                  5,
+                  18
+                ],
+                [
+                  4,
+                  18
+                ],
+                [
+                  2,
+                  18
+                ],
+                [
+                  2,
+                  19
+                ],
+                [
+                  1,
+                  19
+                ],
+                [
+                  1,
+                  20
+                ],
+                [
+                  3,
+                  21
+                ],
+                [
+                  4,
+                  20
+                ],
+                [
+                  5,
+                  20
+                ],
+                [
+                  6,
+                  20
+                ],
+                [
+                  7,
+                  20
+                ],
+                [
+                  7,
+                  19
+                ],
+                [
+                  7,
+                  18
+                ],
+                [
+                  8,
+                  18
+                ],
+                [
+                  9,
+                  17
+                ],
+                [
+                  8,
+                  17
+                ],
+                [
+                  9,
+                  19
+                ],
+                [
+                  9,
+                  20
+                ],
+                [
+                  9,
+                  21
+                ],
+                [
+                  9,
+                  22
+                ],
+                [
+                  8,
+                  22
+                ],
+                [
+                  7,
+                  22
+                ],
+                [
+                  6,
+                  22
+                ],
+                [
+                  5,
+                  22
+                ],
+                [
+                  4,
+                  22
+                ],
+                [
+                  4,
+                  23
+                ],
+                [
+                  5,
+                  24
+                ],
+                [
+                  6,
+                  24
+                ],
+                [
+                  7,
+                  24
+                ],
+                [
+                  8,
+                  24
+                ],
+                [
+                  9,
+                  24
+                ],
+                [
+                  10,
+                  24
+                ],
+                [
+                  11,
+                  24
+                ],
+                [
+                  11,
+                  23
+                ],
+                [
+                  11,
+                  22
+                ],
+                [
+                  11,
+                  21
+                ],
+                [
+                  11,
+                  20
+                ],
+                [
+                  11,
+                  19
+                ],
+                [
+                  11,
+                  18
+                ],
+                [
+                  10,
+                  18
+                ],
+                [
+                  10,
+                  17
+                ],
+                [
+                  11,
+                  16
+                ],
+                [
+                  10,
+                  16
+                ],
+                [
+                  12,
+                  15
+                ],
+                [
+                  12,
+                  14
+                ],
+                [
+                  10,
+                  15
+                ],
+                [
+                  9,
+                  15
+                ],
+                [
+                  11,
+                  14
+                ],
+                [
+                  11,
+                  13
+                ],
+                [
+                  11,
+                  12
+                ],
+                [
+                  10,
+                  11
+                ],
+                [
+                  9,
+                  14
+                ],
+                [
+                  8,
+                  14
+                ],
+                [
+                  10,
+                  13
+                ],
+                [
+                  10,
+                  12
+                ],
+                [
+                  8,
+                  13
+                ],
+                [
+                  7,
+                  13
+                ],
+                [
+                  9,
+                  12
+                ],
+                [
+                  9,
+                  11
+                ],
+                [
+                  7,
+                  12
+                ],
+                [
+                  6,
+                  12
+                ],
+                [
+                  8,
+                  11
+                ],
+                [
+                  6,
+                  11
+                ],
+                [
+                  5,
+                  11
+                ]
+              ],
+              "bounds_native": [
+                1,
+                10,
+                13,
+                26
+              ]
+            }
+          ],
+          "small_quantized_source_variations": [
+            {
+              "pixels_native": [
+                [
+                  59,
+                  4
+                ],
+                [
+                  59,
+                  5
+                ],
+                [
+                  59,
+                  6
+                ],
+                [
+                  59,
+                  7
+                ]
+              ],
+              "bounds_native": [
+                59,
+                4,
+                60,
+                8
+              ]
+            },
+            {
+              "pixels_native": [
+                [
+                  59,
+                  9
+                ]
+              ],
+              "bounds_native": [
+                59,
+                9,
+                60,
+                10
+              ]
+            }
+          ],
+          "method": "Native maxchannelRGBdifference>8 versusmodal164/107/69,8connected components>20texels yield3substantial groups. Tiny quantizationdifferences kept separately, not called new objects. All y36..127 texels exactlybase RGB asserted. Fullsource is paintedhandcolor diffuse with3 existingsoftshadinggroups, not strictsolid technicalmask. Countfields rather than anatomicalparts.",
+          "source_modal_RGBA_pixels": 14208,
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_center_RGBA": [
+            164,
+            107,
+            69,
+            255
+          ],
+          "source_corner_RGBA": [
+            162,
+            106,
+            68,
+            255
+          ],
+          "source_rgba_sha256": "9d95bb932271f7b0e958d64dbce9d9f51e7b1cde16dbea6ff27642ddabf8811e",
+          "full_original_privately_inspected": true,
+          "proof_before_final_prompt_at_utc": "2026-10-08T04:38:02.775495+00:00",
+          "upperright_native_x99to116_band_luma_y0to18": [
+            112.89688888888888,
+            112.65104444444444,
+            114.68297777777778,
+            123.58693333333332,
+            127.59115555555553,
+            117.88719999999999,
+            109.50374444444444,
+            129.27794444444442,
+            127.46074444444442,
+            105.17104444444443,
+            125.45265555555554,
+            134.07497777777775,
+            114.07786666666665,
+            108.89316666666666,
+            131.59456666666665,
+            132.00306666666665,
+            124.0171111111111,
+            117.35932222222222,
+            116.53356666666666
+          ]
+        },
+        "before_call_exact_prompt_assert": {
+          "id": 6761,
+          "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted diffuse UV color map ID6761, existing neck/hands color material.\r\nImage1 is the ONLY edit target/reference: entire original128x128 RGBA texture enlarged nearest8x1024x1024. Refine only the existing three soft painted wash groups at four times source resolution; output the exact same complete square UV map with the same broad color, shape bounds and phase. This is a mostly FLAT COLOR map, not a depiction of a hand, skin photograph, body, face or scene.\r\nActual original background RGBA164/107/69/255. The complete native y36..127 area is exactly constant RGB164/107/69. Keep it perfectly FLAT and uniform: no pores, noise, grain, hair, creases, shadows, fabric pattern, anatomy or new marks. Do not add surface detail to constant fields. Keep the original warm brown/ochre painted hue and relative lightness; no recoloring/beautification.\r\nSource has exactly THREE substantial existing soft shading groups near the upperedge: one dim upper-right softly banded wash native bounds[96,1,120,17], one darker upper-middle irregular wash[60,2,83,17], and one soft pale left wash[1,10,13,26]. Preserve their actual irregular source silhouettes, lowcontrast softness, source color hierarchy and boundaries, with the original faint quantized surrounding transitions remaining faint. No new shapes or interpretation of the washed pixels. The rightwash has THREE existing soft horizontal darker bands with native minima at y6,9,13 (measured over x99..116): keep the same phase and subdued contrast, not new sharp lines. Keep all source shading inside original bounds, no spreading into the flatfield.\r\nDo not transform these three washes into eyes, a mouth, knuckles, fingernails, wounds, badges, hardware, glyphs, teeth or new anatomical parts. Preserve source ambiguity. Improve only the existing source soft transitions in those wash groups, not the number or prominence of marks; no photographic skin texture, strokes, dots, rings or sharp outlines.\r\nOriginal alpha255 everywhere, including the flatfield and all corners. Wholecanvas UV and fullalpha remain; no crop, padding, letterbox, bbox recentering, registration, new border/margin, text, labels, watermark, objects or scene. Output only this same original painted map, at the same relative material/shading scale.",
+          "prompt_constraints": {
+            "source_width": 128,
+            "source_height": 128,
+            "substantial_painted_wash_groups": 3,
+            "left_softpale_wash_groups": 1,
+            "uppermiddle_darksoft_wash_groups": 1,
+            "upperright_softbanded_wash_groups": 1,
+            "background_color_fields": 1,
+            "background_modal_RGBA": [
+              164,
+              107,
+              69,
+              255
+            ],
+            "exactly_constant_lower_field_native_y": 36,
+            "new_anatomy_or_parts_allowed": 0,
+            "new_pores_creases_weave_or_grain_allowed": 0,
+            "upperright_soft_horizontal_darkband_rows": [
+              6,
+              9,
+              13
+            ],
+            "upperright_soft_horizontal_darkband_count": 3
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:39:35.677299+00:00"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 0,
+          "source_center_RGBA": [
+            164,
+            107,
+            69,
+            255
+          ],
+          "complete_originalA_nearest4x_exact": true,
+          "opaque_source_black_not_transparent_hole": true
+        },
+        "private_numeric_scalar_proof": {
+          "id": 6761,
+          "gain": 1.0059146881103516,
+          "source_stored_luma": 115.95677990722655,
+          "actual_stored_luma": 115.95697248153685,
+          "rounding": "8x8 ordered sub-level RGB rounding",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "private_whole_material_count_palette_proof": {
+          "id": 6761,
+          "original_flat_y36to127_RGB": [
+            164,
+            107,
+            69
+          ],
+          "source_flat_field_stdRGB": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "raw_lower40percent_stdRGB": [
+            0.7453821416322634,
+            0.7354265784654581,
+            0.7354987659785955
+          ],
+          "normalized_flat_region_RGBmin": [
+            158,
+            103,
+            67
+          ],
+          "normalized_flat_region_RGBmax": [
+            165,
+            109,
+            74
+          ],
+          "normalized_flat_region_RGBmean": [
+            161.86469832710597,
+            106.39256220278533,
+            70.5668255349864
+          ],
+          "normalized_flat_region_RGBstd": [
+            0.7311509741863306,
+            0.7373362498942625,
+            0.7301734271698245
+          ],
+          "calibrated_flat_RGBmean": [
+            162.82040803328803,
+            107.02433445142663,
+            70.98170537533967
+          ],
+          "calibrated_flat_RGBstd": [
+            0.7643240077393554,
+            0.8871243252831618,
+            0.886180086304978
+          ],
+          "source_alpha_exact": true,
+          "right_band_source_native_y0to18": [
+            112.89688888888888,
+            112.65104444444444,
+            114.68297777777778,
+            123.58693333333332,
+            127.59115555555553,
+            117.88719999999999,
+            109.50374444444444,
+            129.27794444444442,
+            127.46074444444442,
+            105.17104444444443,
+            125.45265555555554,
+            134.07497777777775,
+            114.07786666666665,
+            108.89316666666666,
+            131.59456666666665,
+            132.00306666666665,
+            124.0171111111111,
+            117.35932222222222,
+            116.53356666666666
+          ],
+          "right_band_generated_native_y0to18": [
+            114.52424930555554,
+            114.84105277777778,
+            118.06097083333333,
+            126.2367986111111,
+            131.3969,
+            123.3944375,
+            115.74428819444444,
+            133.05550416666668,
+            130.80674444444446,
+            110.89867222222222,
+            129.10753749999998,
+            137.00334999999998,
+            117.68632916666667,
+            112.76900833333335,
+            131.81543819444445,
+            132.65303958333334,
+            125.56767708333334,
+            119.14832638888886,
+            116.60905069444445
+          ],
+          "washmeanRGB": {
+            "leftpale": {
+              "source": [
+                173.91145833333334,
+                121.640625,
+                82.21875
+              ],
+              "generated": [
+                176.62727864583334,
+                123.62565104166667,
+                86.81575520833333
+              ]
+            },
+            "uppermiddle": {
+              "source": [
+                128.82028985507247,
+                78.57101449275362,
+                45.62898550724638
+              ],
+              "generated": [
+                130.64873188405798,
+                79.80253623188406,
+                47.53061594202899
+              ]
+            },
+            "upperright": {
+              "source": [
+                162.88020833333334,
+                111.52864583333333,
+                73.625
+              ],
+              "generated": [
+                166.82682291666666,
+                113.57861328125,
+                77.72591145833333
+              ]
+            }
+          }
+        },
+        "full_original_raw_sourceA4x_scalar_and_native_privately_inspected": true,
+        "no_RGBartistrepair_sourcecomposite_flattening_crop_padding_bbox_registration": true
+      }
+    },
+    {
+      "id": 2153,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for material/localcontrast aftersolecall, not countfailure. All46 faintsource cuffstrokes retain exact evenx36..126,pitch2,23strong+23weak; targetnative localprominence>3.41 at eachsourcephase. However faint lines become much more conspicuous rigid ribs, leftwashedfield develops coarse photo-like gritty highlights/dark hardoutlined curves and broadmainfield has much stronger crisp foldridges instead of subduedsource wash. Afterpure scalar.990966796875, maingraymean41.30/41.02/41.30→40.27/39.82/39.16 isclose, but leftwashedmean28.58/27.14/23.63→33.44/30.30/25.10 and fullrawmaterial isnot faithfully soft. OriginalAopaqueexact cannot repair localcontrast/material. No unsupported addedanatomy/hardwarecount claim, no retry/artisticRGBfix.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 2153,
+        "texture": {
+          "ID": 2153,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14342876,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Classes\\GerGrenader\\Hands.tga",
+          "Format": "dxt1",
+          "UserName": "Hands",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1439,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 983,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1456,
+                  "field": "Material2",
+                  "material_template_id": 983,
+                  "geometry_id": 1857,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerGrenader_100.mb",
+                  "model_template_id": 1093,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4821,
+                  "field": "Material2",
+                  "material_template_id": 983,
+                  "geometry_id": 2781,
+                  "geometry": "Interface\\CharScreen\\GerGrenader.mb",
+                  "model_template_id": 3208,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "d299a51501686150d1391b1f2108ed2eebae0f95c89c27c960c31b132c7918fb",
+        "source_rgba_sha256": "4f664d307ebd7c249f90a9486d499426840e7c220bdd7a24127d624de644402b",
+        "release_rgba_sha256": "4f664d307ebd7c249f90a9486d499426840e7c220bdd7a24127d624de644402b",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/2153.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "2e12c0b6817a3928eb49a5685bab0a79f8a140f16664c1c3804fb5d1ea96441e",
+      "exact_prompt_sha256": "d63a512b2f08074c0587206f990933e4180c864c10bbf4d04f4df276755ef879",
+      "reference_sha256": "97ce6b7ba63888412a75b678a63c0a26b80d38f8e6f1f27ae7437ac4d4b92813",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/2153-generation-call.json",
+      "generation_call_sha256": "e0c5c9a7dfd3970d3317496077cd4c894c1c14b7ed39c3fb918d380b5c9276e9",
+      "full_material_count_alpha_proof": {
+        "before_call_sourcecount_phase_proof": {
+          "id": 2153,
+          "proved_source_counts": {
+            "source_width": 128,
+            "source_height": 128,
+            "source_vertical_pale_cuff_strokes": 46,
+            "cuff_stroke_pitch_native_x": 2,
+            "cuff_stroke_native_x": [
+              36,
+              38,
+              40,
+              42,
+              44,
+              46,
+              48,
+              50,
+              52,
+              54,
+              56,
+              58,
+              60,
+              62,
+              64,
+              66,
+              68,
+              70,
+              72,
+              74,
+              76,
+              78,
+              80,
+              82,
+              84,
+              86,
+              88,
+              90,
+              92,
+              94,
+              96,
+              98,
+              100,
+              102,
+              104,
+              106,
+              108,
+              110,
+              112,
+              114,
+              116,
+              118,
+              120,
+              122,
+              124,
+              126
+            ],
+            "alternating_primary_strokes": 23,
+            "alternating_secondary_strokes": 23,
+            "primary_native_x": [
+              38,
+              42,
+              46,
+              50,
+              54,
+              58,
+              62,
+              66,
+              70,
+              74,
+              78,
+              82,
+              86,
+              90,
+              94,
+              98,
+              102,
+              106,
+              110,
+              114,
+              118,
+              122,
+              126
+            ],
+            "secondary_native_x": [
+              36,
+              40,
+              44,
+              48,
+              52,
+              56,
+              60,
+              64,
+              68,
+              72,
+              76,
+              80,
+              84,
+              88,
+              92,
+              96,
+              100,
+              104,
+              108,
+              112,
+              116,
+              120,
+              124
+            ],
+            "cuff_band_fields": 1,
+            "large_gray_cloth_backfields": 1,
+            "small_left_top_wash_fields": 1,
+            "narrow_left_middle_wash_fields": 1,
+            "left_bottom_small_wash_fields": 2,
+            "new_hardware_or_anatomy_allowed": 0,
+            "new_weave_crossings_seams_relief_or_grain_pattern_allowed": 0
+          },
+          "source_cuff_native_luma_y5to17_bycolumn": [
+            21.284799999999997,
+            21.284799999999997,
+            0.0,
+            2.3734153846153845,
+            10.961369230769233,
+            24.46084615384615,
+            34.87623076923077,
+            13.194861538461536,
+            5.267938461538463,
+            15.897492307692309,
+            26.659476923076927,
+            31.944615384615382,
+            40.477784615384614,
+            52.255676923076926,
+            57.33358461538462,
+            55.45916923076924,
+            52.13250769230768,
+            49.20621538461539,
+            46.520384615384614,
+            47.04663076923077,
+            40.22149230769231,
+            39.068046153846154,
+            33.87581538461538,
+            32.19924615384615,
+            27.38604615384616,
+            25.052615384615386,
+            20.84026153846154,
+            17.64846153846154,
+            13.11836923076923,
+            7.557015384615383,
+            8.891676923076922,
+            6.431430769230768,
+            0.0,
+            4.2168,
+            0.0,
+            29.516969230769227,
+            43.05599999999999,
+            39.29698461538462,
+            49.75950769230769,
+            39.296984615384616,
+            43.89144615384615,
+            39.25316923076923,
+            50.48541538461537,
+            38.39581538461539,
+            42.6148923076923,
+            38.30720000000001,
+            48.28480000000001,
+            38.30720000000001,
+            42.45033846153846,
+            37.318400000000004,
+            47.757538461538466,
+            37.318400000000004,
+            42.198153846153836,
+            38.86855384615385,
+            48.87926153846154,
+            38.20935384615386,
+            42.228738461538455,
+            38.5019076923077,
+            47.757538461538466,
+            37.51310769230769,
+            41.901661538461525,
+            36.00098461538462,
+            47.757538461538466,
+            39.296984615384616,
+            43.05501538461537,
+            37.31938461538462,
+            46.52726153846153,
+            39.62658461538461,
+            42.63876923076922,
+            37.7824,
+            46.08812307692308,
+            35.233230769230765,
+            39.430400000000006,
+            35.233230769230765,
+            46.439630769230774,
+            38.15581538461539,
+            42.53846153846154,
+            39.75852307692308,
+            48.28480000000001,
+            39.296984615384616,
+            41.857846153846154,
+            38.37489230769231,
+            47.58178461538462,
+            39.34178461538461,
+            43.263384615384616,
+            42.340799999999994,
+            48.48246153846155,
+            43.60418461538461,
+            46.49464615384615,
+            43.53944615384615,
+            49.84566153846153,
+            45.88996923076923,
+            50.340799999999994,
+            47.9547076923077,
+            50.285784615384614,
+            48.372430769230775,
+            49.988800000000005,
+            47.778953846153854,
+            49.59298461538462,
+            47.6251076923077,
+            49.703507692307696,
+            45.306215384615385,
+            49.93427692307693,
+            44.77895384615385,
+            47.01218461538462,
+            42.04529230769231,
+            49.6928,
+            38.880738461538456,
+            44.0004923076923,
+            38.4075076923077,
+            48.724923076923076,
+            38.01218461538462,
+            42.77993846153845,
+            38.30720000000001,
+            47.757538461538466,
+            38.30720000000001,
+            43.0121846153846,
+            38.83593846153847,
+            49.60516923076922,
+            39.69329230769232,
+            43.60566153846153,
+            39.077415384615385,
+            50.19963076923076,
+            39.407015384615384,
+            43.05599999999999,
+            38.37489230769231,
+            49.165046153846156,
+            38.045292307692314
+          ],
+          "stroke_local_meanluma_prominence": [
+            8.649023076923065,
+            10.462523076923077,
+            4.616369230769223,
+            11.660923076923062,
+            4.263384615384602,
+            9.977600000000002,
+            4.637538461538448,
+            10.439138461538462,
+            4.104676923076909,
+            10.340307692307682,
+            3.873107692307677,
+            9.750030769230769,
+            5.144615384615371,
+            10.108553846153846,
+            4.746830769230755,
+            8.054276923076912,
+            3.934276923076915,
+            9.580307692307699,
+            4.197169230769241,
+            9.745107692307698,
+            3.5812923076923013,
+            8.757046153846161,
+            3.0219076923076926,
+            8.723446153846155,
+            2.422092307692317,
+            5.509969230769244,
+            2.922830769230771,
+            5.130953846153837,
+            3.4184615384615284,
+            2.122215384615373,
+            1.9131076923076904,
+            1.8909538461538489,
+            3.2378461538461494,
+            4.891692307692317,
+            3.6000615384615386,
+            9.229784615384617,
+            5.356369230769218,
+            10.515076923076919,
+            4.620246153846139,
+            9.450338461538458,
+            4.440615384615356,
+            10.340553846153824,
+            4.220307692307685,
+            10.957415384615373,
+            4.165046153846141,
+            10.954953846153842
+          ],
+          "source_pattern_method": "Complete native cuffband x35..127,y5..17. All46 even-column brighter strokesx36..126 atpitch2 each exceed average adjacentcolumns>0.5luma; alternating23stronger and23weaker4pixel-pitch source lines. Thin washed linepattern, not permission for knit/weave/extra crossing/rib relief. Count/sourcephase proved beforefinalprompt.",
+          "manual_field_envelopes_native": {
+            "cuffband": [
+              35,
+              5,
+              128,
+              19
+            ],
+            "main_grayback": [
+              35,
+              19,
+              128,
+              128
+            ],
+            "lefttop_wash": [
+              7,
+              3,
+              29,
+              21
+            ],
+            "leftmiddle_wash": [
+              2,
+              24,
+              30,
+              111
+            ],
+            "leftbottom_wash1": [
+              0,
+              112,
+              12,
+              128
+            ],
+            "leftbottom_wash2": [
+              12,
+              111,
+              30,
+              128
+            ]
+          },
+          "field_bounds_scope": "Original irregular soft materialwash envelopes only, not geometric replacements. Leftmiddle darklighttrace and hollow-looking washed shapes have no known mechanical/anatomical identity; preserve their source softsilhouettes exactly without eyes/hinges/fingers/new parts.",
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 470,
+          "source_center_RGBA": [
+            41,
+            40,
+            41,
+            255
+          ],
+          "source_rgba_sha256": "4f664d307ebd7c249f90a9486d499426840e7c220bdd7a24127d624de644402b",
+          "full_original_privately_inspected": true,
+          "proof_before_final_prompt_at_utc": "2026-10-08T04:42:35.640962+00:00"
+        },
+        "before_call_exact_prompt_assert": {
+          "id": 2153,
+          "exact_prompt": "Use case: precise-object-edit\r\nAsset type: Silent Storm original gray painted glove/cloth UV diffuse, ID2153.\r\nImage1 is the ONLY original edit target/reference: whole128x128 RGBA map enlarged nearest8x1024x1024. Refine this exact same flat painted UV texture for4x source resolution. Full square canvas, same source boundaries, muted gray/charcoal/brown palette and relative lightness. Preserve material identity, sourcewashed shape ambiguity and all dark silhouettes; no clothing photo or person.\r\nThe original cuffband is native[35,5,128,19]. It has exactly FORTY-SIX faint thin brighter vertical paint strokes at native x36,38,40,...126, TWO-native-pixel pitch. These alternate23 slightly stronger source strokes at x38,42,...126 and23 weaker strokes at x36,40,...124. Keep the exact source count, pitch, phase, contrast and original narrow washed width. These are existing faint painted shading lines, NOT new knitted ribs, pleats, wovencloth crossings, embroidery, raised relief or a new materialpattern. Do not add horizontal or diagonal threads/lines. Keep its original dark margins and original subdued shading.\r\nPreserve one large plain gray backfield native[35,19,128,128] with its existing soft broad gray washed transitions and weak darker foldshading. This source field has no resolved grain pattern or seams: do not introduce pores, photo leather/cloth weave, coarsegrain, curls, hatching, raised borders, crisp diagonal creaseedges or new marks.\r\nKeep the four original small/long left material washfields in their unchanged irregular source silhouettes/envelopes: lefttop[7,3,29,21], leftmiddle[2,24,30,111], leftbottom[0,112,12,128] and[12,111,30,128]. Retain every original dim brown/gray highlight, darkline and weak angular contour within those existing washes. Unknown tiny hollow/round/hinge-looking shapes remain indistinct soft source paint: do not interpret them as eyes, mechanical hinges, rings, knuckles, fingernails, stitches, buttons or other anatomy/hardware. No new parts, completion or rearrangement. Improve only original soft transitions and very fine matte paint within already-varied source areas, at original physical detail scale.\r\nOriginal alpha255 everywhere. Flatblack/dark source UV fields are opaque painted dark areas, not transparent holes; keep their exact boundaries/interiors. Wholecanvas only: no crop, padding, boundingbox recentering, registration, letterbox, newmargin/border, labels, text, faces, watermark, objects or scene. Output the same original muted hand-painted texture.",
+          "prompt_constraints": {
+            "source_width": 128,
+            "source_height": 128,
+            "source_vertical_pale_cuff_strokes": 46,
+            "cuff_stroke_pitch_native_x": 2,
+            "cuff_stroke_native_x": [
+              36,
+              38,
+              40,
+              42,
+              44,
+              46,
+              48,
+              50,
+              52,
+              54,
+              56,
+              58,
+              60,
+              62,
+              64,
+              66,
+              68,
+              70,
+              72,
+              74,
+              76,
+              78,
+              80,
+              82,
+              84,
+              86,
+              88,
+              90,
+              92,
+              94,
+              96,
+              98,
+              100,
+              102,
+              104,
+              106,
+              108,
+              110,
+              112,
+              114,
+              116,
+              118,
+              120,
+              122,
+              124,
+              126
+            ],
+            "alternating_primary_strokes": 23,
+            "alternating_secondary_strokes": 23,
+            "primary_native_x": [
+              38,
+              42,
+              46,
+              50,
+              54,
+              58,
+              62,
+              66,
+              70,
+              74,
+              78,
+              82,
+              86,
+              90,
+              94,
+              98,
+              102,
+              106,
+              110,
+              114,
+              118,
+              122,
+              126
+            ],
+            "secondary_native_x": [
+              36,
+              40,
+              44,
+              48,
+              52,
+              56,
+              60,
+              64,
+              68,
+              72,
+              76,
+              80,
+              84,
+              88,
+              92,
+              96,
+              100,
+              104,
+              108,
+              112,
+              116,
+              120,
+              124
+            ],
+            "cuff_band_fields": 1,
+            "large_gray_cloth_backfields": 1,
+            "small_left_top_wash_fields": 1,
+            "narrow_left_middle_wash_fields": 1,
+            "left_bottom_small_wash_fields": 2,
+            "new_hardware_or_anatomy_allowed": 0,
+            "new_weave_crossings_seams_relief_or_grain_pattern_allowed": 0
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:43:15.633654+00:00"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 470,
+          "source_center_RGBA": [
+            41,
+            40,
+            41,
+            255
+          ],
+          "complete_originalA_nearest4x_exact": true,
+          "opaque_source_black_not_transparent_hole": true
+        },
+        "private_numeric_scalar_proof": {
+          "id": 2153,
+          "gain": 0.990966796875,
+          "source_stored_luma": 36.14583260498047,
+          "actual_stored_luma": 36.14584392318725,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "private_whole_material_count_palette_proof": {
+          "id": 2153,
+          "source_alpha_exact": true,
+          "cuff_proved46source_positions": [
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48,
+            50,
+            52,
+            54,
+            56,
+            58,
+            60,
+            62,
+            64,
+            66,
+            68,
+            70,
+            72,
+            74,
+            76,
+            78,
+            80,
+            82,
+            84,
+            86,
+            88,
+            90,
+            92,
+            94,
+            96,
+            98,
+            100,
+            102,
+            104,
+            106,
+            108,
+            110,
+            112,
+            114,
+            116,
+            118,
+            120,
+            122,
+            124,
+            126
+          ],
+          "cuff_generated_native_luma": [
+            22.8136875,
+            19.67892403846154,
+            0.40243461538461534,
+            1.7511009615384612,
+            13.428985576923075,
+            31.465085576923073,
+            48.62045384615385,
+            10.939728846153846,
+            1.3802634615384617,
+            15.028305769230768,
+            28.790191346153847,
+            38.299074999999995,
+            48.73756442307692,
+            63.19917884615384,
+            71.80366442307691,
+            67.88802019230769,
+            65.38598269230768,
+            61.16569903846153,
+            57.51079134615384,
+            57.42057403846153,
+            50.24056442307691,
+            47.48832596153845,
+            43.00161730769231,
+            38.000003846153845,
+            33.019050961538454,
+            30.105194230769225,
+            25.129177884615387,
+            20.02591923076923,
+            14.389893269230766,
+            8.231338461538462,
+            10.916325961538462,
+            5.663760576923076,
+            0.40865576923076924,
+            4.725773076923077,
+            0.37072019230769226,
+            48.44046826923076,
+            46.1891298076923,
+            37.11125288461539,
+            59.92423076923077,
+            38.39466346153846,
+            44.63778269230769,
+            37.02749038461538,
+            59.943342307692305,
+            37.03681442307692,
+            42.31871057692308,
+            33.69375096153846,
+            58.56449711538461,
+            37.20322980769231,
+            40.94185096153846,
+            31.95298942307692,
+            57.12957019230768,
+            38.651895192307684,
+            41.830752884615386,
+            35.216576923076914,
+            58.829708653846154,
+            36.54667403846154,
+            43.93208942307693,
+            34.20384134615385,
+            58.191004807692295,
+            36.262711538461524,
+            42.94157596153846,
+            32.96963173076923,
+            58.16420576923076,
+            39.57562884615384,
+            44.23923365384615,
+            33.55021730769231,
+            56.24117019230769,
+            40.095721153846156,
+            43.11266538461538,
+            35.176753846153844,
+            56.6298076923077,
+            35.11582019230769,
+            40.024883653846146,
+            31.05560096153846,
+            57.13700384615384,
+            36.57104326923077,
+            44.29675384615385,
+            36.61795576923077,
+            61.63341057692307,
+            41.43242211538461,
+            42.765787499999995,
+            33.07063846153846,
+            59.59940769230768,
+            39.54592692307692,
+            46.01641730769231,
+            40.22089038461539,
+            62.985169230769216,
+            47.786462500000006,
+            51.85639230769231,
+            45.565103846153846,
+            62.113920192307674,
+            49.431778846153854,
+            58.729313461538446,
+            49.976954807692316,
+            63.155083653846155,
+            50.75433076923078,
+            57.06966923076922,
+            50.229284615384614,
+            63.91731826923076,
+            50.18789711538462,
+            54.63988942307693,
+            46.11056346153846,
+            61.40715673076924,
+            44.248606730769225,
+            48.41469903846152,
+            39.501574999999995,
+            59.55501346153846,
+            37.36997019230769,
+            43.73322788461538,
+            34.00959423076923,
+            58.57331634615384,
+            35.78639903846154,
+            40.02585769230769,
+            32.89469423076923,
+            57.37481634615384,
+            37.73019423076922,
+            40.12912884615385,
+            32.87755,
+            58.74014038461538,
+            40.00060961538462,
+            42.38814711538461,
+            31.192054807692305,
+            59.1831048076923,
+            37.466533653846156,
+            43.500910576923076,
+            33.693725,
+            56.815397115384606,
+            34.69198076923077
+          ],
+          "cuff46source_target_localprominence": [
+            {
+              "x": 36,
+              "source": 8.649023076923065,
+              "target": 3.4132692307692167
+            },
+            {
+              "x": 38,
+              "source": 10.462523076923077,
+              "target": 22.171272596153848
+            },
+            {
+              "x": 40,
+              "source": 4.616369230769223,
+              "target": 6.926705769230772
+            },
+            {
+              "x": 42,
+              "source": 11.660923076923062,
+              "target": 22.91118990384615
+            },
+            {
+              "x": 44,
+              "source": 4.263384615384602,
+              "target": 6.953427884615394
+            },
+            {
+              "x": 46,
+              "source": 9.977600000000002,
+              "target": 23.11600673076923
+            },
+            {
+              "x": 48,
+              "source": 4.637538461538448,
+              "target": 6.363741346153837
+            },
+            {
+              "x": 50,
+              "source": 10.439138461538462,
+              "target": 21.82712788461538
+            },
+            {
+              "x": 52,
+              "source": 4.104676923076909,
+              "target": 4.896516826923083
+            },
+            {
+              "x": 54,
+              "source": 10.340307692307682,
+              "target": 22.948083173076924
+            },
+            {
+              "x": 56,
+              "source": 3.873107692307677,
+              "target": 8.556831730769233
+            },
+            {
+              "x": 58,
+              "source": 9.750030769230769,
+              "target": 22.95772836538461
+            },
+            {
+              "x": 60,
+              "source": 5.144615384615371,
+              "target": 8.325404326923085
+            },
+            {
+              "x": 62,
+              "source": 10.108553846153846,
+              "target": 21.891575480769227
+            },
+            {
+              "x": 64,
+              "source": 4.746830769230755,
+              "target": 7.676310576923079
+            },
+            {
+              "x": 66,
+              "source": 8.054276923076912,
+              "target": 19.41820096153846
+            },
+            {
+              "x": 68,
+              "source": 3.934276923076915,
+              "target": 5.476427884615383
+            },
+            {
+              "x": 70,
+              "source": 9.580307692307699,
+              "target": 21.48352067307693
+            },
+            {
+              "x": 72,
+              "source": 4.197169230769241,
+              "target": 6.939173076923069
+            },
+            {
+              "x": 74,
+              "source": 9.745107692307698,
+              "target": 23.323681730769223
+            },
+            {
+              "x": 76,
+              "source": 3.5812923076923013,
+              "target": 7.702254326923082
+            },
+            {
+              "x": 78,
+              "source": 8.757046153846161,
+              "target": 22.608221634615376
+            },
+            {
+              "x": 80,
+              "source": 3.0219076923076926,
+              "target": 5.514257211538457
+            },
+            {
+              "x": 82,
+              "source": 8.723446153846155,
+              "target": 23.291124999999994
+            },
+            {
+              "x": 84,
+              "source": 2.422092307692317,
+              "target": 6.133008653846154
+            },
+            {
+              "x": 86,
+              "source": 5.509969230769244,
+              "target": 18.981492788461523
+            },
+            {
+              "x": 88,
+              "source": 2.922830769230771,
+              "target": 5.180609134615388
+            },
+            {
+              "x": 90,
+              "source": 5.130953846153837,
+              "target": 14.61547884615382
+            },
+            {
+              "x": 92,
+              "source": 3.4184615384615284,
+              "target": 9.024946634615361
+            },
+            {
+              "x": 94,
+              "source": 2.122215384615373,
+              "target": 12.789440865384606
+            },
+            {
+              "x": 96,
+              "source": 1.9131076923076904,
+              "target": 6.577861538461519
+            },
+            {
+              "x": 98,
+              "source": 1.8909538461538489,
+              "target": 13.70872740384614
+            },
+            {
+              "x": 100,
+              "source": 3.2378461538461494,
+              "target": 6.490659134615392
+            },
+            {
+              "x": 102,
+              "source": 4.891692307692317,
+              "target": 16.227571634615394
+            },
+            {
+              "x": 104,
+              "source": 3.6000615384615386,
+              "target": 6.539608173076914
+            },
+            {
+              "x": 106,
+              "source": 9.229784615384617,
+              "target": 21.11924086538462
+            },
+            {
+              "x": 108,
+              "source": 5.356369230769218,
+              "target": 8.043445673076924
+            },
+            {
+              "x": 110,
+              "source": 10.515076923076919,
+              "target": 23.675319711538457
+            },
+            {
+              "x": 112,
+              "source": 4.620246153846139,
+              "target": 5.685311057692303
+            },
+            {
+              "x": 114,
+              "source": 9.450338461538458,
+              "target": 22.062372115384612
+            },
+            {
+              "x": 116,
+              "source": 4.440615384615356,
+              "target": 4.82525673076924
+            },
+            {
+              "x": 118,
+              "source": 10.340553846153824,
+              "target": 22.30106057692307
+            },
+            {
+              "x": 120,
+              "source": 4.220307692307685,
+              "target": 6.791814903846152
+            },
+            {
+              "x": 122,
+              "source": 10.957415384615373,
+              "target": 24.853810576923074
+            },
+            {
+              "x": 124,
+              "source": 4.165046153846141,
+              "target": 7.920781249999997
+            },
+            {
+              "x": 126,
+              "source": 10.954953846153842,
+              "target": 22.622544230769222
+            }
+          ],
+          "source_meanRGB_main_grayback": [
+            41.29541176470588,
+            41.01964705882353,
+            41.29541176470588
+          ],
+          "target_meanRGB_main_grayback": [
+            40.273213235294115,
+            39.820088235294115,
+            39.16118382352941
+          ],
+          "source_meanRGB_leftwashedfields": [
+            28.58254716981132,
+            27.137803234501348,
+            23.625
+          ],
+          "target_meanRGB_leftwashedfields": [
+            33.44013224393531,
+            30.304455862533693,
+            25.10170990566038
+          ]
+        },
+        "full_original_raw_sourceA4x_scalar_and_native_privately_inspected": true,
+        "no_RGBartistrepair_sourcecomposite_flattening_crop_padding_bbox_registration": true
+      }
+    },
+    {
+      "id": 6827,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for localstrength/material and uncertain source-detail concretization aftersolecall. Exactly9source stripes/8gaps/fullfieldphase/twopalegroups survive; no countfailure or blanket print/complexity skip. Source dimolivefield mean17.12/16.37/.407→21.16/21.78/1.039 afterscalar.89544677734375, oliveLumaStd3.81→5.71, increasing source-relative brightness/contrast while tanfield122.90/82.35/45.06→115.62/80.20/42.99. Lowergray91.17/83.33/73.46→89.79/82.00/71.74 and overall grayLumaStd12.23→11.90 areclose, so do not claim wholly newgraypattern solely from fullrawimpression. Still rawclearly resolves faint brown footwearwash into crisp shoe seams/loop/knot-like details with stronger edgedpaint grain; sourcebootdiagnostic beforecall preserves uncertainty instead of defining mechanicalparts. Nounsupported inventedpartcount claimed; definitivehold is changed relativeolive/tan strength and excessive clarification of original washedmaterial/traces. SourceA255 exact/no crop/padding. No retry/sibling6821call/artisticRGBfix.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 6827,
+        "texture": {
+          "ID": 6827,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12701148,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilFemale_02\\Legs_Asian.tga",
+          "Format": "8888",
+          "UserName": "Legs_Asia",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4740,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2345,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6036,
+                  "field": "Material2",
+                  "material_template_id": 2345,
+                  "geometry_id": 2501,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+                  "model_template_id": 3895,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "67880ec69bc88b3c97f9fcb9211188818f3da88e8e6ad16750e87b198349ad38",
+        "source_rgba_sha256": "8b6f8bd083df85d7af5544e2049019cd4198b0185d7a125458f6a720df5cc9f0",
+        "release_rgba_sha256": "8b6f8bd083df85d7af5544e2049019cd4198b0185d7a125458f6a720df5cc9f0",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6827.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "8096d168ea04de62833fcc017f05ed8265afa79dfc9ad7bd8a41dc020e48bb9a",
+      "exact_prompt_sha256": "1c8ec12a3e74e4a2a760768bb1ca4c73f419487951f6e5193080a432f41578d3",
+      "reference_sha256": "970a3c8d26641e954214ff513cc97726b360601ff3951d9deeb44fa749b664c1",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6827-generation-call.json",
+      "generation_call_sha256": "294e3dd7e1b9f25f729d3e73cc37ae7df5e39352cf9491d2e7135001692acd0b",
+      "full_material_count_alpha_proof": {
+        "before_call_sourcecount_phase_proof": {
+          "id": 6827,
+          "proved_source_counts": {
+            "source_width": 128,
+            "source_height": 128,
+            "broad_vertical_olive_painted_stripes": 9,
+            "interior_dark_stripe_gap_groups": 8,
+            "upper_stripe_native_x_intervals": [
+              [
+                0,
+                6
+              ],
+              [
+                9,
+                14
+              ],
+              [
+                17,
+                22
+              ],
+              [
+                25,
+                30
+              ],
+              [
+                33,
+                38
+              ],
+              [
+                41,
+                46
+              ],
+              [
+                49,
+                54
+              ],
+              [
+                57,
+                62
+              ],
+              [
+                65,
+                72
+              ]
+            ],
+            "upper_dark_gap_native_x_intervals": [
+              [
+                6,
+                9
+              ],
+              [
+                14,
+                17
+              ],
+              [
+                22,
+                25
+              ],
+              [
+                30,
+                33
+              ],
+              [
+                38,
+                41
+              ],
+              [
+                46,
+                49
+              ],
+              [
+                54,
+                57
+              ],
+              [
+                62,
+                65
+              ]
+            ],
+            "interior_repeat_pitch_native_x": 8,
+            "pale_paintfleck_groups": 2,
+            "left_lower_pale_fleck_groups": 1,
+            "right_lower_pale_fleck_groups": 1,
+            "lower_large_gray_wash_fields": 1,
+            "lower_right_darkbrown_wash_fields": 1,
+            "upper_right_tan_wash_fields": 1,
+            "upper_right_brown_wash_fields": 1,
+            "upper_right_thin_grayband_fields": 1,
+            "central_upper_brown_wash_lobes": 2,
+            "central_lower_brown_rectanglewash_fields": 1,
+            "new_anatomy_hardware_straps_or_laces_allowed": 0,
+            "new_weave_or_pattern_allowed": 0
+          },
+          "source_pattern_native_y2to26_luma_bycolumn_x0to75": [
+            18.969031999999995,
+            21.359503999999998,
+            20.12282399999999,
+            18.966303999999994,
+            20.194159999999993,
+            21.599503999999996,
+            14.383976000000002,
+            14.318256000000002,
+            14.326760000000002,
+            21.568167999999996,
+            19.971487999999994,
+            18.626519999999992,
+            19.617423999999993,
+            18.720367999999997,
+            12.183551999999995,
+            11.790015999999998,
+            11.658576,
+            17.895240000000005,
+            16.319208,
+            14.974671999999996,
+            16.059423999999996,
+            17.712567999999997,
+            11.589760000000002,
+            11.569656000000002,
+            11.598264000000002,
+            17.415671999999997,
+            16.022311999999996,
+            14.652263999999997,
+            15.873864,
+            17.44123200000001,
+            11.824031999999999,
+            11.638472,
+            11.675584,
+            17.301447999999997,
+            15.836751999999995,
+            14.523919999999999,
+            16.096535999999993,
+            17.45856,
+            11.478424,
+            11.646976,
+            11.527136,
+            17.030112000000006,
+            15.457127999999996,
+            14.512319999999995,
+            15.502743999999991,
+            17.067224000000003,
+            11.341576,
+            11.527136,
+            11.738208,
+            18.063904000000008,
+            16.136535999999992,
+            14.900447999999997,
+            16.210759999999993,
+            17.758344000000008,
+            11.564248,
+            11.564248,
+            11.741304,
+            18.012352000000007,
+            15.948087999999993,
+            15.048895999999996,
+            16.247871999999994,
+            17.943904000000007,
+            11.749807999999998,
+            11.646976,
+            11.527136,
+            14.606647999999998,
+            17.786792000000005,
+            16.430543999999998,
+            15.317183999999992,
+            16.621879999999994,
+            18.163688000000008,
+            15.382903999999996,
+            11.071639999999997,
+            3.5246319999999995,
+            0.234384,
+            0.16
+          ],
+          "source_eight_gap_phase_proof": [
+            {
+              "gap_native_x": [
+                6,
+                9
+              ],
+              "source_dark_gap_luma": 14.342997333333335,
+              "source_local_contrast": 5.608343466666659
+            },
+            {
+              "gap_native_x": [
+                14,
+                17
+              ],
+              "source_dark_gap_luma": 11.877381333333332,
+              "source_local_contrast": 6.269126666666665
+            },
+            {
+              "gap_native_x": [
+                22,
+                25
+              ],
+              "source_dark_gap_luma": 11.585893333333336,
+              "source_local_contrast": 4.850752266666662
+            },
+            {
+              "gap_native_x": [
+                30,
+                33
+              ],
+              "source_dark_gap_luma": 11.712696,
+              "source_local_contrast": 4.549559999999998
+            },
+            {
+              "gap_native_x": [
+                38,
+                41
+              ],
+              "source_dark_gap_luma": 11.550845333333333,
+              "source_local_contrast": 4.527829066666664
+            },
+            {
+              "gap_native_x": [
+                46,
+                49
+              ],
+              "source_dark_gap_luma": 11.53564,
+              "source_local_contrast": 4.728311999999999
+            },
+            {
+              "gap_native_x": [
+                54,
+                57
+              ],
+              "source_dark_gap_luma": 11.623266666666666,
+              "source_local_contrast": 5.003843733333333
+            },
+            {
+              "gap_native_x": [
+                62,
+                65
+              ],
+              "source_dark_gap_luma": 11.641306666666665,
+              "source_local_contrast": 4.843778819047621
+            }
+          ],
+          "source_two_pale_groups_native": [
+            {
+              "pixels_native": [
+                [
+                  2,
+                  84
+                ],
+                [
+                  3,
+                  84
+                ],
+                [
+                  4,
+                  84
+                ]
+              ],
+              "bounds_native": [
+                2,
+                84,
+                5,
+                85
+              ]
+            },
+            {
+              "pixels_native": [
+                [
+                  113,
+                  117
+                ]
+              ],
+              "bounds_native": [
+                113,
+                117,
+                114,
+                118
+              ]
+            }
+          ],
+          "pale_group_method": "Allwhole nativeRGBmin>1508connected components yieldexactly2paintgroups; one lowerleftconnected softpaintfleck and1single nativepixel at113/117. Not buckle/button/glyph interpretation.",
+          "manual_broad_wash_field_envelopes_native": {
+            "olive_pattern_contour": [
+              0,
+              0,
+              77,
+              91
+            ],
+            "upperright_brown": [
+              78,
+              0,
+              128,
+              13
+            ],
+            "upperright_thin_grayband": [
+              78,
+              13,
+              128,
+              17
+            ],
+            "upperright_tan": [
+              78,
+              17,
+              128,
+              67
+            ],
+            "lowergray": [
+              25,
+              67,
+              108,
+              128
+            ],
+            "lowerrightdarkbrown": [
+              108,
+              67,
+              128,
+              128
+            ],
+            "central_left_upper_brownwash": [
+              30,
+              31,
+              53,
+              53
+            ],
+            "central_right_upper_brownwash": [
+              52,
+              27,
+              78,
+              56
+            ],
+            "central_lower_brownrectwash": [
+              33,
+              54,
+              78,
+              67
+            ]
+          },
+          "bounds_scope": "Original irregular fullsource UVwash envelopes, not rectangular replacementRGBmasks. Native bootfield diagnostic confirms existing uncertain brown/dark angularwash remains washed; no readable lace/hardware/anatomy number invented. Nine stripes count applies complete upperoriginalpattern, sourcecutoff contour continues unchanged below. Sourcefirst/last stripe width differs, no padding/equalizing.",
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 1166,
+          "source_center_RGBA": [
+            45,
+            26,
+            15,
+            255
+          ],
+          "source_rgba_sha256": "8b6f8bd083df85d7af5544e2049019cd4198b0185d7a125458f6a720df5cc9f0",
+          "full_original_privately_inspected": true,
+          "weak_native_bootparts_privately_inspected": true,
+          "proof_before_final_prompt_at_utc": "2026-10-08T04:47:40.901027+00:00"
+        },
+        "before_call_exact_prompt_assert": {
+          "id": 6827,
+          "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted legs/cloth/footwear UV diffuse ID6827.\r\nImage1 is the ONLY edit target/reference: complete original128x128 RGBA atlas enlarged nearest8x1024x1024. Produce the same complete square painted UV texture at4x original resolution. Refine only soft source transitions and existing very fine matte paint variation. Preserve all fullcanvas UV silhouettes, clipped sourceedges, source physical patternscale, dim olive/gray/brown/tan palette and local contrast. Not a clothing photograph, boot product, person or scene.\r\nVerified whole-source pattern: exactly NINE existing broad dim olive vertical painted stripe intervals across the upperleft sourcefield, native x[0,6),[9,14),[17,22),[25,30),[33,38),[41,46),[49,54),[57,62),[65,72). EIGHT intervening dark stripegaps x[6,9),[14,17),[22,25),[30,33),[38,41),[46,49),[54,57),[62,65), eight-native-pixel interior repeatpitch. Keep all9 soft stripes, widths, sourcephase and dim contrast; sourcefirst/last differ inwidth, do NOT equalize them or add a tenth. Keep the irregular original source cutoff contour below and all existing dark boundaries. These are painted stripecolor washes, not raised knit ribs, seams, pleats, wovencloth threads or embroidery.\r\nPreserve upperright existing brown wash[78,0,128,13], thin grayband[78,13,128,17] and one broad softly gradient tan wash[78,17,128,67] exactly in their sourcecolor/UV positions. Tan is a flat painted colorfield with only its original lowcontrast dark lowergradient: do NOT add skin pores, anatomical outlines, folds, beautification or identitychange. Keep lower large gray wash[25,67,108,128] and lowerright darker brown wash[108,67,128,128], original subtle variation and straight field boundaries, no new sewn edge or relief.\r\nPreserve two existing central upper soft brownwash lobes[30,31,53,53] and[52,27,78,56], plus one existing lower brown rectangular wash[33,54,78,67], all with their original irregular dark/light sourcecontours. The incomplete faint angular source marks here remain indistinct paint; do not resolve them into new laces, hinges, holes, eyelets, soles, straps or mechanical/anatomicalparts. These envelopes identify existing colorwash only, NOT rectangles to replace or reshape.\r\nExactly TWO existing tiny pale paintfleck groups: the lowerleft soft fleck whose3brightest connected nativepixels lie in[2,84,5,85], and the single lowerright nativepixel at[113,117,114,118]. Preserve the full faint sourcewash around each and the native count/phase/shape, without splitting, joining, enlarging or completing them into a buckle/button/letter/eye/hardware. No new bright flecks.\r\nMaterial/style: subdued soft hand-painted olive/gray/tan/darkbrown cloth and footwearwashes. Keep original hue/lightness hierarchy and local weak marks. No photo leather/weave, coarse grain, hatching, curls, strong crease ridges, raised borders, crisp stitching, new hardware or anatomy. Improve only existing fine soft transitions at original detailscale.\r\nOriginal alpha255 everywhere, including all1166 opaque RGB0 texels. Black UVfields are opaque solid dark paint, not transparent holes; retain exact boundaries/interiors. Wholecanvas only: no crop/padding/letterbox/bbox recentering/registration, no newmargin, border, labels, text, faces, watermark, objects or scene.",
+          "prompt_constraints": {
+            "source_width": 128,
+            "source_height": 128,
+            "broad_vertical_olive_painted_stripes": 9,
+            "interior_dark_stripe_gap_groups": 8,
+            "upper_stripe_native_x_intervals": [
+              [
+                0,
+                6
+              ],
+              [
+                9,
+                14
+              ],
+              [
+                17,
+                22
+              ],
+              [
+                25,
+                30
+              ],
+              [
+                33,
+                38
+              ],
+              [
+                41,
+                46
+              ],
+              [
+                49,
+                54
+              ],
+              [
+                57,
+                62
+              ],
+              [
+                65,
+                72
+              ]
+            ],
+            "upper_dark_gap_native_x_intervals": [
+              [
+                6,
+                9
+              ],
+              [
+                14,
+                17
+              ],
+              [
+                22,
+                25
+              ],
+              [
+                30,
+                33
+              ],
+              [
+                38,
+                41
+              ],
+              [
+                46,
+                49
+              ],
+              [
+                54,
+                57
+              ],
+              [
+                62,
+                65
+              ]
+            ],
+            "interior_repeat_pitch_native_x": 8,
+            "pale_paintfleck_groups": 2,
+            "left_lower_pale_fleck_groups": 1,
+            "right_lower_pale_fleck_groups": 1,
+            "lower_large_gray_wash_fields": 1,
+            "lower_right_darkbrown_wash_fields": 1,
+            "upper_right_tan_wash_fields": 1,
+            "upper_right_brown_wash_fields": 1,
+            "upper_right_thin_grayband_fields": 1,
+            "central_upper_brown_wash_lobes": 2,
+            "central_lower_brown_rectanglewash_fields": 1,
+            "new_anatomy_hardware_straps_or_laces_allowed": 0,
+            "new_weave_or_pattern_allowed": 0
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:48:34.296581+00:00"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 1166,
+          "source_center_RGBA": [
+            45,
+            26,
+            15,
+            255
+          ],
+          "complete_originalA_nearest4x_exact": true,
+          "opaque_source_black_not_transparent_hole": true
+        },
+        "private_numeric_scalar_proof": {
+          "id": 6827,
+          "gain": 0.89544677734375,
+          "source_stored_luma": 51.36692556152344,
+          "actual_stored_luma": 51.36414211196899,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "private_whole_material_count_palette_proof": {
+          "id": 6827,
+          "source_alpha_exact": true,
+          "source9stripes_8gap_phase": [
+            {
+              "gap_native_x": [
+                6,
+                9
+              ],
+              "source_dark_gap_luma": 14.342997333333335,
+              "source_local_contrast": 5.608343466666659
+            },
+            {
+              "gap_native_x": [
+                14,
+                17
+              ],
+              "source_dark_gap_luma": 11.877381333333332,
+              "source_local_contrast": 6.269126666666665
+            },
+            {
+              "gap_native_x": [
+                22,
+                25
+              ],
+              "source_dark_gap_luma": 11.585893333333336,
+              "source_local_contrast": 4.850752266666662
+            },
+            {
+              "gap_native_x": [
+                30,
+                33
+              ],
+              "source_dark_gap_luma": 11.712696,
+              "source_local_contrast": 4.549559999999998
+            },
+            {
+              "gap_native_x": [
+                38,
+                41
+              ],
+              "source_dark_gap_luma": 11.550845333333333,
+              "source_local_contrast": 4.527829066666664
+            },
+            {
+              "gap_native_x": [
+                46,
+                49
+              ],
+              "source_dark_gap_luma": 11.53564,
+              "source_local_contrast": 4.728311999999999
+            },
+            {
+              "gap_native_x": [
+                54,
+                57
+              ],
+              "source_dark_gap_luma": 11.623266666666666,
+              "source_local_contrast": 5.003843733333333
+            },
+            {
+              "gap_native_x": [
+                62,
+                65
+              ],
+              "source_dark_gap_luma": 11.641306666666665,
+              "source_local_contrast": 4.843778819047621
+            }
+          ],
+          "generated8_gap_phase": [
+            {
+              "gap": [
+                6,
+                9
+              ],
+              "dark_gap_luma": 15.677241166666668,
+              "local_contrast": 12.314797316666663
+            },
+            {
+              "gap": [
+                14,
+                17
+              ],
+              "dark_gap_luma": 14.445020999999999,
+              "local_contrast": 11.050848
+            },
+            {
+              "gap": [
+                22,
+                25
+              ],
+              "dark_gap_luma": 13.860771833333333,
+              "local_contrast": 8.827321016666668
+            },
+            {
+              "gap": [
+                30,
+                33
+              ],
+              "dark_gap_luma": 13.627537499999997,
+              "local_contrast": 8.602931800000002
+            },
+            {
+              "gap": [
+                38,
+                41
+              ],
+              "dark_gap_luma": 13.816985833333334,
+              "local_contrast": 8.090257266666669
+            },
+            {
+              "gap": [
+                46,
+                49
+              ],
+              "dark_gap_luma": 13.8303615,
+              "local_contrast": 7.9675705000000026
+            },
+            {
+              "gap": [
+                54,
+                57
+              ],
+              "dark_gap_luma": 13.621135333333333,
+              "local_contrast": 8.303300166666668
+            },
+            {
+              "gap": [
+                62,
+                65
+              ],
+              "dark_gap_luma": 13.372674166666664,
+              "local_contrast": 7.616727311904766
+            }
+          ],
+          "regional_palette_contrast": {
+            "lowergray": {
+              "source_meanRGB": [
+                91.16662830840046,
+                83.32566168009205,
+                73.4644418872267
+              ],
+              "generated_cellmeanRGB": [
+                89.78758630609896,
+                82.00333716915995,
+                71.73512658227848
+              ],
+              "source_luma_std": 12.229631004848018,
+              "generated_luma_std": 11.898395661167726
+            },
+            "tanwash": {
+              "source_meanRGB": [
+                122.89848484848486,
+                82.34646464646465,
+                45.056060606060605
+              ],
+              "generated_cellmeanRGB": [
+                115.61518308080808,
+                80.20457702020202,
+                42.990814393939395
+              ],
+              "source_luma_std": 27.35142504660825,
+              "generated_luma_std": 26.747342289419286
+            },
+            "bootwash": {
+              "source_meanRGB": [
+                46.04510218463707,
+                26.975334742776603,
+                15.933756166314305
+              ],
+              "generated_cellmeanRGB": [
+                47.6502378435518,
+                28.316243833685693,
+                15.271009513742072
+              ],
+              "source_luma_std": 14.716168388045013,
+              "generated_luma_std": 15.9095325157158
+            },
+            "olivewash": {
+              "source_meanRGB": [
+                17.119551681195517,
+                16.374221668742216,
+                0.40722291407222916
+              ],
+              "generated_cellmeanRGB": [
+                21.156872665006226,
+                21.780004669987548,
+                1.0389554794520548
+              ],
+              "source_luma_std": 3.8094964804187015,
+              "generated_luma_std": 5.706086194534654
+            }
+          },
+          "small_center_wash_native_RGB": {
+            "bounds": [
+              49,
+              38,
+              60,
+              48
+            ],
+            "source": [
+              [
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  41,
+                  24,
+                  14
+                ],
+                [
+                  27,
+                  16,
+                  9
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  10,
+                  8,
+                  6
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  35,
+                  20,
+                  12
+                ],
+                [
+                  20,
+                  12,
+                  7
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ],
+                [
+                  35,
+                  20,
+                  12
+                ],
+                [
+                  11,
+                  8,
+                  6
+                ]
+              ],
+              [
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  44,
+                  26,
+                  15
+                ],
+                [
+                  31,
+                  18,
+                  10
+                ],
+                [
+                  32,
+                  19,
+                  11
+                ],
+                [
+                  27,
+                  16,
+                  9
+                ],
+                [
+                  35,
+                  20,
+                  12
+                ],
+                [
+                  17,
+                  10,
+                  6
+                ]
+              ],
+              [
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  31,
+                  18,
+                  10
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  21,
+                  12,
+                  7
+                ]
+              ],
+              [
+                [
+                  50,
+                  29,
+                  17
+                ],
+                [
+                  50,
+                  29,
+                  17
+                ],
+                [
+                  50,
+                  29,
+                  17
+                ],
+                [
+                  50,
+                  29,
+                  17
+                ],
+                [
+                  34,
+                  20,
+                  11
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  31,
+                  18,
+                  10
+                ]
+              ],
+              [
+                [
+                  51,
+                  29,
+                  17
+                ],
+                [
+                  51,
+                  29,
+                  17
+                ],
+                [
+                  54,
+                  31,
+                  18
+                ],
+                [
+                  37,
+                  22,
+                  13
+                ],
+                [
+                  66,
+                  38,
+                  22
+                ],
+                [
+                  51,
+                  29,
+                  17
+                ],
+                [
+                  51,
+                  29,
+                  17
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  31,
+                  18,
+                  10
+                ],
+                [
+                  48,
+                  28,
+                  16
+                ]
+              ],
+              [
+                [
+                  47,
+                  27,
+                  16
+                ],
+                [
+                  51,
+                  29,
+                  17
+                ],
+                [
+                  37,
+                  22,
+                  13
+                ],
+                [
+                  67,
+                  39,
+                  23
+                ],
+                [
+                  60,
+                  35,
+                  20
+                ],
+                [
+                  84,
+                  77,
+                  68
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ],
+                [
+                  66,
+                  38,
+                  22
+                ],
+                [
+                  31,
+                  18,
+                  10
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ]
+              ],
+              [
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  50,
+                  29,
+                  17
+                ],
+                [
+                  36,
+                  20,
+                  12
+                ],
+                [
+                  66,
+                  38,
+                  22
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  84,
+                  49,
+                  28
+                ],
+                [
+                  20,
+                  12,
+                  7
+                ],
+                [
+                  59,
+                  34,
+                  20
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ]
+              ],
+              [
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  48,
+                  28,
+                  16
+                ],
+                [
+                  36,
+                  20,
+                  12
+                ],
+                [
+                  108,
+                  62,
+                  36
+                ],
+                [
+                  29,
+                  17,
+                  10
+                ],
+                [
+                  62,
+                  36,
+                  21
+                ],
+                [
+                  62,
+                  36,
+                  21
+                ],
+                [
+                  60,
+                  35,
+                  20
+                ],
+                [
+                  60,
+                  35,
+                  20
+                ]
+              ],
+              [
+                [
+                  48,
+                  28,
+                  16
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  45,
+                  26,
+                  15
+                ],
+                [
+                  24,
+                  14,
+                  8
+                ],
+                [
+                  54,
+                  31,
+                  18
+                ],
+                [
+                  56,
+                  32,
+                  19
+                ],
+                [
+                  60,
+                  35,
+                  20
+                ],
+                [
+                  63,
+                  36,
+                  21
+                ],
+                [
+                  65,
+                  38,
+                  22
+                ]
+              ]
+            ],
+            "generated4x_cellmean": [
+              [
+                [
+                  46.0625,
+                  27.375,
+                  14.1875
+                ],
+                [
+                  45.4375,
+                  26.4375,
+                  13.75
+                ],
+                [
+                  45.25,
+                  26.3125,
+                  13.5
+                ],
+                [
+                  45.0625,
+                  26.25,
+                  13.4375
+                ],
+                [
+                  36.875,
+                  21.4375,
+                  11.5625
+                ],
+                [
+                  24.5625,
+                  14.625,
+                  7.4375
+                ],
+                [
+                  19.8125,
+                  11.625,
+                  5.4375
+                ],
+                [
+                  19.3125,
+                  11.375,
+                  5.3125
+                ],
+                [
+                  19.0,
+                  11.0,
+                  5.3125
+                ],
+                [
+                  13.6875,
+                  8.25,
+                  4.5625
+                ],
+                [
+                  0.375,
+                  0.0625,
+                  0.0625
+                ]
+              ],
+              [
+                [
+                  47.375,
+                  28.0625,
+                  14.25
+                ],
+                [
+                  45.75,
+                  26.875,
+                  14.25
+                ],
+                [
+                  45.6875,
+                  26.625,
+                  13.875
+                ],
+                [
+                  46.375,
+                  27.375,
+                  14.125
+                ],
+                [
+                  46.9375,
+                  28.1875,
+                  14.5625
+                ],
+                [
+                  41.9375,
+                  24.0625,
+                  12.8125
+                ],
+                [
+                  25.5,
+                  14.625,
+                  7.5
+                ],
+                [
+                  21.25,
+                  12.8125,
+                  6.3125
+                ],
+                [
+                  22.6875,
+                  13.25,
+                  6.9375
+                ],
+                [
+                  38.9375,
+                  22.6875,
+                  12.0
+                ],
+                [
+                  11.0,
+                  6.0,
+                  3.25
+                ]
+              ],
+              [
+                [
+                  47.875,
+                  28.3125,
+                  14.8125
+                ],
+                [
+                  47.5,
+                  28.0625,
+                  14.625
+                ],
+                [
+                  46.8125,
+                  27.3125,
+                  14.1875
+                ],
+                [
+                  45.1875,
+                  26.25,
+                  13.625
+                ],
+                [
+                  46.3125,
+                  27.125,
+                  14.625
+                ],
+                [
+                  46.3125,
+                  26.8125,
+                  14.3125
+                ],
+                [
+                  39.75,
+                  22.8125,
+                  12.5
+                ],
+                [
+                  38.3125,
+                  22.125,
+                  11.875
+                ],
+                [
+                  34.875,
+                  20.125,
+                  10.5625
+                ],
+                [
+                  40.3125,
+                  22.9375,
+                  12.375
+                ],
+                [
+                  22.1875,
+                  13.0625,
+                  6.75
+                ]
+              ],
+              [
+                [
+                  51.5,
+                  30.0625,
+                  15.5625
+                ],
+                [
+                  51.6875,
+                  29.8125,
+                  15.6875
+                ],
+                [
+                  48.125,
+                  28.3125,
+                  14.75
+                ],
+                [
+                  48.375,
+                  28.4375,
+                  15.0
+                ],
+                [
+                  47.3125,
+                  27.6875,
+                  15.125
+                ],
+                [
+                  42.625,
+                  25.0,
+                  13.4375
+                ],
+                [
+                  46.0625,
+                  26.6875,
+                  13.875
+                ],
+                [
+                  44.9375,
+                  26.0625,
+                  13.625
+                ],
+                [
+                  43.75,
+                  25.4375,
+                  13.375
+                ],
+                [
+                  45.3125,
+                  26.6875,
+                  14.125
+                ],
+                [
+                  29.4375,
+                  17.3125,
+                  9.375
+                ]
+              ],
+              [
+                [
+                  54.625,
+                  31.4375,
+                  16.8125
+                ],
+                [
+                  53.6875,
+                  30.9375,
+                  16.625
+                ],
+                [
+                  52.6875,
+                  30.375,
+                  16.1875
+                ],
+                [
+                  52.5625,
+                  30.625,
+                  16.125
+                ],
+                [
+                  44.5625,
+                  25.625,
+                  13.8125
+                ],
+                [
+                  46.5625,
+                  26.75,
+                  14.4375
+                ],
+                [
+                  47.75,
+                  28.0,
+                  15.0625
+                ],
+                [
+                  46.5625,
+                  26.9375,
+                  13.875
+                ],
+                [
+                  47.3125,
+                  27.6875,
+                  14.9375
+                ],
+                [
+                  46.5,
+                  27.4375,
+                  14.875
+                ],
+                [
+                  35.9375,
+                  21.4375,
+                  11.5
+                ]
+              ],
+              [
+                [
+                  51.8125,
+                  30.25,
+                  16.125
+                ],
+                [
+                  54.0625,
+                  31.125,
+                  16.875
+                ],
+                [
+                  56.25,
+                  32.6875,
+                  17.6875
+                ],
+                [
+                  49.75,
+                  29.5625,
+                  15.3125
+                ],
+                [
+                  72.9375,
+                  43.9375,
+                  23.9375
+                ],
+                [
+                  67.625,
+                  40.3125,
+                  22.4375
+                ],
+                [
+                  43.1875,
+                  25.625,
+                  13.8125
+                ],
+                [
+                  51.375,
+                  30.375,
+                  16.625
+                ],
+                [
+                  52.4375,
+                  30.75,
+                  16.5625
+                ],
+                [
+                  38.9375,
+                  23.3125,
+                  12.625
+                ],
+                [
+                  50.4375,
+                  29.375,
+                  15.5
+                ]
+              ],
+              [
+                [
+                  49.25,
+                  29.25,
+                  15.4375
+                ],
+                [
+                  51.9375,
+                  30.1875,
+                  16.5625
+                ],
+                [
+                  51.5625,
+                  30.3125,
+                  15.625
+                ],
+                [
+                  65.0,
+                  39.0625,
+                  21.3125
+                ],
+                [
+                  65.75,
+                  40.3125,
+                  22.5
+                ],
+                [
+                  110.6875,
+                  72.5,
+                  45.5625
+                ],
+                [
+                  68.0,
+                  41.25,
+                  22.875
+                ],
+                [
+                  68.75,
+                  41.375,
+                  22.625
+                ],
+                [
+                  37.8125,
+                  22.375,
+                  12.25
+                ],
+                [
+                  55.25,
+                  32.5625,
+                  17.625
+                ],
+                [
+                  56.0625,
+                  32.4375,
+                  17.3125
+                ]
+              ],
+              [
+                [
+                  47.6875,
+                  28.375,
+                  15.1875
+                ],
+                [
+                  50.0625,
+                  29.6875,
+                  15.5625
+                ],
+                [
+                  52.625,
+                  30.6875,
+                  16.9375
+                ],
+                [
+                  41.0625,
+                  24.5,
+                  13.3125
+                ],
+                [
+                  68.6875,
+                  42.4375,
+                  24.375
+                ],
+                [
+                  35.625,
+                  22.375,
+                  12.4375
+                ],
+                [
+                  82.25,
+                  48.5,
+                  27.125
+                ],
+                [
+                  41.0625,
+                  24.5625,
+                  13.375
+                ],
+                [
+                  61.25,
+                  36.125,
+                  19.4375
+                ],
+                [
+                  59.5625,
+                  35.0625,
+                  18.75
+                ],
+                [
+                  59.0625,
+                  34.4375,
+                  18.5
+                ]
+              ],
+              [
+                [
+                  50.5625,
+                  29.6875,
+                  15.75
+                ],
+                [
+                  49.9375,
+                  29.375,
+                  15.4375
+                ],
+                [
+                  49.75,
+                  29.25,
+                  15.0625
+                ],
+                [
+                  49.4375,
+                  29.5,
+                  15.375
+                ],
+                [
+                  40.875,
+                  24.3125,
+                  13.0625
+                ],
+                [
+                  95.6875,
+                  57.125,
+                  30.375
+                ],
+                [
+                  43.1875,
+                  25.8125,
+                  14.375
+                ],
+                [
+                  57.75,
+                  33.625,
+                  18.25
+                ],
+                [
+                  63.8125,
+                  37.1875,
+                  19.6875
+                ],
+                [
+                  64.5625,
+                  38.0,
+                  19.75
+                ],
+                [
+                  63.75,
+                  37.625,
+                  19.8125
+                ]
+              ],
+              [
+                [
+                  54.25,
+                  31.625,
+                  16.625
+                ],
+                [
+                  50.6875,
+                  29.5625,
+                  15.0
+                ],
+                [
+                  49.75,
+                  29.5,
+                  15.0625
+                ],
+                [
+                  46.9375,
+                  27.5,
+                  14.0
+                ],
+                [
+                  45.6875,
+                  26.9375,
+                  14.3125
+                ],
+                [
+                  31.9375,
+                  18.5,
+                  9.625
+                ],
+                [
+                  49.9375,
+                  29.25,
+                  15.9375
+                ],
+                [
+                  54.5,
+                  31.0625,
+                  16.8125
+                ],
+                [
+                  59.5625,
+                  34.75,
+                  18.25
+                ],
+                [
+                  63.25,
+                  37.1875,
+                  19.6875
+                ],
+                [
+                  67.125,
+                  39.125,
+                  21.0
+                ]
+              ]
+            ]
+          },
+          "no_unsupported_newpart_count_claim": true
+        },
+        "full_original_raw_sourceA4x_scalar_and_native_privately_inspected": true,
+        "no_RGBartistrepair_sourcecomposite_flattening_crop_padding_bbox_registration": true
+      }
+    }
+  ],
+  "scope": "Diverse actual diffuse hand/neck paintedcolor, grayglove/clothback and Legs maps;6previouslyunviewed freshsourcewholeRGBA actualMaterials/Templates/Models/Heads/Races/runtime parity proven. Allaccepted/q/earlierraw/selected/held/refusal/sameRGBA guards beforeeachcall. Sourcecounts/pitch/subtlemarks/A/bounds beforefinalprompt asserted.3builtin1call/ID withimmediateexactraw/prompt/refSHA/call saved. PurewholeLanczos/scalargain/completeoriginalA only, noRGBrepair/flattening/registeredpatch/crop/padding. Uncalled genuineartpending separatefrom unviewedremaining, nofake technicalcoverage or groupunsuitability.",
+  "shared_metadata_game_build_Git_Cpp": "Untouched byworker; rootonly. StableClothing18/19 andallprevious packages frozenunchanged."
+}

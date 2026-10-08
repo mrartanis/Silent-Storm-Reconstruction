@@ -1,0 +1,3466 @@
+{
+  "batch": "heads-seventh",
+  "finalized_utc": "2026-10-08T04:41:52.452089+00:00",
+  "accepted_snapshot_at_discovery": 2336,
+  "actual_before_tool_snapshots": [
+    {
+      "id": 6765,
+      "sources": 2336,
+      "queue": 2797,
+      "utc": "2026-10-08T04:37:14.678633+00:00"
+    },
+    {
+      "id": 6767,
+      "sources": 2336,
+      "queue": 2797,
+      "utc": "2026-10-08T04:39:27.974910+00:00"
+    },
+    {
+      "id": 6766,
+      "sources": 2336,
+      "queue": 2797,
+      "utc": "2026-10-08T04:38:26.379003+00:00"
+    }
+  ],
+  "ready_ids": [
+    6765,
+    6767
+  ],
+  "ready": [
+    {
+      "id": 6765,
+      "status": "art-reviewed-ready",
+      "source_record": {
+        "id": 6765,
+        "texture": {
+          "ID": 6765,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14673126,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\FaceGenHair\\Hair01_1.tga",
+          "Format": "dxt1",
+          "UserName": "Hair01_1",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4689,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2735,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6581,
+                  "field": "Material0",
+                  "material_template_id": 2735,
+                  "geometry_id": 2220,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4190,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "40884e7feff02bcd30056b465b138d32dee4045ab9ed9d809f6deab6d200d9af",
+        "source_rgba_sha256": "ef4869a9af8003715ba9f520fb4bf1d7d8a8e921e133cba1a5ce238e40ff2977",
+        "release_rgba_sha256": "ef4869a9af8003715ba9f520fb4bf1d7d8a8e921e133cba1a5ce238e40ff2977",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6765.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "ID6765 color/material: muted charcoal gray with original soft low-strength gray highlights. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[132, 117, 115] and mean[31.4246826171875, 26.778564453125, 24.9521484375]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "5cafb562794a3b5f7effd2c4c2f5516434cd923a713b0cd19d967ff130ccd92d",
+            "af3d136b49c7f9fd90ed553c4f4f2a2fb40340207961a854ff3b59089dada3c6"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6765,
+        "batch": "heads-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T04:36:00.846504+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6765 color/material: muted charcoal gray with original soft low-strength gray highlights. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[132, 117, 115] and mean[31.4246826171875, 26.778564453125, 24.9521484375]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6765-prompt.txt",
+        "prompt_sha256": "6fbabb8ba947f445910aa5ce075bb46e87895e313b1db5bd9a2fc25d8494dc70",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6765.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6765-heads-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "5cafb562794a3b5f7effd2c4c2f5516434cd923a713b0cd19d967ff130ccd92d",
+            "af3d136b49c7f9fd90ed553c4f4f2a2fb40340207961a854ff3b59089dada3c6"
+          ]
+        },
+        "target_size": [
+          512,
+          512
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2336,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6765 color/material: muted charcoal gray with original soft low-strength gray highlights. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[132, 117, 115] and mean[31.4246826171875, 26.778564453125, 24.9521484375]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6765.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6765-heads-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T04:38:19.353839+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-4c7ecb85-744f-47bf-a816-c5e3d6294a64.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6765-raw.png",
+        "raw_sha256": "488a1bc0d92fe80e34aade42a1d1a554f3bcecb92689e47e02e7196bc57855be",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6765,
+        "batch": "heads-seventh",
+        "checked_utc": "2026-10-08T04:37:14.678633+00:00",
+        "sources_count": 2336,
+        "queue_count": 2797,
+        "sources_sha256": "96386f6c288518991e7438955d37cdd8c04021f26b57ea4f5a3f428de017820b",
+        "queue_sha256": "11829fdfbd8bcacf6e75e92450afaa40a63396f66a3dfe830afd9d6fd1f4687f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "ef4869a9af8003715ba9f520fb4bf1d7d8a8e921e133cba1a5ce238e40ff2977",
+        "prompt_sha256": "6fbabb8ba947f445910aa5ce075bb46e87895e313b1db5bd9a2fc25d8494dc70",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "5cafb562794a3b5f7effd2c4c2f5516434cd923a713b0cd19d967ff130ccd92d",
+            "af3d136b49c7f9fd90ed553c4f4f2a2fb40340207961a854ff3b59089dada3c6"
+          ]
+        },
+        "started_metadata_sha256": "7726eba6f3b1baac80a83dab179da1119a935cf091f1128a022a5afb814a6fbf",
+        "shared_modified": false
+      },
+      "numeric_preview": {
+        "id": 6765,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6765-raw.png",
+        "raw_sha256": "488a1bc0d92fe80e34aade42a1d1a554f3bcecb92689e47e02e7196bc57855be",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          512,
+          512
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "native_premultiplied": false,
+        "scalar_gain": 1.06622314453125,
+        "target_stored_luma": 27.634461938476562,
+        "actual_stored_luma": 27.63518251800537,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9815231132951058,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 8,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6765-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6765-native-stored-RGB.png"
+      },
+      "local_palette_diagnostic": {
+        "id": 6765,
+        "source_RGB_max": [
+          132,
+          117,
+          115
+        ],
+        "production_stored_RGB_max": [
+          158,
+          143,
+          135
+        ],
+        "source_RGB_mean": [
+          31.4246826171875,
+          26.778564453125,
+          24.9521484375
+        ],
+        "production_stored_RGB_mean": [
+          33.147464752197266,
+          26.334949493408203,
+          24.28359603881836
+        ],
+        "source_max_stored_luma": 120.0446,
+        "production_max_stored_luma": 145.6114
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Full source/raw/native512RGBA privately inspected. Same one continuous charcoal painted hair field with original upper/central branching part and two side-swept flow masses, source asymmetric margin curl-like strokes and native fullcanvas dim backdrop. Broad wave phase/direction/pitch/source scale retained. Smooth brushlike painted detail follows existing shading, no newly separate bright fiber objects, anatomy/skin/teeth/parts or clips. Moderate local peak lift132/117/115→158/143/135 (about17–22%) and slight warmer palette are explicitly recorded; no claim global mean proves local material. Root strict final source/raw/native material gate required.",
+        "hair_only_no_face_anatomy_added": true,
+        "new_artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "retry_performed": false
+      }
+    },
+    {
+      "id": 6767,
+      "status": "art-reviewed-ready",
+      "source_record": {
+        "id": 6767,
+        "texture": {
+          "ID": 6767,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12963030,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\FaceGenHair\\Hair01_3.tga",
+          "Format": "dxt1",
+          "UserName": "Hair01_3",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4691,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2737,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6585,
+                  "field": "Material0",
+                  "material_template_id": 2737,
+                  "geometry_id": 2220,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4192,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "a0b90c2ab2d703bffddbf996e78a35fd97b6502cd6491e21e70c6c9f4a0310b0",
+        "source_rgba_sha256": "051b9c8829e404bbb101f347ef1ac59a815f051003ce00240cd8e05c86a747a8",
+        "release_rgba_sha256": "051b9c8829e404bbb101f347ef1ac59a815f051003ce00240cd8e05c86a747a8",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6767.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "ID6767 color/material: muted gray-olive brown with its existing subtle pale brown-gray highlights, no silver/blond replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[156, 134, 107] and mean[57.35107421875, 50.39093017578125, 41.6905517578125]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "78fbeb2625403fdaf5a5f3bd539ce1096fbaeef2ba19a93a8bd76e8f3a0190b6",
+            "5edf3ab6759a0512ab0d38cf76b213389122fa91886b6bc42728c40dc841406e"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6767,
+        "batch": "heads-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T04:39:25.030796+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6767 color/material: muted gray-olive brown with its existing subtle pale brown-gray highlights, no silver/blond replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[156, 134, 107] and mean[57.35107421875, 50.39093017578125, 41.6905517578125]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6767-prompt.txt",
+        "prompt_sha256": "2d4830fa2d983db18f797b24563b6b6890105aa37240d40ff8719ec7eb33783b",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6767.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6767-heads-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "78fbeb2625403fdaf5a5f3bd539ce1096fbaeef2ba19a93a8bd76e8f3a0190b6",
+            "5edf3ab6759a0512ab0d38cf76b213389122fa91886b6bc42728c40dc841406e"
+          ]
+        },
+        "target_size": [
+          512,
+          512
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2336,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6767 color/material: muted gray-olive brown with its existing subtle pale brown-gray highlights, no silver/blond replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[156, 134, 107] and mean[57.35107421875, 50.39093017578125, 41.6905517578125]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6767.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6767-heads-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T04:40:37.729544+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-11401c9c-7544-4548-9009-076e6b944053.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6767-raw.png",
+        "raw_sha256": "972152db955758157a36359fe9f3ff6a433a26ed47e109fc4dd98ba6081a0136",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6767,
+        "batch": "heads-seventh",
+        "checked_utc": "2026-10-08T04:39:27.974910+00:00",
+        "sources_count": 2336,
+        "queue_count": 2797,
+        "sources_sha256": "96386f6c288518991e7438955d37cdd8c04021f26b57ea4f5a3f428de017820b",
+        "queue_sha256": "11829fdfbd8bcacf6e75e92450afaa40a63396f66a3dfe830afd9d6fd1f4687f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "051b9c8829e404bbb101f347ef1ac59a815f051003ce00240cd8e05c86a747a8",
+        "prompt_sha256": "2d4830fa2d983db18f797b24563b6b6890105aa37240d40ff8719ec7eb33783b",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "78fbeb2625403fdaf5a5f3bd539ce1096fbaeef2ba19a93a8bd76e8f3a0190b6",
+            "5edf3ab6759a0512ab0d38cf76b213389122fa91886b6bc42728c40dc841406e"
+          ]
+        },
+        "started_metadata_sha256": "abcb858607dacf4eac9edb40e6d3529610cabadcbb79218ed67c630aed8d8db6",
+        "shared_modified": false
+      },
+      "numeric_preview": {
+        "id": 6767,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6767-raw.png",
+        "raw_sha256": "972152db955758157a36359fe9f3ff6a433a26ed47e109fc4dd98ba6081a0136",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          512,
+          512
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "native_premultiplied": false,
+        "scalar_gain": 1.115478515625,
+        "target_stored_luma": 51.24248947753906,
+        "actual_stored_luma": 51.25619839401245,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9756843511676523,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 0,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6767-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6767-native-stored-RGB.png"
+      },
+      "local_palette_diagnostic": {
+        "id": 6767,
+        "source_RGB_max": [
+          156,
+          134,
+          107
+        ],
+        "production_stored_RGB_max": [
+          184,
+          156,
+          125
+        ],
+        "source_RGB_mean": [
+          57.35107421875,
+          50.39093017578125,
+          41.6905517578125
+        ],
+        "production_stored_RGB_mean": [
+          59.77970504760742,
+          49.981407165527344,
+          38.785743713378906
+        ],
+        "source_max_stored_luma": 136.7278,
+        "production_max_stored_luma": 159.7146
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Full source/raw/native512RGBA privately inspected. Source one continuous muted gray-olive brown field, existing central descending branching flow/two swept sides/asymmetric marginal curls and dim fullcanvas backdrop retained at native phase/scale. Finer soft brushlike tone follows existing painted direction with no new hairstyle/anatomy/part/clip/object or isolated white gloss. Moderate local maximum156/134/107→184/156/125 (~16–18% lift) and slightly warmer palette recorded. Root strict final local-material/native gate required; matched mean alone is not an acceptance claim.",
+        "hair_only_no_face_anatomy_added": true,
+        "new_artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "retry_performed": false
+      }
+    }
+  ],
+  "held_ids": [
+    6766
+  ],
+  "held": [
+    {
+      "id": 6766,
+      "status": "held-art-brighter-orange-bands",
+      "source_record": {
+        "id": 6766,
+        "texture": {
+          "ID": 6766,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12113379,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\FaceGenHair\\Hair01_2.tga",
+          "Format": "dxt1",
+          "UserName": "Hair01_2",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4690,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2736,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6583,
+                  "field": "Material0",
+                  "material_template_id": 2736,
+                  "geometry_id": 2220,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4191,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "3c4b01dc489e4a4352494b125c7aa8ae57b7b1a770af51a525293ed0e649e9ae",
+        "source_rgba_sha256": "73c2a59d641fc4fc8f360b6b8370c35324331840b136361914e6c682032a06ef",
+        "release_rgba_sha256": "73c2a59d641fc4fc8f360b6b8370c35324331840b136361914e6c682032a06ef",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6766.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "ID6766 color/material: muted dark reddish-brown with its existing subtle reddish-brown highlights, no orange/golden replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[189, 113, 82] and mean[70.31158447265625, 42.03448486328125, 29.10601806640625]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "b27bee6a041ca277c5055400f655fd05ccb89bd77251a7b1985066b5ba075f19",
+            "53de6c4326677882353c8c776a8b44383c12357063ae48f81b50adf4122936cb"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6766,
+        "batch": "heads-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T04:38:23.455980+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6766 color/material: muted dark reddish-brown with its existing subtle reddish-brown highlights, no orange/golden replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[189, 113, 82] and mean[70.31158447265625, 42.03448486328125, 29.10601806640625]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6766-prompt.txt",
+        "prompt_sha256": "af31edd52ba5733172d96d3d30822ca9fe2cfd55b276c8d003802ceba04976fa",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6766.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6766-heads-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "b27bee6a041ca277c5055400f655fd05ccb89bd77251a7b1985066b5ba075f19",
+            "53de6c4326677882353c8c776a8b44383c12357063ae48f81b50adf4122936cb"
+          ]
+        },
+        "target_size": [
+          512,
+          512
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2336,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Enhance only the exact historical painted-game HAIR DIFFUSE UV map supplied as image1 full128x128RGBA and image2 same full storedRGB nearest enlargement. Keep existing soft hand-painted low-resolution material character. Preserve entire square atlas and exact original normalized positions, broad wave/part directions, pitch, count, shape, color palette and native scale. Resolve only subtle smooth painted color transitions already present. Keep existing highlights exactly as subdued and diffuse as original, not brighter. DO NOT render finely separated individual strands, fibers, new hairy detail, gloss/specular streaks, bright tips or sharp ridges; existing hair is soft flowing painted masses. This is not photographic hair or a new hairstyle. No new locks/wisps/curls/braids, new parting, extra volume or new silhouette. No anatomy/skin/scalp/face/eyes/nose/lips/teeth/ears/head. No objects, clips, ribbons, decoration, grain/noise, hard geometric cells or new damage. Keep all existing dim background paint and source darker UV fields at identical reference phase. Full source alpha255 is restored separately; TypeOrdinary/opaque mode and all fields remain unchanged. No transparency cutout/crop/padding/rotation/repack/registration/part enlargement. Whole output becomes512x512 with only scalar brightness correction. ID6766 color/material: muted dark reddish-brown with its existing subtle reddish-brown highlights, no orange/golden replacement. Exactly ONE existing continuous hair artwork fills the source canvas, with ONE central descending branching flow and TWO broad left/right swept sides. Preserve original central upper split, middle branching flow and asymmetric existing margin curls/painted strokes at exact source phase/width, all faint backdrop tone remains as original. Do not turn codec/low-res paint samples into added locks or strand rows. Source RGB maximum[189, 113, 82] and mean[70.31158447265625, 42.03448486328125, 29.10601806640625]; final highlights must remain locally restrained, no stronger isolated bright strands even if average brightness is matched. Maintain the exact muted palette.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6766.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6766-heads-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T04:39:20.926434+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-4660f2a0-f01c-4029-be39-694bc323138e.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6766-raw.png",
+        "raw_sha256": "a7ac5a47694062d4dd1109300b5060ecc1746248a0d2db94ff99e4c4fb28ba53",
+        "raw_saved": true
+      },
+      "fresh_actual_before_builtin_guard": {
+        "id": 6766,
+        "batch": "heads-seventh",
+        "checked_utc": "2026-10-08T04:38:26.379003+00:00",
+        "sources_count": 2336,
+        "queue_count": 2797,
+        "sources_sha256": "96386f6c288518991e7438955d37cdd8c04021f26b57ea4f5a3f428de017820b",
+        "queue_sha256": "11829fdfbd8bcacf6e75e92450afaa40a63396f66a3dfe830afd9d6fd1f4687f",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "73c2a59d641fc4fc8f360b6b8370c35324331840b136361914e6c682032a06ef",
+        "prompt_sha256": "af31edd52ba5733172d96d3d30822ca9fe2cfd55b276c8d003802ceba04976fa",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            128,
+            128
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "affine_prewarp": null,
+          "operations": "Full sourceRGB nearest6 only; no crop/padding/registration/unpremultiply. Entire raw Lanczos512 and complete authoritative sourceA; default mask and pure scalar native brightness. No source artistic RGB restoration.",
+          "references_sha256": [
+            "b27bee6a041ca277c5055400f655fd05ccb89bd77251a7b1985066b5ba075f19",
+            "53de6c4326677882353c8c776a8b44383c12357063ae48f81b50adf4122936cb"
+          ]
+        },
+        "started_metadata_sha256": "096834cd60760960090a21dd5f9d12943ebf2a3ab522e0530e08b2fc5b781d31",
+        "shared_modified": false
+      },
+      "numeric_preview": {
+        "id": 6766,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6766-raw.png",
+        "raw_sha256": "a7ac5a47694062d4dd1109300b5060ecc1746248a0d2db94ff99e4c4fb28ba53",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          512,
+          512
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+        "native_premultiplied": false,
+        "scalar_gain": 1.15081787109375,
+        "target_stored_luma": 47.1127609375,
+        "actual_stored_luma": 47.11555222091675,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9768138001321349,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 0,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6766-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-heads-seventh/native4x/6766-native-stored-RGB.png"
+      },
+      "local_palette_diagnostic": {
+        "id": 6766,
+        "source_RGB_max": [
+          189,
+          113,
+          82
+        ],
+        "production_stored_RGB_max": [
+          237,
+          137,
+          96
+        ],
+        "source_RGB_mean": [
+          70.31158447265625,
+          42.03448486328125,
+          29.10601806640625
+        ],
+        "production_stored_RGB_mean": [
+          75.50003433227539,
+          40.78818130493164,
+          26.212432861328125
+        ],
+        "source_max_stored_luma": 126.9194,
+        "production_max_stored_luma": 155.2998
+      },
+      "private_QA": {
+        "full_source_RGBA_RGB_A_and_whole_nearest_inspected_before_call": true,
+        "whole_raw_inspected": true,
+        "whole_native4x_RGBA_and_storedRGB_inspected": true,
+        "complete_authoritative_sourceA_exact": true,
+        "source_material_count_phase_UV_judgment": "Full source/raw/native512RGBA privately inspected. Broad continuous source branching/side-flow arrangement stays recognizable, but muted reddishbrown shading becomes stronger defined bright orange bands/strands. Original maximum189/113/82→237/137/96 (~17–25% lift) and palette mean70.31/42.03/29.11→75.50/40.79/26.21 show warmer red hierarchy despite matched overallmean47.11555 vs47.11276. Native view reads more orange/luminous than calm original. No sourceRGB repair or retry.",
+        "hair_only_no_face_anatomy_added": true,
+        "new_artist_RGB_patch": false,
+        "source_RGB_art_restored": false,
+        "retry_performed": false
+      }
+    }
+  ],
+  "generation_unavailable_ids": [],
+  "source_only_ids": [
+    5259,
+    6715,
+    6716,
+    6717,
+    6718,
+    6719,
+    6720,
+    6721,
+    6722,
+    6723,
+    6724
+  ],
+  "source_only_deferred": [
+    {
+      "id": 5259,
+      "status": "source-only-deferred",
+      "reason": "Genuine ordinary Hair06 diffuse with actual opaque model/template/material and one direct ComplexHead. Whole source/history/release inspected, not chosen for a fourth related flow-family call after three selected colorvariants. No call; not permanent unsuitability or technical classification.",
+      "source_check": {
+        "id": 5259,
+        "source_record": {
+          "id": 5259,
+          "texture": {
+            "ID": 5259,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": -10601181,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Heads\\Hair\\Hair06.tga",
+            "Format": "8888",
+            "UserName": "Hair06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3409,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2192,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 5507,
+                    "field": "Material0",
+                    "material_template_id": 2192,
+                    "geometry_id": 2220,
+                    "geometry": "Characters\\Hair.mb",
+                    "model_template_id": 3627,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+          "source_rgba_sha256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+          "release_rgba_sha256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5259.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5259,
+          "texture": {
+            "ID": 5259,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": -10601181,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Heads\\Hair\\Hair06.tga",
+            "Format": "8888",
+            "UserName": "Hair06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3409,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2192,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5507,
+                  "field": "Material0",
+                  "material_template_id": 2192,
+                  "geometry_id": 2220,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 3627,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [
+          {
+            "actual_material": {
+              "ID": 3409,
+              "TextureID": 5259,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2192,
+              "GlossID": 5262,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.800000011920929,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2192,
+              "UserName": "Hair06"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 5507,
+                  "Material0": 2192,
+                  "Material1": 0,
+                  "GeometryID": 2220,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3627,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3627,
+                  "UserName": "Hair06"
+                },
+                "geometry": {
+                  "ID": 2220,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.24341541528701782,
+                  "SizeY": 0.23503682017326355,
+                  "SizeZ": 0.24171802401542664,
+                  "CenterX": 0.0031599700450897217,
+                  "CenterY": -0.017979592084884644,
+                  "CenterZ": 0.08878891170024872,
+                  "SrcName": "Characters\\Hair.mb",
+                  "UserName": "Hair01",
+                  "RootJoint": "Hair01"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [
+              {
+                "actual_complex_head": {
+                  "ID": 36,
+                  "HeadID": 41,
+                  "Hair": 3627,
+                  "HairInCap": 3945,
+                  "Mesh0": 1127,
+                  "Mesh1": 0,
+                  "Mesh2": 0,
+                  "Mesh3": 0,
+                  "IFMesh0": 0,
+                  "IFMesh1": 0,
+                  "IFMesh2": 0,
+                  "IFMesh3": 0,
+                  "IsFemale": 1,
+                  "CanBeListed": 1,
+                  "BodyColor": 1,
+                  "UserName": "L.A."
+                },
+                "hair_fields": [
+                  "Hair"
+                ],
+                "actual_head": {
+                  "ID": 41,
+                  "Material0": 1288,
+                  "Material1": 0,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "Material4": 0,
+                  "Material5": 0,
+                  "Material6": 0,
+                  "Material7": 0,
+                  "TransformableTextures": 0,
+                  "IsTransformable": 0,
+                  "UserName": "L.A.",
+                  "SrcName": "Heads\\GDP\\Allies\\LA.gdp",
+                  "TransformableGDP": "",
+                  "TransformableMMT": ""
+                },
+                "actual_body_race": {
+                  "ID": 1,
+                  "MaterialID": 2734,
+                  "RaceAttributeID": 10,
+                  "RaceSliderPos": -1.0,
+                  "UserName": "European"
+                }
+              }
+            ],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+        "release_mmp_sha256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+        "original_png_sha256": "9e614d29d85b108f35ebfec6c0ddf9765e89003df67c860141eadb95916cf93d",
+        "source_rgba_sha256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+        "source_rgb_sha256": "44174ce4ee340507d0f085f4ef294b19f481039eaf75cead86fe2d9cbd16018d",
+        "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6715,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6715,
+        "source_record": {
+          "id": 6715,
+          "texture": {
+            "ID": 6715,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1377112851,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_01.png",
+            "Format": "8888",
+            "UserName": "Hair_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 6,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_01",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_01"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "d479e592b84995d31df4004e02aa6281bb8b7e9ea501070cb1c797c434879b81",
+          "source_rgba_sha256": "f038b97d8617769ea2fde963e09d7867bc822503f3f8ef9d46057de42ebd06f9",
+          "release_rgba_sha256": "f038b97d8617769ea2fde963e09d7867bc822503f3f8ef9d46057de42ebd06f9",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6715.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6715,
+          "texture": {
+            "ID": 6715,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1377112851,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_01.png",
+            "Format": "8888",
+            "UserName": "Hair_01",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 6,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_01",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_01"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "d479e592b84995d31df4004e02aa6281bb8b7e9ea501070cb1c797c434879b81",
+        "release_mmp_sha256": "d479e592b84995d31df4004e02aa6281bb8b7e9ea501070cb1c797c434879b81",
+        "original_png_sha256": "b2e74e11bf8113466562771f095d2e54d0dbd5f1b59bcd594a4fb1fbb4a9868b",
+        "source_rgba_sha256": "f038b97d8617769ea2fde963e09d7867bc822503f3f8ef9d46057de42ebd06f9",
+        "source_rgb_sha256": "0a4c427144592f898be3f90191df130aa250c61e8cbba436c426ea86230fef74",
+        "source_alpha_sha256": "5300a1d7735e71b4635c3f55fc502634747e97f503a42c0cd4c7607818bc6bf1",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 6,
+              "TextureID": 6715,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_01",
+              "TextureName": "Hair_01"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6716,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6716,
+        "source_record": {
+          "id": 6716,
+          "texture": {
+            "ID": 6716,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1360858888,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_02.png",
+            "Format": "8888",
+            "UserName": "Hair_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 7,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_02",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_02"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "7c0784bdf80f9cd5216f38d951acb4630fef0609b4964e3fe9931bb53d59e536",
+          "source_rgba_sha256": "d27ff05b801c70c77c96026450a2092f5d1296e095141af807fb7fad14648136",
+          "release_rgba_sha256": "d27ff05b801c70c77c96026450a2092f5d1296e095141af807fb7fad14648136",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6716.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6716,
+          "texture": {
+            "ID": 6716,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1360858888,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_02.png",
+            "Format": "8888",
+            "UserName": "Hair_02",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 7,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_02",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_02"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "7c0784bdf80f9cd5216f38d951acb4630fef0609b4964e3fe9931bb53d59e536",
+        "release_mmp_sha256": "7c0784bdf80f9cd5216f38d951acb4630fef0609b4964e3fe9931bb53d59e536",
+        "original_png_sha256": "463480841f47e1d2fdd452db08e29c8dcb1b576b9719397ad413b6d2071ebf02",
+        "source_rgba_sha256": "d27ff05b801c70c77c96026450a2092f5d1296e095141af807fb7fad14648136",
+        "source_rgb_sha256": "3546402b710065bf379c3de6d707c517da9229e0f0efe2a8e7982c484710d828",
+        "source_alpha_sha256": "48fed9113768d72d3ff86e8c7660e3956be2ddad22d19f965361d83b0369d7ca",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 7,
+              "TextureID": 6716,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_02",
+              "TextureName": "Hair_02"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6717,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6717,
+        "source_record": {
+          "id": 6717,
+          "texture": {
+            "ID": 6717,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1347499811,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_03.png",
+            "Format": "8888",
+            "UserName": "Hair_03",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 8,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_03",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_03"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "8b5f91f54c55c9a0f7e72b6c33843bfddfc9262a7fb2a997381b292e84af9773",
+          "source_rgba_sha256": "3e31b8898ad765446e9d919c8dcdeaa8b0b7327ac92b74ed60cb14cce11588ad",
+          "release_rgba_sha256": "3e31b8898ad765446e9d919c8dcdeaa8b0b7327ac92b74ed60cb14cce11588ad",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6717.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6717,
+          "texture": {
+            "ID": 6717,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1347499811,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_03.png",
+            "Format": "8888",
+            "UserName": "Hair_03",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 8,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_03",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_03"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8b5f91f54c55c9a0f7e72b6c33843bfddfc9262a7fb2a997381b292e84af9773",
+        "release_mmp_sha256": "8b5f91f54c55c9a0f7e72b6c33843bfddfc9262a7fb2a997381b292e84af9773",
+        "original_png_sha256": "ff42ee9c31992ff40f03ab0a139d68158559165404d188eb91e7421ba8ad8b25",
+        "source_rgba_sha256": "3e31b8898ad765446e9d919c8dcdeaa8b0b7327ac92b74ed60cb14cce11588ad",
+        "source_rgb_sha256": "bd1db87edb576c7e1133839d2978d900bc6713b091089fd3d1b47341fad5e02b",
+        "source_alpha_sha256": "bab7f6b98c040c4d4f6899248a16cf6796053a2c87d7c2fd72806147d7b56a31",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 8,
+              "TextureID": 6717,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_03",
+              "TextureName": "Hair_03"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6718,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6718,
+        "source_record": {
+          "id": 6718,
+          "texture": {
+            "ID": 6718,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1398488095,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_04.png",
+            "Format": "8888",
+            "UserName": "Hair_04",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 9,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_04",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_04"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "902d09bc12eff4e862a8058f3bb326e26084c5afda6b32543435758bd988752e",
+          "source_rgba_sha256": "0834873a3d1adfa23c404a73bf60c246444c0619a606906aae6d1c9ad9294af0",
+          "release_rgba_sha256": "0834873a3d1adfa23c404a73bf60c246444c0619a606906aae6d1c9ad9294af0",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6718.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6718,
+          "texture": {
+            "ID": 6718,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1398488095,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_04.png",
+            "Format": "8888",
+            "UserName": "Hair_04",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 9,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_04",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_04"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "902d09bc12eff4e862a8058f3bb326e26084c5afda6b32543435758bd988752e",
+        "release_mmp_sha256": "902d09bc12eff4e862a8058f3bb326e26084c5afda6b32543435758bd988752e",
+        "original_png_sha256": "6d8d54e0972a46824bbd589db817c0878fd8174ff5117f30b21a8d849962a3a9",
+        "source_rgba_sha256": "0834873a3d1adfa23c404a73bf60c246444c0619a606906aae6d1c9ad9294af0",
+        "source_rgb_sha256": "e8e5d5a8c3296cc0ab595dee1f14e6123d8d2ef093849e044c3ca4eaadda2470",
+        "source_alpha_sha256": "0645d84a5268ec6e10e5615d0b62b5a636b073e0c219d51473e7857aa12cc2a5",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 9,
+              "TextureID": 6718,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_04",
+              "TextureName": "Hair_04"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6719,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6719,
+        "source_record": {
+          "id": 6719,
+          "texture": {
+            "ID": 6719,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1447376685,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_05.png",
+            "Format": "8888",
+            "UserName": "Hair_05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 10,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_05",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_05"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "23b196d3ae22fdc2720759ca459fdf6b864270b820a74074d1ef3f433da869e3",
+          "source_rgba_sha256": "bd416c8b153916e4fd3dbcf5710b8257509f1e60fdaa65173a25bcd53c083f7e",
+          "release_rgba_sha256": "bd416c8b153916e4fd3dbcf5710b8257509f1e60fdaa65173a25bcd53c083f7e",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6719.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6719,
+          "texture": {
+            "ID": 6719,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1447376685,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_05.png",
+            "Format": "8888",
+            "UserName": "Hair_05",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 10,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_05",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_05"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "23b196d3ae22fdc2720759ca459fdf6b864270b820a74074d1ef3f433da869e3",
+        "release_mmp_sha256": "23b196d3ae22fdc2720759ca459fdf6b864270b820a74074d1ef3f433da869e3",
+        "original_png_sha256": "e2eff0377ec680be27366967798b7981664eaec3ea460702def00f9b7ca29bf3",
+        "source_rgba_sha256": "bd416c8b153916e4fd3dbcf5710b8257509f1e60fdaa65173a25bcd53c083f7e",
+        "source_rgb_sha256": "6c91d589ee6448445d840acf97eb9f3821bb0b4657e67f7547056389585af709",
+        "source_alpha_sha256": "7ef43d8b1a14ebf0a87372010f4de598c4b18e2df0cc274920d2fdb3413a5ea0",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 10,
+              "TextureID": 6719,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_05",
+              "TextureName": "Hair_05"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6720,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6720,
+        "source_record": {
+          "id": 6720,
+          "texture": {
+            "ID": 6720,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1482379589,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_06.png",
+            "Format": "8888",
+            "UserName": "Hair_06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 11,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_06",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_06"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "15d45f6e925cfe5c68c0fda052b44c1644b834d97d4e5025c0e184e9a5314c0d",
+          "source_rgba_sha256": "fdd2f59680040f808ba6181db42b788641681ad115fa9efc9251fa7e06569789",
+          "release_rgba_sha256": "fdd2f59680040f808ba6181db42b788641681ad115fa9efc9251fa7e06569789",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6720.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6720,
+          "texture": {
+            "ID": 6720,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1482379589,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_06.png",
+            "Format": "8888",
+            "UserName": "Hair_06",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 11,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_06",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_06"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "15d45f6e925cfe5c68c0fda052b44c1644b834d97d4e5025c0e184e9a5314c0d",
+        "release_mmp_sha256": "15d45f6e925cfe5c68c0fda052b44c1644b834d97d4e5025c0e184e9a5314c0d",
+        "original_png_sha256": "ad3361d7ab5e379d08c46f1e2ff18323bc790574c7719f90cfca050cd20518d8",
+        "source_rgba_sha256": "fdd2f59680040f808ba6181db42b788641681ad115fa9efc9251fa7e06569789",
+        "source_rgb_sha256": "24ded17027d8ca3d5640781a891ef9ddb29092abed05c785982d8f471f28321f",
+        "source_alpha_sha256": "55a3857eefaef081ec2d97c7c02882001fea4eff889b5f524d76dd5a3170f0e8",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 11,
+              "TextureID": 6720,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_06",
+              "TextureName": "Hair_06"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6721,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6721,
+        "source_record": {
+          "id": 6721,
+          "texture": {
+            "ID": 6721,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1449878367,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_07.png",
+            "Format": "8888",
+            "UserName": "Hair_07",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 12,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_07",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_07"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "c435b86919c40cfc70d92db9b5a22c8f9dc54648a530512e1cc23b448fa121b9",
+          "source_rgba_sha256": "316138215528022d8f208171681933b624fef3a0aa79a903710b428d7a2178fd",
+          "release_rgba_sha256": "316138215528022d8f208171681933b624fef3a0aa79a903710b428d7a2178fd",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6721.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6721,
+          "texture": {
+            "ID": 6721,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1449878367,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_07.png",
+            "Format": "8888",
+            "UserName": "Hair_07",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 12,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_07",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_07"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c435b86919c40cfc70d92db9b5a22c8f9dc54648a530512e1cc23b448fa121b9",
+        "release_mmp_sha256": "c435b86919c40cfc70d92db9b5a22c8f9dc54648a530512e1cc23b448fa121b9",
+        "original_png_sha256": "130084344319c725940ca4f4d53b1ab6d4744cee20f62cdd2ce4623d1bba3af8",
+        "source_rgba_sha256": "316138215528022d8f208171681933b624fef3a0aa79a903710b428d7a2178fd",
+        "source_rgb_sha256": "5b10a997da6d49482b52236afd034273dcc3cb24d9c9171426a9d4d56e875591",
+        "source_alpha_sha256": "9d69976f369e8b5a0609fb9be78710e44ddd09dce2c6be67ae12e00531e53053",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 12,
+              "TextureID": 6721,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_07",
+              "TextureName": "Hair_07"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6722,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6722,
+        "source_record": {
+          "id": 6722,
+          "texture": {
+            "ID": 6722,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 709315919,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_08.png",
+            "Format": "8888",
+            "UserName": "Hair_08",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 13,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_08",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_08"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "3cfff2be74efcacc0ce3b61c5fe6cdab20062c83e0e3743dbb4877b734f25395",
+          "source_rgba_sha256": "e80e13ccefa42e6bc4a90f24690d740adb42382a7bf012728b02072c7f0e9b80",
+          "release_rgba_sha256": "e80e13ccefa42e6bc4a90f24690d740adb42382a7bf012728b02072c7f0e9b80",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6722.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6722,
+          "texture": {
+            "ID": 6722,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 709315919,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_08.png",
+            "Format": "8888",
+            "UserName": "Hair_08",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 13,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_08",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_08"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "3cfff2be74efcacc0ce3b61c5fe6cdab20062c83e0e3743dbb4877b734f25395",
+        "release_mmp_sha256": "3cfff2be74efcacc0ce3b61c5fe6cdab20062c83e0e3743dbb4877b734f25395",
+        "original_png_sha256": "b0e7db9c5f502011834130973dd9240ed950266700e36e1fff8228e2a87bdd6c",
+        "source_rgba_sha256": "e80e13ccefa42e6bc4a90f24690d740adb42382a7bf012728b02072c7f0e9b80",
+        "source_rgb_sha256": "c25a81c455f18415f9440d3fe31f49b2989e6cad404e6cd4111e03e8ff2b8cf2",
+        "source_alpha_sha256": "866fa269ef2c98254c98b68eae8913d8d00b85d547755ac05e137ef779cc9703",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 13,
+              "TextureID": 6722,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_08",
+              "TextureName": "Hair_08"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6723,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6723,
+        "source_record": {
+          "id": 6723,
+          "texture": {
+            "ID": 6723,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 375738958,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_09.png",
+            "Format": "8888",
+            "UserName": "Hair_09",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 14,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_09",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_09"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "c1ab5550fe0fc50688d2f2b21d106cc406779a04cfa1dacb12c09917d32be464",
+          "source_rgba_sha256": "44e8beb8d9804c05e62f36ded846f66b404ec32ece57043f05477327f5637893",
+          "release_rgba_sha256": "44e8beb8d9804c05e62f36ded846f66b404ec32ece57043f05477327f5637893",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6723.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6723,
+          "texture": {
+            "ID": 6723,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 375738958,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_09.png",
+            "Format": "8888",
+            "UserName": "Hair_09",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 14,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_09",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_09"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c1ab5550fe0fc50688d2f2b21d106cc406779a04cfa1dacb12c09917d32be464",
+        "release_mmp_sha256": "c1ab5550fe0fc50688d2f2b21d106cc406779a04cfa1dacb12c09917d32be464",
+        "original_png_sha256": "7af7a6890bfa363ed7fe9f5ee91e4dd99ecb470cd61c270456879ee4ee0d8926",
+        "source_rgba_sha256": "44e8beb8d9804c05e62f36ded846f66b404ec32ece57043f05477327f5637893",
+        "source_rgb_sha256": "e00ec09ee23787bfa2989a55008a6cf4930ca46eb6fe3eb135dbe180a7ccfaa2",
+        "source_alpha_sha256": "f0616a2ab0ab043318dd788e579e28b959c063104ffdf8d956f1fe38f03276f6",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 14,
+              "TextureID": 6723,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_09",
+              "TextureName": "Hair_09"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 6724,
+      "status": "source-only-deferred",
+      "reason": "Genuine TransformableFaceTextures hair-color layer, actual THMID1 owner→one Heads consumer plus live/static BuildTexLayers runtime. Source includes two exact eyebrow marks and hairfield/hairline blend boundary with alpha0..255 (6724 max248). No ordinary direct static Models/Materials binding found; preserving exact brows and whole dynamic blend/palette/phase requires separate source/runtime composite QA. Not technical/alpha blanket exclusion; no call or invented replacement face/hair.",
+      "source_check": {
+        "id": 6724,
+        "source_record": {
+          "id": 6724,
+          "texture": {
+            "ID": 6724,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1209933861,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_10.png",
+            "Format": "8888",
+            "UserName": "Hair_10",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "heads-lshead",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "TransformableFaceTextures",
+                "id": 15,
+                "field": "TextureID",
+                "role": "color",
+                "UserName": "Hair_10",
+                "THMID": 1,
+                "Priority": 1,
+                "TextureName": "Hair_10"
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            128,
+            128
+          ],
+          "source_sha256": "846178964f3396ddc4685f13a3f69e35cc54f8ad01680621c90187bbe81ed2a7",
+          "source_rgba_sha256": "b9ef170f129d43ce54b81a3d7036176423db8dc7cce2beec65fabc8a7432d1b3",
+          "release_rgba_sha256": "b9ef170f129d43ce54b81a3d7036176423db8dc7cce2beec65fabc8a7432d1b3",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            248
+          ],
+          "original_png": "expanded/original/6724.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6724,
+          "texture": {
+            "ID": 6724,
+            "Width": 128,
+            "Height": 128,
+            "NMips": 0,
+            "AverageColor": 1209933861,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "LSHead\\AdvancedFaceGen\\HairColor\\Hair_10.png",
+            "Format": "8888",
+            "UserName": "Hair_10",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            128,
+            128
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              128,
+              128
+            ],
+            "mips": 8,
+            "file_bytes": 87404,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "TransformableFaceTextures",
+              "id": 15,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Hair_10",
+              "THMID": 1,
+              "Priority": 1,
+              "TextureName": "Hair_10"
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_head_race_hair_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "846178964f3396ddc4685f13a3f69e35cc54f8ad01680621c90187bbe81ed2a7",
+        "release_mmp_sha256": "846178964f3396ddc4685f13a3f69e35cc54f8ad01680621c90187bbe81ed2a7",
+        "original_png_sha256": "4af0a7606c05b638a0c4d5884c7a2fd2aee5b22568864a0faf1bc03a70fd75f4",
+        "source_rgba_sha256": "b9ef170f129d43ce54b81a3d7036176423db8dc7cce2beec65fabc8a7432d1b3",
+        "source_rgb_sha256": "0d93d4c98810a3ccb0296a334982e2bc4b9bcd82a36883945b3312ed6a59e191",
+        "source_alpha_sha256": "e27bce4f67823e7e581cdfca9dcffb438b3c8b458a8fde5e84062c358cc38fcc",
+        "dimensions": [
+          128,
+          128
+        ],
+        "alpha_extrema": [
+          0,
+          248
+        ],
+        "full_source_privately_inspected": true,
+        "full_original_RGBA_RGB_A_and_nearest_privately_inspected": true,
+        "actual_transformable_face_layer_head_consumer_chain": {
+          "layer_records": [
+            {
+              "ID": 15,
+              "TextureID": 6724,
+              "THMID": 1,
+              "Priority": 1,
+              "UserName": "Hair_10",
+              "TextureName": "Hair_10"
+            }
+          ],
+          "actual_TransformableHeadMaterials_owners": [
+            {
+              "ID": 1,
+              "UserName": "AdvancedFaceGenMaterials"
+            }
+          ],
+          "actual_Heads_transformable_textures_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Genuine color layer used in dynamic face composition, not an ordinary directly bound static hair Model diffuse. Preserve complete native layer A/blend boundaries and exact eyebrows/fields before any future edit; no invented static material mode.",
+          "runtime_refs": [
+            {
+              "file": "DBFormat/DataFaceGen.cpp",
+              "line": 37,
+              "excerpt": "NDatabase::ImportField( \"THMID\", &pOwner );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1097,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            },
+            {
+              "file": "Main/LSHead.cpp",
+              "line": 1228,
+              "excerpt": "BuildTexLayers( face,    pTT->face );"
+            }
+          ]
+        },
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    }
+  ],
+  "source_parity_count": 14,
+  "builtin_generation_calls": 3,
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false,
+  "scope_note": "Fresh discovery accepted2336/q2797 (earlier parent status message2333 was a reporting error, not reused source proof). 14 fresh whole hair/color originals examined from161 uncalled of183 remaining; other147 not inspected and not declared unsuitable. Three new opaque Hair01 colorvariant diffuse IDs, complete sourceA255/TypeOrdinary preserved, one builtin attempt/ID. Selected variant Models have actual typed Materials/Templates/Geometry; no direct variant ComplexHeads consumer found. Nine actual ComplexHeads share same geometry family, explicitly qualified rather than invented direct selected-head binding.10colorlayers are actual dynamic TransformableFaceTextures/Heads art, source-only deferred for exact eyebrow/blend QA. Root alone final art/material/native import/shared/Git; stablesHeads5/6/UI18/Weapons12 untouched."
+}

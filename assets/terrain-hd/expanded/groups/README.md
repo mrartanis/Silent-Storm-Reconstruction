@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 374 of these verified originals are accepted in the shared
+As of 2026-10-08, 383 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-third-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-fourth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,370 IDs: clothing 220, equipment 143, weapons
-57, heads 183, UI 625, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,361 IDs: clothing 219, equipment 140, weapons
+57, heads 179, UI 624, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -320,3 +320,20 @@ exclusion. Remaining1,370 exact source metadata screened against2,328 eligible
 accepted donors with sourceRGBA/dimensions/nativeType:0 matches/0calls, authorized
 book-cover content replacements excluded. 1822/6239/5666/3319/5740 remain held,
 raw/exactprompts/proof retained. Inspect subsequent jobs/reviews before new calls.
+
+Twenty-fourth accepted packet: equipment5406/2448/3051, hair6769/6770/6765/6767,
+neck/hands color6761 and stone-menu4653. Pack:2,345 textures/4,690 aliases/
+126 archives/7,629,266,454 bytes. All prior2,336 source/PNG/native
+hashes unchanged; nine nativeRGBA images exactly match privately viewed whole4x
+predictions. Full originalalpha/UV/material/count/pattern scale retained. 5406
+retains8 square alpha-zero gaps, one large rounded gap and every sourceAA level.
+Hair flow/part retained; moderate existing paint peak lifts disclosed in
+../coordinator-art-review-twenty-fourth.json. 6761 retains3 original soft
+washes/neck-hands color with disclosed weak digital flatfield variation, no new
+anatomy/grain. Scalar brightness only; no artisticRGB insertion/crop/BBox.
+Actual4653 UI sampler HD on/off/on, real graphics menu and isolated normalquit:
+../new-groups-twenty-fourth-{batch,live}-check.json. Frames privately viewed;
+scene certifies layer/menu, not every model. Ordinary Git PNG/prompt stages and
+frozen original worker reviews:../accepted-git-stage-completeness-twenty-fourth.json,
+../coordinator-review-provenance-twenty-fourth.json. Held5405/5388/3041/6768/
+6766/7627/3864/2153/6827 retain raw/reasons. Inspect next jobs before newcalls.

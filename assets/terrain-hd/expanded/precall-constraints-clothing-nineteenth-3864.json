@@ -1,0 +1,113 @@
+[
+  {
+    "id": 3864,
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted garment UV diffuse, ID3864.\r\nImage1 is the ONLY edit target/reference: exact complete128x128 originalRGBA canvas enlarged nearest8x1024x1024. Produce the same complete square texture at four-times original resolution by refining only its existing fine soft painted transitions. Preserve every UV boundary, dim olive/tan/charcoal source color, original hue/lightness hierarchy, scale, silhouette and broad washed shading phase. This is a flat painted texture, never a photograph, garment mockup or person.\r\nKeep the existing three long charcoal vertical strip fields (native envelopes[11,10,18,107],[57,10,64,108],[99,10,106,78]) and original dark horizontal top strip[0,2,127,10]. Their edges, lengths and original tone must stay. Keep only the two existing faint pale U-like wash groups[10,41,19,47] and[56,41,65,47], plus the one existing upper pale open-bracket wash[35,2,42,10]. Their small angular interior marks are uncertain washed pixels: preserve their exact lowcontrast paint instead of completing them into a new buckle, prong, ring or other hardware.\r\nProved source spot phase: FOUR existing small dark paintspots on the leftstrip x14 and FOUR on the middle strip x60, at the same native y48,53,58,63, five-native-pixel pitch; total EIGHT original dark spots. Preserve exact source soft shape and contrast, no more spots, no new round holes or shine. The rightstrip has no new spot sequence.\r\nPreserve the narrow pale zigzag paint trace at native x35..40,y43..68. It has exactly FIVE existing isolated connected pale paintgroups: [(37,44),(38,45),(39,46)];[(37,48),(36,49)];[(38,51),(39,52)];[(37,54),(36,55),(37,56),(38,57),(39,58),(38,59),(37,60),(36,61)];[(38,63),(39,64)]. Keep the SAME original tiny irregular connected versus disconnected paintmarks and their native positions/scale; leave remaining dark faint continuations washed and uncertain. Do not segment these groups into beads, roundparts, teeth, links, zipper teeth, stitching, letters or symbols. Do not add or join/split the trace.\r\nMaterials/style: retain source subdued soft olive/tan mottled cloth wash and dim charcoal fields, only fine matte paint variation at original physical scale. Preserve the existing broad faint folds/washedpatch shapes without new printcells or new shapes. No coarse grain, photo cloth/leather/weave, woven crossing threads, curls, hatching, sharp edge outlines, raised seams or strong bevels. No new straps/buckles/rivets, resolved mechanicalpart anatomy, text or faces.\r\nOriginal A255 everywhere; opaque dark/black pixels are flat dark paint, NOT transparent holes. Preserve solid interiors and all exact canvas edges. Whole canvas only, no crop/padding/letterbox/bbox recentering/registration, no new margins, borders, labels, watermark, scene or objects.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "long_vertical_charcoal_strip_fields": 3,
+      "pale_lower_U_outline_groups": 2,
+      "upper_pale_open_bracket_wash_groups": 1,
+      "left_dark_spot_groups": 4,
+      "middle_dark_spot_groups": 4,
+      "total_existing_dark_spot_groups": 8,
+      "dark_spot_native_x": [
+        14,
+        60
+      ],
+      "dark_spot_native_y": [
+        48,
+        53,
+        58,
+        63
+      ],
+      "dark_spot_pitch_native_y": 5,
+      "existing_isolated_pale_zigtrace_paintgroups": 5,
+      "zigtrace_exact_native_components": [
+        [
+          [
+            37,
+            44
+          ],
+          [
+            38,
+            45
+          ],
+          [
+            39,
+            46
+          ]
+        ],
+        [
+          [
+            37,
+            48
+          ],
+          [
+            36,
+            49
+          ]
+        ],
+        [
+          [
+            38,
+            51
+          ],
+          [
+            39,
+            52
+          ]
+        ],
+        [
+          [
+            37,
+            54
+          ],
+          [
+            36,
+            55
+          ],
+          [
+            37,
+            56
+          ],
+          [
+            38,
+            57
+          ],
+          [
+            39,
+            58
+          ],
+          [
+            38,
+            59
+          ],
+          [
+            37,
+            60
+          ],
+          [
+            36,
+            61
+          ]
+        ],
+        [
+          [
+            38,
+            63
+          ],
+          [
+            39,
+            64
+          ]
+        ]
+      ],
+      "new_hardware_allowed": 0,
+      "new_holes_prongs_stitching_allowed": 0,
+      "repeating_print_pattern": false
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:29:23.376643+00:00"
+  }
+]
