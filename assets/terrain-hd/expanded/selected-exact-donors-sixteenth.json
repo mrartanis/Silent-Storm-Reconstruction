@@ -1,0 +1,70 @@
+[
+  {
+    "id": 5453,
+    "texture": {
+      "ID": 5453,
+      "Width": 256,
+      "Height": 256,
+      "NMips": 0,
+      "AverageColor": -13493751,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\Helena\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3553,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2281,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5721,
+              "field": "Material0",
+              "material_template_id": 2281,
+              "geometry_id": 2193,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\UKScoutFemale_100.mb",
+              "model_template_id": 3774,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      256
+    ],
+    "source_sha256": "703950c8cc77163c47a6d9876810af098b83cd321c8429c3d25d0fac750fbc7a",
+    "source_rgba_sha256": "914ccb047d2929d936a65af22d2383545511c265a5d77a40da30817dd4d0b2a4",
+    "release_rgba_sha256": "914ccb047d2929d936a65af22d2383545511c265a5d77a40da30817dd4d0b2a4",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5453.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_exact_reuse_proof": "source-check-exact-donors-sixteenth.json"
+  }
+]

@@ -1,0 +1,238 @@
+{
+  "source_validated_service_unavailable": [
+    {
+      "id": 1941,
+      "status": "generation-unavailable",
+      "source_record": {
+        "id": 1941,
+        "texture": {
+          "ID": 1941,
+          "Width": 256,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -80734198,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Weapons\\Rifles\\Mauser_M98.tga",
+          "Format": "dxt1",
+          "UserName": "Mauser_M98",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "weapons",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1337,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 895,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1350,
+                  "field": "Material0",
+                  "material_template_id": 895,
+                  "geometry_id": 1763,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 995,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          64
+        ],
+        "source_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+        "source_rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+        "release_rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/1941.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "independent_source_recheck": {
+          "historical_release_original_png_exact": true,
+          "rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+          "dimensions": [
+            256,
+            64
+          ],
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "typed_diffuse_only": true,
+          "actual_material_alpha_mode": "alpha_test",
+          "fresh_actual_typed_chains": [
+            {
+              "actual_material": {
+                "ID": 1337,
+                "TextureID": 1941,
+                "BRDFID": 0,
+                "BumpID": 2732,
+                "SpecColor": 0,
+                "TemplateID": 895,
+                "GlossID": 2749,
+                "MirrorID": 0,
+                "CastShadow": 1,
+                "SpecFactor": 0.0,
+                "RndWeight": 1.0,
+                "MetalMirror": 0.0,
+                "DielMirror": 0.0,
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "Flags": ""
+              },
+              "actual_template": {
+                "ID": 895,
+                "UserName": "Mauser_M98"
+              },
+              "actual_consumers": [
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 1350,
+                    "Material0": 895,
+                    "Material1": 0,
+                    "GeometryID": 1763,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 995,
+                    "RPGArmorID": 28,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "geometry": {
+                    "ID": 1763,
+                    "AIGeometryID": 889,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 1.0955991744995117,
+                    "SizeY": 0.03539097309112549,
+                    "SizeZ": 0.20410965383052826,
+                    "CenterX": 0.28536608815193176,
+                    "CenterY": 5.4016709327697754e-08,
+                    "CenterZ": 0.008445262908935547,
+                    "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                    "UserName": "Mauser_M98",
+                    "RootJoint": "Mauser_M98"
+                  }
+                }
+              ]
+            }
+          ],
+          "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "historical_mmp_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+          "release_mmp_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+          "original_png_sha256": "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+          "source_rgb_sha256": "ef4138286d9a4010ff332dc1a15c651844e86198efcd2147666fb16605c2c14a"
+        },
+        "source_detail_constraints": "Plain warm brown wood region spans lower long band and upper-right angled stock. ONE vertical gray band around native x63..69 intersects wooden strip. Original upper-left gray fragments have source-separated upright patches, short horizontal cap and long thin rail; preserve whole silhouettes/spacing without joining or adding joints. Exactly ONE compact dark angular loop around native x161..174,y24..36, fixed dark aperture. Lower metal assembly around native x94..176 retains exact framed stepped insets/short horizontal rails and source edge highlights; no newly added screws, slots, dots, vents or internal chamber holes. Keep small original muted pale fleck in wooden strip near native x119,y47.",
+        "full_original_privately_inspected_before_call": true,
+        "reference_recipe": {
+          "type": "source-only-entire-canvas-affine3to1-nearest",
+          "source_dimensions": [
+            256,
+            64
+          ],
+          "guide_dimensions": [
+            768,
+            256
+          ],
+          "resampling": "nearest",
+          "affine_prewarp": {
+            "fullcanvas": true,
+            "source_aspect": "4:1",
+            "guide_aspect": "3:1",
+            "scale_x": 3,
+            "scale_y": 4,
+            "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+          },
+          "references_sha256": [
+            "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+            "823cb6645b032dcc9b902e78f340c62c6688dc5c2467a757aadb9fc021679dd9"
+          ]
+        },
+        "full_original_and_full_nearest_affine_guide_privately_inspected_before_call": true
+      },
+      "service_call": {
+        "id": 1941,
+        "status": "service-blocked",
+        "builtin": true,
+        "started_utc": "2026-10-08T01:15:11.019669+00:00",
+        "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into crisp faithful HD painted material texture. Image2 is source-only wholecanvas nearest helper with uniform affine aspect prewarp: original4:1 artwork stretched vertically to3:1, no new information. Return entire atlas mapped linearly wholecanvas to wholecanvas in helper3:1 aspect; pipeline inversely resizes whole output to original4:1. Every original island, black transparent gap, boundary clipping, detail center/size/pitch/count must remain exact normalized UV. Do not crop/pad/zoom/repack/rotate/move/complete source-clipped shapes or assemble an object. This is only a flat old game UV MATERIAL MAP, preserve smooth understated dark gray metal/plain brown wood/source shading. No new holes, screws, vents, chambers, engraving, marks, rails, wear, damage, scratches, stain, wood knots/curl/ornamentalgrain, metalpebble/pits. Source wood and metal remain painted restrained materials, no photorealistic product. Compression blocks are shading, never new hardware. Preserve exact source cutout transparent gaps and silhouette; fullsource native alpha_test mask restored by pipeline without changing material or UV. Keep original muted local colors/relative dark-to-light shading; brightness later corrected using one numeric scalar, not artistic relighting. Plain warm brown wood region spans lower long band and upper-right angled stock. ONE vertical gray band around native x63..69 intersects wooden strip. Original upper-left gray fragments have source-separated upright patches, short horizontal cap and long thin rail; preserve whole silhouettes/spacing without joining or adding joints. Exactly ONE compact dark angular loop around native x161..174,y24..36, fixed dark aperture. Lower metal assembly around native x94..176 retains exact framed stepped insets/short horizontal rails and source edge highlights; no newly added screws, slots, dots, vents or internal chamber holes. Keep small original muted pale fleck in wooden strip near native x119,y47. Full original logical256x64, final production1024x256. ONE atlas only, no border/text/comparison. Source elongated dark wood streak is ONLY soft painted wood shading/grain: never turn it into sharply outlined oval capsule, recessed channel, machined slot or new hole. Metal frames stay source flat edge highlights, no newly doubled rims.",
+        "prompt_file": "assets/terrain-hd/expanded/generated/1941-prompt.txt",
+        "prompt_sha256": "e3f3c69d5dbd600a1e589a2ef894f142666037499c918c0a06d9b091bc6595d9",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1941.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1941-weapons-ninth-affine-source-reference.png"
+        ],
+        "reference_recipe": {
+          "type": "source-only-entire-canvas-affine3to1-nearest",
+          "source_dimensions": [
+            256,
+            64
+          ],
+          "guide_dimensions": [
+            768,
+            256
+          ],
+          "resampling": "nearest",
+          "affine_prewarp": {
+            "fullcanvas": true,
+            "source_aspect": "4:1",
+            "guide_aspect": "3:1",
+            "scale_x": 3,
+            "scale_y": 4,
+            "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+          },
+          "references_sha256": [
+            "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+            "823cb6645b032dcc9b902e78f340c62c6688dc5c2467a757aadb9fc021679dd9"
+          ]
+        },
+        "transparent_background": true,
+        "target_size": [
+          1024,
+          256
+        ],
+        "finished_utc": "2026-10-08T01:16:08.586357+00:00",
+        "exact_service_error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 2cde57e5-5062-4754-ba19-2240dc393004. safety_violations=[illicit].\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"illicit\\\"\\n      ]\\n    }\\n  }\\n}\")\n",
+        "error": {
+          "code": "moderation_blocked",
+          "request_id": "2cde57e5-5062-4754-ba19-2240dc393004",
+          "http_status": 400,
+          "category": "illicit",
+          "moderation_stage": "output"
+        },
+        "raw_saved": false,
+        "retry_permitted": false
+      },
+      "retry_permitted": false,
+      "raw_saved": false
+    }
+  ],
+  "retry_performed": false,
+  "shared_metadata_modified": false
+}

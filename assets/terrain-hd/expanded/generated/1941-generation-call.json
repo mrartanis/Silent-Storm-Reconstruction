@@ -1,0 +1,53 @@
+{
+  "id": 1941,
+  "status": "service-blocked",
+  "builtin": true,
+  "started_utc": "2026-10-08T01:15:11.019669+00:00",
+  "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into crisp faithful HD painted material texture. Image2 is source-only wholecanvas nearest helper with uniform affine aspect prewarp: original4:1 artwork stretched vertically to3:1, no new information. Return entire atlas mapped linearly wholecanvas to wholecanvas in helper3:1 aspect; pipeline inversely resizes whole output to original4:1. Every original island, black transparent gap, boundary clipping, detail center/size/pitch/count must remain exact normalized UV. Do not crop/pad/zoom/repack/rotate/move/complete source-clipped shapes or assemble an object. This is only a flat old game UV MATERIAL MAP, preserve smooth understated dark gray metal/plain brown wood/source shading. No new holes, screws, vents, chambers, engraving, marks, rails, wear, damage, scratches, stain, wood knots/curl/ornamentalgrain, metalpebble/pits. Source wood and metal remain painted restrained materials, no photorealistic product. Compression blocks are shading, never new hardware. Preserve exact source cutout transparent gaps and silhouette; fullsource native alpha_test mask restored by pipeline without changing material or UV. Keep original muted local colors/relative dark-to-light shading; brightness later corrected using one numeric scalar, not artistic relighting. Plain warm brown wood region spans lower long band and upper-right angled stock. ONE vertical gray band around native x63..69 intersects wooden strip. Original upper-left gray fragments have source-separated upright patches, short horizontal cap and long thin rail; preserve whole silhouettes/spacing without joining or adding joints. Exactly ONE compact dark angular loop around native x161..174,y24..36, fixed dark aperture. Lower metal assembly around native x94..176 retains exact framed stepped insets/short horizontal rails and source edge highlights; no newly added screws, slots, dots, vents or internal chamber holes. Keep small original muted pale fleck in wooden strip near native x119,y47. Full original logical256x64, final production1024x256. ONE atlas only, no border/text/comparison. Source elongated dark wood streak is ONLY soft painted wood shading/grain: never turn it into sharply outlined oval capsule, recessed channel, machined slot or new hole. Metal frames stay source flat edge highlights, no newly doubled rims.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1941-prompt.txt",
+  "prompt_sha256": "e3f3c69d5dbd600a1e589a2ef894f142666037499c918c0a06d9b091bc6595d9",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1941.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1941-weapons-ninth-affine-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "source-only-entire-canvas-affine3to1-nearest",
+    "source_dimensions": [
+      256,
+      64
+    ],
+    "guide_dimensions": [
+      768,
+      256
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": {
+      "fullcanvas": true,
+      "source_aspect": "4:1",
+      "guide_aspect": "3:1",
+      "scale_x": 3,
+      "scale_y": 4,
+      "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+    },
+    "references_sha256": [
+      "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+      "823cb6645b032dcc9b902e78f340c62c6688dc5c2467a757aadb9fc021679dd9"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    1024,
+    256
+  ],
+  "finished_utc": "2026-10-08T01:16:08.586357+00:00",
+  "exact_service_error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 2cde57e5-5062-4754-ba19-2240dc393004. safety_violations=[illicit].\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"illicit\\\"\\n      ]\\n    }\\n  }\\n}\")\n",
+  "error": {
+    "code": "moderation_blocked",
+    "request_id": "2cde57e5-5062-4754-ba19-2240dc393004",
+    "http_status": 400,
+    "category": "illicit",
+    "moderation_stage": "output"
+  },
+  "raw_saved": false,
+  "retry_permitted": false
+}

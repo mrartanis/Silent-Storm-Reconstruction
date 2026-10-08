@@ -237,7 +237,7 @@ def main(ids=None):
                 target = stored_luma(original.crop(src))
                 cell_alpha = native_alpha.crop(dst) if native_alpha is not None else None
                 padded = cleared = 0
-                if cell_alpha is not None:
+                if cell_alpha is not None and asset.get('source_mask_rgb_padding', True):
                     cell, padded, cleared = pad_rgb_under_source_mask(cell, cell_alpha)
                 restored = 0
                 if source_regions:
@@ -266,6 +266,9 @@ def main(ids=None):
                        'corrected_luma': measure(output, native_alpha)}
         if native_alpha is not None:
             calibration['native_alpha'] = 'Original source mask resampled at HD density; generated alpha preserved in PNG intermediates'
+        if asset.get('source_mask_rgb_padding') is False:
+            calibration['source_mask_rgb_padding'] = False
+            calibration['source_mask_rgb_padding_reason'] = asset['source_mask_rgb_padding_reason']
         if source_regions:
             calibration['source_rgb_regions'] = asset['source_rgb_regions']
         asset['brightness_calibration'] = calibration

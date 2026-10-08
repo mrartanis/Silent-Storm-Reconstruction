@@ -142,6 +142,11 @@ def import_jobs(jobs, replace=False):
                 assert 0 <= bounds[1] < bounds[3] <= original.height
                 assert region['reason']
             asset['source_rgb_regions'] = job['source_rgb_regions']
+        if 'source_mask_rgb_padding' in job:
+            assert isinstance(job['source_mask_rgb_padding'], bool)
+            assert job['source_mask_rgb_padding_reason']
+            asset['source_mask_rgb_padding'] = job['source_mask_rgb_padding']
+            asset['source_mask_rgb_padding_reason'] = job['source_mask_rgb_padding_reason']
         if job.get('content_replacement'):
             asset['content_replacement'] = job['content_replacement']
             asset['generation'] = 'Built-in image_gen; authorized printed-cover replacement; offline native-size resampling'

@@ -1,0 +1,736 @@
+[
+  {
+    "id": 1936,
+    "texture": {
+      "ID": 1936,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -13491950,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\Garand_M1.tga",
+      "Format": "dxt1",
+      "UserName": "Garand_M1",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1332,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 890,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1343,
+              "field": "Material0",
+              "material_template_id": 890,
+              "geometry_id": 1756,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 988,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 1344,
+              "field": "Material0",
+              "material_template_id": 890,
+              "geometry_id": 1757,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 989,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "76d40a553f1fae32dc3693d3f3613ddac487abf4865d6c7c2e6e538acd5fdc85",
+    "source_rgba_sha256": "f90a0973ca47f1cc2eb4b2fc947904e51f0ec04177c32226845fd7236908e123",
+    "release_rgba_sha256": "f90a0973ca47f1cc2eb4b2fc947904e51f0ec04177c32226845fd7236908e123",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1936.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "f90a0973ca47f1cc2eb4b2fc947904e51f0ec04177c32226845fd7236908e123",
+      "dimensions": [
+        256,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "actual_material_alpha_mode": "alpha_test",
+      "fresh_actual_typed_chains": [
+        {
+          "actual_material": {
+            "ID": 1332,
+            "TextureID": 1936,
+            "BRDFID": 0,
+            "BumpID": 2727,
+            "SpecColor": 0,
+            "TemplateID": 890,
+            "GlossID": 2744,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 890,
+            "UserName": "Garand_M1"
+          },
+          "actual_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1343,
+                "Material0": 890,
+                "Material1": 0,
+                "GeometryID": 1756,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 988,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "geometry": {
+                "ID": 1756,
+                "AIGeometryID": 882,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.0856631994247437,
+                "SizeY": 0.03384176641702652,
+                "SizeZ": 0.19815152883529663,
+                "CenterX": 0.29293328523635864,
+                "CenterY": 0.0,
+                "CenterZ": 0.016671106219291687,
+                "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                "UserName": "Garand_M1",
+                "RootJoint": "Garand_M1"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1344,
+                "Material0": 890,
+                "Material1": 901,
+                "GeometryID": 1757,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 989,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "geometry": {
+                "ID": 1757,
+                "AIGeometryID": 883,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.085243582725525,
+                "SizeY": 0.04161359369754791,
+                "SizeZ": 0.18921267986297607,
+                "CenterX": 0.23027127981185913,
+                "CenterY": -0.0013672858476638794,
+                "CenterZ": 0.06623578816652298,
+                "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                "UserName": "Garand_M1_sniper",
+                "RootJoint": "Garand_M1_sniper"
+              }
+            }
+          ]
+        }
+      ],
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "76d40a553f1fae32dc3693d3f3613ddac487abf4865d6c7c2e6e538acd5fdc85",
+      "release_mmp_sha256": "76d40a553f1fae32dc3693d3f3613ddac487abf4865d6c7c2e6e538acd5fdc85",
+      "original_png_sha256": "713b5a1b1197be73ccfa00523fa8c2aa23e722b3282061d7288ba2a7513a43a7",
+      "source_rgb_sha256": "46a07a1dd0e78c3baba8c7ff90228deb95498eb2d69b75f353a896cca7ef971d"
+    },
+    "source_detail_constraints": "Broad plain brown wooden length crosses lower/middle from left clipped stock to right cylindrical end; smooth horizontal original shading/grain, no wood knots or curl. ONE source dark curved loop above middle-left keeps exact flat outline and black aperture. Upper area has TWO separate gray metal fragments: small stepped rectangular block around native x124..159 and long lighter narrow rail around x173..241. Lower-center ONE rectangular metal assembly preserves only existing internal TWO horizontal dark rectangular inset areas and ONE angled pale lower flap; exact source contours. No new receiver vents, screws or dark slits.",
+    "full_original_privately_inspected_before_call": true,
+    "reference_recipe": {
+      "type": "source-only-entire-canvas-affine3to1-nearest",
+      "source_dimensions": [
+        256,
+        64
+      ],
+      "guide_dimensions": [
+        768,
+        256
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": {
+        "fullcanvas": true,
+        "source_aspect": "4:1",
+        "guide_aspect": "3:1",
+        "scale_x": 3,
+        "scale_y": 4,
+        "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+      },
+      "references_sha256": [
+        "713b5a1b1197be73ccfa00523fa8c2aa23e722b3282061d7288ba2a7513a43a7",
+        "76519b68063c1f92ba02d284ba0d8409ae2cb00c914b8b58e5d303141c9f8b8d"
+      ]
+    },
+    "full_original_and_full_nearest_affine_guide_privately_inspected_before_call": true
+  },
+  {
+    "id": 1938,
+    "texture": {
+      "ID": 1938,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -13625077,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\MAS_1936.tga",
+      "Format": "dxt1",
+      "UserName": "MAS_1936",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1334,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 892,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1347,
+              "field": "Material0",
+              "material_template_id": 892,
+              "geometry_id": 1760,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 992,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "1ee1a6a3360d40c9bd3b32fb2c4ea59214973f3be175cb1819a59249ab3e6bff",
+    "source_rgba_sha256": "3fa24567ce976bff4d68bbbc2c796e64e15e30ee9eae0fa8ef10f181246a3087",
+    "release_rgba_sha256": "3fa24567ce976bff4d68bbbc2c796e64e15e30ee9eae0fa8ef10f181246a3087",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1938.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "3fa24567ce976bff4d68bbbc2c796e64e15e30ee9eae0fa8ef10f181246a3087",
+      "dimensions": [
+        256,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "actual_material_alpha_mode": "alpha_test",
+      "fresh_actual_typed_chains": [
+        {
+          "actual_material": {
+            "ID": 1334,
+            "TextureID": 1938,
+            "BRDFID": 0,
+            "BumpID": 2731,
+            "SpecColor": 0,
+            "TemplateID": 892,
+            "GlossID": 2748,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 892,
+            "UserName": "MAS_1936"
+          },
+          "actual_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1347,
+                "Material0": 892,
+                "Material1": 0,
+                "GeometryID": 1760,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 992,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "geometry": {
+                "ID": 1760,
+                "AIGeometryID": 886,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.04438054561615,
+                "SizeY": 0.038553595542907715,
+                "SizeZ": 0.19052468240261078,
+                "CenterX": 0.28034424781799316,
+                "CenterY": 2.514570951461792e-08,
+                "CenterZ": 0.0030310750007629395,
+                "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                "UserName": "MAS_1936",
+                "RootJoint": "MAS_1936"
+              }
+            }
+          ]
+        }
+      ],
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "1ee1a6a3360d40c9bd3b32fb2c4ea59214973f3be175cb1819a59249ab3e6bff",
+      "release_mmp_sha256": "1ee1a6a3360d40c9bd3b32fb2c4ea59214973f3be175cb1819a59249ab3e6bff",
+      "original_png_sha256": "6b7587336fd3de6bcf96872038c475fb3c5ebd45e800d0319bb4ed1bc420dd68",
+      "source_rgb_sha256": "353b4238f40a774c1f79db9af3489f4f333b2dafe7a62a31085efbe837b22d15"
+    },
+    "source_detail_constraints": "Plain warm brown wood region covers lower long horizontal band and upper-right angled stock; preserve exact broad folds/grain and original boundary. Upper-left TWO long separate muted-gray rectangular bands at distinct y levels; TWO smaller separate shaded cap patches immediately to their right. Exactly ONE dark angular curved loop at native around x155..172,y23..36 and ONE framed gray rectangular receiver inset at around x128..151,y36..48; its original interior stays plain softly shaded, no screw dots or extra chamber slits. Lower metal inset assembly retains only existing stepped outlined panels and horizontal bars. Keep single vertical gray wood band around native x64..69.",
+    "full_original_privately_inspected_before_call": true,
+    "reference_recipe": {
+      "type": "source-only-entire-canvas-affine3to1-nearest",
+      "source_dimensions": [
+        256,
+        64
+      ],
+      "guide_dimensions": [
+        768,
+        256
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": {
+        "fullcanvas": true,
+        "source_aspect": "4:1",
+        "guide_aspect": "3:1",
+        "scale_x": 3,
+        "scale_y": 4,
+        "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+      },
+      "references_sha256": [
+        "6b7587336fd3de6bcf96872038c475fb3c5ebd45e800d0319bb4ed1bc420dd68",
+        "515da79f00f7d80e0cdb3f5989c7ae7be8aba538246e2f30379a1736eae7148c"
+      ]
+    },
+    "full_original_and_full_nearest_affine_guide_privately_inspected_before_call": true
+  },
+  {
+    "id": 1941,
+    "texture": {
+      "ID": 1941,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -80734198,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\Mauser_M98.tga",
+      "Format": "dxt1",
+      "UserName": "Mauser_M98",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1337,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 895,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1350,
+              "field": "Material0",
+              "material_template_id": 895,
+              "geometry_id": 1763,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 995,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+    "source_rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+    "release_rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1941.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "ce48a9422f41b0c8f22653fc42893f0e839947dc66c6e03303d23c7597968605",
+      "dimensions": [
+        256,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "actual_material_alpha_mode": "alpha_test",
+      "fresh_actual_typed_chains": [
+        {
+          "actual_material": {
+            "ID": 1337,
+            "TextureID": 1941,
+            "BRDFID": 0,
+            "BumpID": 2732,
+            "SpecColor": 0,
+            "TemplateID": 895,
+            "GlossID": 2749,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 895,
+            "UserName": "Mauser_M98"
+          },
+          "actual_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1350,
+                "Material0": 895,
+                "Material1": 0,
+                "GeometryID": 1763,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 995,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "geometry": {
+                "ID": 1763,
+                "AIGeometryID": 889,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.0955991744995117,
+                "SizeY": 0.03539097309112549,
+                "SizeZ": 0.20410965383052826,
+                "CenterX": 0.28536608815193176,
+                "CenterY": 5.4016709327697754e-08,
+                "CenterZ": 0.008445262908935547,
+                "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                "UserName": "Mauser_M98",
+                "RootJoint": "Mauser_M98"
+              }
+            }
+          ]
+        }
+      ],
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+      "release_mmp_sha256": "e922f2686c8d09a0116d40f06a0316d670ee47dd753c771245ce885747108efe",
+      "original_png_sha256": "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+      "source_rgb_sha256": "ef4138286d9a4010ff332dc1a15c651844e86198efcd2147666fb16605c2c14a"
+    },
+    "source_detail_constraints": "Plain warm brown wood region spans lower long band and upper-right angled stock. ONE vertical gray band around native x63..69 intersects wooden strip. Original upper-left gray fragments have source-separated upright patches, short horizontal cap and long thin rail; preserve whole silhouettes/spacing without joining or adding joints. Exactly ONE compact dark angular loop around native x161..174,y24..36, fixed dark aperture. Lower metal assembly around native x94..176 retains exact framed stepped insets/short horizontal rails and source edge highlights; no newly added screws, slots, dots, vents or internal chamber holes. Keep small original muted pale fleck in wooden strip near native x119,y47.",
+    "full_original_privately_inspected_before_call": true,
+    "reference_recipe": {
+      "type": "source-only-entire-canvas-affine3to1-nearest",
+      "source_dimensions": [
+        256,
+        64
+      ],
+      "guide_dimensions": [
+        768,
+        256
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": {
+        "fullcanvas": true,
+        "source_aspect": "4:1",
+        "guide_aspect": "3:1",
+        "scale_x": 3,
+        "scale_y": 4,
+        "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+      },
+      "references_sha256": [
+        "23eed187c4d7081c10262e8e33f783d6440d18aefec25b98a4a052f2ced54051",
+        "823cb6645b032dcc9b902e78f340c62c6688dc5c2467a757aadb9fc021679dd9"
+      ]
+    },
+    "full_original_and_full_nearest_affine_guide_privately_inspected_before_call": true
+  },
+  {
+    "id": 1943,
+    "texture": {
+      "ID": 1943,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -13296627,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\PolishMauser_M29.tga",
+      "Format": "dxt1",
+      "UserName": "PolishMauser_M29",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1339,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 897,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1353,
+              "field": "Material0",
+              "material_template_id": 897,
+              "geometry_id": 1766,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 998,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "80441b962e3b099fcf5eb76d37fad4e02710555982d149a37946233b3c4d03ee",
+    "source_rgba_sha256": "e676aea06d76c42a7d3068782ffbbd1617ca2282662ce9b9b04e8a4dbd134d1d",
+    "release_rgba_sha256": "e676aea06d76c42a7d3068782ffbbd1617ca2282662ce9b9b04e8a4dbd134d1d",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1943.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "e676aea06d76c42a7d3068782ffbbd1617ca2282662ce9b9b04e8a4dbd134d1d",
+      "dimensions": [
+        256,
+        64
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "actual_material_alpha_mode": "alpha_test",
+      "fresh_actual_typed_chains": [
+        {
+          "actual_material": {
+            "ID": 1339,
+            "TextureID": 1943,
+            "BRDFID": 0,
+            "BumpID": 2734,
+            "SpecColor": 0,
+            "TemplateID": 897,
+            "GlossID": 2751,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 897,
+            "UserName": "PolishMauser_M29"
+          },
+          "actual_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1353,
+                "Material0": 897,
+                "Material1": 0,
+                "GeometryID": 1766,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 998,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "geometry": {
+                "ID": 1766,
+                "AIGeometryID": 892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.096747875213623,
+                "SizeY": 0.041015565395355225,
+                "SizeZ": 0.18352189660072327,
+                "CenterX": 0.3002122640609741,
+                "CenterY": 2.7008354663848877e-08,
+                "CenterZ": -0.002003304660320282,
+                "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                "UserName": "PolishMauser_M29",
+                "RootJoint": "PolishMauser_M29"
+              }
+            }
+          ]
+        }
+      ],
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "80441b962e3b099fcf5eb76d37fad4e02710555982d149a37946233b3c4d03ee",
+      "release_mmp_sha256": "80441b962e3b099fcf5eb76d37fad4e02710555982d149a37946233b3c4d03ee",
+      "original_png_sha256": "61a8fd847b1adc13ce971d9df1cb59a6808753331dc1c000f1ae1e57ade54a6f",
+      "source_rgb_sha256": "516b0258083392540d9fe7c0ff962dd45268fd83669bce2b3e6890b16191f490"
+    },
+    "source_detail_constraints": "Plain warm brown wooden strip and angled right stock keep full silhouette, soft straight horizontal grain and ONE tiny original pale wood fleck near native x231,y26. Upper-left TWO long separate muted-gray rectangular bands at distinct y levels and TWO small shorter cap patches on their right, exact lengths/positions. Exactly ONE curved dark angular loop above stock around native x155..174,y20..36, with existing pale sloping face. ONE narrow vertical gray wood band around native x63..69. Lower-middle assembly retains source THREE stepped receiver frame areas from native x94..176, original horizontal short rails and black separations; no extra vents/chamber slots, rivets or pale new marks.",
+    "full_original_privately_inspected_before_call": true,
+    "reference_recipe": {
+      "type": "source-only-entire-canvas-affine3to1-nearest",
+      "source_dimensions": [
+        256,
+        64
+      ],
+      "guide_dimensions": [
+        768,
+        256
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": {
+        "fullcanvas": true,
+        "source_aspect": "4:1",
+        "guide_aspect": "3:1",
+        "scale_x": 3,
+        "scale_y": 4,
+        "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+      },
+      "references_sha256": [
+        "61a8fd847b1adc13ce971d9df1cb59a6808753331dc1c000f1ae1e57ade54a6f",
+        "ea9f9b8c57614ce02902e88ac09ae440813ad35ee1e67ceb901639184859ba35"
+      ]
+    },
+    "full_original_and_full_nearest_affine_guide_privately_inspected_before_call": true
+  }
+]

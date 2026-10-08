@@ -1,0 +1,46 @@
+{
+  "id": 1943,
+  "status": "finished",
+  "builtin": true,
+  "started_utc": "2026-10-08T01:16:09.423565+00:00",
+  "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into crisp faithful HD painted material texture. Image2 is source-only wholecanvas nearest helper with uniform affine aspect prewarp: original4:1 artwork stretched vertically to3:1, no new information. Return entire atlas mapped linearly wholecanvas to wholecanvas in helper3:1 aspect; pipeline inversely resizes whole output to original4:1. Every original island, black transparent gap, boundary clipping, detail center/size/pitch/count must remain exact normalized UV. Do not crop/pad/zoom/repack/rotate/move/complete source-clipped shapes or assemble an object. This is only a flat old game UV MATERIAL MAP, preserve smooth understated dark gray metal/plain brown wood/source shading. No new holes, screws, vents, chambers, engraving, marks, rails, wear, damage, scratches, stain, wood knots/curl/ornamentalgrain, metalpebble/pits. Source wood and metal remain painted restrained materials, no photorealistic product. Compression blocks are shading, never new hardware. Preserve exact source cutout transparent gaps and silhouette; fullsource native alpha_test mask restored by pipeline without changing material or UV. Keep original muted local colors/relative dark-to-light shading; brightness later corrected using one numeric scalar, not artistic relighting. Plain warm brown wooden strip and angled right stock keep full silhouette, soft straight horizontal grain and ONE tiny original pale wood fleck near native x231,y26. Upper-left TWO long separate muted-gray rectangular bands at distinct y levels and TWO small shorter cap patches on their right, exact lengths/positions. Exactly ONE curved dark angular loop above stock around native x155..174,y20..36, with existing pale sloping face. ONE narrow vertical gray wood band around native x63..69. Lower-middle assembly retains source THREE stepped receiver frame areas from native x94..176, original horizontal short rails and black separations; no extra vents/chamber slots, rivets or pale new marks. Full original logical256x64, final production1024x256. ONE atlas only, no border/text/comparison. Source elongated dark wood streak is ONLY soft painted wood shading/grain: never turn it into sharply outlined oval capsule, recessed channel, machined slot or new hole. Metal frames stay source flat edge highlights, no newly doubled rims.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1943-prompt.txt",
+  "prompt_sha256": "8cabd01c7dcca24036ca5e31068cea8e2e7e6310f80f0d4b12551cac55af61eb",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1943.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1943-weapons-ninth-affine-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "source-only-entire-canvas-affine3to1-nearest",
+    "source_dimensions": [
+      256,
+      64
+    ],
+    "guide_dimensions": [
+      768,
+      256
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": {
+      "fullcanvas": true,
+      "source_aspect": "4:1",
+      "guide_aspect": "3:1",
+      "scale_x": 3,
+      "scale_y": 4,
+      "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+    },
+    "references_sha256": [
+      "61a8fd847b1adc13ce971d9df1cb59a6808753331dc1c000f1ae1e57ade54a6f",
+      "ea9f9b8c57614ce02902e88ac09ae440813ad35ee1e67ceb901639184859ba35"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    1024,
+    256
+  ],
+  "finished_utc": "2026-10-08T01:16:39.864126+00:00",
+  "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-de7537f4-035c-4c7e-b068-b0ace5fbb9eb.png",
+  "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\1943-raw.png",
+  "raw_sha256": "be3f2fb415e10e467b71aa694c5f85d78b34c9275f62bf8894ae8b9f4a17f8e7"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 1936,
+  "status": "finished",
+  "builtin": true,
+  "started_utc": "2026-10-08T01:11:50.046721+00:00",
+  "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into crisp faithful HD painted material texture. Image2 is source-only wholecanvas nearest helper with uniform affine aspect prewarp: original4:1 artwork stretched vertically to3:1, no new information. Return entire atlas mapped linearly wholecanvas to wholecanvas in helper3:1 aspect; pipeline inversely resizes whole output to original4:1. Every original island, black transparent gap, boundary clipping, detail center/size/pitch/count must remain exact normalized UV. Do not crop/pad/zoom/repack/rotate/move/complete source-clipped shapes or assemble an object. This is only a flat old game UV MATERIAL MAP, preserve smooth understated dark gray metal/plain brown wood/source shading. No new holes, screws, vents, chambers, engraving, marks, rails, wear, damage, scratches, stain, wood knots/curl/ornamentalgrain, metalpebble/pits. Source wood and metal remain painted restrained materials, no photorealistic product. Compression blocks are shading, never new hardware. Preserve exact source cutout transparent gaps and silhouette; fullsource native alpha_test mask restored by pipeline without changing material or UV. Keep original muted local colors/relative dark-to-light shading; brightness later corrected using one numeric scalar, not artistic relighting. Broad plain brown wooden length crosses lower/middle from left clipped stock to right cylindrical end; smooth horizontal original shading/grain, no wood knots or curl. ONE source dark curved loop above middle-left keeps exact flat outline and black aperture. Upper area has TWO separate gray metal fragments: small stepped rectangular block around native x124..159 and long lighter narrow rail around x173..241. Lower-center ONE rectangular metal assembly preserves only existing internal TWO horizontal dark rectangular inset areas and ONE angled pale lower flap; exact source contours. No new receiver vents, screws or dark slits. Full original logical256x64, final production1024x256. ONE atlas only, no border/text/comparison.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1936-prompt.txt",
+  "prompt_sha256": "6a2372715e3a946bf00677bb5afe904e5746cddf13c15b35d54bb2439e869ae4",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1936.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1936-weapons-ninth-affine-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "source-only-entire-canvas-affine3to1-nearest",
+    "source_dimensions": [
+      256,
+      64
+    ],
+    "guide_dimensions": [
+      768,
+      256
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": {
+      "fullcanvas": true,
+      "source_aspect": "4:1",
+      "guide_aspect": "3:1",
+      "scale_x": 3,
+      "scale_y": 4,
+      "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+    },
+    "references_sha256": [
+      "713b5a1b1197be73ccfa00523fa8c2aa23e722b3282061d7288ba2a7513a43a7",
+      "76519b68063c1f92ba02d284ba0d8409ae2cb00c914b8b58e5d303141c9f8b8d"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    1024,
+    256
+  ],
+  "finished_utc": "2026-10-08T01:12:17.468700+00:00",
+  "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-1d936aaf-1a26-4a65-a266-25a71537d01e.png",
+  "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\1936-raw.png",
+  "raw_sha256": "b978cfd16a5d1653e0868f2dea91f334a63b2e1b85dfc7870ebf1126b0663b4c"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 1938,
+  "status": "finished",
+  "builtin": true,
+  "started_utc": "2026-10-08T01:13:31.011780+00:00",
+  "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into crisp faithful HD painted material texture. Image2 is source-only wholecanvas nearest helper with uniform affine aspect prewarp: original4:1 artwork stretched vertically to3:1, no new information. Return entire atlas mapped linearly wholecanvas to wholecanvas in helper3:1 aspect; pipeline inversely resizes whole output to original4:1. Every original island, black transparent gap, boundary clipping, detail center/size/pitch/count must remain exact normalized UV. Do not crop/pad/zoom/repack/rotate/move/complete source-clipped shapes or assemble an object. This is only a flat old game UV MATERIAL MAP, preserve smooth understated dark gray metal/plain brown wood/source shading. No new holes, screws, vents, chambers, engraving, marks, rails, wear, damage, scratches, stain, wood knots/curl/ornamentalgrain, metalpebble/pits. Source wood and metal remain painted restrained materials, no photorealistic product. Compression blocks are shading, never new hardware. Preserve exact source cutout transparent gaps and silhouette; fullsource native alpha_test mask restored by pipeline without changing material or UV. Keep original muted local colors/relative dark-to-light shading; brightness later corrected using one numeric scalar, not artistic relighting. Plain warm brown wood region covers lower long horizontal band and upper-right angled stock; preserve exact broad folds/grain and original boundary. Upper-left TWO long separate muted-gray rectangular bands at distinct y levels; TWO smaller separate shaded cap patches immediately to their right. Exactly ONE dark angular curved loop at native around x155..172,y23..36 and ONE framed gray rectangular receiver inset at around x128..151,y36..48; its original interior stays plain softly shaded, no screw dots or extra chamber slits. Lower metal inset assembly retains only existing stepped outlined panels and horizontal bars. Keep single vertical gray wood band around native x64..69. Full original logical256x64, final production1024x256. ONE atlas only, no border/text/comparison.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1938-prompt.txt",
+  "prompt_sha256": "0506f300d3113d8e752e17dd314ca989cbb8f3f2b62689e5076c7d3214239ca7",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1938.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1938-weapons-ninth-affine-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "source-only-entire-canvas-affine3to1-nearest",
+    "source_dimensions": [
+      256,
+      64
+    ],
+    "guide_dimensions": [
+      768,
+      256
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": {
+      "fullcanvas": true,
+      "source_aspect": "4:1",
+      "guide_aspect": "3:1",
+      "scale_x": 3,
+      "scale_y": 4,
+      "inverse": "Entire generated output inverse affine/Lanczos to1024x256 only; no crop/padding/bbox/registration"
+    },
+    "references_sha256": [
+      "6b7587336fd3de6bcf96872038c475fb3c5ebd45e800d0319bb4ed1bc420dd68",
+      "515da79f00f7d80e0cdb3f5989c7ae7be8aba538246e2f30379a1736eae7148c"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    1024,
+    256
+  ],
+  "finished_utc": "2026-10-08T01:14:08.968505+00:00",
+  "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-1e98150d-8372-4057-a400-34e8692dd6a9.png",
+  "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\1938-raw.png",
+  "raw_sha256": "66b149b63413398ab1f6c97f8658fdb1540030ad4a06595eef2a6f322912ba8f"
+}
