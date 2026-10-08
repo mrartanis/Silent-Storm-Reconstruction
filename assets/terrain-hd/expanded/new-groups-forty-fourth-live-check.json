@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2463,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 622178666,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 561384110,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 724633834,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 3.736503412134097,
+  "frame_ms_mean": 267.46024166666666,
+  "frame_ms_p95": 278.1688,
+  "normal_exit_code": 0,
+  "process_id": 16760,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2463-on",
+      "sha256": "72df2a8c82c40a23e6ec5924f8566e662e9cd915cb234bd919f87420cae6844d"
+    },
+    {
+      "name": "hd2463-options",
+      "sha256": "3bf9f977e698d564c31d955f4488ef40ea127ebf6123a106f7f5238a317dc10a"
+    },
+    {
+      "name": "hd2463-off",
+      "sha256": "978e9d90be1b21fa2b47c57aa277eb52659778efbea8c7a1742b09115d570a4e"
+    },
+    {
+      "name": "hd2463-restored",
+      "sha256": "cd274f4951d3d9007a6eab57ebbfa68638277439421abe1e4d51799c85614eb5"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "current_120frame_fps": 3.736503412134097,
+    "current_frame_ms_p95": 278.1688,
+    "performance_acceptance_claim": false,
+    "limitation": "Actual current120frame measurement recorded. Prior41 ~3.81original/~3.71HD;42/43~3.74HD. Slowpresentation causeunestablished; no driver/system/art/sourcechanges, noclaimprior~60FPS reproduced. Functional resource/UV/alpha checks independent.",
+    "prior_independent_original_HD_qualification": "new-groups-forty-first-batch-check.json:current_runtime_performance_qualification"
+  }
+}

@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 499 of these verified originals are accepted in the shared
+As of 2026-10-08, 501 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-third-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-fourth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,234 IDs: clothing 194, equipment 110, weapons
-57, heads 157, UI 586, effects 106, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,231 IDs: clothing 194, equipment 110, weapons
+57, heads 157, UI 584, effects 105, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -686,3 +686,24 @@ prior42slowpresent/prior41independent original+HDslowqualification retained/caus
 AllfrozenworkerSHA/customUIraw/call/BEFORE exact; actualargument+oneLF already canonical/no manifest or argument rewriting.
 Proofs:../new-groups-forty-third-batch-check.json,../new-groups-forty-third-live-check.json,
 ../new-groups-forty-third-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.
+
+Forty-fourth accepted packet:UI6453/effect4804,2 separate builtin calls.
+Pack2,463 textures/4,926 aliases/130archives/7,823,189,374bytes; prior2,461source/PNG/nativehashes exact.
+Two wholeactualnativeRGBA equal privately viewed4x predictions/fullsourceA/globalgain/defaultpadding.
+WholeUV/material/oldparts/nativepaintscale reviewed;6453caps rounder/dimmer and oldgraybackground finer mottle disclosed.
+4804native whiteclippedarea87→125(+44%,onepixelboundary expansion),halo centroid(+.492,−.278),
+someweakouterbluebits quantizezero; no exactwhitearea/allweakpixel/topology identity claim.
+Original-only7506 is analyticflatadditiveUI tint:inner44squareRGBA92/56/10/0 plusoldthincolorbands,
+NOTentireconstantRGBA. ActualUI945/CComplexButtonFlash timedadditivetint/noAI/noHDartentry.
+GPU6453/4804/7506onoffon9wholeprivateframes/whole+middle+reverse+clippedUV/placement/density4vs1.
+6453Transparentpremulonce;4804/7506AddA0usefulRGB/noPremul.7506 original48/density1/mips1allstates;
+diagnostic hd isglobalenable1/0/1,qualified independently. ActualdisabledToolUI850,
+allTextureN18ParticleInstances4804+FinalElement51435.LightFlareTexture and UI945 source/DB proven;
+genericGPU does not certify activewidget/particle/flare appearance. Fivefrozenworkerreviews/nineheld/no retries.
+Knownprompt4804 exactactualargument+oneadditionalserviceLF proven/originalmanifest frozen;
+raw/call/ref/BEFORE/workerreviews immutable. CustomUI51/52 allfiles verified.
+Source6SHA25 unchanged/current707EXE exact/no newFaceGenbake. Menu11/0/11/pending0/fourprivateframes,
+120frames3.74FPS/p95278.17ms/normalquit/ownedGameabsent.
+Performanceacceptanceclaim:false;prior41independentoriginalandHDslow qualification retained/causeunestablished.
+Proofs:../new-groups-forty-fourth-{batch,live,runtime}-check.json.
+OrdinaryGitPNG/RESbuiltwithGame;1,231verified originals remain.
