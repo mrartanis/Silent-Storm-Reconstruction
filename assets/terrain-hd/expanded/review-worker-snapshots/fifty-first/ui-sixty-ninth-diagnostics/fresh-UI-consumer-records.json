@@ -1,0 +1,589 @@
+{
+  "batch": "ui-sixty-ninth",
+  "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "checked_utc": "2026-10-08T17:36:28.990477+00:00",
+  "source_consumers": [
+    {
+      "id": 4421,
+      "actual_UITexture_records": [
+        {
+          "ID": 566,
+          "R_800x600": 0,
+          "R_1024x768": 4421,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Unselected"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-thirteenth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4630,
+      "actual_UITexture_records": [
+        {
+          "ID": 570,
+          "R_800x600": 0,
+          "R_1024x768": 4630,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Cancel Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4631,
+      "actual_UITexture_records": [
+        {
+          "ID": 571,
+          "R_800x600": 0,
+          "R_1024x768": 4631,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Command Pose Undefined Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4827,
+      "actual_UITexture_records": [
+        {
+          "ID": 580,
+          "R_800x600": 0,
+          "R_1024x768": 4827,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Male"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCharGen.cpp",
+          "first_line": 530,
+          "last_line": 533,
+          "source_excerpt": "530: \t\t\tpMale = new CComplexButton( sEvent.pLoader->GetControl( \"male\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n531: \t\t\tpFemale = new CComplexButton( sEvent.pLoader->GetControl( \"female\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n532: \t\t\tpMale->Set( NDb::GetUITexture( 580 ), NDb::GetUITexture( 582 ), CComplexButton::UNCHECKED, \"male\" );\n533: \t\t\tpFemale->Set( NDb::GetUITexture( 581 ), NDb::GetUITexture( 583 ), CComplexButton::UNCHECKED, \"female\" );",
+          "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifty-fourth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4828,
+      "actual_UITexture_records": [
+        {
+          "ID": 582,
+          "R_800x600": 0,
+          "R_1024x768": 4828,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Male Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCharGen.cpp",
+          "first_line": 530,
+          "last_line": 533,
+          "source_excerpt": "530: \t\t\tpMale = new CComplexButton( sEvent.pLoader->GetControl( \"male\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n531: \t\t\tpFemale = new CComplexButton( sEvent.pLoader->GetControl( \"female\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n532: \t\t\tpMale->Set( NDb::GetUITexture( 580 ), NDb::GetUITexture( 582 ), CComplexButton::UNCHECKED, \"male\" );\n533: \t\t\tpFemale->Set( NDb::GetUITexture( 581 ), NDb::GetUITexture( 583 ), CComplexButton::UNCHECKED, \"female\" );",
+          "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifty-fourth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4829,
+      "actual_UITexture_records": [
+        {
+          "ID": 581,
+          "R_800x600": 0,
+          "R_1024x768": 4829,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Female"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCharGen.cpp",
+          "first_line": 530,
+          "last_line": 533,
+          "source_excerpt": "530: \t\t\tpMale = new CComplexButton( sEvent.pLoader->GetControl( \"male\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n531: \t\t\tpFemale = new CComplexButton( sEvent.pLoader->GetControl( \"female\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n532: \t\t\tpMale->Set( NDb::GetUITexture( 580 ), NDb::GetUITexture( 582 ), CComplexButton::UNCHECKED, \"male\" );\n533: \t\t\tpFemale->Set( NDb::GetUITexture( 581 ), NDb::GetUITexture( 583 ), CComplexButton::UNCHECKED, \"female\" );",
+          "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifty-fourth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4830,
+      "actual_UITexture_records": [
+        {
+          "ID": 583,
+          "R_800x600": 0,
+          "R_1024x768": 4830,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Female Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCharGen.cpp",
+          "first_line": 530,
+          "last_line": 533,
+          "source_excerpt": "530: \t\t\tpMale = new CComplexButton( sEvent.pLoader->GetControl( \"male\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n531: \t\t\tpFemale = new CComplexButton( sEvent.pLoader->GetControl( \"female\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n532: \t\t\tpMale->Set( NDb::GetUITexture( 580 ), NDb::GetUITexture( 582 ), CComplexButton::UNCHECKED, \"male\" );\n533: \t\t\tpFemale->Set( NDb::GetUITexture( 581 ), NDb::GetUITexture( 583 ), CComplexButton::UNCHECKED, \"female\" );",
+          "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifty-fourth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4997,
+      "actual_UITexture_records": [
+        {
+          "ID": 603,
+          "R_800x600": 0,
+          "R_1024x768": 4997,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Axis - BaseFlag - Normal"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-tenth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 4998,
+      "actual_UITexture_records": [
+        {
+          "ID": 604,
+          "R_800x600": 0,
+          "R_1024x768": 4998,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Axis - BaseFlag - Flash"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-tenth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 5269,
+      "actual_UITexture_records": [
+        {
+          "ID": 645,
+          "R_800x600": 0,
+          "R_1024x768": 5269,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Arrow Left"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifteenth.json",
+        "source-check-ui-forty-fifth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 5270,
+      "actual_UITexture_records": [
+        {
+          "ID": 646,
+          "R_800x600": 0,
+          "R_1024x768": 5270,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Arrow Right"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": false,
+      "consumer_qualification": "Typed UITextures.R_1024x768→Texture registration only. No matching precise UI ID runtime fetch found in current Main code; unknown actual dynamic use is not evidence of unused or technical.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifteenth.json",
+        "source-check-ui-forty-fifth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    {
+      "id": 7665,
+      "actual_UITexture_records": [
+        {
+          "ID": 952,
+          "R_800x600": 0,
+          "R_1024x768": 7665,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "LevelUp"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 421,
+          "last_line": 449,
+          "source_excerpt": "421: CHoverFlashButton::CHoverFlashButton( const SWindowInfo &sInfo ):\n422: \tCHoverButton( sInfo )\n423: {\n424: \tpImage = new CImageDraw( SRect( 0, 0, GetSize().x, GetSize().y ), NDb::GetUITexture( 952 ) );\n425: }\n426: ////////////////////////////////////////////////////////////////////////////////////////////////////\n427: void CHoverFlashButton::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n428: {\n429: \tCHoverButton::Draw( sTime, pView );\n430: \n431: \tif ( GetStyle( STYLE_ENABLED ) )\n432: \t{\n433: \t\tfloat fTargetCoeff = ( IsMouseCover() && bShowFlash ) ? 1.0f : 0.0f;\n434: \t\tif ( !IsMouseCover() && bShowFlash )\n435: \t\t{\n436: \t\t\tfTargetCoeff = float( sTime % ( N_STANDART_FLASHTIME * 2 ) ) / N_STANDART_FLASHTIME;\n437: \t\t\tif ( fTargetCoeff > 1 )\n438: \t\t\t\tfTargetCoeff = 2 - fTargetCoeff;\n439: \t\t}\n440: \n441: \t\tfCoeff = CalcFlashCoeff( fCoeff, fTargetCoeff, sTime, sMorphTime );\n442: \t\tsMorphTime = sTime;\n443: \n444: \t\tpImage->SetColor( NGfx::SPixel8888( 0xFF, 0xFF, 0xFF, 0xFF * fCoeff ) );\n445: \t\tpImage->Draw( this, sTime, pView );\n446: \t}\n447: }\n448: ////////////////////////////////////////////////////////////////////////////////////////////////////\n449: CScrollWindowBase::CScrollWindowBase( const SWindowInfo &sInfo ): ",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Individual source count/purpose proof qualifies button/flash use. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-fifty-first.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    }
+  ]
+}
