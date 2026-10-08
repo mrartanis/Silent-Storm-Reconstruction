@@ -1,0 +1,482 @@
+[
+  {
+    "id": 6777,
+    "status": "recommended-original-only-truly-empty-RGBA-root-review-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 6777,
+      "texture": {
+        "ID": 6777,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\FaceGenHair\\Hair05_1.tga",
+        "Format": "dxt1",
+        "UserName": "Hair05_1",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "heads-lshead",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4701,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 2747,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6605,
+                "field": "Material0",
+                "material_template_id": 2747,
+                "geometry_id": 2225,
+                "geometry": "Characters\\Hair.mb",
+                "model_template_id": 4202,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "ea9203b110c6bcf4a885e8a44e97d2322cce0358fab0829ac0193203fbf871ac",
+      "source_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "release_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "original_png": "expanded/original/6777.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "historical_release_original_RGBA_exact": true,
+    "source_RGBA_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+    "source_png_sha256": "1594258d650464372a84556d099c6f0fad9551bbf0efe58e7403336fee183eee",
+    "logical_physical_dimensions": [
+      128,
+      128
+    ],
+    "source_alpha_extrema": [
+      0,
+      0
+    ],
+    "uniqueRGBA_count": 1,
+    "uniqueRGB_count": 1,
+    "actual_dynamic_chains": [],
+    "actual_static_chains": [
+      {
+        "actual_Material": {
+          "ID": 4701,
+          "TextureID": 6777,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2747,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2747,
+          "UserName": "Hair05_1"
+        },
+        "actual_Models": [
+          {
+            "ID": 6605,
+            "Material0": 2747,
+            "Material1": 0,
+            "GeometryID": 2225,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4202,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4202,
+            "UserName": "Hair05_1"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2225,
+            "AIGeometryID": 0,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.19514259696006775,
+            "SizeY": 0.2301487922668457,
+            "SizeZ": 0.27952760457992554,
+            "CenterX": 0.0016900412738323212,
+            "CenterY": -0.030643224716186523,
+            "CenterZ": 0.06497159600257874,
+            "SrcName": "Characters\\Hair.mb",
+            "UserName": "Hair05",
+            "RootJoint": "Hair05"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual statichead/hair color through Materials.TextureID→MaterialTemplates→Models/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "full_RGBA_RGB_A_privately_inspected": true,
+    "reason": "All16384nativeRGBA exactly0/0/0/0; actualstaticMaterial.Alpha alpha_test/Clamp consumedbyhairModels. No paintedRGB or visibleAtexel to regenerate. ExactthreeRGBAduplicates. WholeA remainszero.",
+    "actualruntime_worker_verified": false,
+    "root_review_required": true,
+    "full_native_additional_proof": "build/hd-heads-seventeenth/source-only-native-disposition-proof.json"
+  },
+  {
+    "id": 6778,
+    "status": "recommended-original-only-truly-empty-RGBA-root-review-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 6778,
+      "texture": {
+        "ID": 6778,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\FaceGenHair\\Hair05_2.tga",
+        "Format": "dxt1",
+        "UserName": "Hair05_2",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "heads-lshead",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4702,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 2748,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6607,
+                "field": "Material0",
+                "material_template_id": 2748,
+                "geometry_id": 2225,
+                "geometry": "Characters\\Hair.mb",
+                "model_template_id": 4203,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "ea9203b110c6bcf4a885e8a44e97d2322cce0358fab0829ac0193203fbf871ac",
+      "source_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "release_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "original_png": "expanded/original/6778.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "historical_release_original_RGBA_exact": true,
+    "source_RGBA_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+    "source_png_sha256": "1594258d650464372a84556d099c6f0fad9551bbf0efe58e7403336fee183eee",
+    "logical_physical_dimensions": [
+      128,
+      128
+    ],
+    "source_alpha_extrema": [
+      0,
+      0
+    ],
+    "uniqueRGBA_count": 1,
+    "uniqueRGB_count": 1,
+    "actual_dynamic_chains": [],
+    "actual_static_chains": [
+      {
+        "actual_Material": {
+          "ID": 4702,
+          "TextureID": 6778,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2748,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2748,
+          "UserName": "Hair05_2"
+        },
+        "actual_Models": [
+          {
+            "ID": 6607,
+            "Material0": 2748,
+            "Material1": 0,
+            "GeometryID": 2225,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4203,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4203,
+            "UserName": "Hair05_2"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2225,
+            "AIGeometryID": 0,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.19514259696006775,
+            "SizeY": 0.2301487922668457,
+            "SizeZ": 0.27952760457992554,
+            "CenterX": 0.0016900412738323212,
+            "CenterY": -0.030643224716186523,
+            "CenterZ": 0.06497159600257874,
+            "SrcName": "Characters\\Hair.mb",
+            "UserName": "Hair05",
+            "RootJoint": "Hair05"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual statichead/hair color through Materials.TextureID→MaterialTemplates→Models/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "full_RGBA_RGB_A_privately_inspected": true,
+    "reason": "All16384nativeRGBA exactly0/0/0/0; actualstaticMaterial.Alpha alpha_test/Clamp consumedbyhairModels. No paintedRGB or visibleAtexel to regenerate. ExactthreeRGBAduplicates. WholeA remainszero.",
+    "actualruntime_worker_verified": false,
+    "root_review_required": true,
+    "full_native_additional_proof": "build/hd-heads-seventeenth/source-only-native-disposition-proof.json"
+  },
+  {
+    "id": 6779,
+    "status": "recommended-original-only-truly-empty-RGBA-root-review-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 6779,
+      "texture": {
+        "ID": 6779,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\FaceGenHair\\Hair05_3.tga",
+        "Format": "dxt1",
+        "UserName": "Hair05_3",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "heads-lshead",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4703,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 2749,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6609,
+                "field": "Material0",
+                "material_template_id": 2749,
+                "geometry_id": 2225,
+                "geometry": "Characters\\Hair.mb",
+                "model_template_id": 4204,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "ea9203b110c6bcf4a885e8a44e97d2322cce0358fab0829ac0193203fbf871ac",
+      "source_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "release_rgba_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "original_png": "expanded/original/6779.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "historical_release_original_RGBA_exact": true,
+    "source_RGBA_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+    "source_png_sha256": "1594258d650464372a84556d099c6f0fad9551bbf0efe58e7403336fee183eee",
+    "logical_physical_dimensions": [
+      128,
+      128
+    ],
+    "source_alpha_extrema": [
+      0,
+      0
+    ],
+    "uniqueRGBA_count": 1,
+    "uniqueRGB_count": 1,
+    "actual_dynamic_chains": [],
+    "actual_static_chains": [
+      {
+        "actual_Material": {
+          "ID": 4703,
+          "TextureID": 6779,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2749,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2749,
+          "UserName": "Hair05_3"
+        },
+        "actual_Models": [
+          {
+            "ID": 6609,
+            "Material0": 2749,
+            "Material1": 0,
+            "GeometryID": 2225,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4204,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4204,
+            "UserName": "Hair05_3"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2225,
+            "AIGeometryID": 0,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.19514259696006775,
+            "SizeY": 0.2301487922668457,
+            "SizeZ": 0.27952760457992554,
+            "CenterX": 0.0016900412738323212,
+            "CenterY": -0.030643224716186523,
+            "CenterZ": 0.06497159600257874,
+            "SrcName": "Characters\\Hair.mb",
+            "UserName": "Hair05",
+            "RootJoint": "Hair05"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual statichead/hair color through Materials.TextureID→MaterialTemplates→Models/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "full_RGBA_RGB_A_privately_inspected": true,
+    "reason": "All16384nativeRGBA exactly0/0/0/0; actualstaticMaterial.Alpha alpha_test/Clamp consumedbyhairModels. No paintedRGB or visibleAtexel to regenerate. ExactthreeRGBAduplicates. WholeA remainszero.",
+    "actualruntime_worker_verified": false,
+    "root_review_required": true,
+    "full_native_additional_proof": "build/hd-heads-seventeenth/source-only-native-disposition-proof.json"
+  }
+]
