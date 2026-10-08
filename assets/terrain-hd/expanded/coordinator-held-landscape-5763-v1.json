@@ -1,0 +1,77 @@
+{
+  "id": 5763,
+  "not_accepted": true,
+  "reason": "Root whole review: v1leftfield moves inward from original clipped x0 boundary; original fullalpha alone does not preserve RGB UV width. Required v2 artistic repair.",
+  "unaccepted_source_object": {
+    "id": 5763,
+    "material": "BeerMug03",
+    "category": "buildings-environment",
+    "png": "expanded/generated/5763-landscape-complete-20261008-balanced.png",
+    "uncalibrated_png": "expanded/generated/5763-landscape-complete-20261008.png",
+    "reference_png": "expanded/original/5763-resource-16782979.png",
+    "logical_size": [
+      32,
+      32
+    ],
+    "calibration_grid": [
+      1,
+      1
+    ],
+    "source": "Nival historical Complete/Textures/16782979",
+    "source_rgba_sha256": "95c91e9cbd38dc8615c6a1943ee017d69ea6d55878ac93a917751fac45b43d53",
+    "source_match": "Exact decoded RGBA match to baseline release resource",
+    "generated_png": "expanded/generated/5763-landscape-complete-20261008-raw.png",
+    "generated_size": [
+      1254,
+      1254
+    ],
+    "prompt_file": "expanded/generated/5763-landscape-complete-20261008-prompt.txt",
+    "generation": "Built-in image_gen; source-preserving upscale; offline native-size resampling",
+    "alpha_encoding": "source-stored",
+    "alpha_encoding_reason": "Preserve actual selected UC stored RGB without multiplying authored RGB again. GTexture.cpp LoadTextureData copies stored BGRA unchanged; GTransparent.cpp RealRender uses COMBINE_SMART_ALPHA; GfxRender.cpp maps it to ONE/INVSRCALPHA. Whole selected source has RGB above alpha and useful RGB at alpha zero. DB Texture Type and Materials Alpha remain Transparent; complete selected source alpha is restored unchanged at4x. A premultiply step changes native authored glow/color washes.",
+    "generation_variant": "landscape-complete-20261008",
+    "source_resource_id": 16782979,
+    "source_resource_selection_reason": "Textures.Format=dxt1 imports bIsDXTtrue (DBFormat/DataFormat.cpp969\u0432\u0402\u201c971); current gfx_texture_usedxt=0 causes Main/GTexture.cpp14\u0432\u0402\u201c23 to select ID|0x01000000. Full fresh historical/release selected resource RGBA and native bytes match. Actual diffuse material/model chains and whole selected RGB/A inspected; compressed primary falsely classified structural.",
+    "source_mask_rgb_padding": false,
+    "source_mask_rgb_padding_reason": "Raw RGB canvas is opaque and selected source has authored usefulRGB at A0. Keep all generated storedRGB and restore full selected source A without hidden-color cleaning.",
+    "native_alpha_reference": "expanded/original/5763-resource-16782979.png",
+    "brightness_calibration": {
+      "method": "Uniform RGB gain per original atlas cell, measured in native encoding",
+      "before_png": "expanded/generated/5763-landscape-complete-20261008.png",
+      "reference_png": "expanded/original/5763-resource-16782979.png",
+      "grid": [
+        1,
+        1
+      ],
+      "alpha_unchanged": true,
+      "cells": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "rgb_gain": 1.0684814453125,
+          "quantization": "Nearest 8-bit RGB lookup",
+          "rgb_padding_texels": 0,
+          "rgb_hidden_clear_texels": 0,
+          "original_luma": 70.4075873046875,
+          "before_luma": 65.89596790771483,
+          "corrected_luma": 70.40735245361327
+        }
+      ],
+      "original_luma": 70.4075873046875,
+      "before_luma": 65.89596790771483,
+      "corrected_luma": 70.40735245361327,
+      "native_alpha": "Original source mask resampled at HD density; generated alpha preserved in PNG intermediates",
+      "source_mask_rgb_padding": false,
+      "source_mask_rgb_padding_reason": "Raw RGB canvas is opaque and selected source has authored usefulRGB at A0. Keep all generated storedRGB and restore full selected source A without hidden-color cleaning."
+    }
+  },
+  "existing_files_SHA256": {
+    "expanded/generated/5763-landscape-complete-20261008-balanced.png": "1ac4e954c3f321f6370b8bb427287d75a345eb53c94b6d84cbca47b19806a7c6",
+    "expanded/generated/5763-landscape-complete-20261008.png": "48a46031ce5d84cdd50aa7fc2e559e9e8d72a5a14ba23fffb1d41b0d683fd7dc",
+    "expanded/generated/5763-landscape-complete-20261008-raw.png": "ff40cc6ff9aa10dc4a41ba7286cb405da0be0836af9954f462ff85177f5108ca",
+    "expanded/generated/5763-landscape-complete-20261008-prompt.txt": "49c7a8b64bf490f8ab151aacbdfa17f3d2221af94131ffc1bcfa7a818c5241bb",
+    "expanded/original/5763-resource-16782979.png": "3f87a8cdbf73cbc24660e80d371fba20ebab06d3a8e6f32725c53e512d95c8cc"
+  }
+}

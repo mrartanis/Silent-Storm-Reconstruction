@@ -42,6 +42,10 @@ def import_jobs(jobs, replace=False):
         if variant is not None:
             if not isinstance(variant, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,95}', variant):
                 raise ValueError(f'{id}: invalid generation_variant')
+        encoding = job.get('alpha_encoding')
+        if encoding is not None:
+            if encoding not in ('premultiplied', 'source-stored') or not job.get('alpha_encoding_reason'):
+                raise ValueError(f'{id}: reviewed native RGB encoding reason is required')
         stem = f'{id}-{variant}' if variant is not None else str(id)
         raw = out / f'{stem}-raw.png'
         saved = Path(job['generated'])
@@ -146,6 +150,9 @@ def import_jobs(jobs, replace=False):
         }
         if item['texture']['Type'].lower() == 'transparent':
             asset['alpha_encoding'] = 'premultiplied'
+        if encoding is not None:
+            asset['alpha_encoding'] = encoding
+            asset['alpha_encoding_reason'] = job['alpha_encoding_reason']
         if variant is not None:
             asset['generation_variant'] = variant
         if 'source_resource_id' in item:

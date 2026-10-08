@@ -23,4 +23,13 @@ with tempfile.TemporaryDirectory(prefix='hd-versioned-import-',dir='build') as t
  try:m.import_jobs([bad])
  except ValueError as e:assert 'invalid generation_variant' in str(e)
  else:raise AssertionError('Invalid path must be rejected')
+ job=dict(job,generation_variant='category-v3',alpha_encoding='source-stored',alpha_encoding_reason='Actual native Transparent RGB includes contribution above A, consumed unmodified by ONE/INVSRCALPHA material')
+ m.import_jobs([job]);s=json.loads((b/'sources.json').read_text())['textures'][0];assert s['alpha_encoding']=='source-stored';assert s['alpha_encoding_reason']==job['alpha_encoding_reason'];assert s['native_alpha_reference']=='expanded/original/321.png'
+ spec=importlib.util.spec_from_file_location('native_pack','assets/terrain-hd/build_pack.py');pack=importlib.util.module_from_spec(spec);spec.loader.exec_module(pack)
+ native=pack.mmp(Image.open(b/s['png']),s['alpha_encoding']=='premultiplied',Image.open(b/s['native_alpha_reference']))
+ decoded=Image.frombytes('RGBA',(12,8),native[24:24+12*8*4],'raw','BGRA');assert decoded.getpixel((0,0))==(50,60,70,0)
+ (b/'sources.json').write_text(json.dumps({'textures':[]}));bad=dict(job,alpha_encoding_reason='')
+ try:m.import_jobs([bad])
+ except ValueError as e:assert 'encoding reason' in str(e)
+ else:raise AssertionError('Unreviewed RGB encoding override must be rejected')
 print('Versioned import preserves all old raw/prompt/normalized bytes, exact CRLF argument+ONE LF, native originalalpha and accepted-ID protection; path escape rejected.')

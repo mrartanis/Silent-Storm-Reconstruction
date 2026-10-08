@@ -18,6 +18,13 @@ reviewed structural-original entries only with a
 `reviewed_original_reclassification_reason`; the exact prior disposition is
 preserved inside the new entry. Accepted textures cannot be reopened this way.
 
+An individually reviewed job may set `alpha_encoding: source-stored` with
+`alpha_encoding_reason` when actual original RGB includes authored contribution
+beyond alpha and the material consumes those stored values unchanged. This keeps
+the DB texture type and blend mode, restores the complete original alpha, and
+avoids an additional RGB multiplication. It is an explicit source/renderer audit,
+not an automatic exception for every transparent texture.
+
 For the Russian build/install and authoring instructions, see
 [HD-TEXTURES.md](../../HD-TEXTURES.md). To continue generation in a new Codex
 session, use [CONTINUE-HD-TEXTURES.md](CONTINUE-HD-TEXTURES.md).
