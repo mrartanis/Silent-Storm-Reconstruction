@@ -1,0 +1,43 @@
+{
+  "batch": "ui-fifty-eighth",
+  "readonly_code": true,
+  "actual_Medal10_ImageID880_Texture6752": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataMisc.cpp",
+      "first_line": 16,
+      "last_line": 26,
+      "source_excerpt": "16: void CMedal::Import()\n17: {\n18: \tNDatabase::ImportField( \"SideID\", &pSide );\n19: \tNDatabase::ImportField( \"PrecedingMedalID\", &pPrecedingMedal );\n20: \tNDatabase::ImportField( \"StartingProbabilityPercent\", &nStartingProbability );\n21: \tNDatabase::ImportField( \"AddToProbability\", &nAddToProbability );\n22: \tNDatabase::ImportField( \"PointsNeededToStart\", &nPointsToStart );\n23: \tNDatabase::ImportField( \"PointsNeededToAdd\", &nPointsToAddProbability );\n24: \tNDatabase::ImportField( \"ModelID\", &pModel );\n25: \tNDatabase::ImportField( \"ImageID\", &pImage );\n26: \tNDatabase::ImportField( \"NameID\", &pName );",
+      "sha256": "55f970ef253bcd08099919c8cd2940d1b4e1de380acc8ca30fdabe883ff439d6"
+    },
+    {
+      "file": "Main/iTeamMngMenu.cpp",
+      "first_line": 743,
+      "last_line": 756,
+      "source_excerpt": "743: bool CUnitMedalsPanelItem::ProcessMessage( const SEvent &sEvent )\n744: {\n745: \tif ( sEvent.nEvent == EVENT_TEMPLATELOADCOMPLETE )\n746: \t{\n747: \t\tpText = GetUIWindow<CText>( this, \"text\" );\n748: \t\tpImage = GetUIWindow<CImage>( this, \"icon\" );\n749: \n750: \t\tif ( IsValid( pMedal ) )\n751: \t\t{\n752: \t\t\tpText->SetText( GetDBString( pMedal->pName ) );\n753: \t\t\tpImage->SetImage( pMedal->pImage );\n754: \t\t}\n755: \t}\n756: ",
+      "sha256": "c4ccbd25c266a1aec3e5c389ffc849d3c54b8559da88b0987b0c07b90d8bb194"
+    },
+    {
+      "file": "Main/UIBaseCtrls.cpp",
+      "first_line": 230,
+      "last_line": 250,
+      "source_excerpt": "230: bool CImage::ProcessMessage( const SEvent &sEvent )\n231: {\n232: \tif ( sEvent.nEvent == EVENT_TEMPLATECREATE )\n233: \t{\n234: \t\tNGfx::SPixel8888 sColor;\n235: \t\tsColor.color = sEvent.pControl->nColor;\n236: \t\tSetColor( sColor );\n237: \t\tSetImage( sEvent.pControl->pTextures[0] );\n238: \t}\n239: \n240: \treturn CWindow::ProcessMessage( sEvent );\n241: }\n242: ////////////////////////////////////////////////////////////////////////////////////////////////////\n243: void CImage::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n244: {\n245: \tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y ) );\n246: \tpImage->Draw( this, sTime, pView );\n247: \n248: \tCWindow::Draw( sTime, pView );\n249: }\n250: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+      "sha256": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd"
+    },
+    {
+      "file": "Main/UIInterface.cpp",
+      "first_line": 240,
+      "last_line": 242,
+      "source_excerpt": "240: \t\t\tcase NDb::UI_PROGRESSBAR:\n241: \t\t\t\tpWindow = new CProgressBar( sInfo );\n242: \t\t\t\tbreak;",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4"
+    },
+    {
+      "file": "Main/UICommCtrls.cpp",
+      "first_line": 1623,
+      "last_line": 1666,
+      "source_excerpt": "1623: bool CProgressBar::ProcessMessage( const SEvent &sEvent )\n1624: {\n1625: \tswitch( sEvent.nEvent )\n1626: \t{\n1627: \t\tcase EVENT_TEMPLATECREATE:\n1628: \t\t{\n1629: \t\t\tnImageWidth = 1;\n1630: \t\t\tif ( IsValid( sEvent.pControl->pTextures[0] ) )\n1631: \t\t\t{\n1632: \t\t\t\tpImage->SetImage( sEvent.pControl->pTextures[0] );\n1633: \t\t\t\tnImageWidth = sEvent.pControl->pTextures[0]->nWidth;\n1634: \t\t\t}\n1635: \t\t\tbreak;\n1636: \t\t}\n1637: \t}\n1638: \n1639: \treturn CWindow::ProcessMessage( sEvent );\n1640: }\n1641: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1642: void CProgressBar::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n1643: {\n1644: \tif ( GetStyle( PBARSTYLE_VERT ) )\n1645: \t{\n1646: \t\tif ( !GetStyle( PBARSTYLE_CENTERED ) )\n1647: \t\t\tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y * fValue ) );\n1648: \t\telse\n1649: \t\t\tpImage->SetWindow( SRect( 0, GetSize().y * ( 1.0f - fValue ) / 2.0f, GetSize().x, GetSize().y * ( 1.0f + fValue ) / 2.0f ) );\n1650: \n1651: \t\tif ( GetStyle( PBARSTYLE_SCALE ) )\n1652: \t\t\tpImage->SetScale( CVec2( 1, float( GetSize().x * fValue ) / nImageWidth ) );\n1653: \t}\n1654: \telse\n1655: \t{\n1656: \t\tif ( !GetStyle( PBARSTYLE_CENTERED ) )\n1657: \t\t\tpImage->SetWindow( SRect( 0, 0, GetSize().x * fValue, GetSize().y ) );\n1658: \t\telse\n1659: \t\t\tpImage->SetWindow( SRect( GetSize().x * ( 1.0f - fValue ) / 2.0f, 0, GetSize().x * ( 1.0f + fValue ) / 2.0f, GetSize().y ) );\n1660: \n1661: \t\tif ( GetStyle( PBARSTYLE_SCALE ) )\n1662: \t\t\tpImage->SetScale( CVec2( float( GetSize().x * fValue ) / nImageWidth, 1 ) );\n1663: \t}\n1664: \n1665: \tpImage->Draw( this, sTime, pView );\n1666: \tCWindow::Draw( sTime, pView );",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab"
+    }
+  ],
+  "live_gpu_current_medal_not_claimed": true
+}

@@ -1,15 +1,15 @@
 {
   "date": "2026-10-08",
-  "scope_resources": 2946,
+  "scope_resources": 2952,
   "full_db_inventory_resources": 5801,
-  "hd_textures": 2471,
-  "native_aliases": 4942,
+  "hd_textures": 2474,
+  "native_aliases": 4948,
   "native_archives": 130,
-  "native_bytes": 7828367122,
+  "native_bytes": 7832561582,
   "status_counts": {
-    "validated": 2471,
+    "validated": 2474,
     "original-technical-map": 258,
-    "structural-mask-or-solid": 138,
+    "structural-mask-or-solid": 141,
     "missing-historical": 63,
     "generation-unavailable": 15,
     "release-mismatch": 1
@@ -18,9 +18,9 @@
     "terrain": 178,
     "trees": 30,
     "buildings-environment": 1754,
-    "characters-clothing": 94,
+    "characters-clothing": 95,
     "equipment": 142,
-    "weapons": 65,
+    "weapons": 67,
     "heads-lshead": 24,
     "interface-v5": 91,
     "effects": 84,
@@ -3363,6 +3363,27 @@
       "status": "structural-mask-or-solid",
       "reason": "Individually proven6703constantblackRGB16384texels variableA damagemask or6783blackRGB16383texels+ONEwhiteopaqueauthorcorner/twobrowalphafootprints;actualFaceGen33/43THMID1 consumers/fullRGBA notconstant; NOTconstantRGBA. Entire originalRGBA/UV retained/no varyingRGBpaintdetail/no categoryexclusion.",
       "source": "LSHead\\AdvancedFaceGen\\Brows\\2_1.png"
+    },
+    {
+      "id": 3095,
+      "category": "effects",
+      "status": "structural-mask-or-solid",
+      "reason": "Preserve exact originalRGBA as particle coverage mask. Individual DB/code/fullbinarytrack proof; no builtin call/no HD artwork entry/no blackvertex or RGB/A modification. GenericGPU verifies loading/UV/fulloriginal/mips, not actualflowerbed particle appearance.",
+      "source": "Effects\\Border.tga"
+    },
+    {
+      "id": 2482,
+      "category": "interface-v5",
+      "status": "structural-mask-or-solid",
+      "reason": "Preserve exact original147x17RGBA as functionalblue progressbar shadegradient. Individualactual33Type15controls/UI470/CProgressBarcrop-scale by fValue codeproof; no builtin/noHDartentry/no RGB orA changes. NotconstantRGBA/identicalrows/categoryban. GenericGPU verifies wholeoriginal/full,middle,reverse,clippedUV andmips1, not actualactiveCharacterPanelstat value.",
+      "source": "Interface v5.0\\CharacterPanel\\Intr0036_Bar.tga"
+    },
+    {
+      "id": 4592,
+      "category": "weapons",
+      "status": "structural-mask-or-solid",
+      "reason": "Preserve exact entireconstantRGBA2/203/0/0 as materialcolor/tint, actualMaterial2860->Template1840->Models. Individualfullhistorical-release-originalRGBA equal/constantpaint has no finerpattern to redraw; usefulgreenAddRGB/sourceA0 retained/no premul/blackening/no builtin/noHDartentry. Not alpha0/category ban. GenericGPU verifies loading/UV/fulloriginal/mips5, not actualweaponmodelappearance.",
+      "source": "Characters\\Weapons\\Robot\\TerPlasmaClipGlass.tga"
     }
   ],
   "validation": "Every native archive hash, alias, dimensions, original mask and brightness passed; see Game/res-hd/validation.json"

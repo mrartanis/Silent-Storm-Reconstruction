@@ -1,0 +1,86 @@
+{
+  "id": 5652,
+  "tool": "built-in image_gen.imagegen",
+  "tool_output": "exec-f88d71f4-28ea-42a5-a1fb-bbcb3bc5248f.png",
+  "tool_output_session": "01a11842-209d-7390-8c0a-98acfb1bcaf6",
+  "saved_utc": "2026-10-08T15:20:13.959705+00:00",
+  "generated": "assets/terrain-hd/expanded/generated/5652-raw.png",
+  "raw_sha256": "db26f6b980029b9e3d65a55b53c3e7e7d61cb8165db7041336c5e047b1fab9db",
+  "prompt_file": "assets/terrain-hd/expanded/generated/5652-prompt.txt",
+  "prompt_sha256": "4b78da381e4bdfb68928d60ae7ac64647b3340b84d6f2f4dc4c065ad32a256cc",
+  "exact_prompt": "Use case: precise-object-edit. Asset type: original hand-painted equipment diffuse UV bitmap. Edit the SAME complete painted bitmap to a faithful finer painted HD texture. Preserve all source normalized UV, material, layout, source-scale pigment and soft shading. This is a flat texture canvas, not a photograph or assembled physical object.\n\nImage 1 is the ENTIRE exact native original stored RGB, 64 by 64, opaque at original resolution. Do not treat black RGB as a transparent hole: the COMPLETE original alpha is 255 everywhere and will be restored separately. Maintain every authored black/dim area, including black at the canvas edges. Native source reference contains original soft paint, not enlarged nearest-neighbor cells.\n\nPreserve the same complete 64 by 64 square painted atlas. Keep exactly ONE original red star-shaped painted mark in the upper-left olive field, with the identical source contour, size, position, subdued red palette and soft shading. Keep the original two broad soft gray-olive horizontal washes underneath it, the single rounded olive-gray lower-left wash, and the original curved gray field with its soft dark border in the upper-right. Keep the irregular dim mottled gray pigment in the right/bottom field at its original spatial frequency, irregular phase and local contrast; this is existing painterly pigment, not a regular checker grid or physically counted woven fibers. Preserve every faint olive patch and band at the right edge, and the large original opaque black round area lower-right plus the small dim olive marks to its left. No new emblem, no new star points, seams, threads, cells, shiny rim, scratch pattern or hardware; do not make the original material photographic leather or steel.\n\nConfirmed painted-domain counts: {\"whole_canvas\": 1, \"opaque_source_alpha\": 1, \"red_star_painted_mark\": 1, \"left_broad_horizontal_washes\": 2, \"left_lower_rounded_wash\": 1, \"right_upper_curved_gray_field\": 1, \"lower_right_opaque_black_round_field\": 1}. Keep those existing marks and broad fields only. Original strongest source RGBA is [189, 190, 189, 255] at native coordinates [37, 16]; keep the same local tonal hierarchy and subdued palette, including weak gray/brown/olive pigment. Native coordinate references mean normalized whole canvas positions, not instructions to draw geometric rectangles.\n\nImprove only subtle painterly transitions and fine existing pigment at four times the resolution. Keep the original soft edge width at its native scale, low contrast and matte material. Do not invent coarse mottling, regular grids, photographic leather pores, woven fibers, metal grain, scratches, engraved relief, raised rims, beads, rivets, extra folds, glints, letters or mechanisms. Do not sharpen uncertain paint into new parts. Keep every original weak mark and its irregular source phase.\n\nOutput ONLY the SAME complete square 1:1 opaque RGB texture canvas. No padding, letterboxing, margins, white background, cropping, zoom, recentering, UV island movement, bounding-box fitting, registration, new objects or photographic rendering. Preserve whole original aspect and complete full source material/blur/UV/native pigment scale.",
+  "exact_actual_argument_SHA256": "6ed9d36e8a3a4835cb178cb95cd4f6e0246b98200ac69f0e13dd63f0a27f20da",
+  "canonical_prompt_recipe": "EXACT actual tool prompt UTF8 argument + ONE additional service LF; original actual argument has NO terminal LF, canonical file has exactly one. Immediate save, no later worker rewrite.",
+  "canonical_prompt_SHA256": "4b78da381e4bdfb68928d60ae7ac64647b3340b84d6f2f4dc4c065ad32a256cc",
+  "transparent_background": false,
+  "reference_pngs": [
+    "assets/terrain-hd/expanded/generated/5652-equipment-forty-fourth-source-rgb-native.png"
+  ],
+  "reference_sha256": {
+    "assets/terrain-hd/expanded/generated/5652-equipment-forty-fourth-source-rgb-native.png": "68d7c58d55f4f38fb1f021bab93365b86522ab8b54db6ef7985cee518056c596"
+  },
+  "source_rgba_sha256": "35154718b4ecbedead0a1c23139ba08779d20f641ee7a41a42ebbb67e3640916",
+  "source_transform_recipe": {
+    "input": "assets/terrain-hd/expanded/original/5652.png",
+    "operations": "ENTIRE original native storedRGBA→opaqueRGB only, NO enlargement for tool target. Private NEAREST512 view proves native coordinates only, never tool reference. No crop/padding/rotate/fit/BBox/unpremultiply/artistRGB; entire fullsourceA separately restored.",
+    "source_size": [
+      64,
+      64
+    ],
+    "source_bbox": [
+      0,
+      0,
+      64,
+      64
+    ],
+    "helper_size": [
+      64,
+      64
+    ],
+    "helper_bbox": [
+      0,
+      0,
+      64,
+      64
+    ],
+    "private_NN_coordinate_view": "assets/terrain-hd/expanded/private-equipment-forty-fourth/survey/5652-source-rgb-nearest512.png",
+    "inverse": "ENTIRE raw LANCZOS original4x; RGB diagnostic inverse separately from originalA, never Pillow RGBA implicit premul; standard whole scalar/defaultpadding/nativeType downstream root.",
+    "output": "assets/terrain-hd/expanded/generated/5652-equipment-forty-fourth-source-rgb-native.png"
+  },
+  "pattern_constraints_ref": {
+    "path": "assets/terrain-hd/expanded/pattern-constraints-equipment-forty-fourth.json",
+    "file_SHA256": "c03795254ea08cde35fe5601ff9cbb3ddebb54e875735c662d8d8477bf022c11",
+    "id": 5652
+  },
+  "native_matrix_ref": {
+    "path": "assets/terrain-hd/expanded/native-matrices-equipment-forty-fourth.json",
+    "file_SHA256": "eb900ebf46cc8c18d93b5249cadd828a57f6a8b822b3f7c059a99e4c7c396fd2",
+    "source_key": "5652",
+    "source_RGBA_SHA256": "35154718b4ecbedead0a1c23139ba08779d20f641ee7a41a42ebbb67e3640916"
+  },
+  "common_actual_records": {
+    "path": "assets/terrain-hd/expanded/actual-records-equipment-forty-fourth.json",
+    "file_SHA256": "f0e203bba18a38d78a0789ba53aa9f8db278caed919a01a17421e3214b2a8b7b",
+    "source_key": "5652"
+  },
+  "source_before_call_ref": {
+    "path": "assets/terrain-hd/expanded/source-check-equipment-forty-fourth-before-call.json",
+    "file_SHA256": "8f710b4d3bb4868e1a13963fe3c62f15d2427f19872b653abf64e80a24c46ef3",
+    "id": 5652
+  },
+  "reproducible_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Asset type: original hand-painted equipment diffuse UV bitmap. Edit the SAME complete painted bitmap to a faithful finer painted HD texture. Preserve all source normalized UV, material, layout, source-scale pigment and soft shading. This is a flat texture canvas, not a photograph or assembled physical object.\n\nImage 1 is the ENTIRE exact native original stored RGB, 64 by 64, opaque at original resolution. Do not treat black RGB as a transparent hole: the COMPLETE original alpha is 255 everywhere and will be restored separately. Maintain every authored black/dim area, including black at the canvas edges. Native source reference contains original soft paint, not enlarged nearest-neighbor cells.\n\nPreserve the same complete 64 by 64 square painted atlas. Keep exactly ONE original red star-shaped painted mark in the upper-left olive field, with the identical source contour, size, position, subdued red palette and soft shading. Keep the original two broad soft gray-olive horizontal washes underneath it, the single rounded olive-gray lower-left wash, and the original curved gray field with its soft dark border in the upper-right. Keep the irregular dim mottled gray pigment in the right/bottom field at its original spatial frequency, irregular phase and local contrast; this is existing painterly pigment, not a regular checker grid or physically counted woven fibers. Preserve every faint olive patch and band at the right edge, and the large original opaque black round area lower-right plus the small dim olive marks to its left. No new emblem, no new star points, seams, threads, cells, shiny rim, scratch pattern or hardware; do not make the original material photographic leather or steel.\n\nConfirmed painted-domain counts: {\"whole_canvas\": 1, \"opaque_source_alpha\": 1, \"red_star_painted_mark\": 1, \"left_broad_horizontal_washes\": 2, \"left_lower_rounded_wash\": 1, \"right_upper_curved_gray_field\": 1, \"lower_right_opaque_black_round_field\": 1}. Keep those existing marks and broad fields only. Original strongest source RGBA is [189, 190, 189, 255] at native coordinates [37, 16]; keep the same local tonal hierarchy and subdued palette, including weak gray/brown/olive pigment. Native coordinate references mean normalized whole canvas positions, not instructions to draw geometric rectangles.\n\nImprove only subtle painterly transitions and fine existing pigment at four times the resolution. Keep the original soft edge width at its native scale, low contrast and matte material. Do not invent coarse mottling, regular grids, photographic leather pores, woven fibers, metal grain, scratches, engraved relief, raised rims, beads, rivets, extra folds, glints, letters or mechanisms. Do not sharpen uncertain paint into new parts. Keep every original weak mark and its irregular source phase.\n\nOutput ONLY the SAME complete square 1:1 opaque RGB texture canvas. No padding, letterboxing, margins, white background, cropping, zoom, recentering, UV island movement, bounding-box fitting, registration, new objects or photographic rendering. Preserve whole original aspect and complete full source material/blur/UV/native pigment scale.",
+    "referenced_image_paths": [
+      "assets/terrain-hd/expanded/generated/5652-equipment-forty-fourth-source-rgb-native.png"
+    ],
+    "transparent_background": false
+  },
+  "literal_actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Asset type: original hand-painted equipment diffuse UV bitmap. Edit the SAME complete painted bitmap to a faithful finer painted HD texture. Preserve all source normalized UV, material, layout, source-scale pigment and soft shading. This is a flat texture canvas, not a photograph or assembled physical object.\n\nImage 1 is the ENTIRE exact native original stored RGB, 64 by 64, opaque at original resolution. Do not treat black RGB as a transparent hole: the COMPLETE original alpha is 255 everywhere and will be restored separately. Maintain every authored black/dim area, including black at the canvas edges. Native source reference contains original soft paint, not enlarged nearest-neighbor cells.\n\nPreserve the same complete 64 by 64 square painted atlas. Keep exactly ONE original red star-shaped painted mark in the upper-left olive field, with the identical source contour, size, position, subdued red palette and soft shading. Keep the original two broad soft gray-olive horizontal washes underneath it, the single rounded olive-gray lower-left wash, and the original curved gray field with its soft dark border in the upper-right. Keep the irregular dim mottled gray pigment in the right/bottom field at its original spatial frequency, irregular phase and local contrast; this is existing painterly pigment, not a regular checker grid or physically counted woven fibers. Preserve every faint olive patch and band at the right edge, and the large original opaque black round area lower-right plus the small dim olive marks to its left. No new emblem, no new star points, seams, threads, cells, shiny rim, scratch pattern or hardware; do not make the original material photographic leather or steel.\n\nConfirmed painted-domain counts: {\"whole_canvas\": 1, \"opaque_source_alpha\": 1, \"red_star_painted_mark\": 1, \"left_broad_horizontal_washes\": 2, \"left_lower_rounded_wash\": 1, \"right_upper_curved_gray_field\": 1, \"lower_right_opaque_black_round_field\": 1}. Keep those existing marks and broad fields only. Original strongest source RGBA is [189, 190, 189, 255] at native coordinates [37, 16]; keep the same local tonal hierarchy and subdued palette, including weak gray/brown/olive pigment. Native coordinate references mean normalized whole canvas positions, not instructions to draw geometric rectangles.\n\nImprove only subtle painterly transitions and fine existing pigment at four times the resolution. Keep the original soft edge width at its native scale, low contrast and matte material. Do not invent coarse mottling, regular grids, photographic leather pores, woven fibers, metal grain, scratches, engraved relief, raised rims, beads, rivets, extra folds, glints, letters or mechanisms. Do not sharpen uncertain paint into new parts. Keep every original weak mark and its irregular source phase.\n\nOutput ONLY the SAME complete square 1:1 opaque RGB texture canvas. No padding, letterboxing, margins, white background, cropping, zoom, recentering, UV island movement, bounding-box fitting, registration, new objects or photographic rendering. Preserve whole original aspect and complete full source material/blur/UV/native pigment scale.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5652-equipment-forty-fourth-source-rgb-native.png"
+    ],
+    "transparent_background": false
+  },
+  "prompt_serialization": "Literal actual LF prompt has no terminalLF. Saved canonical prompt is exactly argument+ONE LF. Full reference recipe/SHA included, native/common records referenced once."
+}

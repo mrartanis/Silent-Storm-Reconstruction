@@ -608883,5 +608883,1203 @@
     "original_png": "expanded/original/7610.png",
     "source_match": "Exact decoded RGBA and dimensions match release",
     "packed_png_sha256": "08d9404689e54a9e8222781c9c0dcd131d0f5d09548a3d0f91a3463c79070146"
+  },
+  {
+    "id": 3095,
+    "texture": {
+      "ID": 3095,
+      "Width": 64,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -1903260018,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Effects\\Border.tga",
+      "Format": "8888",
+      "UserName": "Border",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "effects",
+    "role": "typed-db-color-candidate",
+    "status": "structural-mask-or-solid",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "ParticleInstances",
+          "id": 1515,
+          "field": "Texture0",
+          "role": "color",
+          "UserName": "br",
+          "SrcName": "",
+          "EffectID": 493,
+          "ParticleID": 194,
+          "IsCrown": 0,
+          "AlphaBlending": "Normal",
+          "Static": "Dynamic",
+          "PivotX": 0.0,
+          "PivotY": -1.0,
+          "Scale": 1.0,
+          "Speed": 0.0010000000474974513,
+          "CycleCount": 1,
+          "particle_definition": {
+            "ID": 194,
+            "BumpID": 0,
+            "AIGeometryID": 0,
+            "RPGArmorID": 0,
+            "CenterX": 0.0,
+            "CenterY": 0.0,
+            "CenterZ": 0.0,
+            "HalfBoxX": 12.209709167480469,
+            "HalfBoxY": 12.209709167480469,
+            "HalfBoxZ": 2.2097086906433105,
+            "WrapX": 0.0,
+            "WrapY": 0.0,
+            "SrcName": "Models\\Terrain\\Border16-32p2.mb",
+            "UserName": "BR",
+            "ExportPrefix": "BR"
+          },
+          "particle_reference_status": "resolved",
+          "frame_bindings": {
+            "Texture0": 3095
+          },
+          "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_sha256": "62d8837d349cfc0dc529c9ac1d2073f6d67f2da67c3157da093ba525dec4d869",
+    "source_rgba_sha256": "b5db780f798d715b17cea48077ebbe9336d8924d2957f9c29454d222e7f12ef3",
+    "release_rgba_sha256": "b5db780f798d715b17cea48077ebbe9336d8924d2957f9c29454d222e7f12ef3",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/3095.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "reason": "Preserve exact originalRGBA as particle coverage mask. Individual DB/code/fullbinarytrack proof; no builtin call/no HD artwork entry/no blackvertex or RGB/A modification. GenericGPU verifies loading/UV/fulloriginal/mips, not actualflowerbed particle appearance.",
+    "disposition_proof": "expanded/coordinator-original-only-forty-eighth.json",
+    "coordinator_review": "Freshfullhistory-releaseRGBA/typedactualconsumer/sourcepurpose/wholeprivateRGB+A andgenericGPU onoffon exactoriginaldensity1. No imagegen/HDartentry/no alpha0 or name orcategory ban."
+  },
+  {
+    "id": 2482,
+    "texture": {
+      "ID": 2482,
+      "Width": 147,
+      "Height": 17,
+      "NMips": 1,
+      "AverageColor": -16772252,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\CharacterPanel\\Intr0036_Bar.tga",
+      "Format": "8888",
+      "UserName": "ProgressBar",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "structural-mask-or-solid",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 470,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "ProgressBar"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 470,
+          "name": "ProgressBar",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            147,
+            17
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 1120,
+              "field": "Texture0",
+              "control_name": "strength_bar",
+              "type": 15,
+              "rect": [
+                52,
+                228,
+                198,
+                244
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1121,
+              "field": "Texture0",
+              "control_name": "dexterity_bar",
+              "type": 15,
+              "rect": [
+                52,
+                255,
+                198,
+                271
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1122,
+              "field": "Texture0",
+              "control_name": "intelligence_bar",
+              "type": 15,
+              "rect": [
+                52,
+                282,
+                198,
+                298
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1123,
+              "field": "Texture0",
+              "control_name": "shooting_bar",
+              "type": 15,
+              "rect": [
+                52,
+                355,
+                198,
+                371
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1124,
+              "field": "Texture0",
+              "control_name": "vp_bar",
+              "type": 15,
+              "rect": [
+                286,
+                228,
+                432,
+                244
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1125,
+              "field": "Texture0",
+              "control_name": "ap_bar",
+              "type": 15,
+              "rect": [
+                286,
+                255,
+                432,
+                271
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1126,
+              "field": "Texture0",
+              "control_name": "evasion_bar",
+              "type": 15,
+              "rect": [
+                286,
+                282,
+                432,
+                298
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1135,
+              "field": "Texture0",
+              "control_name": "melee_bar",
+              "type": 15,
+              "rect": [
+                52,
+                382,
+                198,
+                398
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1136,
+              "field": "Texture0",
+              "control_name": "throwing_bar",
+              "type": 15,
+              "rect": [
+                52,
+                409,
+                198,
+                425
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1137,
+              "field": "Texture0",
+              "control_name": "snipe_bar",
+              "type": 15,
+              "rect": [
+                52,
+                436,
+                198,
+                452
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1138,
+              "field": "Texture0",
+              "control_name": "burst_bar",
+              "type": 15,
+              "rect": [
+                52,
+                463,
+                198,
+                479
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1139,
+              "field": "Texture0",
+              "control_name": "hide_bar",
+              "type": 15,
+              "rect": [
+                286,
+                355,
+                432,
+                371
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1140,
+              "field": "Texture0",
+              "control_name": "spot_bar",
+              "type": 15,
+              "rect": [
+                286,
+                382,
+                432,
+                398
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1141,
+              "field": "Texture0",
+              "control_name": "engineering_bar",
+              "type": 15,
+              "rect": [
+                286,
+                409,
+                432,
+                425
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1142,
+              "field": "Texture0",
+              "control_name": "medicine_bar",
+              "type": 15,
+              "rect": [
+                286,
+                436,
+                432,
+                452
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1143,
+              "field": "Texture0",
+              "control_name": "interrupt_bar",
+              "type": 15,
+              "rect": [
+                286,
+                463,
+                432,
+                479
+              ],
+              "container": 141,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1557,
+              "field": "Texture0",
+              "control_name": "strength_bar",
+              "type": 15,
+              "rect": [
+                39,
+                292,
+                185,
+                310
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1558,
+              "field": "Texture0",
+              "control_name": "dexterity_bar",
+              "type": 15,
+              "rect": [
+                39,
+                320,
+                185,
+                338
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1559,
+              "field": "Texture0",
+              "control_name": "intelligence_bar",
+              "type": 15,
+              "rect": [
+                39,
+                348,
+                185,
+                366
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1568,
+              "field": "Texture0",
+              "control_name": "shooting_bar",
+              "type": 15,
+              "rect": [
+                39,
+                408,
+                185,
+                426
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1569,
+              "field": "Texture0",
+              "control_name": "melee_bar",
+              "type": 15,
+              "rect": [
+                39,
+                436,
+                185,
+                454
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1570,
+              "field": "Texture0",
+              "control_name": "throwing_bar",
+              "type": 15,
+              "rect": [
+                39,
+                464,
+                185,
+                482
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1571,
+              "field": "Texture0",
+              "control_name": "snipe_bar",
+              "type": 15,
+              "rect": [
+                39,
+                492,
+                185,
+                510
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1572,
+              "field": "Texture0",
+              "control_name": "burst_bar",
+              "type": 15,
+              "rect": [
+                39,
+                520,
+                185,
+                538
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1590,
+              "field": "Texture0",
+              "control_name": "vp_bar",
+              "type": 15,
+              "rect": [
+                272,
+                292,
+                418,
+                310
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1591,
+              "field": "Texture0",
+              "control_name": "ap_bar",
+              "type": 15,
+              "rect": [
+                272,
+                320,
+                418,
+                338
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1592,
+              "field": "Texture0",
+              "control_name": "evasion_bar",
+              "type": 15,
+              "rect": [
+                272,
+                348,
+                418,
+                366
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1593,
+              "field": "Texture0",
+              "control_name": "hide_bar",
+              "type": 15,
+              "rect": [
+                272,
+                408,
+                418,
+                426
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1594,
+              "field": "Texture0",
+              "control_name": "spot_bar",
+              "type": 15,
+              "rect": [
+                272,
+                436,
+                418,
+                454
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1595,
+              "field": "Texture0",
+              "control_name": "engineering_bar",
+              "type": 15,
+              "rect": [
+                272,
+                464,
+                418,
+                482
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1596,
+              "field": "Texture0",
+              "control_name": "medicine_bar",
+              "type": 15,
+              "rect": [
+                272,
+                492,
+                418,
+                510
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1597,
+              "field": "Texture0",
+              "control_name": "interrupt_bar",
+              "type": 15,
+              "rect": [
+                272,
+                520,
+                418,
+                538
+              ],
+              "container": 318,
+              "string_id": 0
+            },
+            {
+              "table": "UIControls",
+              "id": 1932,
+              "field": "Texture0",
+              "control_name": "level_bar",
+              "type": 15,
+              "rect": [
+                16,
+                220,
+                330,
+                238
+              ],
+              "container": 318,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      147,
+      17
+    ],
+    "source_sha256": "5f9ec627616f9cf81910e6e0bf33a895d4c2a5a019fc28a544839a5324e2572b",
+    "source_rgba_sha256": "5752ecfd86400b4e9affba1b93767a26febd603fdc009220a20760f478892c2c",
+    "release_rgba_sha256": "5752ecfd86400b4e9affba1b93767a26febd603fdc009220a20760f478892c2c",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/2482.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "reason": "Preserve exact original147x17RGBA as functionalblue progressbar shadegradient. Individualactual33Type15controls/UI470/CProgressBarcrop-scale by fValue codeproof; no builtin/noHDartentry/no RGB orA changes. NotconstantRGBA/identicalrows/categoryban. GenericGPU verifies wholeoriginal/full,middle,reverse,clippedUV andmips1, not actualactiveCharacterPanelstat value.",
+    "disposition_proof": "expanded/coordinator-original-only-forty-eighth.json",
+    "coordinator_review": "Freshfullhistory-releaseRGBA/typedactualconsumer/sourcepurpose/wholeprivateRGB+A andgenericGPU onoffon exactoriginaldensity1. No imagegen/HDartentry/no alpha0 or name orcategory ban."
+  },
+  {
+    "id": 4592,
+    "texture": {
+      "ID": 4592,
+      "Width": 16,
+      "Height": 16,
+      "NMips": 0,
+      "AverageColor": 183296,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Robot\\TerPlasmaClipGlass.tga",
+      "Format": "8888",
+      "UserName": "TerPlasmaClipGlass",
+      "Type": "TransparentAdd",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "structural-mask-or-solid",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2860,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "transparent",
+          "AddressMode": "Clamp",
+          "TemplateID": 1840,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4816,
+              "field": "Material2",
+              "material_template_id": 1840,
+              "geometry_id": 2778,
+              "geometry": "Characters\\Weapons\\RobotWeaponClips.mb",
+              "model_template_id": 3205,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      16,
+      16
+    ],
+    "source_sha256": "c599da03948ae38d253b2665cc22efded83a5b52a682da1e19d8319cc8561e05",
+    "source_rgba_sha256": "514aa65db0f8c985fb61962f7f06bf383402742d05386c927c03abe5088a2618",
+    "release_rgba_sha256": "514aa65db0f8c985fb61962f7f06bf383402742d05386c927c03abe5088a2618",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      0,
+      0
+    ],
+    "original_png": "expanded/original/4592.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "reason": "Preserve exact entireconstantRGBA2/203/0/0 as materialcolor/tint, actualMaterial2860->Template1840->Models. Individualfullhistorical-release-originalRGBA equal/constantpaint has no finerpattern to redraw; usefulgreenAddRGB/sourceA0 retained/no premul/blackening/no builtin/noHDartentry. Not alpha0/category ban. GenericGPU verifies loading/UV/fulloriginal/mips5, not actualweaponmodelappearance.",
+    "disposition_proof": "expanded/coordinator-original-only-forty-eighth.json",
+    "coordinator_review": "Freshfullhistory-releaseRGBA/typedactualconsumer/sourcepurpose/wholeprivateRGB+A andgenericGPU onoffon exactoriginaldensity1. No imagegen/HDartentry/no alpha0 or name orcategory ban."
+  },
+  {
+    "id": 1931,
+    "texture": {
+      "ID": 1931,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -11125724,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\Carbine_1938.tga",
+      "Format": "dxt1",
+      "UserName": "Carbine_1938",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "validated",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1327,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 885,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1337,
+              "field": "Material0",
+              "material_template_id": 885,
+              "geometry_id": 1750,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 982,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "e082abb9d0edd33cada5822206ad466c7eae569072423f0275b605ab9f9cbe56",
+    "source_rgba_sha256": "2fd45007ad1c1c3d20f105a3366520672cdfcc72cc95825887e64a5b7f0f0af5",
+    "release_rgba_sha256": "2fd45007ad1c1c3d20f105a3366520672cdfcc72cc95825887e64a5b7f0f0af5",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1931.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "packed_png_sha256": "26239a40f8869071926c7ab94643ba908a446980e54f044e3f324dc403bd0167"
+  },
+  {
+    "id": 1942,
+    "texture": {
+      "ID": 1942,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -10140633,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\Mosin_1891_1930.tga",
+      "Format": "dxt1",
+      "UserName": "Mosin_1891_1930",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "validated",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1338,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 896,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1351,
+              "field": "Material0",
+              "material_template_id": 896,
+              "geometry_id": 1764,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 996,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 1352,
+              "field": "Material0",
+              "material_template_id": 896,
+              "geometry_id": 1765,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 997,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "f7689bbcd5777edfa7b70b1f7ea95cebf0b58165f721c347a76e16eb85701ef0",
+    "source_rgba_sha256": "aae6ec4bb28c3790e6497682b88ae34647a3bb375264ac840401c9916df1a723",
+    "release_rgba_sha256": "aae6ec4bb28c3790e6497682b88ae34647a3bb375264ac840401c9916df1a723",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1942.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "packed_png_sha256": "4f2c2ebc09f8e3562087e98ba42929c3ae387ca743b020938eaf4b0fe38d8789"
+  },
+  {
+    "id": 799,
+    "texture": {
+      "ID": 799,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -10995418,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\German\\Soldier\\Face.tga",
+      "Format": "dxt1",
+      "UserName": "Face",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "validated",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 496,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 378,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 516,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 344,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\Soldier01.mb",
+              "model_template_id": 429,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2335,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 344,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\Soldier01.mb",
+              "model_template_id": 1751,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2345,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 1921,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\GerUnterOfficer_100.mb",
+              "model_template_id": 1756,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2346,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2503,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Scientist.mb",
+              "model_template_id": 1757,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2348,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2503,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Scientist.mb",
+              "model_template_id": 1758,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2350,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2503,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Scientist.mb",
+              "model_template_id": 1759,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2352,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2503,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Scientist.mb",
+              "model_template_id": 1760,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2356,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 1762,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2358,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 1763,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2362,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 1765,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2364,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4254,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+              "model_template_id": 1766,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 2366,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 1767,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5717,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 3772,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5719,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 3773,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 6015,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 344,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\Soldier01.mb",
+              "model_template_id": 3884,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 6061,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 3278,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\GermanGeneral.mb",
+              "model_template_id": 3918,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 6295,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 4040,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 6297,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 4041,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7691,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4254,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+              "model_template_id": 4643,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7737,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4256,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale02.mb",
+              "model_template_id": 4653,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7762,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4269,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+              "model_template_id": 4663,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7764,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4269,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+              "model_template_id": 4664,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7766,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4269,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale03.mb",
+              "model_template_id": 4665,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7768,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 4666,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7827,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 4696,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7837,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 4296,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale04.mb",
+              "model_template_id": 4701,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 7912,
+              "field": "Material1",
+              "material_template_id": 378,
+              "geometry_id": 344,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\Soldier01.mb",
+              "model_template_id": 4729,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "31f71cadd3f5fe9190690b468b07cb709cd38fcebeba1b103839031a1facc12c",
+    "source_rgba_sha256": "465795a4af203ae8a7ce6a81ce826c0d9777205a33bc8547a390370480bef751",
+    "release_rgba_sha256": "465795a4af203ae8a7ce6a81ce826c0d9777205a33bc8547a390370480bef751",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/799.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "packed_png_sha256": "6e7d29b50aa6f87938398348e2b455df1eb17869cfcff6f8d366a213ddc6f193"
   }
 ]

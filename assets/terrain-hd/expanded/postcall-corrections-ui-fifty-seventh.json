@@ -1,0 +1,53 @@
+{
+  "batch": "ui-fifty-seventh",
+  "before_proof_immutable": true,
+  "before_complete_v2_sha256": "543e63cb52eca2c54ab3421883f7957ff907a8ba29da73f72d3ab7b2034af42b",
+  "original_incomplete_pretool_setup_proof_sha256": "b3016b34adb5552a62961ae368f581ac1848775be9b2fb804dace608dc5a5638",
+  "setup_correction": "Initial prepare helper accidentally wrote a partial BEFORE proof after the first source loop iteration and stopped before any tool. Partial proof preserved byte-for-byte; complete-v2 records BOTH sources and phases, created before either call. Exact prompts/nativeRGB refs unchanged and verified; no after-call source count or prompt reinterpretation.",
+  "postcall_review": [
+    {
+      "id": 4142,
+      "source_native_A_positive_bbox": [
+        6,
+        9,
+        25,
+        22
+      ],
+      "raw_pigment_bbox_in_native_source_units_threshold_RGBmax_gt10": [
+        6.5,
+        6.5,
+        14.25,
+        11.5
+      ],
+      "raw_pigment_threshold_texels": 396,
+      "raw_pigment_within_source_alpha_positive_texels": 156,
+      "source_alpha_positive_texels": 3556,
+      "diagnostic_threshold_not_exact_geometry": true,
+      "whole_raw_and_native4x_RGB_RGBA_privately_reviewed": true,
+      "actual_hold": "Whole raw shrank the arrow and moved its phase within the full canvas. Original native sourcealpha shape/placement restored exactly at4x leaves generated color only on a small displaced fragment; scalar cannot restore absent artwork. This is actual UV/scale drift, not gain-only or per-pixel threshold-only rejection.",
+      "repair_or_retry": false
+    },
+    {
+      "id": 4147,
+      "source_native_A_positive_bbox": [
+        49,
+        9,
+        68,
+        22
+      ],
+      "raw_pigment_bbox_in_native_source_units_threshold_RGBmax_gt10": [
+        60.75,
+        5.75,
+        67.0,
+        10.0
+      ],
+      "raw_pigment_threshold_texels": 270,
+      "raw_pigment_within_source_alpha_positive_texels": 68,
+      "source_alpha_positive_texels": 3556,
+      "diagnostic_threshold_not_exact_geometry": true,
+      "whole_raw_and_native4x_RGB_RGBA_privately_reviewed": true,
+      "actual_hold": "Whole raw shrank the arrow and moved its phase within the full canvas. Original native sourcealpha shape/placement restored exactly at4x leaves generated color only on a small displaced fragment; scalar cannot restore absent artwork. This is actual UV/scale drift, not gain-only or per-pixel threshold-only rejection.",
+      "repair_or_retry": false
+    }
+  ]
+}

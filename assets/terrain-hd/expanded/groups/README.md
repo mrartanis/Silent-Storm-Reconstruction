@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 509 of these verified originals are accepted in the shared
+As of 2026-10-08, 512 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-seventh-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-eighth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,221 IDs: clothing 192, equipment 110, weapons
-57, heads 155, UI 579, effects 104, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,215 IDs: clothing 191, equipment 110, weapons
+54, heads 155, UI 578, effects 103, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -766,3 +766,26 @@ no oldchildfreeze/blindrefresh. CustomUI56/finalother2 allfilesverified. Menu11/
 120frames59.97FPS/p9516.78ms/normalquit/ownedGameabsent. Prior41independentoriginal+HDslow/42–45HDslow
 and46near60FPS retained/causeoftransitionunestablished/no source-driver-systemchanges byroot/no causalfix/generalperformanceacceptanceclaim.
 Proofs:../new-groups-forty-seventh-{batch,live,runtime}-check.json. OrdinaryGitPNG/RESbuiltwithGame;1,221originalsremain.
+
+Forty-eighth accepted packet:weapon1931/1942 andcharacterbitmap799,3 separatebuiltin calls.
+Pack2,474textures/4,948aliases/130archives/7,832,561,582bytes; prior2,471source/PNG/nativehashes exact.
+Three actualnativeRGBA equal private4x predictions, OrdinaryfullsourceA0..255forweapons/A255for799/straightRGB/scalar/defaultpad0.
+Weapons entire4:1source->wholeNEAREST3:1guide->ENTIRErawinverse4:1, no crop/pad/fit/register/artistRGB.
+Oldbrown-graypaint/SEVEN1931upperstrokes/TWOlowerpalepanels/THREE1942woodlightmarks retained;
+warmerpalette/cleareroldoutlines/dimmerlowerbrown/localphase caveats disclosed.799 authoredUPSIDE-DOWN UV,
+ONEear/TWOeyeshadows/nose/closedmouth/hairwash/TWOtopbandfields kept; oldskin-hairpaint clearer/localwarmer-brighter,
+no exactRGBidentity/newteeth/eyes/photofibers. FullUV/count/material/nativepaintscale/sourceblur keptwithdisclosedlimits.
+Threeindividualoriginals retained:no AI/noHDartentries.3095actualObjects1228Model1->CM1250Effect493->PI1515Particle194Texture0:
+independent3264blackRGB/A0..16/sprite0 tracks+actualshader zeroRGB/attenuatingcoverageA provepurpose; hardcodedMapBorder1836/CM2083Particle0 unrelated.
+2482quietblue147x17functionalgradient/33Type15controls/UI470/CProgressBarcrop-scale byfValue/notconstantRGBA oridenticalrows.
+4592entire16squareRGBA2/203/0/0/Material2860Template1840Models/uniformtint/usefulAddRGB-A0/noPremul/blackening.
+Wholehistory-releaseRGBA/typedpurpose/rootwholeA+RGB/GPU9exactoriginaldensity1; no alpha/type/name/category blanketban.
+ArtGPU9onoffon/whole-middle-reverse-clippedUV/placement/density4vs1/fullA/pending0, originalGPU9density1allstates withGLOBALhd1/0/1.
+GenericGPU notactiveweapon/Head/particle/widget appearance; no newFaceGenbake/source6SHA25/current707EXE exact.
+Eightfrozenworkerreviews/eightworkerholds preserved/no rootwholeallheldviewclaim; rootheld4502finepaintgrain/relief-likeoldedges/localstrength,
+notnewhardware/macrocounts. Raw-call-ref-BEFORE immutable/no repeats/RGBrepair. KnownLF0/all3alreadycanonical exactarg+ONELF,
+no oldmanifest/childfreeze refresh; CustomUI57/58/59 allfilesverified. Menu11/0/11/pending0/fourprivatewholeframes/120HDframes
+59.92FPS/p9518.07ms/normalquit/ownedGameabsent. Prior41independentoriginal+HDslow/42–45slow and46/47near60 retained;
+causeoftransitionunestablished/no source-driver-systemchangesbyroot/no causalfix/generalperformanceacceptanceclaim.
+Proofs:../new-groups-forty-eighth-{batch,live,runtime}-check.json andcoordinator-original-only-forty-eighth.json.
+OrdinaryGitPNG/RESbuiltwithGame;1,215verifiedoriginalsremain.

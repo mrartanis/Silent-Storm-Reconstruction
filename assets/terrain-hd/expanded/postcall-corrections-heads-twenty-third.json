@@ -1,0 +1,27 @@
+{
+  "source_beforeproof_byteunchanged": true,
+  "actual_call_count": 1,
+  "before_prospective_call_ids": [
+    6774,
+    6775,
+    6776
+  ],
+  "unused_prepared_prompt_ids": [
+    6775,
+    6776
+  ],
+  "before_scope_planned3_not_actual3": "Immutable BEFORE scope sole_call_ids were prospective candidates, all sourceimagegen_call_count0; only6774 actually called. Finalcalled1/genuinepending11 reported separately without rewriting before.",
+  "processing_errors": [
+    {
+      "stage": "first private preview view",
+      "description": "Normalizer exec_command returned running session15867; attempted image view before process finished gave invalid/unsupported image. Then explicitly waited session completion and viewed complete saved preview; no imagegen retry or datarepair."
+    },
+    {
+      "stage": "material_phase diagnostic",
+      "description": "Cloned loop still listed prospective6775/76 without raw; two attempts printed6774 then failed missing6775 preview before writing JSON. Corrected own diagnostic to skip trulyuncalled raw and reran once successfully. Source/tool/raw/prompts/before unmodified; this is diagnostic automation correction only."
+    }
+  ],
+  "prompt_representation": "Per root explicit Heads23 instruction, canonicalprompt file is exact actual CRLF argument + ONE additional LF. Separate exact-call-argument UTF8 without serviceLF, literalabsolute args and separateSHAs retained; canonicalLF not toolargument or corruption.",
+  "no_artist_RGB_correction": true,
+  "no_tool_retry": true
+}

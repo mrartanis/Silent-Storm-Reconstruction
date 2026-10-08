@@ -1,0 +1,18 @@
+{
+  "created_utc": "2026-10-08T15:29:14.455446+00:00",
+  "old_packet": "ui-fifty-seventh",
+  "old_manifest": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/manifest-ui-fifty-seventh.json",
+  "old_manifest_sha256": "696423e75e06b9de56d370ed1f6c0c11603b445b9e06e69afeab0d11b1b2ab39",
+  "old_before_complete_sha256": "543e63cb52eca2c54ab3421883f7957ff907a8ba29da73f72d3ab7b2034af42b",
+  "old_before_partial_sha256": "b3016b34adb5552a62961ae368f581ac1848775be9b2fb804dace608dc5a5638",
+  "correction": "UI57 runtime excerpts Main/UICommCtrls.cpp1620/1632 concern CProgressBar, not CImage. Actual CImage::ProcessMessage/Draw source is Main/UIBaseCtrls.cpp230/243; actual UI553/556→UIControls1662/1666 Type2→CImage remains correct. This independent postfreeze addendum changes no previous bytes, prompt, call, source counts, phase evidence or held UV/scale disposition. Current-screen reachability/GPU visibility was not claimed.",
+  "actual_source_excerpt": {
+    "file": "Main/UIBaseCtrls.cpp",
+    "first_line": 230,
+    "last_line": 250,
+    "source_excerpt": "230: bool CImage::ProcessMessage( const SEvent &sEvent )\n231: {\n232: \tif ( sEvent.nEvent == EVENT_TEMPLATECREATE )\n233: \t{\n234: \t\tNGfx::SPixel8888 sColor;\n235: \t\tsColor.color = sEvent.pControl->nColor;\n236: \t\tSetColor( sColor );\n237: \t\tSetImage( sEvent.pControl->pTextures[0] );\n238: \t}\n239: \n240: \treturn CWindow::ProcessMessage( sEvent );\n241: }\n242: ////////////////////////////////////////////////////////////////////////////////////////////////////\n243: void CImage::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n244: {\n245: \tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y ) );\n246: \tpImage->Draw( this, sTime, pView );\n247: \n248: \tCWindow::Draw( sTime, pView );\n249: }\n250: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+    "sha256": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd"
+  },
+  "all_old_25_manifest_file_SHAs_rechecked_exact": true,
+  "old_bytes_modified": false
+}

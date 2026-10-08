@@ -1,0 +1,53 @@
+{
+  "batch": "ui-fifty-ninth",
+  "readonly_code": true,
+  "actual_UIControl1189_Type2_Texture473": true,
+  "nationality14_CustomHeadBackground927_Texture7203": true,
+  "nationality18_CustomHeadBackground928_Texture7204_CharGenBackground922_Texture7210": true,
+  "source_excerpts": [
+    {
+      "file": "Main/UIInterface.cpp",
+      "first_line": 209,
+      "last_line": 211,
+      "source_excerpt": "209: \t\t\tcase NDb::UI_IMAGE:\n210: \t\t\t\tpWindow = new CImage( sInfo );\n211: \t\t\t\tbreak;",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4"
+    },
+    {
+      "file": "Main/UIBaseCtrls.cpp",
+      "first_line": 230,
+      "last_line": 250,
+      "source_excerpt": "230: bool CImage::ProcessMessage( const SEvent &sEvent )\n231: {\n232: \tif ( sEvent.nEvent == EVENT_TEMPLATECREATE )\n233: \t{\n234: \t\tNGfx::SPixel8888 sColor;\n235: \t\tsColor.color = sEvent.pControl->nColor;\n236: \t\tSetColor( sColor );\n237: \t\tSetImage( sEvent.pControl->pTextures[0] );\n238: \t}\n239: \n240: \treturn CWindow::ProcessMessage( sEvent );\n241: }\n242: ////////////////////////////////////////////////////////////////////////////////////////////////////\n243: void CImage::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n244: {\n245: \tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y ) );\n246: \tpImage->Draw( this, sTime, pView );\n247: \n248: \tCWindow::Draw( sTime, pView );\n249: }\n250: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+      "sha256": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd"
+    },
+    {
+      "file": "Main/UICommCtrls.cpp",
+      "first_line": 1623,
+      "last_line": 1666,
+      "source_excerpt": "1623: bool CProgressBar::ProcessMessage( const SEvent &sEvent )\n1624: {\n1625: \tswitch( sEvent.nEvent )\n1626: \t{\n1627: \t\tcase EVENT_TEMPLATECREATE:\n1628: \t\t{\n1629: \t\t\tnImageWidth = 1;\n1630: \t\t\tif ( IsValid( sEvent.pControl->pTextures[0] ) )\n1631: \t\t\t{\n1632: \t\t\t\tpImage->SetImage( sEvent.pControl->pTextures[0] );\n1633: \t\t\t\tnImageWidth = sEvent.pControl->pTextures[0]->nWidth;\n1634: \t\t\t}\n1635: \t\t\tbreak;\n1636: \t\t}\n1637: \t}\n1638: \n1639: \treturn CWindow::ProcessMessage( sEvent );\n1640: }\n1641: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1642: void CProgressBar::Draw( const STime &sTime, NGScene::I2DGameView *pView )\n1643: {\n1644: \tif ( GetStyle( PBARSTYLE_VERT ) )\n1645: \t{\n1646: \t\tif ( !GetStyle( PBARSTYLE_CENTERED ) )\n1647: \t\t\tpImage->SetWindow( SRect( 0, 0, GetSize().x, GetSize().y * fValue ) );\n1648: \t\telse\n1649: \t\t\tpImage->SetWindow( SRect( 0, GetSize().y * ( 1.0f - fValue ) / 2.0f, GetSize().x, GetSize().y * ( 1.0f + fValue ) / 2.0f ) );\n1650: \n1651: \t\tif ( GetStyle( PBARSTYLE_SCALE ) )\n1652: \t\t\tpImage->SetScale( CVec2( 1, float( GetSize().x * fValue ) / nImageWidth ) );\n1653: \t}\n1654: \telse\n1655: \t{\n1656: \t\tif ( !GetStyle( PBARSTYLE_CENTERED ) )\n1657: \t\t\tpImage->SetWindow( SRect( 0, 0, GetSize().x * fValue, GetSize().y ) );\n1658: \t\telse\n1659: \t\t\tpImage->SetWindow( SRect( GetSize().x * ( 1.0f - fValue ) / 2.0f, 0, GetSize().x * ( 1.0f + fValue ) / 2.0f, GetSize().y ) );\n1660: \n1661: \t\tif ( GetStyle( PBARSTYLE_SCALE ) )\n1662: \t\t\tpImage->SetScale( CVec2( float( GetSize().x * fValue ) / nImageWidth, 1 ) );\n1663: \t}\n1664: \n1665: \tpImage->Draw( this, sTime, pView );\n1666: \tCWindow::Draw( sTime, pView );",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab"
+    },
+    {
+      "file": "DBFormat/DataRPG.cpp",
+      "first_line": 1157,
+      "last_line": 1158,
+      "source_excerpt": "1157:   NDatabase::ImportField( \"CustomHeadBackgroundID\", &pCustomHeadBackground );\n1158: }",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9"
+    },
+    {
+      "file": "Main/iAdvFaceGen.cpp",
+      "first_line": 351,
+      "last_line": 354,
+      "source_excerpt": "351: \t\t\tpBackground = GetUIWindow<CImage>( this, \"background\" );\n352: \t\t\tif ( IsValid( pBackground ) && IsValid( pNationality ) && IsValid( pNationality->pCustomHeadBackground ) )\n353: \t\t\t\tpBackground->SetImage( pNationality->pCustomHeadBackground );\n354: ",
+      "sha256": "e43dffe04ed921aa1af5970be8c7904cc1215dfe6bc6bcf16d8ded689fc655ac"
+    },
+    {
+      "file": "Main/iCharGen.cpp",
+      "first_line": 660,
+      "last_line": 666,
+      "source_excerpt": "660: \tpBackground->SetStyle( STYLE_VISIBLE, bNation );\n661: \tif ( bNation )\n662: \t{\n663: \t\tUpdateNationality();\n664: \t\tif ( IsValid( pBackground ) && IsValid( pNationality ) && IsValid( pNationality->pCharGenBackground ) )\n665: \t\t\tpBackground->SetImage( pNationality->pCharGenBackground );\n666: \t}",
+      "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+    }
+  ],
+  "current_screen_specific_template_reachability_not_claimed": true,
+  "worker_Game_GPU_run": false
+}

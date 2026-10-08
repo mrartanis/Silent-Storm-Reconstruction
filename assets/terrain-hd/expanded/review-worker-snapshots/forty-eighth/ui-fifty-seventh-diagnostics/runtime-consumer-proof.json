@@ -1,0 +1,42 @@
+{
+  "batch": "ui-fifty-seventh",
+  "code_readonly": true,
+  "excerpts": [
+    {
+      "file": "Main/UIInterface.cpp",
+      "first_line": 209,
+      "last_line": 223,
+      "source_excerpt": "209: \t\t\tcase NDb::UI_IMAGE:\n210: \t\t\t\tpWindow = new CImage( sInfo );\n211: \t\t\t\tbreak;\n212: \t\t\tcase NDb::UI_EDIT:\n213: \t\t\t\tpWindow = new CEdit( sInfo );\n214: \t\t\t\tbreak;\n215: \t\t\tcase NDb::UI_BUTTON:\n216: \t\t\t\tpWindow = new CButton( sInfo );\n217: \t\t\t\tbreak;\n218: \t\t\tcase NDb::UI_PUSHBUTTON:\n219: \t\t\t\tpWindow = new CPushButton( sInfo );\n220: \t\t\t\tbreak;\n221: \t\t\tcase NDb::UI_CHECKBUTTON:\n222: \t\t\t\tpWindow = new CCheckButton( sInfo );\n223: \t\t\t\tbreak;",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4"
+    },
+    {
+      "file": "Main/UICommCtrls.cpp",
+      "first_line": 578,
+      "last_line": 585,
+      "source_excerpt": "578: bool CCheckButton::ProcessMessage( const SEvent &sEvent )\n579: {\n580: \tswitch( sEvent.nEvent )\n581: \t{\n582: \tcase EVENT_TEMPLATECREATE:\n583: \t\t{\n584: \t\t\tAddState( 0 );\n585: \t\t\tAddImageState( 1, sEvent.pControl->pTextures[4] );",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab"
+    },
+    {
+      "file": "Main/UICommCtrls.cpp",
+      "first_line": 1620,
+      "last_line": 1637,
+      "source_excerpt": "1620: \tfValue = min( max( _fValue, 0.0f ), 1.0f );\n1621: }\n1622: ////////////////////////////////////////////////////////////////////////////////////////////////////\n1623: bool CProgressBar::ProcessMessage( const SEvent &sEvent )\n1624: {\n1625: \tswitch( sEvent.nEvent )\n1626: \t{\n1627: \t\tcase EVENT_TEMPLATECREATE:\n1628: \t\t{\n1629: \t\t\tnImageWidth = 1;\n1630: \t\t\tif ( IsValid( sEvent.pControl->pTextures[0] ) )\n1631: \t\t\t{\n1632: \t\t\t\tpImage->SetImage( sEvent.pControl->pTextures[0] );\n1633: \t\t\t\tnImageWidth = sEvent.pControl->pTextures[0]->nWidth;\n1634: \t\t\t}\n1635: \t\t\tbreak;\n1636: \t\t}\n1637: \t}",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab"
+    },
+    {
+      "file": "Main/iPerksPanel.cpp",
+      "first_line": 60,
+      "last_line": 68,
+      "source_excerpt": "60: \tCButton( sInfo ), pPerk( _pPerk )\n61: {\n62: \tNDb::CDBPerk *pDBPerk = pPerk->GetDBPerk();\n63: \tAddImageState( STATE_NORMAL, pDBPerk->pIcon );\n64: \tAddImageState( STATE_NORMAL_HOVER, pDBPerk->pIcon, NGfx::SPixel8888( 0x7F, 0x7F, 0xFF, 0xFF ) );\n65: \tAddImageState( STATE_DISABLED_TAKEN, pDBPerk->pIcon );\n66: \tAddImageState( STATE_DISABLED_TAKEN_HOVER, pDBPerk->pIcon, NGfx::SPixel8888( 0x7F, 0x7F, 0xFF, 0xFF ) );\n67: \tAddImageState( STATE_DISABLED_AVAILABLE, pDBPerk->pIconDisabled );\n68: \tAddImageState( STATE_DISABLED_AVAILABLE_HOVER, pDBPerk->pIconDisabled, NGfx::SPixel8888( 0x7F, 0x7F, 0xFF, 0xFF ) );",
+      "sha256": "d0dfc8daceb0d15e8082885a61cc535d72755706ca52717a8127b04d5245c27f"
+    },
+    {
+      "file": "DBFormat/DataRPG.cpp",
+      "first_line": 785,
+      "last_line": 789,
+      "source_excerpt": "785: \t////\n786: \tNDatabase::ImportField( \"ToolTip\", &pToolTip );\n787: \tNDatabase::ImportField( \"Icon\", &pIcon );\n788: \tNDatabase::ImportField( \"IconDisabled\", &pIconDisabled );\n789: \tNDatabase::ImportField( \"PerksPanel\", &pPerksPanel );",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9"
+    }
+  ],
+  "qualification": "Actual UIControl/Perk consumers confirmed from freshDB; code proves normal factory/image/Perk paths only. Specific current-screen reachability and GPU/native live rendering not tested by worker."
+}

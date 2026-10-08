@@ -64,3 +64,10 @@
 
 *.sh text eol=lf
 assets/terrain-hd/**/*.png binary
+# Frozen HD evidence is hashed as exact bytes, including service prompt newlines.
+assets/terrain-hd/expanded/**/*.json -text
+assets/terrain-hd/expanded/**/*.py -text
+assets/terrain-hd/expanded/**/*.txt -text
+# Mutable registries keep the repository's normal text normalization.
+assets/terrain-hd/expanded/queue.json text
+assets/terrain-hd/expanded/coverage.json text

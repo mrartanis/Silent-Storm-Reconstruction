@@ -1,0 +1,86 @@
+{
+  "id": 1967,
+  "tool": "built-in image_gen.imagegen",
+  "tool_output": "exec-2a35ddc0-e310-4394-9172-862f55419fd1.png",
+  "tool_output_session": "01a11842-209d-7390-8c0a-98acfb1bcaf6",
+  "saved_utc": "2026-10-08T15:41:04.972648+00:00",
+  "generated": "assets/terrain-hd/expanded/generated/1967-raw.png",
+  "raw_sha256": "c67f81ca3623f286cc7bcef1fc7217482553fcda2085d7ea7d96330e6f255c88",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1967-prompt.txt",
+  "prompt_sha256": "6a4d8ddc7d1cfe0ef746457dbedffe7ae2c4997c77f094d4fa12caa5f70a1901",
+  "exact_prompt": "Use case: precise-object-edit. Asset type: original hand-painted weapon diffuse UV texture. Edit the SAME entire source bitmap into a faithful finer painted HD texture. Keep sourceUV, original native paintscale/blur, layout, materials, palette and exact original marks. Flat complete texture atlas, not a photographic gun or newly assembled physical object.\n\nImage1 is the SAME entire native original storedRGB128x64 madeopaque at originalresolution, no enlarged NN blockguide.\n\nSource has mixed alpha: ONLY original explicit alpha0 cutout stays a cutout after complete originalalpha restoration downstream. Other black RGB areas are opaque authored sourcepaint/support with alpha255 and must stay black, never treated as a transparent or cropped border. Reference is opaque RGB to preserve all original stored pigment. Numerical brightness/sourceA are restored separately; do not remove or lighten black support.\n\nKeep the same upper-left curved darkgray painted field with all of its existing faint internal marks and weak lightwash; ONE central long warmbrown painted stock field, ONE upper-right warmbrown rounded field, ONE middle-right long outlined darkgray paint field, and the existing lower gray fields. At the very bottom preserve the exact alternating pale-stroke cadence: THIRTEEN separate thin existing light strokes centered at native x29,31,33,35,37,39,41,43,45,47,49,51,53 on source row61/62, with native pitch TWO pixels, plus the existing brighter terminal gray edge at x55 which joins the neighboring gray panel. The latter is not a newly detached fourteenth tooth. These are original painted stripes; retain their weak soft contrast and source width, do not rebuild physical teeth/ridges or add bars. Keep all existing weak marks inside gray fields as the same indistinct paint, not rivets, letters or newly sharper holes. Preserve original warm wood-colored paint gradients and its subdued source grain, no new wood rings, engraved grain, sharp glossy knots or scratch pattern.\n\nConfirmed source-painted-domain constraints, not guessed physical component counts: {\"upper-left gray curved painted field\": 1, \"central-left long warmbrown painted stock field\": 1, \"upper-right warmbrown rounded painted field\": 1, \"middle-right long darkgray outlined painted field\": 1, \"lower-left gray fields and original lower light-stroke strip\": 1, \"lower-right gray framed painted band\": 1, \"whole_source_canvas\": 1, \"lower_separate_pale_column_strokes\": 13, \"existing_terminal_gray_edge_column\": 1}. Preserve original pale/dim hierarchy and every small old source mark. Strongest native source RGBA[239, 239, 247, 255] at original native[8, 61]; all source alpha/paint boundaries remain at original normalizedUV. Uncertain tiny paint marks remain equally indistinct soft paint, never interpreted as new letter, screw, rivet, bead, button, hole or raised plate.\n\nHD improvement ONLY finer original handpaint transitions and understated native pigment. Preserve existing wood/metal paint palette and sourceblur scale. NO photographic woodgrain/metal abrasion/pores/coarsegrain/new scratches/woodrings/knots/checkergrid/engravedgrip/threadweave/polished reflective machining/new hardware/raisedrelief/glossybevel/new whiteglints/new rivets/straps/screws/regularized geometry/stronger outlines. Tiny seams/stripes remain exact old number/spacing/phase/localsoftcontrast.\n\nOutput ONLY the SAME ENTIRE opaqueRGB 2:1 canvas. Keep every original reference field at the same normalized position. NO padding/letterbox/whitemargins/crop/zoom/recenter/registration/UVfitting/UVrepack/BBox/new parts/photo. Keep entire source A/black support/material/nativepaintscale/blur.",
+  "exact_actual_argument_SHA256": "33d457786560cd7e68cc0dad94377e3b44958edf58401c6c0eca0038fb933b88",
+  "canonical_prompt_recipe": "EXACT actual tool prompt UTF8 argument + ONE additional service LF; original actual argument has NO terminal LF, canonical file has exactly one. Immediate save, no later worker rewrite.",
+  "canonical_prompt_SHA256": "6a4d8ddc7d1cfe0ef746457dbedffe7ae2c4997c77f094d4fa12caa5f70a1901",
+  "transparent_background": false,
+  "reference_pngs": [
+    "assets/terrain-hd/expanded/generated/1967-weapons-fourteenth-source-rgb-native.png"
+  ],
+  "reference_sha256": {
+    "assets/terrain-hd/expanded/generated/1967-weapons-fourteenth-source-rgb-native.png": "12cf7524b1c52dd09c60ff788da077847f21a3d1db6f630fb7751c84f5faa881"
+  },
+  "source_rgba_sha256": "4f78984148a198ef74287c442440eebd6b99d99dcd8e6c02fa13ea5206688c14",
+  "source_transform_recipe": {
+    "input": "assets/terrain-hd/expanded/original/1967.png",
+    "operations": "ENTIRE original native storedRGBA→opaqueRGB only, NO enlargement for tool target. Private NEAREST512 view proves native coordinates only, never tool reference. No crop/padding/rotate/fit/BBox/unpremultiply/artistRGB; entire fullsourceA separately restored.",
+    "source_size": [
+      128,
+      64
+    ],
+    "source_bbox": [
+      0,
+      0,
+      128,
+      64
+    ],
+    "helper_size": [
+      128,
+      64
+    ],
+    "helper_bbox": [
+      0,
+      0,
+      128,
+      64
+    ],
+    "private_NN_coordinate_view": "assets/terrain-hd/expanded/private-weapons-fourteenth/survey/1967-source-rgb-nearest512.png",
+    "inverse": "ENTIRE raw LANCZOS original4x; RGB diagnostic inverse separately from originalA, never Pillow RGBA implicit premul; standard whole scalar/defaultpadding/nativeType downstream root.",
+    "output": "assets/terrain-hd/expanded/generated/1967-weapons-fourteenth-source-rgb-native.png"
+  },
+  "pattern_constraints_ref": {
+    "path": "assets/terrain-hd/expanded/pattern-constraints-weapons-fourteenth.json",
+    "file_SHA256": "19d4f587e6d51c1acbde98940e9e78c446c9f1ae2ebe3289fc9b1bb2ef034292",
+    "id": 1967
+  },
+  "native_matrix_ref": {
+    "path": "assets/terrain-hd/expanded/native-matrices-weapons-fourteenth.json",
+    "file_SHA256": "bdee70299ee89a5f4adb0e2144ee5763114f4f43685daff184f9e515afe56330",
+    "source_key": "1967",
+    "source_RGBA_SHA256": "4f78984148a198ef74287c442440eebd6b99d99dcd8e6c02fa13ea5206688c14"
+  },
+  "common_actual_records": {
+    "path": "assets/terrain-hd/expanded/actual-records-weapons-fourteenth.json",
+    "file_SHA256": "6ae57a34279970b1bb06605735f05b8d00d684ee8515c0f08693277cbe6088b0",
+    "source_key": "1967"
+  },
+  "source_before_call_ref": {
+    "path": "assets/terrain-hd/expanded/source-check-weapons-fourteenth-before-call.json",
+    "file_SHA256": "08cfc13c603a26b1c68da3b2a8eb6e14ee55dfbda6b6049d8b42ab719b1be727",
+    "id": 1967
+  },
+  "reproducible_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Asset type: original hand-painted weapon diffuse UV texture. Edit the SAME entire source bitmap into a faithful finer painted HD texture. Keep sourceUV, original native paintscale/blur, layout, materials, palette and exact original marks. Flat complete texture atlas, not a photographic gun or newly assembled physical object.\n\nImage1 is the SAME entire native original storedRGB128x64 madeopaque at originalresolution, no enlarged NN blockguide.\n\nSource has mixed alpha: ONLY original explicit alpha0 cutout stays a cutout after complete originalalpha restoration downstream. Other black RGB areas are opaque authored sourcepaint/support with alpha255 and must stay black, never treated as a transparent or cropped border. Reference is opaque RGB to preserve all original stored pigment. Numerical brightness/sourceA are restored separately; do not remove or lighten black support.\n\nKeep the same upper-left curved darkgray painted field with all of its existing faint internal marks and weak lightwash; ONE central long warmbrown painted stock field, ONE upper-right warmbrown rounded field, ONE middle-right long outlined darkgray paint field, and the existing lower gray fields. At the very bottom preserve the exact alternating pale-stroke cadence: THIRTEEN separate thin existing light strokes centered at native x29,31,33,35,37,39,41,43,45,47,49,51,53 on source row61/62, with native pitch TWO pixels, plus the existing brighter terminal gray edge at x55 which joins the neighboring gray panel. The latter is not a newly detached fourteenth tooth. These are original painted stripes; retain their weak soft contrast and source width, do not rebuild physical teeth/ridges or add bars. Keep all existing weak marks inside gray fields as the same indistinct paint, not rivets, letters or newly sharper holes. Preserve original warm wood-colored paint gradients and its subdued source grain, no new wood rings, engraved grain, sharp glossy knots or scratch pattern.\n\nConfirmed source-painted-domain constraints, not guessed physical component counts: {\"upper-left gray curved painted field\": 1, \"central-left long warmbrown painted stock field\": 1, \"upper-right warmbrown rounded painted field\": 1, \"middle-right long darkgray outlined painted field\": 1, \"lower-left gray fields and original lower light-stroke strip\": 1, \"lower-right gray framed painted band\": 1, \"whole_source_canvas\": 1, \"lower_separate_pale_column_strokes\": 13, \"existing_terminal_gray_edge_column\": 1}. Preserve original pale/dim hierarchy and every small old source mark. Strongest native source RGBA[239, 239, 247, 255] at original native[8, 61]; all source alpha/paint boundaries remain at original normalizedUV. Uncertain tiny paint marks remain equally indistinct soft paint, never interpreted as new letter, screw, rivet, bead, button, hole or raised plate.\n\nHD improvement ONLY finer original handpaint transitions and understated native pigment. Preserve existing wood/metal paint palette and sourceblur scale. NO photographic woodgrain/metal abrasion/pores/coarsegrain/new scratches/woodrings/knots/checkergrid/engravedgrip/threadweave/polished reflective machining/new hardware/raisedrelief/glossybevel/new whiteglints/new rivets/straps/screws/regularized geometry/stronger outlines. Tiny seams/stripes remain exact old number/spacing/phase/localsoftcontrast.\n\nOutput ONLY the SAME ENTIRE opaqueRGB 2:1 canvas. Keep every original reference field at the same normalized position. NO padding/letterbox/whitemargins/crop/zoom/recenter/registration/UVfitting/UVrepack/BBox/new parts/photo. Keep entire source A/black support/material/nativepaintscale/blur.",
+    "referenced_image_paths": [
+      "assets/terrain-hd/expanded/generated/1967-weapons-fourteenth-source-rgb-native.png"
+    ],
+    "transparent_background": false
+  },
+  "literal_actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Asset type: original hand-painted weapon diffuse UV texture. Edit the SAME entire source bitmap into a faithful finer painted HD texture. Keep sourceUV, original native paintscale/blur, layout, materials, palette and exact original marks. Flat complete texture atlas, not a photographic gun or newly assembled physical object.\n\nImage1 is the SAME entire native original storedRGB128x64 madeopaque at originalresolution, no enlarged NN blockguide.\n\nSource has mixed alpha: ONLY original explicit alpha0 cutout stays a cutout after complete originalalpha restoration downstream. Other black RGB areas are opaque authored sourcepaint/support with alpha255 and must stay black, never treated as a transparent or cropped border. Reference is opaque RGB to preserve all original stored pigment. Numerical brightness/sourceA are restored separately; do not remove or lighten black support.\n\nKeep the same upper-left curved darkgray painted field with all of its existing faint internal marks and weak lightwash; ONE central long warmbrown painted stock field, ONE upper-right warmbrown rounded field, ONE middle-right long outlined darkgray paint field, and the existing lower gray fields. At the very bottom preserve the exact alternating pale-stroke cadence: THIRTEEN separate thin existing light strokes centered at native x29,31,33,35,37,39,41,43,45,47,49,51,53 on source row61/62, with native pitch TWO pixels, plus the existing brighter terminal gray edge at x55 which joins the neighboring gray panel. The latter is not a newly detached fourteenth tooth. These are original painted stripes; retain their weak soft contrast and source width, do not rebuild physical teeth/ridges or add bars. Keep all existing weak marks inside gray fields as the same indistinct paint, not rivets, letters or newly sharper holes. Preserve original warm wood-colored paint gradients and its subdued source grain, no new wood rings, engraved grain, sharp glossy knots or scratch pattern.\n\nConfirmed source-painted-domain constraints, not guessed physical component counts: {\"upper-left gray curved painted field\": 1, \"central-left long warmbrown painted stock field\": 1, \"upper-right warmbrown rounded painted field\": 1, \"middle-right long darkgray outlined painted field\": 1, \"lower-left gray fields and original lower light-stroke strip\": 1, \"lower-right gray framed painted band\": 1, \"whole_source_canvas\": 1, \"lower_separate_pale_column_strokes\": 13, \"existing_terminal_gray_edge_column\": 1}. Preserve original pale/dim hierarchy and every small old source mark. Strongest native source RGBA[239, 239, 247, 255] at original native[8, 61]; all source alpha/paint boundaries remain at original normalizedUV. Uncertain tiny paint marks remain equally indistinct soft paint, never interpreted as new letter, screw, rivet, bead, button, hole or raised plate.\n\nHD improvement ONLY finer original handpaint transitions and understated native pigment. Preserve existing wood/metal paint palette and sourceblur scale. NO photographic woodgrain/metal abrasion/pores/coarsegrain/new scratches/woodrings/knots/checkergrid/engravedgrip/threadweave/polished reflective machining/new hardware/raisedrelief/glossybevel/new whiteglints/new rivets/straps/screws/regularized geometry/stronger outlines. Tiny seams/stripes remain exact old number/spacing/phase/localsoftcontrast.\n\nOutput ONLY the SAME ENTIRE opaqueRGB 2:1 canvas. Keep every original reference field at the same normalized position. NO padding/letterbox/whitemargins/crop/zoom/recenter/registration/UVfitting/UVrepack/BBox/new parts/photo. Keep entire source A/black support/material/nativepaintscale/blur.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1967-weapons-fourteenth-source-rgb-native.png"
+    ],
+    "transparent_background": false
+  },
+  "prompt_serialization": "Literal actual LF prompt has no terminalLF. Saved canonical prompt is exactly argument+ONE LF. Full reference recipe/SHA included, native/common records referenced once."
+}

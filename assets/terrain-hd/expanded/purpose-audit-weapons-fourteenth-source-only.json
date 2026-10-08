@@ -1,0 +1,555 @@
+{
+  "scope": "weapons-fourteenth",
+  "source_only_no_calls": [
+    4590,
+    4591,
+    4592,
+    5086
+  ],
+  "actual_records_ref": {
+    "path": "assets/terrain-hd/expanded/actual-records-weapons-fourteenth.json",
+    "file_SHA256": "6ae57a34279970b1bb06605735f05b8d00d684ee8515c0f08693277cbe6088b0"
+  },
+  "source_before_ref": {
+    "path": "assets/terrain-hd/expanded/source-check-weapons-fourteenth-before-call.json",
+    "file_SHA256": "08cfc13c603a26b1c68da3b2a8eb6e14ee55dfbda6b6049d8b42ab719b1be727"
+  },
+  "actual_runtime_code": [
+    {
+      "path": "Main/GMatShare.cpp",
+      "file_SHA256": "7d3afa8c838e40fb63b77c3f98bda0a1f68d9d76d97a375d97deb1889067883e",
+      "line_start": 35,
+      "line_end": 75,
+      "exact_code": "}\n////////////////////////////////////////////////////////////////////////////////////////////////////\nexternA5 CBasicShare<STextureKey, CFileTexture, STextureKeyHash> shareTextures;\nstatic IMaterial* CreateMaterialFromDBRecord( NDb::CMaterial *_pMaterial, \n\tCPtrFuncBase<NGfx::CCubeTexture> *pSky )\n{\n\tCVec3 vColor( 1, 0.3f, 0.3f );\n\tbool bWrap = _pMaterial->addrMode == NDb::CMaterial::AM_WRAP;\n\tCObj<CPtrFuncBase<NGfx::CTexture> > pTexture, pBump, pGloss, pMirror;\n\tif ( IsValid( _pMaterial->pTexture ) )\n\t{\n\t\tpTexture = shareTextures.Get( STextureKey( _pMaterial->pTexture->GetRecordID(), bWrap ) );\n\t\tCVec4 v = NGfx::GetCVec4Color( _pMaterial->pTexture->dwAverageColor );\n\t\tvColor = CVec3( v.r, v.g, v.b );\n\t}\n\tif ( _pMaterial->alpha == NDb::CMaterial::A_EXPLOSION_DECAL )\n\t\treturn CreateExplosionDecal( pTexture );\n\t//pBump = shareTextures.Get( 13 );\n\tif ( IsValid( _pMaterial->pBump ) ) \n\t\tpBump = shareTextures.Get( STextureKey( _pMaterial->pBump->GetRecordID(), bWrap ) );\n\tif ( IsValid( _pMaterial->pGloss ) ) \n\t\tpGloss = shareTextures.Get( STextureKey( _pMaterial->pGloss->GetRecordID(), bWrap ) );\n\tif ( IsValid( _pMaterial->pMirror ) ) \n\t\tpMirror = shareTextures.Get( STextureKey( _pMaterial->pMirror->GetRecordID(), bWrap ) );\n\t//_pMaterial->vSpecColor = CVec3(1,1,1);\n\t//_pMaterial->fSpecFactor = 1;//random.GetFloat( 0.2f, 1 );//0.8f;//0.5f;\n\tint alphaMode;\n\tswitch ( _pMaterial->alpha )\n\t{\n\t\tcase NDb::CMaterial::A_OPAQUE: \t          alphaMode = MA_OPAQUE; break;\n\t\tcase NDb::CMaterial::A_ALPHA_TEST:        alphaMode = MA_OPAQUE | MA_ALPHA_TEST; break;\n\t\tcase NDb::CMaterial::A_TRANSPARENT:       alphaMode = MA_TRANSPARENT; break;\n\t\tcase NDb::CMaterial::A_TRANSPARENT_2SIDED:alphaMode = MA_TRANSPARENT | MA_2SIDED; break;\n\t\tcase NDb::CMaterial::A_SELF_ILLUM:        alphaMode = MA_OPAQUE | MA_SELF_ILLUM; break;\n\t\tcase NDb::CMaterial::A_SELF_ILLUM_AT:     alphaMode = MA_OPAQUE | MA_SELF_ILLUM | MA_ALPHA_TEST; break;\n\t\tcase NDb::CMaterial::A_OVERLAY:           alphaMode = MA_OVERLAY; break;\n\t}\n\treturn CreateMaterial( vColor, pTexture, pBump, _pMaterial->fSpecFactor, \n\t\t_pMaterial->vSpecColor, pGloss, pMirror, pSky, \n\t\t_pMaterial->fMetalMirror, _pMaterial->fDielMirror, alphaMode, _pMaterial->bCastShadow );\n}"
+    },
+    {
+      "path": "Main/GMaterial.cpp",
+      "file_SHA256": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570",
+      "line_start": 207,
+      "line_end": 231,
+      "exact_code": "////////////////////////////////////////////////////////////////////////////////////////////////////\nclass CTransparentMaterial: public IMaterial\n{\n\tOBJECT_BASIC_METHODS( CTransparentMaterial );\n\tZDATA\n\tCDGPtr< CPtrFuncBase<NGfx::CTexture> > pTexture;\n\tSTransparentMaterialInfo transpInfo;\n\tbool b2Sided;\n\tZEND int operator&( CStructureSaver &f ) { f.Add(2,&pTexture); f.Add(3,&transpInfo); f.Add(4,&b2Sided); return 0; }\npublic:\n\tCTransparentMaterial() {}\n\tCTransparentMaterial( CPtrFuncBase<NGfx::CTexture> *_pTex, bool _b2Sided, float fMetalMirror, float fDielMirror )\n\t\t: pTexture(_pTex), b2Sided(_b2Sided) { transpInfo.fMetalMirror = fMetalMirror; transpInfo.fDielMirror = fDielMirror; }\n\tvirtual EMaterialType GetType() const { return MT_TRANSPARENT; }\n\tvirtual const STransparentMaterialInfo& GetTransparentInfo();\n\tbool DoesCastShadow() const { return false; }\n\tbool Is2Sided() const { return b2Sided; }\n\tvirtual void Precache() { GetTransparentInfo(); }\n};\n////////////////////////////////////////////////////////////////////////////////////////////////////\nconst STransparentMaterialInfo& CTransparentMaterial::GetTransparentInfo() \n{ \n\tpTexture.Refresh();\n\ttranspInfo.pTex = pTexture->GetValue();\n\treturn transpInfo; "
+    },
+    {
+      "path": "Main/GMaterial.cpp",
+      "file_SHA256": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570",
+      "line_start": 316,
+      "line_end": 352,
+      "exact_code": "IMaterial* CreateMaterial( \n\tconst CVec3 &color,\n\tCPtrFuncBase<NGfx::CTexture> *pTexture, CPtrFuncBase<NGfx::CTexture> *pBump,\n\tfloat fSpecPower, const CVec3 &vGlossVolor,\n\tCPtrFuncBase<NGfx::CTexture> *pGlossTexture,\n\tCPtrFuncBase<NGfx::CTexture> *pMirrorTexture,\n\tCPtrFuncBase<NGfx::CCubeTexture> *pSky,\n\tfloat fMetalMirror, float fDielMirror,\n\tint alphaMode, bool bDoesCastShadow )\n{\n\tCObj<CObjectBase> pHold1(pBump), pHold2(pGlossTexture), pHold3(pMirrorTexture);\n\tif ( ( alphaMode & MA_TYPE_MASK ) == MA_TRANSPARENT )\n\t\treturn new CTransparentMaterial( pTexture, ( alphaMode & MA_2SIDED ) != 0, fMetalMirror, fDielMirror );\n\tCGenericMaterial *pRes = new CGenericMaterial( bDoesCastShadow );\n\tpRes->SetDiffuseColor( color );\n\t//alphaMode |= MA_SELF_ILLUM;\n\tif ( alphaMode & MA_SELF_ILLUM )\n\t\tpRes->SetSelfIllum();\n\t//const_cast<CVec3&>(vGlossVolor) = CVec3(1,1,1);\n\t//fSpecPower = 1;\n\tif ( pTexture == 0 )\n\t{\n\t\tpRes->SetDiffuseColor( new CCVec3( color ) );\n\t\tpRes->Check();\n\t\tpRes->SetReflectionInfo( pSky, pMirrorTexture, fDielMirror, fMetalMirror );\n\t\treturn pRes;\n\t}\n\tif ( ( alphaMode & MA_TYPE_MASK ) == MA_OVERLAY )\n\t\tpRes->SetDecal();\n\tpRes->SetDiffuseTex( pTexture );\n\tif ( alphaMode & MA_ALPHA_TEST )\n\t\tpRes->SetAlphaTest( true );\n\tpRes->SetBump( pBump );\n\n\tif ( fabs2( vGlossVolor ) > 0 )\n\t\tpRes->SetSpecularColor( new CCVec3( vGlossVolor ), fSpecPower );\n\tif ( pGlossTexture )"
+    },
+    {
+      "path": "Main/GTransparent.cpp",
+      "file_SHA256": "b191caffaaa39d6b7215ee3c2b60d1f5c63e01a6ab1a28807f007b9058b8175e",
+      "line_start": 269,
+      "line_end": 330,
+      "exact_code": "////////////////////////////////////////////////////////////////////////////////////////////////////\nstatic void SetObjectEffect( bool bTnLMode, NGfx::CRenderContext *pRC, const STransparentMaterialInfo &info, \n\tNGfx::CTexture *pFog, NGfx::CCubeTexture *pSky )\n{\n\tNGfx::SEffect *pEff;\n\tNGfx::SEffFoggedParticle efFog;\n\tNGfx::SEffTexture efTexture;\n\tNGfx::SEffFoggedTextureAndMirror efFoggedSimple;\n\tNGfx::SEffTextureAndMirror efSimple;\n\tNGfx::SEffTnLTexture efTnLTexture;\n\tif ( bTnLMode )\n\t{\n\t\tefTnLTexture.pTex = info.pTex;\n\t\tpEff = &efTnLTexture;\n\t}\n\telse\n\t{\n\t\tif ( pSky && ( info.fDielMirror > 0 || info.fMetalMirror > 0 ) )\n\t\t{\n\t\t\tif ( pFog && NGfx::GetHardwareLevel() >= NGfx::HL_GFORCE3 )\n\t\t\t{\n\t\t\t\tefFoggedSimple.pTex = info.pTex;\n\t\t\t\tefFoggedSimple.pTexMirror = pSky;\n\t\t\t\tefFoggedSimple.pFog = pFog;\n\t\t\t\tefFoggedSimple.fMetalMirror = info.fMetalMirror;\n\t\t\t\tefFoggedSimple.fDielMirror = info.fDielMirror;\n\t\t\t\tpEff = &efFoggedSimple;\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tefSimple.pTex = info.pTex;\n\t\t\t\tefSimple.pTexMirror = pSky;\n\t\t\t\tefSimple.fMetalMirror = info.fMetalMirror;\n\t\t\t\tefSimple.fDielMirror = info.fDielMirror;\n\t\t\t\tpEff = &efSimple;\n\t\t\t}\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif ( pFog )\n\t\t\t{\n\t\t\t\tefFog.pFog = pFog;\n\t\t\t\tefFog.pTex = info.pTex;\n\t\t\t\tpEff = &efFog;\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tefTexture.pTex = info.pTex;\n\t\t\t\tpEff = &efTexture;\n\t\t\t}\n\t\t}\n\t}\n\tpRC->SetEffect( pEff );\n}\n////////////////////////////////////////////////////////////////////////////////////////////////////\nstatic void SetParticlesEffect( bool bTnLMode, NGfx::CRenderContext *pRC, NGfx::CTexture *pLight, NGfx::CTexture *pFog )\n{\n\tif ( bTnLMode )\n\t{\n\t\tNGfx::SEffTnLParticles eff;\n\t\tpRC->SetEffect( &eff );\n\t}"
+    },
+    {
+      "path": "Main/GfxEffects.cpp",
+      "file_SHA256": "86baa1ed10783abf54ad70eb1b9b5f0047301e9b6540ccf86874e790303f38ae",
+      "line_start": 100,
+      "line_end": 124,
+      "exact_code": "////////////////////////////////////////////////////////////////////////////////////////////////////\nvoid SEffTextureAndMirror::Use( CRenderContext *p )\n{\n\tCVec4 vParams( 0, 0, fDielMirror, fMetalMirror );\n\tp->SetPixelShader( psTextureAndMirror );\n\tp->SetVertexShader( vsTextureAndMirror );\n\tp->SetVSConst( 14, vParams );\n\tp->SetTexture( 0, pTex );\n\tp->SetTexture( 1, pTexMirror );\n}\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// SEffFoggedTextureAndMirror\n////////////////////////////////////////////////////////////////////////////////////////////////////\nvoid SEffFoggedTextureAndMirror::Use( CRenderContext *p )\n{\n\tp->SetPixelShader( psFoggedTextureAndMirror );\n\tp->SetVertexShader( vsFoggedTextureAndMirror );\n\tCVec4 vParams( 1 / F_FOG_HEIGHT, 1 / F_FOG_DISTANCE, fDielMirror, fMetalMirror );\n\tp->SetVSConst( 14, vParams );\n\tp->SetTexture( 0, pTex );\n\tp->SetTexture( 1, pTexMirror );\n\tp->SetTexture( 2, pFog );\n}\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// SEffRegister"
+    }
+  ],
+  "records": [
+    {
+      "id": 4590,
+      "native_Type": "Ordinary",
+      "fullRGBA_distinct_count": 23,
+      "native_RGB_A_channel_extrema": [
+        [
+          8,
+          115
+        ],
+        [
+          146,
+          215
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          255,
+          255
+        ]
+      ],
+      "whole_constant_RGBA": null,
+      "constant_texel_count": null,
+      "identical_each_native_RGBA_row": true,
+      "identical_each_native_RGBA_column": false,
+      "actual_static_consumers": [
+        {
+          "actual_material_ref": {
+            "table": "Materials",
+            "id": 2858,
+            "canonical_record_SHA256": "d01e79731f4827cd7e988181c8072257bd9786db5d15132cc338fa865a3bd918"
+          },
+          "actual_material_template_ref": {
+            "table": "MaterialTemplates",
+            "id": 1838,
+            "canonical_record_SHA256": "1f641ff34fc6bea5966d1ff99c44dc131dc51453c28592d9acab3f0489def110"
+          },
+          "all_actual_model_consumer_refs": [
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 4815,
+                "canonical_record_SHA256": "ae8ec151e894079095cec58eb341c5aac838e1cf9b397e8f72f6a6529c85d6f5"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3204,
+                "canonical_record_SHA256": "d3717e2deec536fa15fa0ff929ed766818493a70d53d3657223d8b9035169d48"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 2777,
+                "canonical_record_SHA256": "958c1b56afd537d99a090bf3c160b31d052c6c5fc9f8cd5ca170e5ecc387f7cf"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 4816,
+                "canonical_record_SHA256": "fbb3b2e33bd130ddfb6ad1263113725c7f6b801827b0734a617c84db50f9a644"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3205,
+                "canonical_record_SHA256": "151f9ec3d776511fd01dc49141ea478d8c77b53325307fd29d828f936afe4017"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 2778,
+                "canonical_record_SHA256": "67934be23f9d2d1286b331ea9baf4553f12fa239217e02b6473f76a110dd2464"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 5754,
+                "canonical_record_SHA256": "460f0c33d91504c94eec323a02f67149f037dcf3efac342d12714bf397d59878"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3791,
+                "canonical_record_SHA256": "16ee76929dd3d4dc9aedc93fc313a31c3d03d5dcac88d55dfb20291b1018dd5d"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3528,
+                "canonical_record_SHA256": "c7573e7803197a69c7b2cbab2850f3d7b2650f9599a13a2d5b3852127e1278e0"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 5762,
+                "canonical_record_SHA256": "a160902d9ca995199d4fbe8a495261eb25a69849836f51cd78949ecd53983623"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3795,
+                "canonical_record_SHA256": "1e3687827aa0b3b78143331475e1007a4bf9a04fa217db5a5591b61bcb14d702"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3531,
+                "canonical_record_SHA256": "1b9deb3e1b06ba2503f66d67bdc501838620b22289bf1081386698d9061b6b23"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 5979,
+                "canonical_record_SHA256": "07a4fcc7eb6f1a5fbe0fb5628cb5e199ac2b208019f9be806c7751256d914a72"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3866,
+                "canonical_record_SHA256": "99ba92e3469f1ff61e903dfc8fd678314a9d9dfe7cb94851580bb285a3cc4b55"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3687,
+                "canonical_record_SHA256": "f59384acb63285f51bde35a04cc3d5fe8f45fe7b52111d3f558f4c541e2a3016"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 5981,
+                "canonical_record_SHA256": "7e3a629b940e5e3473d4aaccd8ed1163047a238194f243dd620994fd85a6c084"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3867,
+                "canonical_record_SHA256": "a64b273761c9ca5d8e482994349439db39c7686a67d8b9e3f021d74f560479aa"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3688,
+                "canonical_record_SHA256": "927cf521c99685baf622372a3a8ed2735c2d45311d4263719bfc3d5533e38df8"
+              }
+            },
+            {
+              "material_field": "Material1",
+              "model_ref": {
+                "table": "Models",
+                "id": 7810,
+                "canonical_record_SHA256": "54655cf5715eafbe103806993e83c47bc854a4910be5039932f847ced984e27d"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 4688,
+                "canonical_record_SHA256": "8a03fff74d64fd5f35e52cd24799abf634534d25b596524aaae68d5ecd1f884f"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 4285,
+                "canonical_record_SHA256": "ea998b660e8a4f2a6d6260774525fc65dffe07c27c9e74a7ad9a25f0ec2ebfa1"
+              }
+            }
+          ],
+          "actual_Heads_refs": [],
+          "actual_Races_refs": [],
+          "actual_ComplexHeads_hair_refs": [],
+          "actual_TransformableHeadHairs_refs": [],
+          "actual_Alpha_AddressMode": [
+            "self_illum",
+            "Clamp"
+          ],
+          "qualification": "Actual Materials.TextureID diffuse/TemplateID/Models.MaterialN roles proven from freshDB; geometries/modeltemplates exact. Runtime/modelmeshUV/physicalhardware interpretation unknown, no invented dynamicHead proof."
+        }
+      ],
+      "source_native_matrix_ref": {
+        "path": "assets/terrain-hd/expanded/native-matrices-weapons-fourteenth.json",
+        "file_SHA256": "bdee70299ee89a5f4adb0e2144ee5763114f4f43685daff184f9e515afe56330",
+        "source_key": "4590",
+        "source_RGBA_SHA256": "ab7cbc223c3acbb34b65294c67b1cb72787eb80741e83c7a565bd46000e741e9"
+      },
+      "source_fullRGBA_history_release_parity": "Fresh historical MMP == release native == original FULLRGBA/dimensions, exact Texture row and nativePOT checked.",
+      "purpose_qualification": "Actual self_illum sets MA_SELF_ILLUM and still uses SetDiffuseTex, no Water/control inferred. Smooth emissive source colorgradient remains purpose-preserving genuine0call pending; no newgrain/details and no automatic analytic-mask/technical classification."
+    },
+    {
+      "id": 4591,
+      "native_Type": "Ordinary",
+      "fullRGBA_distinct_count": 172,
+      "native_RGB_A_channel_extrema": [
+        [
+          8,
+          90
+        ],
+        [
+          4,
+          255
+        ],
+        [
+          8,
+          90
+        ],
+        [
+          255,
+          255
+        ]
+      ],
+      "whole_constant_RGBA": null,
+      "constant_texel_count": null,
+      "identical_each_native_RGBA_row": false,
+      "identical_each_native_RGBA_column": false,
+      "actual_static_consumers": [
+        {
+          "actual_material_ref": {
+            "table": "Materials",
+            "id": 2859,
+            "canonical_record_SHA256": "be2f7028521c0743a302c05f3862d494544a962936397a15af611da5192a965b"
+          },
+          "actual_material_template_ref": {
+            "table": "MaterialTemplates",
+            "id": 1839,
+            "canonical_record_SHA256": "f3fde330ec83b72b90c0b6d3d3c5c80c81ed73fb1f48bccc3ac5479bbe049724"
+          },
+          "all_actual_model_consumer_refs": [
+            {
+              "material_field": "Material0",
+              "model_ref": {
+                "table": "Models",
+                "id": 4816,
+                "canonical_record_SHA256": "fbb3b2e33bd130ddfb6ad1263113725c7f6b801827b0734a617c84db50f9a644"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3205,
+                "canonical_record_SHA256": "151f9ec3d776511fd01dc49141ea478d8c77b53325307fd29d828f936afe4017"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 2778,
+                "canonical_record_SHA256": "67934be23f9d2d1286b331ea9baf4553f12fa239217e02b6473f76a110dd2464"
+              }
+            }
+          ],
+          "actual_Heads_refs": [],
+          "actual_Races_refs": [],
+          "actual_ComplexHeads_hair_refs": [],
+          "actual_TransformableHeadHairs_refs": [],
+          "actual_Alpha_AddressMode": [
+            "opaque",
+            "Clamp"
+          ],
+          "qualification": "Actual Materials.TextureID diffuse/TemplateID/Models.MaterialN roles proven from freshDB; geometries/modeltemplates exact. Runtime/modelmeshUV/physicalhardware interpretation unknown, no invented dynamicHead proof."
+        }
+      ],
+      "source_native_matrix_ref": {
+        "path": "assets/terrain-hd/expanded/native-matrices-weapons-fourteenth.json",
+        "file_SHA256": "bdee70299ee89a5f4adb0e2144ee5763114f4f43685daff184f9e515afe56330",
+        "source_key": "4591",
+        "source_RGBA_SHA256": "0c16ef983fcceca04811b2fd63cfb9c829e79dd741ac4042a662f8257f00caf3"
+      },
+      "source_fullRGBA_history_release_parity": "Fresh historical MMP == release native == original FULLRGBA/dimensions, exact Texture row and nativePOT checked.",
+      "purpose_qualification": "Actual opaque color diffuse includes original two broad green glow pigment domains and original flat lowergreenfield. No new grain/layout/count invented; genuine0call pending."
+    },
+    {
+      "id": 4592,
+      "native_Type": "TransparentAdd",
+      "fullRGBA_distinct_count": 1,
+      "native_RGB_A_channel_extrema": [
+        [
+          2,
+          2
+        ],
+        [
+          203,
+          203
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "whole_constant_RGBA": [
+        2,
+        203,
+        0,
+        0
+      ],
+      "constant_texel_count": 256,
+      "identical_each_native_RGBA_row": true,
+      "identical_each_native_RGBA_column": true,
+      "actual_static_consumers": [
+        {
+          "actual_material_ref": {
+            "table": "Materials",
+            "id": 2860,
+            "canonical_record_SHA256": "d559881602099a9906f5f13fd2a83087661c3714af2f6ad2096243ce8f5ef954"
+          },
+          "actual_material_template_ref": {
+            "table": "MaterialTemplates",
+            "id": 1840,
+            "canonical_record_SHA256": "d77e26f33abf4fb919c7743966022cd60d819cb869c8f4efb4a0b3e15e620bff"
+          },
+          "all_actual_model_consumer_refs": [
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 4816,
+                "canonical_record_SHA256": "fbb3b2e33bd130ddfb6ad1263113725c7f6b801827b0734a617c84db50f9a644"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3205,
+                "canonical_record_SHA256": "151f9ec3d776511fd01dc49141ea478d8c77b53325307fd29d828f936afe4017"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 2778,
+                "canonical_record_SHA256": "67934be23f9d2d1286b331ea9baf4553f12fa239217e02b6473f76a110dd2464"
+              }
+            }
+          ],
+          "actual_Heads_refs": [],
+          "actual_Races_refs": [],
+          "actual_ComplexHeads_hair_refs": [],
+          "actual_TransformableHeadHairs_refs": [],
+          "actual_Alpha_AddressMode": [
+            "transparent",
+            "Clamp"
+          ],
+          "qualification": "Actual Materials.TextureID diffuse/TemplateID/Models.MaterialN roles proven from freshDB; geometries/modeltemplates exact. Runtime/modelmeshUV/physicalhardware interpretation unknown, no invented dynamicHead proof."
+        }
+      ],
+      "source_native_matrix_ref": {
+        "path": "assets/terrain-hd/expanded/native-matrices-weapons-fourteenth.json",
+        "file_SHA256": "bdee70299ee89a5f4adb0e2144ee5763114f4f43685daff184f9e515afe56330",
+        "source_key": "4592",
+        "source_RGBA_SHA256": "514aa65db0f8c985fb61962f7f06bf383402742d05386c927c03abe5088a2618"
+      },
+      "source_fullRGBA_history_release_parity": "Fresh historical MMP == release native == original FULLRGBA/dimensions, exact Texture row and nativePOT checked.",
+      "purpose_qualification": "ONE uniform nonzero green straightRGB tint through actual transparent Material2860/Template1840/Models and reflection-capable renderer, originalA0 preserved. This is a solid color-map recommendation, NOT an invisible/empty alpha0 classification."
+    },
+    {
+      "id": 5086,
+      "native_Type": "Ordinary",
+      "fullRGBA_distinct_count": 119,
+      "native_RGB_A_channel_extrema": [
+        [
+          2,
+          33
+        ],
+        [
+          197,
+          251
+        ],
+        [
+          24,
+          214
+        ],
+        [
+          255,
+          255
+        ]
+      ],
+      "whole_constant_RGBA": null,
+      "constant_texel_count": null,
+      "identical_each_native_RGBA_row": false,
+      "identical_each_native_RGBA_column": false,
+      "actual_static_consumers": [
+        {
+          "actual_material_ref": {
+            "table": "Materials",
+            "id": 3224,
+            "canonical_record_SHA256": "b5edd525091a6a8d4068fc848a32386717bd5f0a2106720170d4e5eed9605186"
+          },
+          "actual_material_template_ref": {
+            "table": "MaterialTemplates",
+            "id": 2070,
+            "canonical_record_SHA256": "810705a7ac2b5eae0a4504ee34fc50d5910faa851241e08f15314b14530eafeb"
+          },
+          "all_actual_model_consumer_refs": [
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 5213,
+                "canonical_record_SHA256": "450e9f4c1e547c24416f767e77bb00243a4344f83f1fc592c66e24ea265c39ce"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3476,
+                "canonical_record_SHA256": "646dee44c98f5ab969ec62c13ad1ea3bedb39546dac63883ec38f1e88bf2930a"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3231,
+                "canonical_record_SHA256": "fc68a59e9d07c6c149edbd7c7af884a822048de41b4e96ca8aa5b0588265b8f5"
+              }
+            },
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 5263,
+                "canonical_record_SHA256": "9854996094038a2c2e0b9c809dd9bfacd83c14e6f36bca6ec5b60b657427948e"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3489,
+                "canonical_record_SHA256": "3eeff2e020b2a959f44db1204f3f6ac35ea5d3d20a68658efbaf2b63dd82d2db"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3238,
+                "canonical_record_SHA256": "df504649a24896c3d521aecaf9a293235e97be35d02799b4cf68e96e03b90b91"
+              }
+            },
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 5265,
+                "canonical_record_SHA256": "6aeb725361b0da0c237245642094b4f172cc70c653de268340d36b078d89c3cb"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3490,
+                "canonical_record_SHA256": "5b2daeffb617d970d1e4a2cbecd4147f535ee50cb568e96aa1510cbc2bf0ab78"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3239,
+                "canonical_record_SHA256": "e3ab73ca4e4d96c949c4c8e099053b14e75768873874dd1d7eaeb8f03aea278c"
+              }
+            },
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 5267,
+                "canonical_record_SHA256": "dc0f5faf2d33866f6ba9ec16dede66cab07031b971223cb7729ab6eb35410b54"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3491,
+                "canonical_record_SHA256": "cee65ee6d68a8f45561c7dd8d51277b9d9927b68e7e28a8dcb0859c016c3c649"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3681,
+                "canonical_record_SHA256": "2a512c4788c3d73b69aaaed7b7fdc2f121b8968b95173b0799a424f7a1cd9743"
+              }
+            },
+            {
+              "material_field": "Material2",
+              "model_ref": {
+                "table": "Models",
+                "id": 5269,
+                "canonical_record_SHA256": "f7c252e2b5e7a9bcbf94c1a838e4f21c41fa77eb3cf8070817583f09e4ba4793"
+              },
+              "model_template_ref": {
+                "table": "ModelTemplates",
+                "id": 3492,
+                "canonical_record_SHA256": "1c9157dcc8809d42767c2a8876a7fa5d0eec50410287da76d5e78aee5b730132"
+              },
+              "geometry_ref": {
+                "table": "Geometries",
+                "id": 3682,
+                "canonical_record_SHA256": "0b8f60d6726303852809eec2f9f0d61348b3220bf9b90bf4c3f9cc55b19b3d52"
+              }
+            }
+          ],
+          "actual_Heads_refs": [],
+          "actual_Races_refs": [],
+          "actual_ComplexHeads_hair_refs": [],
+          "actual_TransformableHeadHairs_refs": [],
+          "actual_Alpha_AddressMode": [
+            "self_illum",
+            "Clamp"
+          ],
+          "qualification": "Actual Materials.TextureID diffuse/TemplateID/Models.MaterialN roles proven from freshDB; geometries/modeltemplates exact. Runtime/modelmeshUV/physicalhardware interpretation unknown, no invented dynamicHead proof."
+        }
+      ],
+      "source_native_matrix_ref": {
+        "path": "assets/terrain-hd/expanded/native-matrices-weapons-fourteenth.json",
+        "file_SHA256": "bdee70299ee89a5f4adb0e2144ee5763114f4f43685daff184f9e515afe56330",
+        "source_key": "5086",
+        "source_RGBA_SHA256": "fd0e56c2226c9a85b4240a2653857046fe0e4b9d3e014d8c56b1590fa49c0339"
+      },
+      "source_fullRGBA_history_release_parity": "Fresh historical MMP == release native == original FULLRGBA/dimensions, exact Texture row and nativePOT checked.",
+      "purpose_qualification": "Actual self_illum sets MA_SELF_ILLUM and still uses SetDiffuseTex, no Water/control inferred. Smooth emissive source colorgradient remains purpose-preserving genuine0call pending; no newgrain/details and no automatic analytic-mask/technical classification."
+    }
+  ],
+  "known_dispatch": "Actual Materials Alpha transparent→MA_TRANSPARENT→CTransparentMaterial→GetTransparentInfo.pTex; SetObjectEffect chooses reflection TextureAndMirror/FoggedTextureAndMirror if sky and mirrorcoefficients, otherwise ordinary texture/fog/TnLtexture path. Actual source4592 mirrorcoefficients.3/.7. Uniform sourcegreen stays source tint; geometric shading/reflection is runtime, no new texture-detail justification. Gradients4590/5086 Alpha self_illum→MA_SELF_ILLUM→SetSelfIllum+SetDiffuseTex, genuineemissive color, not proof of lookup/control.",
+  "unknowns": "Read-only static/runtime-dispatch code audit, no ownGame/nativebuild. Actual mesh UV/sky availability/geometric shading/final renderedopacity not measured. No claim alpha0 means invisible or sourceRGB should become white/unpremultiplied. Root sole classification/sharedstate."
+}
