@@ -1,0 +1,151 @@
+[
+  {
+    "path": "DBFormat/DataFormat.cpp",
+    "complete_file_SHA256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+    "relevant_line_references": [
+      {
+        "line": 76,
+        "text": "\tCPtr<CTMaterial> pMaterials[N_MODEL_MATERIALS];"
+      },
+      {
+        "line": 548,
+        "text": "\t\tf.Add( 3 + i, &pMaterials[i] );"
+      },
+      {
+        "line": 573,
+        "text": "\tNDatabase::ImportField( \"Material0\", &pMaterials[0] );"
+      },
+      {
+        "line": 574,
+        "text": "\tNDatabase::ImportField( \"Material1\", &pMaterials[1] );"
+      },
+      {
+        "line": 575,
+        "text": "\tNDatabase::ImportField( \"Material2\", &pMaterials[2] );"
+      },
+      {
+        "line": 576,
+        "text": "\tNDatabase::ImportField( \"Material3\", &pMaterials[3] );"
+      },
+      {
+        "line": 579,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 608,
+        "text": "\t\tf.Add( 3 + i, &pMaterials[i] ); "
+      },
+      {
+        "line": 626,
+        "text": "\t\tpModel->pMaterials[i] = IsValid( pMaterials[i] ) ? pMaterials[i]->GetRnd( pRand, flags ) : 0;"
+      },
+      {
+        "line": 680,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 761,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 971,
+        "text": "\tbIsDXT = szFormat.substr( 0, 3 ) == \"dxt\";"
+      },
+      {
+        "line": 1007,
+        "text": "\tNDatabase::ImportField( \"TextureID\", &pTexture );"
+      },
+      {
+        "line": 1055,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 1177,
+        "text": "\tNDatabase::ImportField( \"TextureID\", &pTexture );"
+      },
+      {
+        "line": 1198,
+        "text": "\tNDatabase::ImportField( \"TextureID\", &pTexture );"
+      },
+      {
+        "line": 1251,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 1347,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 1573,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      },
+      {
+        "line": 1708,
+        "text": "\tNDatabase::ImportField( \"TextureID\", &pTexture );"
+      },
+      {
+        "line": 1728,
+        "text": "\tNDatabase::ImportField( \"TemplateID\", &pTemplate );"
+      }
+    ],
+    "qualification": "Full sourceSHA+exact relevantlines. ActualDB typedroles independentlyrefs; runtime/meshUV notinvented."
+  },
+  {
+    "path": "Main/GTexture.cpp",
+    "complete_file_SHA256": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+    "relevant_line_references": [
+      {
+        "line": 15,
+        "text": "static int GetRealTextureID( NDb::CTexture *pTex )"
+      },
+      {
+        "line": 146,
+        "text": "\t\tpRequest = new CFileRequest( \"Textures\", GetRealTextureID( pTex ) );"
+      },
+      {
+        "line": 161,
+        "text": "\t\t\tCResourceFileOpener file( \"LRTextures\", GetRealTextureID( pTex ) );"
+      },
+      {
+        "line": 245,
+        "text": "\t\t\tpRequest = new CFileRequest( \"Textures\", GetRealTextureID( NDb::GetTexture( nTextureIDs[0] ) ) );"
+      },
+      {
+        "line": 257,
+        "text": "\t\t\tpRequest = new CFileRequest( \"Textures\", GetRealTextureID( NDb::GetTexture( nTextureIDs[i] ) ) );"
+      }
+    ],
+    "qualification": "Full sourceSHA+exact relevantlines. ActualDB typedroles independentlyrefs; runtime/meshUV notinvented."
+  },
+  {
+    "path": "Main/LSHead.cpp",
+    "complete_file_SHA256": "5fca9be14f991f42e952eb68386f2904b322a482124ec5c23958ef9e500c216d",
+    "relevant_line_references": [],
+    "qualification": "Full sourceSHA+exact relevantlines. ActualDB typedroles independentlyrefs; runtime/meshUV notinvented."
+  },
+  {
+    "path": "assets/terrain-hd/prepare_sources.py",
+    "complete_file_SHA256": "9e8875e42b445660cd0a3282800c1d1a7f2d2a3fe3c2a8791461dbcd3ef9f581",
+    "relevant_line_references": [],
+    "qualification": "Full sourceSHA+exact relevantlines. ActualDB typedroles independentlyrefs; runtime/meshUV notinvented."
+  },
+  {
+    "path": "assets/terrain-hd/match_brightness.py",
+    "complete_file_SHA256": "16b1c6f1264c592cf36d9561b5eeae2d274e5e5635e9294f9920594a4a5558a1",
+    "relevant_line_references": [
+      {
+        "line": 55,
+        "text": "def pad_rgb_under_source_mask(im, source_alpha):"
+      },
+      {
+        "line": 110,
+        "text": "def match_cell(im, target_luma, premultiply, alpha=None):"
+      },
+      {
+        "line": 241,
+        "text": "                    cell, padded, cleared = pad_rgb_under_source_mask(cell, cell_alpha)"
+      }
+    ],
+    "qualification": "Full sourceSHA+exact relevantlines. ActualDB typedroles independentlyrefs; runtime/meshUV notinvented."
+  }
+]

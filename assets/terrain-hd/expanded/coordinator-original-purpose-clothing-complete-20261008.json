@@ -1,0 +1,783 @@
+{
+  "database_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "current_runtime_gfx_texture_usedxt": 0,
+  "code_SHA256": {
+    "DBFormat/DataFormat.cpp": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+    "Main/GTexture.cpp": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+    "Main/GMatShare.cpp": "7d3afa8c838e40fb63b77c3f98bda0a1f68d9d76d97a375d97deb1889067883e",
+    "Main/GMaterial.cpp": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570",
+    "Main/GRenderExecute.cpp": "bf282f51cc6521fcf544cf46024c4a2d0689631ba76b9e94e006f5cac5ed3ebe",
+    "Main/GfxShaders.cpp": "df0957935fd448c37e5819350606e2ea7435f5f36698e85af8804e7e8e52e71b",
+    "Main/BgfxBackend.cpp": "8d90e2f7106f812d5f488fefd8161872124024537a668d85a0ee5be6c5112650",
+    "diagnostics/CompileBgfxShaders.py": "4ee8344d6a4c8242da2b14edbe07d1ed2024f092b4862be89f675d1c3e2a11b6"
+  },
+  "renderer_reason": "CMaterial alpha_test -> MA_ALPHA_TEST; AddATOperations/RO_TEXTURE_AT and diffuse AT preserve sampled texture alpha. psAlphaTestDiffuseTex4 state ALPHAREF120/GREATER. BgfxBackend sends uniform states/255; translated shaders discard failing alpha. Zero mask remains zero under every mip and filtering. This code proof does not claim an actual rendered model screenshot.",
+  "records": [
+    {
+      "id": 1881,
+      "runtime_original_resource_id": 16779097,
+      "source_record": {
+        "ID": 1881,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\Hanke\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "4a9a7203bb29f2bdbf980f67cbe2f7405e3c415edd700e1bf0a36f6d674b5a82",
+      "whole_RGBA_SHA256": "b79e92a5fc2dad78ac6abed36951aade5d5dcfddedf052857381fd8959044f1b",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1271,
+            "TextureID": 1881,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 846,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 1885,
+      "runtime_original_resource_id": 16779101,
+      "source_record": {
+        "ID": 1885,
+        "Width": 256,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\GerSoldier\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "97931511a02aa2aebacac498dddcae6c2ab61208550eba16e577475a35bb6c13",
+      "whole_RGBA_SHA256": "0390844d3a9e6d88f8febe419438492c3aa822d7155a1f78e49da0d48a4a1741",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1279,
+            "TextureID": 1885,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 850,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 1889,
+      "runtime_original_resource_id": 16779105,
+      "source_record": {
+        "ID": 1889,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\UKSoldier\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "fb5267c8eb45c43522bb8fde25332b15dd4cb42e0951c2bca1d6490ff12de875",
+      "whole_RGBA_SHA256": "6a445370a6e2d344fff49148ca28c4fc2a816b621a1e9f0692b4855d1f035cdd",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1287,
+            "TextureID": 1889,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 854,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 1893,
+      "runtime_original_resource_id": 16779109,
+      "source_record": {
+        "ID": 1893,
+        "Width": 64,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\UKSniper\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "6eb11ca746066e5e206e7c748876b8d1059081d9e9d82fb549468aed4c4eb914",
+      "whole_RGBA_SHA256": "d5dc5d8b7de6b13f71f36e0f001fa34ab92d2c5e18fafce93912c1def032885d",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1295,
+            "TextureID": 1893,
+            "BRDFID": 0,
+            "BumpID": 2139,
+            "SpecColor": 0,
+            "TemplateID": 858,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 2008,
+      "runtime_original_resource_id": 16779224,
+      "source_record": {
+        "ID": 2008,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\GerSniper\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "b116d1c05c8b0a3ba41f145929c2adb91414ba350c0b965e989ee75489d39172",
+      "whole_RGBA_SHA256": "8caa03eee663fdbc0f246d53eba9a86c54e2fa2c361c385c748f8a8213c7e98a",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1405,
+            "TextureID": 2008,
+            "BRDFID": 0,
+            "BumpID": 2162,
+            "SpecColor": 0,
+            "TemplateID": 954,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 2442,
+      "runtime_original_resource_id": 16779658,
+      "source_record": {
+        "ID": 2442,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\UK\\Officer\\orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "d3eb8b122c4660efd79231ce9c9a8192c7eccf802411f2f6f66665c3ddf29ffc",
+      "whole_RGBA_SHA256": "a1a2513ea6cbe313f65443f137518ed4d7a157b4522bd04b850333f63bd73447",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1647,
+            "TextureID": 2442,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1115,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 2545,
+      "runtime_original_resource_id": 16779761,
+      "source_record": {
+        "ID": 2545,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Terror\\TerSoldier\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "d94e44889c1cd3dec7e443c16fb516384fa362cf0d0da5bd73e0447563bf1aac",
+      "whole_RGBA_SHA256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": true,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1678,
+            "TextureID": 2545,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1136,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 2549,
+      "runtime_original_resource_id": 16779765,
+      "source_record": {
+        "ID": 2549,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Terror\\TerOfficer\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "d94e44889c1cd3dec7e443c16fb516384fa362cf0d0da5bd73e0447563bf1aac",
+      "whole_RGBA_SHA256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": true,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1670,
+            "TextureID": 2549,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1132,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 3071,
+      "runtime_original_resource_id": 16780287,
+      "source_record": {
+        "ID": 3071,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\USSR\\Soldier\\orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "df9373fa6fb25bce33a46db19acf6900ab11822b985876f636c9373543cf0f9d",
+      "whole_RGBA_SHA256": "0d96e9ef552c23e50b35d84c91818868460353c1e0ef9c6ac3f9d69e366df832",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 1887,
+            "TextureID": 3071,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1265,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        },
+        {
+          "material": {
+            "ID": 3699,
+            "TextureID": 3071,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2355,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 4454,
+      "runtime_original_resource_id": 16781670,
+      "source_record": {
+        "ID": 4454,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\GerSniperFemale\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "b116d1c05c8b0a3ba41f145929c2adb91414ba350c0b965e989ee75489d39172",
+      "whole_RGBA_SHA256": "8caa03eee663fdbc0f246d53eba9a86c54e2fa2c361c385c748f8a8213c7e98a",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 2768,
+            "TextureID": 4454,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1787,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 4518,
+      "runtime_original_resource_id": 16781734,
+      "source_record": {
+        "ID": 4518,
+        "Width": 256,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\GerSoldierFemale\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "97931511a02aa2aebacac498dddcae6c2ab61208550eba16e577475a35bb6c13",
+      "whole_RGBA_SHA256": "0390844d3a9e6d88f8febe419438492c3aa822d7155a1f78e49da0d48a4a1741",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 2812,
+            "TextureID": 4518,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1814,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 4564,
+      "runtime_original_resource_id": 16781780,
+      "source_record": {
+        "ID": 4564,
+        "Width": 64,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\UKSniperFemale\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "6eb11ca746066e5e206e7c748876b8d1059081d9e9d82fb549468aed4c4eb914",
+      "whole_RGBA_SHA256": "d5dc5d8b7de6b13f71f36e0f001fa34ab92d2c5e18fafce93912c1def032885d",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 2845,
+            "TextureID": 4564,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1829,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 4572,
+      "runtime_original_resource_id": 16781788,
+      "source_record": {
+        "ID": 4572,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\UKSoldierFemale\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "fb5267c8eb45c43522bb8fde25332b15dd4cb42e0951c2bca1d6490ff12de875",
+      "whole_RGBA_SHA256": "6a445370a6e2d344fff49148ca28c4fc2a816b621a1e9f0692b4855d1f035cdd",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 2853,
+            "TextureID": 4572,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1833,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    },
+    {
+      "id": 7712,
+      "runtime_original_resource_id": 16784928,
+      "source_record": {
+        "ID": 7712,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": 0,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\UK\\Soldier\\Orders.tga",
+        "Format": "dxt1",
+        "UserName": "Orders01",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "source_MMP_SHA256": "3aa92b83b020cc51a8e15a046d3dcbb293cb5d5c4cc7a83b858ba0b6111c75c9",
+      "whole_RGBA_SHA256": "5351a1dacdf031549af78bf18a7fce9a211df7a4154b9d7016ae144282f94b8e",
+      "historical_release_whole_RGBA_exact": true,
+      "alpha_extrema": [
+        0,
+        0
+      ],
+      "RGB_entirely_zero": false,
+      "actual_consumers": [
+        {
+          "material": {
+            "ID": 536,
+            "TextureID": 7712,
+            "BRDFID": 0,
+            "BumpID": 910,
+            "SpecColor": 0,
+            "TemplateID": 399,
+            "GlossID": 914,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "material_templates": [],
+          "models": []
+        }
+      ],
+      "disposition": "Retain original: every actual diffuse material uses alpha_test; full selected UC alpha zero fails a>120/255. Nonzero stored RGB is not falsely called empty artwork."
+    }
+  ],
+  "shared_metadata_modified": false,
+  "private_whole_visual_review": "Coordinator privately viewed both whole-native sheets and every one of the14 actual UC storedRGB/fullA pairs.12 are white authored UV wireframes on black;2545/2549 RGB entirelyzero. All14 selectedsourceA is exactlyzero throughout. Individual material/loader/shader proof retains originals; no new imagegen or source edits."
+}
