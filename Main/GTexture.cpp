@@ -99,6 +99,9 @@ void CFileTexture::CreateChecker()
 	colors[1] = NGfx::SPixel8888(255,255,255,255);
 	const int nSize = 128;
 	pValue = NGfx::MakeTexture( nSize, nSize, 1, NGfx::SPixel8888::ID, NGfx::REGULAR, NGfx::CLAMP );
+	NDb::CTexture *pTex = NDb::GetTexture( GetKey().nID );
+	if ( IsValid(pValue) && pTex )
+		pValue->SetSourceLogicalSize( pTex->nWidth, pTex->nHeight );
 	NGfx::CTextureLock<NGfx::SPixel8888> lock( pValue, 0, NGfx::INPLACE );
 	for ( int y = 0; y < nSize; ++y )
 	{
@@ -107,10 +110,17 @@ void CFileTexture::CreateChecker()
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static NGfx::CTexture* MakeTexture( const SMMPFileHeader &hdr, NGfx::ETextureUsage eUsage, NGfx::EWrap eWrap )
+static NGfx::CTexture* MakeTexture( const SMMPFileHeader &hdr, NGfx::ETextureUsage eUsage, NGfx::EWrap eWrap,
+	int logicalWidth, int logicalHeight )
 {
-	return NGfx::MakeTexture( hdr.nSizeX, hdr.nSizeY, hdr.nNumMipLevels, 
+	// HD/LR file texels differ from authored UI pixels; use an exact standalone sheet.
+	if ( eUsage == NGfx::TEXTURE_2D && ( hdr.nSizeX != logicalWidth || hdr.nSizeY != logicalHeight ) )
+		eUsage = NGfx::REGULAR;
+	NGfx::CTexture *pResult = NGfx::MakeTexture( hdr.nSizeX, hdr.nSizeY, hdr.nNumMipLevels,
 		hdr.format, eUsage, eWrap );
+	if ( pResult )
+		pResult->SetSourceLogicalSize( logicalWidth, logicalHeight );
+	return pResult;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CFileTexture::Recalc()
@@ -150,7 +160,7 @@ void CFileTexture::Recalc()
 			SMMPFileHeader hdr;
 			CResourceFileOpener file( "LRTextures", GetRealTextureID( pTex ) );
 			file->Read( &hdr, sizeof(hdr) );
-			pValue = MakeTexture( hdr, eUsage, eWrap );
+			pValue = MakeTexture( hdr, eUsage, eWrap, pTex->nWidth, pTex->nHeight );
 			if ( !RealLoadTexture( pValue.GetPtr(), file.GetStream(), hdr, 0, 0, hdr.nSizeX, hdr.nSizeY, hdr.nNumMipLevels ) )
 				throw int(0);
 			bHasRead = true;
@@ -160,8 +170,10 @@ void CFileTexture::Recalc()
 		}
 		if ( !bHasRead )
 		{
-			pValue = NGfx::MakeTexture( 1, 1, 1, 
+			pValue = NGfx::MakeTexture( 1, 1, 1,
 				NGfx::SPixel8888::ID, eUsage, eWrap );
+			if ( IsValid(pValue) )
+				pValue->SetSourceLogicalSize( pTex->nWidth, pTex->nHeight );
 			NGfx::CTextureLock<NGfx::SPixel8888> lock( pValue, 0, NGfx::INPLACE );
 			lock[0][0].color = pTex->dwAverageColor;
 		}
@@ -175,7 +187,7 @@ void CFileTexture::Recalc()
 	{
 		file->Seek(0);
 		file->Read( &hdr, sizeof(hdr) );
-		pValue = MakeTexture( hdr, eUsage, eWrap );
+		pValue = MakeTexture( hdr, eUsage, eWrap, pTex->nWidth, pTex->nHeight );
 		if ( !RealLoadTexture( pValue.GetPtr(), file.GetStream(), hdr, 0, 0, hdr.nSizeX, hdr.nSizeY, hdr.nNumMipLevels ) )
 		{
 			ASSERT(0);

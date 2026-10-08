@@ -29,7 +29,7 @@ void RenderRectLayout( NGfx::C2DQuadsRenderer *pRes, NGfx::CTexture *pTex, const
 // Per rect: the source corners are Min/Max-normalized over (fX, fX+fSizeX) so a negative baked size
 // still yields a well-formed quad; the texture rect is remapped by the ratio
 // (tex extent / source extent) from the respective corner (no Sign()/scale division -- retail).
-void RenderRectLayoutClipped( NGfx::C2DQuadsRenderer *pRes, NGfx::CTexture *pTex, const CRectLayout &sLayout, const CTPoint<int> &sPosition, const CTRect<int> &sWindow, float fZ, ELayoutRenderMode lrm )
+void RenderRectLayoutClipped( NGfx::C2DQuadsRenderer *pRes, NGfx::CTexture *pTex, const CRectLayout &sLayout, const CTPoint<int> &sPosition, const CTRect<int> &sWindow, float fZ, ELayoutRenderMode lrm, bool logicalSource )
 {
 	for ( int nTemp = 0; nTemp < sLayout.rects.size(); nTemp++ )
 	{
@@ -62,7 +62,7 @@ void RenderRectLayoutClipped( NGfx::C2DQuadsRenderer *pRes, NGfx::CTexture *pTex
 		if ( lrm == LRM_CLEAR_RECT )
 			color = NGfx::SPixel8888( 0, 0, 0, 0 );   // retail zeroes the whole pixel
 
-		pRes->AddRect( CTRect<float>( fClipX1, fClipY1, fClipX2, fClipY2 ), pTex, sTexRect, color, fZ );
+		pRes->AddRect( CTRect<float>( fClipX1, fClipY1, fClipX2, fClipY2 ), pTex, sTexRect, color, fZ, logicalSource );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

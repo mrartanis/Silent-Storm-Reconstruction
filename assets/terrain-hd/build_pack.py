@@ -26,7 +26,8 @@ def mmp(image, premultiply=False, alpha_reference=None):
         r, g, b, a = image.split()
         image = Image.merge('RGBA', (ImageChops.multiply(r, a),
                                     ImageChops.multiply(g, a), ImageChops.multiply(b, a), a))
-    # Stop at a one-pixel height: the legacy GPU loader shifts both dimensions.
+    # Keep the legacy partial chain, for POT and NPOT alike. Both dimensions
+    # remain positive for the reader, and existing native payloads stay intact.
     levels = []
     level = image
     while True:
@@ -99,7 +100,7 @@ def build(output, incremental=False):
         atlas = Image.open(ROOT / asset['png'])
         logical = asset.get('logical_size', [256, 64])
         assert atlas.size == tuple(n * 4 for n in logical), (asset['id'], atlas.size)
-        assert all(n > 0 and n & (n - 1) == 0 for n in atlas.size)
+        assert all(n > 0 for n in logical), (asset['id'], logical)
         alpha = Image.open(ROOT / asset['native_alpha_reference']) if asset.get('native_alpha_reference') else None
         data = mmp(atlas, asset.get('alpha_encoding') == 'premultiplied', alpha)
         if entries and len(payload) + len(data) + 4096 > max_archive_bytes:

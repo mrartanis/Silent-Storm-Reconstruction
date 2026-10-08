@@ -37,7 +37,7 @@ void C2DScene::CreateDynamicRects( CPtrFuncBase<NGfx::CTexture> *pTexture, const
 	{
 		CDGPtr<CPtrFuncBase<NGfx::CTexture> > pTex( pTexture );
 		pTex.Refresh();
-		RenderRectLayoutClipped( &quadRender, pTex->GetValue(), sLayout, sPosition, sWindow, 0.0f, LRM_NORMAL );
+		RenderRectLayoutClipped( &quadRender, pTex->GetValue(), sLayout, sPosition, sWindow, 0.0f, LRM_NORMAL, true );
 	}
 	else
 		RenderRectLayoutClipped( &quadRender, 0, sLayout, sPosition, sWindow, 0.0f, LRM_NORMAL );

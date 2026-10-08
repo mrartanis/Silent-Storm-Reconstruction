@@ -1,0 +1,185 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 D3D11",
+  "pack_textures": 2316,
+  "game_SHA256": "f96a9700ecfbb0397d4ad9bb25f655fe1372e23dda6ae3b0c8077541ae2df4a1",
+  "normal_exit_code": 0,
+  "own_process_absent_after_quit": true,
+  "own_process_id": 12792,
+  "actual_CFileTexture_states": [
+    "[harness] uitextureprobe enabled=1 requested=6094 observed=6094 drawn=1 frames=360 frame=1045 logical=32x32 physical=128x128 density=4.000000x4.000000 holder=128x128 placement=0,0 mips=8 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=6094 observed=6094 drawn=1 frames=1160 frame=1951 logical=32x32 physical=32x32 density=1.000000x1.000000 holder=32x32 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=6094 observed=6094 drawn=1 frames=1802 frame=2699 logical=32x32 physical=128x128 density=4.000000x4.000000 holder=128x128 placement=0,0 mips=8 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=7209 observed=7209 drawn=1 frames=365 frame=3260 logical=256x512 physical=1024x2048 density=4.000000x4.000000 holder=1024x2048 placement=0,0 mips=11 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=7209 observed=7209 drawn=1 frames=1172 frame=4173 logical=256x512 physical=256x512 density=1.000000x1.000000 holder=256x512 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=7209 observed=7209 drawn=1 frames=1820 frame=4927 logical=256x512 physical=1024x2048 density=4.000000x4.000000 holder=1024x2048 placement=0,0 mips=11 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=5425 observed=5425 drawn=1 frames=350 frame=5473 logical=1024x1024 physical=4096x4096 density=4.000000x4.000000 holder=4096x4096 placement=0,0 mips=13 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=5425 observed=5425 drawn=1 frames=1157 frame=6386 logical=1024x1024 physical=1024x1024 density=1.000000x1.000000 holder=1024x1024 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=5425 observed=5425 drawn=1 frames=1807 frame=7140 logical=1024x1024 physical=4096x4096 density=4.000000x4.000000 holder=4096x4096 placement=0,0 mips=13 pending=0 placeholder=0 hd=1"
+  ],
+  "screenshots": [
+    {
+      "name": "hd2316fixed-ui-6094-on",
+      "sha256": "400d7edcc9b8341324958983a6d11f6355950cc6a703d43f1c6ca760fb93e430"
+    },
+    {
+      "name": "hd2316fixed-ui-6094-off",
+      "sha256": "3c179c91a29e39023466bf7f68ebff6385b6e292464f72a4ca20bfbf13b4b3d2"
+    },
+    {
+      "name": "hd2316fixed-ui-6094-restored",
+      "sha256": "503e7fb8a6e85910822a918b6149c6b0972b28919d5bbb57ea7f8aa4818eaa7f"
+    },
+    {
+      "name": "hd2316fixed-ui-7209-on",
+      "sha256": "91c53b4cf94ef0be9be9ac236e78b00453de78d950c5dfc722817a5111b1ff51"
+    },
+    {
+      "name": "hd2316fixed-ui-7209-off",
+      "sha256": "467163684ac9357a65933d7e5d86eac0655e24446d055dcbd1ff1e1818be9246"
+    },
+    {
+      "name": "hd2316fixed-ui-7209-restored",
+      "sha256": "eee453e7b2189fe0aae4ba6f8d4ee6a69f983a0eaac5b3f97c26567928f274c1"
+    },
+    {
+      "name": "hd2316fixed-ui-5425-on",
+      "sha256": "30f38752913896705ed088a7c42f299cde0246fb7ce4e0035feda034733ed3eb"
+    },
+    {
+      "name": "hd2316fixed-ui-5425-off",
+      "sha256": "262e08fe62e93da190df528ef05de89a22febe33c9011745d922261a9f4857b9"
+    },
+    {
+      "name": "hd2316fixed-ui-5425-restored",
+      "sha256": "f10d7e8270a47fe1b8e5f2b9e2098ff8d6f379d25955fbf704805b4333a12f94"
+    }
+  ],
+  "private_visual_review": "All9 complete screenshots privately inspected.5425 full4096 whole/reversed/middle/clipped panels now cover complete intended UV with fixed geometry and no black panels/bands;6094 and7209 full/reversed/partial/clipped density on/off/on checked. Source7209 alpha0 stored RGB produces original-only brown/white additive fields; full sourceA retained and correct native premultiply removes those, so exact composited edge/color identity is not claimed. Scene UI text remains readable. No public comparisons/HTML.",
+  "original_failure_preserved": "Original hd2316-ui-5425 on/restored screenshots show signedSHORT2 overflow; corrected shader normalization/packing, no accepted PNG regeneration.",
+  "Game_aggregate_build_exit": 0,
+  "build_log": "build/hd-nineteenth-fixed-build.log",
+  "coordinate_packing_checks": 84,
+  "coordinate_packing_failures": 0,
+  "CMake_CTest_passed": true,
+  "NPOT_archive_alpha_mip_tests_passed": 2,
+  "existing_RGB_tests_passed": 4,
+  "current_source_files_SHA256": {
+    "Main/GTexture.cpp": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+    "Main/GTexture.h": "d97d37d6b3cad52a041c431c2b1738504426b6563c3f559d28efa700dc26f49d",
+    "Main/GfxBuffers.h": "3dd4ea0cc9c7d749711aa8997887d260b90a58d462e0e7b0e5895ffcd1bb4a33",
+    "Main/GfxBuffers.cpp": "b161721d4c15dc664bbb6fbbe52d9ea8d4151d5bc555ddff0765acae885b698e",
+    "Main/GfxUtils.cpp": "a8c489ddccaa79b59ba1fe7c72ba320d7f3801af17f9ee6f7eddedadc2112626",
+    "Main/GfxUtils.h": "abd8575e3efa3b9f061f7d7e57bba91296ecb4f9e77127d044cc327513c9a07a",
+    "Main/GRects.h": "ae21a2e9a5907f2f09594ac2ddd3965da23c0a824c00dc29d5045ed3c7d87332",
+    "Main/GRects.cpp": "2b664d9f6d670eba92cdfbfcb4f39c239580199bfdb56df0061a6c843730a568",
+    "Main/2DScene.cpp": "f76d930cdc247a10ab8f019cad9c55756aa4c48d407fb2d2f31f8f963d9fef9f",
+    "Main/G2DView.cpp": "de07580ef8e6aa55ec48f70ec6e1fc2e576f154eb1d3bce064e5da64873cacff",
+    "Game/Main.cpp": "05722159897f67134d018073e27a7eaba9c3ed0ed8dc5b2f60e15550c08e9f6c",
+    "Main/TextureSampling.h": "654a93d8072a3554849c766029cfc3c7eaef0607adb0301a58c4e1b7d8d7c267",
+    "diagnostics/TextureSamplingTests.cpp": "441968ba024fafeae3200d7d2bd82d194f5c9b040c9148decedf5b8287796d28",
+    "diagnostics/UITextureProbe.h": "da2a33c244d295aec8682386bda9612a5a488a7ac616cb7c79d905bb9bc23392",
+    "CMakeLists.txt": "e8f73f212799c9047f8071e55423171e0ee1db0732252385809b4d94600ffaf1",
+    "assets/terrain-hd/build_pack.py": "4167f75fff3225c29a18fe7b75ac0bcec021668aa299038b9d63e75372d82dc7",
+    "assets/terrain-hd/test_npot_pack.py": "b6e86894aa79295e300158593f3f9907f36ba72c88036e00fdea758b6cc90dc8"
+  },
+  "packing_fix_proof": {
+    "task": "bounded-UI-SHORT2-packing-overflow-fix",
+    "status": "frozen-for-root-build-and-real-GPU-probe",
+    "finished_utc": "2026-10-08T03:06:28.856401+00:00",
+    "changed_files": [
+      {
+        "path": "Main/GfxUtils.cpp",
+        "sha256": "a8c489ddccaa79b59ba1fe7c72ba320d7f3801af17f9ee6f7eddedadc2112626"
+      },
+      {
+        "path": "Main/GfxUtils.h",
+        "sha256": "abd8575e3efa3b9f061f7d7e57bba91296ecb4f9e77127d044cc327513c9a07a"
+      },
+      {
+        "path": "Main/TextureSampling.h",
+        "sha256": "654a93d8072a3554849c766029cfc3c7eaef0607adb0301a58c4e1b7d8d7c267"
+      },
+      {
+        "path": "diagnostics/TextureSamplingTests.cpp",
+        "sha256": "441968ba024fafeae3200d7d2bd82d194f5c9b040c9148decedf5b8287796d28"
+      }
+    ],
+    "reported_GPU_failure": "Root real GPU probe 5425: selected 4096x4096, logical 1024x1024, density 4; whole/reversed panels black, middle 50 percent correct, clipped panels show bands.",
+    "root_cause": "Float2Int(4096*8)=32768 becomes signed SHORT2 -32768 before backend expansion; float sampling-helper tests alone missed vertex storage overflow.",
+    "fix": "Adaptive per-batch power-of-two multiplier selected from the whole physical holder extent and actual endpoints after logical halftexel correction, density and atlas placement. Keep 8 when safe, 4 for 4096, 2 for 8204, 1 for 16384, fractional values for greater endpoints. Reciprocal multiplier goes through existing c16 normalization. Flush the old batch when multiplier changes. No clamp, crop, unsigned reinterpretation or shader/vertex ABI changes.",
+    "precision": "Each endpoint uses the existing Float2Int rounding mode. Eight steps remain for safe small holders. Conservative signed range 32766.5 protects the positive boundary. Quantization at 4096 is 1/4 physical texel, equal to 1/16 logical texel at density 4.",
+    "physical_paths": "Explicit logical sampling opt-in remains unchanged. CopyTexture/ShowTexture stay physical. Blur offsets now derive physical holder dimensions independently of packed coordinate multiplier, retaining legacy unnormalized-NP2 convention.",
+    "source_proof": [
+      {
+        "file": "Main/GPixelFormat.h",
+        "line": 143,
+        "excerpt": "143: \t\tstruct { short nU, nV; };"
+      },
+      {
+        "file": "Main/BgfxBackend.cpp",
+        "line": 413,
+        "excerpt": "413:     case D3DDECLTYPE_SHORT2:layout.add(attr,2,bgfx::AttribType::Int16,false);offset=e->Offset+4;break;"
+      },
+      {
+        "file": "Main/BgfxBackend.cpp",
+        "line": 438,
+        "excerpt": "438:         if(attr.type==bgfx::AttribType::Int16) {\n439:           for(unsigned c=0;c<attr.components;++c) { int16_t n;std::memcpy(&n,packed+c*2,2);value[c]=float(n); }\n440:         } else {"
+      },
+      {
+        "file": "Main/GfxShaders.txt",
+        "line": 67,
+        "excerpt": "67: proc Render2D\n68: \tm4x4 oPos, v0, c10\n69: \tmul oT0.xy, v3, c16\n70: \tmov oD0, v4"
+      },
+      {
+        "file": "Main/GfxUtils.cpp",
+        "line": 133,
+        "excerpt": "133: S2DRectInfoLock* C2DQuadsRenderer::GetRectInfoLock( CTexture *pContainer, const STexturePlaceInfo &region, float uvPackingSteps )\n134: {\n135: \tif ( pContainer != pPrevContainer || ( pLock && ( pLock->IsFull() || fUVMult != 1.0f / uvPackingSteps ) ) )\n136: \t\tFlush();\n137: \tif ( pLock == 0 )\n138: \t{\n139: \t\tif ( IsTnLDevice() )\n140: \t\t{\n141: \t\t\tfUVMult = 1;\n142: \t\t\tpLock = new SRealRectInfoLock<SGeomVecT1C1>();\n143: \t\t}\n144: \t\telse\n145: \t\t{\n146: \t\t\tfUVMult = 1.0f / uvPackingSteps;\n147: \t\t\tpLock = new SRealRectInfoLock<SRectVertex>();\n148: \t\t}\n149: \t\tpPrevContainer = pContainer;\n150: \t}\n151: \tconst bool unnormalizedNP2 = pContainer && NGfx::IsNVidiaNP2Bug() && !region.IsHolderAPow2Texture();\n152: \tfScaleU = S2TextureSampling::PackedUVScale( uvPackingSteps, pContainer ? region.size.x : 0, unnormalizedNP2 );\n153: \tfScaleV = S2TextureSampling::PackedUVScale( uvPackingSteps, pContainer ? region.size.y : 0, unnormalizedNP2 );\n154: \treturn pLock;"
+      },
+      {
+        "file": "Main/GfxUtils.cpp",
+        "line": 163,
+        "excerpt": "163: \tconst int packedU = Float2Int( u * uvPackingSteps ), packedV = Float2Int( v * uvPackingSteps );\n164: \tASSERT( packedU >= -32768 && packedU <= 32767 && packedV >= -32768 && packedV <= 32767 );\n165: \tpRes->tex.nU = packedU;\n166: \tpRes->tex.nV = packedV;"
+      },
+      {
+        "file": "Main/GfxUtils.cpp",
+        "line": 216,
+        "excerpt": "216: \tconst float uvPackingSteps = IsTnLDevice() ? 1.0f : S2TextureSampling::UVPackingSteps(\n217: \t\tsample, pContainer ? region.size.x : 0, pContainer ? region.size.y : 0 );\n218: \t// color.a == 0 - could also be optimized"
+      },
+      {
+        "file": "Main/GfxUtils.cpp",
+        "line": 370,
+        "excerpt": "370: \t\t// Blur offsets are physical texels, independent of SHORT2 packing precision.\n371: \t\tconst int width = Max( 1, pTex->GetXSize() ), height = Max( 1, pTex->GetYSize() );\n372: \t\tconst bool unnormalizedNP2 = NGfx::IsNVidiaNP2Bug() && pTex->IsNP2();\n373: \t\tfloat fOffsetX = fBlurShift * S2TextureSampling::TexelUVScale( width, unnormalizedNP2 );\n374: \t\tfloat fOffsetY = fBlurShift * S2TextureSampling::TexelUVScale( height, unnormalizedNP2 );\n375: \t\tpRC->SetVSConst( 16, CVec4( fScaleU, fScaleV, 0, 0 ) );"
+      }
+    ],
+    "verification": {
+      "command": "cmd /c vcvars64.bat >nul && cl /nologo /std:c++17 /EHsc /W4 diagnostics\\TextureSamplingTests.cpp /Febuild\\TextureSamplingTests-agent.exe /Fobuild\\TextureSamplingTests-agent.obj && build\\TextureSamplingTests-agent.exe",
+      "vcvars64": "G:/SS/lab/tools/VS2022/VC/Auxiliary/Build/vcvars64.bat",
+      "result": "TextureSamplingTests: 84 checks, 0 failures",
+      "compiler_exit": 0,
+      "git_diff_check_exit": 0,
+      "checks": "Original 23 coordinate checks retained. Added actual portable Float2Int, signed int16 storage, backend float expansion and c16 shader normalization checks. Covers old overflow, full 4096, reversed, middle 50 percent, clipped, large asymmetric NPOT 8204x2084, nonzero atlas placement, 16384 extent, negative/outside-holder coordinates, legacy NP2, exact retail eighth-texel precision, logical halftexel quantization, and blur per-physical-texel scale.",
+      "Game_build_run_or_GPU_performed_by_child": false
+    },
+    "root_GPU_recheck": [
+      "Build aggregate Game after this frozen report. Child did not change shared sources.",
+      "S2_TEXTURE_DIAGNOSTICS=1; uitextureprobe 5425 with existing HD toggle enabled. Whole, reversed, partial and clipped panels must cover the complete 4096 extent with fixed screen geometry and no bands.",
+      "Use the existing gfx_hd_textures off/on mechanism: original 1024 density 1 and HD 4096 density 4 retain orientation, framing and source details across all six panels.",
+      "uitextureprobe 7209 and uitextureprobe 6094: physical 1024x2048 and 128x128 use unchanged eight-step packing. Check ordinary UI and fonts too.",
+      "After root NPOT art/import approval: uitextureprobe 3455, physical 2060x520, existing short-min mip chain. Check whole, partial, reversed and clipped panels. Additional large NPOT GPU test only if an actual source asset is available; no synthetic artwork registration.",
+      "uitextureprobe off restores ordinary UI. Check physical ShowTexture, CopyTexture and blur paths separately if supported by the existing harness."
+    ],
+    "remaining_validation": "Root must run actual Game build and GPU probes; standalone packing tests do not establish pixel-perfect rendered results or backend integration compilation.",
+    "not_modified": [
+      "HD shared metadata, PNG and source assets",
+      "resource priority and mods",
+      "alpha/premultiply",
+      "shaders/backend",
+      "Game/Main.cpp/G2DView harness",
+      "native mip chain",
+      "Git index/commits"
+    ],
+    "effects_sixteenth_stable_retained": true
+  },
+  "scope_limit": "Actual GPU checks cover3 existing/new POT textures. Next accepted NPOT5843 still requires its own real GPU check. Hardware deeper allocated but unuploaded levels beyond legacy short-min chain not newly certified. No new resource priority/alpha/shader/backend/DB changes."
+}

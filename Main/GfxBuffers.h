@@ -8,6 +8,7 @@
 #include "Cache.h"
 #include "GfxLegacyTokens.h"
 #include "GfxInternal.h"
+#include "TextureSampling.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace NGfx
 {
@@ -288,6 +289,7 @@ class CTexture : public I2DBuffer,
 	typedef NCache::CGatherElementBase<NCache::CShortPtrAllocator, NCache::CQuadTreeElement, CTexture> CBase;
 	OBJECT_BASIC_METHODS(CTexture);
 	int nFrameUsed;
+	int nSourceLogicalWidth, nSourceLogicalHeight;
 public:
 	CPtr<CTB> pTB;
 	CTRect<int> region;
@@ -295,8 +297,11 @@ public:
 	bool bPointFiltered;
 	//
 	bool Touch() { bool bRes = CBase::Touch(); nFrameUsed = nCurrentFrame; return bRes; }
-	CTexture() : bPointFiltered(false) {}
+	CTexture() : nSourceLogicalWidth(0), nSourceLogicalHeight(0), bPointFiltered(false) {}
 	CTexture(CTB* _pTB, EWrap _wrap);
+	void SetSourceLogicalSize(int width, int height) { nSourceLogicalWidth = width; nSourceLogicalHeight = height; }
+	float GetTexelScaleX() const { return S2TextureSampling::TexelScale(region.Width(), nSourceLogicalWidth); }
+	float GetTexelScaleY() const { return S2TextureSampling::TexelScale(region.Height(), nSourceLogicalHeight); }
 	//CTexture( int _nXSize, int _nYSize, int nLevels, D3DFORMAT _format, DWORD dwUsage );
 	virtual int GetPixelID() { return D3DFormat2PixelID(pTB->GetFormat()); }
 	virtual I2DBufferLock* Lock(int nLevel, EAccess access);

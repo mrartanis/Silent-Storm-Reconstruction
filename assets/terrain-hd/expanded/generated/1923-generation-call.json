@@ -1,0 +1,46 @@
+{
+  "id": 1923,
+  "status": "finished",
+  "builtin": true,
+  "started_utc": "2026-10-08T01:43:56.003502+00:00",
+  "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV texture to faithful crisp HD PAINTED material atlas. Image2 is exact same complete original nearest enlarged source-only guide; no newart. For source4:1 only, guide uses entire-canvas uniform affine stretch to3:1 and output must map whole guide to whole output; final inverse is entire-image Lanczos to original4:1. For source2:1 no affine: preserve whole2:1. Every source island/clipping/boundary/blackgap/detail center/count/pitch/phase/scale remains normalized UV identical. NO crop/pad/zoom/registration/bbox/repack/rotate/reframe/assembled object/render/photo. Source alpha_test exact native fullalpha is restored later; preserve original cutout shapes. Black original UV fields stay RGBBLACK, including Apositive sourceblack; no filling these with adjacent material. Preserve original muted darkgray metal and brown wood hue/value hierarchy; smooth understated paintedgrain only, not coarse stipple/leather pebbles/crosshatch, photorealisticgrain, knots/curls. Codecblocks are painted tonal shading, never new hardware. No new holes/screws/rivets/vents/marks/lettering/engraving/ornament/new damage/scratches/stains/raised rims/borderbands. Existing pale tiny glints remain small flat paint, not star/cross/glyph/drilledcentre. Existing darkwood streaks remain source softshade, not new capsule machined slot. Numeric global scalar brightness later only; no artistic relighting. Whole original rectangular map has ONE long top gray shaded cylindrical strip, THREE separate small mutedgray cap patches at its upper-left end, ONE far upper-right diagonal darkgray piece with its existing single tiny pale central glint. Broad lower-left clipped brown wood stock and ONE plain ochre-brown rectangle near lower-center retain exact soft source shading/grain; not plaques/engraved symbols or patterned panels. Along upper-middle/right retain source TWO separate small gray rectangular shaded patches and ONE dark angular loop with existing black aperture. Broad lower-right darksteel field has exactly ONE isolated tiny pale central glint native approximately(202,38) and the original small elongated lower-left dark inset with only its existing two angled pale interior faces; no new rivets/drilled holes/extra internal bars. Bottom retains same source-separated flat shaded metal frame fragments and lower canvas clipping. All tiny pale source highlights remain simple flat paint marks, no new punched centres, symbols, screws or extra machining. Preserve black UV gaps, emptyblack opaque source areas and all original crop boundaries. Original logical256x64; production1024x256. ONE entire atlas only, no caption/border/comparison.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1923-prompt.txt",
+  "prompt_sha256": "01a2e2cadedf414ee627eb1f65422472eebed88dc6c81335b1ce84110ec9097d",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1923.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1923-weapons-eleventh-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "whole-source-only-nearest-affine3to1",
+    "source_dimensions": [
+      256,
+      64
+    ],
+    "guide_dimensions": [
+      768,
+      256
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": {
+      "fullcanvas": true,
+      "source_aspect": "4:1",
+      "guide_aspect": "3:1",
+      "scale_x": 3,
+      "scale_y": 4,
+      "inverse": "Whole output Lanczos to1024x256 only; no crop/padding/bbox/registration"
+    },
+    "references_sha256": [
+      "3aa1dc3861610082e798da72cec574e233666d66167bdd3d581852867cc29130",
+      "1e81cc86a63b4c8c64bbd54e398cba11800653f9b7228eab0c99d60edd2e6225"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    1024,
+    256
+  ],
+  "finished_utc": "2026-10-08T01:47:03.213006+00:00",
+  "builtin_output_path": "C:\\Users\\artanis\\.codex\\generated_images\\01a11837-e163-7f23-bae1-a016094f60c6\\exec-66a2a4d7-c8c1-4330-a3f0-9fb5cbd8346b.png",
+  "saved_raw": "G:\\SS\\Silent-Storm-Reconstruction\\assets\\terrain-hd\\expanded\\generated\\1923-raw.png",
+  "raw_sha256": "3e596f31b458cb310c91cce903c4fe99d103bd3a5dc0fc9732a542bc615e26ac"
+}

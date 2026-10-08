@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "../diagnostics/TextureResidency.h"
+#include "../diagnostics/UITextureProbe.h"
 #include "../diagnostics/FrameProfiler.h"
 #include "..\Main\GInit.h"
 #include "../Main/DisplayOptions.h"
@@ -692,6 +693,7 @@ static NUI::CWindow* HarnessFindWindow(NUI::CWindow* window,const string& id) {
 //   perfpose <x> <y> <z> <yaw> <pitch> <rod> set a reproducible camera pose
 //   perfoscillate <dx> <dy> <dz> <even frames> move every frame; 0 restores origin
 //   texturestatus report opt-in texture quality/residency and GPU memory
+//   uitextureprobe <texture-ID>|off|status draw actual UI whole/partial/reversed/clipped sampling
 //   perfmotionstatus log remaining frames for a continuous camera-motion probe
 //   perffloor <-3..4> change the actual scene cut floor (range/lock still apply)
 //   perflighting <0..3> isolate lighting: bit 1 disables sun shadows, bit 2 disables CL
@@ -747,7 +749,11 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 	string sCmd( szBuf );
 	SaveLoadDiag( "[harness] cmd: %s\n", sCmd.c_str() );
 	if ( sCmd == "quit" )
+	{
+		S2UITextureProbe::Select(0);
+		NGScene::ReleaseUITextureProbeResource();
 		return false;
+	}
 	else if(sCmd.compare(0,8,"uiclick ")==0) {
 		auto* button=HarnessFindWindow(NUI::CurrentInterfaceForDiagnostics(),sCmd.substr(8));
 		bool ok=IsValid(button) && button->GetStyle(NUI::STYLE_ENABLED) && IsValid(button->GetParent());
@@ -841,6 +847,29 @@ static bool HarnessPoll()   // returns false to request main-loop exit
             if(mission->GetCamera()->IsCameraFrozen()!=freeze)mission->GetCamera()->FreezeCamera(freeze);
             SaveLoadDiag("[harness] perf camera frozen=%d\n",mission->GetCamera()->IsCameraFrozen()?1:0);
         } else SaveLoadDiag("[harness] perf camera rejected\n");
+    }
+    else if(sCmd=="uitextureprobe off") {
+        S2UITextureProbe::Select(0);
+        NGScene::ReleaseUITextureProbeResource();
+        SaveLoadDiag("[harness] uitextureprobe off\n");
+    }
+    else if(sCmd=="uitextureprobe status" || sCmd=="uitextureprobestatus") {
+        const auto& p=S2UITextureProbe::Get();
+        SaveLoadDiag("[harness] uitextureprobe enabled=%d requested=%d observed=%d drawn=%d frames=%d frame=%d logical=%dx%d physical=%dx%d density=%.6fx%.6f holder=%dx%d placement=%d,%d mips=%d pending=%d placeholder=%d hd=%d\n",
+            S2TextureDiag::Enabled()?1:0,p.requestedID,p.observedID,p.drawn?1:0,p.drawFrames,p.lastFrame,
+            p.logicalWidth,p.logicalHeight,p.physicalWidth,p.physicalHeight,p.densityX,p.densityY,
+            p.holderWidth,p.holderHeight,p.placementX,p.placementY,p.mips,p.pending?1:0,p.placeholder?1:0,
+            NGScene::HDTexturesEnabled()?1:0);
+    }
+    else if(sCmd.compare(0,15,"uitextureprobe ")==0) {
+        int textureID=0; char extra=0;
+        if(!S2TextureDiag::Enabled()) SaveLoadDiag("[harness] uitextureprobe rejected: S2_TEXTURE_DIAGNOSTICS=1 required\n");
+        else if(sscanf(sCmd.c_str(),"uitextureprobe %d %c",&textureID,&extra)!=1 || textureID<=0 || !NDb::GetTexture(textureID))
+            SaveLoadDiag("[harness] uitextureprobe rejected: expected actual texture-ID\n");
+        else {
+            S2UITextureProbe::Select(textureID);
+            SaveLoadDiag("[harness] uitextureprobe armed texture=%d\n",textureID);
+        }
     }
     else if(sCmd=="texturestatus") {
         auto& d=S2TextureDiag::Get();

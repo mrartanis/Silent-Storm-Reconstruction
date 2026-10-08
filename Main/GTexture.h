@@ -51,6 +51,8 @@ protected:
 public:
 	CFileTexture() : bIsFakeTexture(false) {}
 	void CreateChecker();
+	bool IsPendingForDiagnostics() const { return IsValid(pRequest) && !pRequest->IsReady(); }
+	bool IsPlaceholderForDiagnostics() const { return bIsFakeTexture; }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CFileCubeTexture : public CResourceLoader<int, NGfx::CCubeTexture>

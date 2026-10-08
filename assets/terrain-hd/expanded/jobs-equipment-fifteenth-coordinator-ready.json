@@ -1,0 +1,33 @@
+[
+  {
+    "id": 3044,
+    "generated": "assets/terrain-hd/expanded/generated/3044-raw.png",
+    "prompt": "Use case: faithful HD game diffuse UV texture edit, material/periodic pattern preservation.\r\nReference is the ENTIRE original native128x128 storedRGB texture enlarged NEAREST4x to512x512 with no artistic changes. Original alpha is retained separately by the game pipeline. Edit this FULL source square canvas in place. Preserve exact normalized UV positions/sizes/orientations of ALL source material regions, contours, black gaps and edge-clipped sections. No crop, padding, recentering, rotation, zoom, fitting, atlas rearrangement or border. Do not render an assembled object or scene.\r\nKeep the original upper-left dark grip. Its strictly periodic core in ORIGINAL128x128 coordinates is x5..30,y8..65: EXACTLY19 subtle horizontal bright strokes centered at rows9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63. Period3native pixels, SAME phase, original narrowing and very dim gray/brown shades. Dark rows10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55,58,61,64 remain the original gaps. Attached guide is exactly4x all these original coordinates. Source upper cap y0..8 and lower soft cap y66..80 are separate faint curved transitions, not extra ribs: keep original shade/form and add no20th stroke. Preserve the original narrow center silver/gray blade with its original soft lengthwise shade/bevel, original single oval metal eyelet below the left grip with ONE black oval opening, existing dark triangular shape below the eyelet, two long dark-brown leather panels at the middle/right with their original seam edges, and existing upper-right dark-gray cap. No extra eyelet, rivet, holes, pockets, buckles, strap, logos or text.\r\nReplace coarse source pixel steps ONLY with finer softly painted diffuse surface detail at the same source material scale. All original repeated bars and their faint strength must remain; preserve exact count/spacing/phase and all taper/cap shapes. Do not turn original flat tonal bands into raised teeth, bolts, extra geometry or sharper black grooves. Keep original muted silver metal, almost-black rubber and dark brown/blue leather; plain fields stay plain. Very subtle original-like fine grain only, no added rough crust/rust pits, coarse mosaic patches, decorative scratches/curls, rays, gleaming glints, stronger highlights or new parts. Never brighten source weak strokes or remove them. No invented symbols, letters, numbers, engraved labels or marks. Output only the ENTIRE full original UV texture as opaqueRGB, without labels or comparison. The coordinate numbers above are constraints only, never text to draw.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/3044.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST4x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        128,
+        128
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/3044-equipment-fifteenth-source-rgb-support.png"
+    }
+  }
+]

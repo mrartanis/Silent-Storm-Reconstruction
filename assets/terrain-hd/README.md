@@ -8,14 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,309 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 63 clothing, 106 equipment, 65 weapons,
-2 heads, 32 interface icons, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,316 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 63 clothing, 107 equipment, 65 weapons,
+2 heads, 38 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,734 records, including 347 accepted new-group textures, the original
+contains 2,752 records, including 354 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-88 structural/solid masks, 63 unavailable historical sources, one release mismatch
+99 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and fifteen resource IDs whose original-preserving image generation was unavailable
 (fourteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,433 verified originals outside the shared queue, including next
+validation. There remain 1,415 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -149,8 +149,34 @@ Seventeenth accepted packet: `expanded/jobs-new-groups-seventeenth.json` adds8: 
 
 Eighteenth accepted packet: `expanded/jobs-new-groups-eighteenth.json` adds4 effects1567/1577/5120/5275. Pack2,309 textures/4,618 aliases/124 archives/7,479,225,912 bytes. Prior2,305 source/PNG/native hashes unchanged; all4 nativeRGBA equal privately reviewed production4x predictions. Full original alpha/Transparent premultiply, paper/soft impact materials, original pieces/pattern/wholecanvas UV retained. Existing folds/rims locally more defined and privately accepted at4x; no additional components/creases/hard geometry. Scalar calibration only, no crop/BBox/artistic RGB repair. Full native validation, actual HD on/off/on menu, four private screenshots and isolated normal quit/Game absent: `expanded/new-groups-eighteenth-{batch,live}-check.json`. Integration scene confirms layer/menu, not every individual new effect. Every declared accepted stage remains an ordinary Git file (`expanded/accepted-git-stage-completeness-eighteenth.json`). Unaccepted attempts effects-thirteenth/fourteenth, weapons-tenth/clothing-twelfth retain exact raw/prompts/refSHA/metadata and material/new-detail/blackUV-drift reasons outside pack. Effects-fifteenth0calls, source-only audit. Do not assume1936 padding optout corrects other rejected art; do not regenerate accepted IDs.
 
-All 12,267 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,752,877,475 bytes before Git deduplication/compression).
+Nineteenth accepted packet: seven5425/7209/4651/4661/4642/4723/3044,
+six UI backgrounds/materials and one equipment atlas. Pack2,316 textures/4,632
+aliases/126 archives/7,599,812,562 bytes. Prior2,309 source/PNG/native hashes
+unchanged; all7 nativeRGBA exactly equal privately reviewed production4x predictions.
+Wholecanvas UV/sourcealpha/material blend modes retained;3044 keeps exact19 grip
+stroke phase. Scalar calibration only, no artistic RGB insertion/crop/BBox.
+Eleven genuinely constant or empty fills1881/5393/5394/6644/6646..6652 retain originals;
+this does not exclude other CImage or NPOT artwork. GPU UI derives density from
+the actual selected file after logical clipping/retail halftexel correction,
+without resizing geometry. Physical CopyTexture/ShowTexture, fonts/manual/RT paths
+keep their existing units. HD file2D sheets use dedicated textures instead of
+overflowing the1024² atlas. Builder accepts exact whole NPOT4x without padding,
+retaining the existing short-min mip convention and every old native payload.
+Signed-SHORT2 overflow at4096 is fixed by bounded coordinate packing with reciprocal
+normalization; full UV is never clamped/cropped, small-texture precision retained.
+All84 coordinate/packing checks, two NPOT archive/alpha/mip tests and four existing RGB calibration tests pass.
+UI runtime evidence is recorded separately. Full native validation, actual-menu
+HD on/off/on and isolated normal quit: `expanded/new-groups-nineteenth-{batch,live}-check.json`.
+Integration scene does not certify every new UI/model. All declared accepted
+stages are ordinary Git files (`expanded/accepted-git-stage-completeness-nineteenth.json`).
+Equipment14/16 and weapons11 held artifacts retain exact provenance;3046/3049
+were not imported due to material/local detail drift. Exact accepted-donor audit
+of1433 remaining sources against2303 eligible donors (authorized book covers
+excluded) found0 matches and made0 new calls. UI13/equipment17 are subsequent
+independent packets; inspect saved raw/jobs before generating again.
+
+All 12,316 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,817,838,024 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

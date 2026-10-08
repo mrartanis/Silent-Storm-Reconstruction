@@ -43,8 +43,8 @@ public:
 	void SetTarget( const CVec2 &vSize, int _dm );
 	void SetTarget( NGfx::CTexture *pTarget, const CVec2 &vSize, int _dm );
 	void SetTarget( const NGfx::CRenderContext &rc, const CVec2 &vSize, int _dm );
-	void AddRect( const CTRect<float> &rTarget, NGfx::CTexture *pTex, const CTRect<float> &rSrc, 
-		SPixel8888 color = NGfx::SPixel8888(255,255,255,255), float fZ = 1.0f );
+	void AddRect( const CTRect<float> &rTarget, NGfx::CTexture *pTex, const CTRect<float> &rSrc,
+		SPixel8888 color = NGfx::SPixel8888(255,255,255,255), float fZ = 1.0f, bool logicalSource = false );
 	void Flush();
 	void SetUserEffect( I2DEffect *p ) { pUserEffect = p; }
 
@@ -59,7 +59,7 @@ private:
 	C2DQuadsRenderer( const C2DQuadsRenderer &a ) { ASSERT(0); }
 	void operator=( const C2DQuadsRenderer &a ) { ASSERT(0); }
 	void SetupRC( const CVec2 &vSize );
-	S2DRectInfoLock* GetRectInfoLock( CTexture *pContainer, const STexturePlaceInfo &region );
+	S2DRectInfoLock* GetRectInfoLock( CTexture *pContainer, const STexturePlaceInfo &region, float uvPackingSteps );
 	virtual void NewTextureWasAllocated() { Flush(); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////

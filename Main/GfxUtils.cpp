@@ -5,6 +5,7 @@
 #include "GfxUtils.h"
 #include "GfxShaders.h"
 #include "Transform.h"
+#include "TextureSampling.h"
 namespace NGfx
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,10 +130,9 @@ void C2DQuadsRenderer::SetupRC( const CVec2 &vSize )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const int N_UV_PER_TEXEL_STEPS = 8;
-S2DRectInfoLock* C2DQuadsRenderer::GetRectInfoLock( CTexture *pContainer, const STexturePlaceInfo &region )
+S2DRectInfoLock* C2DQuadsRenderer::GetRectInfoLock( CTexture *pContainer, const STexturePlaceInfo &region, float uvPackingSteps )
 {
-	if ( pContainer != pPrevContainer || ( pLock && pLock->IsFull() ) )
+	if ( pContainer != pPrevContainer || ( pLock && ( pLock->IsFull() || fUVMult != 1.0f / uvPackingSteps ) ) )
 		Flush();
 	if ( pLock == 0 )
 	{
@@ -143,32 +143,27 @@ S2DRectInfoLock* C2DQuadsRenderer::GetRectInfoLock( CTexture *pContainer, const 
 		}
 		else
 		{
-			fUVMult = 1.0f / N_UV_PER_TEXEL_STEPS;
+			fUVMult = 1.0f / uvPackingSteps;
 			pLock = new SRealRectInfoLock<SRectVertex>();
 		}
 		pPrevContainer = pContainer;
 	}
-	if ( NGfx::IsNVidiaNP2Bug() && !region.IsHolderAPow2Texture() )
-	{
-		fScaleU = fUVMult;
-		fScaleV = fUVMult;
-	}
-	else
-	{
-		fScaleU = fUVMult / Max( 1, region.size.x );
-		fScaleV = fUVMult / Max( 1, region.size.y );
-	}
+	const bool unnormalizedNP2 = pContainer && NGfx::IsNVidiaNP2Bug() && !region.IsHolderAPow2Texture();
+	fScaleU = S2TextureSampling::PackedUVScale( uvPackingSteps, pContainer ? region.size.x : 0, unnormalizedNP2 );
+	fScaleV = S2TextureSampling::PackedUVScale( uvPackingSteps, pContainer ? region.size.y : 0, unnormalizedNP2 );
 	return pLock;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-static void FillVertex( SRectVertex *pRes, float x, float y, float u, float v, DWORD dwColor, float fZ )
+static void FillVertex( SRectVertex *pRes, float x, float y, float u, float v, DWORD dwColor, float fZ, float uvPackingSteps )
 {
 	pRes->pos.x = x;
 	pRes->pos.y = y;
 	pRes->pos.z = fZ;
 	pRes->normal.dw = 0;
-	pRes->tex.nU = Float2Int( u * N_UV_PER_TEXEL_STEPS );
-	pRes->tex.nV = Float2Int( v * N_UV_PER_TEXEL_STEPS );
+	const int packedU = Float2Int( u * uvPackingSteps ), packedV = Float2Int( v * uvPackingSteps );
+	ASSERT( packedU >= -32768 && packedU <= 32767 && packedV >= -32768 && packedV <= 32767 );
+	pRes->tex.nU = packedU;
+	pRes->tex.nV = packedV;
 	//CalcTexCoords( &pRes->tex, u, v );
 	pRes->texLM.dw = 0;
 	pRes->texU.dw = dwColor;
@@ -185,8 +180,8 @@ static void FillVertex( SGeomVecT1C1 *pRes, float x, float y, float u, float v, 
 	pRes->color.color = dwColor;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void C2DQuadsRenderer::AddRect( const CTRect<float> &_rTarget, NGfx::CTexture *pTex, const CTRect<float> &_rSrc, 
-	SPixel8888 color, float fZ )
+void C2DQuadsRenderer::AddRect( const CTRect<float> &_rTarget, NGfx::CTexture *pTex, const CTRect<float> &_rSrc,
+	SPixel8888 color, float fZ, bool logicalSource )
 {
 	float fXAdd = 0, fYAdd = 0;
 	STexturePlaceInfo region;
@@ -211,50 +206,33 @@ void C2DQuadsRenderer::AddRect( const CTRect<float> &_rTarget, NGfx::CTexture *p
 	rTarget.x2 = Float2Int( rTarget.x2 );
 	rTarget.y1 = Float2Int( rTarget.y1 );
 	rTarget.y2 = Float2Int( rTarget.y2 );
-	// fix scaling rects with target adjust
-	CTRect<float> rSrc(_rSrc);
-	float fWidth = rTarget.x2 - rTarget.x1, fWidthA = fabsf(fWidth);
-	float fTexWidth = rSrc.x2 - rSrc.x1, fTexWidthA = fabsf( fTexWidth );
-	if ( fWidthA != fTexWidthA )
-	{
-		float fU = 0.5f * ( rSrc.x1 + rSrc.x2 );
-		if ( fWidthA > fTexWidthA && fTexWidthA > 0 && fWidthA > 1 )
-		{
-			float fScale = ( fTexWidthA - 1 ) / fTexWidthA * fWidthA / ( fWidthA - 1 );
-			rSrc.x1 = fU + (rSrc.x1 - fU ) * fScale;
-			rSrc.x2 = fU + (rSrc.x2 - fU ) * fScale;
-		}
-	}
-	float fHeight = rTarget.y2 - rTarget.y1, fHeightA = fabsf(fHeight);
-	float fTexHeight = rSrc.y2 - rSrc.y1, fTexHeightA = fabsf( fTexHeight );
-	if ( fHeightA != fTexHeightA )
-	{
-		float fU = 0.5f * ( rSrc.y1 + rSrc.y2 );
-		if ( fHeightA > fTexHeightA && fTexHeightA > 0 && fHeightA > 1 )
-		{
-			float fScale = ( fTexHeightA - 1 ) / fTexHeightA * fHeightA / ( fHeightA - 1 );
-			rSrc.y1 = fU + (rSrc.y1 - fU ) * fScale;
-			rSrc.y2 = fU + (rSrc.y2 - fU ) * fScale;
-		}
-	}
+	const bool bSampleTexture = logicalSource && ( dm & QRM_RENDER_MASK ) != QRM_SOLID && pTex;
+	const auto sample = S2TextureSampling::SampleRect(
+		{rTarget.x1, rTarget.y1, rTarget.x2, rTarget.y2},
+		{_rSrc.x1, _rSrc.y1, _rSrc.x2, _rSrc.y2},
+		bSampleTexture ? pTex->GetTexelScaleX() : 1.0f,
+		bSampleTexture ? pTex->GetTexelScaleY() : 1.0f, fXAdd, fYAdd );
+	CTRect<float> rSrc( sample.x1, sample.y1, sample.x2, sample.y2 );
+	const float uvPackingSteps = IsTnLDevice() ? 1.0f : S2TextureSampling::UVPackingSteps(
+		sample, pContainer ? region.size.x : 0, pContainer ? region.size.y : 0 );
 	// color.a == 0 - could also be optimized
 	fZ = fZ * 998.0f + 1.0f; // fZ in [0...1]
 	DWORD dwColor = color.color;
 	if ( IsTnLDevice() )
 	{
-		SGeomVecT1C1 *pGeom = ((SRealRectInfoLock<SGeomVecT1C1>*)GetRectInfoLock( pContainer, region ))->AddRect();
-		FillVertex( pGeom + 0, rTarget.x1 - 0.5f, rTarget.y1 - 0.5f, fXAdd + rSrc.x1, fYAdd + rSrc.y1, dwColor, fScaleU, fScaleV, fZ );
-		FillVertex( pGeom + 1, rTarget.x1 - 0.5f, rTarget.y2 - 0.5f, fXAdd + rSrc.x1, fYAdd + rSrc.y2, dwColor, fScaleU, fScaleV, fZ );
-		FillVertex( pGeom + 2, rTarget.x2 - 0.5f, rTarget.y2 - 0.5f, fXAdd + rSrc.x2, fYAdd + rSrc.y2, dwColor, fScaleU, fScaleV, fZ );
-		FillVertex( pGeom + 3, rTarget.x2 - 0.5f, rTarget.y1 - 0.5f, fXAdd + rSrc.x2, fYAdd + rSrc.y1, dwColor, fScaleU, fScaleV, fZ );
+		SGeomVecT1C1 *pGeom = ((SRealRectInfoLock<SGeomVecT1C1>*)GetRectInfoLock( pContainer, region, uvPackingSteps ))->AddRect();
+		FillVertex( pGeom + 0, rTarget.x1 - 0.5f, rTarget.y1 - 0.5f, rSrc.x1, rSrc.y1, dwColor, fScaleU, fScaleV, fZ );
+		FillVertex( pGeom + 1, rTarget.x1 - 0.5f, rTarget.y2 - 0.5f, rSrc.x1, rSrc.y2, dwColor, fScaleU, fScaleV, fZ );
+		FillVertex( pGeom + 2, rTarget.x2 - 0.5f, rTarget.y2 - 0.5f, rSrc.x2, rSrc.y2, dwColor, fScaleU, fScaleV, fZ );
+		FillVertex( pGeom + 3, rTarget.x2 - 0.5f, rTarget.y1 - 0.5f, rSrc.x2, rSrc.y1, dwColor, fScaleU, fScaleV, fZ );
 	}
 	else
 	{
-		SRectVertex *pGeom = ((SRealRectInfoLock<SRectVertex>*)GetRectInfoLock( pContainer, region ))->AddRect();
-		FillVertex( pGeom + 0, rTarget.x1 - 0.5f, rTarget.y1 - 0.5f, fXAdd + rSrc.x1, fYAdd + rSrc.y1, dwColor, fZ );
-		FillVertex( pGeom + 1, rTarget.x1 - 0.5f, rTarget.y2 - 0.5f, fXAdd + rSrc.x1, fYAdd + rSrc.y2, dwColor, fZ );
-		FillVertex( pGeom + 2, rTarget.x2 - 0.5f, rTarget.y2 - 0.5f, fXAdd + rSrc.x2, fYAdd + rSrc.y2, dwColor, fZ );
-		FillVertex( pGeom + 3, rTarget.x2 - 0.5f, rTarget.y1 - 0.5f, fXAdd + rSrc.x2, fYAdd + rSrc.y1, dwColor, fZ );
+		SRectVertex *pGeom = ((SRealRectInfoLock<SRectVertex>*)GetRectInfoLock( pContainer, region, uvPackingSteps ))->AddRect();
+		FillVertex( pGeom + 0, rTarget.x1 - 0.5f, rTarget.y1 - 0.5f, rSrc.x1, rSrc.y1, dwColor, fZ, uvPackingSteps );
+		FillVertex( pGeom + 1, rTarget.x1 - 0.5f, rTarget.y2 - 0.5f, rSrc.x1, rSrc.y2, dwColor, fZ, uvPackingSteps );
+		FillVertex( pGeom + 2, rTarget.x2 - 0.5f, rTarget.y2 - 0.5f, rSrc.x2, rSrc.y2, dwColor, fZ, uvPackingSteps );
+		FillVertex( pGeom + 3, rTarget.x2 - 0.5f, rTarget.y1 - 0.5f, rSrc.x2, rSrc.y1, dwColor, fZ, uvPackingSteps );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,8 +367,11 @@ public:
 	{
 		pRC->SetPixelShader( psShadowBlur );//psTexture );//
 		pRC->SetVertexShader( vsShadowBlur );
-		float fOffsetX = fBlurShift * N_UV_PER_TEXEL_STEPS * fScaleU;
-		float fOffsetY = fBlurShift * N_UV_PER_TEXEL_STEPS * fScaleV;
+		// Blur offsets are physical texels, independent of SHORT2 packing precision.
+		const int width = Max( 1, pTex->GetXSize() ), height = Max( 1, pTex->GetYSize() );
+		const bool unnormalizedNP2 = NGfx::IsNVidiaNP2Bug() && pTex->IsNP2();
+		float fOffsetX = fBlurShift * S2TextureSampling::TexelUVScale( width, unnormalizedNP2 );
+		float fOffsetY = fBlurShift * S2TextureSampling::TexelUVScale( height, unnormalizedNP2 );
 		pRC->SetVSConst( 16, CVec4( fScaleU, fScaleV, 0, 0 ) );
 		pRC->SetVSConst( 17, CVec4( 0, fOffsetY, 0, 0 ) );
 		pRC->SetVSConst( 18, CVec4(  fOffsetX, -fOffsetY, 0, 0 ) );

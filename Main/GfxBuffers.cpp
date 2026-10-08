@@ -626,7 +626,7 @@ CTextureLocker::~CTextureLocker()
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-CTexture::CTexture(CTB* _pTB, EWrap _wrap) : pTB(_pTB), nFrameUsed(0), wrap(_wrap), bPointFiltered(false) { region.SetRect(0, 0, _pTB->GetXSize(), _pTB->GetYSize()); }
+CTexture::CTexture(CTB* _pTB, EWrap _wrap) : nFrameUsed(0), nSourceLogicalWidth(0), nSourceLogicalHeight(0), pTB(_pTB), wrap(_wrap), bPointFiltered(false) { region.SetRect(0, 0, _pTB->GetXSize(), _pTB->GetYSize()); }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 I2DBufferLock* CTexture::Lock( int nLevel, EAccess access ) 
 {
@@ -1498,6 +1498,9 @@ CTexture* MakeTexture( int nXSize, int nYSize, int nMipLevels, int nPixelID, ETe
 		InformNew2DTextureAlloc();
 		D3DFORMAT fmt = PixelID2D3DFormat( nPixelID );
 		ASSERT( fmt == D3DFMT_A8R8G8B8 );
+		CTB *pCache = textureCache.GetTB();
+		if ( !pCache || nXSize > pCache->GetXSize() || nYSize > pCache->GetYSize() )
+			return MakeTexture( nXSize, nYSize, nMipLevels, nPixelID, REGULAR, wrap );
 		return textureCache.Alloc( nXSize, nYSize );
 	}
 	if ( eUsage == TRANSPARENT_TEXTURE )

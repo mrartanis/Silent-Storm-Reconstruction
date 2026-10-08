@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 347 of these verified originals are accepted in the shared
+As of 2026-10-08, 354 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-eighteenth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-nineteenth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,433 IDs: clothing 224, equipment 152, weapons
-57, heads 184, UI 656, effects 136, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,415 IDs: clothing 223, equipment 151, weapons
+57, heads 184, UI 640, effects 136, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -206,3 +206,29 @@ Sixteenth accepted packet: `../jobs-new-groups-sixteenth.json` adds17: eleven eq
 Seventeenth accepted packet: `../jobs-new-groups-seventeenth.json` adds8: three equipment, three effects, one weapon and exact clothing duplicate5453←4010 with zero new imagegen calls. Pack2,305 textures/4,610 aliases/124 archives/7,477,827,592 bytes; prior2,297 source/PNG/native hashes unchanged. All8 nativeRGBA equal privately reviewed production4x predictions; full original alpha, blend/UV/materials/count/scale retained.1936 uses source-only wholecanvas3:1 affine guide/inverse whole4x and explicit source_mask_rgb_padding=False: default padding incorrectly colors alpha-positive RGB-black UV gaps. Full original alpha retained, scalar0.997734, no artistic RGB repair/crop/BBox; defaults and prior accepted assets unchanged. Two meaningful new blackUV regression tests and two existing sourceRGB-region tests pass. Full native validation, actual-menu HD on/off/on, four private screenshots and isolated normal quit/Game absent: `../new-groups-seventeenth-{batch,live}-check.json`. Integration scene confirms layers/menu, not display of every new atlas. All declared accepted stages are ordinary Git files (`../accepted-git-stage-completeness-seventeenth.json`). Nine original16x16 two-color/solid UI5363..5371 retained without generation: actual CFrame UICommCtrls.cpp684..692/UITextures654..662 runtime proof. Genuine artistic UI remain pending.1941 actual OUTPUT moderation refusal/request2cde57e5-5062-4754-ba19-2240dc393004 recorded with exact prompt/refSHA, no retries. Rejected5453v1 archived in generated/rejected-clothing-ninth-5453-v1 before canonical donor reuse. Unaccepted raw stay outside pack with provenance. Do not regenerate accepted IDs.
 
 Eighteenth accepted packet: `../jobs-new-groups-eighteenth.json` adds4 effects1567/1577/5120/5275. Pack2,309 textures/4,618 aliases/124 archives/7,479,225,912 bytes. Prior2,305 source/PNG/native hashes unchanged; all4 nativeRGBA equal privately reviewed production4x predictions. Full original alpha/Transparent premultiply, paper/soft impact materials, original pieces/pattern/wholecanvas UV retained. Existing folds/rims locally more defined and privately accepted at4x; no additional components/creases/hard geometry. Scalar calibration only, no crop/BBox/artistic RGB repair. Full native validation, actual HD on/off/on menu, four private screenshots and isolated normal quit/Game absent: `../new-groups-eighteenth-{batch,live}-check.json`. Integration scene confirms layer/menu, not every individual new effect. Every declared accepted stage remains an ordinary Git file (`../accepted-git-stage-completeness-eighteenth.json`). Unaccepted attempts effects-thirteenth/fourteenth, weapons-tenth/clothing-twelfth retain exact raw/prompts/refSHA/metadata and material/new-detail/blackUV-drift reasons outside pack. Effects-fifteenth0calls, source-only audit. Do not assume1936 padding optout corrects other rejected art; do not regenerate accepted IDs.
+
+Nineteenth accepted packet: seven5425/7209/4651/4661/4642/4723/3044,
+six UI backgrounds/materials and one equipment atlas. Pack2,316 textures/4,632
+aliases/126 archives/7,599,812,562 bytes. Prior2,309 source/PNG/native hashes
+unchanged; all7 nativeRGBA exactly equal privately reviewed production4x predictions.
+Wholecanvas UV/sourcealpha/material blend modes retained;3044 keeps exact19 grip
+stroke phase. Scalar calibration only, no artistic RGB insertion/crop/BBox.
+Eleven genuinely constant or empty fills1881/5393/5394/6644/6646..6652 retain originals;
+this does not exclude other CImage or NPOT artwork. GPU UI derives density from
+the actual selected file after logical clipping/retail halftexel correction,
+without resizing geometry. Physical CopyTexture/ShowTexture, fonts/manual/RT paths
+keep their existing units. HD file2D sheets use dedicated textures instead of
+overflowing the1024² atlas. Builder accepts exact whole NPOT4x without padding,
+retaining the existing short-min mip convention and every old native payload.
+Signed-SHORT2 overflow at4096 is fixed by bounded coordinate packing with reciprocal
+normalization; full UV is never clamped/cropped, small-texture precision retained.
+All84 coordinate/packing checks, two NPOT archive/alpha/mip tests and four existing RGB calibration tests pass.
+UI runtime evidence is recorded separately. Full native validation, actual-menu
+HD on/off/on and isolated normal quit: `../new-groups-nineteenth-{batch,live}-check.json`.
+Integration scene does not certify every new UI/model. All declared accepted
+stages are ordinary Git files (`../accepted-git-stage-completeness-nineteenth.json`).
+Equipment14/16 and weapons11 held artifacts retain exact provenance;3046/3049
+were not imported due to material/local detail drift. Exact accepted-donor audit
+of1433 remaining sources against2303 eligible donors (authorized book covers
+excluded) found0 matches and made0 new calls. UI13/equipment17 are subsequent
+independent packets; inspect saved raw/jobs before generating again.

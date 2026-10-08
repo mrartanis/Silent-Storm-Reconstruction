@@ -1,0 +1,1872 @@
+[
+  {
+    "id": 5393,
+    "source_record": {
+      "id": 5393,
+      "texture": {
+        "ID": 5393,
+        "Width": 177,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -12104914,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\FaceGen\\31_01.tga",
+        "Format": "8888",
+        "UserName": "Face Slider",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 663,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Face Slider"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 663,
+            "name": "Face Slider",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              177,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2041,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  25,
+                  2,
+                  202,
+                  40
+                ],
+                "container": 362,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        177,
+        38
+      ],
+      "source_sha256": "b7ccb433b474ebc7e8d93523cb73a4310f723041a9c41919e227722fc289f16f",
+      "source_rgba_sha256": "0e855801bd42a060cfc086535ee5c1bf12117d6bd502418282c2eca640f24a64",
+      "release_rgba_sha256": "0e855801bd42a060cfc086535ee5c1bf12117d6bd502418282c2eca640f24a64",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/5393.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          71,
+          75,
+          46,
+          255
+        ],
+        "pixels": 6726
+      }
+    ],
+    "source_rgba_sha256": "0e855801bd42a060cfc086535ee5c1bf12117d6bd502418282c2eca640f24a64",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 663,
+          "R_800x600": 0,
+          "R_1024x768": 5393,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Face Slider"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2041,
+              "Type": 15,
+              "Left": 25,
+              "Top": 2,
+              "Right": 202,
+              "Bottom": 40,
+              "Texture0": 663,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 362,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 2,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 362,
+              "Width": 229,
+              "Height": 42,
+              "ScriptID": 0,
+              "UserName": "Face Scroll"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      177,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 5394,
+    "source_record": {
+      "id": 5394,
+      "texture": {
+        "ID": 5394,
+        "Width": 177,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -11196141,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\FaceGen\\31_02.tga",
+        "Format": "8888",
+        "UserName": "Voice Slider",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 664,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Voice Slider"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 664,
+            "name": "Voice Slider",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              177,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2042,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  25,
+                  2,
+                  201,
+                  39
+                ],
+                "container": 373,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        177,
+        38
+      ],
+      "source_sha256": "ec45d437946c3dbd40935af9691708d8b68e7c06ee017799ee610f3a602b7378",
+      "source_rgba_sha256": "e19d8ea06721e37683f4942428c40d2fc0a2eac4ad71555e27af48141646fced",
+      "release_rgba_sha256": "e19d8ea06721e37683f4942428c40d2fc0a2eac4ad71555e27af48141646fced",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/5394.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          85,
+          41,
+          19,
+          255
+        ],
+        "pixels": 6726
+      }
+    ],
+    "source_rgba_sha256": "e19d8ea06721e37683f4942428c40d2fc0a2eac4ad71555e27af48141646fced",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 664,
+          "R_800x600": 0,
+          "R_1024x768": 5394,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Voice Slider"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2042,
+              "Type": 15,
+              "Left": 25,
+              "Top": 2,
+              "Right": 201,
+              "Bottom": 39,
+              "Texture0": 664,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 373,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 2,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 373,
+              "Width": 226,
+              "Height": 41,
+              "ScriptID": 0,
+              "UserName": "Voice Scroll"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      177,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6644,
+    "source_record": {
+      "id": 6644,
+      "texture": {
+        "ID": 6644,
+        "Width": 240,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -7564183,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_008_01.tga",
+        "Format": "8888",
+        "UserName": "M_008_01",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 858,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_008_01"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 858,
+            "name": "M_008_01",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              240,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2387,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  0,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 400,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        240,
+        38
+      ],
+      "source_sha256": "72d710bf085d375cc236cfaa86c2fe8fba481baf902d6f7d45a207dfad1824f9",
+      "source_rgba_sha256": "18ebee030ec3c14fb53ed5f2332576b150f0941b85a0926ce27b202565411153",
+      "release_rgba_sha256": "18ebee030ec3c14fb53ed5f2332576b150f0941b85a0926ce27b202565411153",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6644.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          139,
+          147,
+          105,
+          255
+        ],
+        "pixels": 9120
+      }
+    ],
+    "source_rgba_sha256": "18ebee030ec3c14fb53ed5f2332576b150f0941b85a0926ce27b202565411153",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 858,
+          "R_800x600": 0,
+          "R_1024x768": 6644,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_008_01"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2387,
+              "Type": 15,
+              "Left": 0,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 858,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 400,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 400,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_01"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      240,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6646,
+    "source_record": {
+      "id": 6646,
+      "texture": {
+        "ID": 6646,
+        "Width": 240,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -8222852,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_009_01.tga",
+        "Format": "8888",
+        "UserName": "M_009_01",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 855,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_009_01"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 855,
+            "name": "M_009_01",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              240,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2390,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  0,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 406,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        240,
+        38
+      ],
+      "source_sha256": "6fa98f84562e4c58b54855a847f5eceb9e4e9576324ebdb0a37d77e5b866f311",
+      "source_rgba_sha256": "5c4f7fc885aab01fef1c214f1860dadef300f6c7068a5a4a271ffd0217ea530f",
+      "release_rgba_sha256": "5c4f7fc885aab01fef1c214f1860dadef300f6c7068a5a4a271ffd0217ea530f",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6646.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          129,
+          134,
+          124,
+          255
+        ],
+        "pixels": 9120
+      }
+    ],
+    "source_rgba_sha256": "5c4f7fc885aab01fef1c214f1860dadef300f6c7068a5a4a271ffd0217ea530f",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 855,
+          "R_800x600": 0,
+          "R_1024x768": 6646,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_009_01"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2390,
+              "Type": 15,
+              "Left": 0,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 855,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 406,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 406,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_02"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      240,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6647,
+    "source_record": {
+      "id": 6647,
+      "texture": {
+        "ID": 6647,
+        "Width": 20,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -9931923,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_009_02.tga",
+        "Format": "8888",
+        "UserName": "M_009_02",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 856,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_009_02"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 856,
+            "name": "M_009_02",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              20,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2391,
+                "field": "Texture0",
+                "control_name": "slider",
+                "type": 2,
+                "rect": [
+                  220,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 406,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        20,
+        38
+      ],
+      "source_sha256": "30246dac02c66522a1c4011ca7f90217ed512a681b6e5a10f26336874c86585e",
+      "source_rgba_sha256": "4b0e88e0415c2feac8512542fa3e94c4bbb7ea119fed756930b178cc9ffa537e",
+      "release_rgba_sha256": "4b0e88e0415c2feac8512542fa3e94c4bbb7ea119fed756930b178cc9ffa537e",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6647.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          104,
+          115,
+          109,
+          255
+        ],
+        "pixels": 760
+      }
+    ],
+    "source_rgba_sha256": "4b0e88e0415c2feac8512542fa3e94c4bbb7ea119fed756930b178cc9ffa537e",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 856,
+          "R_800x600": 0,
+          "R_1024x768": 6647,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_009_02"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2391,
+              "Type": 2,
+              "Left": 220,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 856,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 406,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 1,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 0,
+              "Visible": 1,
+              "Topmost": 1,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "slider",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 406,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_02"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      20,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6648,
+    "source_record": {
+      "id": 6648,
+      "texture": {
+        "ID": 6648,
+        "Width": 240,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -5604508,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_010_01.tga",
+        "Format": "8888",
+        "UserName": "M_010_01",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 857,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_010_01"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 857,
+            "name": "M_010_01",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              240,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2392,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  0,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 407,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        240,
+        38
+      ],
+      "source_sha256": "0f78c6a70fdba6ad1bacaeda61a2c599987f114f29d23235af2f967e3ddb90fd",
+      "source_rgba_sha256": "a426b88ae9ef1b2b4b63d8856c8d26104a6ff73f53e368b43b4ca8777e6988a7",
+      "release_rgba_sha256": "a426b88ae9ef1b2b4b63d8856c8d26104a6ff73f53e368b43b4ca8777e6988a7",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6648.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          169,
+          123,
+          100,
+          255
+        ],
+        "pixels": 9120
+      }
+    ],
+    "source_rgba_sha256": "a426b88ae9ef1b2b4b63d8856c8d26104a6ff73f53e368b43b4ca8777e6988a7",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 857,
+          "R_800x600": 0,
+          "R_1024x768": 6648,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_010_01"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2392,
+              "Type": 15,
+              "Left": 0,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 857,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 407,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 407,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_03"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      240,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6649,
+    "source_record": {
+      "id": 6649,
+      "texture": {
+        "ID": 6649,
+        "Width": 20,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -7116969,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_010_02.tga",
+        "Format": "8888",
+        "UserName": "M_010_02",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 862,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_010_02"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 862,
+            "name": "M_010_02",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              20,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2394,
+                "field": "Texture0",
+                "control_name": "slider",
+                "type": 2,
+                "rect": [
+                  220,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 407,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        20,
+        38
+      ],
+      "source_sha256": "2e79d4486f226822ab45972b8b16e0010b53dba24937ffa2aeecb778fe6c7c25",
+      "source_rgba_sha256": "3a86b5b232e06fb7c89cb7efb9e0beab028b08e117c09d075ca5d44e71502f03",
+      "release_rgba_sha256": "3a86b5b232e06fb7c89cb7efb9e0beab028b08e117c09d075ca5d44e71502f03",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6649.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          146,
+          103,
+          87,
+          255
+        ],
+        "pixels": 760
+      }
+    ],
+    "source_rgba_sha256": "3a86b5b232e06fb7c89cb7efb9e0beab028b08e117c09d075ca5d44e71502f03",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 862,
+          "R_800x600": 0,
+          "R_1024x768": 6649,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_010_02"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2394,
+              "Type": 2,
+              "Left": 220,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 862,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 407,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 1,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 0,
+              "Visible": 1,
+              "Topmost": 1,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "slider",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 407,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_03"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      20,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6650,
+    "source_record": {
+      "id": 6650,
+      "texture": {
+        "ID": 6650,
+        "Width": 240,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -5599378,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_011_01.tga",
+        "Format": "8888",
+        "UserName": "M_011_01",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 859,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_011_01"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 859,
+            "name": "M_011_01",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              240,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2393,
+                "field": "Texture0",
+                "control_name": "progress",
+                "type": 15,
+                "rect": [
+                  0,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 408,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        240,
+        38
+      ],
+      "source_sha256": "9dd2aa4820456dfdd4bcdececd5795d1c4c7fcc92dffbfa624051f514b8ff7ce",
+      "source_rgba_sha256": "c9e3fbc10947fe1273c4c5c58b528c3fabc2bdc78bbf48b47319d1e05acf016f",
+      "release_rgba_sha256": "c9e3fbc10947fe1273c4c5c58b528c3fabc2bdc78bbf48b47319d1e05acf016f",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6650.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          169,
+          142,
+          110,
+          255
+        ],
+        "pixels": 9120
+      }
+    ],
+    "source_rgba_sha256": "c9e3fbc10947fe1273c4c5c58b528c3fabc2bdc78bbf48b47319d1e05acf016f",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 859,
+          "R_800x600": 0,
+          "R_1024x768": 6650,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_011_01"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2393,
+              "Type": 15,
+              "Left": 0,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 859,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 408,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 0,
+              "Color": 0,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "progress",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 408,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_04"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      240,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6651,
+    "source_record": {
+      "id": 6651,
+      "texture": {
+        "ID": 6651,
+        "Width": 20,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -7046303,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_011_02.tga",
+        "Format": "8888",
+        "UserName": "M_011_02",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 860,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_011_02"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 860,
+            "name": "M_011_02",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              20,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2395,
+                "field": "Texture0",
+                "control_name": "slider",
+                "type": 2,
+                "rect": [
+                  220,
+                  0,
+                  240,
+                  38
+                ],
+                "container": 408,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        20,
+        38
+      ],
+      "source_sha256": "12a8484dbdf23aa1b68c20e72332d1ac429b23cd8bd0495d0c43732f0acba6f1",
+      "source_rgba_sha256": "d1f4a9b8210ef1e104cf63300c5b00066eb97f78528dfb3f5594097d263afb13",
+      "release_rgba_sha256": "d1f4a9b8210ef1e104cf63300c5b00066eb97f78528dfb3f5594097d263afb13",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6651.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          147,
+          123,
+          97,
+          255
+        ],
+        "pixels": 760
+      }
+    ],
+    "source_rgba_sha256": "d1f4a9b8210ef1e104cf63300c5b00066eb97f78528dfb3f5594097d263afb13",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 860,
+          "R_800x600": 0,
+          "R_1024x768": 6651,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_011_02"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2395,
+              "Type": 2,
+              "Left": 220,
+              "Top": 0,
+              "Right": 240,
+              "Bottom": 38,
+              "Texture0": 860,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 408,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 1,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 0,
+              "Visible": 1,
+              "Topmost": 1,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "slider",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 408,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "Slider_04"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      20,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  },
+  {
+    "id": 6652,
+    "source_record": {
+      "id": 6652,
+      "texture": {
+        "ID": 6652,
+        "Width": 20,
+        "Height": 38,
+        "NMips": 1,
+        "AverageColor": -9142435,
+        "InstantLoad": 1,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\AdvFaceGen\\M_008_02.tga",
+        "Format": "8888",
+        "UserName": "M_008_02",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "2D"
+      },
+      "category": "interface-v5",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 861,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "M_008_02"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 861,
+            "name": "M_008_02",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              20,
+              38
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2434,
+                "field": "Texture0",
+                "control_name": "slider",
+                "type": 2,
+                "rect": [
+                  220,
+                  0,
+                  239,
+                  38
+                ],
+                "container": 418,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ]
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        20,
+        38
+      ],
+      "source_sha256": "88721cc0263a314c5bd26f52e8d3a55fb5ceef99d1fd7c7b096e3d8e1e626f9a",
+      "source_rgba_sha256": "316f7f423f93a7a7df3e65ba38a934a0d32e6068f80731acd95d79c7ffceb172",
+      "release_rgba_sha256": "316f7f423f93a7a7df3e65ba38a934a0d32e6068f80731acd95d79c7ffceb172",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6652.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "recommendation": "original-only constant runtime UI fill; coordinator decides classification",
+    "imagegen_calls": 0,
+    "artistic_texture_claim": false,
+    "cframe_slice_claim": false,
+    "reason": "Full historical/release/original exact RGBA is one uniform color, opaque A255, with no artistic grain, glyph, edge or icon. Actual progressbar/image binding confirms solid UI fill rather than inferred technical label from class name.",
+    "exact_RGBA_histogram": [
+      {
+        "rgba": [
+          116,
+          127,
+          93,
+          255
+        ],
+        "pixels": 760
+      }
+    ],
+    "source_rgba_sha256": "316f7f423f93a7a7df3e65ba38a934a0d32e6068f80731acd95d79c7ffceb172",
+    "fresh_actual_ui_chains": [
+      {
+        "actual_ui_texture": {
+          "ID": 861,
+          "R_800x600": 0,
+          "R_1024x768": 6652,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "M_008_02"
+        },
+        "resolution_field": "R_1024x768",
+        "actual_controls": [
+          {
+            "field": "Texture0",
+            "actual_control": {
+              "ID": 2434,
+              "Type": 2,
+              "Left": 220,
+              "Top": 0,
+              "Right": 239,
+              "Bottom": 38,
+              "Texture0": 861,
+              "Texture1": 0,
+              "Texture2": 0,
+              "Texture3": 0,
+              "Texture4": 0,
+              "Model0": 0,
+              "Model1": 0,
+              "Model2": 0,
+              "Model3": 0,
+              "Model4": 0,
+              "StringID": 0,
+              "UIContainerID": 418,
+              "NestedUIContainerID": 0,
+              "TooltipID": 0,
+              "Depth": 1,
+              "Color": -1,
+              "Freeze": 1,
+              "Transparent": 1,
+              "Visible": 1,
+              "Topmost": 0,
+              "Texture5": 0,
+              "DefaultWindow": 0,
+              "Bottommost": 0,
+              "Sound0": 0,
+              "Sound1": 0,
+              "Sound2": 0,
+              "Sound3": 0,
+              "Sound4": 0,
+              "ToolTipAnchorX": 0,
+              "ToolTipAnchorY": 0,
+              "Text": "",
+              "IDText": "slider",
+              "ToolTipAnchorType": ""
+            },
+            "actual_container": {
+              "ID": 418,
+              "Width": 240,
+              "Height": 38,
+              "ScriptID": 0,
+              "UserName": "test"
+            }
+          }
+        ]
+      }
+    ],
+    "runtime_proof": {
+      "control_enum": "DBFormat/DataInterface.h enum:UI_IMAGE2, UI_PROGRESSBAR15. Names containing Slider do not determine actual class.",
+      "progressbar": "Main/UIInterface.cpp240 dispatches UI_PROGRESSBAR to CProgressBar; Main/UICommCtrls.cpp1623-1670 binds exact Texture0, keeps original logical width, clips progress window by value and only scales if original PBARSTYLE_SCALE. No artistic reconstruction or source crop inferred.",
+      "image": "Main/UIInterface.cpp209 dispatches UI_IMAGE to CImage; Main/UIBaseCtrls.cpp229-251 binds Texture0 and retains complete source texture; Main/UIWrap.cpp237-245 defaults to full physical source rectangle, original logical dimensions retained.",
+      "cframe_scope": "CFrame fixed UI654..662 correspond only accepted/original-only5363..5371. These ten are not new CFrame slices.",
+      "source_files_sha256": {
+        "Main/UICommCtrls.cpp": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+        "Main/UIBaseCtrls.cpp": "0c39e4564f1a8d325b511b722433d5bfcb9c1c5f852999cb0d25e2f252fa63fd",
+        "Main/UIWrap.cpp": "2ffa2c03d1db9b1d9d387671d839c45dd1a2cbf826b3801b633eddd185ee60dd",
+        "Main/UIInterface.cpp": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+        "DBFormat/DataInterface.h": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7",
+        "DBFormat/DataInterface.cpp": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+      }
+    },
+    "logical_size": [
+      20,
+      38
+    ],
+    "native_support_note": "NPOT original preserved exactly; do not pad/crop/repack into HD dimensions."
+  }
+]

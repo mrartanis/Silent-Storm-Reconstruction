@@ -1,0 +1,1472 @@
+[
+  {
+    "id": 5425,
+    "texture": {
+      "ID": 5425,
+      "Width": 1024,
+      "Height": 1024,
+      "NMips": 1,
+      "AverageColor": -9216970,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\PWL\\_PWL_Base.tga",
+      "Format": "8888",
+      "UserName": "Base",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 883,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Base"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 883,
+          "name": "Base",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            1024,
+            1024
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      1024,
+      1024
+    ],
+    "source_sha256": "eb418bb0f158edb8b2d20e59c2110be9f6be852a670c85e8c40cd8f5686f9240",
+    "source_rgba_sha256": "126a04f55b2d3a099a4179bb8b2cbf26049fee4d61289e43469b95df3331a1b2",
+    "release_rgba_sha256": "126a04f55b2d3a099a4179bb8b2cbf26049fee4d61289e43469b95df3331a1b2",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5425.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 7209,
+    "texture": {
+      "ID": 7209,
+      "Width": 256,
+      "Height": 512,
+      "NMips": 1,
+      "AverageColor": -1370212049,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\CharGen\\Flags\\M_014_1.tga",
+      "Format": "dxt1",
+      "UserName": "FlagUSA",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 921,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "FlagUSA"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 921,
+          "name": "FlagUSA",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            256,
+            512
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "Nationalities",
+              "id": 14,
+              "field": "CharGenBackgroundID"
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      512
+    ],
+    "source_sha256": "895a230dfad2ab7c32af9e7702031feca4b9b74644b50dc30bab3fbc3b86e490",
+    "source_rgba_sha256": "bd81a7136a5dc66c63d1ba2e8d5df66663ab1ad69e4db03549d624ed42828776",
+    "release_rgba_sha256": "bd81a7136a5dc66c63d1ba2e8d5df66663ab1ad69e4db03549d624ed42828776",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/7209.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 4651,
+    "texture": {
+      "ID": 4651,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 1,
+      "AverageColor": -14408151,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\MainMenu\\Brick.tga",
+      "Format": "dxt1",
+      "UserName": "Brick",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2895,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1860,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4849,
+              "field": "Material3",
+              "material_template_id": 1860,
+              "geometry_id": 3006,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3223,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4850,
+              "field": "Material3",
+              "material_template_id": 1860,
+              "geometry_id": 3007,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3224,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4851,
+              "field": "Material3",
+              "material_template_id": 1860,
+              "geometry_id": 3008,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3225,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4854,
+              "field": "Material3",
+              "material_template_id": 1860,
+              "geometry_id": 3011,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3228,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4855,
+              "field": "Material3",
+              "material_template_id": 1860,
+              "geometry_id": 3012,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3229,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "91b9bf8ed78240562cb45c02d49ccd53f82ae40859b8eccfa4104311d4c5fbbb",
+    "source_rgba_sha256": "461a23eedf3e0a868e09a1d739aba9b680bbb11f8760673e773478b738ff05d2",
+    "release_rgba_sha256": "461a23eedf3e0a868e09a1d739aba9b680bbb11f8760673e773478b738ff05d2",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4651.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 4661,
+    "texture": {
+      "ID": 4661,
+      "Width": 64,
+      "Height": 64,
+      "NMips": 1,
+      "AverageColor": -14934240,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\MainMenu\\Stone.tga",
+      "Format": "dxt1",
+      "UserName": "Stone",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2905,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1870,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4849,
+              "field": "Material2",
+              "material_template_id": 1870,
+              "geometry_id": 3006,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3223,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4850,
+              "field": "Material2",
+              "material_template_id": 1870,
+              "geometry_id": 3007,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3224,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4851,
+              "field": "Material2",
+              "material_template_id": 1870,
+              "geometry_id": 3008,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3225,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4854,
+              "field": "Material2",
+              "material_template_id": 1870,
+              "geometry_id": 3011,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3228,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4855,
+              "field": "Material2",
+              "material_template_id": 1870,
+              "geometry_id": 3012,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3229,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      64
+    ],
+    "source_sha256": "2148505e78b58b29b4e8520bf257332cea8c3d3369e60934393b1da736745400",
+    "source_rgba_sha256": "25806fc9f23aa6976a7c6211d6560aeb1a10c36768ba976705be1efa69f3f42b",
+    "release_rgba_sha256": "25806fc9f23aa6976a7c6211d6560aeb1a10c36768ba976705be1efa69f3f42b",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4661.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 4642,
+    "texture": {
+      "ID": 4642,
+      "Width": 256,
+      "Height": 256,
+      "NMips": 1,
+      "AverageColor": -15132386,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\MainMenu\\MainMenu_Terrain.tga",
+      "Format": "8888",
+      "UserName": "MainMenu_Terrain",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2892,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1858,
+          "consumers": []
+        },
+        {
+          "table": "Materials",
+          "id": 3384,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2170,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4855,
+              "field": "Material1",
+              "material_template_id": 2170,
+              "geometry_id": 3012,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3229,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      256
+    ],
+    "source_sha256": "e78fe88e3712805d6dd7551e201246e72ad4aac9ecc0b0ca6ab51b947b1a1947",
+    "source_rgba_sha256": "106bd7884666374d5bbf23e23e67dc1c5e704e608aeacdcc4e6813f3ecbd57bd",
+    "release_rgba_sha256": "106bd7884666374d5bbf23e23e67dc1c5e704e608aeacdcc4e6813f3ecbd57bd",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4642.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 4723,
+    "texture": {
+      "ID": 4723,
+      "Width": 512,
+      "Height": 256,
+      "NMips": 1,
+      "AverageColor": -13488322,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\MainMenu\\M1_Element_C.tga",
+      "Format": "dxt1",
+      "UserName": "M1_Element_C",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2973,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "self_illum",
+          "AddressMode": "Clamp",
+          "TemplateID": 1914,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4932,
+              "field": "Material0",
+              "material_template_id": 1914,
+              "geometry_id": 3063,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3286,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      512,
+      256
+    ],
+    "source_sha256": "8619357fc1f132b4c5feb7d4523eec277b23c570ed0db25d3705a284638fff8e",
+    "source_rgba_sha256": "3b9d836c5ca729017643638c13735a78ca96e389fbb3f5df4498143e2c772512",
+    "release_rgba_sha256": "3b9d836c5ca729017643638c13735a78ca96e389fbb3f5df4498143e2c772512",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4723.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 3044,
+    "texture": {
+      "ID": 3044,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15725299,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Equipment\\Items\\Knives\\UK_Fairbairn_Sykes.tga",
+      "Format": "dxt1",
+      "UserName": "UK_Fairbairn_Sykes",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "equipment",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1874,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1255,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1802,
+              "field": "Material0",
+              "material_template_id": 1255,
+              "geometry_id": 2119,
+              "geometry": "Characters\\Equipment\\Items\\Knives.mb",
+              "model_template_id": 1383,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 1803,
+              "field": "Material0",
+              "material_template_id": 1255,
+              "geometry_id": 2120,
+              "geometry": "Characters\\Equipment\\Items\\Knives.mb",
+              "model_template_id": 1384,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 1804,
+              "field": "Material0",
+              "material_template_id": 1255,
+              "geometry_id": 2121,
+              "geometry": "Characters\\Equipment\\Items\\Knives.mb",
+              "model_template_id": 1385,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "d7afdbec04edc9125e19ed1c4cbf2bd4e979583f50b2f7be828fdbdd44f41908",
+    "source_rgba_sha256": "1d511222ec58bf604057742e933f12c1287d4e78936d9aec0de1e22d0ec94bc6",
+    "release_rgba_sha256": "1d511222ec58bf604057742e933f12c1287d4e78936d9aec0de1e22d0ec94bc6",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/3044.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 5393,
+    "texture": {
+      "ID": 5393,
+      "Width": 177,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -12104914,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\FaceGen\\31_01.tga",
+      "Format": "8888",
+      "UserName": "Face Slider",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 663,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Face Slider"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 663,
+          "name": "Face Slider",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            177,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2041,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                25,
+                2,
+                202,
+                40
+              ],
+              "container": 362,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      177,
+      38
+    ],
+    "source_sha256": "b7ccb433b474ebc7e8d93523cb73a4310f723041a9c41919e227722fc289f16f",
+    "source_rgba_sha256": "0e855801bd42a060cfc086535ee5c1bf12117d6bd502418282c2eca640f24a64",
+    "release_rgba_sha256": "0e855801bd42a060cfc086535ee5c1bf12117d6bd502418282c2eca640f24a64",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5393.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 5394,
+    "texture": {
+      "ID": 5394,
+      "Width": 177,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -11196141,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\FaceGen\\31_02.tga",
+      "Format": "8888",
+      "UserName": "Voice Slider",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 664,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Voice Slider"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 664,
+          "name": "Voice Slider",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            177,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2042,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                25,
+                2,
+                201,
+                39
+              ],
+              "container": 373,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      177,
+      38
+    ],
+    "source_sha256": "ec45d437946c3dbd40935af9691708d8b68e7c06ee017799ee610f3a602b7378",
+    "source_rgba_sha256": "e19d8ea06721e37683f4942428c40d2fc0a2eac4ad71555e27af48141646fced",
+    "release_rgba_sha256": "e19d8ea06721e37683f4942428c40d2fc0a2eac4ad71555e27af48141646fced",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5394.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6644,
+    "texture": {
+      "ID": 6644,
+      "Width": 240,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -7564183,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_008_01.tga",
+      "Format": "8888",
+      "UserName": "M_008_01",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 858,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_008_01"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 858,
+          "name": "M_008_01",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            240,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2387,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                0,
+                0,
+                240,
+                38
+              ],
+              "container": 400,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      240,
+      38
+    ],
+    "source_sha256": "72d710bf085d375cc236cfaa86c2fe8fba481baf902d6f7d45a207dfad1824f9",
+    "source_rgba_sha256": "18ebee030ec3c14fb53ed5f2332576b150f0941b85a0926ce27b202565411153",
+    "release_rgba_sha256": "18ebee030ec3c14fb53ed5f2332576b150f0941b85a0926ce27b202565411153",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6644.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6646,
+    "texture": {
+      "ID": 6646,
+      "Width": 240,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -8222852,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_009_01.tga",
+      "Format": "8888",
+      "UserName": "M_009_01",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 855,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_009_01"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 855,
+          "name": "M_009_01",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            240,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2390,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                0,
+                0,
+                240,
+                38
+              ],
+              "container": 406,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      240,
+      38
+    ],
+    "source_sha256": "6fa98f84562e4c58b54855a847f5eceb9e4e9576324ebdb0a37d77e5b866f311",
+    "source_rgba_sha256": "5c4f7fc885aab01fef1c214f1860dadef300f6c7068a5a4a271ffd0217ea530f",
+    "release_rgba_sha256": "5c4f7fc885aab01fef1c214f1860dadef300f6c7068a5a4a271ffd0217ea530f",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6646.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6647,
+    "texture": {
+      "ID": 6647,
+      "Width": 20,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -9931923,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_009_02.tga",
+      "Format": "8888",
+      "UserName": "M_009_02",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 856,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_009_02"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 856,
+          "name": "M_009_02",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            20,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2391,
+              "field": "Texture0",
+              "control_name": "slider",
+              "type": 2,
+              "rect": [
+                220,
+                0,
+                240,
+                38
+              ],
+              "container": 406,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      20,
+      38
+    ],
+    "source_sha256": "30246dac02c66522a1c4011ca7f90217ed512a681b6e5a10f26336874c86585e",
+    "source_rgba_sha256": "4b0e88e0415c2feac8512542fa3e94c4bbb7ea119fed756930b178cc9ffa537e",
+    "release_rgba_sha256": "4b0e88e0415c2feac8512542fa3e94c4bbb7ea119fed756930b178cc9ffa537e",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6647.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6648,
+    "texture": {
+      "ID": 6648,
+      "Width": 240,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -5604508,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_010_01.tga",
+      "Format": "8888",
+      "UserName": "M_010_01",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 857,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_010_01"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 857,
+          "name": "M_010_01",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            240,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2392,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                0,
+                0,
+                240,
+                38
+              ],
+              "container": 407,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      240,
+      38
+    ],
+    "source_sha256": "0f78c6a70fdba6ad1bacaeda61a2c599987f114f29d23235af2f967e3ddb90fd",
+    "source_rgba_sha256": "a426b88ae9ef1b2b4b63d8856c8d26104a6ff73f53e368b43b4ca8777e6988a7",
+    "release_rgba_sha256": "a426b88ae9ef1b2b4b63d8856c8d26104a6ff73f53e368b43b4ca8777e6988a7",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6648.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6649,
+    "texture": {
+      "ID": 6649,
+      "Width": 20,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -7116969,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_010_02.tga",
+      "Format": "8888",
+      "UserName": "M_010_02",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 862,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_010_02"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 862,
+          "name": "M_010_02",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            20,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2394,
+              "field": "Texture0",
+              "control_name": "slider",
+              "type": 2,
+              "rect": [
+                220,
+                0,
+                240,
+                38
+              ],
+              "container": 407,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      20,
+      38
+    ],
+    "source_sha256": "2e79d4486f226822ab45972b8b16e0010b53dba24937ffa2aeecb778fe6c7c25",
+    "source_rgba_sha256": "3a86b5b232e06fb7c89cb7efb9e0beab028b08e117c09d075ca5d44e71502f03",
+    "release_rgba_sha256": "3a86b5b232e06fb7c89cb7efb9e0beab028b08e117c09d075ca5d44e71502f03",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6649.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6650,
+    "texture": {
+      "ID": 6650,
+      "Width": 240,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -5599378,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_011_01.tga",
+      "Format": "8888",
+      "UserName": "M_011_01",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 859,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_011_01"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 859,
+          "name": "M_011_01",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            240,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2393,
+              "field": "Texture0",
+              "control_name": "progress",
+              "type": 15,
+              "rect": [
+                0,
+                0,
+                240,
+                38
+              ],
+              "container": 408,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      240,
+      38
+    ],
+    "source_sha256": "9dd2aa4820456dfdd4bcdececd5795d1c4c7fcc92dffbfa624051f514b8ff7ce",
+    "source_rgba_sha256": "c9e3fbc10947fe1273c4c5c58b528c3fabc2bdc78bbf48b47319d1e05acf016f",
+    "release_rgba_sha256": "c9e3fbc10947fe1273c4c5c58b528c3fabc2bdc78bbf48b47319d1e05acf016f",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6650.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6651,
+    "texture": {
+      "ID": 6651,
+      "Width": 20,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -7046303,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_011_02.tga",
+      "Format": "8888",
+      "UserName": "M_011_02",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 860,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_011_02"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 860,
+          "name": "M_011_02",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            20,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2395,
+              "field": "Texture0",
+              "control_name": "slider",
+              "type": 2,
+              "rect": [
+                220,
+                0,
+                240,
+                38
+              ],
+              "container": 408,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      20,
+      38
+    ],
+    "source_sha256": "12a8484dbdf23aa1b68c20e72332d1ac429b23cd8bd0495d0c43732f0acba6f1",
+    "source_rgba_sha256": "d1f4a9b8210ef1e104cf63300c5b00066eb97f78528dfb3f5594097d263afb13",
+    "release_rgba_sha256": "d1f4a9b8210ef1e104cf63300c5b00066eb97f78528dfb3f5594097d263afb13",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6651.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 6652,
+    "texture": {
+      "ID": 6652,
+      "Width": 20,
+      "Height": 38,
+      "NMips": 1,
+      "AverageColor": -9142435,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\AdvFaceGen\\M_008_02.tga",
+      "Format": "8888",
+      "UserName": "M_008_02",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 861,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "M_008_02"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 861,
+          "name": "M_008_02",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            20,
+            38
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2434,
+              "field": "Texture0",
+              "control_name": "slider",
+              "type": 2,
+              "rect": [
+                220,
+                0,
+                239,
+                38
+              ],
+              "container": 418,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      20,
+      38
+    ],
+    "source_sha256": "88721cc0263a314c5bd26f52e8d3a55fb5ceef99d1fd7c7b096e3d8e1e626f9a",
+    "source_rgba_sha256": "316f7f423f93a7a7df3e65ba38a934a0d32e6068f80731acd95d79c7ffceb172",
+    "release_rgba_sha256": "316f7f423f93a7a7df3e65ba38a934a0d32e6068f80731acd95d79c7ffceb172",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6652.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  {
+    "id": 1881,
+    "texture": {
+      "ID": 1881,
+      "Width": 256,
+      "Height": 256,
+      "NMips": 0,
+      "AverageColor": 0,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\Hanke\\Orders.tga",
+      "Format": "dxt1",
+      "UserName": "Orders",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1271,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 846,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1298,
+              "field": "Material3",
+              "material_template_id": 846,
+              "geometry_id": 1521,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Hanke.mb",
+              "model_template_id": 949,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      256
+    ],
+    "source_sha256": "29b6aca4e0d64ef9d3ec464ceb3004298227d4eac95e5c77045289d5faa43fc1",
+    "source_rgba_sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+    "release_rgba_sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      0
+    ],
+    "original_png": "expanded/original/1881.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  }
+]
