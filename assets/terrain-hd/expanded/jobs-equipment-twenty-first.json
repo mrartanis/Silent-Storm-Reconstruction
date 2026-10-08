@@ -1,0 +1,33 @@
+[
+  {
+    "id": 5434,
+    "generated": "assets/terrain-hd/expanded/generated/5434-raw.png",
+    "prompt": "Edit this exact complete game diffuse UV map into a modest HD hand-painted texture. The attached image is the entire native64x64 stored RGB canvas enlarged NEAREST8x512x512. Return the full square canvas with every original material field, black gap, shape, lightpatch and part at precisely the original normalized position and scale. No crop, padding, zoom, recentering, fitting, framing, arrangement changes or whitespace.\r\n\r\nPreserve the large upper-left almost-flat muted brown painted rectangle, its original slender gray edge, the adjacent upper dark gray rounded field, the middle-left gray painted field, the middle gray field with its ONE existing rectangular dark opening, the separate right gray field with its ONE existing rectangular dark opening, and the full long dim gray bottom stripe. There are exactly TWO rectangular openings; preserve their source dimensions and positions. Keep source flat/soft painted dark-gray and brown material and original subdued broad highlight fields. Do not turn the dark rectangles into new hardware pieces, screws, buckles or smaller cutouts.\r\n\r\nOnly gently resolve the original soft painted tonal detail. Almost-flat areas MUST remain almost-flat: no invented woodgrain, brushed metal grain, leather, scratches, rust, mottling, cloth texture or decorative surfaces. Maintain dark gaps, weak relative light strengths and matte source colors. No new part, crease, bevel, ridge, dent, white edge, glint, bolt, logo, text, symbol or decorative curl. Avoid photoreal hardware interpretation and increased local contrast. Output the entire opaque UV canvas; original native alpha will be restored separately.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5434.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5434-equipment-twenty-first-source-rgb-support.png"
+    }
+  }
+]

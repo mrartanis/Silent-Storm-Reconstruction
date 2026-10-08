@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 362 of these verified originals are accepted in the shared
+As of 2026-10-08, 365 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twentieth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-first-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,401 IDs: clothing 223, equipment 149, weapons
-57, heads 184, UI 628, effects 136, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,380 IDs: clothing 222, equipment 147, weapons
+57, heads 184, UI 628, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -253,3 +253,25 @@ recorded in ../new-groups-twentieth-{batch,live}-check.json. Separate real GPU
 reviewed; integration testing does not certify every new element. All declared
 PNG/prompt stages are ordinary Git files, ../accepted-git-stage-completeness-twentieth.json.
 Held independent attempts preserve exact raw/prompt/reason provenance. Never regenerate accepted IDs.
+
+Twenty-first accepted packet: 5403/6830/5434, one clothing and two equipment
+atlases. Pack: 2,327 textures / 4,654 aliases / 126 archives /
+7,606,212,086 bytes. All prior 2,324 source/PNG/native hashes are unchanged;
+three nativeRGBA images exactly match privately reviewed whole production4x predictions.
+Full source alpha, UV, material, component count and pattern scale retained.
+Accepted local paint/contrast/warmth changes are disclosed in ../coordinator-art-review-twenty-first.json;
+exact local RGB identity is not claimed. No artistic RGB insertion, crop/BBox or
+regeneration of accepted IDs. Full native validation, actual-menu HD on/off/on and
+isolated normal quit: ../new-groups-twenty-first-{batch,live}-check.json.
+All frames privately inspected; this scene does not certify each new model atlas.
+All declared PNG/exact-prompt stages are ordinary Git files:
+../accepted-git-stage-completeness-twenty-first.json.
+Eighteen original-only sources 4282/4362/4363/4784/4806..4817/5115/7464 were
+individually inspected in whole RGB/A: sixteen analytical light halos retain exact
+native center/ray/falloff profiles; two constant-black RGB Burn_00 images retain
+authored alpha scorch shapes and their distinct explosion_decal/overlay/opaque modes.
+Zero halo alpha is intentional additive encoding, not an exclusion criterion.
+Identical RGBA masks do not authorize material substitution. Missing definition273
+for4784 is recorded honestly. Painted particle/alpha art is not generally excluded.
+See ../coordinator-original-only-effects-eighteenth.json. Held independent
+attempts retain exact raw/prompt/reason provenance.

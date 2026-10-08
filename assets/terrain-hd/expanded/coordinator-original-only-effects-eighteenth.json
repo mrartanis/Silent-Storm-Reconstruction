@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-08",
+  "original_only_ids": [
+    4282,
+    4362,
+    4363,
+    4784,
+    4806,
+    4807,
+    4808,
+    4809,
+    4810,
+    4811,
+    4812,
+    4813,
+    4814,
+    4815,
+    4816,
+    4817,
+    5115,
+    7464
+  ],
+  "private_full_source_RGB_and_A_inspected": true,
+  "recommendation_SHA256": "72192fb546713496ba44adb5cfd17051f568129aba719e8359bd75448949ba16",
+  "decision": "Sixteen individually inspected colored point-light halo RGB profiles, single smooth center/falloff and existing narrow vertical ray; no material diffuse detail to reconstruct. Source alpha is identically zero and additive RGB is intentional, not reason for rejection. Exact native emissive falloff/ray widths/color and Type retained. Two Burn_00 maps have identically black RGB and authored alpha-only scorch shape: retain full originalRGBA and distinct explosion_decal/overlay/opaque material bindings; identicalRGBA does not authorize different-mode donor reuse. This individual structural emitter/mask decision does not exclude painted particle sprites/other alpha textures. Zero imagegen/artificial upscale for18.",
+  "runtime_code_proof": [
+    {
+      "path": "DBFormat/DataMap.cpp",
+      "line": 286,
+      "text": "286: \tNDatabase::ImportField( \"LightFlareTexture\", &pFlareTexture );",
+      "sha256": "9a20fa28cde2567dbaef49b348f4ca381d58cec48f4a5574cc9be0fc4afe1a10"
+    },
+    {
+      "path": "DBFormat/DataFormat.cpp",
+      "line": 1424,
+      "text": "1424: \tNDatabase::ImportField( \"PLightFlareTexture\", &pPFlareTexture );",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+    },
+    {
+      "path": "Main/MapBuild.cpp",
+      "line": 416,
+      "text": "416: \t\t\t\t\t\t\tp->fPFlareRadius = pFin->fFlareRadius;\n417: \t\t\t\t\t\t\tp->pPFlareTexture = pFin->pFlareTexture;\n418: \t\t\t\t\t\t\tp->ptPLightFlarePos = pFin->ptFlarePos;\n419: \t\t\t\t\t\t\tp->bPLightShadow = pFin->bLightShadow;\t// retail @0x674c91: element LightShadow -> model point-light shadow flag",
+      "sha256": "6291dfcc23a57d2418ef5fee6991daf485934981ae2e2fc8fea3f2ffafcc190a"
+    },
+    {
+      "path": "Main/wOSBase.cpp",
+      "line": 392,
+      "text": "392: \t\tif ( pCont->fPFlareRadius > 0 )\n393: \t\t{\n394: \t\t\tCVec3 ptFlareOrigin;\n395: \t\t\trv.forward.RotateHVector( &ptFlareOrigin, pCont->ptPLightFlarePos );\n396: \t\t\tp->AddFlare( new NGScene::CCVec3(ptFlareOrigin), pCont->fPFlareRadius, pCont->pPFlareTexture, position.nFloor );\n397: \t\t}",
+      "sha256": "88cbe1b189b545663ee90bce58e61d5402277531225a0a366be939fdf269b5b4"
+    },
+    {
+      "path": "Main/GView.cpp",
+      "line": 1153,
+      "text": "1153: \tint nFlareID = 4282;\n1154: \tif ( pFlareTexture )\n1155: \t\tnFlareID = pFlareTexture->GetRecordID();\n1156: \treturn CreateParticles( \n1157: \t\tPF_DYNAMIC | PF_SELF_ILLUM, false, false, \n1158: \t\tnew CPointGlowAnimator( \n1159: \t\t\tpScene,\n1160: \t\t\tpTime, \n1161: \t\t\tpOrigin,\n1162: \t\t\tshareTextures.Get( STextureKey( nFlareID, STextureKey::TK_TRANSPARENT ) ),\n1163: \t\t\tfFlareRadius,\n1164: \t\t\tfOnTime,\n1165: \t\t\tfOffTime ),\n1166: \t\tnew CMNode( pIdentityTransform, pOrigin ), bound, \n1167: \t\tSRoomInfo( nFloor ) );",
+      "sha256": "96a3b0c27c11114bafcc6bc47498dc4ea637848c0adc8f7718ef7ab303823d93"
+    },
+    {
+      "path": "Main/GPointLightGlow.cpp",
+      "line": 23,
+      "text": "23: void CPointGlowEffect::AddParticles( IParticleOutput *pRender )\n24: {\n25: \tpParent->CalcSize();\n26: \n27: \tconst SParticleOrientationInfo &orientation = pRender->GetOrientationInfo();\n28: \tCVec3 vRes[4];\n29: \tfloat fLeng = ( vPos - orientation.vBasic[3] ) * orientation.vBasic[2];\n30: \tif ( fLeng <= F_NEAR_CLIP )\n31: \t\treturn;\n32: \t// Retail 0x5471f8 / v1.2 0x5472d8: build the billboard at the light,\n33: \t// not on the camera's near plane. Perspective supplies the distance scaling.\n34: \tvRes[0] = vPos - orientation.vBasic[0] * fSize - orientation.vBasic[1] * fSize;\n35: \tvRes[1] = vPos + orientation.vBasic[0] * fSize - orientation.vBasic[1] * fSize;\n36: \tvRes[2] = vPos + orientation.vBasic[0] * fSize + orientation.vBasic[1] * fSize;\n37: \tvRes[3] = vPos - orientation.vBasic[0] * fSize + orientation.vBasic[1] * fSize;\n38: \tCDGPtr<CPtrFuncBase<NGfx::CTexture> > pTex( textures[0] );\n39: \tif ( !IsValid( pTex ) )\n40: \t\treturn;\n41: \tpTex.Refresh();\n42: \tSTransparentTexturePlace tPlace;\n43: \tGetTransparentTexturePlace( &tPlace, pTex->GetValue() );\n44: \t// Retail 0x5474ac / v1.2 0x54758c: fixed sorting depth, independent of camera motion.\n45: \tpRender->AddParticle( vRes, 0xffffff | (nAlpha<<24), tPlace, 1e10f );\n46: }\n47: ////////////////////////////////////////////////////////////////////////////////////////////////////\n48: // CPointGlowAnimator\n49: ////////////////////////////////////////////////////////////////////////////////////////////////////",
+      "sha256": "25b048d2d15dc6c4fbc998bb8a448d25220fd450ed4d97ea0c22d9a269e1361a"
+    },
+    {
+      "path": "Main/GPointLightGlow.cpp",
+      "line": 102,
+      "text": "102: void CPointGlowAnimator::Recalc()\n103: {\n104: \tif ( !IsValid( pValue ) )\n105: \t{\n106: \t\tpValue = new CPointGlowEffect;\n107: \t\tpValue->textures.resize(1);\n108: \t\tpValue->textures[0] = pTexture;\n109: \t}\n110: \tCDynamicCast<CPointGlowEffect> pRealValue(pValue);\n111: \tCPointGlowEffect &value = *pRealValue;\n112: \tvalue.bEnd = false;\n113: \tvalue.vPos = pPlacement->GetValue();",
+      "sha256": "25b048d2d15dc6c4fbc998bb8a448d25220fd450ed4d97ea0c22d9a269e1361a"
+    },
+    {
+      "path": "Main/GMatShare.cpp",
+      "line": 50,
+      "text": "50: \tif ( _pMaterial->alpha == NDb::CMaterial::A_EXPLOSION_DECAL )\n51: \t\treturn CreateExplosionDecal( pTexture );",
+      "sha256": "7d3afa8c838e40fb63b77c3f98bda0a1f68d9d76d97a375d97deb1889067883e"
+    },
+    {
+      "path": "Main/GMaterial.cpp",
+      "line": 291,
+      "text": "291: void CExplosionDecalMaterial::AddOperations( SOpGenContext *p, ERenderPath rp )\n292: {\n293: \tif ( !pTexture )\n294: \t\treturn;\n295: \tpTexture.Refresh();\n296: \tif ( pTexture->GetValue() && rp != RP_TNL )\n297: \t\tp->AddOperation( RO_EXPLOSION_DECAL, 10, ABM_SMART|DPM_EQUAL, 0, pTexture->GetValue() );\n298: }",
+      "sha256": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570"
+    },
+    {
+      "path": "Main/GMatShare.cpp",
+      "line": 70,
+      "text": "70: \t\tcase NDb::CMaterial::A_OVERLAY:           alphaMode = MA_OVERLAY; break;",
+      "sha256": "7d3afa8c838e40fb63b77c3f98bda0a1f68d9d76d97a375d97deb1889067883e"
+    },
+    {
+      "path": "Main/GMaterial.cpp",
+      "line": 343,
+      "text": "343: \tif ( ( alphaMode & MA_TYPE_MASK ) == MA_OVERLAY )\n344: \t\tpRes->SetDecal();\n345: \tpRes->SetDiffuseTex( pTexture );",
+      "sha256": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570"
+    }
+  ],
+  "4784_missing_particle_definition": 273,
+  "fresh_source_proof": "new-groups-twenty-first-fresh-source-audit.json"
+}

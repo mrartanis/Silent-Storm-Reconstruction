@@ -1,0 +1,76 @@
+[
+  {
+    "id": 3888,
+    "source_record": {
+      "id": 3888,
+      "texture": {
+        "ID": 3888,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -434169068,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\Engineer\\USSR01\\Body.tga",
+        "Format": "dxt1",
+        "UserName": "Body",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2470,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 1620,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2358,
+                "field": "Material0",
+                "material_template_id": 1620,
+                "geometry_id": 2502,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+                "model_template_id": 1763,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "4c37e16c2b4668aa6041ba8281ece76e29d666302eb2b6807d8908ca9f42f524",
+      "source_rgba_sha256": "2cbe5d1b16dd8e48f3f53d80f23d3dfdfcd3041b2a33d82aa6a2635d7649e43e",
+      "release_rgba_sha256": "2cbe5d1b16dd8e48f3f53d80f23d3dfdfcd3041b2a33d82aa6a2635d7649e43e",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "original_png": "expanded/original/3888.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "imagegen_calls": 0,
+    "status": "source-only-original-artwork-pending-audit",
+    "reason": "Clear nine rectangular chain rings at native12px pitch, genuine clothing material. Full original/historical/release/actualtyped proof completed; related4298 single output material drift means no sibling call now. Source itself is not deemed technically unsuitable or uncountable; source detail/material remains pending future qualified generation.",
+    "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-sixteenth.json"
+  }
+]

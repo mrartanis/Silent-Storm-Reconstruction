@@ -8,14 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,324 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 63 clothing, 109 equipment, 65 weapons,
+The completed pack contains **2,327 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 64 clothing, 111 equipment, 65 weapons,
 2 heads, 44 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,766 records, including 362 accepted new-group textures, the original
+contains 2,787 records, including 365 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-105 structural/solid masks, 63 unavailable historical sources, one release mismatch
+123 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and fifteen resource IDs whose original-preserving image generation was unavailable
 (fourteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,401 verified originals outside the shared queue, including next
+validation. There remain 1,380 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -196,8 +196,30 @@ reviewed; integration testing does not certify every new element. All declared
 PNG/prompt stages are ordinary Git files, expanded/accepted-git-stage-completeness-twentieth.json.
 Held independent attempts preserve exact raw/prompt/reason provenance. Never regenerate accepted IDs.
 
-All 12,396 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,867,702,189 bytes before Git deduplication/compression).
+Twenty-first accepted packet: 5403/6830/5434, one clothing and two equipment
+atlases. Pack: 2,327 textures / 4,654 aliases / 126 archives /
+7,606,212,086 bytes. All prior 2,324 source/PNG/native hashes are unchanged;
+three nativeRGBA images exactly match privately reviewed whole production4x predictions.
+Full source alpha, UV, material, component count and pattern scale retained.
+Accepted local paint/contrast/warmth changes are disclosed in expanded/coordinator-art-review-twenty-first.json;
+exact local RGB identity is not claimed. No artistic RGB insertion, crop/BBox or
+regeneration of accepted IDs. Full native validation, actual-menu HD on/off/on and
+isolated normal quit: expanded/new-groups-twenty-first-{batch,live}-check.json.
+All frames privately inspected; this scene does not certify each new model atlas.
+All declared PNG/exact-prompt stages are ordinary Git files:
+expanded/accepted-git-stage-completeness-twenty-first.json.
+Eighteen original-only sources 4282/4362/4363/4784/4806..4817/5115/7464 were
+individually inspected in whole RGB/A: sixteen analytical light halos retain exact
+native center/ray/falloff profiles; two constant-black RGB Burn_00 images retain
+authored alpha scorch shapes and their distinct explosion_decal/overlay/opaque modes.
+Zero halo alpha is intentional additive encoding, not an exclusion criterion.
+Identical RGBA masks do not authorize material substitution. Missing definition273
+for4784 is recorded honestly. Painted particle/alpha art is not generally excluded.
+See expanded/coordinator-original-only-effects-eighteenth.json. Held independent
+attempts retain exact raw/prompt/reason provenance.
+
+All 12,421 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,884,833,634 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
