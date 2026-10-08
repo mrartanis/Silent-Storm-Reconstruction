@@ -1,0 +1,94 @@
+[
+  {
+    "id": 5899,
+    "texture": {
+      "ID": 5899,
+      "Width": 195,
+      "Height": 233,
+      "NMips": 1,
+      "AverageColor": -10265257,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\Photo\\Allies\\Matt.tga",
+      "Format": "8888",
+      "UserName": "Matt",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 770,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Matt"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 770,
+          "name": "Matt",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            195,
+            233
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      195,
+      233
+    ],
+    "source_sha256": "9483f51ceee18787548df117b2ad8834a8f006b0d712121dc2cf44705813cfcb",
+    "source_rgba_sha256": "97e117ea9c6f862e95a0332681472f970106e3d75de2aeb8dad437c72661ea90",
+    "release_rgba_sha256": "97e117ea9c6f862e95a0332681472f970106e3d75de2aeb8dad437c72661ea90",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5899.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Edit the ENTIRE existing Silent Storm biography photograph texture,195x233 native canvas. Preserve its CURRENT UPSIDE-DOWN stored retail orientation exactly: never upright, rotate, flip, crop, recenter or reconstruct the scene. This is an existing matte faded sepia/grayscale photograph, not a painted face atlas and not a request for a new photograph or newly painted portrait. Retain the old fine photographic grain/soft faded exposure/low local contrast/warm-gray palette and native pattern scale; no colorization, fresh digital portrait, new skin pores, beauty retouch, smoothing away old grain, new photographic lighting or recoloring. Exactly ONE original man/head/bust; preserve original identity, frontal gaze, two old eyes with their dark old pupils/eyelids, two old brows, one original nose, closed lips with ZERO visible teeth, jaw/cheek/forehead proportions, expression and old single dark hair mass/hairline/parting. Do not add teeth, open the mouth, change eye shape/iris highlights, symmetry, age, makeup, anatomy, hair outline or individual glossy hair fibers. Original stored approximate feature positions are two eye regions around native(98,129)/(145,129), nose region around(121,107), closed mouth around(119,77); full native image and exact pixel proof define placement, not generic facial standards. Existing dark collar/shoulder masses and quiet background vertical light/dark streaks remain exactly in their native places and keep their existing ambiguity/blur; do not turn faint background washes into new timber panel joints, bricks, tubes, carved relief or hard cells, and do not add buttons, tie, medals, letters, props or markings. Preserve the entire photographic image border and all old field exposure, no new frame. Source fullA255 and every originalRGB field are authoritative; no transparent cutout. Enhance only subtle continuity of already present detail at four-times texel resolution while keeping source identity/grain/softness/large-scale photographic shading. No sourceRGB patch, registration or artist repair.",
+    "reference_recipe": {
+      "type": "whole-original-native-storedRGB",
+      "source_size": [
+        195,
+        233
+      ],
+      "reference_size": [
+        195,
+        233
+      ],
+      "guide_size": null,
+      "source_bbox": [
+        0,
+        0,
+        195,
+        233
+      ],
+      "affine_prewarp": null,
+      "operations": "Exact entire original.convertRGB native195x233 with byte-identical RGB; no resampling for actual imagegen reference. NN wholecanvas private view only, not tool reference. Whole rawRGBA Lanczos source4x/defaultpad/fullA/pure global scalar/native premul once. No crop/registration/artRGB repair.",
+      "references_sha256": [
+        "be9960f5651d17518e04c627c8dcec8194de6af964586399f16ac49bdcf7ac54"
+      ],
+      "authoritative_original_png_sha256": "9c44c02e77c9654e2b5aadd10dc68ed61b2e5714a3048638a4ff588766134a9b",
+      "private_NN_only_sha256": "51d74891043b01a5e4767ed685c593c3822e80f6a4ec02c8ad7500ae614db687"
+    }
+  }
+]

@@ -1,0 +1,12 @@
+Use case: precise-object-edit. Faithfully edit this ENTIRE historical Silent Storm softly painted COLOR bitmap at higher resolution. Keep original paint gradients/material and native-scale softness, not a new realistic effect scene.
+
+Image1 is the EXACT ENTIRE original storedRGB madeopaque at NATIVE32x32 resolution, with no changed RGB values. Its black canvas is original paint, not a cutout request. Native pixels prove UV/pigment only, not a mosaic or grid. Preserve the full original normalizedUV, every original paint domain, relative widths and strengths, softblur and original oncanvas scale. Improve only the smooth fine depiction of EXISTING soft pigment transitions; no new shapes or material.
+
+ONE original softly painted compact lime-green/yellow-green glow on the ENTIRE black32 by32 nativecanvas. Original strongest central pigment x15,y15 is RGB96/241/0; original blue channel is EXACTLY0 across the canvas. Keep the slightly irregular horizontally broad soft core and dim brown-green falloff at precisely the original source positions/widths, blur and relative strengths. Literal storedRGB is ONE563-pixel connected domain bounded x2..30,y2..28, not one solid object or a squared pixel-grid. Keep center green, no white/cyan core or blue tint, new rays/rings/orbit/particle flecks/hard polygon or longer tail. Retain source black background and subtle asymmetric falloff; do not brighten outer dim paint.
+
+Actual Type is TransparentAdd: the entire original A channel is0 yet storedRGB is the useful additive color. Output an OPAQUE RGB image of the whole canvas on original black; do not multiply its RGB by alpha or make this effect invisible. Full original A restored separately downstream. Brightness afterward is only one global numerical scalar; preserve local source color hierarchy and original palette now.
+
+No new grain, squared cells, speckles, textures, sharp outlines, lens elements, stars, sparks, rings, metal, hardware, surfaces, clouds, curls, noise, extra pigment fields or rays. Do not widen/recenter/regularize the core, manufacture symmetrical anatomy or reinterpret faint source bits as objects. Do not remove original dim pigment. Keep the source soft painted falloff and existing subdued strengths.
+
+Output ONLY the ENTIRE SAME square color canvas at higher resolution. No crop, padding, margins, border, letterbox, BBox, registration, zoom, recentering, sourceRGB composite or UV fitting/repacking. Preserve original source count/phase/material/scale/fullcanvas. No text/symbols.
+

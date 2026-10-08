@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 494 of these verified originals are accepted in the shared
+As of 2026-10-08, 497 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-first-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-second-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,240 IDs: clothing 194, equipment 110, weapons
-57, heads 158, UI 589, effects 108, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,236 IDs: clothing 194, equipment 110, weapons
+57, heads 157, UI 588, effects 106, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -648,3 +648,24 @@ correctBEFOREaudit/raw/ref/call/reviews unchanged. Oldconsumerprose clarificatio
 2079 UI399 Control1951only;1952 belongs2080/UI398. Proofs:
 ../new-groups-forty-first-batch-check.json, ../new-groups-forty-first-live-check.json,
 ../new-groups-forty-first-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.
+
+Forty-second accepted packet:UI2251/effects1764+5298,3separate builtin generations.
+Pack2,459 textures/4,918 aliases/130archives/7,821,254,526bytes/prior2,456hashes exact.
+WholeactualnativeRGBA3 equal private4x predictions/fullsourceA/UV/material/count/nativepaintscale;
+2251oldgraycircle+cross,1764softcyan/5298softgreen glow; localpalette caveats in
+../coordinator-art-review-forty-second.json/scalaronly/noartistRGB/retries.
+Rootheld6691 strongernearwhite originalreflection, notfalseanatomy/countclaim;
+eightworkerreviews frozen/other12held saved. Original6692 retainedblackRGB16383+
+ONEwhiteopaquecorner/fullgradedbeardAlpha/NOTconstantRGBA/FaceGen22THMID1/0calls/noHDartentry.
+GPU2251/1764/5298 ninewholeprivateonoffonframes/whole+middle+reverse+clippedUV/
+placement/density4vs1/fullA;Transparent2251premulonce(A255)/Add1764+5298A0usefulRGBnoPremul.
+Directdisabledheal UI426/particleTextureN+definitions/siblingsmissingunknown audited.
+Original6692 actualSW128/mip0/all3sameoriginal/source+CPUintegeralpha/Vflip/FNV/fixed256atlas.
+Genericprobes do not certify activewidget/particles/full3Dhead appearance.
+SixsourceSHA25unchanged/currentbuilt707EXEexact/realmenu11/0/11/pending0/normalquit/ownedGameabsent.
+Current120frames:3.74FPS/p95278.12ms, no allmodelperformanceclaim;
+prior41 slowpresent with bothHD/original qualification remains in itsreport.
+Two known promptLF entries proven/oldmanifest frozen/two nestedclothmanifests fullyverified;
+immutable before-call portablecopies numeric only. Proofs:
+../new-groups-forty-second-batch-check.json,../new-groups-forty-second-live-check.json,
+../new-groups-forty-second-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.

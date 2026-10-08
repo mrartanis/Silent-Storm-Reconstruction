@@ -1,0 +1,34 @@
+[
+  {
+    "id": 6691,
+    "generated": "assets/terrain-hd/expanded/generated/6691-raw.png",
+    "prompt": "Use case: precise-object-edit. Faithfully edit this exact original Silent Storm softly PAINTED COLOR texture bitmap at higher resolution while preserving the original art, material and blur.\r\n\r\nImage1 is the ENTIRE edit target: EXACT ORIGINAL native64x64 storedRGB madeopaque at original resolution, no enlargement/grid/NNblocks. Preserve entire normalized original UV and original native pattern scale/phase/count. Original completeAlpha is255 and will be restored downstream with only one global numerical brightness scalar. Ordinary straightRGB, no premultiplication. Keep original nativeblur as artwork, not missing anatomy/detail.\r\n\r\nThis is the ACTUAL original64x64 blurred EYE COLOR bitmap, not a request to render a new eyeball. Keep ONE original soft dark upper hazefield and the TWO original softly painted central reflectionpaint patches: stronger upper patch at original native[28:39,17:29], fainter lower patch at[28:39,29:43]. Preserve their native positions, tiny relative extents, indistinct blurred edges, exact subtlewarmgray/pink tint and upper-versus-lower weakness. Keep original dim reddishgray leftwash and softly varying lower graybrown field, not flatgrayfill. NO new iris/pupil/eyeball/eyelids/anatomy/glints/catchlights/veins/radialpattern/fibers/polygon/mosaic. Do not interpret the blur as missing detail; sourceblur is required material/scale.\r\n\r\nExact original fullRGBA extrema [[62, 211], [53, 191], [50, 183], [255, 255]]; strongestoriginalpaint nativeRGBA [211, 191, 183, 255] at native [33, 23]. Retain original peakandweaklocalpaint strength and hue relationships, every original softbrushphase/nativepatternsize. Gently resolve SAME fine matte sourcepaint only. No photo texture/hairfibers/fineparallelstrands/pores/anatomy/newglints/newcatchlights/mosaic/newmottle/cloudwash/sharperoutlinedrims/physicalgrain/relief.\r\n\r\nOutput ONLY SAME ENTIRE opaqueRGB squarecanvas at identical normalized sourceUV: no crop/whitespace/border/cutout/padding/fitting/zoom/recenter/autoBBox/repack/composite. No new parts/tufts/curls/counts/text/glyph/symbol/colors or sharp outlines. Original source alpha restored separately; defaultpadding preserved.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/6691.png",
+      "operations": "ENTIRE original native storedRGBA→opaqueRGB only, NO enlargement for tool target. Private NEAREST512 view proves native coordinates only, never tool reference. No crop/padding/rotate/fit/BBox/unpremultiply/artistRGB; entire fullsourceA separately restored.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        64,
+        64
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "private_NN_coordinate_view": "assets/terrain-hd/expanded/private-heads-twenty-first/survey/6691-source-rgb-nearest512.png",
+      "inverse": "ENTIRE raw LANCZOS original4x; RGB diagnostic inverse separately from originalA, never Pillow RGBA implicit premul; standard whole scalar/defaultpadding/nativeType downstream root.",
+      "output": "assets/terrain-hd/expanded/generated/6691-heads-twenty-first-source-rgb-native.png"
+    }
+  }
+]

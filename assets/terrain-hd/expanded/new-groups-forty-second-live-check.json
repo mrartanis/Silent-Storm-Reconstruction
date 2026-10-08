@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2459,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 621991282,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 561384110,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 724446450,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 3.7369440008672727,
+  "frame_ms_mean": 267.44151166666666,
+  "frame_ms_p95": 278.1199,
+  "normal_exit_code": 0,
+  "process_id": 4996,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2459-on",
+      "sha256": "22144faff3897e96f38dc739b0ab1ed83102c56be7dd177920faf4b41e5e39ff"
+    },
+    {
+      "name": "hd2459-options",
+      "sha256": "648e2326fabcfb127414be49b7373457c831bb91f2423191ac3d27b5f552a81a"
+    },
+    {
+      "name": "hd2459-off",
+      "sha256": "b65dc99ba6eeefe4cba180e454137367601a5ca23695bea593110e0356a8ec42"
+    },
+    {
+      "name": "hd2459-restored",
+      "sha256": "5bb69393e13c3f01c6ed3492ccf9c3b1c1bbaa584532535362e337c6189f5d64"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "current_120frame_fps": 3.7369440008672727,
+    "current_frame_ms_p95": 278.1199,
+    "performance_acceptance_claim": false,
+    "limitation": "Current ~3.74FPS slow presentation persists. Prior41 independently repeated original3.81/HD3.71FPS; cause unestablished. Functional/resource/UV/alpha checks passed; no claim that prior ~60FPS reproduced. No driver/system/source/art changes to conceal limitation.",
+    "prior_independent_original_HD_qualification": "new-groups-forty-first-batch-check.json:current_runtime_performance_qualification"
+  }
+}

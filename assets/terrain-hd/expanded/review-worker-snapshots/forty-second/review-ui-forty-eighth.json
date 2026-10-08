@@ -1,0 +1,3244 @@
+{
+  "batch": "ui-forty-eighth",
+  "finalized_utc": "2026-10-08T12:43:19.811676+00:00",
+  "source_registry_snapshot_qualification": {
+    "source_registry_count_at_discovery": 2456,
+    "queue_count_at_discovery": 2927,
+    "source_registry_counts_before_calls": [
+      2456
+    ],
+    "queue_counts_before_calls": [
+      2927
+    ],
+    "qualification": "Actual discovery and before-tool guard2456/q2927 were root41 production registry, published2451/61649318 at dispatch; not falsely claiming all2456 accepted then. Parent confirmed root41 subsequently published acbbc91d0cc4463e63de0d06f2db92fd61fd0be5 accepted2456/q2927/rem1240 during private QA. Before bytes unchanged. Child UI48 unimported; no native/GPU acceptance claim."
+  },
+  "ready_ids": [],
+  "ready": [],
+  "held_ids": [
+    5899
+  ],
+  "held": [
+    {
+      "id": 5899,
+      "status": "art-reviewed-held-source-relative-photographic-exposure-grain-softness",
+      "source_record": {
+        "id": 5899,
+        "texture": {
+          "ID": 5899,
+          "Width": 195,
+          "Height": 233,
+          "NMips": 1,
+          "AverageColor": -10265257,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Photo\\Allies\\Matt.tga",
+          "Format": "8888",
+          "UserName": "Matt",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 770,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Matt"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 770,
+              "name": "Matt",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          195,
+          233
+        ],
+        "source_sha256": "9483f51ceee18787548df117b2ad8834a8f006b0d712121dc2cf44705813cfcb",
+        "source_rgba_sha256": "97e117ea9c6f862e95a0332681472f970106e3d75de2aeb8dad437c72661ea90",
+        "release_rgba_sha256": "97e117ea9c6f862e95a0332681472f970106e3d75de2aeb8dad437c72661ea90",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5899.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Edit the ENTIRE existing Silent Storm biography photograph texture,195x233 native canvas. Preserve its CURRENT UPSIDE-DOWN stored retail orientation exactly: never upright, rotate, flip, crop, recenter or reconstruct the scene. This is an existing matte faded sepia/grayscale photograph, not a painted face atlas and not a request for a new photograph or newly painted portrait. Retain the old fine photographic grain/soft faded exposure/low local contrast/warm-gray palette and native pattern scale; no colorization, fresh digital portrait, new skin pores, beauty retouch, smoothing away old grain, new photographic lighting or recoloring. Exactly ONE original man/head/bust; preserve original identity, frontal gaze, two old eyes with their dark old pupils/eyelids, two old brows, one original nose, closed lips with ZERO visible teeth, jaw/cheek/forehead proportions, expression and old single dark hair mass/hairline/parting. Do not add teeth, open the mouth, change eye shape/iris highlights, symmetry, age, makeup, anatomy, hair outline or individual glossy hair fibers. Original stored approximate feature positions are two eye regions around native(98,129)/(145,129), nose region around(121,107), closed mouth around(119,77); full native image and exact pixel proof define placement, not generic facial standards. Existing dark collar/shoulder masses and quiet background vertical light/dark streaks remain exactly in their native places and keep their existing ambiguity/blur; do not turn faint background washes into new timber panel joints, bricks, tubes, carved relief or hard cells, and do not add buttons, tie, medals, letters, props or markings. Preserve the entire photographic image border and all old field exposure, no new frame. Source fullA255 and every originalRGB field are authoritative; no transparent cutout. Enhance only subtle continuity of already present detail at four-times texel resolution while keeping source identity/grain/softness/large-scale photographic shading. No sourceRGB patch, registration or artist repair.",
+        "reference_recipe": {
+          "type": "whole-original-native-storedRGB",
+          "source_size": [
+            195,
+            233
+          ],
+          "reference_size": [
+            195,
+            233
+          ],
+          "guide_size": null,
+          "source_bbox": [
+            0,
+            0,
+            195,
+            233
+          ],
+          "affine_prewarp": null,
+          "operations": "Exact entire original.convertRGB native195x233 with byte-identical RGB; no resampling for actual imagegen reference. NN wholecanvas private view only, not tool reference. Whole rawRGBA Lanczos source4x/defaultpad/fullA/pure global scalar/native premul once. No crop/registration/artRGB repair.",
+          "references_sha256": [
+            "be9960f5651d17518e04c627c8dcec8194de6af964586399f16ac49bdcf7ac54"
+          ],
+          "authoritative_original_png_sha256": "9c44c02e77c9654e2b5aadd10dc68ed61b2e5714a3048638a4ff588766134a9b",
+          "private_NN_only_sha256": "51d74891043b01a5e4767ed685c593c3822e80f6a4ec02c8ad7500ae614db687"
+        }
+      },
+      "generation_provenance": {
+        "id": 5899,
+        "batch": "ui-forty-eighth",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T12:32:01.597145+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Image1 is the EXACT full historical storedRGB at NATIVE195x233 resolution; it is the edit target. No enlarged nearest guide is being supplied to imagegen: private NN view was UV/count evidence only. Return one entire raster texture with original framing and orientation. SourceRGBA alpha is recorded separately and restored exactly; global scalar brightness only. This is fidelity-preserving editing of the existing photograph, not replacement content, an invented movie scene or a new portrait. Edit the ENTIRE existing Silent Storm biography photograph texture,195x233 native canvas. Preserve its CURRENT UPSIDE-DOWN stored retail orientation exactly: never upright, rotate, flip, crop, recenter or reconstruct the scene. This is an existing matte faded sepia/grayscale photograph, not a painted face atlas and not a request for a new photograph or newly painted portrait. Retain the old fine photographic grain/soft faded exposure/low local contrast/warm-gray palette and native pattern scale; no colorization, fresh digital portrait, new skin pores, beauty retouch, smoothing away old grain, new photographic lighting or recoloring. Exactly ONE original man/head/bust; preserve original identity, frontal gaze, two old eyes with their dark old pupils/eyelids, two old brows, one original nose, closed lips with ZERO visible teeth, jaw/cheek/forehead proportions, expression and old single dark hair mass/hairline/parting. Do not add teeth, open the mouth, change eye shape/iris highlights, symmetry, age, makeup, anatomy, hair outline or individual glossy hair fibers. Original stored approximate feature positions are two eye regions around native(98,129)/(145,129), nose region around(121,107), closed mouth around(119,77); full native image and exact pixel proof define placement, not generic facial standards. Existing dark collar/shoulder masses and quiet background vertical light/dark streaks remain exactly in their native places and keep their existing ambiguity/blur; do not turn faint background washes into new timber panel joints, bricks, tubes, carved relief or hard cells, and do not add buttons, tie, medals, letters, props or markings. Preserve the entire photographic image border and all old field exposure, no new frame. Source fullA255 and every originalRGB field are authoritative; no transparent cutout. Enhance only subtle continuity of already present detail at four-times texel resolution while keeping source identity/grain/softness/large-scale photographic shading. No sourceRGB patch, registration or artist repair.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5899-prompt.txt",
+        "prompt_sha256": "f01018b465c656b93234500dae3d9e5f18e6819b08a0895f160863e389a3dd74",
+        "prompt_file_sha256": "14a6fc80008f7c7070d20f5e28b181d7aad29bb242e92d7ef2e6a95b3f17a642",
+        "prompt_file_recipe": "Exact actual tool prompt argument UTF8 plus precisely one final LF; no CRLF.",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5899-ui-forty-eighth-native-storedRGB-reference.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-native-storedRGB",
+          "source_size": [
+            195,
+            233
+          ],
+          "reference_size": [
+            195,
+            233
+          ],
+          "guide_size": null,
+          "source_bbox": [
+            0,
+            0,
+            195,
+            233
+          ],
+          "affine_prewarp": null,
+          "operations": "Exact entire original.convertRGB native195x233 with byte-identical RGB; no resampling for actual imagegen reference. NN wholecanvas private view only, not tool reference. Whole rawRGBA Lanczos source4x/defaultpad/fullA/pure global scalar/native premul once. No crop/registration/artRGB repair.",
+          "references_sha256": [
+            "be9960f5651d17518e04c627c8dcec8194de6af964586399f16ac49bdcf7ac54"
+          ],
+          "authoritative_original_png_sha256": "9c44c02e77c9654e2b5aadd10dc68ed61b2e5714a3048638a4ff588766134a9b",
+          "private_NN_only_sha256": "51d74891043b01a5e4767ed685c593c3822e80f6a4ec02c8ad7500ae614db687"
+        },
+        "target_size": [
+          780,
+          932
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2456,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Image1 is the EXACT full historical storedRGB at NATIVE195x233 resolution; it is the edit target. No enlarged nearest guide is being supplied to imagegen: private NN view was UV/count evidence only. Return one entire raster texture with original framing and orientation. SourceRGBA alpha is recorded separately and restored exactly; global scalar brightness only. This is fidelity-preserving editing of the existing photograph, not replacement content, an invented movie scene or a new portrait. Edit the ENTIRE existing Silent Storm biography photograph texture,195x233 native canvas. Preserve its CURRENT UPSIDE-DOWN stored retail orientation exactly: never upright, rotate, flip, crop, recenter or reconstruct the scene. This is an existing matte faded sepia/grayscale photograph, not a painted face atlas and not a request for a new photograph or newly painted portrait. Retain the old fine photographic grain/soft faded exposure/low local contrast/warm-gray palette and native pattern scale; no colorization, fresh digital portrait, new skin pores, beauty retouch, smoothing away old grain, new photographic lighting or recoloring. Exactly ONE original man/head/bust; preserve original identity, frontal gaze, two old eyes with their dark old pupils/eyelids, two old brows, one original nose, closed lips with ZERO visible teeth, jaw/cheek/forehead proportions, expression and old single dark hair mass/hairline/parting. Do not add teeth, open the mouth, change eye shape/iris highlights, symmetry, age, makeup, anatomy, hair outline or individual glossy hair fibers. Original stored approximate feature positions are two eye regions around native(98,129)/(145,129), nose region around(121,107), closed mouth around(119,77); full native image and exact pixel proof define placement, not generic facial standards. Existing dark collar/shoulder masses and quiet background vertical light/dark streaks remain exactly in their native places and keep their existing ambiguity/blur; do not turn faint background washes into new timber panel joints, bricks, tubes, carved relief or hard cells, and do not add buttons, tie, medals, letters, props or markings. Preserve the entire photographic image border and all old field exposure, no new frame. Source fullA255 and every originalRGB field are authoritative; no transparent cutout. Enhance only subtle continuity of already present detail at four-times texel resolution while keeping source identity/grain/softness/large-scale photographic shading. No sourceRGB patch, registration or artist repair.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5899-ui-forty-eighth-native-storedRGB-reference.png"
+          ],
+          "transparent_background": false
+        },
+        "pretool_provenance_revision": 2,
+        "pretool_coordinate_revision_utc": "2026-10-08T12:35:29.813809+00:00",
+        "source_count_phase_before_builtin_path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase-before-builtin-v2.json",
+        "prepared_service_calls_before_revision": 0,
+        "pretool_revision_qualification": "V1 prepared args not submitted; current exact args revised BEFORE sole first builtin call. Old started metadata/guard/proof/prompt preserved independently, not a service retry or after-call patch.",
+        "finished_utc": "2026-10-08T12:37:00.999908+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-548090c3-6fa7-4ba0-ae29-cb04707b9472.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5899-raw.png",
+        "raw_sha256": "542b87580e9b163baa0b90bd9b6fb4734cadecf2b4d0918ebc6a9ec498e81c95",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 5899,
+        "batch": "ui-forty-eighth",
+        "checked_utc": "2026-10-08T12:35:34.037878+00:00",
+        "sources_count": 2456,
+        "queue_count": 2927,
+        "sources_sha256": "84af84ef6d61828b166f986742713c051e329e078e5c2c2755fbac0ba653f5a7",
+        "queue_sha256": "c79270d87a3b40542380bea5d198bd5adb0e0ff41a3a8ae1e7f0f0e7d7262405",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "97e117ea9c6f862e95a0332681472f970106e3d75de2aeb8dad437c72661ea90",
+        "prompt_sha256": "f01018b465c656b93234500dae3d9e5f18e6819b08a0895f160863e389a3dd74",
+        "reference_recipe": {
+          "type": "whole-original-native-storedRGB",
+          "source_size": [
+            195,
+            233
+          ],
+          "reference_size": [
+            195,
+            233
+          ],
+          "guide_size": null,
+          "source_bbox": [
+            0,
+            0,
+            195,
+            233
+          ],
+          "affine_prewarp": null,
+          "operations": "Exact entire original.convertRGB native195x233 with byte-identical RGB; no resampling for actual imagegen reference. NN wholecanvas private view only, not tool reference. Whole rawRGBA Lanczos source4x/defaultpad/fullA/pure global scalar/native premul once. No crop/registration/artRGB repair.",
+          "references_sha256": [
+            "be9960f5651d17518e04c627c8dcec8194de6af964586399f16ac49bdcf7ac54"
+          ],
+          "authoritative_original_png_sha256": "9c44c02e77c9654e2b5aadd10dc68ed61b2e5714a3048638a4ff588766134a9b",
+          "private_NN_only_sha256": "51d74891043b01a5e4767ed685c593c3822e80f6a4ec02c8ad7500ae614db687"
+        },
+        "started_metadata_sha256": "0465a1d2a0f937107b6191ca3801041c46148e0e336e2b4ce1830b50dc85ace8",
+        "shared_modified": false
+      },
+      "before_call_guard_sha256": "4692e6db19b5b8fb14db053997d383649a9612675f8b024cb3a1ba85e19f7649",
+      "source_count_phase_before_prompt": {
+        "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase-before-builtin-v2.json",
+        "sha256": "36bb100dd1b14775a3de97e927cc3705a27433284cfcf81ace64bb08dd5d7e2b"
+      },
+      "pretool_history": {
+        "v1_before_proof_path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase.json",
+        "v1_sha256": "fbfe2c34f63edf6b0de84ee41db31c5515ffc29707db5b7743dde357c01c76c6",
+        "authoritative_before_builtin_v2_path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase-before-builtin-v2.json",
+        "authoritative_v2_sha256": "36bb100dd1b14775a3de97e927cc3705a27433284cfcf81ace64bb08dd5d7e2b",
+        "coordinate_correction": {
+          "id": 5899,
+          "corrected_utc": "2026-10-08T12:35:29.813809+00:00",
+          "actual_service_calls_at_correction": 0,
+          "source_RGBA_bytes_modified": false,
+          "original_before_proof": {
+            "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase.json",
+            "sha256": "fbfe2c34f63edf6b0de84ee41db31c5515ffc29707db5b7743dde357c01c76c6"
+          },
+          "original_before_guard": {
+            "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/5899-fresh-before-builtin-guard.json",
+            "sha256": "abb94964f2c1bb1c9a6fa2b186ccc808d3ce96638a47e90c386208721d4a30d3"
+          },
+          "archived_prepared_prompt": {
+            "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/5899-prompt-prepared-v1-not-submitted.txt",
+            "sha256": "407550a8921f5add172c330805b6d3ff8350f7fbf0d3635b318d1688d4a22010",
+            "submitted": false
+          },
+          "archived_started_metadata": {
+            "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/5899-started-metadata-before-coordinate-correction.json",
+            "sha256": "20b0652fbd19cd2a637439bec65acc15a4a24d855bf3696f6ddc718ad5244f07"
+          },
+          "authoritative_before_proof": {
+            "path": "G:/SS/Silent-Storm-Reconstruction/build/ui-forty-eighth-private/source-count-phase-before-builtin-v2.json",
+            "sha256": "36bb100dd1b14775a3de97e927cc3705a27433284cfcf81ace64bb08dd5d7e2b"
+          },
+          "private_whole_coordinate_view_sha256": "be419cc4d67634196b076783ae443b09e2c817a187c445dbb6469aacc8367cb4",
+          "old_approximate_positions": "two eye regions around native(80,150)/(124,150), nose region around(105,124), closed mouth around(103,86)",
+          "actual_approximate_positions": "two eye regions around native(98,129)/(145,129), nose region around(121,107), closed mouth around(119,77)",
+          "reason": "Whole-image native coordinate labels show former approximate landmarks were misplaced. Corrected before the first request, preserving every immutable v1 proof byte; no crop/ref RGB repair/service retry.",
+          "shared_modified": false
+        },
+        "qualification": "Initial eye/nose/mouth approximate positions corrected BEFORE first and only actual request after labeled whole native source inspection. V1 proof/pixel matrix/prepared prompt/started metadata/guard retained unchanged, no V1 arguments submitted and no service retry. Corrected positions eyes(98,129)/(145,129),nose(121,107),closedmouth(119,77); full native pixels authoritative. Canonical actualprompt UTF8 plus exactly one final LF, no CRLF. No reference/sourceRGB alteration."
+      },
+      "numeric_preview": {
+        "id": 5899,
+        "source_native_type": "Transparent",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5899-raw.png",
+        "raw_sha256": "542b87580e9b163baa0b90bd9b6fb4734cadecf2b4d0918ebc6a9ec498e81c95",
+        "raw_size": [
+          1147,
+          1371
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          780,
+          932
+        ],
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_alpha_sha256": "8de176dbb08b2417f4c96fc8ddc8a7dc13cc74d8994f9f2b68b76a2b21cc4d20",
+        "native_premultiplied": true,
+        "scalar_gain": 0.921661376953125,
+        "target_stored_luma": 93.16767757895896,
+        "actual_stored_luma": 93.16820944453616,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9177773565918617,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 0,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-forty-eighth/native4x/5899-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-forty-eighth/native4x/5899-native-stored-RGB.png"
+      },
+      "source_material_local_diagnostics": {
+        "id": 5899,
+        "source_whole_RGB_Lanczos_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-forty-eighth/native4x/5899-source-whole-RGB-Lanczos.png",
+        "regions": [
+          {
+            "name": "oldeyefieldleft",
+            "native_bounds": [
+              89,
+              122,
+              107,
+              138
+            ],
+            "source_Lanczos_mean_RGB": [
+              100.07356770833333,
+              92.78211805555556,
+              86.32118055555556
+            ],
+            "production_mean_RGB": [
+              93.70594618055556,
+              84.56380208333333,
+              76.01432291666667
+            ],
+            "source_RGB_std": [
+              18.04657398466402,
+              17.72704432145835,
+              17.587138292755544
+            ],
+            "production_RGB_std": [
+              21.633290383974824,
+              20.522986573724072,
+              19.571367436289936
+            ]
+          },
+          {
+            "name": "oldeyefieldright",
+            "native_bounds": [
+              136,
+              122,
+              154,
+              138
+            ],
+            "source_Lanczos_mean_RGB": [
+              106.92860243055556,
+              100.55251736111111,
+              95.86697048611111
+            ],
+            "production_mean_RGB": [
+              97.65386284722223,
+              89.39453125,
+              81.81814236111111
+            ],
+            "source_RGB_std": [
+              17.805392771912572,
+              16.82499852184574,
+              16.320689281845386
+            ],
+            "production_RGB_std": [
+              19.75420199256699,
+              18.548937842711464,
+              17.564375661619895
+            ]
+          },
+          {
+            "name": "oldnosefield",
+            "native_bounds": [
+              112,
+              94,
+              129,
+              123
+            ],
+            "source_Lanczos_mean_RGB": [
+              124.8728448275862,
+              115.26140973630832,
+              106.77104462474645
+            ],
+            "production_mean_RGB": [
+              135.0076064908722,
+              123.37550709939148,
+              112.36156186612575
+            ],
+            "source_RGB_std": [
+              27.531084827244932,
+              26.15098192456892,
+              24.64783014292767
+            ],
+            "production_RGB_std": [
+              37.84492073324507,
+              36.58634052316144,
+              35.50269399821043
+            ]
+          },
+          {
+            "name": "oldclosedmouth",
+            "native_bounds": [
+              105,
+              71,
+              133,
+              85
+            ],
+            "source_Lanczos_mean_RGB": [
+              127.42235331632654,
+              116.82732780612245,
+              108.68734056122449
+            ],
+            "production_mean_RGB": [
+              133.19770408163265,
+              121.30739795918367,
+              110.64381377551021
+            ],
+            "source_RGB_std": [
+              24.906541464587487,
+              24.202575642518447,
+              23.82797308780801
+            ],
+            "production_RGB_std": [
+              31.555837210818876,
+              30.802995172494718,
+              30.366160110275214
+            ]
+          },
+          {
+            "name": "oldforehead",
+            "native_bounds": [
+              104,
+              151,
+              146,
+              173
+            ],
+            "source_Lanczos_mean_RGB": [
+              161.11099837662337,
+              155.29383116883116,
+              150.78781114718615
+            ],
+            "production_mean_RGB": [
+              180.21678841991343,
+              172.15679112554113,
+              164.888933982684
+            ],
+            "source_RGB_std": [
+              4.099338483878769,
+              4.118769049402745,
+              4.54778146558371
+            ],
+            "production_RGB_std": [
+              6.533826987073498,
+              7.247081804524692,
+              8.07341529153983
+            ]
+          },
+          {
+            "name": "oldhairmass",
+            "native_bounds": [
+              80,
+              188,
+              140,
+              209
+            ],
+            "source_Lanczos_mean_RGB": [
+              77.45084325396826,
+              73.46602182539682,
+              69.94910714285714
+            ],
+            "production_mean_RGB": [
+              71.95649801587301,
+              65.50486111111111,
+              59.56939484126984
+            ],
+            "source_RGB_std": [
+              8.276949986234998,
+              7.919074586657572,
+              7.738361024510538
+            ],
+            "production_RGB_std": [
+              13.948205011884884,
+              12.788759021968694,
+              11.649938936026448
+            ]
+          },
+          {
+            "name": "oldquietbackground",
+            "native_bounds": [
+              3,
+              159,
+              37,
+              212
+            ],
+            "source_Lanczos_mean_RGB": [
+              82.6100166481687,
+              78.46340871254162,
+              74.89577552719201
+            ],
+            "production_mean_RGB": [
+              88.40763734739178,
+              80.87971698113208,
+              73.89119728079912
+            ],
+            "source_RGB_std": [
+              15.341356139951655,
+              14.532173961819385,
+              14.108294445642025
+            ],
+            "production_RGB_std": [
+              24.62018644696137,
+              22.9640598733942,
+              21.374682924569555
+            ]
+          }
+        ],
+        "source_peak_RGB": [
+          185,
+          181,
+          178
+        ],
+        "production_peak_RGB": [
+          226,
+          224,
+          222
+        ],
+        "source_mean_RGB": [
+          98.70208264553759,
+          92.150319137229,
+          86.95192445251458
+        ],
+        "production_mean_RGB": [
+          100.6011678771872,
+          91.89011637504127,
+          83.94168867613074
+        ],
+        "qualification": "Whole source RGB independently LANCZOS, fullA255/no visible-alpha weighting ambiguity. Region means/std are diagnostics, not automatic rejection rules. No output artistRGB repair or source composite."
+      },
+      "runtime_qualification": {
+        "actual_UITextureIDs": [
+          770
+        ],
+        "actual_UI_registration": [
+          {
+            "ui_texture_id": 770,
+            "name": "Matt",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              195,
+              233
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "actual_direct_database_consumers": [
+          {
+            "table": "RPGPers",
+            "record": {
+              "ID": 130,
+              "ClassID": 11,
+              "DisplayName": 4243,
+              "WeaponID": 6,
+              "ModelID": 1030,
+              "BaseValueID": 32,
+              "FaceID": 37,
+              "UniformID": 81,
+              "DeathSoundID": 788,
+              "HitSoundID": 749,
+              "NationalityID": 23,
+              "MaxAck": 113,
+              "WearingPanzerkleinID": 0,
+              "SideID": 2,
+              "IsFemale": 0,
+              "Voice": 0,
+              "IsPanzerkleinID": 0,
+              "BiographyID": 17191,
+              "CanHired": 1,
+              "CharacteristicsID": 17233,
+              "PhotoID": 770,
+              "CanBeListed": 0,
+              "WeaponInHand": 0,
+              "WeaponInBackpack": 0,
+              "LongNameID": 19143,
+              "AckUnit": 0,
+              "LongBurstSnd": 6546,
+              "CameraAnchorX": -0.49604201316833496,
+              "CameraAnchorY": 0.38184666633605957,
+              "CameraAnchorZ": 1.538037657737732,
+              "CameraDistance": 3.819777250289917,
+              "CameraYaw": 0.8750001192092896,
+              "CameraPitch": -0.1874999701976776,
+              "CameraRoll": 0.0,
+              "CameraFOV": 35.0,
+              "FaceGenCameraAnchorX": -0.36562442779541016,
+              "FaceGenCameraAnchorY": 0.331356406211853,
+              "FaceGenCameraAnchorZ": 1.7219561338424683,
+              "FaceGenCameraDistance": 2.767625331878662,
+              "FaceGenCameraYaw": 0.8499993681907654,
+              "FaceGenCameraPitch": 0.22499996423721313,
+              "FaceGenCameraRoll": 0.0,
+              "FaceGenCameraFOV": 35.0,
+              "UserName": "Matt",
+              "Side": "Allies",
+              "SrcAcksFile": "Texts\\Asks\\Al-Y-Matt.xls"
+            }
+          }
+        ],
+        "actual_consumer_proof": {
+          "id": 5899,
+          "actual_UITextureIDs": [
+            770
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 130,
+                "ClassID": 11,
+                "DisplayName": 4243,
+                "WeaponID": 6,
+                "ModelID": 1030,
+                "BaseValueID": 32,
+                "FaceID": 37,
+                "UniformID": 81,
+                "DeathSoundID": 788,
+                "HitSoundID": 749,
+                "NationalityID": 23,
+                "MaxAck": 113,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17191,
+                "CanHired": 1,
+                "CharacteristicsID": 17233,
+                "PhotoID": 770,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19143,
+                "AckUnit": 0,
+                "LongBurstSnd": 6546,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Matt",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-Y-Matt.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "qualification": "RPGPers130 PhotoID770 -> UITexture770 R_1024x768 -> Texture5899 actual database chain. DataRPG.cpp857 imports pPhoto; biography iTeamMngMenu.cpp881/883/884 SetImage(pPers->pPhoto) draws actual source. Not registration-only, no actor identity inference from game character label. No child newart native/GPU/live verification."
+      },
+      "private_QA": {
+        "whole_source_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_inspected": true,
+        "native_storedRGB_exactly_equals_viewed_RGBA_RGB": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "HELD source-relative photographic exposure/softness/grain/material. Existing photograph, not a newly painted head atlas: whole upside-down stored orientation, original one man/head/bust/two eyes/two brows/nose/closed lips with zero visible teeth, hair mass/collar/background broad placement retained. No new actor identity inferred from game label. The output makes original faded photograph more contrasty and sharply grained; source forehead161.111/155.294/150.788 to180.217/172.157/164.889, nose124.873/115.261/106.771 to135.008/123.376/112.362; two eye fields darken100.074/92.782/86.321 to93.706/84.564/76.014 and106.929/100.553/95.867 to97.654/89.395/81.818. Hair77.451/73.466/69.949 to71.956/65.505/59.569; quiet background82.610/78.463/74.896 to88.408/80.880/73.891 and std15.341/14.532/14.108 to24.620/22.964/21.375. These diagnostics support whole visible exposure/grain contrast changes; no arbitrary single-pixel rule. Source scratches and light eye spots already exist, not falsely classified entirely new; output has more prominent fine grain/scratch/background contrast and clearer eyelid/face modeling. Peak185/181/178 to226/224/222 is not sole rejection criterion. Overall storedluma93.16767757895896 to93.16820944453616/gain0.921661376953125 cannot preserve regional exposure/film softness alone. No new teeth/open mouth/glyph/physical background parts alleged; exact identity/feature shape pixel-perfect preservation not claimed. Source fullA255 restored, native Transparent premultiply exactly once changes no color; storedRGB equals calibratedRGBA RGB, dark/light source-over mathematically identical at A255. Whole raw1147x1371 and calibrated780x932 plus independent sourceRGB LANCZOS privately inspected. Only builtin output/whole LANCZOS/pure global scalar; no RGBrepair/source composite/crop/BBox/registration/optout/retry. Actual RPGPers130 PhotoIDUI770->Texture5899 and biography pPhoto.SetImage consumer proven before call, no child newart GPU/live verification. Root sole finalgate.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "final_acceptance_owner": "root"
+    }
+  ],
+  "source_only_ids": [
+    5890,
+    5891,
+    5892,
+    5893,
+    5894,
+    5895,
+    5896,
+    5897,
+    5898,
+    5900,
+    5901
+  ],
+  "source_only_deferred": [
+    {
+      "id": 5890,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Close head/old wall striping/film grain: exact facial identity and weak backdrop phase not fully proved for a prompt. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5890,
+        "source_record": {
+          "id": 5890,
+          "texture": {
+            "ID": 5890,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8949653,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Abala.tga",
+            "Format": "8888",
+            "UserName": "Abala",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 761,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Abala"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 761,
+                "name": "Abala",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "5f4ad6305efc20fe1d98b292fd02e137bf7ec65546ed3d6bc471c19be4da3219",
+          "source_rgba_sha256": "5d8d7a799ac7de1c7ce372b36ccc6932c713032f8877a74815f0720dcbc3dffd",
+          "release_rgba_sha256": "5d8d7a799ac7de1c7ce372b36ccc6932c713032f8877a74815f0720dcbc3dffd",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5890.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5890,
+          "texture": {
+            "ID": 5890,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8949653,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Abala.tga",
+            "Format": "8888",
+            "UserName": "Abala",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 761,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Abala"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 761,
+              "name": "Abala",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "5f4ad6305efc20fe1d98b292fd02e137bf7ec65546ed3d6bc471c19be4da3219",
+        "release_mmp_sha256": "5f4ad6305efc20fe1d98b292fd02e137bf7ec65546ed3d6bc471c19be4da3219",
+        "original_png_sha256": "c0947900253b1b288d642d678a6d7815114f6bbb52385eff3e28c92e97b41364",
+        "source_rgba_sha256": "5d8d7a799ac7de1c7ce372b36ccc6932c713032f8877a74815f0720dcbc3dffd",
+        "source_rgb_sha256": "d4924a448608ccb548dc5215ef294534acf7bc20cefee2f301776bbd1ca8be2e",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5890,
+          "actual_UITextureIDs": [
+            761
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 129,
+                "ClassID": 5,
+                "DisplayName": 4231,
+                "WeaponID": 15,
+                "ModelID": 1115,
+                "BaseValueID": 23,
+                "FaceID": 28,
+                "UniformID": 79,
+                "DeathSoundID": 703,
+                "HitSoundID": 672,
+                "NationalityID": 10,
+                "MaxAck": 141,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17180,
+                "CanHired": 1,
+                "CharacteristicsID": 17181,
+                "PhotoID": 761,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19122,
+                "AckUnit": 0,
+                "LongBurstSnd": 6301,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Abala",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-I-Abala.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5891,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Head/coat/collar/old fine backdrop grain: exact identity and native grain detail remain unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5891,
+        "source_record": {
+          "id": 5891,
+          "texture": {
+            "ID": 5891,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -9014674,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Arvid.tga",
+            "Format": "8888",
+            "UserName": "Arvid",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 762,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Arvid"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 762,
+                "name": "Arvid",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "3cffcb5baa956ba430184c3b97299e00affe55a00fc032d040c7265d51e40e66",
+          "source_rgba_sha256": "96b202a8cfa3e37dedcf7b94ea71e9770b420d2ab18517d39ef71aaf8df40dbd",
+          "release_rgba_sha256": "96b202a8cfa3e37dedcf7b94ea71e9770b420d2ab18517d39ef71aaf8df40dbd",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5891.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5891,
+          "texture": {
+            "ID": 5891,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -9014674,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Arvid.tga",
+            "Format": "8888",
+            "UserName": "Arvid",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 762,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Arvid"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 762,
+              "name": "Arvid",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "3cffcb5baa956ba430184c3b97299e00affe55a00fc032d040c7265d51e40e66",
+        "release_mmp_sha256": "3cffcb5baa956ba430184c3b97299e00affe55a00fc032d040c7265d51e40e66",
+        "original_png_sha256": "1bbec77e3d2ac604caeaf3ac1f8307531e505d906a03783df54cd0242e8f9445",
+        "source_rgba_sha256": "96b202a8cfa3e37dedcf7b94ea71e9770b420d2ab18517d39ef71aaf8df40dbd",
+        "source_rgb_sha256": "cf8a248f79eb30d095fd4e5ccc5015c85dd7bee4a6f45ad1b245906e3d816466",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5891,
+          "actual_UITextureIDs": [
+            762
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 42,
+                "ClassID": 2,
+                "DisplayName": 4232,
+                "WeaponID": 82,
+                "ModelID": 953,
+                "BaseValueID": 24,
+                "FaceID": 29,
+                "UniformID": 83,
+                "DeathSoundID": 775,
+                "HitSoundID": 742,
+                "NationalityID": 19,
+                "MaxAck": 99,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17182,
+                "CanHired": 1,
+                "CharacteristicsID": 17183,
+                "PhotoID": 762,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19124,
+                "AckUnit": 0,
+                "LongBurstSnd": 6326,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Arvid",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-N-Arvid.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5892,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Full figure with drums/hand props/string fan: individual component and phase counts need proof. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5892,
+        "source_record": {
+          "id": 5892,
+          "texture": {
+            "ID": 5892,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -10594220,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Bob.tga",
+            "Format": "8888",
+            "UserName": "Bob",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 763,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Bob"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 763,
+                "name": "Bob",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "8684a086796a1e5438ab7a0857efe9a34583753d8df6e5d820a48818432c4d21",
+          "source_rgba_sha256": "ea27fe56e46cff311c9fed35b0e52783cba3dfb9a40619030804c3626d0e8f13",
+          "release_rgba_sha256": "ea27fe56e46cff311c9fed35b0e52783cba3dfb9a40619030804c3626d0e8f13",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5892.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5892,
+          "texture": {
+            "ID": 5892,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -10594220,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Bob.tga",
+            "Format": "8888",
+            "UserName": "Bob",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 763,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Bob"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 763,
+              "name": "Bob",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8684a086796a1e5438ab7a0857efe9a34583753d8df6e5d820a48818432c4d21",
+        "release_mmp_sha256": "8684a086796a1e5438ab7a0857efe9a34583753d8df6e5d820a48818432c4d21",
+        "original_png_sha256": "9b684111c96aca43c0a2ddde62540e52417811c59da5bd27f9060ba7c6cc04e6",
+        "source_rgba_sha256": "ea27fe56e46cff311c9fed35b0e52783cba3dfb9a40619030804c3626d0e8f13",
+        "source_rgb_sha256": "e4351fa43991c53659daf89d2c9bf291a82de1654a87817bd507808beb4e7e0e",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5892,
+          "actual_UITextureIDs": [
+            763
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 119,
+                "ClassID": 3,
+                "DisplayName": 4233,
+                "WeaponID": 28,
+                "ModelID": 1094,
+                "BaseValueID": 25,
+                "FaceID": 30,
+                "UniformID": 80,
+                "DeathSoundID": 777,
+                "HitSoundID": 743,
+                "NationalityID": 16,
+                "MaxAck": 103,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17200,
+                "CanHired": 1,
+                "CharacteristicsID": 17226,
+                "PhotoID": 763,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19126,
+                "AckUnit": 0,
+                "LongBurstSnd": 6349,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Bob",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-F-Bob.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5893,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Full figure/paper object/hand clothing/background precise marks: no invented text or transcription permitted; counts unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5893,
+        "source_record": {
+          "id": 5893,
+          "texture": {
+            "ID": 5893,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7765379,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Doug.tga",
+            "Format": "8888",
+            "UserName": "Doug",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 764,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Doug"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 764,
+                "name": "Doug",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "11fe8a74f5495119c27cd3d7a86ae157d3881f6312a7b20f118f4180c6b4b884",
+          "source_rgba_sha256": "c4ae21402b152c75cd7ba11b45b01bb88cb3a743374f2d26573695e65ff9f657",
+          "release_rgba_sha256": "c4ae21402b152c75cd7ba11b45b01bb88cb3a743374f2d26573695e65ff9f657",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5893.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5893,
+          "texture": {
+            "ID": 5893,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7765379,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Doug.tga",
+            "Format": "8888",
+            "UserName": "Doug",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 764,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Doug"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 764,
+              "name": "Doug",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "11fe8a74f5495119c27cd3d7a86ae157d3881f6312a7b20f118f4180c6b4b884",
+        "release_mmp_sha256": "11fe8a74f5495119c27cd3d7a86ae157d3881f6312a7b20f118f4180c6b4b884",
+        "original_png_sha256": "f6fd1251c4fbbc4de8b92b17128f5360ccf704af8c2993247bc0ac1b868df17a",
+        "source_rgba_sha256": "c4ae21402b152c75cd7ba11b45b01bb88cb3a743374f2d26573695e65ff9f657",
+        "source_rgb_sha256": "278d97b5f5801b4a3f07fb1cf4c192ab2799a213b576afd097a1273a24b95731",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5893,
+          "actual_UITextureIDs": [
+            764
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 116,
+                "ClassID": 6,
+                "DisplayName": 4234,
+                "WeaponID": 28,
+                "ModelID": 1118,
+                "BaseValueID": 26,
+                "FaceID": 31,
+                "UniformID": 78,
+                "DeathSoundID": 779,
+                "HitSoundID": 744,
+                "NationalityID": 15,
+                "MaxAck": 114,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17195,
+                "CanHired": 1,
+                "CharacteristicsID": 17227,
+                "PhotoID": 764,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19129,
+                "AckUnit": 0,
+                "LongBurstSnd": 6373,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Doug",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-B-Doug.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5894,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Female figure/camera-like old props/pose/background photographic grain: exact props and identity not fully proved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5894,
+        "source_record": {
+          "id": 5894,
+          "texture": {
+            "ID": 5894,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -5659745,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Elf.tga",
+            "Format": "8888",
+            "UserName": "Elf",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 765,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Elf"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 765,
+                "name": "Elf",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "236259fc6bc8d7f675da846c9229350fbf36d822991c991c3ff284151d3d832d",
+          "source_rgba_sha256": "529eb05f393107db0ca52d3fa91c8046161f5f1e0b49648cdf9a2fd47a919d74",
+          "release_rgba_sha256": "529eb05f393107db0ca52d3fa91c8046161f5f1e0b49648cdf9a2fd47a919d74",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5894.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5894,
+          "texture": {
+            "ID": 5894,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -5659745,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Elf.tga",
+            "Format": "8888",
+            "UserName": "Elf",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 765,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Elf"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 765,
+              "name": "Elf",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "236259fc6bc8d7f675da846c9229350fbf36d822991c991c3ff284151d3d832d",
+        "release_mmp_sha256": "236259fc6bc8d7f675da846c9229350fbf36d822991c991c3ff284151d3d832d",
+        "original_png_sha256": "3da0fd3d5904a8003b5ec2bf5d7f6364a9717cf2d2179a56f3b2bb13d63aace5",
+        "source_rgba_sha256": "529eb05f393107db0ca52d3fa91c8046161f5f1e0b49648cdf9a2fd47a919d74",
+        "source_rgb_sha256": "a2ad61174f442272e5131b8fb0d38bad8207bd043adf0b457e1cef1ede035fc1",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5894,
+          "actual_UITextureIDs": [
+            765
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 118,
+                "ClassID": 11,
+                "DisplayName": 4235,
+                "WeaponID": 7,
+                "ModelID": 1466,
+                "BaseValueID": 27,
+                "FaceID": 32,
+                "UniformID": 81,
+                "DeathSoundID": 701,
+                "HitSoundID": 681,
+                "NationalityID": 15,
+                "MaxAck": 99,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 1,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17186,
+                "CanHired": 1,
+                "CharacteristicsID": 17228,
+                "PhotoID": 765,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19131,
+                "AckUnit": 0,
+                "LongBurstSnd": 6390,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Elf",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-B-Elf.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5895,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Full figure/gear/window/storage objects: individual source part counts and native texture phase unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5895,
+        "source_record": {
+          "id": 5895,
+          "texture": {
+            "ID": 5895,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8685709,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Gator.tga",
+            "Format": "8888",
+            "UserName": "Gator",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 766,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Gator"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 766,
+                "name": "Gator",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "9f45f7bee0b6d8e1080624ccaa3082b97fd1bf20736b7cb0b3ccc89b13e9a850",
+          "source_rgba_sha256": "9211f0174902fd758c9b86a441d14abc0f9d4594b31661f6afa6b3c0d64876cf",
+          "release_rgba_sha256": "9211f0174902fd758c9b86a441d14abc0f9d4594b31661f6afa6b3c0d64876cf",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5895.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5895,
+          "texture": {
+            "ID": 5895,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8685709,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Gator.tga",
+            "Format": "8888",
+            "UserName": "Gator",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 766,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Gator"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 766,
+              "name": "Gator",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "9f45f7bee0b6d8e1080624ccaa3082b97fd1bf20736b7cb0b3ccc89b13e9a850",
+        "release_mmp_sha256": "9f45f7bee0b6d8e1080624ccaa3082b97fd1bf20736b7cb0b3ccc89b13e9a850",
+        "original_png_sha256": "3ad5d597e4be6b4633c632634b7ad9f31aa558a5b432280118bef68c721a03d6",
+        "source_rgba_sha256": "9211f0174902fd758c9b86a441d14abc0f9d4594b31661f6afa6b3c0d64876cf",
+        "source_rgb_sha256": "56997596ed63f6ebbf989d99cb31c81a7fa4659dc2d81f6acb553a713b660df0",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5895,
+          "actual_UITextureIDs": [
+            766
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 39,
+                "ClassID": 10,
+                "DisplayName": 4236,
+                "WeaponID": 146,
+                "ModelID": 952,
+                "BaseValueID": 28,
+                "FaceID": 33,
+                "UniformID": 82,
+                "DeathSoundID": 781,
+                "HitSoundID": 746,
+                "NationalityID": 21,
+                "MaxAck": 106,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17187,
+                "CanHired": 1,
+                "CharacteristicsID": 17229,
+                "PhotoID": 766,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19134,
+                "AckUnit": 0,
+                "LongBurstSnd": 6419,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Gator",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-C-Gator.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5896,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Standing figure/barrel-like old background/repeated bands/garment grain: exact bands/props phase unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5896,
+        "source_record": {
+          "id": 5896,
+          "texture": {
+            "ID": 5896,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -9475997,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Jerzey.tga",
+            "Format": "8888",
+            "UserName": "Jerzey",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 767,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Jerzey"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 767,
+                "name": "Jerzey",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "d788ff92bf02f18112741796cdaf85511b3691e079fdee779905307e946ed098",
+          "source_rgba_sha256": "42c9e4af59f9d8fc19933821ae4e4b4a57dd5c0cee4137632a51ae1c365cbbc5",
+          "release_rgba_sha256": "42c9e4af59f9d8fc19933821ae4e4b4a57dd5c0cee4137632a51ae1c365cbbc5",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5896.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5896,
+          "texture": {
+            "ID": 5896,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -9475997,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Jerzey.tga",
+            "Format": "8888",
+            "UserName": "Jerzey",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 767,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Jerzey"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 767,
+              "name": "Jerzey",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "d788ff92bf02f18112741796cdaf85511b3691e079fdee779905307e946ed098",
+        "release_mmp_sha256": "d788ff92bf02f18112741796cdaf85511b3691e079fdee779905307e946ed098",
+        "original_png_sha256": "b3186a9113c58aa15aa6f89ee00ab6f48150a0b344b420d925b1763bdb2bb08c",
+        "source_rgba_sha256": "42c9e4af59f9d8fc19933821ae4e4b4a57dd5c0cee4137632a51ae1c365cbbc5",
+        "source_rgb_sha256": "09d6d5b9f7fedbcef67fdc5fbacdec63e60e0d334d7fe01bc5d562686f5764cb",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5896,
+          "actual_UITextureIDs": [
+            767
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 122,
+                "ClassID": 10,
+                "DisplayName": 4240,
+                "WeaponID": 36,
+                "ModelID": 952,
+                "BaseValueID": 29,
+                "FaceID": 34,
+                "UniformID": 90,
+                "DeathSoundID": 785,
+                "HitSoundID": 747,
+                "NationalityID": 17,
+                "MaxAck": 104,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17188,
+                "CanHired": 1,
+                "CharacteristicsID": 17230,
+                "PhotoID": 767,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19138,
+                "AckUnit": 0,
+                "LongBurstSnd": 6443,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Jerzey",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-P-Jerzey.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5897,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Figure/flowers/foliage/garment patterns: native component counts and photographic identity unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5897,
+        "source_record": {
+          "id": 5897,
+          "texture": {
+            "ID": 5897,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896708,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Kate.tga",
+            "Format": "8888",
+            "UserName": "Kate",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 768,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Kate"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 768,
+                "name": "Kate",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "550efbb68a2c3180e5e23e4395f2e744e87625a7b60b6b30ce727f573f15ab19",
+          "source_rgba_sha256": "ed29baa790e46d0b7e1b4724993f10f6a1b215ad4cc5aa0f637a0244481412fa",
+          "release_rgba_sha256": "ed29baa790e46d0b7e1b4724993f10f6a1b215ad4cc5aa0f637a0244481412fa",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5897.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5897,
+          "texture": {
+            "ID": 5897,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896708,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Kate.tga",
+            "Format": "8888",
+            "UserName": "Kate",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 768,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Kate"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 768,
+              "name": "Kate",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "550efbb68a2c3180e5e23e4395f2e744e87625a7b60b6b30ce727f573f15ab19",
+        "release_mmp_sha256": "550efbb68a2c3180e5e23e4395f2e744e87625a7b60b6b30ce727f573f15ab19",
+        "original_png_sha256": "8980e00e6db3d04207da54b3ad47cf71d15ed7a4f243ac22aaa0d44c779b540a",
+        "source_rgba_sha256": "ed29baa790e46d0b7e1b4724993f10f6a1b215ad4cc5aa0f637a0244481412fa",
+        "source_rgb_sha256": "384bf01c2c68fa25d594913155a9c47cd0629925a8589f3e14a88602a7eca956",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5897,
+          "actual_UITextureIDs": [
+            768
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 127,
+                "ClassID": 11,
+                "DisplayName": 4241,
+                "WeaponID": 8,
+                "ModelID": 1466,
+                "BaseValueID": 30,
+                "FaceID": 35,
+                "UniformID": 81,
+                "DeathSoundID": 786,
+                "HitSoundID": 748,
+                "NationalityID": 21,
+                "MaxAck": 129,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 1,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17189,
+                "CanHired": 1,
+                "CharacteristicsID": 17231,
+                "PhotoID": 768,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19139,
+                "AckUnit": 0,
+                "LongBurstSnd": 6488,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Kate",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-C-Kate.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5898,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Figure/background existing literal sign lettering: preserve exact old source forms, no invented transcription; individual proof unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5898,
+        "source_record": {
+          "id": 5898,
+          "texture": {
+            "ID": 5898,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8291466,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\L.A..tga",
+            "Format": "8888",
+            "UserName": "L.A.",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 769,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "L.A."
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 769,
+                "name": "L.A.",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "08930a13331b82a9ea67d16eb2d4eb4f9518ae398da344b9be476eb39536a9a9",
+          "source_rgba_sha256": "1000094b675b46b1064a9e5619078e73a046c3b17ddb574a9323f133c6855b73",
+          "release_rgba_sha256": "1000094b675b46b1064a9e5619078e73a046c3b17ddb574a9323f133c6855b73",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5898.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5898,
+          "texture": {
+            "ID": 5898,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -8291466,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\L.A..tga",
+            "Format": "8888",
+            "UserName": "L.A.",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 769,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "L.A."
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 769,
+              "name": "L.A.",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "08930a13331b82a9ea67d16eb2d4eb4f9518ae398da344b9be476eb39536a9a9",
+        "release_mmp_sha256": "08930a13331b82a9ea67d16eb2d4eb4f9518ae398da344b9be476eb39536a9a9",
+        "original_png_sha256": "239b3b5f4f1e380c7a48a9b02cd1ad1c533f4c5d973c1f4f1c075918fb2b5783",
+        "source_rgba_sha256": "1000094b675b46b1064a9e5619078e73a046c3b17ddb574a9323f133c6855b73",
+        "source_rgb_sha256": "fe1af90f237c7d4b0d8ac697aa8c6c654fe28f33f83983c491761ee709acab2d",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5898,
+          "actual_UITextureIDs": [
+            769
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 115,
+                "ClassID": 6,
+                "DisplayName": 4242,
+                "WeaponID": 28,
+                "ModelID": 1465,
+                "BaseValueID": 31,
+                "FaceID": 36,
+                "UniformID": 96,
+                "DeathSoundID": 704,
+                "HitSoundID": 683,
+                "NationalityID": 14,
+                "MaxAck": 286,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 1,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17190,
+                "CanHired": 1,
+                "CharacteristicsID": 17232,
+                "PhotoID": 769,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19142,
+                "AckUnit": 0,
+                "LongBurstSnd": 6513,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "L.A.",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-A-LA.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5900,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Figure/checkered garment/weak hardware-like background: native cloth repeat and tiny parts phase not fully proved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5900,
+        "source_record": {
+          "id": 5900,
+          "texture": {
+            "ID": 5900,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896707,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Nessie.tga",
+            "Format": "8888",
+            "UserName": "Nessie",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 771,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Nessie"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 771,
+                "name": "Nessie",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "adaa24b919bc643189e3d9a1d37fc993c50f42a2ab149135aa2386533d8ed5fa",
+          "source_rgba_sha256": "46de2710f5af5dc91ccbfe2da0ce3b2aafcb28907cf76c73cadaea0aec6ddb51",
+          "release_rgba_sha256": "46de2710f5af5dc91ccbfe2da0ce3b2aafcb28907cf76c73cadaea0aec6ddb51",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5900.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5900,
+          "texture": {
+            "ID": 5900,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896707,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Nessie.tga",
+            "Format": "8888",
+            "UserName": "Nessie",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 771,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Nessie"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 771,
+              "name": "Nessie",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "adaa24b919bc643189e3d9a1d37fc993c50f42a2ab149135aa2386533d8ed5fa",
+        "release_mmp_sha256": "adaa24b919bc643189e3d9a1d37fc993c50f42a2ab149135aa2386533d8ed5fa",
+        "original_png_sha256": "d22b1d66b5d2d03e80737d20c27862f16986413f727bd252c1b104cb0c39265a",
+        "source_rgba_sha256": "46de2710f5af5dc91ccbfe2da0ce3b2aafcb28907cf76c73cadaea0aec6ddb51",
+        "source_rgb_sha256": "c0443787523b0e1f1796795c1ed56a0dfdb70749b11f9a6e198d57ba31e83dbf",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5900,
+          "actual_UITextureIDs": [
+            771
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 41,
+                "ClassID": 3,
+                "DisplayName": 4244,
+                "WeaponID": 28,
+                "ModelID": 1094,
+                "BaseValueID": 33,
+                "FaceID": 38,
+                "UniformID": 80,
+                "DeathSoundID": 789,
+                "HitSoundID": 750,
+                "NationalityID": 14,
+                "MaxAck": 108,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17192,
+                "CanHired": 1,
+                "CharacteristicsID": 17234,
+                "PhotoID": 771,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19145,
+                "AckUnit": 0,
+                "LongBurstSnd": 6568,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Nessie",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-A-Nessie.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5901,
+      "status": "source-only-genuine-pending-uncalled",
+      "reason": "Figure/dark uniform/straps/buckles/barrel-like backdrop: exact weak hardware and pattern phase unresolved. Individually whole original/RGB/A/NN inspected; actual RPGPers PhotoID chain/biography consumer proven. Zero calls, no photograph/alpha/NPOT group ban and no technical/original-only fallback.",
+      "source_check": {
+        "id": 5901,
+        "source_record": {
+          "id": 5901,
+          "texture": {
+            "ID": 5901,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896708,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Oleg.tga",
+            "Format": "8888",
+            "UserName": "Oleg",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 772,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Oleg"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 772,
+                "name": "Oleg",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  195,
+                  233
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            195,
+            233
+          ],
+          "source_sha256": "d7db5573e74e40986a36b0b7f282ad549ca0abede19743e1319d343bb7c9f251",
+          "source_rgba_sha256": "33bc8dfb692846541db37311e11f744fe7d8b22321c89b0144f0e0bb44c139d1",
+          "release_rgba_sha256": "33bc8dfb692846541db37311e11f744fe7d8b22321c89b0144f0e0bb44c139d1",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/5901.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5901,
+          "texture": {
+            "ID": 5901,
+            "Width": 195,
+            "Height": 233,
+            "NMips": 1,
+            "AverageColor": -7896708,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Photo\\Allies\\Oleg.tga",
+            "Format": "8888",
+            "UserName": "Oleg",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            195,
+            233
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              195,
+              233
+            ],
+            "mips": 1,
+            "file_bytes": 181764,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 772,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Oleg"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 772,
+              "name": "Oleg",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                195,
+                233
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "d7db5573e74e40986a36b0b7f282ad549ca0abede19743e1319d343bb7c9f251",
+        "release_mmp_sha256": "d7db5573e74e40986a36b0b7f282ad549ca0abede19743e1319d343bb7c9f251",
+        "original_png_sha256": "68d5da63cf415b9771b83df90ace688c64d0e3e0ab3e32c72f3a6aa98c7b3c49",
+        "source_rgba_sha256": "33bc8dfb692846541db37311e11f744fe7d8b22321c89b0144f0e0bb44c139d1",
+        "source_rgb_sha256": "a8223b6171a4a241638df2387701e9b0f120ab8decd09c069c1ae4c7e2a6832e",
+        "source_alpha_sha256": "dc4e87bce18e869f54832268ce351171b79ef9f17d65c7101849b825cfa4e892",
+        "dimensions": [
+          195,
+          233
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true,
+        "actual_photo_consumer_proof": {
+          "id": 5901,
+          "actual_UITextureIDs": [
+            772
+          ],
+          "actual_PhotoID_consumers": [
+            {
+              "table": "RPGPers",
+              "record": {
+                "ID": 125,
+                "ClassID": 6,
+                "DisplayName": 4245,
+                "WeaponID": 36,
+                "ModelID": 1118,
+                "BaseValueID": 34,
+                "FaceID": 39,
+                "UniformID": 78,
+                "DeathSoundID": 790,
+                "HitSoundID": 751,
+                "NationalityID": 18,
+                "MaxAck": 118,
+                "WearingPanzerkleinID": 0,
+                "SideID": 2,
+                "IsFemale": 0,
+                "Voice": 0,
+                "IsPanzerkleinID": 0,
+                "BiographyID": 17193,
+                "CanHired": 1,
+                "CharacteristicsID": 17235,
+                "PhotoID": 772,
+                "CanBeListed": 0,
+                "WeaponInHand": 0,
+                "WeaponInBackpack": 0,
+                "LongNameID": 19146,
+                "AckUnit": 0,
+                "LongBurstSnd": 6608,
+                "CameraAnchorX": -0.49604201316833496,
+                "CameraAnchorY": 0.38184666633605957,
+                "CameraAnchorZ": 1.538037657737732,
+                "CameraDistance": 3.819777250289917,
+                "CameraYaw": 0.8750001192092896,
+                "CameraPitch": -0.1874999701976776,
+                "CameraRoll": 0.0,
+                "CameraFOV": 35.0,
+                "FaceGenCameraAnchorX": -0.36562442779541016,
+                "FaceGenCameraAnchorY": 0.331356406211853,
+                "FaceGenCameraAnchorZ": 1.7219561338424683,
+                "FaceGenCameraDistance": 2.767625331878662,
+                "FaceGenCameraYaw": 0.8499993681907654,
+                "FaceGenCameraPitch": 0.22499996423721313,
+                "FaceGenCameraRoll": 0.0,
+                "FaceGenCameraFOV": 35.0,
+                "UserName": "Oleg",
+                "Side": "Allies",
+                "SrcAcksFile": "Texts\\Asks\\Al-R-Oleg.xls"
+              }
+            }
+          ],
+          "actual_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+          "runtime": {
+            "import_file": "DBFormat/DataRPG.cpp",
+            "import_line": 857,
+            "draw_file": "Main/iTeamMngMenu.cpp",
+            "draw_lines": [
+              881,
+              883,
+              884
+            ],
+            "qualification": "Actual biography-photo importer and CImage SetImage(pPers->pPhoto) code path. Actual direct DBPhotoID consumers listed; source name is not actor identity inference. No new-art native/GPU/live claim."
+          }
+        },
+        "full_wholeNN_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ],
+  "source_parity_count": 12,
+  "builtin_generation_calls": 1,
+  "recommended_original_only_ids": [],
+  "generation_unavailable_ids": [],
+  "scope_note": "Fresh remaining589/discovery501 eligible uncalled sources;12 wholeRGBA/RGB/A/NN/actual PhotoID consumers/history-release audits. One first sole builtin5899 after corrected immutable BEFORE-v2 proof, no forced second/third call. Exact native storedRGB195x233 supplied; NN only private count/UV evidence. All12 genuine biography photographs, not painted head atlases/technical fillers. Held5899 source-relative old photographic exposure/grain/softness,11 genuine pending0call individual evidence gaps. Full780x932/defaultpadding/fullA255/native Transparent premultiply once/scalar only, no RGBrepair/crop/BBox/optout/retry. All old packets immutable, rootsole shared/import/native/Game/Git.",
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false
+}
