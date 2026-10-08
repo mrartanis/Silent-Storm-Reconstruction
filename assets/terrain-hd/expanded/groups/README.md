@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 467 of these verified originals are accepted in the shared
+As of 2026-10-08, 474 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirty-sixth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirty-seventh-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,276 IDs: clothing 197, equipment 119, weapons
-57, heads 165, UI 598, effects 116, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,269 IDs: clothing 194, equipment 119, weapons
+57, heads 165, UI 595, effects 115, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -543,3 +543,19 @@ Code unchanged25; currentbuiltGame707a588b used. Nativevalidation/realmenu
 11/0/11/fourprivateframes/normalquit: ../new-groups-thirty-sixth-batch-check.json,
 ../new-groups-thirty-sixth-live-check.json and ../new-groups-thirty-sixth-runtime-check.json.
 Seven reviews frozen; held variants preserved without retries; ordinaryGitPNG/RESbuiltwithGame.
+
+Thirty-seventh accepted packet: clothing3849/7631/5615/UI5826/5801/5804/effect5261.
+Seven separate builtin generations. Pack2,436 textures/4,872 aliases/129 archives/
+7,813,582,920 bytes. Prior2,429 source/PNG/native hashes unchanged. All7 actualnativeRGBA
+equal privately reviewed whole4x predictions/fullsourceA/UV/material/count/paintscale.
+Source7631 lowergray boundary/5615 lowerangledgrayfold already exist, no newseam/thirdbutton.
+Localpaint caveats disclosed in ../coordinator-art-review-thirty-seventh.json;
+numericalbrightness only/no artisticRGB inserts. ActualGPU5826/5261 whole/middle/reverse/
+clipped on/off/on/placement/density4vs1 reviewed; TransparentAdd5261 keeps usefulRGB withA0,
+no premultiply. UI742 registration-only;UI717/720 RPGPerks14/DataPerk/iPerksPanel proven.
+All ParticleInstances TextureN5261 audited; missing siblings4737/4738 explicitunknown.
+Activeeffect/widget/full3Dmodel appearance notcertified; noFaceGen37. Code unchanged25,
+currentbuiltEXE707a588b byteexact to testedGame. Nativevalidation/realmenu11/0/11/fourprivateframes/
+normalquit: ../new-groups-thirty-seventh-batch-check.json,
+../new-groups-thirty-seventh-live-check.json and ../new-groups-thirty-seventh-runtime-check.json.
+Five frozenreviews/held2118and5838/no retries; ordinaryGitPNG/RESbuiltwithGame.
