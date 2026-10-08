@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2493,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 632839190,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 572044634,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 735288646,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 59.84239725223827,
+  "frame_ms_mean": 16.612135833333333,
+  "frame_ms_p95": 18.1489,
+  "normal_exit_code": 0,
+  "process_id": 288,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2493-on",
+      "sha256": "8f0c8ed998381047a09c2736be570df66792d89be8e7c1c27f2a8d0359c9ba08"
+    },
+    {
+      "name": "hd2493-options",
+      "sha256": "271a9cd134536b9ce984a697670d2273903b54dc30add6a46d1b4cc79b2f13fb"
+    },
+    {
+      "name": "hd2493-off",
+      "sha256": "25d8ddd524b04bbf35bbee760910c740fa41200c16946b06872fa1e96c1b85d2"
+    },
+    {
+      "name": "hd2493-restored",
+      "sha256": "bc2ce8dafb526aaf6256e9c8d7f33f9889480dc5e63940e254d6280e0d5a0f6a"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "current_120frame_fps": 59.84239725223827,
+    "current_frame_ms_p95": 18.1489,
+    "performance_acceptance_claim": false,
+    "limitation": "SingleHD120frame measured; historicalslow41–45/near6046–51 causeunestablished/no rootcausalfix."
+  }
+}

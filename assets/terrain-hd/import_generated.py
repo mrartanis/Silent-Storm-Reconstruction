@@ -7,6 +7,7 @@ Generation remains a separate explicit built-in image_gen operation.
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 from PIL import Image, ImageChops
@@ -36,14 +37,24 @@ def import_jobs(jobs, replace=False):
             assert reuse_id in known, (id, reuse_id, 'Unreviewed donor')
         original = Image.open(ROOT / item['original_png']).convert('RGBA')
         assert hashlib.sha256(original.tobytes()).hexdigest() == item['source_rgba_sha256']
-        raw = out / f'{id}-raw.png'
+        # A new reviewed attempt keeps earlier raw, prompts and normalized files immutable.
+        variant = job.get('generation_variant')
+        if variant is not None:
+            if not isinstance(variant, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,95}', variant):
+                raise ValueError(f'{id}: invalid generation_variant')
+        stem = f'{id}-{variant}' if variant is not None else str(id)
+        raw = out / f'{stem}-raw.png'
         saved = Path(job['generated'])
         if saved.resolve() != raw.resolve():
+            if raw.exists() and raw.read_bytes() != saved.read_bytes():
+                raise ValueError(f'{id}: saved raw destination differs from the reviewed input')
             shutil.copy2(saved, raw)
         image = Image.open(raw).convert('RGBA')
         logical = item['logical_size']
         assert list(original.size) == logical
-        normalized = out / f'{id}.png'
+        normalized = out / f'{stem}.png'
+        if variant is not None and normalized.exists():
+            raise ValueError(f'{id}: normalized variant already exists; use a new reviewed variant')
         target_size = tuple(n * 4 for n in logical)
         registration = None
         if job.get('uv_regions'):
@@ -112,9 +123,12 @@ def import_jobs(jobs, replace=False):
                             'generated_bbox': list(generated_bbox), 'source_bbox': list(source_bbox)}
         else:
             image.resize(target_size, Image.Resampling.LANCZOS).save(normalized)
-        prompt = out / f'{id}-prompt.txt'
+        prompt = out / f'{stem}-prompt.txt'
         # Preserve CRLF already present in exact service arguments on Windows.
-        prompt.write_bytes((job['prompt'] + '\n').encode('utf-8'))
+        prompt_bytes = (job['prompt'] + '\n').encode('utf-8')
+        if prompt.exists() and prompt.read_bytes() != prompt_bytes:
+            raise ValueError(f'{id}: existing exact prompt differs; use a new reviewed variant')
+        prompt.write_bytes(prompt_bytes)
         grid = [4, 1] if item['role'] == 'base-tile' else [1, 1]
         if item['role'] == 'grass-sprite':
             grid = [item.get('layout', {}).get('SideSize', 4)] * 2
@@ -123,7 +137,7 @@ def import_jobs(jobs, replace=False):
             'category': item['category'], 'png': normalized.relative_to(ROOT).as_posix(),
             'uncalibrated_png': normalized.relative_to(ROOT).as_posix(),
             'reference_png': item['original_png'], 'logical_size': logical,
-            'calibration_grid': grid, 'source': f'Nival historical Complete/Textures/{id}',
+            'calibration_grid': grid, 'source': f'Nival historical Complete/Textures/{item.get("source_resource_id", id)}',
             'source_rgba_sha256': item['source_rgba_sha256'],
             'source_match': 'Exact decoded RGBA match to baseline release resource',
             'generated_png': raw.relative_to(ROOT).as_posix(), 'generated_size': list(image.size),
@@ -132,6 +146,11 @@ def import_jobs(jobs, replace=False):
         }
         if item['texture']['Type'].lower() == 'transparent':
             asset['alpha_encoding'] = 'premultiplied'
+        if variant is not None:
+            asset['generation_variant'] = variant
+        if 'source_resource_id' in item:
+            asset['source_resource_id'] = item['source_resource_id']
+            asset['source_resource_selection_reason'] = item['source_resource_selection_reason']
         if registration:
             asset['uv_registration'] = registration
         if job.get('source_rgb_regions'):

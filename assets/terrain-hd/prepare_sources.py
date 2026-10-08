@@ -1,6 +1,8 @@
 """Read-only native source verification and additive HD queue preparation.
 
 Input: a JSON list of {texture, category, role, optional layout/relation}.
+An audited source_resource_id can select the original uncompressed resource alias;
+source_resource_selection_reason must document the actual loader selection.
 No historical or release resource is modified. Existing queue entries are retained.
 """
 import argparse
@@ -92,31 +94,53 @@ def decode_mmp(data):
     return image
 
 
-def prepare(candidates, historical, release, output, append=False):
+def prepare(candidates, historical, release, output, append=False, revisit_originals=()):
     resources = ReleaseResources(release)
     queue_path = ROOT / 'expanded/queue.json'
     queue = json.loads(queue_path.read_text(encoding='utf-8'))
     known = {entry['id'] for entry in queue}
+    queue_by_id = {entry['id']: entry for entry in queue}
+    revisited = set()
+    revisit_originals = set(revisit_originals)
     accepted = {entry['id'] for entry in json.loads((ROOT / 'sources.json').read_text(encoding='utf-8'))['textures']}
     prepared = []
     for row in candidates:
         texture = row['texture']
         resource_id = texture['ID']
-        if resource_id in known or resource_id in accepted:
+        if resource_id in accepted:
+            if resource_id in revisit_originals:
+                raise ValueError(f'{resource_id}: accepted HD sources cannot be revisited')
             continue
+        if resource_id in known and resource_id not in revisit_originals:
+            continue
+        prior = queue_by_id.get(resource_id) if resource_id in revisit_originals else None
+        if prior is not None:
+            if prior['status'] != 'structural-mask-or-solid' or not row.get('reviewed_original_reclassification_reason'):
+                raise ValueError(f'{resource_id}: individual structural-original review is required')
+        source_id = row.get('source_resource_id', resource_id)
+        if not isinstance(source_id, int) or source_id not in (resource_id, resource_id | 0x01000000):
+            raise ValueError(f'{resource_id}: invalid original resource alias')
+        if source_id != resource_id and not row.get('source_resource_selection_reason'):
+            raise ValueError(f'{resource_id}: audited resource selection reason is required')
         item = {'id': resource_id, 'texture': texture, 'category': row['category'],
                 'role': row['role'], 'status': 'pending'}
+        if prior is not None:
+            item['previous_original_disposition'] = prior
+            item['reviewed_original_reclassification_reason'] = row['reviewed_original_reclassification_reason']
         for key in ('layout', 'relation', 'usage', 'review_requirements'):
             if key in row:
                 item[key] = row[key]
-        source = Path(historical) / str(resource_id)
+        if 'source_resource_id' in row:
+            item['source_resource_id'] = source_id
+            item['source_resource_selection_reason'] = row.get('source_resource_selection_reason', 'Primary original resource')
+        source = Path(historical) / str(source_id)
         if not source.exists():
             item.update(status='missing-historical', reason='Historical MMP file unavailable')
         else:
             data = source.read_bytes()
             try:
                 image = decode_mmp(data)
-                released = decode_mmp(resources.read(resource_id))
+                released = decode_mmp(resources.read(source_id))
                 if image.size != released.size or image.tobytes() != released.tobytes():
                     item.update(status='release-mismatch', reason='Decoded dimensions or RGBA differ from release')
                 else:
@@ -125,7 +149,8 @@ def prepare(candidates, historical, release, output, append=False):
                                 release_rgba_sha256=hashlib.sha256(released.tobytes()).hexdigest(),
                                 source_native_format=struct.unpack_from('<I', data, 4)[0],
                                 alpha_extrema=list(image.getchannel('A').getextrema()),
-                                original_png=f'expanded/original/{resource_id}.png',
+                                original_png=(f'expanded/original/{resource_id}.png' if source_id == resource_id
+                                              else f'expanded/original/{resource_id}-resource-{source_id}.png'),
                                 source_match='Exact decoded RGBA and dimensions match release')
                     if texture['Type'].lower() == 'bump' or texture['Format'].lower() in ('normal', 'normals'):
                         item.update(status='original-technical-map', reason='DB Bump/normal type')
@@ -143,12 +168,17 @@ def prepare(candidates, historical, release, output, append=False):
                 item.update(status='missing-release', reason='Release resource ID unavailable')
             except ValueError as error:
                 item.update(status='unsupported-source-format', reason=str(error))
+        if prior is not None:
+            if item['status'] != 'pending':
+                raise ValueError(f'{resource_id}: reviewed original source failed fresh verification')
+            revisited.add(resource_id)
         prepared.append(item)
         known.add(resource_id)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(prepared, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     if append:
-        queue_path.write_text(json.dumps(queue + prepared, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        queue_path.write_text(json.dumps([entry for entry in queue if entry['id'] not in revisited] + prepared,
+                                       ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     return prepared
 
 
@@ -159,8 +189,10 @@ if __name__ == '__main__':
     parser.add_argument('--release', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--append', action='store_true')
+    parser.add_argument('--revisit-originals', nargs='+', type=int, default=[],
+                        help='Explicit individually reviewed structural-original IDs; accepted HD entries are protected')
     args = parser.parse_args()
     records = prepare(json.loads(args.candidates.read_text(encoding='utf-8')), args.historical,
-                      args.release, args.output, args.append)
+                      args.release, args.output, args.append, args.revisit_originals)
     from collections import Counter
     print(len(records), dict(Counter(item['status'] for item in records)))

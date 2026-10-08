@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 527 of these verified originals are accepted in the shared
+As of 2026-10-08, 531 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-fifty-first-batch-check.json` and
+unchanged for provenance: consult `../new-groups-fifty-second-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,196 IDs: clothing 191, equipment 107, weapons
-49, heads 154, UI 568, effects 103, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,192 IDs: clothing 191, equipment 107, weapons
+49, heads 154, UI 564, effects 103, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -856,3 +856,22 @@ knownLF0/oldraw-call-ref-BEFORE-manifests exact. PNGordinaryGit/RESbuiltwithGame
 Historical41–45slow/46–50near60 causeunestablished/no causalfix/generalperformanceacceptanceclaim.
 Proofs: ../new-groups-fifty-first-{batch,live,runtime,original-runtime}-check.json;
 1,196 verified originals remain.
+
+Fifty-second accepted packet: four disabled UI5038/5345/4633/7228, fourseparatebuiltin
+calls/fullUV/sourceA/scalar/TransparentpremulONCE.2,493textures/4,986aliases/
+130archives/7,853,752,506bytes; prior2,489source/PNG/native hashes unchanged.
+Softmattepaint/scale/count/storedorientation retained witholdedgeclarity/localwash/
+rounding caveats.5038dot/5345junctionpatch/4633lowerwash alreadySOURCE, notnewstud/lens.
+7228storedRIGHT despiteUI936LeftD; actualnativeRGBA allfour exactpredictions.
+Five frozenreviews/fiveworkerholds/no rootwholeallheldview claim.6399/6400 individual
+original-purpose recommendations pendingroot/no dispositions. FreshtypedDBUI and
+iStorePanel/iUnitIconBar/iCustomGame/CComplexButton consumers. AllDB8888 primaryselector
+despiteconfigusedxt0; alternateabsence3/7228alternateaudited/notselected, freshrootPOSTCALL
+audit distinct fromimmutableBEFORE/no falsefullaliasRGBAidentity.
+All12wholeprivateartGPU/fourmenu frames/full-middle-reverse-clippedUV/density4vs1/
+pending0/menu11/0/11; genericGPU notactualactivewidgetappearance. Fullpackvalidation/
+source6SHA25/current707EXE/no newFaceGenbake;4actualarg+ONE LF/knownLF0/oldraw-call-ref-BEFORE-manifests exact.
+PNGordinaryGit/RESbuiltwithGame/120HDframes59.84FPS/p9518.15ms/
+normalquit0/ownGameabsent. Historical41–45slow/46–51near60 causeunestablished/no causalfix/
+generalperformanceacceptanceclaim. Proofs:../new-groups-fifty-second-{batch,live,runtime}-check.json.
+1,192 verified originals remain.

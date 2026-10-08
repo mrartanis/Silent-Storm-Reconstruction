@@ -1,5 +1,23 @@
 # HD textures
 
+Current user scope (8 October 2026): finish entire heads/hair, clothing and world
+categories. Other unfinished categories are paused. One agent owns each whole
+category and performs visual and scripted review, with versioned artistic repairs
+of unaccepted results. One coordinator owns shared metadata and publication;
+build and validate after the category is complete, then publish checked portions.
+
+New job `generation_variant` selects immutable sibling raw, prompt and normalized
+filenames; accepted IDs remain excluded. Preserve the exact imagegen argument
+followed by one LF. Candidate `source_resource_id` may select the primary ID or
+its uncompressed alias (ID | 0x01000000), with an explicit
+`source_resource_selection_reason` proving the typed loader selection. Historical
+and release resources must match in their complete RGBA. The chosen full RGBA,
+including alpha, supplies the reference and calibration; old primary PNGs remain
+unchanged. `prepare_sources.py --revisit-originals <IDs>` can reopen individually
+reviewed structural-original entries only with a
+`reviewed_original_reclassification_reason`; the exact prior disposition is
+preserved inside the new entry. Accepted textures cannot be reopened this way.
+
 For the Russian build/install and authoring instructions, see
 [HD-TEXTURES.md](../../HD-TEXTURES.md). To continue generation in a new Codex
 session, use [CONTINUE-HD-TEXTURES.md](CONTINUE-HD-TEXTURES.md).
@@ -8,11 +26,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,489 HD textures**: 178 terrain assets, 30 tree
+The completed pack contains **2,493 HD textures**: 178 terrain assets, 30 tree
 assets, 1,754 building/environment assets, 95 clothing, 145 equipment, 71 weapons,
-24 head/hair textures, 99 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+24 head/hair textures, 103 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,971 records, including 527 accepted new-group textures, the original
+contains 2,975 records, including 531 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
 143 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +46,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,196 verified originals outside the shared queue, including next
+validation. There remain 1,192 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -799,8 +817,27 @@ Historical41–45slow/46–50near60 causeunestablished/no causalfix/generalperfo
 Proofs: expanded/new-groups-fifty-first-{batch,live,runtime,original-runtime}-check.json;
 1,196 verified originals remain.
 
-All 14,277 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (11,577,757,526 bytes before Git deduplication/compression).
+Fifty-second accepted packet: four disabled UI5038/5345/4633/7228, fourseparatebuiltin
+calls/fullUV/sourceA/scalar/TransparentpremulONCE.2,493textures/4,986aliases/
+130archives/7,853,752,506bytes; prior2,489source/PNG/native hashes unchanged.
+Softmattepaint/scale/count/storedorientation retained witholdedgeclarity/localwash/
+rounding caveats.5038dot/5345junctionpatch/4633lowerwash alreadySOURCE, notnewstud/lens.
+7228storedRIGHT despiteUI936LeftD; actualnativeRGBA allfour exactpredictions.
+Five frozenreviews/fiveworkerholds/no rootwholeallheldview claim.6399/6400 individual
+original-purpose recommendations pendingroot/no dispositions. FreshtypedDBUI and
+iStorePanel/iUnitIconBar/iCustomGame/CComplexButton consumers. AllDB8888 primaryselector
+despiteconfigusedxt0; alternateabsence3/7228alternateaudited/notselected, freshrootPOSTCALL
+audit distinct fromimmutableBEFORE/no falsefullaliasRGBAidentity.
+All12wholeprivateartGPU/fourmenu frames/full-middle-reverse-clippedUV/density4vs1/
+pending0/menu11/0/11; genericGPU notactualactivewidgetappearance. Fullpackvalidation/
+source6SHA25/current707EXE/no newFaceGenbake;4actualarg+ONE LF/knownLF0/oldraw-call-ref-BEFORE-manifests exact.
+PNGordinaryGit/RESbuiltwithGame/120HDframes59.84FPS/p9518.15ms/
+normalquit0/ownGameabsent. Historical41–45slow/46–51near60 causeunestablished/no causalfix/
+generalperformanceacceptanceclaim. Proofs:expanded/new-groups-fifty-second-{batch,live,runtime}-check.json.
+1,192 verified originals remain.
+
+All 14,340 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (11,591,796,929 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
