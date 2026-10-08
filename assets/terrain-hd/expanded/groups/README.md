@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 422 of these verified originals are accepted in the shared
+As of 2026-10-08, 428 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirtieth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirty-first-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,321 IDs: clothing 206, equipment 126, weapons
-57, heads 170, UI 620, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,315 IDs: clothing 203, equipment 125, weapons
+57, heads 170, UI 618, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -444,3 +444,17 @@ realmenu/fourprivateframes/normalquit: ../new-groups-thirtieth-batch-check.json
 and ../new-groups-thirtieth-live-check.json; eye/GPU integration:
 ../new-groups-thirtieth-runtime-check.json. Three worker reviews frozen
 beforeimport. OrdinaryGit PNG; accepted IDs must not be regenerated.
+
+Thirty-first accepted packet: equipment6473, clothing5616/4517/4685,
+flag maps4749/4750. Six separate builtin generations. Pack:2,390 textures/4,780
+aliases/129 archives/7,774,693,306 bytes. Prior2,384 source/PNG/native hashes unchanged;
+all6 nativeRGBA equal privately viewed whole4x predictions. Full4517 sourcealpha,
+UV/material/count/scale retained; localpaint variations disclosed in
+../coordinator-art-review-thirty-first.json. Numericalbrightness only,
+no artisticRGB inserts. Actual4750 GPU whole/middle/reverse/clipped draws on/off/on
+reviewed; material/model binding proven, complete3Dflag appearance notcertified.
+GameEXE/code unchanged since verified25. Nativevalidation/realmenu/fourprivateframes/
+normalquit: ../new-groups-thirty-first-batch-check.json,
+../new-groups-thirty-first-live-check.json and
+../new-groups-thirty-first-runtime-check.json. Three reviews frozen beforeimport;
+ordinaryGit PNG, accepted IDs must not be regenerated.

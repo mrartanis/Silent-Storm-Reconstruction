@@ -1,0 +1,138 @@
+{
+  "id": 4685,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-3f0b5f3b-500e-4b8e-9702-3921f938c627.png",
+  "prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original TerrorEliteCommanderLegs verydim darkbrown camouflage paintedcloth. Preserve leftdarkbrowncamofieldx0..99, middledarkbrowncamofieldx103..207/y43..128, rightdimgrayfieldx207..256 andONE upperfootpaintwash atnativey3..55. Count/phase invariant: ONE lowergray ZIGZAGPAINTfield has EXACT FIVE uppercaps atnative(110,118),(116,118),(122,118),(128,118),(134,118), andFOUR lowerdips at(113,121),(119,121),(125,121),(131,121). Pitch6nativepixels; keep thissingle thinflatwash stroke with4Vs/5peaks, not separate closedloops/newropes/knots. Upperright darkpainttrace has EXACT FIVE full horizontalcrossbars atnativey31,35,39,43,47,pitch4, plusshort ORIGINAL framecapsy26/y51. These are VERYDIM graypaint Labout25..30, not raisedmetalgrille or brightarmor. Keep graytrace faintrelative to cloth; no extra bar/cap. AlloriginalA255 including2280RGBblacktexels. Preserve original irregular browncamopatches andsoftcodecwash silhouettes at sourcephysicalscale, without inventing sharpnewcamopatches or regularweave. FineHD oldpaint must not amplify grayfixturecontrast.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4685-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "91df9b3ae64f28cde238ef686af3ce98477e161f3ccd8402659c4cf284e27269",
+    "exact_prompt_file": "1cc5957c5d23ef5f53c26fb7daca4e07e6ec7e34641b17d5e4c3ca6c1ce38c06",
+    "reference_png": "89b7f822da33863c9a7262bbede8c029e98e1c772f83324426e527c71c7c01a4"
+  },
+  "saved_at_utc": "2026-10-08T07:17:28.642908+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 4685,
+    "texture": {
+      "ID": 4685,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15330027,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Terror\\TerEliteComander\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2436,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1602,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4858,
+              "field": "Material2",
+              "material_template_id": 1602,
+              "geometry_id": 3015,
+              "geometry": "Characters\\Skeletons01\\Skins\\Terror\\TerEliteComander_100.mb",
+              "model_template_id": 3231,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "3dc5495f4eada4442cbbe9bc7e25a05b5946e52980c8c1ea6ecd50635b5a4b2c",
+    "source_rgba_sha256": "7ec7a6082b4d2d2365e7f250cce71a293dc8875c8a195b00ab217928f7517f22",
+    "release_rgba_sha256": "7ec7a6082b4d2d2365e7f250cce71a293dc8875c8a195b00ab217928f7517f22",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4685.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "e0591eac16ffa4ae33691585efbe2c2809d9250695f1f8c68a57d55348a0de83",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-ninth-4685.json",
+  "source_count_phase_proof_sha256": "f6d8459fed9b1bec25078ce3d7bc2a13688c6a285394591fd8c5bfa33987fb65",
+  "precall_constraints_sha256": "2be457b29d82fb13cf80f37148f26dfb1d291f86e23698843d0f7dc6cd37cc1e",
+  "exact_service_args": {
+    "prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original TerrorEliteCommanderLegs verydim darkbrown camouflage paintedcloth. Preserve leftdarkbrowncamofieldx0..99, middledarkbrowncamofieldx103..207/y43..128, rightdimgrayfieldx207..256 andONE upperfootpaintwash atnativey3..55. Count/phase invariant: ONE lowergray ZIGZAGPAINTfield has EXACT FIVE uppercaps atnative(110,118),(116,118),(122,118),(128,118),(134,118), andFOUR lowerdips at(113,121),(119,121),(125,121),(131,121). Pitch6nativepixels; keep thissingle thinflatwash stroke with4Vs/5peaks, not separate closedloops/newropes/knots. Upperright darkpainttrace has EXACT FIVE full horizontalcrossbars atnativey31,35,39,43,47,pitch4, plusshort ORIGINAL framecapsy26/y51. These are VERYDIM graypaint Labout25..30, not raisedmetalgrille or brightarmor. Keep graytrace faintrelative to cloth; no extra bar/cap. AlloriginalA255 including2280RGBblacktexels. Preserve original irregular browncamopatches andsoftcodecwash silhouettes at sourcephysicalscale, without inventing sharpnewcamopatches or regularweave. FineHD oldpaint must not amplify grayfixturecontrast.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4685-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4685,
+    "gain": 0.828125,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 21.128156506347654,
+    "actual_stored_luma": 21.127952026748655,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending rootwhole4x originalpaint/graytrace softness/materialQA. Whole256x128 to1024x512, sourceA255/defaultpad0/scalar.828125; sourceL21.128157 to21.127952. BEFOREprompt exactnative sourceonezigzagfield uppercaps5 at110/116/122/128/134,y118 andlowerdips4 at113/119/125/131,y121, pitch6 proved. Full4x retains5caps/4Vs/fourlowerdips; linegeometriccentroid minima x110.75/116.75/122.75/129/135,y118.18..118.31 versusoriginalpixelcenters110.5/...134.5: within.25...5native, no substantialrepeatphase drift. Maxbrightnesswindow sometimesselects descendingwing at123.75/135.5,y119, notgeometricapex; bothprobes explicitlysaved, nofalse exactpixelregistration claim. Grayzig line moreuniform/smoothly outlined at4x withlowernative capRGB123/130/123 to76/71/68 andlast115/117/123 to54/50/48, Lstd20.67 to11.89 acrossfield; sharp-sourcepixel washglints diffuseintoHDstroke, relativehighlight compression disclosedrootQA. Five upperrightfullcrossbars31/35/39/43/47,pitch4 retainedwith4xpeaks31.25/35.25/39.25/43.25/47.5; originalshortframecaps26/51 retained. BarL25..30 to34..40 afterscalar,moderatelift disclosed butnot5675doublegraystrength. Fullraw blackoval looksgrille-like, but source/nativecrop208..225/y67..101 revealsalreadyexistingfaintgraybars insideoriginalblackoval; means14.57/14.52/14.57 to16.48/15.62/14.62. Beforepromptwholeblackovalwashfield preserved, noexhaustivebarcountwaspromised there. No falselyclaimedaddedgrille fromfullrawimpression. Sourcealreadycontainsgrayhorizontal supportrectangle207..238/y44..53 RGB25.55/26.43/25.55 to21.00/20.85/20.73 andrectangularshadedzigbackground, not addedpadding/framecanvas. Leftcamo25.90/23.88/23.17 to28.38/23.39/20.00;middle23.73/21.80/21.20 to26.71/22.33/19.27;rightgray15.82/15.89/15.82 to17.80/16.82/15.74. Finepaintgrain/strongerexistingfolds/warmerbrownpatches andgrayfootedges at4x disclosedrootpalette/materialQA. No demonstratednewregularweave/count/hardware, noartRGBrepair/crop/Falseflag/retry."
+}

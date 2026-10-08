@@ -1,0 +1,138 @@
+{
+  "id": 4517,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-9545a15a-ed38-42eb-a467-4782c59cae25.png",
+  "prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original GerSoldierFemaleLegs. Keep tan/darkbrown leftfield nativex0..96, dimgraymiddlex96..151, andoliverightx151..256 with their ORIGINAL irregularpaintblotches/softfolds. Exactsourcecount: TWO separate dim angularGRAY WASHfields atnative[100,92,117,105] and[129,92,142,105]; keep their unequal paintcontours, dark lowernotches andanyopenends. They are not an invitation to manufacture closed metalframes/eyelets/pins/extra innerbars. ONE left uppergraybootwash at[29,22,66,56] remains indistinctsoftpaint, not a newbuckle with inferredparts. Preserve alloriginal clothboundaries/partialedgefields andblackspacing. Alpha fact: only416native lowercenter pixels are trueA0;2120OTHER RGBblackpixels areA255, so donotcutout the wholeblackcanvas. Preserve completeopaque RGBsupport; output opaque fullcanvas androot restores thoseexact416A0 afterward. No regular repeatingweave or newcamopatches. Graymarks mustremain subdued at source local brightness againstcloth, never gray metallicinserts.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4517-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "cf5fc8a7bda48799c7198ba42f249298357c2ca963dd126bb5e74453f8fee872",
+    "exact_prompt_file": "11cf30aa07696c96ca4a1b16cb034da144aba23d8d1ef502692e23f2b398760d",
+    "reference_png": "0b8b9bda02036f636288354d0690fcd7dc0f22ed2899ebb2d2f8ae8e601912c1"
+  },
+  "saved_at_utc": "2026-10-08T07:16:21.156469+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 4517,
+    "texture": {
+      "ID": 4517,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -47767021,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerSoldierFemale\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "LegsArms",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2810,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 1813,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4587,
+              "field": "Material2",
+              "material_template_id": 1813,
+              "geometry_id": 2703,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerSoldierFemale_100.mb",
+              "model_template_id": 3067,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "98df6e586f2c1d4174d070686628f762614f4e7a85ae00d9f1519202e153aee5",
+    "source_rgba_sha256": "d5479e9811c36997b9be7c507b50ab23e6d1f79c1e210f1e8f9e2a6350f568d1",
+    "release_rgba_sha256": "d5479e9811c36997b9be7c507b50ab23e6d1f79c1e210f1e8f9e2a6350f568d1",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/4517.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "e0591eac16ffa4ae33691585efbe2c2809d9250695f1f8c68a57d55348a0de83",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-ninth-4517.json",
+  "source_count_phase_proof_sha256": "57c3d839799713a374309a7e4943bde11d066ea047e50da080529eb96e5e7f53",
+  "precall_constraints_sha256": "78cbfb268b8940e35a741982f3b6fa899bc6904eb8397b690abfcabbda0846c9",
+  "exact_service_args": {
+    "prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original GerSoldierFemaleLegs. Keep tan/darkbrown leftfield nativex0..96, dimgraymiddlex96..151, andoliverightx151..256 with their ORIGINAL irregularpaintblotches/softfolds. Exactsourcecount: TWO separate dim angularGRAY WASHfields atnative[100,92,117,105] and[129,92,142,105]; keep their unequal paintcontours, dark lowernotches andanyopenends. They are not an invitation to manufacture closed metalframes/eyelets/pins/extra innerbars. ONE left uppergraybootwash at[29,22,66,56] remains indistinctsoftpaint, not a newbuckle with inferredparts. Preserve alloriginal clothboundaries/partialedgefields andblackspacing. Alpha fact: only416native lowercenter pixels are trueA0;2120OTHER RGBblackpixels areA255, so donotcutout the wholeblackcanvas. Preserve completeopaque RGBsupport; output opaque fullcanvas androot restores thoseexact416A0 afterward. No regular repeatingweave or newcamopatches. Graymarks mustremain subdued at source local brightness againstcloth, never gray metallicinserts.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4517-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4517,
+    "gain": 0.7490234375,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 34.05239922485352,
+    "actual_stored_luma": 34.049670388031004,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending rootfull4x softpaint/material review. Whole256x128 to1024x512/scalar.7490234375/sourceL34.052399 to34.049670. MixedsourceA specificallyproved BEFOREprompt: ONLY416lowercentertrueA0,2120otherRGBblack sourcepixelsA255. Service transparent_backgroundfalse returnedfullRGBsupportedcanvas; exactwholeoriginalA restorednearest4x, defaultpad0/cleared0. No automaticblackcutout/fullcanvas alpha inference or Falseflag. Two originaldim angulargraywash fields withdarklowernotches retained atnative100..117 and129..142/y92..105; source/native diagnostic showsoriginalgrayframe-likepaint contours alreadypresent, not two newlymanufacturedbuckles. Nativecombinedfields mean24.68/21.06/17.29 to24.99/22.03/19.16,Lstd16.46 to15.29; count2/sourcephase/open/darkspacing retained. Upperleftgraywash likewiseexisting sourcecurves/strip cadence, itsboundary boxwaswholefieldwash, not exhaustivemicrohardwarecount. Lefttan49.48/36.77/20.37 to51.68/37.64/22.77,Lstd25.01 to24.83;middlegray29.35/24.88/19.24 to29.01/25.05/20.88,Lstd11.58 to10.90;rightolive38.07/38.73/18.59 to38.65/36.70/20.24,Lstd22.66 to20.30. Fullraw4x enhancesdirectionalpaint grain/diagonalfolds andsharpgraywash edges, disclosedrootsoftnesscheck. Existingirregular tan/brown andolivewash silhouettes retained; no newsemanticcamopatch count/regularfabricweave proved fromlowcodecnoise. OriginalwholeUV/nativebounds/fullA matched, noRGBrepair/registration/crop. Moreoutlinedoldpaint isnot automatic acceptance; rootmustassess sourcewashstrength/hue/material."
+}

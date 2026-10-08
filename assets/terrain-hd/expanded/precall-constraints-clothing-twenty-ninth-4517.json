@@ -1,0 +1,41 @@
+[
+  {
+    "id": 4517,
+    "exact_prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original GerSoldierFemaleLegs. Keep tan/darkbrown leftfield nativex0..96, dimgraymiddlex96..151, andoliverightx151..256 with their ORIGINAL irregularpaintblotches/softfolds. Exactsourcecount: TWO separate dim angularGRAY WASHfields atnative[100,92,117,105] and[129,92,142,105]; keep their unequal paintcontours, dark lowernotches andanyopenends. They are not an invitation to manufacture closed metalframes/eyelets/pins/extra innerbars. ONE left uppergraybootwash at[29,22,66,56] remains indistinctsoftpaint, not a newbuckle with inferredparts. Preserve alloriginal clothboundaries/partialedgefields andblackspacing. Alpha fact: only416native lowercenter pixels are trueA0;2120OTHER RGBblackpixels areA255, so donotcutout the wholeblackcanvas. Preserve completeopaque RGBsupport; output opaque fullcanvas androot restores thoseexact416A0 afterward. No regular repeatingweave or newcamopatches. Graymarks mustremain subdued at source local brightness againstcloth, never gray metallicinserts.",
+    "prompt_constraints": {
+      "center_gray_angular_wash_fields": 2,
+      "center_gray_fields_native_bounds": [
+        [
+          100,
+          92,
+          117,
+          105
+        ],
+        [
+          129,
+          92,
+          142,
+          105
+        ]
+      ],
+      "source_open_dark_lower_notch_rule": "Preserve two dimsourcewash contours/openends; no manufactured closedframe/innerbar/pin/eyelets.",
+      "left_uppergray_boot_wash_count": 1,
+      "left_uppergray_boot_native_bounds": [
+        29,
+        22,
+        66,
+        56
+      ],
+      "camouflage_periodic_repeat": false,
+      "wholematerial_regions": [
+        "tan/darkbrownleftfield x0..96",
+        "dimgraymiddlefield x96..151",
+        "oliverightfield x151..256"
+      ],
+      "camouflage_rule": "Keep original irregularpaintblotch/fold silhouettes andlocalcontrast; no newrepeatingweave/camopatches."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "frozen_after_sourceproof_utc": "2026-10-08T07:14:17.307840+00:00",
+    "sourceproof_sha256": "57c3d839799713a374309a7e4943bde11d066ea047e50da080529eb96e5e7f53"
+  }
+]

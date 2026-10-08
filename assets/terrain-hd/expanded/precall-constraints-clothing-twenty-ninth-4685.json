@@ -1,0 +1,77 @@
+[
+  {
+    "id": 4685,
+    "exact_prompt": "Edit the supplied original game diffuse texture atlas into a faithful HD PAINTED texture. The sole reference is the entire original256x128 RGBA canvas shown nearest8x2048x1024, not a rendered character or scene. Keep the exact complete2:1 canvas, all UV field boundaries/black margins, every original mark silhouette, phase, material identity and physical pattern scale. Target modest finer matte painted transitions at4x, keeping source dim soft lowcontrast washes, subtle existing folds and restrained finepaintgrain. Do not introduce extra garments, pockets, hardware, anatomy, photoreal cloth weave/leather pores, crosshatch, ornament, polishedmetal or strongbevels. No crop/padding/letterbox, no repositioning or automatic object cleanup. All RGBblack support pixels are opaque unless the originalA explicitly says otherwise. Output the entire opaque RGB-supported canvas; alpha will be restored from the exact original afterward. Keep relative hue/lightness hierarchy and source-graytrace intensity, not a highcontrast reconstruction.\nThis is original TerrorEliteCommanderLegs verydim darkbrown camouflage paintedcloth. Preserve leftdarkbrowncamofieldx0..99, middledarkbrowncamofieldx103..207/y43..128, rightdimgrayfieldx207..256 andONE upperfootpaintwash atnativey3..55. Count/phase invariant: ONE lowergray ZIGZAGPAINTfield has EXACT FIVE uppercaps atnative(110,118),(116,118),(122,118),(128,118),(134,118), andFOUR lowerdips at(113,121),(119,121),(125,121),(131,121). Pitch6nativepixels; keep thissingle thinflatwash stroke with4Vs/5peaks, not separate closedloops/newropes/knots. Upperright darkpainttrace has EXACT FIVE full horizontalcrossbars atnativey31,35,39,43,47,pitch4, plusshort ORIGINAL framecapsy26/y51. These are VERYDIM graypaint Labout25..30, not raisedmetalgrille or brightarmor. Keep graytrace faintrelative to cloth; no extra bar/cap. AlloriginalA255 including2280RGBblacktexels. Preserve original irregular browncamopatches andsoftcodecwash silhouettes at sourcephysicalscale, without inventing sharpnewcamopatches or regularweave. FineHD oldpaint must not amplify grayfixturecontrast.",
+    "prompt_constraints": {
+      "lowerzig_paintfield_count": 1,
+      "lowerzig_upper_caps_count": 5,
+      "lowerzig_upper_caps_native_xy": [
+        [
+          110,
+          118
+        ],
+        [
+          116,
+          118
+        ],
+        [
+          122,
+          118
+        ],
+        [
+          128,
+          118
+        ],
+        [
+          134,
+          118
+        ]
+      ],
+      "lowerzig_lower_dips_count": 4,
+      "lowerzig_lower_dips_native_xy": [
+        [
+          113,
+          121
+        ],
+        [
+          119,
+          121
+        ],
+        [
+          125,
+          121
+        ],
+        [
+          131,
+          121
+        ]
+      ],
+      "lowerzig_pitch_native": 6,
+      "upperright_full_darkgray_crossbars_count": 5,
+      "upperright_full_crossbars_native_y": [
+        31,
+        35,
+        39,
+        43,
+        47
+      ],
+      "upperright_crossbars_pitch_native": 4,
+      "upperright_cap_native_y": [
+        26,
+        51
+      ],
+      "crossbar_material_rule": "Verydim flat graypaint/background trace, not newraisedmetalgrille/largebrightnessboost.",
+      "originalupper_boot_wash_count": 1,
+      "camouflage_periodic_repeat": false,
+      "wholematerial_regions": [
+        "leftdarkbrowncamofield x0..99",
+        "middledarkbrowncamofield x103..207 y43..128",
+        "rightdimgrayfield x207..256 withupperfootwash y3..55"
+      ],
+      "camouflage_rule": "Preserve allsource irregularbrowndimpaintedpatch silhouettes andphase; do not introduce sharpnewmilitarycamopatches/photocloth."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "frozen_after_sourceproof_utc": "2026-10-08T07:14:17.308870+00:00",
+    "sourceproof_sha256": "f6d8459fed9b1bec25078ce3d7bc2a13688c6a285394591fd8c5bfa33987fb65"
+  }
+]

@@ -1,0 +1,4499 @@
+{
+  "batch": "ui-twenty-sixth",
+  "accepted_snapshot": 2379,
+  "remaining_interface_scope": 621,
+  "fresh_uncalled_count": 556,
+  "checked_utc": "2026-10-08T07:08:33.067453+00:00",
+  "source_checks": [
+    {
+      "id": 4749,
+      "source_record": {
+        "id": 4749,
+        "texture": {
+          "ID": 4749,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14476270,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\IT.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Italy",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3017,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1937,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4967,
+                  "field": "Material0",
+                  "material_template_id": 1937,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3305,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "1de40b590c63cc640709f24aeaffbb0efa96bf44e5501f04fafedb9f47f28c1b",
+        "source_rgba_sha256": "cfe0d6ddda19878eee0b7a534f6409c9c1a6a38708074a26b6ba29f9b6f541c0",
+        "release_rgba_sha256": "cfe0d6ddda19878eee0b7a534f6409c9c1a6a38708074a26b6ba29f9b6f541c0",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4749.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4749,
+        "texture": {
+          "ID": 4749,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14476270,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\IT.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Italy",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3017,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1937,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4967,
+                "field": "Material0",
+                "material_template_id": 1937,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3305,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3017,
+            "TextureID": 4749,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1937,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1937,
+            "UserName": "Flag_Italy"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4967,
+                "Material0": 1937,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3305,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3305,
+                "UserName": "Flag_Italy"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "1de40b590c63cc640709f24aeaffbb0efa96bf44e5501f04fafedb9f47f28c1b",
+      "release_mmp_sha256": "1de40b590c63cc640709f24aeaffbb0efa96bf44e5501f04fafedb9f47f28c1b",
+      "original_png_sha256": "7eaea21553b1d4f495503c182f2ac56c4adf6f1da75088556023ffaf7dbdbc30",
+      "source_rgba_sha256": "cfe0d6ddda19878eee0b7a534f6409c9c1a6a38708074a26b6ba29f9b6f541c0",
+      "source_rgb_sha256": "b6ff3b04f636ecbafd5721cdc26380c08a1f76b567a95451c99adb5062a2dbeb",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source256x512, production1024x2048. Exactly ONE existing narrow hanging cloth flag-shaped painted field occupies the original LEFT part; original large right UV field and curved top outside remain BLACK, even though fullsourceA is255. Exact cloth edge and concave top silhouette from source; do not grow or center the flag to fill the black canvas. The cloth has EXACTLY THREE existing horizontal stacked color regions in this retail orientation: dim GREEN above, old dim warmgray/taupe in middle, dark RED below. Keep both original gently curved color-transition boundaries, all broad original drape/fold/shadow bands, and the existing diagonal warm light versus bluegray shade across the middle region at precisely the old source phase. Do not rotate into a conventional horizontal flag or move/re-proportion colored regions. Existing painted folds remain soft and subdued, no crisp sewn seams/rope/attachments/poles, no newly added creases, threads, woven fiber noise, tears or shine. Only gentle old matte cloth gamepaint. No new emblem, lettering or mark.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          256,
+          512
+        ],
+        "guide_size": [
+          512,
+          1024
+        ],
+        "source_bbox": [
+          0,
+          0,
+          256,
+          512
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole source exact storedRGB NN2x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. Transparent5016 native storedRGB premultiplied once; root typednative audit required.",
+        "references_sha256": [
+          "7eaea21553b1d4f495503c182f2ac56c4adf6f1da75088556023ffaf7dbdbc30",
+          "1b7478bc9e2a88a7b7459147bb04a933c43b274e6abbd7fd7fa2998396ab1f9a"
+        ]
+      },
+      "actual_runtime_binding": {
+        "actual_material": 3017,
+        "actual_template": 1937,
+        "actual_model": 4967,
+        "actual_geometry": 3002,
+        "geometry": "Interface/CharScreen/Flags.mb",
+        "qualification": "Fresh actual opaque diffuse material-template-model chain. No selected live character-scene rendering claim."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4750,
+      "source_record": {
+        "id": 4750,
+        "texture": {
+          "ID": 4750,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13882839,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\JP.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Japan",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3019,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1938,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4969,
+                  "field": "Material0",
+                  "material_template_id": 1938,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3306,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "21bdf508db6545af0c7e070f47a4f5a63b7f02df7bcda7f863109a44c8a360c2",
+        "source_rgba_sha256": "8a4584faa4d0668569a3e304c9ea95e1fcc1125fe765c3e0dd37f1342e463fa2",
+        "release_rgba_sha256": "8a4584faa4d0668569a3e304c9ea95e1fcc1125fe765c3e0dd37f1342e463fa2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4750.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4750,
+        "texture": {
+          "ID": 4750,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13882839,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\JP.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Japan",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3019,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1938,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4969,
+                "field": "Material0",
+                "material_template_id": 1938,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3306,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3019,
+            "TextureID": 4750,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1938,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1938,
+            "UserName": "Flag_Japan"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4969,
+                "Material0": 1938,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3306,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3306,
+                "UserName": "Flag_Japan"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "21bdf508db6545af0c7e070f47a4f5a63b7f02df7bcda7f863109a44c8a360c2",
+      "release_mmp_sha256": "21bdf508db6545af0c7e070f47a4f5a63b7f02df7bcda7f863109a44c8a360c2",
+      "original_png_sha256": "cace44c7d6f57570a4f14f3e5f29bb17f747be750654520a5d5d7a97de327bf7",
+      "source_rgba_sha256": "8a4584faa4d0668569a3e304c9ea95e1fcc1125fe765c3e0dd37f1342e463fa2",
+      "source_rgb_sha256": "940cc2b0be6273eb70e5dffe54e47fa805873cd88a5df04a912c896393a6a961",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source256x512, production1024x2048. Exactly ONE existing narrow hanging cloth flag-shaped painted field occupies original LEFT part, with original BLACK right UV field and concave upper outside; fullsourceA is255. Exactly ONE existing dim DARKRED circular painted patch stays at the original source location/outline/diameter on this cloth, deformed and shaded only by the existing old painted drape. Preserve the original pale cloth bluegray shaded upper region and warmtaupe lower region separated by the existing diagonal warm-light boundary, including its exact phase through the red patch. Do not turn the upper muted bluegray into new bright clean white, lighten the circle to vibrant red, move/regularize/enlarge the circle, or add a ring border. Preserve source broad soft fold bands/top drape/edge and every original UV color boundary. No new fold count, seams, stitch texture, threads, attachments, shiny satin or photography; only fine existing matte cloth painted tones. Do not infer/create rising-sun rays, text, emblems, pole, cord or other parts.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          256,
+          512
+        ],
+        "guide_size": [
+          512,
+          1024
+        ],
+        "source_bbox": [
+          0,
+          0,
+          256,
+          512
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole source exact storedRGB NN2x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. Transparent5016 native storedRGB premultiplied once; root typednative audit required.",
+        "references_sha256": [
+          "cace44c7d6f57570a4f14f3e5f29bb17f747be750654520a5d5d7a97de327bf7",
+          "88e85aa99d113627766dcfb19c19f5c370d1486bff4f902df0c8bb5292e1c40e"
+        ]
+      },
+      "actual_runtime_binding": {
+        "actual_material": 3019,
+        "actual_template": 1938,
+        "actual_model": 4969,
+        "actual_geometry": 3002,
+        "geometry": "Interface/CharScreen/Flags.mb",
+        "qualification": "Fresh actual opaque diffuse chain, no selected live/GPU claim."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4751,
+      "source_record": {
+        "id": 4751,
+        "texture": {
+          "ID": 4751,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13953765,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3021,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1939,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4975,
+                  "field": "Material0",
+                  "material_template_id": 1939,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3309,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+        "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+        "release_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4751.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4751,
+        "texture": {
+          "ID": 4751,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13953765,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3021,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1939,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4975,
+                "field": "Material0",
+                "material_template_id": 1939,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3309,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3021,
+            "TextureID": 4751,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1939,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1939,
+            "UserName": "Flag_USA"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4975,
+                "Material0": 1939,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3309,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3309,
+                "UserName": "Flag_USA"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+      "release_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+      "original_png_sha256": "3d045cf5e695c1fedd697885e70b2bbf400d04647293f6ed0513652d4c1cd38c",
+      "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+      "source_rgb_sha256": "d2fd2f775c7b3f84f584fa6e2aa61b00a64448522e139a7b1b9be2043b07b0da",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4752,
+      "source_record": {
+        "id": 4752,
+        "texture": {
+          "ID": 4752,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13955058,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\RU.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USSR",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3023,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1940,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4973,
+                  "field": "Material0",
+                  "material_template_id": 1940,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3308,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+        "source_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+        "release_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4752.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4752,
+        "texture": {
+          "ID": 4752,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13955058,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\RU.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USSR",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3023,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1940,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4973,
+                "field": "Material0",
+                "material_template_id": 1940,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3308,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3023,
+            "TextureID": 4752,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1940,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1940,
+            "UserName": "Flag_USSR"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4973,
+                "Material0": 1940,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3308,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3308,
+                "UserName": "Flag_USSR"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+      "release_mmp_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+      "original_png_sha256": "6d3ca7f1926976206e4740fa6cf3a88759ee9ec65764e871d416c9c055da5242",
+      "source_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+      "source_rgb_sha256": "27a3837b181ad79e7a8bd915cd60dff4d460e09230d28ceab49caf94ced8a343",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4753,
+      "source_record": {
+        "id": 4753,
+        "texture": {
+          "ID": 4753,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14675173,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\UK.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_UK",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3025,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1941,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4971,
+                  "field": "Material0",
+                  "material_template_id": 1941,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3307,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+        "source_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+        "release_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4753.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4753,
+        "texture": {
+          "ID": 4753,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14675173,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\CharScreen\\UK.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_UK",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3025,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1941,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4971,
+                "field": "Material0",
+                "material_template_id": 1941,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 3307,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3025,
+            "TextureID": 4753,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1941,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1941,
+            "UserName": "Flag_UK"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4971,
+                "Material0": 1941,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 3307,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3307,
+                "UserName": "Flag_UK"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+      "release_mmp_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+      "original_png_sha256": "1eea9f0ae3c787e92fcb61ab524791a0a74a6f67ecbe1692b9c16ce7a70cd1ec",
+      "source_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+      "source_rgb_sha256": "eb600a729a1be84f9ef7c1823aa7fe05b4281f504e1f2667d47bb1985e921123",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7193,
+      "source_record": {
+        "id": 7193,
+        "texture": {
+          "ID": 7193,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14147564,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\IT_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Italy_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5161,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2920,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7213,
+                  "field": "Material0",
+                  "material_template_id": 2920,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4458,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+        "source_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+        "release_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7193.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7193,
+        "texture": {
+          "ID": 7193,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14147564,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\IT_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Italy_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5161,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2920,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7213,
+                "field": "Material0",
+                "material_template_id": 2920,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 4458,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 5161,
+            "TextureID": 7193,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2920,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2920,
+            "UserName": "Flag_Italy_C"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7213,
+                "Material0": 2920,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 4458,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4458,
+                "UserName": "Flag_Italy_C"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+      "release_mmp_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+      "original_png_sha256": "fd4df58e08d7dbc688169da194a266fd64c721de731a2423534ab35a868a99d9",
+      "source_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+      "source_rgb_sha256": "80e9923779d8ce23d3d56ba6094c866d574e7bfa3fec9deae038eb67bc56b43c",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7194,
+      "source_record": {
+        "id": 7194,
+        "texture": {
+          "ID": 7194,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13357524,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\JP_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Japan_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5165,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2922,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7215,
+                  "field": "Material0",
+                  "material_template_id": 2922,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4459,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+        "source_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+        "release_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7194.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7194,
+        "texture": {
+          "ID": 7194,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13357524,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\JP_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_Japan_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5165,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2922,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7215,
+                "field": "Material0",
+                "material_template_id": 2922,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 4459,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 5165,
+            "TextureID": 7194,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2922,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2922,
+            "UserName": "Flag_Japan_C"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7215,
+                "Material0": 2922,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 4459,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4459,
+                "UserName": "Flag_Japan_C"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+      "release_mmp_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+      "original_png_sha256": "528c46fb3828a00ee1b48c777f639ee82b7ecc5858447c665d256fc550fb71f6",
+      "source_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+      "source_rgb_sha256": "b8c581231511cd91ff11a79c7f37f2c16d0d112f2037116e6dc1d60283858277",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7195,
+      "source_record": {
+        "id": 7195,
+        "texture": {
+          "ID": 7195,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14346980,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\UK_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_UK_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5169,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2924,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7205,
+                  "field": "Material0",
+                  "material_template_id": 2924,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4454,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+        "source_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+        "release_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7195.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7195,
+        "texture": {
+          "ID": 7195,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -14346980,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\UK_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_UK_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5169,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2924,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7205,
+                "field": "Material0",
+                "material_template_id": 2924,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 4454,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 5169,
+            "TextureID": 7195,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2924,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2924,
+            "UserName": "Flag_UK_C"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7205,
+                "Material0": 2924,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 4454,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4454,
+                "UserName": "Flag_UK_C"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+      "release_mmp_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+      "original_png_sha256": "9c8d7fd29696b3daf01264dde2c5c28dfc88156c953f2dfeeec4ff7484e13756",
+      "source_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+      "source_rgb_sha256": "0629c19ce7c0f6b56f2c8488b020bf6b1b381265e238c687b84b741dbf0672bc",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7196,
+      "source_record": {
+        "id": 7196,
+        "texture": {
+          "ID": 7196,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13559779,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\US_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5167,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2923,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7207,
+                  "field": "Material0",
+                  "material_template_id": 2923,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4455,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          512
+        ],
+        "source_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+        "source_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+        "release_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7196.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7196,
+        "texture": {
+          "ID": 7196,
+          "Width": 256,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13559779,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\US_C.tga",
+          "Format": "dxt1",
+          "UserName": "Flag_USA_C",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5167,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2923,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7207,
+                "field": "Material0",
+                "material_template_id": 2923,
+                "geometry_id": 3002,
+                "geometry": "Interface\\CharScreen\\Flags.mb",
+                "model_template_id": 4455,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 5167,
+            "TextureID": 7196,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2923,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2923,
+            "UserName": "Flag_USA_C"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7207,
+                "Material0": 2923,
+                "Material1": 0,
+                "GeometryID": 3002,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 74,
+                "TemplateID": 4455,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4455,
+                "UserName": "Flag_USA_C"
+              },
+              "geometry": {
+                "ID": 3002,
+                "AIGeometryID": 1892,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.1085608005523682,
+                "SizeY": 4.19082431130301e-30,
+                "SizeZ": 3.2812509536743164,
+                "CenterX": 0.0,
+                "CenterY": -2.095412155651505e-30,
+                "CenterZ": 2.109375476837158,
+                "SrcName": "Interface\\CharScreen\\Flags.mb",
+                "UserName": "Flag",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+      "release_mmp_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+      "original_png_sha256": "41a1752d441c79a4dbd8fb590284fe9b27e3e4d9727de444775f1e8fb59f9e7e",
+      "source_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+      "source_rgb_sha256": "284ab00ecdfc50dd8647bbd76bde8610f2fc2852a34a51de3a0569b9eabc1cbe",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        256,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5016,
+      "source_record": {
+        "id": 5016,
+        "texture": {
+          "ID": 5016,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1304806627,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0088.tga",
+          "Format": "8888",
+          "UserName": "TeamMNG - Hire",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 618,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "TeamMNG - Hire"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 618,
+              "name": "TeamMNG - Hire",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "fbb88fa54097b67b313bdc724dc84991a2a9231539af8117e0a1e4bd32da1ec6",
+        "source_rgba_sha256": "7ed043db2ea8392b7464decc1f471b5bbc3fe7cb88d8a3202fd9eb30407b7fd9",
+        "release_rgba_sha256": "7ed043db2ea8392b7464decc1f471b5bbc3fe7cb88d8a3202fd9eb30407b7fd9",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5016.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5016,
+        "texture": {
+          "ID": 5016,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1304806627,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0088.tga",
+          "Format": "8888",
+          "UserName": "TeamMNG - Hire",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "logical_size": [
+          48,
+          48
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            48,
+            48
+          ],
+          "mips": 1,
+          "file_bytes": 9240,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 618,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "TeamMNG - Hire"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 618,
+            "name": "TeamMNG - Hire",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              48,
+              48
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "fbb88fa54097b67b313bdc724dc84991a2a9231539af8117e0a1e4bd32da1ec6",
+      "release_mmp_sha256": "fbb88fa54097b67b313bdc724dc84991a2a9231539af8117e0a1e4bd32da1ec6",
+      "original_png_sha256": "bcbd690f894fc0ee5618ff6dcf9a1626da70de8dc7d422e9c65438555d93e949",
+      "source_rgba_sha256": "7ed043db2ea8392b7464decc1f471b5bbc3fe7cb88d8a3202fd9eb30407b7fd9",
+      "source_rgb_sha256": "0699f8d10d196d4f7b54da40caba0d45b541de79e00d39cc96e6f799fcf26ad3",
+      "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+      "dimensions": [
+        48,
+        48
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source48x48square, production192x192. Exactly ONE original abstract dark green-black ARCHED silhouette with TWO blunt lower legs and ONE narrow upward triangular notch cut into its lower center, within the original soft YELLOW/OLIVE painted outline and existing dim GREEN soft halo. Keep the upper arch width/height, slopes, asymmetric lower ends/notch, rim thickness, exact contour and source black margins at the original UV positions. The existing overall symbol is retained as a shape: do not transcribe it as a letter, invent a font, words or meanings, or turn it into physical pants/helmet/machine. Preserve original modest yellow highlight near the arch top, darker yellow lower rim and diffuse green surrounding paint; do not strengthen the existing halo into neon/new glow or raise rim into bright chrome/beveled metal. No new inner crossbar, second notch/hole, added strokes, border box or ornaments. Fine old painted tonal continuity only, preserving source soft edges and component count; no enlarged pixel-block surface.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          48,
+          48
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          48,
+          48
+        ],
+        "affine_prewarp": null,
+        "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. Transparent5016 native storedRGB premultiplied once; root typednative audit required.",
+        "references_sha256": [
+          "bcbd690f894fc0ee5618ff6dcf9a1626da70de8dc7d422e9c65438555d93e949",
+          "986dbbbe4a51836965c7793e6f041cebfadfa8601b3a32d6f3caad72cc306200"
+        ]
+      },
+      "actual_runtime_binding": {
+        "actual_UITextureID": 618,
+        "file": "Main/iTeamMngMenu.cpp",
+        "line": 998,
+        "excerpt": "pHire->Set( NDb::GetUITexture( 618 ), NDb::GetUITexture( 619 ), CComplexButton::NORMAL );",
+        "qualification": "Actual runtime hire button uses UI618 normal icon; fresh historical UITextures618→Textures5016. No selected live/GPU claim."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5748,
+      "source_record": {
+        "id": 5748,
+        "texture": {
+          "ID": 5748,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1306064379,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0100.tga",
+          "Format": "8888",
+          "UserName": "Command PKExit",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 686,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Command PKExit"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 686,
+              "name": "Command PKExit",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+        "source_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+        "release_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5748.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5748,
+        "texture": {
+          "ID": 5748,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1306064379,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0100.tga",
+          "Format": "8888",
+          "UserName": "Command PKExit",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "logical_size": [
+          48,
+          48
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            48,
+            48
+          ],
+          "mips": 1,
+          "file_bytes": 9240,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 686,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Command PKExit"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 686,
+            "name": "Command PKExit",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              48,
+              48
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+      "release_mmp_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+      "original_png_sha256": "332bb974f8152d51f40f3d4b86f067a63096066afb321dd37c57ef5350c08a6b",
+      "source_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+      "source_rgb_sha256": "51b9713736c50afaddb663dd8d823478e19541fd43deae98a0922a5e2e6aacb4",
+      "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+      "dimensions": [
+        48,
+        48
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 6452,
+      "source_record": {
+        "id": 6452,
+        "texture": {
+          "ID": 6452,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1303175406,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0123.tga",
+          "Format": "8888",
+          "UserName": "Command Tool",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 849,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Command Tool"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 849,
+              "name": "Command Tool",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+        "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "release_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/6452.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6452,
+        "texture": {
+          "ID": 6452,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1303175406,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0123.tga",
+          "Format": "8888",
+          "UserName": "Command Tool",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "logical_size": [
+          48,
+          48
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            48,
+            48
+          ],
+          "mips": 1,
+          "file_bytes": 9240,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 849,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Command Tool"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 849,
+            "name": "Command Tool",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              48,
+              48
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+      "release_mmp_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+      "original_png_sha256": "03b413e3416ad5fb6a956fb78be718430ebb92b99e7abda4eb33e23b751a7c67",
+      "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+      "source_rgb_sha256": "f6933bf8fe30758ac9ab8b80facae6abd5972e9f77f643b1fab6ac3ed0b8e282",
+      "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+      "dimensions": [
+        48,
+        48
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    }
+  ],
+  "shared_modified": false,
+  "source_parity_count": 12,
+  "imagegen_calls_at_selection": 0,
+  "finalized_utc": "2026-10-08T07:20:53.305458+00:00",
+  "builtin_generation_calls": 3,
+  "source_only_deferred": [
+    {
+      "id": 4751,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque CharScreen USA flag cloth diffuse with detailed star/canton/stripe pattern. Whole sourceRGBA/A/freshtypedmaterial/parity inspected. Exact visible star count, stripe boundary phase and distorted pattern under folds not proved here; no guessed conventional flag substitution, zero calls.",
+      "source_check": {
+        "id": 4751,
+        "source_record": {
+          "id": 4751,
+          "texture": {
+            "ID": 4751,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13953765,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USA",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3021,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1939,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4975,
+                    "field": "Material0",
+                    "material_template_id": 1939,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 3309,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+          "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+          "release_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4751.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4751,
+          "texture": {
+            "ID": 4751,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13953765,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\US.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USA",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3021,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1939,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4975,
+                  "field": "Material0",
+                  "material_template_id": 1939,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3309,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3021,
+              "TextureID": 4751,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1939,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1939,
+              "UserName": "Flag_USA"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4975,
+                  "Material0": 1939,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 3309,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3309,
+                  "UserName": "Flag_USA"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+        "release_mmp_sha256": "67f3624d25453eed3b40085da7833413873ecf669422d019ba42d2cd7b221ded",
+        "original_png_sha256": "3d045cf5e695c1fedd697885e70b2bbf400d04647293f6ed0513652d4c1cd38c",
+        "source_rgba_sha256": "d57d6e88ae7171ccef9fdd2dbf5311f5fc703443af1c3947ff81bb90bfe18f02",
+        "source_rgb_sha256": "d2fd2f775c7b3f84f584fa6e2aa61b00a64448522e139a7b1b9be2043b07b0da",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4752,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque CharScreen USSR flag cloth diffuse, one complex painted emblem and original red/shaded cloth. Whole source/parity/actualmaterial inspected; exact emblem strokes/geometry need independent proof, no new heraldry or glyph transcription/call.",
+      "source_check": {
+        "id": 4752,
+        "source_record": {
+          "id": 4752,
+          "texture": {
+            "ID": 4752,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13955058,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\RU.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USSR",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3023,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1940,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4973,
+                    "field": "Material0",
+                    "material_template_id": 1940,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 3308,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+          "source_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+          "release_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4752.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4752,
+          "texture": {
+            "ID": 4752,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13955058,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\RU.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USSR",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3023,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1940,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4973,
+                  "field": "Material0",
+                  "material_template_id": 1940,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3308,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3023,
+              "TextureID": 4752,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1940,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1940,
+              "UserName": "Flag_USSR"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4973,
+                  "Material0": 1940,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 3308,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3308,
+                  "UserName": "Flag_USSR"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+        "release_mmp_sha256": "e77fab301f4ae0fcded5c3b8157c729d61602beeaecb2db85d0b55bdcce99153",
+        "original_png_sha256": "6d3ca7f1926976206e4740fa6cf3a88759ee9ec65764e871d416c9c055da5242",
+        "source_rgba_sha256": "e7f7c3cc860470374ad06f37efee092bfe5cff5d51c71971eaa46ff85e6ca4e4",
+        "source_rgb_sha256": "27a3837b181ad79e7a8bd915cd60dff4d460e09230d28ceab49caf94ced8a343",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4753,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque CharScreen UK flag cloth with intersecting original red/white/blue linework. Whole source/parity/actualmaterial inspected. Exact asymmetric intersection/stripe widths under drape need source-phase proof before call, genuine pending not technical.",
+      "source_check": {
+        "id": 4753,
+        "source_record": {
+          "id": 4753,
+          "texture": {
+            "ID": 4753,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14675173,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UK.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_UK",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3025,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1941,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4971,
+                    "field": "Material0",
+                    "material_template_id": 1941,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 3307,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+          "source_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+          "release_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4753.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4753,
+          "texture": {
+            "ID": 4753,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14675173,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\CharScreen\\UK.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_UK",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3025,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1941,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4971,
+                  "field": "Material0",
+                  "material_template_id": 1941,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 3307,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3025,
+              "TextureID": 4753,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1941,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1941,
+              "UserName": "Flag_UK"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4971,
+                  "Material0": 1941,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 3307,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3307,
+                  "UserName": "Flag_UK"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+        "release_mmp_sha256": "759ba8b3d06e15f864297b1e9728e2e3bec82434dd3a32acc3e1d86435db2897",
+        "original_png_sha256": "1eea9f0ae3c787e92fcb61ab524791a0a74a6f67ecbe1692b9c16ce7a70cd1ec",
+        "source_rgba_sha256": "6b11742a454013001772171b2862b36b02e0be867175a02610ab9fee541fb77b",
+        "source_rgb_sha256": "eb600a729a1be84f9ef7c1823aa7fe05b4281f504e1f2667d47bb1985e921123",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7193,
+      "status": "source-only-unselected-genuine-art",
+      "reason": "Genuine opaque FaceGen-scene Italy flag cloth with three original stacked fields and different baked lighting from4749. Whole sourceRGBA/A/parity/typedmodel inspected; uncalled, unselected within bounded three-call package, not declared unsuitable or alias merely because same country. Future prompt must independently prove this original changed fold/light/boundary phase.",
+      "source_check": {
+        "id": 7193,
+        "source_record": {
+          "id": 7193,
+          "texture": {
+            "ID": 7193,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14147564,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\IT_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_Italy_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 5161,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2920,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 7213,
+                    "field": "Material0",
+                    "material_template_id": 2920,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 4458,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+          "source_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+          "release_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7193.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7193,
+          "texture": {
+            "ID": 7193,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14147564,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\IT_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_Italy_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5161,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2920,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7213,
+                  "field": "Material0",
+                  "material_template_id": 2920,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4458,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 5161,
+              "TextureID": 7193,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2920,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2920,
+              "UserName": "Flag_Italy_C"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 7213,
+                  "Material0": 2920,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 4458,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4458,
+                  "UserName": "Flag_Italy_C"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+        "release_mmp_sha256": "a0d4f9a2b7b0c3d4092117d644deee5127ff3fbfffa0728680eee63359b989ae",
+        "original_png_sha256": "fd4df58e08d7dbc688169da194a266fd64c721de731a2423534ab35a868a99d9",
+        "source_rgba_sha256": "5a96d3fa12f96e9f9c644e714c7abdf81a22fa91a73c0c212d1c7917ec0587e8",
+        "source_rgb_sha256": "80e9923779d8ce23d3d56ba6094c866d574e7bfa3fec9deae038eb67bc56b43c",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7194,
+      "status": "source-only-unselected-genuine-art",
+      "reason": "Genuine opaque FaceGen-scene Japan flag cloth with one red patch and different baked-light phase from4750. Whole sourceRGBA/A/parity/typedmodel inspected; uncalled/unselected within bounded package, not unsuitable. Do not reuse4750 merely because similar flag; future needs this actual patch/fold/light phase proof.",
+      "source_check": {
+        "id": 7194,
+        "source_record": {
+          "id": 7194,
+          "texture": {
+            "ID": 7194,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13357524,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\JP_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_Japan_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 5165,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2922,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 7215,
+                    "field": "Material0",
+                    "material_template_id": 2922,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 4459,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+          "source_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+          "release_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7194.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7194,
+          "texture": {
+            "ID": 7194,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13357524,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\JP_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_Japan_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5165,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2922,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7215,
+                  "field": "Material0",
+                  "material_template_id": 2922,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4459,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 5165,
+              "TextureID": 7194,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2922,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2922,
+              "UserName": "Flag_Japan_C"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 7215,
+                  "Material0": 2922,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 4459,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4459,
+                  "UserName": "Flag_Japan_C"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+        "release_mmp_sha256": "3be20584a3c1d0bf5634517c68da2d9023cb151a370e42193cc9c0bdc6d5d985",
+        "original_png_sha256": "528c46fb3828a00ee1b48c777f639ee82b7ecc5858447c665d256fc550fb71f6",
+        "source_rgba_sha256": "22b097c268e8c63b3b755c081ca8851720b199f59a7ccdc465e8f75e9b7cfe12",
+        "source_rgb_sha256": "b8c581231511cd91ff11a79c7f37f2c16d0d112f2037116e6dc1d60283858277",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7195,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque FaceGen-scene UK flag cloth variant. Whole sourceRGBA/A/parity/typedmodel inspected. Intersecting original stripe/border pattern plus scene light requires its own exact asymmetric count/phase proof; zero calls, no generic conventional flag replacement.",
+      "source_check": {
+        "id": 7195,
+        "source_record": {
+          "id": 7195,
+          "texture": {
+            "ID": 7195,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14346980,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\UK_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_UK_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 5169,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2924,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 7205,
+                    "field": "Material0",
+                    "material_template_id": 2924,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 4454,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+          "source_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+          "release_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7195.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7195,
+          "texture": {
+            "ID": 7195,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -14346980,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\UK_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_UK_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5169,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2924,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7205,
+                  "field": "Material0",
+                  "material_template_id": 2924,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4454,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 5169,
+              "TextureID": 7195,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2924,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2924,
+              "UserName": "Flag_UK_C"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 7205,
+                  "Material0": 2924,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 4454,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4454,
+                  "UserName": "Flag_UK_C"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+        "release_mmp_sha256": "86a06f517052b63c12b7191e93823702a990e738b7ad3ae5b06b55c001b1e195",
+        "original_png_sha256": "9c8d7fd29696b3daf01264dde2c5c28dfc88156c953f2dfeeec4ff7484e13756",
+        "source_rgba_sha256": "da67edb82ff43f77fbd69b36ddcb4737b6147f27d0de69dc09e5aa0b64761a3c",
+        "source_rgb_sha256": "0629c19ce7c0f6b56f2c8488b020bf6b1b381265e238c687b84b741dbf0672bc",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7196,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque FaceGen-scene USA flag variant. Whole sourceRGBA/A/parity/typedmodel inspected. Exact stars/stripes/cloth-shaded pattern not proved here; no call, no group ban or fake original-only classification.",
+      "source_check": {
+        "id": 7196,
+        "source_record": {
+          "id": 7196,
+          "texture": {
+            "ID": 7196,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13559779,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\US_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USA_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 5167,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 2923,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 7207,
+                    "field": "Material0",
+                    "material_template_id": 2923,
+                    "geometry_id": 3002,
+                    "geometry": "Interface\\CharScreen\\Flags.mb",
+                    "model_template_id": 4455,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            512
+          ],
+          "source_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+          "source_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+          "release_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7196.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7196,
+          "texture": {
+            "ID": 7196,
+            "Width": 256,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -13559779,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\FaceGen\\US_C.tga",
+            "Format": "dxt1",
+            "UserName": "Flag_USA_C",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5167,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2923,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7207,
+                  "field": "Material0",
+                  "material_template_id": 2923,
+                  "geometry_id": 3002,
+                  "geometry": "Interface\\CharScreen\\Flags.mb",
+                  "model_template_id": 4455,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 5167,
+              "TextureID": 7196,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2923,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2923,
+              "UserName": "Flag_USA_C"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 7207,
+                  "Material0": 2923,
+                  "Material1": 0,
+                  "GeometryID": 3002,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 74,
+                  "TemplateID": 4455,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 4455,
+                  "UserName": "Flag_USA_C"
+                },
+                "geometry": {
+                  "ID": 3002,
+                  "AIGeometryID": 1892,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1085608005523682,
+                  "SizeY": 4.19082431130301e-30,
+                  "SizeZ": 3.2812509536743164,
+                  "CenterX": 0.0,
+                  "CenterY": -2.095412155651505e-30,
+                  "CenterZ": 2.109375476837158,
+                  "SrcName": "Interface\\CharScreen\\Flags.mb",
+                  "UserName": "Flag",
+                  "RootJoint": "skinCluster1"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+        "release_mmp_sha256": "3a4d464aeeb51fd16da63c38a1875857bb134971c0ebcc7e86e6dbef97594d13",
+        "original_png_sha256": "41a1752d441c79a4dbd8fb590284fe9b27e3e4d9727de444775f1e8fb59f9e7e",
+        "source_rgba_sha256": "a34a9552bc5a661439d160d9397216a10a105806c412a5cf8af10dfa79c1fb96",
+        "source_rgb_sha256": "284ab00ecdfc50dd8647bbd76bde8610f2fc2852a34a51de3a0569b9eabc1cbe",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          256,
+          512
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5748,
+      "status": "source-only-deferred",
+      "reason": "Genuine registered UITextures686 Command PKExit painted icon: one soft red circular outline and one divided downward symbol. Whole sourceRGBA/A/parity/actualUI registration inspected. Current Main/iUnitIconBar.cpp414 PKexit button usesUI382, not686, so active use of686 is not claimed. Honest source-only pending exact icon-phase/runtime role, no invented analytic classification or generation.",
+      "source_check": {
+        "id": 5748,
+        "source_record": {
+          "id": 5748,
+          "texture": {
+            "ID": 5748,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306064379,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0100.tga",
+            "Format": "8888",
+            "UserName": "Command PKExit",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 686,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Command PKExit"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 686,
+                "name": "Command PKExit",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+          "source_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+          "release_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5748.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5748,
+          "texture": {
+            "ID": 5748,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306064379,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0100.tga",
+            "Format": "8888",
+            "UserName": "Command PKExit",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 686,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Command PKExit"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 686,
+              "name": "Command PKExit",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+        "release_mmp_sha256": "c2d7861a5c681631ec000961f4487ff54c090d61aac3d204aa511c9655acbe70",
+        "original_png_sha256": "332bb974f8152d51f40f3d4b86f067a63096066afb321dd37c57ef5350c08a6b",
+        "source_rgba_sha256": "5afbe7f8c639973efa3be9f0194ac8e30345b8d600b38355ab1eec5cc94447fd",
+        "source_rgb_sha256": "51b9713736c50afaddb663dd8d823478e19541fd43deae98a0922a5e2e6aacb4",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 6452,
+      "status": "source-only-unselected-genuine-art",
+      "reason": "Genuine registered UITextures849 Command Tool painted icon with one diagonal tool-shaped silhouette, two orange/yellow end fields, dark central grip and gray stem. Whole source/parity/actualUI inspected; Main/iUnitIconBar.cpp CreateButton849/850 runtime use-tool path found. Uncalled/unselected within bounded package, not deemed unsuitable; future source scale/softness/form proof must avoid resolving tiny patches into new mechanics.",
+      "source_check": {
+        "id": 6452,
+        "source_record": {
+          "id": 6452,
+          "texture": {
+            "ID": 6452,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1303175406,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0123.tga",
+            "Format": "8888",
+            "UserName": "Command Tool",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 849,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Command Tool"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 849,
+                "name": "Command Tool",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+          "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+          "release_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6452.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6452,
+          "texture": {
+            "ID": 6452,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1303175406,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0123.tga",
+            "Format": "8888",
+            "UserName": "Command Tool",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 849,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Command Tool"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 849,
+              "name": "Command Tool",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+        "release_mmp_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+        "original_png_sha256": "03b413e3416ad5fb6a956fb78be718430ebb92b99e7abda4eb33e23b751a7c67",
+        "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "source_rgb_sha256": "f6933bf8fe30758ac9ab8b80facae6abd5972e9f77f643b1fab6ac3ed0b8e282",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ],
+  "source_registry_snapshot_qualification": {
+    "source_registry_count_at_discovery": 2379,
+    "queue_count_at_discovery": 2841,
+    "source_registry_counts_before_calls": [
+      2379,
+      2379,
+      2379
+    ],
+    "queue_counts_before_calls": [
+      2841,
+      2841,
+      2841
+    ],
+    "qualification": "Trusted root UI26 task: registry2379/q2841 is current package29 pendingnative; committed baseline2371. Registry length is guard snapshot, not all2379accepted/nativevalidated. No later native validation or publication inferred by child. Legacy accepted_snapshot_at_call field equals exact source-list guard count."
+  }
+}
