@@ -1,0 +1,148 @@
+{
+  "id": 4453,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-6004bfd6-fbf1-43d5-b393-84e5819b93f3.png",
+  "prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into a faithful 4x HD painted game texture. It is exactly the original256x128 whole diffuse canvas; nearest8x RGBA guide2048x1024 only. Preserve the entire2:1 horizontal canvas, complete UV layout, every source edge, material identity and physical print scale. No crop/BBox/UV-fitting/recentering/padding/new margin. Actual source alpha255 everywhere, including2249 intentional opaque RGB-black pixels: keep black RGB support, never treat black as transparency.\nKeep subdued gray/green matte painted cloth with original soft folds and fine old painted grain. TWO main graycloth fields remain at native[2,7,93,103] and[130,0,255,119]. Exactly ONE upper-left pale glint remains at(67,14), with the existing nearby dark tiny wash; no extra button/hole. The ONE large triangular irregular BROWN STREAK CAMOUFLAGE field at[95,34,214,103] preserves every broad irregular printed contour, uneven spacing and source-scale phase. It is old painted cloth print, not bark, woodgrain, fabric weave, ribbons, embroidery or a new periodic motif. Do not guess a stripe count from codec-fragmented irregular paint. TWO brown boot paint sections remain at[96,0,131,37] and[2,102,132,127], with their original soft lowcontrast brown highlights/shadows. ONE dark closed round/frame-like wash at[116,25,130,38] preserves exactdim graybrown boundary and darkcenter as ORIGINAL PAINT, no extra ring/letter/badge/hardware anatomy or new metallic plaque. ONE lower-right faint angular gray wash at[215,116,231,126] preserves original soft bars/notches/spacing, no sharpened manufactured buckle, pin or screw. Maintain relative source gray/brown/olive local hues and lightness. HD refinement only of existing painted transitions, no new folds, seams, laces, eyelets, skin anatomy, hard glossy metal, strong white rims, objects, glyphs or ornaments. Return ONLY the same entire diffuse atlas.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4453-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, default numericgain and complete originalA only.",
+  "artifact_sha256": {
+    "raw": "5693fd86347faaafadc2dc7d450bf302f049ff9cb6d659d87c064cce8b5918a1",
+    "exact_prompt_file": "ccd0f5fc9fae2d250186651d5484fccb39bde18bd40ece9494c789d415431cb0",
+    "reference_png": "2448da7e9f79ee2ce6387d4b1b7412f566aa04fbe8d5d80337af93c956798a15"
+  },
+  "saved_at_utc": "2026-10-08T08:37:18.547916+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "source_record": {
+    "id": 4453,
+    "texture": {
+      "ID": 4453,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13817823,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerSniperFemale\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "LegsArms",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2766,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 1786,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1897,
+              "field": "Material2",
+              "material_template_id": 1786,
+              "geometry_id": 2191,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerSniperFemale_100.mb",
+              "model_template_id": 1464,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4823,
+              "field": "Material2",
+              "material_template_id": 1786,
+              "geometry_id": 2992,
+              "geometry": "Interface\\CharScreen\\GerSniperFemale.mb",
+              "model_template_id": 3209,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "751d0485970d9c07d314332f24bb4992d29e7d6397d922f24311cfd7d66003fa",
+    "source_rgba_sha256": "92d3e72093bd0116ebb71487a6c7ccb13eb0a14da6da59be4a9f1c2e6b2b7f2f",
+    "release_rgba_sha256": "92d3e72093bd0116ebb71487a6c7ccb13eb0a14da6da59be4a9f1c2e6b2b7f2f",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4453.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "fa7f78469643908ae4dd8702d7ca40be1ed0910f27d80429f3d64eab83fe2a64",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-second-4453.json",
+  "source_count_phase_proof_sha256": "e562abed678086285e7971c4037a8b672f83a25213390eae19dcabfeed007edb",
+  "precall_constraints_sha256": "4ca5d9eadba5aa2d90f76247b82f55dfc060b8bebff17c11ceb290b5457132c3",
+  "exact_service_args": {
+    "prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into a faithful 4x HD painted game texture. It is exactly the original256x128 whole diffuse canvas; nearest8x RGBA guide2048x1024 only. Preserve the entire2:1 horizontal canvas, complete UV layout, every source edge, material identity and physical print scale. No crop/BBox/UV-fitting/recentering/padding/new margin. Actual source alpha255 everywhere, including2249 intentional opaque RGB-black pixels: keep black RGB support, never treat black as transparency.\nKeep subdued gray/green matte painted cloth with original soft folds and fine old painted grain. TWO main graycloth fields remain at native[2,7,93,103] and[130,0,255,119]. Exactly ONE upper-left pale glint remains at(67,14), with the existing nearby dark tiny wash; no extra button/hole. The ONE large triangular irregular BROWN STREAK CAMOUFLAGE field at[95,34,214,103] preserves every broad irregular printed contour, uneven spacing and source-scale phase. It is old painted cloth print, not bark, woodgrain, fabric weave, ribbons, embroidery or a new periodic motif. Do not guess a stripe count from codec-fragmented irregular paint. TWO brown boot paint sections remain at[96,0,131,37] and[2,102,132,127], with their original soft lowcontrast brown highlights/shadows. ONE dark closed round/frame-like wash at[116,25,130,38] preserves exactdim graybrown boundary and darkcenter as ORIGINAL PAINT, no extra ring/letter/badge/hardware anatomy or new metallic plaque. ONE lower-right faint angular gray wash at[215,116,231,126] preserves original soft bars/notches/spacing, no sharpened manufactured buckle, pin or screw. Maintain relative source gray/brown/olive local hues and lightness. HD refinement only of existing painted transitions, no new folds, seams, laces, eyelets, skin anatomy, hard glossy metal, strong white rims, objects, glyphs or ornaments. Return ONLY the same entire diffuse atlas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4453-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4453,
+    "gain": 0.934234619140625,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 40.316219860839844,
+    "actual_stored_luma": 40.32062277641296,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending root whole4x/native material review, not accepted. Whole256x128 to1024x512; full source A255 including2249 intentional opaque RGBblack texels, defaultpad0, scalar.934234619140625, source/globalL40.316220 to40.320623. Precall actualfullRGBA proved two main graycloth fields, one pale glint67/14, one irregular triangular brown streak-print field, two brownboot sections, one upper dark round/frame wash and one lower-right angular gray wash. Whole raw/source/4x/native privately inspected. Both gray marks already exist in native source: upper dark rounded center and graybrown closed outer frame; lower angular T/short horizontal bar with vertical gray post. Raw makes boundaries cleaner and lower mark more hardware-looking, disclosed material/edge caveat rather than falsely claiming wholly new buckle. Fine irregular brown print retained whole phase and triangular outline without made-up periodic count; grayfolds already source and more defined, not new garment folds. No demonstrable added repeated weave/curls or extra glints/closures. Grayleft meanRGB47.50/48.80/43.92 to49.08/49.34/43.15,Lstd15.70 to16.49; grayright43.84/39.58/31.39 to44.46/39.73/31.68,Lstd26.42 to23.68. Brown print71.91/57.95/40.08 to67.79/53.24/36.84,Lstd35.55 to31.26; upper round wash darker31.00/25.30/21.24 to25.23/19.92/15.53; lower wash brighter34.13/32.06/26.93 to38.88/36.41/31.11. Lowerboot warmer/lighter34.50/25.08/22.47 to40.42/26.96/22.36. Existing soft paint lift and codec contours disclosed for root material judgment; no pixel-perfect RGB requirement, no artRGBrepair/crop/BBox/padding/registration/optout/retry."
+}

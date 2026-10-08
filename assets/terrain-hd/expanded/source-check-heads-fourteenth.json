@@ -1,0 +1,3848 @@
+{
+  "batch": "heads-fourteenth",
+  "source_entry_count_at_audit": 2400,
+  "queue_entry_count_at_audit": 2862,
+  "source_count_semantics": "Root2400source entries/q2862 pending32 validation at task dispatch; committed/pushed2390 per coordinator. Fresh source entry counts are not automatically accepted production counts.",
+  "source_checks": [
+    {
+      "id": 1126,
+      "source_record": {
+        "id": 1126,
+        "texture": {
+          "ID": 1126,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9608356,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\EYE.tga",
+          "Format": "dxt1",
+          "UserName": "Eye",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 745,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Wrap",
+              "TemplateID": 520,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "fe34ab236083eb2c3613a15644e779743239dbbc6a04c36c9ec8cdd72f26cfea",
+        "source_rgba_sha256": "156f30e32d0f5411126e4c133f57c44c30349577b55d4c77ccff2c1535cc7ed1",
+        "release_rgba_sha256": "156f30e32d0f5411126e4c133f57c44c30349577b55d4c77ccff2c1535cc7ed1",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1126.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 1126,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -9608356,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "LSHead\\EYE.tga",
+        "Format": "dxt1",
+        "UserName": "Eye",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 745,
+            "TextureID": 1126,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 328965,
+            "TemplateID": 520,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 1.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 520,
+            "UserName": "3"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "fe34ab236083eb2c3613a15644e779743239dbbc6a04c36c9ec8cdd72f26cfea",
+      "release_MMP_SHA256": "fe34ab236083eb2c3613a15644e779743239dbbc6a04c36c9ec8cdd72f26cfea",
+      "original_PNG_SHA256": "afd84cff647e222e98d0ccb33bc9fc51dfe5e60adb25473ab9a6faa25cd72236",
+      "source_RGBA_SHA256": "156f30e32d0f5411126e4c133f57c44c30349577b55d4c77ccff2c1535cc7ed1",
+      "native_size": [
+        64,
+        64
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 745,
+          "Alpha": "opaque",
+          "AddressMode": "Wrap"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/1126-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/1126-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 1,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/1126.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST12x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          64,
+          64
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/1126-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/1126.png",
+          "assets/terrain-hd/expanded/generated/1126-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "afd84cff647e222e98d0ccb33bc9fc51dfe5e60adb25473ab9a6faa25cd72236",
+          "fef72a82eb70e209eac9fe24b6cb82fc1c521c43224b2b5186bdb44bf06fef23"
+        ]
+      },
+      "source_only_reason": "Whole native original+source-only helper privately inspected. Full native pigment phase/palette and broad source fields recorded BEFORE prompt; one FIRST builtin call planned. No generated/held source retry.",
+      "postcall_status": "ready-for-coordinator-art-native-review",
+      "postcall_review_note": "Candidate ready ONLY root whole art/native review, not production accepted. Static actual Material745 opaque diffuse, nativeOrdinary64square/A255, NOT dynamic THMID. Full originalRGBA/storedRGB NN12x768/raw1254/whole4x256/sourceA/defaultscalar privately inspected. ONE iris/ONE pupil and original upper/lower softly tinted marks plus TWO outside broad pale washes keep corresponding source UV/material/scale. IMPORTANT postcall source interpretation correction: beforeprompt count of TWO reflection patches was not a complete classification of all iris pigment; native[37,32,41,37) already contains a weaker warm pigment mark, sourcepeak90/73/74 -> inverse102/86/81, mean56.9/48.65/48.45 ->66.1/54.75/53.55. Initial tentative new-third-form concern was retracted after exact native matrices; no proven new form/extra white catchlight. Beforecall bytes unchanged, correction separate. Existing outside pale fields stronger: rightpeak189/178/181 ->210/199/198 and native45,29 source161/151/145 ->197/183/177 (+36); source gray/brown pigment subtly warmer and softened, upper tintedpeak156/146/140 ->140/125/116, lower99/81/90 ->93/71/77. No new radial fibers/veins/mosaic/photopores/anatomy observed. Whole inversecorr.9872; highpassstd.325 ->.903 diagnostic, not acceptance cutoff. Root may hold local palette/reflection hierarchy. FullA4x exact/POT/defaultpad/pure scalar only, no artRGB/crop/BBox/retry/optout.",
+      "full_raw_native4x_source_alpha_storedRGB_privately_reviewed": true
+    },
+    {
+      "id": 1127,
+      "source_record": {
+        "id": 1127,
+        "texture": {
+          "ID": 1127,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": -8496053,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\FACE.tga",
+          "Format": "dxt1",
+          "UserName": "Face",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 742,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Wrap",
+              "TemplateID": 517,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "d66ff025fcf376112724b5a98fd7d4ab1d0c08745018aca53fabf304970c4aef",
+        "source_rgba_sha256": "ac08763a2bb1b41fa5cbc1639e88699863ded8598252259c5ab51adc824c383d",
+        "release_rgba_sha256": "ac08763a2bb1b41fa5cbc1639e88699863ded8598252259c5ab51adc824c383d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1127.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 1127,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": -8496053,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "LSHead\\FACE.tga",
+        "Format": "dxt1",
+        "UserName": "Face",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 742,
+            "TextureID": 1127,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 517,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 517,
+            "UserName": "0"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "d66ff025fcf376112724b5a98fd7d4ab1d0c08745018aca53fabf304970c4aef",
+      "release_MMP_SHA256": "d66ff025fcf376112724b5a98fd7d4ab1d0c08745018aca53fabf304970c4aef",
+      "original_PNG_SHA256": "9a8f9392a069ebe054483b9d4cc4d64b0544781e8be4cfa0b7ec8c2ab88ccf3d",
+      "source_RGBA_SHA256": "ac08763a2bb1b41fa5cbc1639e88699863ded8598252259c5ab51adc824c383d",
+      "native_size": [
+        256,
+        256
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 742,
+          "Alpha": "opaque",
+          "AddressMode": "Wrap"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/1127-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/1127.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST3x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          256,
+          256
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/1127-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/1127.png",
+          "assets/terrain-hd/expanded/generated/1127-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "9a8f9392a069ebe054483b9d4cc4d64b0544781e8be4cfa0b7ec8c2ab88ccf3d",
+          "0120cf3c9ae248a1b150ffc106ead714baf1cfb08c4b7c62a3e3c32a61441dac"
+        ]
+      },
+      "source_only_reason": "Genuine static face diffuse with inverted identity/hair/ears/moustache fields; detailed identity/strand count proof deferred in this bounded scope, zero calls. Not blanket human exclusion."
+    },
+    {
+      "id": 1128,
+      "source_record": {
+        "id": 1128,
+        "texture": {
+          "ID": 1128,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -7509401,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\MISC.tga",
+          "Format": "dxt1",
+          "UserName": "Misc",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 744,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 519,
+              "consumers": []
+            },
+            {
+              "table": "Materials",
+              "id": 746,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 521,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "84e3bff285f88c2b35f5b317579f258b9e3f17ea08a9f446496c5c4220f6e15d",
+        "source_rgba_sha256": "a354fb87687b509e3062ec49a6422d0353b67f841de174acea83c773b720de3b",
+        "release_rgba_sha256": "a354fb87687b509e3062ec49a6422d0353b67f841de174acea83c773b720de3b",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1128.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 1128,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -7509401,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "LSHead\\MISC.tga",
+        "Format": "dxt1",
+        "UserName": "Misc",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 744,
+            "TextureID": 1128,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 519,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 519,
+            "UserName": "2"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        },
+        {
+          "actual_material": {
+            "ID": 746,
+            "TextureID": 1128,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 328965,
+            "TemplateID": 521,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 1.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 521,
+            "UserName": "4"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "84e3bff285f88c2b35f5b317579f258b9e3f17ea08a9f446496c5c4220f6e15d",
+      "release_MMP_SHA256": "84e3bff285f88c2b35f5b317579f258b9e3f17ea08a9f446496c5c4220f6e15d",
+      "original_PNG_SHA256": "b7051a99b3726cc7015a8f9f5c6cb6cc0b7685a001326480575d313882d374d2",
+      "source_RGBA_SHA256": "a354fb87687b509e3062ec49a6422d0353b67f841de174acea83c773b720de3b",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 744,
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap"
+        },
+        {
+          "id": 746,
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/1128-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/1128.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/1128-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/1128.png",
+          "assets/terrain-hd/expanded/generated/1128-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "b7051a99b3726cc7015a8f9f5c6cb6cc0b7685a001326480575d313882d374d2",
+          "b9f6bc1ed72229d5fb9a06000982e7346e16bf43989fdc128f817177271fd8a1"
+        ]
+      },
+      "source_only_reason": "Genuine skin/eyelash/upper-lower tooth atlas. Original tooth and thin eyelash count needs separate exact phase proof before call; zero calls, not blanket dental exclusion."
+    },
+    {
+      "id": 6691,
+      "source_record": {
+        "id": 6691,
+        "texture": {
+          "ID": 6691,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9871782,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "LSHead\\AdvancedFaceGen\\Eyes_Old.png",
+          "Format": "8888",
+          "UserName": "Old_Eye",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "TransformableEyeTextures",
+              "id": 8,
+              "field": "TextureID",
+              "role": "color",
+              "UserName": "Eyes_Old",
+              "THMID": 1,
+              "Priority": 0,
+              "TextureName": "Eyes_Old"
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+        "source_rgba_sha256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+        "release_rgba_sha256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6691.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 6691,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -9871782,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "LSHead\\AdvancedFaceGen\\Eyes_Old.png",
+        "Format": "8888",
+        "UserName": "Old_Eye",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [],
+      "actual_dynamic_texture_layer_head_consumer_chains": [
+        {
+          "actual_layer_table": "TransformableEyeTextures",
+          "actual_layer": {
+            "ID": 8,
+            "TextureID": 6691,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "Eyes_Old",
+            "TextureName": "Eyes_Old"
+          },
+          "actual_THMID_owner": {
+            "ID": 1,
+            "UserName": "AdvancedFaceGenMaterials"
+          },
+          "all_actual_Heads_consumers": [
+            {
+              "ID": 90,
+              "Material0": 1070,
+              "Material1": 0,
+              "Material2": 0,
+              "Material3": 0,
+              "Material4": 0,
+              "Material5": 0,
+              "Material6": 0,
+              "Material7": 0,
+              "TransformableTextures": 1,
+              "IsTransformable": 1,
+              "UserName": "facegen",
+              "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+              "TransformableGDP": "Res\\FaceGenHead.gdp",
+              "TransformableMMT": "Res\\FaceGenHead.mmt"
+            }
+          ],
+          "actual_ComplexHeads_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 94,
+                "HeadID": 90,
+                "Hair": 0,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 0,
+                "UserName": "facegen_test"
+              },
+              "actual_head": {
+                "ID": 90,
+                "Material0": 1070,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 1,
+                "IsTransformable": 1,
+                "UserName": "facegen",
+                "SrcName": "Heads\\GDP\\AdvancedFaceGen\\800_v6_n1_h6.gdp",
+                "TransformableGDP": "Res\\FaceGenHead.gdp",
+                "TransformableMMT": "Res\\FaceGenHead.mmt"
+              },
+              "actual_body_race": null
+            }
+          ],
+          "qualification": "Dynamic FaceGen source color layer; THMID owner/Heads exact. No static material alpha mode invented. Native sourceA and all original layer counts/weights/wholecanvas UV remain unchanged.",
+          "eye_canvas_runtime": {
+            "file": "Main/LSHead.cpp",
+            "source_SHA256": "5fca9be14f991f42e952eb68386f2904b322a482124ec5c23958ef9e500c216d",
+            "BuildTexLayers_eye_lines": [
+              1119,
+              1252
+            ],
+            "MixTexture_eye_destination": [
+              64,
+              64,
+              128,
+              128
+            ],
+            "fill": 0,
+            "orientation": "V-flipped per BlendLayer implementation; source canvas preserved, no pre-rotation",
+            "unknowns": "Actual FaceGen channel weights/runtime dispatch are not measured by this readonly source audit; root owns runtime tests."
+          }
+        }
+      ],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+      "release_MMP_SHA256": "1b298f8b53c5c62e2e5890e5fe634c1e3c3f5958697ed75d007ae19bc98e7216",
+      "original_PNG_SHA256": "4959fbdeb8cb8b39becc6e7bafc40ad785c455c825be0f3b9e36895d90c43ff9",
+      "source_RGBA_SHA256": "fd5bbc3519d7adbbe635c52b1153e89e38f8c6223bf10103941cc4b38619f828",
+      "native_size": [
+        64,
+        64
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-twelfth.json",
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/6691-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/6691-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6691.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST12x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          64,
+          64
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6691-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6691.png",
+          "assets/terrain-hd/expanded/generated/6691-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "4959fbdeb8cb8b39becc6e7bafc40ad785c455c825be0f3b9e36895d90c43ff9",
+          "dd49fc503a5c8864dc0183a86b50b6d8235d5f44866de8a50fcb0fe6c7dd0946"
+        ]
+      },
+      "source_only_reason": "Actual dynamic TransformableEye THMID source. Almost erased iris/pupil soft wash is genuine paint; no clear complete eye structure to specify without invention, zero calls."
+    },
+    {
+      "id": 3322,
+      "source_record": {
+        "id": 3322,
+        "texture": {
+          "ID": 3322,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -11717349,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\Hair\\Hair03_old.tga",
+          "Format": "8888",
+          "UserName": "Hair03",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2078,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1404,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1943,
+                  "field": "Material0",
+                  "material_template_id": 1404,
+                  "geometry_id": 2222,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 1494,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7460,
+                  "field": "Material0",
+                  "material_template_id": 1404,
+                  "geometry_id": 2222,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4564,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "b1c1b9cd6359500688371efff2f981c06087a86097ba0e0954e64c13b0e912f1",
+        "source_rgba_sha256": "c881dbbb9e23aed1d2c5151019141853cef8b6f8fa63a9180538200fac47a9ec",
+        "release_rgba_sha256": "c881dbbb9e23aed1d2c5151019141853cef8b6f8fa63a9180538200fac47a9ec",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3322.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 3322,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -11717349,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\Hair\\Hair03_old.tga",
+        "Format": "8888",
+        "UserName": "Hair03",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 2078,
+            "TextureID": 3322,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1404,
+            "GlossID": 3445,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.5,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 1404,
+            "UserName": "Hair03"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1943,
+                "Material0": 1404,
+                "Material1": 0,
+                "GeometryID": 2222,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1494,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1494,
+                "UserName": "Hair03"
+              },
+              "geometry": {
+                "ID": 2222,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2346051037311554,
+                "SizeY": 0.24389851093292236,
+                "SizeZ": 0.25864970684051514,
+                "CenterX": 0.0,
+                "CenterY": -0.026346296072006226,
+                "CenterZ": 0.0655108094215393,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair03",
+                "RootJoint": "Hair03"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7460,
+                "Material0": 1404,
+                "Material1": 0,
+                "GeometryID": 2222,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4564,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4564,
+                "UserName": "Hairs_for_mobs"
+              },
+              "geometry": {
+                "ID": 2222,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2346051037311554,
+                "SizeY": 0.24389851093292236,
+                "SizeZ": 0.25864970684051514,
+                "CenterX": 0.0,
+                "CenterY": -0.026346296072006226,
+                "CenterZ": 0.0655108094215393,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair03",
+                "RootJoint": "Hair03"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 9,
+                "HeadID": 15,
+                "Hair": 1494,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "CarmelinaDonati"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 15,
+                "Material0": 990,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "CarmelinaDonati",
+                "SrcName": "Heads\\GDP\\Axis\\CarmelinaDonati.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 49,
+                "HeadID": 18,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "CivilFemale"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 18,
+                "Material0": 993,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Ela-Eagle-Jelinek",
+                "SrcName": "Heads\\GDP\\Axis\\Ela-Eagle-Jelinek.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 101,
+                "HeadID": 94,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 4648,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem1"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 94,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem1",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 105,
+                "HeadID": 98,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem2"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 98,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem2",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem2.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            }
+          ],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "b1c1b9cd6359500688371efff2f981c06087a86097ba0e0954e64c13b0e912f1",
+      "release_MMP_SHA256": "b1c1b9cd6359500688371efff2f981c06087a86097ba0e0954e64c13b0e912f1",
+      "original_PNG_SHA256": "fcc90b28444a54db99491bd7e98e2ffde567627f3b37aecc89b35c8ff1ac244d",
+      "source_RGBA_SHA256": "c881dbbb9e23aed1d2c5151019141853cef8b6f8fa63a9180538200fac47a9ec",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 2078,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-tenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/3322-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/3322.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/3322-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/3322.png",
+          "assets/terrain-hd/expanded/generated/3322-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "fcc90b28444a54db99491bd7e98e2ffde567627f3b37aecc89b35c8ff1ac244d",
+          "7937cd56b1bc99cdfcc2eb7d3c60abc7440302304d9ec9dc00713c8d2564bca0"
+        ]
+      },
+      "source_only_reason": "Actual diffuse brown hair with many intertwined curled locks; exact native lock phase/count not yet resolved, genuine pending zero calls."
+    },
+    {
+      "id": 3323,
+      "source_record": {
+        "id": 3323,
+        "texture": {
+          "ID": 3323,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14803943,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\Hair\\Hair04.tga",
+          "Format": "8888",
+          "UserName": "Hair04",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2080,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 1405,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1945,
+                  "field": "Material0",
+                  "material_template_id": 1405,
+                  "geometry_id": 2223,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 1495,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7461,
+                  "field": "Material0",
+                  "material_template_id": 1405,
+                  "geometry_id": 2223,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4564,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "5b43a4bb324ebc55c6050e5433bbe673d0e0fcf3c22922f12e941574eb6a66d8",
+        "source_rgba_sha256": "4ecfa1d4d8d15bc4c54f29c424e7f491df8f2961522bb5e836a4a58d2bbbe46b",
+        "release_rgba_sha256": "4ecfa1d4d8d15bc4c54f29c424e7f491df8f2961522bb5e836a4a58d2bbbe46b",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3323.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 3323,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -14803943,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\Hair\\Hair04.tga",
+        "Format": "8888",
+        "UserName": "Hair04",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 2080,
+            "TextureID": 3323,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1405,
+            "GlossID": 3431,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.800000011920929,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 1405,
+            "UserName": "Hair04"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1945,
+                "Material0": 1405,
+                "Material1": 0,
+                "GeometryID": 2223,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1495,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1495,
+                "UserName": "Hair04"
+              },
+              "geometry": {
+                "ID": 2223,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.1932307481765747,
+                "SizeY": 0.24764850735664368,
+                "SizeZ": 0.2075890600681305,
+                "CenterX": -0.00023384764790534973,
+                "CenterY": -0.026822958141565323,
+                "CenterZ": 0.10893754661083221,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair04",
+                "RootJoint": "Hair04"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7461,
+                "Material0": 1405,
+                "Material1": 0,
+                "GeometryID": 2223,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4564,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4564,
+                "UserName": "Hairs_for_mobs"
+              },
+              "geometry": {
+                "ID": 2223,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.1932307481765747,
+                "SizeY": 0.24764850735664368,
+                "SizeZ": 0.2075890600681305,
+                "CenterX": -0.00023384764790534973,
+                "CenterY": -0.026822958141565323,
+                "CenterZ": 0.10893754661083221,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair04",
+                "RootJoint": "Hair04"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 35,
+                "HeadID": 40,
+                "Hair": 1495,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 2,
+                "UserName": "Kate"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 40,
+                "Material0": 1287,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Kate",
+                "SrcName": "Heads\\GDP\\Allies\\Kate.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 2,
+                "MaterialID": 2732,
+                "RaceAttributeID": 11,
+                "RaceSliderPos": -0.699999988079071,
+                "UserName": "Arab"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 49,
+                "HeadID": 18,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "CivilFemale"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 18,
+                "Material0": 993,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Ela-Eagle-Jelinek",
+                "SrcName": "Heads\\GDP\\Axis\\Ela-Eagle-Jelinek.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 56,
+                "HeadID": 54,
+                "Hair": 1495,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "English_Medic_Female"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 54,
+                "Material0": 2012,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "English_Medic_Female",
+                "SrcName": "Heads\\GDP\\Hero\\Allies\\English_Medic_Female.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 66,
+                "HeadID": 64,
+                "Hair": 1495,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 4,
+                "UserName": "Japan_Scout_Female"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 64,
+                "Material0": 2022,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Japan_Scout_Female",
+                "SrcName": "Heads\\GDP\\Hero\\Axis\\Japan_Scout_Female.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 4,
+                "MaterialID": 2733,
+                "RaceAttributeID": 13,
+                "RaceSliderPos": 0.0,
+                "UserName": "Asian"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 101,
+                "HeadID": 94,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 4648,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem1"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 94,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem1",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 105,
+                "HeadID": 98,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem2"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 98,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem2",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem2.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            }
+          ],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "5b43a4bb324ebc55c6050e5433bbe673d0e0fcf3c22922f12e941574eb6a66d8",
+      "release_MMP_SHA256": "5b43a4bb324ebc55c6050e5433bbe673d0e0fcf3c22922f12e941574eb6a66d8",
+      "original_PNG_SHA256": "b981ed3ea0f302267d137357d037c3d55d4fab9d0a7d8562558e236d4d43903f",
+      "source_RGBA_SHA256": "4ecfa1d4d8d15bc4c54f29c424e7f491df8f2961522bb5e836a4a58d2bbbe46b",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 2080,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-tenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/3323-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 1,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/3323.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/3323-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/3323.png",
+          "assets/terrain-hd/expanded/generated/3323-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "b981ed3ea0f302267d137357d037c3d55d4fab9d0a7d8562558e236d4d43903f",
+          "53798755012ee3ddd856c839a756a1b7cc9fc0b4551f0655068eab11d0bf6829"
+        ]
+      },
+      "source_only_reason": "Whole native original+source-only helper privately inspected. Full native pigment phase/palette and broad source fields recorded BEFORE prompt; one FIRST builtin call planned. No generated/held source retry.",
+      "postcall_status": "held-native-material-review",
+      "postcall_review_note": "Held for native painterly material review, not permanent refusal and no retry. Static actual hair Materials/template consumers, native128square Ordinary/A255; full original+NN6x768/raw1254/native4x512/scalar/fullA inspected. Source TWO broad softly painted banks/ONE small lowerwhorl/TWO existing thin pale polygonal paint shapes remain in corresponding broad UV, not newly named hardware. But fullraw and native4x introduce numerous strongly outlined photographic individual fibers, sharper shine and thick rigid pale outlines, replacing source softer grouped painted strokes. Concern is actual material/pattern-scale/detail strength, not blanket hair or repeat exclusion. Source upper bank peak112/106/98 ->141/131/120; right existing line native118,26 source71/67/62 ->125/116/106 (+54), lowerwhorl79/74/68 ->91/83/74. Whole inversecorr.9732; native4x highpassstd.524 ->2.564 supports fullview concern, not universal cutoff. Entire originalA restored/POT/defaultscalar/defaultpad; no new component count asserted from alphaA255 segmentation. Raw/exactprompt/call copied rejected, no sourceRGB insertion/crop/BBox/optout/retry.",
+      "full_raw_native4x_source_alpha_storedRGB_privately_reviewed": true
+    },
+    {
+      "id": 3324,
+      "source_record": {
+        "id": 3324,
+        "texture": {
+          "ID": 3324,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13033717,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\Hair\\Hair05.tga",
+          "Format": "dxt1",
+          "UserName": "Hair05",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2082,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 1406,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1947,
+                  "field": "Material0",
+                  "material_template_id": 1406,
+                  "geometry_id": 2224,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 1496,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1949,
+                  "field": "Material0",
+                  "material_template_id": 1406,
+                  "geometry_id": 2225,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 1497,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6003,
+                  "field": "Material0",
+                  "material_template_id": 1406,
+                  "geometry_id": 3696,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 3878,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6708,
+                  "field": "Material0",
+                  "material_template_id": 1406,
+                  "geometry_id": 3960,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4258,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 7462,
+                  "field": "Material0",
+                  "material_template_id": 1406,
+                  "geometry_id": 2225,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4564,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "fd58a27d183323c8c112b5a7ce04fa922170d2cf0d9d10a194e41090c6af5c1c",
+        "source_rgba_sha256": "e6a5ed5314e4c347b2dce7aeb6aa3a322e4f4a43ea9c16524154aac7c7ba354a",
+        "release_rgba_sha256": "e6a5ed5314e4c347b2dce7aeb6aa3a322e4f4a43ea9c16524154aac7c7ba354a",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/3324.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 3324,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -13033717,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\Hair\\Hair05.tga",
+        "Format": "dxt1",
+        "UserName": "Hair05",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 2082,
+            "TextureID": 3324,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1406,
+            "GlossID": 3443,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.800000011920929,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 1406,
+            "UserName": "Hair05"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1947,
+                "Material0": 1406,
+                "Material1": 0,
+                "GeometryID": 2224,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1496,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1496,
+                "UserName": "Hair05hat"
+              },
+              "geometry": {
+                "ID": 2224,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.19514259696006775,
+                "SizeY": 0.22022414207458496,
+                "SizeZ": 0.27952760457992554,
+                "CenterX": 0.0016900412738323212,
+                "CenterY": -0.035605549812316895,
+                "CenterZ": 0.06497159600257874,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair05hat",
+                "RootJoint": "Hair05cap"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 1949,
+                "Material0": 1406,
+                "Material1": 0,
+                "GeometryID": 2225,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 1497,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 1497,
+                "UserName": "Hair05"
+              },
+              "geometry": {
+                "ID": 2225,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.19514259696006775,
+                "SizeY": 0.2301487922668457,
+                "SizeZ": 0.27952760457992554,
+                "CenterX": 0.0016900412738323212,
+                "CenterY": -0.030643224716186523,
+                "CenterZ": 0.06497159600257874,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair05",
+                "RootJoint": "Hair05"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6003,
+                "Material0": 1406,
+                "Material1": 0,
+                "GeometryID": 3696,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3878,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3878,
+                "UserName": "Hair05Cap"
+              },
+              "geometry": {
+                "ID": 3696,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.1829623281955719,
+                "SizeY": 0.2868777811527252,
+                "SizeZ": 0.17299388349056244,
+                "CenterX": 0.0016900412738323212,
+                "CenterY": 0.04646989330649376,
+                "CenterZ": 0.020965509116649628,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair05Cap",
+                "RootJoint": "Hair05Cap03"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6708,
+                "Material0": 1406,
+                "Material1": 1417,
+                "GeometryID": 3960,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4258,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4258,
+                "UserName": "HairMedic"
+              },
+              "geometry": {
+                "ID": 3960,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.21901796758174896,
+                "SizeY": 0.22022414207458496,
+                "SizeZ": 0.27952760457992554,
+                "CenterX": 0.0008450206369161606,
+                "CenterY": 0.001059211790561676,
+                "CenterZ": 0.09699031710624695,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "HairMedic",
+                "RootJoint": "HairCap"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7462,
+                "Material0": 1406,
+                "Material1": 0,
+                "GeometryID": 2225,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4564,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4564,
+                "UserName": "Hairs_for_mobs"
+              },
+              "geometry": {
+                "ID": 2225,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.19514259696006775,
+                "SizeY": 0.2301487922668457,
+                "SizeZ": 0.27952760457992554,
+                "CenterX": 0.0016900412738323212,
+                "CenterY": -0.030643224716186523,
+                "CenterZ": 0.06497159600257874,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair05",
+                "RootJoint": "Hair05"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 11,
+                "HeadID": 17,
+                "Hair": 1497,
+                "HairInCap": 1496,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "DaniKunstler"
+              },
+              "hair_fields": [
+                "Hair",
+                "HairInCap"
+              ],
+              "actual_head": {
+                "ID": 17,
+                "Material0": 992,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "DaniKunstler",
+                "SrcName": "Heads\\GDP\\Axis\\DaniKunstler.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 49,
+                "HeadID": 18,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "CivilFemale"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 18,
+                "Material0": 993,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Ela-Eagle-Jelinek",
+                "SrcName": "Heads\\GDP\\Axis\\Ela-Eagle-Jelinek.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 61,
+                "HeadID": 59,
+                "Hair": 4258,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "German_Medic_Female"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 59,
+                "Material0": 2016,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "German_Medic_Female",
+                "SrcName": "Heads\\GDP\\Hero\\Axis\\German_Medic_Female.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 64,
+                "HeadID": 62,
+                "Hair": 1497,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "Italian_Sniper_Female"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 62,
+                "Material0": 2020,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Italian_Sniper_Female",
+                "SrcName": "Heads\\GDP\\Hero\\Axis\\Italian_Sniper_Female.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 85,
+                "HeadID": 59,
+                "Hair": 1497,
+                "HairInCap": 3945,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "Axis_Grenader_Female"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 59,
+                "Material0": 2016,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "German_Medic_Female",
+                "SrcName": "Heads\\GDP\\Hero\\Axis\\German_Medic_Female.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 86,
+                "HeadID": 84,
+                "Hair": 1497,
+                "HairInCap": 0,
+                "Mesh0": 3486,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "E_Base_Med"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 84,
+                "Material0": 2322,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "E_Base_Med",
+                "SrcName": "Heads\\GDP\\NPC\\E_Base_Med.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 99,
+                "HeadID": 17,
+                "Hair": 1497,
+                "HairInCap": 1496,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "GermanFemaleHead"
+              },
+              "hair_fields": [
+                "Hair",
+                "HairInCap"
+              ],
+              "actual_head": {
+                "ID": 17,
+                "Material0": 992,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "DaniKunstler",
+                "SrcName": "Heads\\GDP\\Axis\\DaniKunstler.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 101,
+                "HeadID": 94,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 4648,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem1"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 94,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem1",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 105,
+                "HeadID": 98,
+                "Hair": 4564,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem2"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 98,
+                "Material0": 3036,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem2",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem2.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            },
+            {
+              "actual_complex_head": {
+                "ID": 121,
+                "HeadID": 112,
+                "Hair": 1497,
+                "HairInCap": 0,
+                "Mesh0": 0,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "civFem4"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 112,
+                "Material0": 2016,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "civFem3",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            }
+          ],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "fd58a27d183323c8c112b5a7ce04fa922170d2cf0d9d10a194e41090c6af5c1c",
+      "release_MMP_SHA256": "fd58a27d183323c8c112b5a7ce04fa922170d2cf0d9d10a194e41090c6af5c1c",
+      "original_PNG_SHA256": "9c495b311cc84bf933d798d57e8324a410b80d61226177af60610bd2e4ab1c67",
+      "source_RGBA_SHA256": "e6a5ed5314e4c347b2dce7aeb6aa3a322e4f4a43ea9c16524154aac7c7ba354a",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 2082,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-tenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/3324-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 1,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/3324.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/3324-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/3324.png",
+          "assets/terrain-hd/expanded/generated/3324-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "9c495b311cc84bf933d798d57e8324a410b80d61226177af60610bd2e4ab1c67",
+          "7a709ff720b0c74daf17d8940dc60fc88fa3fd74fbfe18d7dfff7f94f19fb96c"
+        ]
+      },
+      "source_only_reason": "Whole native original+source-only helper privately inspected. Full native pigment phase/palette and broad source fields recorded BEFORE prompt; one FIRST builtin call planned. No generated/held source retry.",
+      "postcall_status": "ready-for-coordinator-art-native-review",
+      "postcall_review_note": "Candidate ready ONLY root final whole native art review, not production accepted. Static actual brown hair diffuse Material/template consumers, original128square Ordinary/sourceA255, NN6x768/raw1254/ENTIRE4x512/scalar/fullA privately inspected. ONE original curled brown painted field and ONE centralpart retain broad source curl/part footprint and source irregular winding stroke placement, dark outer region/material/scale; no newly interpreted hardware/locks or gray fill. Beforeprompt every native RGBA and row/column pigment maximum saved; these numeric maxima are bitmap phase proof, not an invented complete physical lock count. Fine paint becomes substantially finer and more explicit, not visibly white photogloss or regular comb-pattern; root final review needed for individual locks/pattern fidelity. Caveats: warmred strengthened and coolchannels slightly lower, wholemean56.45/31.00/10.82 ->60.25/30.03/9.21, centerpart mean84.47/51.08/20.42 ->90.79/51.12/19.00; sourcepeak222/150/74 ->251/168/84. Native23,19 source90/56/24 ->152/94/42 (+62), an existing bright curl locally stronger; no automatic local-tone threshold failure. Native4x highpassstd.602 ->3.252, inversecorr.9817, finer brush texture/relativefield strength explicitly unresolved for root. Default fullA/POT/pure scalar/defaultpad/no RGB repair/crop/BBox/optout/retry.",
+      "full_raw_native4x_source_alpha_storedRGB_privately_reviewed": true
+    },
+    {
+      "id": 5259,
+      "source_record": {
+        "id": 5259,
+        "texture": {
+          "ID": 5259,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -10601181,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\Hair\\Hair06.tga",
+          "Format": "8888",
+          "UserName": "Hair06",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3409,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2192,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5507,
+                  "field": "Material0",
+                  "material_template_id": 2192,
+                  "geometry_id": 2220,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 3627,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+        "source_rgba_sha256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+        "release_rgba_sha256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5259.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 5259,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -10601181,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\Hair\\Hair06.tga",
+        "Format": "8888",
+        "UserName": "Hair06",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 3409,
+            "TextureID": 5259,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2192,
+            "GlossID": 5262,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.800000011920929,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 2192,
+            "UserName": "Hair06"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5507,
+                "Material0": 2192,
+                "Material1": 0,
+                "GeometryID": 2220,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3627,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3627,
+                "UserName": "Hair06"
+              },
+              "geometry": {
+                "ID": 2220,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.24341541528701782,
+                "SizeY": 0.23503682017326355,
+                "SizeZ": 0.24171802401542664,
+                "CenterX": 0.0031599700450897217,
+                "CenterY": -0.017979592084884644,
+                "CenterZ": 0.08878891170024872,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair01",
+                "RootJoint": "Hair01"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 36,
+                "HeadID": 41,
+                "Hair": 3627,
+                "HairInCap": 3945,
+                "Mesh0": 1127,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 1,
+                "CanBeListed": 1,
+                "BodyColor": 1,
+                "UserName": "L.A."
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 41,
+                "Material0": 1288,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "L.A.",
+                "SrcName": "Heads\\GDP\\Allies\\LA.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            }
+          ],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+      "release_MMP_SHA256": "fc7534a5ce39d2c5a1b6e281602fdebad2624c57a65c4c4a3fe2739d23c16a10",
+      "original_PNG_SHA256": "9e614d29d85b108f35ebfec6c0ddf9765e89003df67c860141eadb95916cf93d",
+      "source_RGBA_SHA256": "ab87b5dc3b0c6b1f7e8431f84f86219578be96ea9bd67476b598d51973cdcaf7",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 3409,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/5259-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/5259-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/5259.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/5259-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/5259.png",
+          "assets/terrain-hd/expanded/generated/5259-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "9e614d29d85b108f35ebfec6c0ddf9765e89003df67c860141eadb95916cf93d",
+          "c5f76ef0bd07ae4a5ec6035ca4ed709a3b97bb1f326230128aa0c8592ecd5a77"
+        ]
+      },
+      "source_only_reason": "Actual diffuse brown hair with intertwined fine strokes; exact lock phase/count remains pending, zero calls."
+    },
+    {
+      "id": 6772,
+      "source_record": {
+        "id": 6772,
+        "texture": {
+          "ID": 6772,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12836846,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\FaceGenHair\\Hair03_2.tga",
+          "Format": "dxt1",
+          "UserName": "Hair03_2",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4696,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 2742,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6595,
+                  "field": "Material0",
+                  "material_template_id": 2742,
+                  "geometry_id": 2222,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4197,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "67b9cb87a7b4799f7187689be3c39b44b1c93d67703e14ef276d563a73feae73",
+        "source_rgba_sha256": "c41c75a532a912dc85d0a47c1f5aab82952fa8d1fdf57012d04b90072892a292",
+        "release_rgba_sha256": "c41c75a532a912dc85d0a47c1f5aab82952fa8d1fdf57012d04b90072892a292",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6772.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 6772,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -12836846,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\FaceGenHair\\Hair03_2.tga",
+        "Format": "dxt1",
+        "UserName": "Hair03_2",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 4696,
+            "TextureID": 6772,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2742,
+            "GlossID": 3445,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.5,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 2742,
+            "UserName": "Hair03_2"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6595,
+                "Material0": 2742,
+                "Material1": 0,
+                "GeometryID": 2222,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4197,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4197,
+                "UserName": "Hair03_2"
+              },
+              "geometry": {
+                "ID": 2222,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2346051037311554,
+                "SizeY": 0.24389851093292236,
+                "SizeZ": 0.25864970684051514,
+                "CenterX": 0.0,
+                "CenterY": -0.026346296072006226,
+                "CenterZ": 0.0655108094215393,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair03",
+                "RootJoint": "Hair03"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "67b9cb87a7b4799f7187689be3c39b44b1c93d67703e14ef276d563a73feae73",
+      "release_MMP_SHA256": "67b9cb87a7b4799f7187689be3c39b44b1c93d67703e14ef276d563a73feae73",
+      "original_PNG_SHA256": "e1bd00970526b699252fabf706b5429f0e679de3f08a03fa77903183798904a3",
+      "source_RGBA_SHA256": "c41c75a532a912dc85d0a47c1f5aab82952fa8d1fdf57012d04b90072892a292",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 4696,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/6772-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/6772-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6772.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6772-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6772.png",
+          "assets/terrain-hd/expanded/generated/6772-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "e1bd00970526b699252fabf706b5429f0e679de3f08a03fa77903183798904a3",
+          "62277ebd6363912cfebff88f87d8d669360e0d937e1df29fe767db9040981c8b"
+        ]
+      },
+      "source_only_reason": "Actual alpha_test brown hair source with A255. Native lock-phase detail pending, zero calls."
+    },
+    {
+      "id": 6773,
+      "source_record": {
+        "id": 6773,
+        "texture": {
+          "ID": 6773,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13818335,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\FaceGenHair\\Hair03_3.tga",
+          "Format": "dxt1",
+          "UserName": "Hair03_3",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4697,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 2743,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6597,
+                  "field": "Material0",
+                  "material_template_id": 2743,
+                  "geometry_id": 2222,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4198,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 5851,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3110,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7799,
+                  "field": "Material0",
+                  "material_template_id": 3110,
+                  "geometry_id": 2222,
+                  "geometry": "Characters\\Hair.mb",
+                  "model_template_id": 4682,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "348d18542f4fae3728e6767041ac55a85214608c206df98d741d847558839b6e",
+        "source_rgba_sha256": "6cf3eb06ab3902e75bfde26ea4d13b9becdedd6711d315481a68639dcdcbdc1a",
+        "release_rgba_sha256": "6cf3eb06ab3902e75bfde26ea4d13b9becdedd6711d315481a68639dcdcbdc1a",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6773.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 6773,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -13818335,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\FaceGenHair\\Hair03_3.tga",
+        "Format": "dxt1",
+        "UserName": "Hair03_3",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 4697,
+            "TextureID": 6773,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2743,
+            "GlossID": 3445,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.5,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 2743,
+            "UserName": "Hair03_3"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6597,
+                "Material0": 2743,
+                "Material1": 0,
+                "GeometryID": 2222,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4198,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4198,
+                "UserName": "Hair03_3"
+              },
+              "geometry": {
+                "ID": 2222,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2346051037311554,
+                "SizeY": 0.24389851093292236,
+                "SizeZ": 0.25864970684051514,
+                "CenterX": 0.0,
+                "CenterY": -0.026346296072006226,
+                "CenterZ": 0.0655108094215393,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair03",
+                "RootJoint": "Hair03"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        },
+        {
+          "actual_material": {
+            "ID": 5851,
+            "TextureID": 6773,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 3110,
+            "GlossID": 3445,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.800000011920929,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 3110,
+            "UserName": "Hair02Old"
+          },
+          "all_actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 7799,
+                "Material0": 3110,
+                "Material1": 0,
+                "GeometryID": 2222,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 4682,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4682,
+                "UserName": "Hair03Old"
+              },
+              "geometry": {
+                "ID": 2222,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2346051037311554,
+                "SizeY": 0.24389851093292236,
+                "SizeZ": 0.25864970684051514,
+                "CenterX": 0.0,
+                "CenterY": -0.026346296072006226,
+                "CenterZ": 0.0655108094215393,
+                "SrcName": "Characters\\Hair.mb",
+                "UserName": "Hair03",
+                "RootJoint": "Hair03"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [
+            {
+              "actual_complex_head": {
+                "ID": 127,
+                "HeadID": 117,
+                "Hair": 4682,
+                "HairInCap": 0,
+                "Mesh0": 4223,
+                "Mesh1": 0,
+                "Mesh2": 0,
+                "Mesh3": 0,
+                "IFMesh0": 0,
+                "IFMesh1": 0,
+                "IFMesh2": 0,
+                "IFMesh3": 0,
+                "IsFemale": 0,
+                "CanBeListed": 0,
+                "BodyColor": 1,
+                "UserName": "Recapture_Scientist"
+              },
+              "hair_fields": [
+                "Hair"
+              ],
+              "actual_head": {
+                "ID": 117,
+                "Material0": 3111,
+                "Material1": 0,
+                "Material2": 0,
+                "Material3": 0,
+                "Material4": 0,
+                "Material5": 0,
+                "Material6": 0,
+                "Material7": 0,
+                "TransformableTextures": 0,
+                "IsTransformable": 0,
+                "UserName": "Recapture_Scientist",
+                "SrcName": "Heads\\GDP\\Mob\\Civilians\\civFem1.gdp",
+                "TransformableGDP": "",
+                "TransformableMMT": ""
+              },
+              "actual_body_race": {
+                "ID": 1,
+                "MaterialID": 2734,
+                "RaceAttributeID": 10,
+                "RaceSliderPos": -1.0,
+                "UserName": "European"
+              }
+            }
+          ],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "348d18542f4fae3728e6767041ac55a85214608c206df98d741d847558839b6e",
+      "release_MMP_SHA256": "348d18542f4fae3728e6767041ac55a85214608c206df98d741d847558839b6e",
+      "original_PNG_SHA256": "1cafee2842929142d2ac1922b75e40012225fee9cb120c0a3c9658c254842294",
+      "source_RGBA_SHA256": "6cf3eb06ab3902e75bfde26ea4d13b9becdedd6711d315481a68639dcdcbdc1a",
+      "native_size": [
+        128,
+        128
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        255,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 4697,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp"
+        },
+        {
+          "id": 5851,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/6773-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/6773-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6773.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6773-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6773.png",
+          "assets/terrain-hd/expanded/generated/6773-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "1cafee2842929142d2ac1922b75e40012225fee9cb120c0a3c9658c254842294",
+          "7d14cf62dfb80d52308c8e50d5cb94634f2c906a8db3c145c774edf72dcec1dd"
+        ]
+      },
+      "source_only_reason": "Actual gray hair with mixed opaque/alpha_test material consumers and sourceA255; original fine lock detail pending, zero calls."
+    },
+    {
+      "id": 1897,
+      "source_record": {
+        "id": 1897,
+        "texture": {
+          "ID": 1897,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731272213,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\6.Axis01\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1299,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 861,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "763efa18a44517980dfd63935a9c6b7b7de1c94062879d8ddc679595382c2e13",
+        "source_rgba_sha256": "3e16c61e9036629e3747ef896fef5e5d57e3213f8f736c930a57567e2967f830",
+        "release_rgba_sha256": "3e16c61e9036629e3747ef896fef5e5d57e3213f8f736c930a57567e2967f830",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/1897.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 1897,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": 1731272213,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\6.Axis01\\0.tga",
+        "Format": "dxt1",
+        "UserName": "0",
+        "Type": "Ordinary",
+        "AddrType": "Wrap",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 1299,
+            "TextureID": 1897,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 861,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 861,
+            "UserName": "0"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "763efa18a44517980dfd63935a9c6b7b7de1c94062879d8ddc679595382c2e13",
+      "release_MMP_SHA256": "763efa18a44517980dfd63935a9c6b7b7de1c94062879d8ddc679595382c2e13",
+      "original_PNG_SHA256": "c3635b6eebfaafda136e66fc4365d6c0ea1816232fefca9e0b9cfce8465a9531",
+      "source_RGBA_SHA256": "3e16c61e9036629e3747ef896fef5e5d57e3213f8f736c930a57567e2967f830",
+      "native_size": [
+        256,
+        256
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        0,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 1299,
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/1897-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/1897-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/1897.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST3x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          256,
+          256
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/1897-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/1897.png",
+          "assets/terrain-hd/expanded/generated/1897-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "c3635b6eebfaafda136e66fc4365d6c0ea1816232fefca9e0b9cfce8465a9531",
+          "76e9038ec5ef5cdff0d560dcfb9c87ddcf8513037904e3febf336d2d86be35a8"
+        ]
+      },
+      "source_only_reason": "Genuine static inverted face/eye/teeth atlas with mixed sourceA. Exact teeth and identity detail proof deferred; zero calls, not absent-THMID technical exclusion."
+    },
+    {
+      "id": 2183,
+      "source_record": {
+        "id": 2183,
+        "texture": {
+          "ID": 2183,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 0,
+          "AverageColor": 1731141142,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Heads\\27.OlliHeikkinen\\0.tga",
+          "Format": "dxt1",
+          "UserName": "0",
+          "Type": "Ordinary",
+          "AddrType": "Wrap",
+          "StorageType": "Ordinary"
+        },
+        "category": "heads-lshead",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1462,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Wrap",
+              "TemplateID": 1002,
+              "consumers": [
+                {
+                  "table": "Heads",
+                  "id": 27,
+                  "field": "Material0",
+                  "material_template_id": 1002,
+                  "head_source": "Heads\\GDP\\Axis\\OlliHeikkinen.gdp",
+                  "transformable": false,
+                  "transformable_textures_id": 0
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "fd7fb0ca4018627c49d7d619657dbd26fb5b17b7d9dadfc5519efb5ca59da609",
+        "source_rgba_sha256": "41d0267197b324c26d881ad2229c2bf8f763303a043630ab57bdab40e2f13fed",
+        "release_rgba_sha256": "41d0267197b324c26d881ad2229c2bf8f763303a043630ab57bdab40e2f13fed",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2183.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_DB_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "exact_Texture_row": {
+        "ID": 2183,
+        "Width": 256,
+        "Height": 256,
+        "NMips": 0,
+        "AverageColor": 1731141142,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Heads\\27.OlliHeikkinen\\0.tga",
+        "Format": "dxt1",
+        "UserName": "0",
+        "Type": "Ordinary",
+        "AddrType": "Wrap",
+        "StorageType": "Ordinary"
+      },
+      "fresh_actual_typed_material_head_race_hair_chains": [
+        {
+          "actual_material": {
+            "ID": 1462,
+            "TextureID": 2183,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1002,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "alpha_test",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_material_template": {
+            "ID": 1002,
+            "UserName": "0"
+          },
+          "all_actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": [],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers. Unknown runtime dispatch or model mesh UV not invented."
+        }
+      ],
+      "actual_dynamic_texture_layer_head_consumer_chains": [],
+      "history_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_native_bytes_equal": true,
+      "historical_MMP_SHA256": "fd7fb0ca4018627c49d7d619657dbd26fb5b17b7d9dadfc5519efb5ca59da609",
+      "release_MMP_SHA256": "fd7fb0ca4018627c49d7d619657dbd26fb5b17b7d9dadfc5519efb5ca59da609",
+      "original_PNG_SHA256": "1691e42c5e1f490befb5d48885193d72be932868f24099fc1a4500f9859e1e22",
+      "source_RGBA_SHA256": "41d0267197b324c26d881ad2229c2bf8f763303a043630ab57bdab40e2f13fed",
+      "native_size": [
+        256,
+        256
+      ],
+      "actual_native_type": "Ordinary",
+      "actual_sourceA_extrema": [
+        0,
+        255
+      ],
+      "actual_material_Alpha_AddressMode": [
+        {
+          "id": 1462,
+          "Alpha": "alpha_test",
+          "AddressMode": "Wrap"
+        }
+      ],
+      "prior_heads10_11_12_sourceonly_audits": [
+        "source-check-heads-thirteenth.json"
+      ],
+      "prior_sourceonly_helper_examples": [
+        "assets/terrain-hd/expanded/generated/2183-heads-thirteenth-source-rgb-support.png",
+        "assets/terrain-hd/expanded/private-heads-fourteenth/survey/2183-whole-source-rgb-nearest.png"
+      ],
+      "view_novelty": "Readonly re-audit if prior source-only evidence; no first-ever view claim. Previous raw/calls/held/accepted/identicalRGBA guarded separately.",
+      "full_original_and_helper_privately_inspected": true,
+      "call_count": 0,
+      "reference_recipe": {
+        "input": "assets/terrain-hd/expanded/original/2183.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST3x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          256,
+          256
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/2183-heads-fourteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/2183.png",
+          "assets/terrain-hd/expanded/generated/2183-heads-fourteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "1691e42c5e1f490befb5d48885193d72be932868f24099fc1a4500f9859e1e22",
+          "7d2e5c6b9a62b34c038f8b4081c038df662dc67321d84ec4a222dcc1b2fa5b59"
+        ]
+      },
+      "source_only_reason": "Genuine static inverted face/eye/teeth atlas with mixed sourceA. Detailed original teeth/identity phases pending before a faithful call, zero calls."
+    }
+  ],
+  "all_source_RGBA_history_release_parity_exact": true,
+  "shared_modified": false
+}

@@ -1,0 +1,32 @@
+{
+  "mode": "Readonly actual CFaceTexture THMID source-chain and current CPU implementation audit; no source/code/CPU/Game/build change",
+  "dynamic_import_file": "DBFormat/DataFaceGen.cpp",
+  "dynamic_import_SHA256": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+  "binding": "CFaceTexture::Import actualTHMID owner PushItem(&pOwner->face,(CHeadTexture*)this), NOT CEyeTexture owner.eye or static material",
+  "actual_runtime_file": "Main/LSHead.cpp",
+  "actual_runtime_SHA256": "5fca9be14f991f42e952eb68386f2904b322a482124ec5c23958ef9e500c216d",
+  "BuildTexLayers_face_lines": [
+    1118,
+    1251
+  ],
+  "actual_FACE_destination": [
+    0,
+    128,
+    128,
+    256
+  ],
+  "source": "ENTIRE logical128square source bitmap, no internal atlas grid inferred",
+  "fill": {
+    "ARGB_hex": "FF808080",
+    "RGB": [
+      128,
+      128,
+      128
+    ],
+    "A": 255
+  },
+  "actual_sampler_file": "Main/FaceGenTextureSampling.h",
+  "actual_sampler_SHA256": "79adf4fb5d777d9056dd01f882b52697bbe37155589ad8d3cb71b5d841a1f448",
+  "operation": "LogicalSourceMip chooses logical dims; BlendLayer clips original whole128 to fixedFACE128 subrect, Vflips and blends straight sourceRGB by originalA*actualweight/255, forces destinationA255. Original DB/layers/sourceA/weights/UV unchanged.",
+  "unknowns": "Actual FaceGen weights/runtime dispatch/native selected mip/probe not tested by worker. Root sole native/runtime authority."
+}

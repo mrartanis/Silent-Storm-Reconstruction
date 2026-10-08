@@ -1,0 +1,138 @@
+{
+  "id": 6825,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-35b43fe5-2a9f-48c9-a557-bf1840b301d4.png",
+  "prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into a faithful4x HD painted game texture. It is the original128square whole diffuse canvas, exact RGBA nearest8x1024square guide only. Preserve every wholeUV boundary and source edge/material field/physical scale without crop/BBox/padding/recentering/new margins. Actual sourceA255 everywhere, including2013 intentional opaque RGB-black pixels: preserve them, never infer transparent black cutouts.\nKeep the source simple subdued GRAY COAT paint, dark central wash and warm BROWN painted wash field in the original old game style. ONE large right graycoat field at[64,0,128,111], ONE long dark central field[39,0,66,101] and ONE left brown washfield[0,0,39,76] remain exact. Preserve every original uneven horizontal shading transition inside the leftbrown field, as broad SOFT PAINT wash; do not add stripes, wrinkles, anatomy, eyes, pores, leather or new bands. Existing gradients/weakpaintgrain stay subdued and lowcontrast, no photorealism/beautification or manufactured texture. Exactly ONE small right white painted glint at native(106,65) on ONE existing dark horizontal field[103,61,128,69] remains; preserve its tiny shape/strength, no new button, eyelet, jewellery or hole interpretation. ONE lower-left bluegray paintedfield[16,78,37,127] and every adjoining warm wash/blackfield preserve their original curved boundaries and soft local shading. Fine HD detail may improve only the existing paint transitions/weak old grain and faint coat seams at the same exact source scale. No new garment seams, stitches, weave, pockets, hardware, symbols, objects or dramatic highlights. Preserve source local gray/brown/blue hue and lightness hierarchy, all fullUV/A exactly. Return ONLY the same entire diffuse painted atlas.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6825-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "reference_recipe": "Exact original128square wholeRGBA nearest8x1024square; no crop/padding/BBox/artistic edit; inverse wholeLanczos512square, default numericgain and complete originalA only.",
+  "artifact_sha256": {
+    "raw": "14906ec51691953187a9379d0b86745c18367012d0437e95679acdc088cf27d6",
+    "exact_prompt_file": "40bd8d2731a7143631a16d355eb8bfd91707fa02baefacb6c75ce725e1e85f15",
+    "reference_png": "dfa34db8e0bae1742ff433117427a67e13963c264328eb1c15f973d0356c2fc2"
+  },
+  "saved_at_utc": "2026-10-08T08:38:39.938715+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "source_record": {
+    "id": 6825,
+    "texture": {
+      "ID": 6825,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -12634065,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_02\\Body_Asian.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Asia",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4737,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2343,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6036,
+              "field": "Material0",
+              "material_template_id": 2343,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 3895,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "00112aa1487e8debe50b78c9b02a358d926dc5b0455486b6f84132af6ea222f4",
+    "source_rgba_sha256": "da9e0779073711eb01c047412550630610d47cf63a87a3aa5d0eacdaba778929",
+    "release_rgba_sha256": "da9e0779073711eb01c047412550630610d47cf63a87a3aa5d0eacdaba778929",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6825.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "fa7f78469643908ae4dd8702d7ca40be1ed0910f27d80429f3d64eab83fe2a64",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-second-6825.json",
+  "source_count_phase_proof_sha256": "b3e54e6572d48543bef7807a75ca0396633ed820654ad5b722fb239d69fef78f",
+  "precall_constraints_sha256": "ebf810a2ffac04677db66d2ad99d5abf5649eef5829ae5f882a729912ecc639c",
+  "exact_service_args": {
+    "prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into a faithful4x HD painted game texture. It is the original128square whole diffuse canvas, exact RGBA nearest8x1024square guide only. Preserve every wholeUV boundary and source edge/material field/physical scale without crop/BBox/padding/recentering/new margins. Actual sourceA255 everywhere, including2013 intentional opaque RGB-black pixels: preserve them, never infer transparent black cutouts.\nKeep the source simple subdued GRAY COAT paint, dark central wash and warm BROWN painted wash field in the original old game style. ONE large right graycoat field at[64,0,128,111], ONE long dark central field[39,0,66,101] and ONE left brown washfield[0,0,39,76] remain exact. Preserve every original uneven horizontal shading transition inside the leftbrown field, as broad SOFT PAINT wash; do not add stripes, wrinkles, anatomy, eyes, pores, leather or new bands. Existing gradients/weakpaintgrain stay subdued and lowcontrast, no photorealism/beautification or manufactured texture. Exactly ONE small right white painted glint at native(106,65) on ONE existing dark horizontal field[103,61,128,69] remains; preserve its tiny shape/strength, no new button, eyelet, jewellery or hole interpretation. ONE lower-left bluegray paintedfield[16,78,37,127] and every adjoining warm wash/blackfield preserve their original curved boundaries and soft local shading. Fine HD detail may improve only the existing paint transitions/weak old grain and faint coat seams at the same exact source scale. No new garment seams, stitches, weave, pockets, hardware, symbols, objects or dramatic highlights. Preserve source local gray/brown/blue hue and lightness hierarchy, all fullUV/A exactly. Return ONLY the same entire diffuse painted atlas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6825-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 6825,
+    "gain": 0.91973876953125,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 56.211404284667964,
+    "actual_stored_luma": 56.211389369201655,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending root whole4x/native material and palette review, not accepted. Whole128square to512square; full source A255 including2013 intentional opaque RGBblack texels, defaultpad0, scalar.91973876953125, globalL56.211404 to56.211389. Precall proved one right graycoat field, one dark center, one left brown broad uneven painted wash with every original row mean phase saved, one pale T-like glint106/65 and one existing dark horizontal field, one lower bluegray field and opaque black lower field. Whole original/raw/4x/native privately inspected; shape and field phase retained, single white glint remains one, existing faint triangular gray trace already original rather than new applique. Coat paint grain is rounder/denser and existing seam/shadow outlines stronger, but no new periodic weave/curl pattern or proven extra hardware. Graycoat meanRGB80.81/73.76/64.65 to82.72/74.39/64.34,Lstd21.35 to22.31. Brown wash warmer61.83/44.51/28.81 to64.87/42.88/23.37,Lstd23.36 to24.68; bluegray85.86/88.99/90.48 to86.95/91.59/95.01,Lstd21.13 to24.70. White glint source irregular T-like paint softened rather than interpreted as counted buttons/letters; no semantic hardware promise. Honest paint-grain/warm-shift/soft-edge caveats for root, not production acceptance. Whole UV/source A preserved; no artRGBrepair/composite/crop/BBox/padding/registration/optout/retry."
+}

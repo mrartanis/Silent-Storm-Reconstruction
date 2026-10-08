@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 445 of these verified originals are accepted in the shared
+As of 2026-10-08, 452 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirty-third-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirty-fourth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,298 IDs: clothing 200, equipment 122, weapons
-57, heads 170, UI 608, effects 117, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,291 IDs: clothing 198, equipment 122, weapons
+57, heads 166, UI 607, effects 117, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -486,4 +486,23 @@ appearance not certified. GameEXE/code unchangedverified25. Nativevalidation/
 realmenu/fourprivateframes/normalquit: ../new-groups-thirty-third-batch-check.json,
 ../new-groups-thirty-third-live-check.json and
 ../new-groups-thirty-third-runtime-check.json. Four reviews frozen beforeimport;
+ordinaryGit PNG, accepted IDs must not be regenerated.
+
+Thirty-fourth accepted packet: static eye1126/hair3324, dynamic face6710/6711,
+clothing4453/6825 and icon5811. Seven separate builtin generations. Pack:2,414
+textures/4,828 aliases/129 archives/7,795,382,080 bytes. Prior2,407 source/PNG/native
+hashes unchanged; all7 nativeRGBA equal privately viewed whole4x predictions.
+Fullsourcealpha/UV/material/count/paintscale retained; localpaint variations
+disclosed in ../coordinator-art-review-thirty-fourth.json.1126 weakpigment
+already exists in source; separate honest postcall correction retains original
+prompt/before-call proof. Numericalbrightness only, no artisticRGB inserts.
+Actual1126/5811 GPU whole/middle/reverse/clipped on/off/on and atlasplacement
+reviewed.1126 uses staticMaterials745/Template520, notTHMID eye. Actual6710/6711
+128face SWloader/mip2/fullsourcealpha/Vflip/independentinteger CPU hashes and
+nine head94bakes/static/textured/roundtrips verified; fixed256faceatlas unchanged.
+No completeGPU head or activeperkpanel appearance claim. GameEXE/code unchanged25.
+Nativevalidation/realmenu/fourprivateframes/normalquit:
+../new-groups-thirty-fourth-batch-check.json,
+../new-groups-thirty-fourth-live-check.json and
+../new-groups-thirty-fourth-runtime-check.json. Four reviews frozen beforeimport;
 ordinaryGit PNG, accepted IDs must not be regenerated.
