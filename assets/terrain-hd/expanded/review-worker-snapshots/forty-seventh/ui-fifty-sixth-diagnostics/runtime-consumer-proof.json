@@ -1,0 +1,70 @@
+{
+  "batch": "ui-fifty-sixth",
+  "evidence": [
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataRPG.cpp",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9",
+      "start": 1142,
+      "end": 1150,
+      "purpose": "Nationality exact normal/disabled texture imports",
+      "exact_excerpt": "void CNationality::Import()\n{\n  NDatabase::ImportField( \"ToolTip\", &pToolTip );\n  NDatabase::ImportField( \"MaleHead\", &pMaleHead );\n  NDatabase::ImportField( \"FemaleHead\", &pFemaleHead );\n  NDatabase::ImportField( \"FlagTexture\", &pFlag );\n  NDatabase::ImportField( \"IconNormalTexture\", &pIconNormal );\n  NDatabase::ImportField( \"IconDisabledTexture\", &pIconDisabled );\n\t//// Retail schema (the customMale/FemaleHead vectors were dropped). The runtime 36MB game.db is COLUMNAR and is loaded"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iCharGen.cpp",
+      "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8",
+      "start": 537,
+      "end": 551,
+      "purpose": "Real side nationality icon selection",
+      "exact_excerpt": "\t\t\tpNation3 = new CComplexButton( sEvent.pLoader->GetControl( \"national_2\" ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n\t\t\tif ( IsValid( pSide->pNationality1 ) )\n\t\t\t{\n\t\t\t\tpNation1->Set( pSide->pNationality1->pIconNormal, pSide->pNationality1->pIconDisabled, CComplexButton::UNCHECKED, \"national_0\" );\n\t\t\t\tpNation1->GetToolTip()->SetText( GetDBString( pSide->pNationality1->pToolTip ) );\n\t\t\t}\n\t\t\tif ( IsValid( pSide->pNationality2 ) )\n\t\t\t{\n\t\t\t\tpNation2->Set( pSide->pNationality2->pIconNormal, pSide->pNationality2->pIconDisabled, CComplexButton::UNCHECKED, \"national_1\" );\n\t\t\t\tpNation2->GetToolTip()->SetText( GetDBString( pSide->pNationality2->pToolTip ) );\n\t\t\t}\n\t\t\tif ( IsValid( pSide->pNationality3 ) )\n\t\t\t{\n\t\t\t\tpNation3->Set( pSide->pNationality3->pIconNormal, pSide->pNationality3->pIconDisabled, CComplexButton::UNCHECKED, \"national_2\" );\n\t\t\t\tpNation3->GetToolTip()->SetText( GetDBString( pSide->pNationality3->pToolTip ) );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iAdvFaceGen.cpp",
+      "sha256": "e43dffe04ed921aa1af5970be8c7904cc1215dfe6bc6bcf16d8ded689fc655ac",
+      "start": 40,
+      "end": 43,
+      "purpose": "Advanced facegen loads actual container398",
+      "exact_excerpt": "// + the 3 voice1/2/3 controls (Steam game.db UIControls ids 2599/2600/2601). (361 is the BASIC FaceGen\n// container; only it carries the customhead control -- but BOTH 361 and 398 carry voice1/2/3.)\nconst int N_ADVFACEGEN_CONTAINER = 398;   // verified retail UIContainers.ID for the advanced face editor\n"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iAdvFaceGen.cpp",
+      "sha256": "e43dffe04ed921aa1af5970be8c7904cc1215dfe6bc6bcf16d8ded689fc655ac",
+      "start": 328,
+      "end": 335,
+      "purpose": "Actual horizontal scroll controls",
+      "exact_excerpt": "\t\t\t// VERT and the later SetupScroll flip came too late, pinning every handle to one end. Bare CScroll\n\t\t\t// (its base wires the auto-created +/- CButtons + CSlider; retail @0x191690 also just GetUIWindows).\n\t\t\tpAgeScroll = new CScroll( sEvent.pLoader->GetControl( \"Age\" ) );  pAgeScroll->SetStyle( SCRLSTYLE_HORZ, true );\n\t\t\tpGenderScroll = new CScroll( sEvent.pLoader->GetControl( \"Gender\" ) );  pGenderScroll->SetStyle( SCRLSTYLE_HORZ, true );\n\t\t\tpNationalityScroll = new CScroll( sEvent.pLoader->GetControl( \"Nationality\" ) );  pNationalityScroll->SetStyle( SCRLSTYLE_HORZ, true );\n\t\t\tpLipsScroll = new CScroll( sEvent.pLoader->GetControl( \"Lips\" ) );  pLipsScroll->SetStyle( SCRLSTYLE_HORZ, true );\n\t\t\tpChinScroll = new CScroll( sEvent.pLoader->GetControl( \"Chin\" ) );  pChinScroll->SetStyle( SCRLSTYLE_HORZ, true );\n\t\t\tpNoseScroll = new CScroll( sEvent.pLoader->GetControl( \"Nose\" ) );  pNoseScroll->SetStyle( SCRLSTYLE_HORZ, true );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iAdvFaceGen.cpp",
+      "sha256": "e43dffe04ed921aa1af5970be8c7904cc1215dfe6bc6bcf16d8ded689fc655ac",
+      "start": 485,
+      "end": 487,
+      "purpose": "Actual advanced editor LoadTemplate398",
+      "exact_excerpt": "\tpMenuUI = new NUI::CAdvFaceGenUI( NUI::SWindowInfo( GetInterface(), NUI::SPoint( 0, 0 ), NUI::SPoint( 1024, 768 ), \"facegenUI\", NUI::STYLE_ENABLED ), pMerc, pNationality );\n\tNUI::LoadTemplate( pMenuUI, NDb::GetUIContainer( NUI::N_ADVFACEGEN_CONTAINER ) );\n\tpMenuUI->ShowWindow( NUI::SWTYPE_SHOW );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/UIInterface.cpp",
+      "sha256": "8c8d857b18f714f0972975e41d3f9c38fd04626197e139a2d3a8f2cd4b4f4cd4",
+      "start": 209,
+      "end": 217,
+      "purpose": "Actual image/button control factory",
+      "exact_excerpt": "\t\t\tcase NDb::UI_IMAGE:\n\t\t\t\tpWindow = new CImage( sInfo );\n\t\t\t\tbreak;\n\t\t\tcase NDb::UI_EDIT:\n\t\t\t\tpWindow = new CEdit( sInfo );\n\t\t\t\tbreak;\n\t\t\tcase NDb::UI_BUTTON:\n\t\t\t\tpWindow = new CButton( sInfo );\n\t\t\t\tbreak;"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/UICommCtrls.cpp",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+      "start": 1015,
+      "end": 1034,
+      "purpose": "Actual minus/plus handlers",
+      "exact_excerpt": "\t\t\tif ( !IsValid( pSlider ) )\t\t// missing \"slider\" child (release-data resilience)\n\t\t\t\treturn true;\n\t\t\tif ( sEvent.szID == \"minus\" )\n\t\t\t{\n\t\t\t\tpSlider->SetValue( pSlider->GetValue() - 1 );\n\t\t\t\tOnAction();\n\t\t\t}\n\t\t\telse if ( sEvent.szID == \"plus\" )\n\t\t\t{\n\t\t\t\tpSlider->SetValue( pSlider->GetValue() + 1 );\n\t\t\t\tOnAction();\n\t\t\t}\n\t\t\telse if ( sEvent.szID == \"slider\" )\n\t\t\t\tOnAction();\n\t\t\treturn true;\n\t\t}\n\tcase EVENT_TEMPLATELOADCOMPLETE:\n\t\t{\n\t\t\tpSlider = GetUIWindow<CSlider>( this, \"slider\" );\n\t\t\tif ( IsValid( pSlider ) )\t\t// guard: container may ship no \"slider\" child"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/UICommCtrls.cpp",
+      "sha256": "4b0ec2fb0d861d40a1fd2fdb4aa76d1df27dde49516ed946e2ebed99d86540ab",
+      "start": 421,
+      "end": 450,
+      "purpose": "Actual button template texture mounts",
+      "exact_excerpt": "\t\t\t}\n\n\t\t\tif ( IsValid( sEvent.pControl->pTextures[2] ) )\n\t\t\t{\n\t\t\t\tpMountDown->SetSize( GetSize() );\n\t\t\t\tpMountDown->SetImage( sEvent.pControl->pTextures[2] );\n\t\t\t}\n\t\t\telse if ( IsValid( sEvent.pControl->pTextures[1] ) )\n\t\t\t{\n\t\t\t\tpMountDown->SetSize( GetSize() );\n\t\t\t\tpMountDown->SetImage( sEvent.pControl->pTextures[1], SRect( sEvent.pControl->pTextures[1]->nWidth, 0, 0, sEvent.pControl->pTextures[1]->nHeight ) );\n\t\t\t}\n\n\t\t\tif ( IsValid( sEvent.pControl->pTextures[3] ) )\n\t\t\t{\n\t\t\t\tpMountDisabled->SetSize( GetSize() );\n\t\t\t\tpMountDisabled->SetImage( sEvent.pControl->pTextures[3] );\n\t\t\t}\n\n\t\t\tbreak;\n\t\t}\n\t}\n\n\treturn CWindow::ProcessMessage( sEvent );\n}\n////////////////////////////////////////////////////////////////////////////////////////////////////\nvoid CButton::Update( const STime &sTime, NGScene::I2DGameView *pView )\n{\n\tif ( !GetStyle( STYLE_VISIBLE ) )\n\t{"
+    }
+  ],
+  "qualification": "Fresh actual DBNationality3 IconNormalTexture586/IconDisabledTexture587, Sides1/3.Nationality1=3 and corresponding code selection; real left chevronUITextures853 UIControls2365/2399/2401/2403 plus nested parents under398 and real advanced editor/button/scroll code. Not registration-only for these called3. Read-only evidence only; no worker Game/GPU/native acceptance."
+}

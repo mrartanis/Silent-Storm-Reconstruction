@@ -1,0 +1,62 @@
+{
+  "batch": "final-other-second",
+  "evidence": [
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iSpecialView.cpp",
+      "sha256": "ce1b841fed4c86427f45e4b53ce29869e9d8b010cb5f35ce5d3dc583f687b535",
+      "start": 77,
+      "end": 102,
+      "purpose": "CEarthView directly loads actual RPGItem487 and creates its ModelTemplate3979",
+      "exact_excerpt": "// CEarthView::CEarthView( const SWindowInfo & ) @0x23f280 -- the live ctor. Zeroes the spin state,\n// clears the parented scene, then for the fixed globe RPG item ( NDb::GetRPGItem(0x1E7) ) builds the\n// camera from sCameras[2] (the canonical \"camera from SCameraParams\" idiom, cf. iCommonUI.cpp:858)\n// and installs the model + camera transform.\n////////////////////////////////////////////////////////////////////////////////////////////////////\nCEarthView::CEarthView( const SWindowInfo &sInfo ):\n\tCModel( sInfo ), bButtonDown( false ), fAngleX( 0 ), fLastAngleX( 0 ), fAngleY( 0 ), fLastAngleY( 0 ), sLastPoint( 0, 0 )\n{\n\tSetScene( 0, false );\n\n\tCPtr<NDb::CRPGItem> pRPGItem( NDb::GetRPGItem( 0x1E7 ) );\n\tif ( IsValid( pRPGItem ) )\n\t{\n\t\tconst NDb::SCameraParams &sCamera = pRPGItem->sCameras[2];\n\n\t\tCVec3 vForwardDir;\n\t\tCQuat q = CQuat( sCamera.fYaw, V3_AXIS_Z ) * CQuat( sCamera.fPitch, V3_AXIS_X );\n\t\tq.GetYAxis( &vForwardDir );\n\n\t\tCVec3 vCP( sCamera.vAnchor - vForwardDir * sCamera.fDistance );\n\t\tSHMatrix sCameraTransform;\n\t\tMakeMatrix( &sCameraTransform, sCamera.fPitch, sCamera.fYaw, sCamera.fRoll, vCP );\n\n\t\tSRand sRnd;\n\t\tSetModel( pRPGItem->pModel->CreateModel( &sRnd ) );\n\t\tSetCameraTransform( sCameraTransform );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataRPG.cpp",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9",
+      "start": 58,
+      "end": 66,
+      "purpose": "RPGItems.ModelID imports the CTRndModel ref",
+      "exact_excerpt": "void CRPGItem::Import()\n{\n\tNDatabase::ImportField( \"Weight\", &nWeight );\n\tNDatabase::ImportField( \"SizeX\",\t&sSize.x );\n\tNDatabase::ImportField( \"SizeY\",\t&sSize.y );\n\tNDatabase::ImportField( \"TooltipID\", &pToolTip );\n\tNDatabase::ImportField( \"ModelID\", &pModel );\n\tNDatabase::ImportField( \"ModelActive1\", &pModelActive );\n\tNDatabase::ImportField( \"Model1\", &pModelInactive );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataRPG.h",
+      "sha256": "d979caabe329a85dcb3b30e6de515390345674fa9d20b347eef4c04e9f78b89b",
+      "start": 215,
+      "end": 230,
+      "purpose": "CRPGItem.pModel pointer type",
+      "exact_excerpt": "class CRPGItem: public CDBRecord\n{\n\tOBJECT_BASIC_METHODS(CRPGItem);\npublic:\n\tint nWeight; // in grams\n\tint nSubTypePriority;\n\tEItemSubType subType;\n\tCTPoint<int> sSize;\n\tCPtr<CString> pToolTip;\n\tCPtr<CString> pName;\n\tCPtr<CString> pDescription;\n\tCPtr<CTRndModel> pModel;\n\tCPtr<CTRndModel> pModelActive;\n\tCPtr<CTRndModel> pModelInactive;\n\tvector<SUniformItem> looks;\n\tSCameraParams sCameras[CAMERA_MAX_VALUE];"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataFormat.cpp",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "start": 2093,
+      "end": 2094,
+      "purpose": "ModelTemplate/ContainerModel registration domains",
+      "exact_excerpt": "\tREGISTER_DATABASE_CLASS( 32, \"ModelTemplates\", CTRndModel );\n\tREGISTER_DATABASE_CLASS( 33, \"ContainerModels\", CRndContainerModel );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataFormat.cpp",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "start": 618,
+      "end": 627,
+      "purpose": "Actual CRndModel creates model geometry/materials",
+      "exact_excerpt": "\tCModel *pModel = new CModel;\n\tpModel->pGeometry = pGeometry;\n\tpModel->pSkeleton = pSkeleton;\n\tpModel->pRPGArmor = pRPGArmor;\n\t// retail CreateModel @0x3f7670 stows the source CTRndModel template on the product\n\t// (CModel::pSrcRndModel, save tag 12) so NRender can re-roll materials later.\n\tpModel->pSrcRndModel = pTemplate;\n\tfor ( int i = 0; i < N_MODEL_MATERIALS; ++i )\n\t\tpModel->pMaterials[i] = IsValid( pMaterials[i] ) ? pMaterials[i]->GetRnd( pRand, flags ) : 0;\n\treturn pModel;"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataFormat.cpp",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "start": 1565,
+      "end": 1569,
+      "purpose": "Object Model0..4 refs",
+      "exact_excerpt": "\tNDatabase::ImportField( \"Model0\", &pModels[0] );\n\tNDatabase::ImportField( \"Model1\", &pModels[1] );\n\tNDatabase::ImportField( \"Model2\", &pModels[2] );\n\tNDatabase::ImportField( \"Model3\", &pModels[3] );\n\tNDatabase::ImportField( \"Model4\", &pModels[4] );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataFormat.cpp",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "start": 1635,
+      "end": 1644,
+      "purpose": "Object model containers are created through their actual references",
+      "exact_excerpt": "\tpO->bIsDeploySpot = bIsDeploySpot;\n\tpO->nParentID = GetRecordID();\n\t//pO->eType = eType;\n\t//pO->pWeapon = pWeapon;\n\tfor ( int i = 0; i < N_DESTROY_STAGES; ++i )\n\t\tif ( pModels[i] )\n\t\t\tpO->pModels[i] = pModels[i]->CreateContainer( pRand, params );\n\tif ( IsValid( pChild ) )\n\t\tpO->pChild = pChild->CreateObject( pRand, params );\n\tASSERT( IsValid( pTemplate ) );"
+    }
+  ],
+  "qualification": "Fresh actual DB consumer proof resolves RPGItem487 and actual world-object links. Code support is read-only; no worker Game/native/GPU run. Source635/2432 actual Materials color refs have no resolved Model/UI consumer; not declared unused or technical. Source7701 has real material/model diffuse chain, but no downstream person/object record proved by this audit."
+}

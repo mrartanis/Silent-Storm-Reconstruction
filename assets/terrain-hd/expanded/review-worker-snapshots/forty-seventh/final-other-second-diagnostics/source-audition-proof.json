@@ -1,0 +1,1369 @@
+{
+  "batch": "final-other-second",
+  "accepted_snapshot": 2465,
+  "remaining_interface_scope": 7,
+  "fresh_uncalled_count": 6,
+  "checked_utc": "2026-10-08T14:37:42.235179+00:00",
+  "source_checks": [
+    {
+      "id": 5856,
+      "source_record": {
+        "id": 5856,
+        "texture": {
+          "ID": 5856,
+          "Width": 1024,
+          "Height": 2048,
+          "NMips": 0,
+          "AverageColor": -16711164,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\Sky.tga",
+          "Format": "dxt1",
+          "UserName": "Sky",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "final",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3834,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "self_illum",
+              "AddressMode": "Wrap",
+              "TemplateID": 2430,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6181,
+                  "field": "Material0",
+                  "material_template_id": 2430,
+                  "geometry_id": 3723,
+                  "geometry": "Final\\FF.mb",
+                  "model_template_id": 3973,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6228,
+                  "field": "Material0",
+                  "material_template_id": 2430,
+                  "geometry_id": 3791,
+                  "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                  "model_template_id": 3996,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "UITextures",
+              "id": 953,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 953,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                2048
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          2048
+        ],
+        "source_sha256": "4caa0dd73ad283f5e4a89accbcabb7b46bf32531af681d1098b2da01ac2a08fd",
+        "source_rgba_sha256": "d4ee8465b0da4a504d868e9b0159302aefba88ead4192013c8ad704b2a482f6d",
+        "release_rgba_sha256": "d4ee8465b0da4a504d868e9b0159302aefba88ead4192013c8ad704b2a482f6d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5856.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "final"
+      },
+      "fresh_actual_usage": {
+        "id": 5856,
+        "texture": {
+          "ID": 5856,
+          "Width": 1024,
+          "Height": 2048,
+          "NMips": 0,
+          "AverageColor": -16711164,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\Sky.tga",
+          "Format": "dxt1",
+          "UserName": "Sky",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          2048
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            1024,
+            2048
+          ],
+          "mips": 9,
+          "file_bytes": 1398120,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3834,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "self_illum",
+            "AddressMode": "Wrap",
+            "TemplateID": 2430,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6181,
+                "field": "Material0",
+                "material_template_id": 2430,
+                "geometry_id": 3723,
+                "geometry": "Final\\FF.mb",
+                "model_template_id": 3973,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6228,
+                "field": "Material0",
+                "material_template_id": 2430,
+                "geometry_id": 3791,
+                "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "model_template_id": 3996,
+                "flags": ""
+              }
+            ]
+          },
+          {
+            "table": "UITextures",
+            "id": 953,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 953,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              1024,
+              2048
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3834,
+            "TextureID": 5856,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2430,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "self_illum",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2430,
+            "UserName": "Sky"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6181,
+                "Material0": 2430,
+                "Material1": 0,
+                "GeometryID": 3723,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3973,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3973,
+                "UserName": "Sky"
+              },
+              "geometry": {
+                "ID": 3723,
+                "AIGeometryID": 2418,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 996.0,
+                "SizeY": 947.2523193359375,
+                "SizeZ": 884.9942626953125,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 438.89215087890625,
+                "SrcName": "Final\\FF.mb",
+                "UserName": "Sky",
+                "RootJoint": "Sky"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6228,
+                "Material0": 2430,
+                "Material1": 0,
+                "GeometryID": 3791,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3996,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3996,
+                "UserName": "Space"
+              },
+              "geometry": {
+                "ID": 3791,
+                "AIGeometryID": 2485,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 399.9999694824219,
+                "SizeY": 399.99993896484375,
+                "SizeZ": 400.0,
+                "CenterX": 1.52587890625e-05,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "UserName": "Space",
+                "RootJoint": "Space"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "self_illum"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "4caa0dd73ad283f5e4a89accbcabb7b46bf32531af681d1098b2da01ac2a08fd",
+      "release_mmp_sha256": "4caa0dd73ad283f5e4a89accbcabb7b46bf32531af681d1098b2da01ac2a08fd",
+      "original_png_sha256": "c7356300b85e40b7b800b82def8892c61a0171ff019177cb51d4c208c63842fc",
+      "source_rgba_sha256": "d4ee8465b0da4a504d868e9b0159302aefba88ead4192013c8ad704b2a482f6d",
+      "source_rgb_sha256": "16ee74ef6f795a1496ca9d80896193123eda85c7b8a7107359a0e19368a6bafc",
+      "source_alpha_sha256": "4bda3a28f4ffe603c0ec1258c0034d65a1a0d35ab7bd523a834608adabf03cc5",
+      "dimensions": [
+        1024,
+        2048
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5887,
+      "source_record": {
+        "id": 5887,
+        "texture": {
+          "ID": 5887,
+          "Width": 2048,
+          "Height": 1024,
+          "NMips": 0,
+          "AverageColor": -11243399,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\Earth.tga",
+          "Format": "dxt1",
+          "UserName": "Earth",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "final",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3861,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2444,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6196,
+                  "field": "Material0",
+                  "material_template_id": 2444,
+                  "geometry_id": 3782,
+                  "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                  "model_template_id": 3979,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 5892,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3123,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          2048,
+          1024
+        ],
+        "source_sha256": "e3a8d3a99f117b44828fd27818a8319ff47d77f9e6c6a590e8a663a052342737",
+        "source_rgba_sha256": "429c22b2f026994489660a70ccddf6b853d24a6272ba0e3a0a843dc889352681",
+        "release_rgba_sha256": "429c22b2f026994489660a70ccddf6b853d24a6272ba0e3a0a843dc889352681",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5887.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "final"
+      },
+      "fresh_actual_usage": {
+        "id": 5887,
+        "texture": {
+          "ID": 5887,
+          "Width": 2048,
+          "Height": 1024,
+          "NMips": 0,
+          "AverageColor": -11243399,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\Earth.tga",
+          "Format": "dxt1",
+          "UserName": "Earth",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          2048,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            2048,
+            1024
+          ],
+          "mips": 9,
+          "file_bytes": 1398120,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3861,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2444,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6196,
+                "field": "Material0",
+                "material_template_id": 2444,
+                "geometry_id": 3782,
+                "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "model_template_id": 3979,
+                "flags": ""
+              }
+            ]
+          },
+          {
+            "table": "Materials",
+            "id": 5892,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 3123,
+            "consumers": []
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3861,
+            "TextureID": 5887,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2444,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2444,
+            "UserName": "Earth"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6196,
+                "Material0": 2444,
+                "Material1": 2445,
+                "GeometryID": 3782,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3979,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3979,
+                "UserName": "Earth"
+              },
+              "geometry": {
+                "ID": 3782,
+                "AIGeometryID": 2478,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 141.84149169921875,
+                "SizeY": 141.97518920898438,
+                "SizeZ": 141.27174377441406,
+                "CenterX": -1.33514404296875e-05,
+                "CenterY": 1.52587890625e-05,
+                "CenterZ": 7.62939453125e-06,
+                "SrcName": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "UserName": "Earth",
+                "RootJoint": "skinCluster2"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        },
+        {
+          "actual_material": {
+            "ID": 5892,
+            "TextureID": 5887,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 3123,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 3123,
+            "UserName": "TestEarth"
+          },
+          "actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "e3a8d3a99f117b44828fd27818a8319ff47d77f9e6c6a590e8a663a052342737",
+      "release_mmp_sha256": "e3a8d3a99f117b44828fd27818a8319ff47d77f9e6c6a590e8a663a052342737",
+      "original_png_sha256": "be07fd34ad2f31183cab5a55a266b14f564bb326f94213f858cd15c2fc1d7d60",
+      "source_rgba_sha256": "429c22b2f026994489660a70ccddf6b853d24a6272ba0e3a0a843dc889352681",
+      "source_rgb_sha256": "84e65aaf79676a6e1ba8e85c02cc612160f073b9e2e3d02ad0c5ba41dfcbdd88",
+      "source_alpha_sha256": "4bda3a28f4ffe603c0ec1258c0034d65a1a0d35ab7bd523a834608adabf03cc5",
+      "dimensions": [
+        2048,
+        1024
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5889,
+      "source_record": {
+        "id": 5889,
+        "texture": {
+          "ID": 5889,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 0,
+          "AverageColor": 235013127,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\EarthCloudsNight.tga",
+          "Format": "8888",
+          "UserName": "EarthClouds",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "final",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3863,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 2445,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 6196,
+                  "field": "Material1",
+                  "material_template_id": 2445,
+                  "geometry_id": 3782,
+                  "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                  "model_template_id": 3979,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "source_sha256": "c61cbf1bac4070cd1f0c984d3633eb8c57e34dc8b94a9d9ca1b105e0bb7d039c",
+        "source_rgba_sha256": "63c4a73eb1917d834f31bd802259859cf67ea4dc11e9faab05bcf9c4dbf559b4",
+        "release_rgba_sha256": "63c4a73eb1917d834f31bd802259859cf67ea4dc11e9faab05bcf9c4dbf559b4",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          2,
+          54
+        ],
+        "original_png": "expanded/original/5889.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "final"
+      },
+      "fresh_actual_usage": {
+        "id": 5889,
+        "texture": {
+          "ID": 5889,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 0,
+          "AverageColor": 235013127,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Final\\EarthCloudsNight.tga",
+          "Format": "8888",
+          "UserName": "EarthClouds",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            1024,
+            1024
+          ],
+          "mips": 11,
+          "file_bytes": 5592428,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3863,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 2445,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6196,
+                "field": "Material1",
+                "material_template_id": 2445,
+                "geometry_id": 3782,
+                "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "model_template_id": 3979,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3863,
+            "TextureID": 5889,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2445,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2445,
+            "UserName": "EarthClouds"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 6196,
+                "Material0": 2444,
+                "Material1": 2445,
+                "GeometryID": 3782,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3979,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3979,
+                "UserName": "Earth"
+              },
+              "geometry": {
+                "ID": 3782,
+                "AIGeometryID": 2478,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 141.84149169921875,
+                "SizeY": 141.97518920898438,
+                "SizeZ": 141.27174377441406,
+                "CenterX": -1.33514404296875e-05,
+                "CenterY": 1.52587890625e-05,
+                "CenterZ": 7.62939453125e-06,
+                "SrcName": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+                "UserName": "Earth",
+                "RootJoint": "skinCluster2"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c61cbf1bac4070cd1f0c984d3633eb8c57e34dc8b94a9d9ca1b105e0bb7d039c",
+      "release_mmp_sha256": "c61cbf1bac4070cd1f0c984d3633eb8c57e34dc8b94a9d9ca1b105e0bb7d039c",
+      "original_png_sha256": "5f95bcbde02c1f91951c32d0e3c68882e0f5113831e2aee3777e841938a68f57",
+      "source_rgba_sha256": "63c4a73eb1917d834f31bd802259859cf67ea4dc11e9faab05bcf9c4dbf559b4",
+      "source_rgb_sha256": "481ba35c1097e04df9db3b75d9070bb22e185146f58f52128c4f6475bd08fcac",
+      "source_alpha_sha256": "e60801cb2fbc3269b463417547f4ae6d9854af77a4b87b553cbe04fcbe9eebbe",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "alpha_extrema": [
+        2,
+        54
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 635,
+      "source_record": {
+        "id": 635,
+        "texture": {
+          "ID": 635,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -8884898,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "testFrame.tga",
+          "Format": "dxt1",
+          "UserName": "testFrame",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "other",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 434,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Wrap",
+              "TemplateID": 333,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "c54e38a429c10786cb35ac9e8ed92de20a4c3f456e3d38d9cc43b582ff96873d",
+        "source_rgba_sha256": "7e8f9e60f589d04024b48ecfd5ff4638d4c4c43fcb9510cb936f297013810d58",
+        "release_rgba_sha256": "7e8f9e60f589d04024b48ecfd5ff4638d4c4c43fcb9510cb936f297013810d58",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/635.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "other"
+      },
+      "fresh_actual_usage": {
+        "id": 635,
+        "texture": {
+          "ID": 635,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -8884898,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "testFrame.tga",
+          "Format": "dxt1",
+          "UserName": "testFrame",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 2752,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 434,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Wrap",
+            "TemplateID": 333,
+            "consumers": []
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 434,
+            "TextureID": 635,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 333,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Wrap",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 333,
+            "UserName": "testFrame"
+          },
+          "actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c54e38a429c10786cb35ac9e8ed92de20a4c3f456e3d38d9cc43b582ff96873d",
+      "release_mmp_sha256": "c54e38a429c10786cb35ac9e8ed92de20a4c3f456e3d38d9cc43b582ff96873d",
+      "original_png_sha256": "08233014a1efaf1b225583eeda34e05f2dac052ca7c27885b00e9035a897a80c",
+      "source_rgba_sha256": "7e8f9e60f589d04024b48ecfd5ff4638d4c4c43fcb9510cb936f297013810d58",
+      "source_rgb_sha256": "c2812abd0285be94bd5f2586f23f78ed8467201c0c4d61ca12357a926636bd65",
+      "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 2432,
+      "source_record": {
+        "id": 2432,
+        "texture": {
+          "ID": 2432,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -11185598,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Tests\\chaptermap4.tga",
+          "Format": "8888",
+          "UserName": "Chaptermap",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "other",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1486,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 1020,
+              "consumers": []
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          512
+        ],
+        "source_sha256": "ff29d14d821c51d3e858dccb6abd1cf5538794f923dc0e367f23e7a70120e4ea",
+        "source_rgba_sha256": "e4649c3962ee289c14681ed31156c5898aa72eaf2e8ed417ffc71c40efa6be9a",
+        "release_rgba_sha256": "e4649c3962ee289c14681ed31156c5898aa72eaf2e8ed417ffc71c40efa6be9a",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/2432.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "other"
+      },
+      "fresh_actual_usage": {
+        "id": 2432,
+        "texture": {
+          "ID": 2432,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -11185598,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Tests\\chaptermap4.tga",
+          "Format": "8888",
+          "UserName": "Chaptermap",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            512,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 1048600,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 1486,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "TemplateID": 1020,
+            "consumers": []
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 1486,
+            "TextureID": 2432,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1020,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1020,
+            "UserName": "newmap"
+          },
+          "actual_model_consumers": [],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "transparent"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "ff29d14d821c51d3e858dccb6abd1cf5538794f923dc0e367f23e7a70120e4ea",
+      "release_mmp_sha256": "ff29d14d821c51d3e858dccb6abd1cf5538794f923dc0e367f23e7a70120e4ea",
+      "original_png_sha256": "98504e2871a3b26fc63dec89d398e55cf03c6e7b824a5d18be1d49620c6fdcd7",
+      "source_rgba_sha256": "e4649c3962ee289c14681ed31156c5898aa72eaf2e8ed417ffc71c40efa6be9a",
+      "source_rgb_sha256": "2c8c57dc7e8995279b74670c70682692958ef0869c76cb9c063d2d0c884f79d7",
+      "source_alpha_sha256": "3b874d3ba46c638fc3094f8e92fb744ca974893873f8885f54e23760f9b6311b",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 7701,
+      "source_record": {
+        "id": 7701,
+        "texture": {
+          "ID": 7701,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14147815,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Tests\\ZMale#2\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "other",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5897,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3126,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7837,
+                  "field": "Material2",
+                  "material_template_id": 3126,
+                  "geometry_id": 4296,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale04.mb",
+                  "model_template_id": 4701,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "91c30c30d1fe866ac58586175b19a96d96d6d6265bf8e93ed076ddd3ccef0a60",
+        "source_rgba_sha256": "5610ccd25886c77ba464d7e2b41184dfd5217fef5b8a9ce71f0eb124592383c2",
+        "release_rgba_sha256": "5610ccd25886c77ba464d7e2b41184dfd5217fef5b8a9ce71f0eb124592383c2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7701.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "actual_queue_group": "other"
+      },
+      "fresh_actual_usage": {
+        "id": 7701,
+        "texture": {
+          "ID": 7701,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14147815,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Tests\\ZMale#2\\Legs.tga",
+          "Format": "dxt1",
+          "UserName": "Legs",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            128
+          ],
+          "mips": 6,
+          "file_bytes": 21864,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5897,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 3126,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7837,
+                "field": "Material2",
+                "material_template_id": 3126,
+                "geometry_id": 4296,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale04.mb",
+                "model_template_id": 4701,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 5897,
+            "TextureID": 7701,
+            "BRDFID": 0,
+            "BumpID": 7697,
+            "SpecColor": 0,
+            "TemplateID": 3126,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 3126,
+            "UserName": "Legs"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material2",
+              "model": {
+                "ID": 7837,
+                "Material0": 3125,
+                "Material1": 378,
+                "GeometryID": 4296,
+                "Material2": 3126,
+                "Material3": 3124,
+                "SkeletonID": 145,
+                "TemplateID": 4701,
+                "RPGArmorID": 1,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 4701,
+                "UserName": "ZCivilMale"
+              },
+              "geometry": {
+                "ID": 4296,
+                "AIGeometryID": 34,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 1.7477362155914307,
+                "SizeY": 0.4233368933200836,
+                "SizeZ": 1.5502821207046509,
+                "CenterX": -0.005883866921067238,
+                "CenterY": -0.020139101892709732,
+                "CenterZ": 1.2993154525756836,
+                "SrcName": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale04.mb",
+                "UserName": "CivilMale03",
+                "RootJoint": "skinCluster1"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "91c30c30d1fe866ac58586175b19a96d96d6d6265bf8e93ed076ddd3ccef0a60",
+      "release_mmp_sha256": "91c30c30d1fe866ac58586175b19a96d96d6d6265bf8e93ed076ddd3ccef0a60",
+      "original_png_sha256": "324c94fa95e7f495c2639451fa43a881b98d4368056560f3c3e788bff7abdb0d",
+      "source_rgba_sha256": "5610ccd25886c77ba464d7e2b41184dfd5217fef5b8a9ce71f0eb124592383c2",
+      "source_rgb_sha256": "14da88583e69ae547affb196d7845e1980e2642a7a31120afdb042298a141dfe",
+      "source_alpha_sha256": "2d864c0b789a43214eee8524d3182075125e5ca2cd527f3582ec87ffd94076bc",
+      "dimensions": [
+        256,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    }
+  ],
+  "shared_modified": false
+}

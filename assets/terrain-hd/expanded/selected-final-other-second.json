@@ -1,0 +1,70 @@
+[
+  {
+    "id": 5889,
+    "texture": {
+      "ID": 5889,
+      "Width": 1024,
+      "Height": 1024,
+      "NMips": 0,
+      "AverageColor": 235013127,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Final\\EarthCloudsNight.tga",
+      "Format": "8888",
+      "UserName": "EarthClouds",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "final",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3863,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "transparent",
+          "AddressMode": "Clamp",
+          "TemplateID": 2445,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6196,
+              "field": "Material1",
+              "material_template_id": 2445,
+              "geometry_id": 3782,
+              "geometry": "Technics\\Sattellite_TSoE_01fz\\Satellite_anim.mb",
+              "model_template_id": 3979,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      1024,
+      1024
+    ],
+    "source_sha256": "c61cbf1bac4070cd1f0c984d3633eb8c57e34dc8b94a9d9ca1b105e0bb7d039c",
+    "source_rgba_sha256": "63c4a73eb1917d834f31bd802259859cf67ea4dc11e9faab05bcf9c4dbf559b4",
+    "release_rgba_sha256": "63c4a73eb1917d834f31bd802259859cf67ea4dc11e9faab05bcf9c4dbf559b4",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      2,
+      54
+    ],
+    "original_png": "expanded/original/5889.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "actual_queue_group": "final"
+  }
+]

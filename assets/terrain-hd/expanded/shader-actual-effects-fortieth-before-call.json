@@ -1,0 +1,26 @@
+[
+  {
+    "shader": "dwvsTransparentMap",
+    "compiler_embedded_assembly": "vs.1.1\ndcl_position v0;\ndcl_normal v1;\ndcl_texcoord0 v3;\ndcl_tangent0 v4;\ndcl_tangent1 v5;\ndcl_texcoord1 v6;\nm4x4 oPos, v0, c10\nmov oD0.w, v4\nmul oD0.xyz, v4.xyz, v4.w\nmul oT0.xy, v3, c6.xx\nmad oT1.xy, v6, c6.yy, c6.zz",
+    "code_file": "Main/GfxShaders.cpp",
+    "file_SHA256": "df0957935fd448c37e5819350606e2ea7435f5f36698e85af8804e7e8e52e71b"
+  },
+  {
+    "shader": "dwvsFoggedLitParticle",
+    "compiler_embedded_assembly": "vs.1.1\ndcl_position v0;\ndcl_normal v1;\ndcl_texcoord0 v3;\ndcl_tangent0 v4;\ndcl_tangent1 v5;\ndcl_texcoord1 v6;\nm4x4 r0, v0, c10\nmov oPos, r0\nmov r0.z, v0.z\nmul oT2.xy, r0.zw, c14.xy\nmov oD0.w, v4\nmul oD0.xyz, v4.xyz, v4.w\nmul oT0.xy, v3, c6.xx\nmad oT1.xy, v6, c6.yy, c6.zz",
+    "code_file": "Main/GfxShaders.cpp",
+    "file_SHA256": "df0957935fd448c37e5819350606e2ea7435f5f36698e85af8804e7e8e52e71b"
+  },
+  {
+    "shader": "dwpsTransparentTexTex4AlphaFirst",
+    "compiler_embedded_assembly": "ps.1.1\r\ntex t0\r\ntex t1\r\nmul r0.rgb, t0, v0\r\n+mul r0.a, t0.a, v0.a\r\nmul_x4 r0.rgb, r0, t1",
+    "code_file": "Main/GfxShaders.cpp",
+    "file_SHA256": "df0957935fd448c37e5819350606e2ea7435f5f36698e85af8804e7e8e52e71b"
+  },
+  {
+    "shader": "dwpsFoggedLitParticle",
+    "compiler_embedded_assembly": "ps.1.1\r\ntex t0\r\ntex t1\r\ntex t2\r\nmul r0.rgb, t0, v0\r\n+mul r0.a, t0.a, v0.a\r\nmul_x4 r0.rgb, r0, t1\r\nmul r1, t2, r0.a\r\nmad r0.rgb, r0, 1-t2.a, r1",
+    "code_file": "Main/GfxShaders.cpp",
+    "file_SHA256": "df0957935fd448c37e5819350606e2ea7435f5f36698e85af8804e7e8e52e71b"
+  }
+]

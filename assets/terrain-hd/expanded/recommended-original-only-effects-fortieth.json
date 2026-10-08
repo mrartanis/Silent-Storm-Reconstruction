@@ -1,0 +1,140 @@
+[
+  {
+    "id": 3095,
+    "status": "recommended-original-only-root-review-pending",
+    "reason": "Individual structural-alpha darkeningcoverage mask in its ONLYactual typedconsumer; sourceRGB zeroed byactual allblack particlevertexcolor. PreserveoriginalRGBA/nofakeHD. Not inferred from RGB==A/name/nearblack/Type alone. RuntimeObject1228.Model1→CM1250→Effect493→1515→Particles194/Texture0=3095; source/binary/nativeblend/shaderproof savedBEFORE. FogonlydependscoverageA, never sourcecolor variation. Mapborder1836 usesdifferentCM2083/Particle0, namesnotpurposeproof. No automatic all-monochrome/allFXclassification.",
+    "source_record": {
+      "id": 3095,
+      "texture": {
+        "ID": 3095,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -1903260018,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Effects\\Border.tga",
+        "Format": "8888",
+        "UserName": "Border",
+        "Type": "Transparent",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "effects",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "ParticleInstances",
+            "id": 1515,
+            "field": "Texture0",
+            "role": "color",
+            "UserName": "br",
+            "SrcName": "",
+            "EffectID": 493,
+            "ParticleID": 194,
+            "IsCrown": 0,
+            "AlphaBlending": "Normal",
+            "Static": "Dynamic",
+            "PivotX": 0.0,
+            "PivotY": -1.0,
+            "Scale": 1.0,
+            "Speed": 0.0010000000474974513,
+            "CycleCount": 1,
+            "particle_definition": {
+              "ID": 194,
+              "BumpID": 0,
+              "AIGeometryID": 0,
+              "RPGArmorID": 0,
+              "CenterX": 0.0,
+              "CenterY": 0.0,
+              "CenterZ": 0.0,
+              "HalfBoxX": 12.209709167480469,
+              "HalfBoxY": 12.209709167480469,
+              "HalfBoxZ": 2.2097086906433105,
+              "WrapX": 0.0,
+              "WrapY": 0.0,
+              "SrcName": "Models\\Terrain\\Border16-32p2.mb",
+              "UserName": "BR",
+              "ExportPrefix": "BR"
+            },
+            "particle_reference_status": "resolved",
+            "frame_bindings": {
+              "Texture0": 3095
+            },
+            "layout_review": "Texture slots are animation bindings, not inferred atlas cells. Preserve Particle.WrapX/WrapY, instance pivot, timing, blending and any native particle UV grid; inspect source before defining calibration_grid."
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "62d8837d349cfc0dc529c9ac1d2073f6d67f2da67c3157da093ba525dec4d869",
+      "source_rgba_sha256": "b5db780f798d715b17cea48077ebbe9336d8924d2957f9c29454d222e7f12ef3",
+      "release_rgba_sha256": "b5db780f798d715b17cea48077ebbe9336d8924d2957f9c29454d222e7f12ef3",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "original_png": "expanded/original/3095.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "imagegen_calls": 0,
+    "actual_full_RGBA_equal_A": true,
+    "full_A_extrema": [
+      0,
+      255
+    ],
+    "source_RGBA_SHA256": "b5db780f798d715b17cea48077ebbe9336d8924d2957f9c29454d222e7f12ef3",
+    "actual_runtime_vertexRGB_allzero": true,
+    "actual_runtime_vertexAlpha_values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "color_formula": "source texture RGB * vertexRGB(0) * light = 0; outA=textureA*vertexA; fog RGB derivedfromoutA only; SMART srcONE/dstINV_SRC_ALPHA attenuates scene under fixedblackcoverage.",
+    "purpose_before_ref": [
+      {
+        "path": "assets/terrain-hd/expanded/extended-consumer-effects-fortieth-before-call.json",
+        "file_SHA256": "4d2fb39add3151efe0c805d4666ea800835f53aed2b95f6613437776cb9b9cf2"
+      },
+      {
+        "path": "assets/terrain-hd/expanded/purpose-audit-effects-fortieth-before-call.json",
+        "file_SHA256": "c34cc4b32fab908a7cc3654111602f5d9fcfa91206663cf00edfb28e1bbb3dab"
+      },
+      {
+        "path": "assets/terrain-hd/expanded/particle-runtime-effects-fortieth-before-call.json",
+        "file_SHA256": "2bb6d7a2b6eedf74ae402447620f301557b07f924d0e15c1729987ec493cab41"
+      },
+      {
+        "path": "assets/terrain-hd/expanded/shader-actual-effects-fortieth-before-call.json",
+        "file_SHA256": "1f6db3bfb8c1e2202c8043eddbf442bc24b70679617fc362b81e487e56956513"
+      }
+    ],
+    "root_sole_classification_queue_edit": true
+  }
+]
