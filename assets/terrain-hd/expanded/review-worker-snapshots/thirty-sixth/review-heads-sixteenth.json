@@ -1,0 +1,2114 @@
+{
+  "batch": "heads-sixteenth",
+  "status": "stable-complete-ready-subset-coordinator-review",
+  "selected_ids": [
+    6692,
+    6698,
+    6699,
+    6700,
+    6701,
+    6703,
+    6709,
+    6713,
+    6714,
+    6719,
+    6720,
+    6721
+  ],
+  "generated_ids": [
+    6698,
+    6719,
+    6720
+  ],
+  "ready_ids": [
+    6720
+  ],
+  "held_ids": [
+    6698,
+    6719
+  ],
+  "pending_uncalled_ids": [
+    6692,
+    6699,
+    6700,
+    6701,
+    6703,
+    6709,
+    6713,
+    6714,
+    6721
+  ],
+  "call_count": 3,
+  "max_authorized_calls": 4,
+  "not_forced_call_count": true,
+  "records": [
+    {
+      "id": 6698,
+      "status": "held-native-painted-material-softness-pattern-review",
+      "call_count": 1,
+      "reason": "HELD native material review, not accepted and no retry. Full original/nativeRGBA/sourceRGB NN6x768/alpha/raw1254/full4x512/defaultscalar/whole sourceA byteexact privately reviewed. Entire source ONE curved softly painted beard field, TWO rising side lobes and ONE dark oval gap remain in same wholeUV/native scale, with original cornerpixel retained. However original fine softly blurred brushwork becomes visibly coarser separate triangular paintdabs/stippled clumps, and source soft oval boundary becomes brighter/rougher. This is material/pattern-scale change, not just threshold1pixel smoothing or a new physical-beard-count claim. Whole inverse correlation.9955 does not override fullraw material drift. Existing native35,60 source109/93/82 ->149/130/118 maxchannel+40; oval-boundary diagnostic mean76.34/62.50/52.82 ->83.34/66.75/55.75, peak147/136/126 ->172/157/146. Source lower tiny warm patches retained but stronger grain. Original sole cornerwhite pixel255/255/255 ->218/216/214 under whole inverse, not erased/extra glint. Full4x HP(radius1) sourceRGBstd.379/.397/.402 ->1.453/1.499/1.496 describes added coarsepaint variation, not universal threshold. Native128Ordinary/sourceA0..255/fullA4x/POT/defaultpad0/pure scalar/no RGB repair/crop/BBox/optout.",
+      "generated": "assets/terrain-hd/expanded/generated/6698-raw.png",
+      "raw_sha256": "1d2ea1fa0fa156a792fed4839be2aa19d8d382c9a8f4704e49759ca2cb41a538",
+      "prompt_file": "assets/terrain-hd/expanded/generated/6698-prompt.txt",
+      "prompt_argument_sha256": "6954cfd2690a134fd89e22b4b6b5ee4642398f12634ceb795daef8212069eb37",
+      "call_metadata": "assets/terrain-hd/expanded/generated/6698-heads-sixteenth-call.json",
+      "call_metadata_sha256": "11641b92cce8d3420f27b1fe07f3df0d0f5f9d67f927280c45717468833f5532",
+      "reference_sha256": {
+        "assets/terrain-hd/expanded/original/6698.png": "fd5ec1ab48ffd7961dd2aa58acce3da9a03604366f4dc62669471083eb2cb525",
+        "assets/terrain-hd/expanded/generated/6698-heads-sixteenth-source-rgb-support.png": "3fbf0e6ec6a7b84d7768cca574576e430c53d184eaca59c6c5a8ddff5a89d6b6"
+      },
+      "source_transform_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6698.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6698-heads-sixteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6698.png",
+          "assets/terrain-hd/expanded/generated/6698-heads-sixteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "fd5ec1ab48ffd7961dd2aa58acce3da9a03604366f4dc62669471083eb2cb525",
+          "3fbf0e6ec6a7b84d7768cca574576e430c53d184eaca59c6c5a8ddff5a89d6b6"
+        ]
+      },
+      "actual_tool_arguments": {
+        "prompt": "Use case: precise-object-edit. Historical Silent Storm softly PAINTED COLOR head overlay bitmap, faithful subdued high-resolution source paint.\r\n\r\nImage1 is the EXACT entire native128x128 original RGBA with variable alpha. Image2 is the SAME entire native storedRGB source, solely whole NEAREST6x768 enlargement to expose its painted color. Edit the complete bitmap edge-to-edge at identical normalizedUV, using Image2 for original full stored color. Preserve all original pigment footprints/native phase/scale/local weak intensity, source blur and complete palette. Final complete ORIGINAL alpha will be independently restored; brightness is only one global numerical scalar. No physical face/head render or reinterpretation.\r\n\r\nPreserve EXACTLY ONE existing soft gray-beige curved painted BEARD field in native approximatelyx25..102,y47..96, with its TWO original softly rising side paint lobes and ONE original central dark OVAL gap inside its existing pale soft boundary. Keep exact curve/lobe/oval shape and asymmetric dim painted edges. Source is blurred softly stippled brushpaint, not a photo: retain the SAME visible native brush pattern phase/scale and very weak lower patches, WITHOUT drawing new beard hairs, physical fibers, pores, curls, sharper individual bristles, additional teeth/mouth/lips/nostrils or anatomy. Original background is the same dark warm brown paint, not a face to fill in. Keep original ONE white source pixel in bottom-left native[0,127], at the SAME normalized size/location, not omitted or enlarged into a new glint.\r\n\r\nActual whole source RGB extrema are [[26, 15, 7], [255, 255, 255]], nativeA[0, 255]. Preserve dim local pigment strength and original light hierarchy. Refine only very subtly the same soft fine paint, no sharpening/raised edges/gloss/new highlights/new materialgrain. Do not brighten pale source strokes or fill dark parts into anatomy.\r\n\r\nOutput ONLY the SAME complete full source square. No crop/zoom/padding/whitespace/frame/cutout/fitting/repack/autoBBox/sourceRGB repair/rearrangement/new shapes/count/material. No new text/glyphs/symbols. Full originalA and default padding restored downstream.",
+        "referenced_image_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6698.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6698-heads-sixteenth-source-rgb-support.png"
+        ],
+        "transparent_background": false
+      },
+      "metrics": {
+        "id": 6698,
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "target_4x_size": [
+          512,
+          512
+        ],
+        "preview_luma_gain": 0.9950464090259944,
+        "luma_spatial_correlation": 0.9914636640977057,
+        "native_alpha_restored": true,
+        "bbox_registration": false,
+        "native_packer_premultiplies": false,
+        "native_preview_luma_gain": 1.06195068359375,
+        "native_preview_stored_luma": 26.433017815399168,
+        "native_preview_rounding": "Nearest 8-bit RGB lookup",
+        "root_padding_texels": 0,
+        "root_hidden_clear_texels": 0,
+        "normalization_recipe": "Full raw RGBA Lanczos to exact original4x dimensions, matching importer; original alpha Lanczos4x, matching packer. Existing pure pad_rgb_under_source_mask + match_cell scalar calibration, then original native premultiplication in PRIVATE previews only. No crop/reposition/rotate/source artistic RGB insertion. Root calibrates final.",
+        "normalized_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-native-alpha-normalized.png",
+        "rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-rgb-normalized.png",
+        "private_gain_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-gain-preview.png",
+        "stored_native_rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-stored-rgb-private.png"
+      },
+      "detail_metrics": {
+        "id": 6698,
+        "diagnostic": "Entire calibrated native storedRGB inverse LANCZOS to original native source dimensions, positive-source pixels only. Local increases/connected-component bboxes diagnose source material/count only; not proof of newly invented parts, never used for registration or compositing.",
+        "stored_native_luma_spatial_correlation": 0.9955464068809896,
+        "max_positive_source_local_channel_increase": 40,
+        "weak_source_pixels_max_lt60_gain_gt12": 9,
+        "examples": [
+          {
+            "logical_xy": [
+              35,
+              60
+            ],
+            "source_rgb": [
+              109,
+              93,
+              82
+            ],
+            "candidate_rgb": [
+              149,
+              130,
+              118
+            ],
+            "max_channel_increase": 40
+          },
+          {
+            "logical_xy": [
+              55,
+              74
+            ],
+            "source_rgb": [
+              134,
+              120,
+              107
+            ],
+            "candidate_rgb": [
+              167,
+              150,
+              134
+            ],
+            "max_channel_increase": 33
+          },
+          {
+            "logical_xy": [
+              36,
+              64
+            ],
+            "source_rgb": [
+              112,
+              96,
+              85
+            ],
+            "candidate_rgb": [
+              144,
+              124,
+              110
+            ],
+            "max_channel_increase": 32
+          },
+          {
+            "logical_xy": [
+              56,
+              73
+            ],
+            "source_rgb": [
+              140,
+              126,
+              112
+            ],
+            "candidate_rgb": [
+              172,
+              151,
+              133
+            ],
+            "max_channel_increase": 32
+          },
+          {
+            "logical_xy": [
+              56,
+              75
+            ],
+            "source_rgb": [
+              131,
+              118,
+              106
+            ],
+            "candidate_rgb": [
+              163,
+              146,
+              132
+            ],
+            "max_channel_increase": 32
+          },
+          {
+            "logical_xy": [
+              36,
+              60
+            ],
+            "source_rgb": [
+              101,
+              84,
+              72
+            ],
+            "candidate_rgb": [
+              132,
+              109,
+              94
+            ],
+            "max_channel_increase": 31
+          },
+          {
+            "logical_xy": [
+              37,
+              66
+            ],
+            "source_rgb": [
+              112,
+              92,
+              79
+            ],
+            "candidate_rgb": [
+              143,
+              121,
+              105
+            ],
+            "max_channel_increase": 31
+          },
+          {
+            "logical_xy": [
+              54,
+              73
+            ],
+            "source_rgb": [
+              137,
+              126,
+              113
+            ],
+            "candidate_rgb": [
+              168,
+              152,
+              140
+            ],
+            "max_channel_increase": 31
+          },
+          {
+            "logical_xy": [
+              54,
+              74
+            ],
+            "source_rgb": [
+              134,
+              121,
+              110
+            ],
+            "candidate_rgb": [
+              165,
+              148,
+              132
+            ],
+            "max_channel_increase": 31
+          },
+          {
+            "logical_xy": [
+              55,
+              73
+            ],
+            "source_rgb": [
+              134,
+              121,
+              109
+            ],
+            "candidate_rgb": [
+              164,
+              145,
+              131
+            ],
+            "max_channel_increase": 30
+          }
+        ],
+        "source_native_alpha_components_8connected_positiveA": [
+          {
+            "pixel_count": 2549,
+            "source_pixel_bbox": [
+              25,
+              48,
+              103,
+              101
+            ]
+          },
+          {
+            "pixel_count": 6,
+            "source_pixel_bbox": [
+              98,
+              44,
+              100,
+              49
+            ]
+          },
+          {
+            "pixel_count": 4,
+            "source_pixel_bbox": [
+              28,
+              44,
+              29,
+              48
+            ]
+          },
+          {
+            "pixel_count": 4,
+            "source_pixel_bbox": [
+              20,
+              66,
+              22,
+              68
+            ]
+          },
+          {
+            "pixel_count": 1,
+            "source_pixel_bbox": [
+              0,
+              127,
+              1,
+              128
+            ]
+          }
+        ],
+        "source_material_components_8connected_RGBmax_gt5": [
+          {
+            "pixel_count": 16384,
+            "source_pixel_bbox": [
+              0,
+              0,
+              128,
+              128
+            ]
+          }
+        ],
+        "native_alpha4x_byte_exact": true
+      },
+      "material_phase": {
+        "id": 6698,
+        "diagnostic": "ENTIRE pure scalar/fulloriginalA512 source and candidate; whole LANCZOS128 inverse for numeric source regions, NEVER used to repair/composite artwork. Alpha-over-gray ONLY fullcanvas private visibility diagnostic, no CPU/GPU/runtime test or actualFaceGen weight claim.",
+        "regions": [
+          {
+            "name": "whole_soft_beard_paint_field",
+            "native_bbox": [
+              25,
+              47,
+              103,
+              97
+            ],
+            "source_mean_RGB": [
+              54.21358974358974,
+              40.631025641025644,
+              32.09307692307692
+            ],
+            "production_mean_RGB": [
+              57.79589743589744,
+              41.7151282051282,
+              31.893076923076922
+            ],
+            "source_std_RGB": [
+              31.211236798601277,
+              30.822469517434875,
+              29.328008897931664
+            ],
+            "production_std_RGB": [
+              35.450932266353796,
+              34.640640529089396,
+              32.99477197545164
+            ],
+            "source_max_RGB": [
+              147,
+              136,
+              127
+            ],
+            "production_max_RGB": [
+              172,
+              157,
+              146
+            ],
+            "source_peak_mean_xy": [
+              70,
+              75
+            ],
+            "production_peak_mean_xy": [
+              54,
+              72
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "source_left_rising_lobe",
+            "native_bbox": [
+              26,
+              48,
+              40,
+              78
+            ],
+            "source_mean_RGB": [
+              55.09047619047619,
+              40.88333333333333,
+              32.24285714285714
+            ],
+            "production_mean_RGB": [
+              60.29761904761905,
+              43.31190476190476,
+              33.10952380952381
+            ],
+            "source_std_RGB": [
+              25.595040530798965,
+              24.586450165610156,
+              23.180822768350712
+            ],
+            "production_std_RGB": [
+              31.49451190358965,
+              29.88996250042216,
+              28.157675173952384
+            ],
+            "source_max_RGB": [
+              121,
+              105,
+              98
+            ],
+            "production_max_RGB": [
+              149,
+              130,
+              120
+            ],
+            "source_peak_mean_xy": [
+              36,
+              66
+            ],
+            "production_peak_mean_xy": [
+              35,
+              60
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "source_right_rising_lobe",
+            "native_bbox": [
+              88,
+              48,
+              103,
+              78
+            ],
+            "source_mean_RGB": [
+              55.05777777777778,
+              40.86,
+              32.19555555555556
+            ],
+            "production_mean_RGB": [
+              58.76,
+              42.02444444444444,
+              32.013333333333335
+            ],
+            "source_std_RGB": [
+              26.79587438302056,
+              25.80982500263547,
+              24.295440409495722
+            ],
+            "production_std_RGB": [
+              30.631214290146744,
+              29.23113755003621,
+              27.52283577120804
+            ],
+            "source_max_RGB": [
+              127,
+              114,
+              107
+            ],
+            "production_max_RGB": [
+              153,
+              129,
+              113
+            ],
+            "source_peak_mean_xy": [
+              88,
+              73
+            ],
+            "production_peak_mean_xy": [
+              91,
+              64
+            ],
+            "source_alpha_extrema": [
+              0,
+              254
+            ]
+          },
+          {
+            "name": "one_existing_dark_oval_and_pale_boundary",
+            "native_bbox": [
+              49,
+              60,
+              79,
+              76
+            ],
+            "source_mean_RGB": [
+              76.34375,
+              62.49791666666667,
+              52.822916666666664
+            ],
+            "production_mean_RGB": [
+              83.33958333333334,
+              66.75208333333333,
+              55.75416666666667
+            ],
+            "source_std_RGB": [
+              43.122796592260805,
+              42.73688877686804,
+              40.39801841047479
+            ],
+            "production_std_RGB": [
+              49.595649337010606,
+              48.62932709788462,
+              46.111978551914476
+            ],
+            "source_max_RGB": [
+              147,
+              136,
+              126
+            ],
+            "production_max_RGB": [
+              172,
+              157,
+              146
+            ],
+            "source_peak_mean_xy": [
+              70,
+              75
+            ],
+            "production_peak_mean_xy": [
+              54,
+              72
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "source_lower_curved_paint_band",
+            "native_bbox": [
+              31,
+              72,
+              98,
+              96
+            ],
+            "source_mean_RGB": [
+              67.28544776119404,
+              53.674751243781095,
+              44.17164179104478
+            ],
+            "production_mean_RGB": [
+              72.03793532338308,
+              55.73694029850746,
+              44.87251243781095
+            ],
+            "source_std_RGB": [
+              34.32657017636835,
+              34.273981099527646,
+              33.09678467783541
+            ],
+            "production_std_RGB": [
+              39.115665051913986,
+              38.68412170684847,
+              37.40680679612586
+            ],
+            "source_max_RGB": [
+              147,
+              136,
+              127
+            ],
+            "production_max_RGB": [
+              172,
+              157,
+              146
+            ],
+            "source_peak_mean_xy": [
+              70,
+              75
+            ],
+            "production_peak_mean_xy": [
+              54,
+              72
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "existing_bottomleft_corner_pixel",
+            "native_bbox": [
+              0,
+              127,
+              1,
+              128
+            ],
+            "source_mean_RGB": [
+              255.0,
+              255.0,
+              255.0
+            ],
+            "production_mean_RGB": [
+              218.0,
+              216.0,
+              214.0
+            ],
+            "source_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "production_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "source_max_RGB": [
+              255,
+              255,
+              255
+            ],
+            "production_max_RGB": [
+              218,
+              216,
+              214
+            ],
+            "source_peak_mean_xy": [
+              0,
+              127
+            ],
+            "production_peak_mean_xy": [
+              0,
+              127
+            ],
+            "source_alpha_extrema": [
+              255,
+              255
+            ]
+          }
+        ],
+        "full4x_highpass_Gaussian_radius1_source_std_RGB": [
+          0.3786587539568149,
+          0.3973971811915293,
+          0.4017030672036562
+        ],
+        "full4x_highpass_Gaussian_radius1_production_std_RGB": [
+          1.452862605267787,
+          1.4989842853709139,
+          1.4955871436368076
+        ],
+        "fullA4x_byteexact": true,
+        "nativeType": "Ordinary",
+        "source_brow_count": 0,
+        "production_brow_count_private_wholeview": 0,
+        "source_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-source-alpha-over-gray-private.png",
+        "production_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6698-production-alpha-over-gray-private.png"
+      },
+      "rejected_raw": "assets/terrain-hd/expanded/rejected/heads-sixteenth/6698-attempt1-raw.png"
+    },
+    {
+      "id": 6719,
+      "status": "held-native-painted-material-softness-pattern-review",
+      "call_count": 1,
+      "reason": "HELD native material review, not accepted and no retry. Whole native128Ordinary/exact sourceRGBA/history-release/NN6x768/raw1254/native4x512/sourceA/pure scalar privately inspected. TWO original upper/lateral graybrown hairpaint banks, ONE soft centerbridge, TWO faint browstrokes and ONE original cornerpixel keep wholecanvas positions/scale/sourcealpha footprint. Original soft wavy hairbrush pattern becomes visually sharper stepped block/mosaic-like striations and rougher bright centerbridge at fullraw/native4x, changing soft paint material. This is not a guessed individual hair-count or a threshold-only1px failure. Two faint brows remain dim: sourcepeak81/68/59 ->left83/69/59,right86/72/61; fieldmean nearly preserved. Centerbridge peak188/180/171 ->206/195/186, source native64,24 source139/126/112 ->170/154/141(+31). Whole inversecorrelation.9934 does not establish source blur/material fidelity. Original lower flat RGB56/43/35 becomes55.75/42.00/33.59,std.472/.340/.495 (max57/43/35); sourceA0 there so private straight-alpha diagnostic hides this small nonoriginal shade, not actual runtime validation. Original corner176/160/156 ->161/143/136. Full4x HPstd source.760/.758/.726 ->2.669/2.586/2.411 numeric detail diagnostic. No new eyes/glints/teeth/anatomy/physical hardware alleged. FullsourceA byteexact/defaultpad0/scalar only, no patches/crop/BBox/optout.",
+      "generated": "assets/terrain-hd/expanded/generated/6719-raw.png",
+      "raw_sha256": "5846530d99a2459b6bb1789da2ba574697ed499ef9f96c003b6fbaef75ddb948",
+      "prompt_file": "assets/terrain-hd/expanded/generated/6719-prompt.txt",
+      "prompt_argument_sha256": "25cc2797c84d0c97a178eab827266314b057ce49895369c1df61e1207a8e9347",
+      "call_metadata": "assets/terrain-hd/expanded/generated/6719-heads-sixteenth-call.json",
+      "call_metadata_sha256": "297b20af51b174f0f1d24d03d73869e6d1ca905b0197a11026d1d2ca62793bb4",
+      "reference_sha256": {
+        "assets/terrain-hd/expanded/original/6719.png": "e2eff0377ec680be27366967798b7981664eaec3ea460702def00f9b7ca29bf3",
+        "assets/terrain-hd/expanded/generated/6719-heads-sixteenth-source-rgb-support.png": "297765a93f1651f50ab2388cec37fdaf8bb1f15fdc0132c8ce8a479f7ddbf14b"
+      },
+      "source_transform_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6719.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6719-heads-sixteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6719.png",
+          "assets/terrain-hd/expanded/generated/6719-heads-sixteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "e2eff0377ec680be27366967798b7981664eaec3ea460702def00f9b7ca29bf3",
+          "297765a93f1651f50ab2388cec37fdaf8bb1f15fdc0132c8ce8a479f7ddbf14b"
+        ]
+      },
+      "actual_tool_arguments": {
+        "prompt": "Use case: precise-object-edit. Historical Silent Storm softly PAINTED COLOR head overlay bitmap, faithful subdued high-resolution source paint.\r\n\r\nImage1 is the EXACT entire native128x128 original RGBA with variable alpha. Image2 is the SAME entire native storedRGB source, solely whole NEAREST6x768 enlargement to expose its painted color. Edit the complete bitmap edge-to-edge at identical normalizedUV, using Image2 for original full stored color. Preserve all original pigment footprints/native phase/scale/local weak intensity, source blur and complete palette. Final complete ORIGINAL alpha will be independently restored; brightness is only one global numerical scalar. No physical face/head render or reinterpretation.\r\n\r\nPreserve the TWO existing muted warm graybrown upper/lateral HAIR PAINT banks, their ONE original central soft bridge, complete original asymmetric outline and dark brown lower color field. Keep ALL exact source brush tufts/waves at their original location/count/phase/scale; do not add individual photohair fibers, new locks, curls, radial strands, pores, photographic grain, stipples, mosaic, coarse paintcells, glints or a face. The TWO existing faint short BROW paint strokes at nativeleft[43,37,63,45] andright[65,37,86,45] retain their EXACT width/native positions/dim tint/blur; no eyes/iris/pupils/catchlights beneath them. Keep original tiny lower-left single source paintpixel native[0,127] RGB176/160/156, equally tiny and dim, not a white glint. Entire lower warm brown paint field stays its original mostly flat shade and softness, no new cloudfields/skin anatomy/ears/teeth. All source darker gaps and paint-bank edges remain softly painted, not raised metallic rims or new outlines.\r\n\r\nActual whole source RGB extrema are [[33, 19, 6], [188, 180, 171]], nativeA[0, 255]. Preserve dim local pigment strength and original light hierarchy. Refine only very subtly the same soft fine paint, no sharpening/raised edges/gloss/new highlights/new materialgrain. Do not brighten pale source strokes or fill dark parts into anatomy.\r\n\r\nOutput ONLY the SAME complete full source square. No crop/zoom/padding/whitespace/frame/cutout/fitting/repack/autoBBox/sourceRGB repair/rearrangement/new shapes/count/material. No new text/glyphs/symbols. Full originalA and default padding restored downstream.",
+        "referenced_image_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6719.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6719-heads-sixteenth-source-rgb-support.png"
+        ],
+        "transparent_background": false
+      },
+      "metrics": {
+        "id": 6719,
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "target_4x_size": [
+          512,
+          512
+        ],
+        "preview_luma_gain": 0.9672556994697875,
+        "luma_spatial_correlation": 0.9822230832441305,
+        "native_alpha_restored": true,
+        "bbox_registration": false,
+        "native_packer_premultiplies": false,
+        "native_preview_luma_gain": 0.9864215850830078,
+        "native_preview_stored_luma": 57.31459768066406,
+        "native_preview_rounding": "8x8 ordered sub-level RGB rounding",
+        "root_padding_texels": 0,
+        "root_hidden_clear_texels": 0,
+        "normalization_recipe": "Full raw RGBA Lanczos to exact original4x dimensions, matching importer; original alpha Lanczos4x, matching packer. Existing pure pad_rgb_under_source_mask + match_cell scalar calibration, then original native premultiplication in PRIVATE previews only. No crop/reposition/rotate/source artistic RGB insertion. Root calibrates final.",
+        "normalized_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-native-alpha-normalized.png",
+        "rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-rgb-normalized.png",
+        "private_gain_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-gain-preview.png",
+        "stored_native_rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-stored-rgb-private.png"
+      },
+      "detail_metrics": {
+        "id": 6719,
+        "diagnostic": "Entire calibrated native storedRGB inverse LANCZOS to original native source dimensions, positive-source pixels only. Local increases/connected-component bboxes diagnose source material/count only; not proof of newly invented parts, never used for registration or compositing.",
+        "stored_native_luma_spatial_correlation": 0.9933859151155269,
+        "max_positive_source_local_channel_increase": 31,
+        "weak_source_pixels_max_lt60_gain_gt12": 1,
+        "examples": [
+          {
+            "logical_xy": [
+              64,
+              24
+            ],
+            "source_rgb": [
+              139,
+              126,
+              112
+            ],
+            "candidate_rgb": [
+              170,
+              154,
+              141
+            ],
+            "max_channel_increase": 31
+          },
+          {
+            "logical_xy": [
+              68,
+              22
+            ],
+            "source_rgb": [
+              148,
+              137,
+              124
+            ],
+            "candidate_rgb": [
+              174,
+              159,
+              146
+            ],
+            "max_channel_increase": 26
+          },
+          {
+            "logical_xy": [
+              69,
+              22
+            ],
+            "source_rgb": [
+              149,
+              134,
+              122
+            ],
+            "candidate_rgb": [
+              175,
+              160,
+              148
+            ],
+            "max_channel_increase": 26
+          },
+          {
+            "logical_xy": [
+              69,
+              23
+            ],
+            "source_rgb": [
+              142,
+              131,
+              116
+            ],
+            "candidate_rgb": [
+              165,
+              148,
+              135
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              90,
+              24
+            ],
+            "source_rgb": [
+              137,
+              124,
+              113
+            ],
+            "candidate_rgb": [
+              160,
+              146,
+              132
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              65,
+              25
+            ],
+            "source_rgb": [
+              118,
+              105,
+              91
+            ],
+            "candidate_rgb": [
+              141,
+              123,
+              109
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              75,
+              14
+            ],
+            "source_rgb": [
+              113,
+              95,
+              80
+            ],
+            "candidate_rgb": [
+              135,
+              114,
+              95
+            ],
+            "max_channel_increase": 22
+          },
+          {
+            "logical_xy": [
+              71,
+              17
+            ],
+            "source_rgb": [
+              126,
+              114,
+              102
+            ],
+            "candidate_rgb": [
+              148,
+              133,
+              117
+            ],
+            "max_channel_increase": 22
+          },
+          {
+            "logical_xy": [
+              31,
+              20
+            ],
+            "source_rgb": [
+              126,
+              111,
+              92
+            ],
+            "candidate_rgb": [
+              148,
+              131,
+              113
+            ],
+            "max_channel_increase": 22
+          },
+          {
+            "logical_xy": [
+              42,
+              29
+            ],
+            "source_rgb": [
+              128,
+              114,
+              104
+            ],
+            "candidate_rgb": [
+              150,
+              134,
+              119
+            ],
+            "max_channel_increase": 22
+          }
+        ],
+        "source_native_alpha_components_8connected_positiveA": [
+          {
+            "pixel_count": 5920,
+            "source_pixel_bbox": [
+              0,
+              0,
+              128,
+              73
+            ]
+          },
+          {
+            "pixel_count": 71,
+            "source_pixel_bbox": [
+              41,
+              38,
+              63,
+              44
+            ]
+          },
+          {
+            "pixel_count": 71,
+            "source_pixel_bbox": [
+              65,
+              38,
+              87,
+              44
+            ]
+          },
+          {
+            "pixel_count": 1,
+            "source_pixel_bbox": [
+              0,
+              127,
+              1,
+              128
+            ]
+          }
+        ],
+        "source_material_components_8connected_RGBmax_gt5": [
+          {
+            "pixel_count": 16384,
+            "source_pixel_bbox": [
+              0,
+              0,
+              128,
+              128
+            ]
+          }
+        ],
+        "native_alpha4x_byte_exact": true
+      },
+      "material_phase": {
+        "id": 6719,
+        "diagnostic": "ENTIRE pure scalar/fulloriginalA512 source and candidate; whole LANCZOS128 inverse for numeric source regions, NEVER used to repair/composite artwork. Alpha-over-gray ONLY fullcanvas private visibility diagnostic, no CPU/GPU/runtime test or actualFaceGen weight claim.",
+        "regions": [
+          {
+            "name": "left_soft_hair_paint_bank",
+            "native_bbox": [
+              0,
+              0,
+              64,
+              73
+            ],
+            "source_mean_RGB": [
+              79.09375,
+              64.1115154109589,
+              52.92337328767123
+            ],
+            "production_mean_RGB": [
+              80.92251712328768,
+              64.34182363013699,
+              52.08989726027397
+            ],
+            "source_std_RGB": [
+              25.41552342173015,
+              23.71779946013015,
+              20.695766763003515
+            ],
+            "production_std_RGB": [
+              28.26698161863957,
+              25.77999444913938,
+              22.180234644691172
+            ],
+            "source_max_RGB": [
+              166,
+              153,
+              144
+            ],
+            "production_max_RGB": [
+              184,
+              170,
+              157
+            ],
+            "source_peak_mean_xy": [
+              63,
+              23
+            ],
+            "production_peak_mean_xy": [
+              62,
+              22
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "right_soft_hair_paint_bank",
+            "native_bbox": [
+              64,
+              0,
+              128,
+              73
+            ],
+            "source_mean_RGB": [
+              78.71810787671232,
+              64.0667808219178,
+              53.11023116438356
+            ],
+            "production_mean_RGB": [
+              80.89897260273973,
+              64.66630993150685,
+              52.66545376712329
+            ],
+            "source_std_RGB": [
+              25.70587283350119,
+              24.372919494911027,
+              21.653621642920417
+            ],
+            "production_std_RGB": [
+              28.93917923568054,
+              26.87131137948459,
+              23.659543421502164
+            ],
+            "source_max_RGB": [
+              188,
+              180,
+              171
+            ],
+            "production_max_RGB": [
+              206,
+              195,
+              186
+            ],
+            "source_peak_mean_xy": [
+              71,
+              20
+            ],
+            "production_peak_mean_xy": [
+              71,
+              20
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "original_central_soft_bridge",
+            "native_bbox": [
+              51,
+              14,
+              79,
+              33
+            ],
+            "source_mean_RGB": [
+              94.26691729323308,
+              79.06203007518798,
+              67.1296992481203
+            ],
+            "production_mean_RGB": [
+              98.21992481203007,
+              81.17857142857143,
+              68.14473684210526
+            ],
+            "source_std_RGB": [
+              29.921328480127883,
+              29.689336108871927,
+              28.06772324003985
+            ],
+            "production_std_RGB": [
+              35.128744650872775,
+              34.557569808102684,
+              32.758166497824114
+            ],
+            "source_max_RGB": [
+              188,
+              180,
+              171
+            ],
+            "production_max_RGB": [
+              206,
+              195,
+              186
+            ],
+            "source_peak_mean_xy": [
+              71,
+              20
+            ],
+            "production_peak_mean_xy": [
+              71,
+              20
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "left_faint_brow_stroke",
+            "native_bbox": [
+              43,
+              37,
+              63,
+              45
+            ],
+            "source_mean_RGB": [
+              58.76875,
+              45.76875,
+              37.5375
+            ],
+            "production_mean_RGB": [
+              59.20625,
+              45.35,
+              36.69375
+            ],
+            "source_std_RGB": [
+              5.867518507640176,
+              5.935298934131286,
+              5.398943762440959
+            ],
+            "production_std_RGB": [
+              6.91926375689639,
+              6.742773909897909,
+              5.987483689956921
+            ],
+            "source_max_RGB": [
+              81,
+              68,
+              59
+            ],
+            "production_max_RGB": [
+              83,
+              69,
+              59
+            ],
+            "source_peak_mean_xy": [
+              50,
+              39
+            ],
+            "production_peak_mean_xy": [
+              49,
+              39
+            ],
+            "source_alpha_extrema": [
+              0,
+              212
+            ]
+          },
+          {
+            "name": "right_faint_brow_stroke",
+            "native_bbox": [
+              65,
+              37,
+              86,
+              45
+            ],
+            "source_mean_RGB": [
+              58.63095238095238,
+              45.63690476190476,
+              37.416666666666664
+            ],
+            "production_mean_RGB": [
+              59.48809523809524,
+              45.607142857142854,
+              36.81547619047619
+            ],
+            "source_std_RGB": [
+              5.7596291255947145,
+              5.822192349350415,
+              5.29646857491661
+            ],
+            "production_std_RGB": [
+              7.258810816319715,
+              7.121426183311438,
+              6.271287443724301
+            ],
+            "source_max_RGB": [
+              81,
+              68,
+              59
+            ],
+            "production_max_RGB": [
+              86,
+              72,
+              61
+            ],
+            "source_peak_mean_xy": [
+              77,
+              39
+            ],
+            "production_peak_mean_xy": [
+              77,
+              39
+            ],
+            "source_alpha_extrema": [
+              0,
+              212
+            ]
+          },
+          {
+            "name": "lower_plain_brown_paint_field",
+            "native_bbox": [
+              12,
+              80,
+              116,
+              120
+            ],
+            "source_mean_RGB": [
+              56.0,
+              43.0,
+              35.0
+            ],
+            "production_mean_RGB": [
+              55.746634615384615,
+              42.004567307692305,
+              33.58605769230769
+            ],
+            "source_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "production_std_RGB": [
+              0.4715341381248546,
+              0.34000608774027324,
+              0.4949726454548076
+            ],
+            "source_max_RGB": [
+              56,
+              43,
+              35
+            ],
+            "production_max_RGB": [
+              57,
+              43,
+              35
+            ],
+            "source_peak_mean_xy": [
+              12,
+              80
+            ],
+            "production_peak_mean_xy": [
+              37,
+              100
+            ],
+            "source_alpha_extrema": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "existing_bottomleft_corner_pixel",
+            "native_bbox": [
+              0,
+              127,
+              1,
+              128
+            ],
+            "source_mean_RGB": [
+              176.0,
+              160.0,
+              156.0
+            ],
+            "production_mean_RGB": [
+              161.0,
+              143.0,
+              136.0
+            ],
+            "source_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "production_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "source_max_RGB": [
+              176,
+              160,
+              156
+            ],
+            "production_max_RGB": [
+              161,
+              143,
+              136
+            ],
+            "source_peak_mean_xy": [
+              0,
+              127
+            ],
+            "production_peak_mean_xy": [
+              0,
+              127
+            ],
+            "source_alpha_extrema": [
+              255,
+              255
+            ]
+          }
+        ],
+        "full4x_highpass_Gaussian_radius1_source_std_RGB": [
+          0.7602626195799052,
+          0.757938682881103,
+          0.7258213839746429
+        ],
+        "full4x_highpass_Gaussian_radius1_production_std_RGB": [
+          2.6690929910532524,
+          2.5861727167717254,
+          2.411011937714523
+        ],
+        "fullA4x_byteexact": true,
+        "nativeType": "Ordinary",
+        "source_brow_count": 2,
+        "production_brow_count_private_wholeview": 2,
+        "source_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-source-alpha-over-gray-private.png",
+        "production_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6719-production-alpha-over-gray-private.png"
+      },
+      "rejected_raw": "assets/terrain-hd/expanded/rejected/heads-sixteenth/6719-attempt1-raw.png"
+    },
+    {
+      "id": 6720,
+      "status": "ready-for-coordinator-art-native-review",
+      "call_count": 1,
+      "reason": "Candidate ready ONLY root final whole art/native review, NOT accepted. Exact128Ordinary dynamic TransformableFaceTextures color overlay/actualTHMID/Heads source consumers, not staticMaterials or eye. Entire nativeRGBA/sourceRGB NN6x768/originalA/raw1254/full4x512/pure scalar/defaultpad0/fullsourceA byteexact privately inspected. TWO original muted beige-graybrown hairpaint banks, ONE original centerbridge, TWO short original faint browpaint strokes, original dark brown lower color field and ONE sourcecornerpixel retain whole UV/native scale/pigment locations. Source broad brush waves/tufts retained; no new eyes/pupil/irisglints/teeth/faceanatomy/photopores or separately invented locks observed. Individual blurry physical hairs are not assigned a fake exact strand count; all original native matrices/row-and-column maxima were preserved beforeprompt. Caveats: original brush transitions are finer/more structured and brighter at existing peaks, source softness changed locally; fullraw has brushdab grain, not actual photofiber reconstruction. Centerbridge peak210/210/203 ->228/227/218. Original left brow peak127/123/113 ->150/142/129, right->152/145/130; means73.69/65.62/56.42 ->76.10/66.60/57.09, right73.32/65.21/56.02 ->75.78/66.07/56.55. Existing native76,39 source125/120/111 ->152/144/130 maxchannel+27. Lower flat field source66/57/48 ->65.49/55.77/47.01,std.649/.477/.558,max67/57/48 (A0 there); original corner176/160/156 ->191/174/170 retained onepixel with same sourceA. HPstd source.632/.650/.602 ->2.433/2.436/2.325; increased finepaint detail is explicit, root may hold original brush softness/bright-brow strength. Whole inversecorrelation.9972 diagnostic, not acceptance cutoff. Strict whole inverse/fullA/defaultscalar/actualOrdinary/noRGBpatch/crop/BBox/optout/retry. One FIRST sole builtin; root owns nativeCPU/GPU/game acceptance.",
+      "generated": "assets/terrain-hd/expanded/generated/6720-raw.png",
+      "raw_sha256": "d18d96f1a096eda7c80f25d890af4579704a0f0e6d9d91bd2ef475099c63cd52",
+      "prompt_file": "assets/terrain-hd/expanded/generated/6720-prompt.txt",
+      "prompt_argument_sha256": "a684f495b94f7f47621ec9b3a429649947f45191b887a226666e585fbec7d0c1",
+      "call_metadata": "assets/terrain-hd/expanded/generated/6720-heads-sixteenth-call.json",
+      "call_metadata_sha256": "155ff7b5f1625725ea876765566d47a4a4505b0f28e5311f5b545dd6b3b23588",
+      "reference_sha256": {
+        "assets/terrain-hd/expanded/original/6720.png": "ad3361d7ab5e379d08c46f1e2ff18323bc790574c7719f90cfca050cd20518d8",
+        "assets/terrain-hd/expanded/generated/6720-heads-sixteenth-source-rgb-support.png": "c9ced698d0a02a8259f2d074a29f0bab81f4b89b47d6ab3962f2dcb7610d6ce7"
+      },
+      "source_transform_recipe": {
+        "input": "assets/terrain-hd/expanded/original/6720.png",
+        "operations": "Whole native storedRGBA to opaqueRGB NEAREST6x only, no crop/BBox/registration/padding/rotate/unpremultiply/sourceartRGB repair. Original fullA separately restored; ENTIRE raw inverse original4x/pure scalar/defaultpad.",
+        "source_size": [
+          128,
+          128
+        ],
+        "guide_size": [
+          768,
+          768
+        ],
+        "source_bbox": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "helper": "assets/terrain-hd/expanded/generated/6720-heads-sixteenth-source-rgb-support.png",
+        "references": [
+          "assets/terrain-hd/expanded/original/6720.png",
+          "assets/terrain-hd/expanded/generated/6720-heads-sixteenth-source-rgb-support.png"
+        ],
+        "references_SHA256": [
+          "ad3361d7ab5e379d08c46f1e2ff18323bc790574c7719f90cfca050cd20518d8",
+          "c9ced698d0a02a8259f2d074a29f0bab81f4b89b47d6ab3962f2dcb7610d6ce7"
+        ]
+      },
+      "actual_tool_arguments": {
+        "prompt": "Use case: precise-object-edit. Historical Silent Storm softly PAINTED COLOR head overlay bitmap, faithful subdued high-resolution source paint.\r\n\r\nImage1 is the EXACT entire native128x128 original RGBA with variable alpha. Image2 is the SAME entire native storedRGB source, solely whole NEAREST6x768 enlargement to expose its painted color. Edit the complete bitmap edge-to-edge at identical normalizedUV, using Image2 for original full stored color. Preserve all original pigment footprints/native phase/scale/local weak intensity, source blur and complete palette. Final complete ORIGINAL alpha will be independently restored; brightness is only one global numerical scalar. No physical face/head render or reinterpretation.\r\n\r\nPreserve the TWO existing soft muted beige/graybrown upper/lateral HAIR PAINT banks, their ONE original central soft bridge, complete original asymmetric outline and dark brown lower color field. Keep ALL exact source brush tufts/waves at their original location/count/phase/scale; do not add individual photohair fibers, new locks, curls, radial strands, pores, photographic grain, stipples, mosaic, coarse paintcells, glints or a face. The TWO existing faint short BROW paint strokes at nativeleft[43,37,63,45] andright[65,37,86,45] retain their EXACT width/native positions/dim tint/blur; no eyes/iris/pupils/catchlights beneath them. Keep original tiny lower-left single source paintpixel native[0,127] RGB176/160/156, equally tiny and dim, not a white glint. Entire lower warm brown paint field stays its original mostly flat shade and softness, no new cloudfields/skin anatomy/ears/teeth. All source darker gaps and paint-bank edges remain softly painted, not raised metallic rims or new outlines.\r\n\r\nActual whole source RGB extrema are [[56, 48, 40], [210, 210, 203]], nativeA[0, 255]. Preserve dim local pigment strength and original light hierarchy. Refine only very subtly the same soft fine paint, no sharpening/raised edges/gloss/new highlights/new materialgrain. Do not brighten pale source strokes or fill dark parts into anatomy.\r\n\r\nOutput ONLY the SAME complete full source square. No crop/zoom/padding/whitespace/frame/cutout/fitting/repack/autoBBox/sourceRGB repair/rearrangement/new shapes/count/material. No new text/glyphs/symbols. Full originalA and default padding restored downstream.",
+        "referenced_image_paths": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6720.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6720-heads-sixteenth-source-rgb-support.png"
+        ],
+        "transparent_background": false
+      },
+      "metrics": {
+        "id": 6720,
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "target_4x_size": [
+          512,
+          512
+        ],
+        "preview_luma_gain": 1.038925385920725,
+        "luma_spatial_correlation": 0.9935921667201113,
+        "native_alpha_restored": true,
+        "bbox_registration": false,
+        "native_packer_premultiplies": false,
+        "native_preview_luma_gain": 1.056884765625,
+        "native_preview_stored_luma": 81.65691422042846,
+        "native_preview_rounding": "Nearest 8-bit RGB lookup",
+        "root_padding_texels": 0,
+        "root_hidden_clear_texels": 0,
+        "normalization_recipe": "Full raw RGBA Lanczos to exact original4x dimensions, matching importer; original alpha Lanczos4x, matching packer. Existing pure pad_rgb_under_source_mask + match_cell scalar calibration, then original native premultiplication in PRIVATE previews only. No crop/reposition/rotate/source artistic RGB insertion. Root calibrates final.",
+        "normalized_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-native-alpha-normalized.png",
+        "rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-rgb-normalized.png",
+        "private_gain_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-gain-preview.png",
+        "stored_native_rgb_preview": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-stored-rgb-private.png"
+      },
+      "detail_metrics": {
+        "id": 6720,
+        "diagnostic": "Entire calibrated native storedRGB inverse LANCZOS to original native source dimensions, positive-source pixels only. Local increases/connected-component bboxes diagnose source material/count only; not proof of newly invented parts, never used for registration or compositing.",
+        "stored_native_luma_spatial_correlation": 0.9971600947397005,
+        "max_positive_source_local_channel_increase": 27,
+        "weak_source_pixels_max_lt60_gain_gt12": 0,
+        "examples": [
+          {
+            "logical_xy": [
+              76,
+              39
+            ],
+            "source_rgb": [
+              125,
+              120,
+              111
+            ],
+            "candidate_rgb": [
+              152,
+              144,
+              130
+            ],
+            "max_channel_increase": 27
+          },
+          {
+            "logical_xy": [
+              0,
+              126
+            ],
+            "source_rgb": [
+              66,
+              57,
+              48
+            ],
+            "candidate_rgb": [
+              93,
+              81,
+              74
+            ],
+            "max_channel_increase": 27
+          },
+          {
+            "logical_xy": [
+              75,
+              39
+            ],
+            "source_rgb": [
+              127,
+              123,
+              113
+            ],
+            "candidate_rgb": [
+              152,
+              145,
+              130
+            ],
+            "max_channel_increase": 25
+          },
+          {
+            "logical_xy": [
+              1,
+              127
+            ],
+            "source_rgb": [
+              66,
+              57,
+              48
+            ],
+            "candidate_rgb": [
+              90,
+              78,
+              71
+            ],
+            "max_channel_increase": 24
+          },
+          {
+            "logical_xy": [
+              71,
+              20
+            ],
+            "source_rgb": [
+              201,
+              200,
+              191
+            ],
+            "candidate_rgb": [
+              224,
+              221,
+              213
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              53,
+              39
+            ],
+            "source_rgb": [
+              127,
+              123,
+              113
+            ],
+            "candidate_rgb": [
+              150,
+              142,
+              129
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              74,
+              39
+            ],
+            "source_rgb": [
+              123,
+              119,
+              108
+            ],
+            "candidate_rgb": [
+              146,
+              139,
+              125
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              77,
+              39
+            ],
+            "source_rgb": [
+              122,
+              117,
+              108
+            ],
+            "candidate_rgb": [
+              145,
+              137,
+              123
+            ],
+            "max_channel_increase": 23
+          },
+          {
+            "logical_xy": [
+              56,
+              40
+            ],
+            "source_rgb": [
+              109,
+              106,
+              97
+            ],
+            "candidate_rgb": [
+              131,
+              124,
+              111
+            ],
+            "max_channel_increase": 22
+          },
+          {
+            "logical_xy": [
+              16,
+              58
+            ],
+            "source_rgb": [
+              120,
+              107,
+              89
+            ],
+            "candidate_rgb": [
+              142,
+              123,
+              100
+            ],
+            "max_channel_increase": 22
+          }
+        ],
+        "source_native_alpha_components_8connected_positiveA": [
+          {
+            "pixel_count": 6173,
+            "source_pixel_bbox": [
+              0,
+              0,
+              128,
+              73
+            ]
+          },
+          {
+            "pixel_count": 69,
+            "source_pixel_bbox": [
+              42,
+              38,
+              63,
+              43
+            ]
+          },
+          {
+            "pixel_count": 1,
+            "source_pixel_bbox": [
+              0,
+              127,
+              1,
+              128
+            ]
+          }
+        ],
+        "source_material_components_8connected_RGBmax_gt5": [
+          {
+            "pixel_count": 16384,
+            "source_pixel_bbox": [
+              0,
+              0,
+              128,
+              128
+            ]
+          }
+        ],
+        "native_alpha4x_byte_exact": true
+      },
+      "material_phase": {
+        "id": 6720,
+        "diagnostic": "ENTIRE pure scalar/fulloriginalA512 source and candidate; whole LANCZOS128 inverse for numeric source regions, NEVER used to repair/composite artwork. Alpha-over-gray ONLY fullcanvas private visibility diagnostic, no CPU/GPU/runtime test or actualFaceGen weight claim.",
+        "regions": [
+          {
+            "name": "left_soft_hair_paint_bank",
+            "native_bbox": [
+              0,
+              0,
+              64,
+              73
+            ],
+            "source_mean_RGB": [
+              108.34995719178082,
+              97.4888698630137,
+              82.95184075342466
+            ],
+            "production_mean_RGB": [
+              110.74721746575342,
+              98.15047089041096,
+              82.9130993150685
+            ],
+            "source_std_RGB": [
+              42.31068537314033,
+              40.72500447064001,
+              35.4801463999745
+            ],
+            "production_std_RGB": [
+              45.97627362308012,
+              43.63035307602452,
+              37.61450189840893
+            ],
+            "source_max_RGB": [
+              195,
+              186,
+              171
+            ],
+            "production_max_RGB": [
+              206,
+              199,
+              184
+            ],
+            "source_peak_mean_xy": [
+              37,
+              17
+            ],
+            "production_peak_mean_xy": [
+              62,
+              22
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "right_soft_hair_paint_bank",
+            "native_bbox": [
+              64,
+              0,
+              128,
+              73
+            ],
+            "source_mean_RGB": [
+              108.89833047945206,
+              98.58732876712328,
+              84.56442636986301
+            ],
+            "production_mean_RGB": [
+              110.8103595890411,
+              98.9353595890411,
+              84.24743150684931
+            ],
+            "source_std_RGB": [
+              42.5969550485058,
+              41.54438429965191,
+              36.86533309458213
+            ],
+            "production_std_RGB": [
+              45.90255456907125,
+              44.25993058262555,
+              38.89276608415579
+            ],
+            "source_max_RGB": [
+              210,
+              210,
+              203
+            ],
+            "production_max_RGB": [
+              228,
+              227,
+              218
+            ],
+            "source_peak_mean_xy": [
+              72,
+              21
+            ],
+            "production_peak_mean_xy": [
+              72,
+              21
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "original_central_soft_bridge",
+            "native_bbox": [
+              51,
+              14,
+              79,
+              33
+            ],
+            "source_mean_RGB": [
+              130.24436090225564,
+              119.36842105263158,
+              103.44924812030075
+            ],
+            "production_mean_RGB": [
+              132.64097744360902,
+              119.95676691729324,
+              103.67857142857143
+            ],
+            "source_std_RGB": [
+              40.93815785978221,
+              41.20610650493933,
+              38.437470696834524
+            ],
+            "production_std_RGB": [
+              45.71348385939751,
+              45.72963217346175,
+              42.9026270230388
+            ],
+            "source_max_RGB": [
+              210,
+              210,
+              203
+            ],
+            "production_max_RGB": [
+              228,
+              227,
+              218
+            ],
+            "source_peak_mean_xy": [
+              72,
+              21
+            ],
+            "production_peak_mean_xy": [
+              72,
+              21
+            ],
+            "source_alpha_extrema": [
+              0,
+              255
+            ]
+          },
+          {
+            "name": "left_faint_brow_stroke",
+            "native_bbox": [
+              43,
+              37,
+              63,
+              45
+            ],
+            "source_mean_RGB": [
+              73.6875,
+              65.61875,
+              56.425
+            ],
+            "production_mean_RGB": [
+              76.1,
+              66.6,
+              57.09375
+            ],
+            "source_std_RGB": [
+              14.446101333923973,
+              16.054933772442048,
+              15.614716616064433
+            ],
+            "production_std_RGB": [
+              19.672696815637664,
+              20.237403489578405,
+              18.68281191195533
+            ],
+            "source_max_RGB": [
+              127,
+              123,
+              113
+            ],
+            "production_max_RGB": [
+              150,
+              142,
+              129
+            ],
+            "source_peak_mean_xy": [
+              53,
+              39
+            ],
+            "production_peak_mean_xy": [
+              53,
+              39
+            ],
+            "source_alpha_extrema": [
+              0,
+              191
+            ]
+          },
+          {
+            "name": "right_faint_brow_stroke",
+            "native_bbox": [
+              65,
+              37,
+              86,
+              45
+            ],
+            "source_mean_RGB": [
+              73.32142857142857,
+              65.20833333333333,
+              56.023809523809526
+            ],
+            "production_mean_RGB": [
+              75.7797619047619,
+              66.06547619047619,
+              56.55357142857143
+            ],
+            "source_std_RGB": [
+              14.192688186498847,
+              15.775151560160404,
+              15.343663334912824
+            ],
+            "production_std_RGB": [
+              19.6233660512514,
+              20.206122328025938,
+              18.662975483870845
+            ],
+            "source_max_RGB": [
+              127,
+              123,
+              113
+            ],
+            "production_max_RGB": [
+              152,
+              145,
+              130
+            ],
+            "source_peak_mean_xy": [
+              75,
+              39
+            ],
+            "production_peak_mean_xy": [
+              75,
+              39
+            ],
+            "source_alpha_extrema": [
+              0,
+              191
+            ]
+          },
+          {
+            "name": "lower_plain_brown_paint_field",
+            "native_bbox": [
+              12,
+              80,
+              116,
+              120
+            ],
+            "source_mean_RGB": [
+              66.0,
+              57.0,
+              48.0
+            ],
+            "production_mean_RGB": [
+              65.49471153846154,
+              55.76658653846154,
+              47.010576923076925
+            ],
+            "source_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "production_std_RGB": [
+              0.6485715913433358,
+              0.4774621231569519,
+              0.5580560816232294
+            ],
+            "source_max_RGB": [
+              66,
+              57,
+              48
+            ],
+            "production_max_RGB": [
+              67,
+              57,
+              48
+            ],
+            "source_peak_mean_xy": [
+              12,
+              80
+            ],
+            "production_peak_mean_xy": [
+              102,
+              80
+            ],
+            "source_alpha_extrema": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "existing_bottomleft_corner_pixel",
+            "native_bbox": [
+              0,
+              127,
+              1,
+              128
+            ],
+            "source_mean_RGB": [
+              176.0,
+              160.0,
+              156.0
+            ],
+            "production_mean_RGB": [
+              191.0,
+              174.0,
+              170.0
+            ],
+            "source_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "production_std_RGB": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "source_max_RGB": [
+              176,
+              160,
+              156
+            ],
+            "production_max_RGB": [
+              191,
+              174,
+              170
+            ],
+            "source_peak_mean_xy": [
+              0,
+              127
+            ],
+            "production_peak_mean_xy": [
+              0,
+              127
+            ],
+            "source_alpha_extrema": [
+              255,
+              255
+            ]
+          }
+        ],
+        "full4x_highpass_Gaussian_radius1_source_std_RGB": [
+          0.6320967292540093,
+          0.6498671535651781,
+          0.6017898223410075
+        ],
+        "full4x_highpass_Gaussian_radius1_production_std_RGB": [
+          2.432563761052072,
+          2.4360440678986888,
+          2.325019209522217
+        ],
+        "fullA4x_byteexact": true,
+        "nativeType": "Ordinary",
+        "source_brow_count": 2,
+        "production_brow_count_private_wholeview": 2,
+        "source_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-source-alpha-over-gray-private.png",
+        "production_alpha_over_gray_private": "assets/terrain-hd/expanded/private-heads-sixteenth/native4x/6720-production-alpha-over-gray-private.png"
+      }
+    },
+    {
+      "id": 6692,
+      "status": "source-only-original-black-color-mask",
+      "call_count": 0,
+      "reason": "Actual dynamic face beard color layer: RGB is exactly black at16383/16384 native pixels, with ONLY ONE original white bottomleft pixel; alpha alone retains painted beard footprint. Source-only native black painted mask plus original cornerpixel, no new colored beard artwork invented."
+    },
+    {
+      "id": 6699,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine softly painted beige beard with one connected curved field/two rising lobes/one dark oval center; bounded scope pending0calls, not analytical/technical by name. Full detailed native strand-phase not asserted from blurred brushwork."
+    },
+    {
+      "id": 6700,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine gray painted beard with many original diagonal brush strokes and one dark oval gap. Full fine brush-pattern count/phase unresolved, pending0calls, not technical."
+    },
+    {
+      "id": 6701,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine dim bluegray beard color field with existing mottled/stippled native RGB and sourceA0..87; exact stipple phase/count not proved for a first faithful call, pending0calls without inventing pores."
+    },
+    {
+      "id": 6703,
+      "status": "source-only-original-black-color-mask",
+      "call_count": 0,
+      "reason": "Actual dynamic face source layer: ENTIRE source RGB exactly[0,0,0], independently nontrivial painted alpha0..255. Source-only original black color mask preserves authored alpha footprint; no invented visibleRGB anatomy."
+    },
+    {
+      "id": 6709,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine extremely dim painted gender/color layer with paired native alpha brow strokes and tiny corner pigment; exact weak RGB fields/phase not established in bounded calls, pending0calls. Not empty because dark storedRGB and original alpha are intentional."
+    },
+    {
+      "id": 6713,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine dynamic muted brown face color layer with RGB64/30/12..73/38/20 and complex source face alpha; barely visible native wash remains pending0calls to avoid adding anatomy or new cloudy material."
+    },
+    {
+      "id": 6714,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine dynamic muted brown face color layer with almost identical dark RGB range and different actual source alpha; full native weak phase not established, pending0calls, not constant technical classification."
+    },
+    {
+      "id": 6721,
+      "status": "genuine-color-art-pending-source-count-weakphase-proof",
+      "call_count": 0,
+      "reason": "Genuine gray softly painted hair/color layer with paired banks, short pale brow strokes and many diagonal source brushmarks; detailed brush phase not proved in bounded selected calls, pending0calls."
+    }
+  ],
+  "source_before_call": "assets/terrain-hd/expanded/source-check-heads-sixteenth-before-call.json",
+  "source_before_call_SHA256": "4f5663d7bc24bc76dbf98829f0d1435061d50ebeba4e10a912a32eac3cbffc34",
+  "pattern_before_call": "assets/terrain-hd/expanded/pattern-constraints-heads-sixteenth.json",
+  "pattern_before_call_SHA256": "67bdb7b61778762a7ec90a7de356a04f303cd8c61d4fde0198dc0aa197af93b8",
+  "postcall_diagnostic_correction": "assets/terrain-hd/expanded/postcall-correction-heads-sixteenth.json",
+  "source_parity": "Fresh all12 exact historical/release/original native fullRGBA/type/dimensions/sourceA. ActualTransformableFaceTextures rows→actualTHMID owners→allactualHeads/ComplexHeads/Races; allselecteddynamicFace color, no staticMaterials/TransformableEye/Modelhair fiction. Two originalblackmask sources individually proved by fullRGB/A, not Bump/name blanket. Other genuine hair/beard/weak facecolor pending0calls, not analytical classification.",
+  "QA": "All12 wholeRGBA/RGB/alpha viewed;3 FIRST solebuiltins only after exact native weakmark counts/fields/matrices/rowphase/palette proof beforeprompts. ExactCRLF args/refSHA/raw/call immediately saved and unchanged. Fullraw/material/native4x/storedRGB/fullA4x byteexact/POT/defaultpad0/purescalar privately inspected. Whole gray128 alpha visibility diagnostic ONLY private approximate straight-alpha-over-gray, not actualFaceGenCPU/GPU/gameweights/runtime validation. Correction separate: initial numeric RGBAinverse induced alphainterpolation artifacts; corrected numeric storedRGB FIRST→wholeLANCZOS128, beforeproof/call/image bytes unchanged. One ready solelyrootreview, twoheldmaterial/coarsepattern reasons, no retries/artistRGB/crops/BBox/optout.",
+  "ownership": "Only new Heads16 independent artifacts. Heads14/15,Eq36,Effects22 and allsharedmetadata/import/native/Game/build/Git/C++ untouched. Root sole final acceptance/runtime/import coordinator."
+}

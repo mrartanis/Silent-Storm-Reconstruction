@@ -1,0 +1,198 @@
+[
+  {
+    "id": 5673,
+    "exact_prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into faithful4x HD old painted game art. Exact128square original whole diffuse, fullRGBA nearest8x1024square source-only guide. Preserve entireUV/sourceedges/materials/source detail scale, no crop/BBox/padding/recenter/UVfit/margins. Source has2461 trueA0 texels and13923 A255 texels, including2060 intentional opaqueRGBblack inside material support. Preserve exact source alpha mask: opaque black stays opaque, only actual sourceA0 is transparent, do NOT cut blackcloth/shadows away.\nKeep the source dim gray-black garment paint and brown cloth/strap washes matte, softly shaded and lowcontrast. ONE original angular gray round/frame-like paintwash[41,60,60,72] keeps exact source irregular gray contour/darkinset, no added ring, shiny bevel, screw or new assembly. Its ONE bright connector paintpoint at native(49,71) stays separate in exactly sourcephase. ONE thin stepped gray PAINT trace[48,72,52,106] has EXACT TWELVE RIGHT turns at x50/y72/75/78/81/84/87/90/93/96/99/102/105 and EXACT ELEVEN LEFT turns at x49/y74/77/80/83/86/89/92/95/98/101/104, pitch3native. Retain FIRST right72 and faint LAST right105, not12complete pairs/extra tail. Keep stepped wash soft/flat; do NOT reinterpret as new zipperteeth, roundknots, chainrings or raised metal parts. Upper-neck irregular short gray bar shadings[0,42,128,52] keep every original uneven bar/source phase including brownstrap overlaps, do NOT force a new uniform weave/neckband repeat. Preserve two brown softcloth fields[0,45,42,128] and[54,45,108,128], far-right brown rectangular paintfield[107,71,128,107] with ORIGINAL softhorizontal shaded levels, not newly woven ridges or furniture. Keep all softoriginalfolds. HD only refines existing mattepaint transitions/weak grain, no photofabric/leather/pores/new materialpattern/seams/hardware/symbols/anatomy/gloss or foldgeometry. Keep black/gray/brown local hue/lightness/blur hierarchy. Return ONLY same entire source diffuse atlas with its exactmixed alpha.",
+    "proved_source_counts": {
+      "single_gray_angular_roundframe_wash_count": 1,
+      "single_gray_angular_roundframe_wash_bounds": [
+        41,
+        60,
+        60,
+        72
+      ],
+      "single_bright_ring_connector_wash_native_xy": [
+        49,
+        71
+      ],
+      "single_bright_ring_connector_RGBA": [
+        222,
+        219,
+        222,
+        255
+      ],
+      "single_vertical_zig_painted_trace_count": 1,
+      "single_vertical_zig_painted_trace_bounds": [
+        48,
+        72,
+        52,
+        106
+      ],
+      "zig_right_turn_count": 12,
+      "zig_right_native_x": 50,
+      "zig_right_native_y": [
+        72,
+        75,
+        78,
+        81,
+        84,
+        87,
+        90,
+        93,
+        96,
+        99,
+        102,
+        105
+      ],
+      "zig_left_turn_count": 11,
+      "zig_left_native_x": 49,
+      "zig_left_native_y": [
+        74,
+        77,
+        80,
+        83,
+        86,
+        89,
+        92,
+        95,
+        98,
+        101,
+        104
+      ],
+      "zig_repeat_pitch_native": 3,
+      "zig_first_right_turn_y": 72,
+      "zig_faint_last_right_turn_y": 105,
+      "zig_last_left_turn_y": 104,
+      "zig_semantics": "Soft original painted stepped gray trace; preserve asymmetric12right/11left phase, not12completepairs. No new zipper teeth/knots/rings/raisedmetal assembly, no semantic toothcount inferred.",
+      "upper_neck_irregular_grayrib_paintfield_bounds": [
+        0,
+        42,
+        128,
+        52
+      ],
+      "upper_neck_rib_semantics": "Fulloriginal row/canvas phase proof, irregular gray shortbar shading partly overlapped by original brownstraps; no invented uniform fullneck count/spacing, no new woven collar.",
+      "left_brown_softcloth_bounds": [
+        0,
+        45,
+        42,
+        128
+      ],
+      "right_brown_softcloth_bounds": [
+        54,
+        45,
+        108,
+        128
+      ],
+      "far_right_brown_rectfield_bounds": [
+        107,
+        71,
+        128,
+        107
+      ],
+      "upper_darkcloth_bounds": [
+        0,
+        17,
+        128,
+        42
+      ],
+      "all_source_A_mask": "ActualmixedA0andA255 fullypreserved, includingopaqueRGBblack inside supportingwashfields; no black-as-alpha or wholecanvastransparent assumption."
+    },
+    "prompt_constraints": {
+      "single_gray_angular_roundframe_wash_count": 1,
+      "single_gray_angular_roundframe_wash_bounds": [
+        41,
+        60,
+        60,
+        72
+      ],
+      "single_bright_ring_connector_wash_native_xy": [
+        49,
+        71
+      ],
+      "single_bright_ring_connector_RGBA": [
+        222,
+        219,
+        222,
+        255
+      ],
+      "single_vertical_zig_painted_trace_count": 1,
+      "single_vertical_zig_painted_trace_bounds": [
+        48,
+        72,
+        52,
+        106
+      ],
+      "zig_right_turn_count": 12,
+      "zig_right_native_x": 50,
+      "zig_right_native_y": [
+        72,
+        75,
+        78,
+        81,
+        84,
+        87,
+        90,
+        93,
+        96,
+        99,
+        102,
+        105
+      ],
+      "zig_left_turn_count": 11,
+      "zig_left_native_x": 49,
+      "zig_left_native_y": [
+        74,
+        77,
+        80,
+        83,
+        86,
+        89,
+        92,
+        95,
+        98,
+        101,
+        104
+      ],
+      "zig_repeat_pitch_native": 3,
+      "zig_first_right_turn_y": 72,
+      "zig_faint_last_right_turn_y": 105,
+      "zig_last_left_turn_y": 104,
+      "zig_semantics": "Soft original painted stepped gray trace; preserve asymmetric12right/11left phase, not12completepairs. No new zipper teeth/knots/rings/raisedmetal assembly, no semantic toothcount inferred.",
+      "upper_neck_irregular_grayrib_paintfield_bounds": [
+        0,
+        42,
+        128,
+        52
+      ],
+      "upper_neck_rib_semantics": "Fulloriginal row/canvas phase proof, irregular gray shortbar shading partly overlapped by original brownstraps; no invented uniform fullneck count/spacing, no new woven collar.",
+      "left_brown_softcloth_bounds": [
+        0,
+        45,
+        42,
+        128
+      ],
+      "right_brown_softcloth_bounds": [
+        54,
+        45,
+        108,
+        128
+      ],
+      "far_right_brown_rectfield_bounds": [
+        107,
+        71,
+        128,
+        107
+      ],
+      "upper_darkcloth_bounds": [
+        0,
+        17,
+        128,
+        42
+      ],
+      "all_source_A_mask": "ActualmixedA0andA255 fullypreserved, includingopaqueRGBblack inside supportingwashfields; no black-as-alpha or wholecanvastransparent assumption."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "source_count_proof_sha256": "5462039bf1c80cb3736a70747b4d9925c57a3171d64e2250b69cbec794b4e5e1",
+    "source_check_sha256": "7fea2d9cb5a8d5e054166840604b7c86e3d5e8a30b2b6d8fec22b0302abafeb2",
+    "frozen_before_tool_utc": "2026-10-08T09:22:37.662056+00:00"
+  }
+]

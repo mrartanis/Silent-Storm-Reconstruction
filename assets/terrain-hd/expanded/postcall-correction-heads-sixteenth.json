@@ -1,0 +1,8 @@
+{
+  "phase": "POSTCALL own diagnostic correction, beforecall/raw/exactargs/reference/calls unchanged",
+  "reason": "Initial material_phase production inverse resized RGBA before extracting RGB, so Pillow alpha-aware interpolation yielded artificial black underA0 and clipped255 near small alpha. Correct production color diagnostic uses storedRGB extraction FIRST then ENTIRE RGB LANCZOS inverse128; no source or generated image repair. The initial printed region numbers were invalid and are superseded by corrected material-phase JSON.",
+  "original_affected_ids": [6698,6719,6720],
+  "source_preview_recipe": "Whole originalRGB LANCZOS512 + separate originalA LANCZOS512, straight-alpha-over-gray128 ONLY private visibility diagnostic; not actualCPU/GPU weights/runtime validation.",
+  "beforecall_proof_immutable": true,
+  "RGB_artistic_repairs": false
+}

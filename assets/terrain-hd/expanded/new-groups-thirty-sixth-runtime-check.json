@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-08",
+  "pack_textures": 2429,
+  "game_SHA256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "no_CPP_changes_since_verified25": true,
+  "actual_layer_checks": [
+    {
+      "id": 6720,
+      "logical_source_size": [
+        128,
+        128
+      ],
+      "all3_actual_SW_loader_source_and_CPU_hashes_match_independent_integer_alpha_Vflip_FNV": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "df5b7496cef6b318",
+          "atlashash": "81688d53fbe0f2b8"
+        },
+        {
+          "sourcehash": "c3aab377220ef7f8",
+          "atlashash": "6306e808e1a4bc59"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6720\r\n[harness] facegen layer id=6720 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=df5b7496cef6b318 atlashash=81688d53fbe0f2b8\r\n",
+        "[harness] cmd: facegenlayer 6720\r\n[harness] facegen layer id=6720 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=c3aab377220ef7f8 atlashash=6306e808e1a4bc59\r\n",
+        "[harness] cmd: facegenlayer 6720\r\n[harness] facegen layer id=6720 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=df5b7496cef6b318 atlashash=81688d53fbe0f2b8\r\n"
+      ],
+      "diagnostic_atlas_rect": [
+        0,
+        128,
+        128,
+        256
+      ],
+      "scope_note": "Actual128 TransformableFaceTextures THMID1 face layer uses the fixed original128facequad in256atlas and Vflip. No completeGPU head appearance claim."
+    }
+  ],
+  "actual_three_DB_head_bakes_per_state": [
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=5ada146710ea6cc4\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=a5f7ae238ccf7bef\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=344a12e8c545b01a\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=d3155898178747fc\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=5ada146710ea6cc4\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=a5f7ae238ccf7bef\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=344a12e8c545b01a\r\n"
+  ],
+  "bake_hashes_on_off_restored": [
+    [
+      "5ada146710ea6cc4",
+      "a5f7ae238ccf7bef",
+      "344a12e8c545b01a"
+    ],
+    [
+      "e61211fd62cc6efc",
+      "d3155898178747fc",
+      "72eb80435311b3f3"
+    ],
+    [
+      "5ada146710ea6cc4",
+      "a5f7ae238ccf7bef",
+      "344a12e8c545b01a"
+    ]
+  ],
+  "actual_GPU_diffuse_texture_ids": [
+    5844,
+    5802
+  ],
+  "actual_CFileTexture_states": [
+    "[harness] uitextureprobe enabled=1 requested=5844 observed=5844 drawn=1 frames=1021 frame=1646 logical=35x35 physical=140x140 density=4.000000x4.000000 holder=140x140 placement=0,0 mips=8 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=5844 observed=5844 drawn=1 frames=2217 frame=3006 logical=35x35 physical=35x35 density=1.000000x1.000000 holder=35x35 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=5844 observed=5844 drawn=1 frames=3253 frame=4204 logical=35x35 physical=140x140 density=4.000000x4.000000 holder=140x140 placement=0,0 mips=8 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=5802 observed=5802 drawn=1 frames=1027 frame=5736 logical=48x48 physical=192x192 density=4.000000x4.000000 holder=192x192 placement=0,0 mips=8 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=5802 observed=5802 drawn=1 frames=2109 frame=6964 logical=48x48 physical=48x48 density=1.000000x1.000000 holder=48x48 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=5802 observed=5802 drawn=1 frames=3041 frame=8042 logical=48x48 physical=192x192 density=4.000000x4.000000 holder=192x192 placement=0,0 mips=8 pending=0 placeholder=0 hd=1"
+  ],
+  "screenshots": [
+    {
+      "name": "hd2429-ui-5844-on",
+      "sha256": "7a276afb4e475a7c88eef3377d3dad362e38d404d73207d23bb168783a4c1b5a"
+    },
+    {
+      "name": "hd2429-ui-5844-off",
+      "sha256": "dcbd060410860aa842392aba65bfd401f40e7069b7e954f61757ee3547bbaa51"
+    },
+    {
+      "name": "hd2429-ui-5844-restored",
+      "sha256": "f3dfdbab297f5d833d4717423842ca7617b758e261660d52927a721a566fd0d9"
+    },
+    {
+      "name": "hd2429-ui-5802-on",
+      "sha256": "8534eb0aefe7d2ec626c5a88fe71ecf09fd5f17faa6415b1e17d1951986fdb7d"
+    },
+    {
+      "name": "hd2429-ui-5802-off",
+      "sha256": "c5d648fefd83cc9b16cbdcae8c6af76d658e2fb772e85ee948658e41d46451ce"
+    },
+    {
+      "name": "hd2429-ui-5802-restored",
+      "sha256": "bceb43b8b6e632a67225b869f2712eb1386b8a97984b3f0904fe3d1be02c5ea7"
+    }
+  ],
+  "private_GPU_review": "All6 full GPU screenshots privately inspected for whole/middle/reversed UV and clipped geometry. Original I-like body+ONEdot and tiltedgrayelliptic rim/darkinside/whole sourceA/premulonce/source softpaintscale retained; no atlas shift/new band/black fill/white fringe. No public comparisons or HTML.",
+  "normal_exit_code": 0,
+  "own_process_absent_after_quit": true,
+  "own_process_id": 8848,
+  "scope_limit": "Actual5844 UI699 registration-only and5802 UI718/IconDisabled4perks/DataPerk23/iPerksPanel67/68 consumer proven. GenericGPU sampler doesnotcertify activewidgets. Actual6720 TransformableFaceTexture11/THMID1 logical128 SWloader/mip2/Vflip/independentintegeralpha/FNV; fixed256atlas and9actualhead94bakes/roundtrips pipeline verified, no completeGPU head appearance claim. CurrentbuiltEXE checked byteexact; codeSHA unchanged25."
+}
