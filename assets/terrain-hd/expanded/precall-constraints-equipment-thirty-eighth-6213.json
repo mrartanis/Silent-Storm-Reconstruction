@@ -1,0 +1,177 @@
+[
+  {
+    "id": 6213,
+    "proved_source_counts": {
+      "broad_brown_gray_main_material_field": 1,
+      "existing_weak_gray_accent_regions": 3,
+      "weak_gray_region_bounds": [
+        [
+          0,
+          12,
+          6,
+          18
+        ],
+        [
+          58,
+          12,
+          64,
+          17
+        ],
+        [
+          54,
+          26,
+          61,
+          32
+        ]
+      ],
+      "existing_weak_redbrown_patch_regions": 1,
+      "redbrown_patch_bounds": [
+        56,
+        18,
+        64,
+        29
+      ],
+      "proved_native_xy_RGBA_samples": {
+        "grayleft": {
+          "xy": [
+            1,
+            13
+          ],
+          "RGBA": [
+            140,
+            134,
+            123,
+            255
+          ]
+        },
+        "grayrighttop": {
+          "xy": [
+            60,
+            13
+          ],
+          "RGBA": [
+            115,
+            97,
+            82,
+            255
+          ]
+        },
+        "grayrightlower": {
+          "xy": [
+            56,
+            28
+          ],
+          "RGBA": [
+            123,
+            109,
+            90,
+            255
+          ]
+        },
+        "redwash": {
+          "xy": [
+            60,
+            21
+          ],
+          "RGBA": [
+            107,
+            32,
+            24,
+            255
+          ]
+        }
+      },
+      "alpha255_texels": 4096,
+      "opaque_RGBblack_texels": 18,
+      "pattern_caveat": "Three weakgray paintaccent AREAS+ONE subduedredbrownwash, not physicallyinterpretedbuckles/badges/letters or countedmetalobjects. Sourcealreadysoftbrownmattepaint withsubtle topedgegray/nativewash, no newseams/physicalhardware from lowcontrastpigment."
+    },
+    "prompt_constraints": {
+      "broad_brown_gray_main_material_field": 1,
+      "existing_weak_gray_accent_regions": 3,
+      "weak_gray_region_bounds": [
+        [
+          0,
+          12,
+          6,
+          18
+        ],
+        [
+          58,
+          12,
+          64,
+          17
+        ],
+        [
+          54,
+          26,
+          61,
+          32
+        ]
+      ],
+      "existing_weak_redbrown_patch_regions": 1,
+      "redbrown_patch_bounds": [
+        56,
+        18,
+        64,
+        29
+      ],
+      "proved_native_xy_RGBA_samples": {
+        "grayleft": {
+          "xy": [
+            1,
+            13
+          ],
+          "RGBA": [
+            140,
+            134,
+            123,
+            255
+          ]
+        },
+        "grayrighttop": {
+          "xy": [
+            60,
+            13
+          ],
+          "RGBA": [
+            115,
+            97,
+            82,
+            255
+          ]
+        },
+        "grayrightlower": {
+          "xy": [
+            56,
+            28
+          ],
+          "RGBA": [
+            123,
+            109,
+            90,
+            255
+          ]
+        },
+        "redwash": {
+          "xy": [
+            60,
+            21
+          ],
+          "RGBA": [
+            107,
+            32,
+            24,
+            255
+          ]
+        }
+      },
+      "alpha255_texels": 4096,
+      "opaque_RGBblack_texels": 18,
+      "pattern_caveat": "Three weakgray paintaccent AREAS+ONE subduedredbrownwash, not physicallyinterpretedbuckles/badges/letters or countedmetalobjects. Sourcealreadysoftbrownmattepaint withsubtle topedgegray/nativewash, no newseams/physicalhardware from lowcontrastpigment."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "source_count_proof_path": "assets/terrain-hd/expanded/precall-source-proof-equipment-thirty-eighth-6213.json",
+    "source_count_proof_sha256": "47065272f921a02d4659e7d55731b2d5fe519b9daafe60094e65c6b14b918c9e",
+    "exact_prompt": "Edit ONLY the exact complete original softly painted game equipment COLOR atlas. Image1 is originalnativeRGBA; image2 is its identical complete storedRGB nearest8x opaqueauthoringguide. Same wholeUVcanvas, no object/scene reconstruction. Preserve original wholeUV, every existing faintpaint mark, sourceblur, native material/detail scale and relative color hierarchy. Actual read-only Materials.TextureID->Materials.TemplateID/MaterialTemplates->Models.MaterialN color use, textureTypeOrdinary and actualMaterialAlpha opaque. Output complete opaque storedRGB paint for whole4x normalization; production separately restores the ENTIREoriginalA exactly, includingA0/A255black. Preserve hiddenRGB beneathA0 too; never infer transparentholes/emptyspace from darkRGB or guessmaterialalpha. Improve only soft original finepaint transitions with the same deliberateblur and lowcontrast. No photopores/coarsegrain/newweave/stitches/curlornaments/newseams/hardware/physicalparts/sharphighlights/bevelededges/symbols/text; no brighterpalette/newgeometry/regularization. Completecanvas only, no crop/BBox/padding/newmargins/recenter/UVfit/registration or sourceRGBpatch. Source64x64. Keep ONE subdued brown/gray main paintedmaterial field with existing faintshadow shape. THREE specific softgray edgeaccent AREAS: leftnative x0..5/y12..17 (original smallT-shapedpainttrace: topstripey13/x0..4, narrowwashx3/y14..16), rightuppernative x58..63/y12..16, rightlowerdiagonalwashnative x54..60/y26..31. Their sourcepixelmatrix is authoritative: native(1,13)RGBA140/134/123/255,(60,13)115/97/82/255,(56,28)123/109/90/255. Retain ONE indistinct darkredbrown pigmentwash x56..63/y18..28 withsample(60,21)107/32/24/255, never turn it into an emblem, buckle or engravedbadge. Topedge alreadyhas weakgraygrain/paint and broadmainfield subtlefadedbrownshadow; keep sourcephysicalscale/phase/dimness, do not add skin/leathercreases/photoarmor/newfoldgeometry. Existing18RGBblackpixels arefullyA255, notholes. Whole originalA255 at4096pixels. Keep all sourcepaint and originaledge positions, not raisedmetalhardware. Output full exact coloratlas."
+  }
+]

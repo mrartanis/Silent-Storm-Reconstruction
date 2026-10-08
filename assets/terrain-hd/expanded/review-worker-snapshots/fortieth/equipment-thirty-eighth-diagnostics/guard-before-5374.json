@@ -1,0 +1,76 @@
+{
+  "id": 5374,
+  "checked_utc": "2026-10-08T11:24:35.704572+00:00",
+  "accepted_queue_allraw_call_prompt_attempt_job_held_refused_ID_and_sameRGBA_exclusion_passed": true,
+  "honest_original_sourceonly_no_call_reaudit": "source-only-equipment-eighteenth.json",
+  "source_record": {
+    "id": 5374,
+    "texture": {
+      "ID": 5374,
+      "Width": 32,
+      "Height": 32,
+      "NMips": 0,
+      "AverageColor": 843529018,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Equipment\\Items\\MedicineStuff\\Capsule.tga",
+      "Format": "dxt3",
+      "UserName": "Capsule",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "equipment",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3499,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2240,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5621,
+              "field": "Material0",
+              "material_template_id": 2240,
+              "geometry_id": 3449,
+              "geometry": "Characters\\Equipment\\Items\\MedicineStuff.mb",
+              "model_template_id": 3704,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      32,
+      32
+    ],
+    "source_sha256": "6e2dd854e96f593486e62e35e4d178f3f62446facdc879557515f814ea4bc0aa",
+    "source_rgba_sha256": "4e6e2f6c03ecaef530b8f835fa51104fc1a9be30838140348c0a4d8dec28076e",
+    "release_rgba_sha256": "4e6e2f6c03ecaef530b8f835fa51104fc1a9be30838140348c0a4d8dec28076e",
+    "source_native_format": 3,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/5374.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "sources_sha256": "aac77e82206427b57c831d563e0f3925df55902590915d07134fc884c68f4b39",
+  "queue_sha256": "0804d14581158b2fb30426b936f49becdc5ae3a806abca1a8270c5cabd542b1f",
+  "beforeproof_sha256": "a3012b9bc1097968efa95e763142afc4153ae63daf90c31bfa5501aac5c10dc8"
+}
