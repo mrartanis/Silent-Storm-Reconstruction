@@ -1,0 +1,37 @@
+{
+  "phase": "Read-only postcall clarification, BEFOREtyped/sourceproof preserved unchanged. Not actualruntimeexecution.",
+  "source_ids": [
+    4915,
+    7682
+  ],
+  "code_refs": [
+    {
+      "path": "Main/GView.cpp",
+      "file_SHA256": "96a3b0c27c11114bafcc6bc47498dc4ea637848c0adc8f7718ef7ab303823d93",
+      "lines": [
+        1145,
+        1169
+      ],
+      "qualification": "AddFlare usesactual pFlareTexture.GetRecordID, shareTextures TK_TRANSPARENT, CPointGlowAnimator atoriginalfFlareRadius."
+    },
+    {
+      "path": "Main/GPointLightGlow.cpp",
+      "file_SHA256": "25b048d2d15dc6c4fbc998bb8a448d25220fd450ed4d97ea0c22d9a269e1361a",
+      "lines": [
+        23,
+        46
+      ],
+      "qualification": "CPointGlowEffect.AddParticles buildsentirebillboard, GetTransparentTexturePlace then AddParticle. SourceLogicalUV/radius/runtimeworldposition unmodified."
+    },
+    {
+      "path": "Main/MapBuild.cpp",
+      "file_SHA256": "6291dfcc23a57d2418ef5fee6991daf485934981ae2e2fc8fea3f2ffafcc190a",
+      "lines": [
+        417,
+        417
+      ],
+      "qualification": "FinalElements pFlareTexture forwarded topPFlareTexture."
+    }
+  ],
+  "missing_definition_policy": "No invented definitions, explicit sourcechecks authoritative. Exactparticlecounts notinferredfromnativeRGB."
+}

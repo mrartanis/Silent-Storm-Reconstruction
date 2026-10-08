@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 497 of these verified originals are accepted in the shared
+As of 2026-10-08, 499 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-second-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-third-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,236 IDs: clothing 194, equipment 110, weapons
-57, heads 157, UI 588, effects 106, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,234 IDs: clothing 194, equipment 110, weapons
+57, heads 157, UI 586, effects 106, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -669,3 +669,20 @@ Two known promptLF entries proven/oldmanifest frozen/two nestedclothmanifests fu
 immutable before-call portablecopies numeric only. Proofs:
 ../new-groups-forty-second-batch-check.json,../new-groups-forty-second-live-check.json,
 ../new-groups-forty-second-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.
+
+Forty-third accepted packet:UI3790/3419,2 separate builtin calls.
+Pack2,461 textures/4,922 aliases/130archives/7,821,594,562bytes; prior2,459source/PNG/nativehashes exact.
+WholeactualnativeRGBA2 equal private4x predictions/fullsourceA/UV/material/count/nativepaintscale/globalgain/defaultpad0.
+3790oneoldambercircle/oldbrownperimeter/zero glyphs;3419threebrassforms/threesilvertips/oldrearstrip.
+Localbrownperimeter/quietouterwash3790 and oldrearstripbrightness3419 caveats disclosed in ../coordinator-art-review-forty-third.json.
+Rootheld4915 shiftedsoftcolorfalloff/5299 rougherlocalpaintcontrast;5299oldswirl already source/no false newring claim.
+Fiveworkerreviews frozen/nineotherheld preserved/no RGBartrepair/retries.
+GPU3790NPOT41/3419 sixwholeprivateonoffonframes/whole+middle+reverse+clippedUV/placement/density4vs1/fullA/premulonce.
+ActualdirectpMovingUI525ChapterMap/ShortBurstUI500iUnitIconBar353/521 audited byreadonlyDB/source;
+genericGPU does not certify activewidget/chaptermap/fullmodelappearance. No newFaceGen/original-only entries.
+SixsourceSHA25 unchanged/currentbuilt707EXEexact/realmenu11/0/11/pending0/fourprivateframes/normalquit/ownedGameabsent.
+Current120frames:3.73FPS/p95279.39ms; no performanceacceptanceclaim;
+prior42slowpresent/prior41independent original+HDslowqualification retained/causeunestablished.
+AllfrozenworkerSHA/customUIraw/call/BEFORE exact; actualargument+oneLF already canonical/no manifest or argument rewriting.
+Proofs:../new-groups-forty-third-batch-check.json,../new-groups-forty-third-live-check.json,
+../new-groups-forty-third-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.
