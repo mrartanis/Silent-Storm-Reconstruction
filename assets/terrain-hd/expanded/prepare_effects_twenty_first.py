@@ -1,0 +1,52 @@
+from pathlib import Path
+import json,hashlib,shutil
+import numpy as np
+from PIL import Image
+B=Path(__file__).resolve().parent;ST='effects-twenty-first';CALL=[1086,1620,5397]
+def save(n,v):(B/n).write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+def comps(m):
+ seen=np.zeros_like(m);out=[]
+ for y,x in zip(*np.where(m)):
+  if seen[y,x]:continue
+  q=[(int(y),int(x))];seen[y,x]=True;xy=[]
+  while q:
+   yy,xx=q.pop();xy.append([xx,yy])
+   for dy in [-1,0,1]:
+    for dx in [-1,0,1]:
+     ny,nx=yy+dy,xx+dx
+     if 0<=ny<m.shape[0]and 0<=nx<m.shape[1]and m[ny,nx]and not seen[ny,nx]:seen[ny,nx]=1;q.append((ny,nx))
+  a=np.array(xy);out.append({'area':len(xy),'bbox':[int(a[:,0].min()),int(a[:,1].min()),int(a[:,0].max()+1),int(a[:,1].max()+1)],'native_xy':xy})
+ return out
+proof=json.loads((B/f'source-check-{ST}.json').read_text(encoding='utf-8'));constraints=[];pending=[]
+for r in proof:
+ i=r['id'];o=Image.open(B/f'original/{i}.png').convert('RGBA');a=np.asarray(o);rgb=a[:,:,:3];g=rgb.mean(2)
+ old=[p for p in B.rglob(f'{i}-*source*.png')if ST not in p.as_posix()]
+ r['previous_source_only_views']=[p.relative_to(B.parents[2]).as_posix()for p in sorted(old)[:10]];r['view_novelty']='Honest previous source-only re-audit; no prior accepted/generated/held/call/nativeRGBA-to-called allowed.'
+ r['full_original_RGBA_private_view']=True;r['full_source_RGB_private_view']=True
+ r['source_only_reason']='Native source is genuine soft muted brown painted remnant color fields with small separately standing weak patches. Pending individual weak component/intensity preservation; zero calls. Previously held715-family is not regenerated; no fake technical/analytic mask classification.'if i not in CALL else'Genuine source color art, exact native palette/complete sourceRGBA matrices/component footprints saved before FIRST prompt. One built-in separate edit planned, no changes to DB/UV/sourceA.'
+ c={'id':i,'before_prompt':True,'native_size':list(o.size),'source_RGBA_sha256':hashlib.sha256(o.tobytes()).hexdigest(),'source_RGBA_extrema':[list(z)for z in o.getextrema()],'native_RGBA_matrix':a.tolist(),'positive_RGB_native_components':comps(rgb.max(2)>0),'positive_A_native_components':comps(a[:,:,3]>0),'component_qualification':'Exact positive-code native bitmap connectivity and matrices are preserved. Diagnostic connected-region counts are NOT automatically anatomical object counts and are NOT acceptance thresholds. Whole source-only reference only; coordinates never crop/composite/patch anything.'}
+ if i==1086:
+  c['field_proof']='Exactly13 positive-codec native RGB connected regions, including weak edge-touching remnants and all connected brighter lobes; not13 physical flames. Preserve every same source connected footprint AND its internal source intensity peaks/puff shoulders, not merge/repack or make all regions similarly bright. Whole matrix resolves dim halos and original positions.'
+  assert len(c['positive_RGB_native_components'])==13
+  boxes=[('upperleft warm field',[13,2,21,13]),('topdim warm field',[26,5,33,13]),('upperright warm field and all dim edge fragments',[49,0,64,20]),('central connected warm color lobes',[17,11,52,43]),('lowerleft connected warm color lobes',[3,30,29,61]),('lowerright connected warm color lobes',[43,40,63,64])]
+ elif i==1620:
+  c['five_broad_gray_color_fields']='FIVE visually confirmed major source gray fragment-color fields: top small diagonal gray streak native[11,1,15,7]; upperright weakgray streak[25,7,30,10]; ONE centralright group with two attached lobes[19,10,30,20]; leftmid thin diagonal gray streak[2,12,8,17]; bottom smallgray shard[19,26,24,30]. Additional original very weak sub8RGB links/flecks retained from entire native matrix, never erased or promoted. This is five broad field groups, not an assertion totalphysical fragments equals5.'
+  c['observed_native_above8RGB_component_masks']=comps(rgb.max(2)>8);assert len(c['observed_native_above8RGB_component_masks'])==5
+  c['threshold_qualification']='8 is THIS source diagnostic separating five broad visible gray groups from lower-code weak links/flecks, NOT generation deletion mask or global acceptance rule. All native values0..238 and weak positions preserved.'
+  boxes=[('topgray field',[11,1,15,7]),('upperright weakgray field',[25,7,30,10]),('centralright gray field with attached lobes',[19,10,30,20]),('leftmid gray field',[2,12,8,17]),('bottomgray field',[19,26,24,30])]
+ else:
+  c['field_proof']='ONE central flat darkred irregular spatter mass with its attached original streaks plus ALL disconnected native weak red painted regions. Whole positiveRGB mask/matrices contain exact native area/coordinates for each; count not inferred as physical droplets. Source maxRGB77/43/38, not bright red/white/wet blood. Preserve every source tonal crest and dark opening; no new wet geometry/droplets/reflections.'
+  boxes=[('central flat darkred irregular mass and attached streaks',[13,22,51,52]),('upper weak red marks',[0,0,64,22]),('left weak red marks',[0,22,13,64]),('right weak red marks and broad existing lower-right streak',[51,22,64,64]),('bottom weak red marks',[13,52,51,64])]
+ c['native_domains']=[]
+ for name,b in boxes:
+  x0,y0,x1,y1=b;z=rgb[y0:y1,x0:x1];c['native_domains'].append({'name':name,'bbox':b,'native_RGB':z.tolist(),'mean_RGB':z.mean((0,1)).tolist(),'max_RGB':z.max((0,1)).tolist()})
+ if i in CALL:constraints.append(c)
+ else:
+  r['zero_call_source_RGBA_extrema']=c['source_RGBA_extrema'];r['sameRGBA_pending_siblings']=[x['id']for x in proof if x['id']!=i and x['source_rgba_sha256']==r['source_rgba_sha256']];pending.append(i)
+save(f'pattern-constraints-{ST}.json',constraints);save(f'scope-{ST}.json',{'selected_ids':[r['id']for r in proof],'sole_call_ids':CALL,'maximum_call_count':3,'pending_uncalled_ids':pending,'source_count_semantics':'12 real native sourceIDs, prior source-only re-audit allowed; some pending brown remnants exactRGBA sibling duplicates, never accepted donors. Calls3 have distinctRGBA and no previous calls.'})
+save(f'source-check-{ST}.json',proof);shutil.copyfile(B/f'source-check-{ST}.json',B/f'source-check-{ST}-before-call.json')
+base=['Use case: precise-object-edit. Asset type: faithful Silent Storm painted particle COLOR diffuse texture edit, higher resolution.','Image1 is the exact ENTIRE original native storedRGB color source exposed solely by whole nearest-neighbor enlargement. Preserve the SAME complete edge-to-edge normalized UV, original color material, every black gap, native component positions/count/phase/relative area and paint blur/scale. Original complete alpha is retained independently and brightness is purely globally calibrated numerically. Refine only the EXISTING source paint very subtly; it remains flat painted source-color art, not a photograph or physical scene.','Keep exact source muted palette, weak-to-strong local shading ratios, blurry source edges and existing only paint forms. No invented bright cores, glints, flecks, sparks/rays/curls/cauliflower turbulence, cracks/folds, wet anatomy or new physical geometry. No photonoise/rough grain/new large checker/pixelcells/raised beveled edges. Whole nearest guide shows native sampling cells; keep original low-frequency soft color shading without introducing harder macroblock contours or new coarse details. Do not brighten tiny faint pieces or standardize all blob intensity.','Output ENTIRE opaque storedRGB source-color canvas only. No crop/zoom/padding/frame/recenter/repack/autobbox/cutout. Do not change source UV/scale/count or native alpha/premul semantics; preserve useful RGB wherever original alpha0. All other pixels remain the same original background color.']
+special={1086:'Source64x64 has exact RGB maxima243/139/35 and alpha0. Keep original orange/brown soft painted scattered color lobes, source footprint and relative intensities exactly. The native positiveRGB bitmap has13 disconnected regions, including very weak corner/edge remnants; this does NOT mean13 separate flame tongues. Preserve their exact original locations/area and all internal connected warmer lobe peaks from image1. Keep upper-left orange puff, dim top-middle mark, upper-right orange puff, central warmer pairs, left/lower connected color lobes, bright existing midright orange lobe and lower-right orange lobe at their same UV. No new yellow/white focus, flame tongues, sparks, new center catches, glow rings or black cavities. Source brightest areas stay orange243/139/35 maximum hierarchy rather than white. Keep all dim original fragments dim, no enlargement/movement/merging of any blob.',1620:'Source32x32 is a muted grayscale glass-color bitmap, RGB maximum238/238/238, source alpha0. Preserve FIVE visually original major gray field groups at exact UV: (1) small top diagonal streak native[11,1,15,7], (2) weak upperright gray streak[25,7,30,10], (3) ONE centralright attached-two-lobe gray group[19,10,30,20], (4) thin midleft gray diagonal streak[2,12,8,17], (5) small lower gray field[19,26,24,30]. ALSO preserve all the native weak gray links/flecks outside those broad fields exactly as image1; do not delete or strengthen them. These are source-painted gray fragment shapes, not permission to invent crystal shards, realistic glass reflections/cracks/edges, new detached pieces or brilliant glints. Keep current soft irregular grayscale shading, maximum only existing original brighter low fragment, all weak regions remain weak.',5397:'Source64x64 has maximumRGB77/43/38 and sourceA0..255. Preserve the source FLAT muted dark-red/brown painted spatter: ONE existing central irregular darkred mass with its original attached irregular streaks, EXACT every existing disconnected small red paint region/weak fleck/tail, black openings and full edge-touching footprints from image1. Do not add/erase/move any painted fragment, turn faint marks into new bright droplets or add large smooth spots. It stays the same subdued FLAT dry color bitmap, no wet liquid geometry, shine, white highlights, thickness, blood anatomy, photographic grain or mottled new splatter. Keep existing darkred/brown shade hierarchy and native weak maxima, without red intensity boost or brighter central mass.'}
+for i in CALL:
+ p=B/f'generated/{i}-prompt.txt';assert not p.exists();p.write_bytes('\r\n\r\n'.join(base[:2]+[special[i]]+base[2:]).encode('utf-8'))
+print([(c['id'],c['source_RGBA_extrema'],len(c['positive_RGB_native_components']))for c in constraints])

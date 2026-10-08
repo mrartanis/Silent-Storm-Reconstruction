@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1086,
+    "generated": "assets/terrain-hd/expanded/generated/1086-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset type: faithful Silent Storm painted particle COLOR diffuse texture edit, higher resolution.\r\n\r\nImage1 is the exact ENTIRE original native storedRGB color source exposed solely by whole nearest-neighbor enlargement. Preserve the SAME complete edge-to-edge normalized UV, original color material, every black gap, native component positions/count/phase/relative area and paint blur/scale. Original complete alpha is retained independently and brightness is purely globally calibrated numerically. Refine only the EXISTING source paint very subtly; it remains flat painted source-color art, not a photograph or physical scene.\r\n\r\nSource64x64 has exact RGB maxima243/139/35 and alpha0. Keep original orange/brown soft painted scattered color lobes, source footprint and relative intensities exactly. The native positiveRGB bitmap has13 disconnected regions, including very weak corner/edge remnants; this does NOT mean13 separate flame tongues. Preserve their exact original locations/area and all internal connected warmer lobe peaks from image1. Keep upper-left orange puff, dim top-middle mark, upper-right orange puff, central warmer pairs, left/lower connected color lobes, bright existing midright orange lobe and lower-right orange lobe at their same UV. No new yellow/white focus, flame tongues, sparks, new center catches, glow rings or black cavities. Source brightest areas stay orange243/139/35 maximum hierarchy rather than white. Keep all dim original fragments dim, no enlargement/movement/merging of any blob.\r\n\r\nKeep exact source muted palette, weak-to-strong local shading ratios, blurry source edges and existing only paint forms. No invented bright cores, glints, flecks, sparks/rays/curls/cauliflower turbulence, cracks/folds, wet anatomy or new physical geometry. No photonoise/rough grain/new large checker/pixelcells/raised beveled edges. Whole nearest guide shows native sampling cells; keep original low-frequency soft color shading without introducing harder macroblock contours or new coarse details. Do not brighten tiny faint pieces or standardize all blob intensity.\r\n\r\nOutput ENTIRE opaque storedRGB source-color canvas only. No crop/zoom/padding/frame/recenter/repack/autobbox/cutout. Do not change source UV/scale/count or native alpha/premul semantics; preserve useful RGB wherever original alpha0. All other pixels remain the same original background color.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/1086.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/1086-effects-twenty-first-source-rgb-support.png"
+    }
+  }
+]

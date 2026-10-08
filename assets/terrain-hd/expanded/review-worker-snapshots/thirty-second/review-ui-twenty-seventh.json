@@ -1,0 +1,3399 @@
+{
+  "batch": "ui-twenty-seventh",
+  "finalized_utc": "2026-10-08T07:34:55.610050+00:00",
+  "source_registry_snapshot_qualification": {
+    "source_registry_count_at_discovery": 2384,
+    "queue_count_at_discovery": 2846,
+    "source_registry_counts_before_calls": [
+      2384,
+      2384,
+      2384
+    ],
+    "queue_counts_before_calls": [
+      2846,
+      2846,
+      2846
+    ],
+    "qualification": "Trusted root UI27 task: registry2384/q2846 is current package30 pendingbuild/native; committed2379/q2841 pushed7ac522fd. Registry length is guard snapshot, not all2384accepted/nativevalidated. No later native validation/publication inferred by child. Legacy accepted_snapshot_at_call field equals exact source-list guard count."
+  },
+  "ready_ids": [
+    5799
+  ],
+  "ready": [
+    {
+      "id": 5799,
+      "status": "art-reviewed-ready",
+      "source_record": {
+        "id": 5799,
+        "texture": {
+          "ID": 5799,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1305468379,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Defence_01.tga",
+          "Format": "8888",
+          "UserName": "Defence1",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 715,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Defence1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 715,
+              "name": "Defence1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 8,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 40,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 46,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 75,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "b73ab0037b9c747b0654da9ccc8fd3dfb699036d2b0880c7baa1e92cf959d8d1",
+        "source_rgba_sha256": "5edd6f31eb3ca07b3d50b5df855c7410a5696c5484326588d700060ebdc33d6a",
+        "release_rgba_sha256": "5edd6f31eb3ca07b3d50b5df855c7410a5696c5484326588d700060ebdc33d6a",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5799.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source48x48, production192x192. Exactly ONE existing tilted oval dark-center painted sign: ONE continuous soft dim pink-gray elliptical rim around ONE dark oval interior, with original asymmetric thickness, center position and diagonal tilt. Keep the original dark/pink inner gradient and broad subdued mauve-brown field at original UV phase. Exactly ONE existing broad dark diagonal shadow/wash occupies lowerleft and the old lower canvas; do not strengthen it, add another ring, inner line, central object, disk, emblem, numeral or hard physical hole. This remains the abstract original painted icon, not a newly concrete pipe, bullet impact, polished metal eyelet or bevel. Keep its intentionally blurred soft rim transitions and modest source highlight on upperleft/upper/right portions; do not create crisp white rim, grain, relief or raised solid geometry. Preserve original uneven dim corner washes without turning them into letters or extra parts, and preserve entire black outer margin.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "4aea5b351668aa0946682b02ff1405e80a8711fad3da039ce5e0667ef9960d43",
+            "fb8fb47c245452f758bfb134feacfd12cdee9817889fef80ae3ca0a20aff3bef"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 5799,
+        "batch": "ui-twenty-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T07:29:21.924561+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing tilted oval dark-center painted sign: ONE continuous soft dim pink-gray elliptical rim around ONE dark oval interior, with original asymmetric thickness, center position and diagonal tilt. Keep the original dark/pink inner gradient and broad subdued mauve-brown field at original UV phase. Exactly ONE existing broad dark diagonal shadow/wash occupies lowerleft and the old lower canvas; do not strengthen it, add another ring, inner line, central object, disk, emblem, numeral or hard physical hole. This remains the abstract original painted icon, not a newly concrete pipe, bullet impact, polished metal eyelet or bevel. Keep its intentionally blurred soft rim transitions and modest source highlight on upperleft/upper/right portions; do not create crisp white rim, grain, relief or raised solid geometry. Preserve original uneven dim corner washes without turning them into letters or extra parts, and preserve entire black outer margin.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5799-prompt.txt",
+        "prompt_sha256": "73a085e87a84f4622a8d7a3290508141f9ea2ed9db039d22ac63b212873f9d71",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5799.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5799-ui-twenty-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "4aea5b351668aa0946682b02ff1405e80a8711fad3da039ce5e0667ef9960d43",
+            "fb8fb47c245452f758bfb134feacfd12cdee9817889fef80ae3ca0a20aff3bef"
+          ]
+        },
+        "target_size": [
+          192,
+          192
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2384,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing tilted oval dark-center painted sign: ONE continuous soft dim pink-gray elliptical rim around ONE dark oval interior, with original asymmetric thickness, center position and diagonal tilt. Keep the original dark/pink inner gradient and broad subdued mauve-brown field at original UV phase. Exactly ONE existing broad dark diagonal shadow/wash occupies lowerleft and the old lower canvas; do not strengthen it, add another ring, inner line, central object, disk, emblem, numeral or hard physical hole. This remains the abstract original painted icon, not a newly concrete pipe, bullet impact, polished metal eyelet or bevel. Keep its intentionally blurred soft rim transitions and modest source highlight on upperleft/upper/right portions; do not create crisp white rim, grain, relief or raised solid geometry. Preserve original uneven dim corner washes without turning them into letters or extra parts, and preserve entire black outer margin.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5799.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5799-ui-twenty-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T07:30:01.678525+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-f59c3ecb-b9ea-4bab-87f1-8e9ba9295d80.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5799-raw.png",
+        "raw_sha256": "22cc7ed76a8af6429f0589b52decd8394250885b784b657cc5b01a41b9225c17",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 5799,
+        "batch": "ui-twenty-seventh",
+        "checked_utc": "2026-10-08T07:29:25.452347+00:00",
+        "sources_count": 2384,
+        "queue_count": 2846,
+        "sources_sha256": "b96cae1ad8fef570c92fd2b79f57d69583534f95bde1f25c84cc266e49dc9b4f",
+        "queue_sha256": "a0ae1146dfc29cd54a95842cd887c26ffa250a975ad955a8c2166b13d77cee44",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "5edd6f31eb3ca07b3d50b5df855c7410a5696c5484326588d700060ebdc33d6a",
+        "prompt_sha256": "73a085e87a84f4622a8d7a3290508141f9ea2ed9db039d22ac63b212873f9d71",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "4aea5b351668aa0946682b02ff1405e80a8711fad3da039ce5e0667ef9960d43",
+            "fb8fb47c245452f758bfb134feacfd12cdee9817889fef80ae3ca0a20aff3bef"
+          ]
+        },
+        "started_metadata_sha256": "b3e3b6d0ddf1aec857ac6d005368fea4df03111b01556bea5b46cd0a9e17c259",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 5799,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source48x48, production192x192. Exactly ONE existing tilted oval dark-center painted sign: ONE continuous soft dim pink-gray elliptical rim around ONE dark oval interior, with original asymmetric thickness, center position and diagonal tilt. Keep the original dark/pink inner gradient and broad subdued mauve-brown field at original UV phase. Exactly ONE existing broad dark diagonal shadow/wash occupies lowerleft and the old lower canvas; do not strengthen it, add another ring, inner line, central object, disk, emblem, numeral or hard physical hole. This remains the abstract original painted icon, not a newly concrete pipe, bullet impact, polished metal eyelet or bevel. Keep its intentionally blurred soft rim transitions and modest source highlight on upperleft/upper/right portions; do not create crisp white rim, grain, relief or raised solid geometry. Preserve original uneven dim corner washes without turning them into letters or extra parts, and preserve entire black outer margin.",
+        "source_RGBA_sha256": "5edd6f31eb3ca07b3d50b5df855c7410a5696c5484326588d700060ebdc33d6a",
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "source_numeric_phase_diagnostic": {
+          "component_count_proof": "Source48x48, production192x192. Exactly ONE existing tilted oval dark-center painted sign: ONE continuous soft dim pink-gray elliptical rim around ONE dark oval interior, with original asymmetric thickness, center position and diagonal tilt. Keep the original dark/pink inner gradient and broad subdued mauve-brown field at original UV phase. Exactly ONE existing broad dark diagonal shadow/wash occupies lowerleft and the old lower canvas; do not strengthen it, add another ring, inner line, central object, disk, emblem, numeral or hard physical hole. This remains the abstract original painted icon, not a newly concrete pipe, bullet impact, polished metal eyelet or bevel. Keep its intentionally blurred soft rim transitions and modest source highlight on upperleft/upper/right portions; do not create crisp white rim, grain, relief or raised solid geometry. Preserve original uneven dim corner washes without turning them into letters or extra parts, and preserve entire black outer margin.",
+          "source_alpha_extrema": [
+            0,
+            255
+          ],
+          "fullcanvas_size": [
+            48,
+            48
+          ],
+          "source_black_outer_margin_columns": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ],
+          "source_black_outer_margin_rows": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        "runtime_qualification": {
+          "actual_UITextureID": 715,
+          "actual_RPGPerkIDs": [
+            8,
+            40,
+            46,
+            75
+          ],
+          "file": "Main/iPerksPanel.cpp",
+          "line": 63,
+          "excerpt": "AddImageState( STATE_NORMAL, pDBPerk->pIcon );",
+          "database_import_file": "DBFormat/DataPerk.cpp",
+          "database_import_line": 22,
+          "database_import_excerpt": "NDatabase::ImportField( \"Icon\", &pIcon );",
+          "qualification": "Actual RPGPerks.Icon→UITextures715→Textures5799; actual normal perk button pIcon consumer. No selected live/GPU claim."
+        }
+      },
+      "numeric_preview": {
+        "id": 5799,
+        "source_native_type": "Transparent",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5799-raw.png",
+        "raw_sha256": "22cc7ed76a8af6429f0589b52decd8394250885b784b657cc5b01a41b9225c17",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          192,
+          192
+        ],
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "production_alpha_sha256": "8968bca646b2dbd8ca8783c37b8b363dde51ecef04e61496ae62b59d2ce3f680",
+        "native_premultiplied": true,
+        "scalar_gain": 1.047393798828125,
+        "target_stored_luma": 37.13831432291667,
+        "actual_stored_luma": 37.13859796006945,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9920101429303769,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 2727,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/5799-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/5799-native-stored-RGB.png"
+      },
+      "source_material_local_and_phase_diagnostics": {
+        "id": 5799,
+        "source_mean_RGB": [
+          47.55121527777778,
+          34.09852430555556,
+          36.588107638888886
+        ],
+        "production_stored_mean_RGB": [
+          48.38823784722222,
+          33.90776909722222,
+          36.016927083333336
+        ],
+        "source_peak_RGB": [
+          238.0,
+          185.0,
+          183.0
+        ],
+        "production_peak_RGB": [
+          255.0,
+          221.0,
+          216.0
+        ],
+        "source_relative_ROI_diagnostics": [
+          {
+            "name": "upper-pink-rim",
+            "source_native_bounds": [
+              15,
+              15,
+              24,
+              18
+            ],
+            "source_RGB": [
+              145.66666666666666,
+              109.29629629629629,
+              117.48148148148148
+            ],
+            "production_RGB": [
+              162.33333333333334,
+              118.05555555555556,
+              124.49537037037037
+            ],
+            "delta_RGB": [
+              16.666666666666686,
+              8.759259259259267,
+              7.013888888888886
+            ]
+          },
+          {
+            "name": "right-pink-rim",
+            "source_native_bounds": [
+              29,
+              23,
+              32,
+              31
+            ],
+            "source_RGB": [
+              98.16666666666667,
+              73.875,
+              78.75
+            ],
+            "production_RGB": [
+              102.875,
+              76.13802083333333,
+              80.4140625
+            ],
+            "delta_RGB": [
+              4.708333333333329,
+              2.2630208333333286,
+              1.6640625
+            ]
+          },
+          {
+            "name": "lower-pink-rim",
+            "source_native_bounds": [
+              20,
+              33,
+              28,
+              36
+            ],
+            "source_RGB": [
+              98.66666666666667,
+              74.5,
+              79.79166666666667
+            ],
+            "production_RGB": [
+              100.93229166666667,
+              73.5703125,
+              78.11197916666667
+            ],
+            "delta_RGB": [
+              2.265625,
+              -0.9296875,
+              -1.6796875
+            ]
+          },
+          {
+            "name": "oval-dark-center",
+            "source_native_bounds": [
+              20,
+              22,
+              27,
+              28
+            ],
+            "source_RGB": [
+              10.333333333333334,
+              7.666666666666667,
+              8.523809523809524
+            ],
+            "production_RGB": [
+              10.962797619047619,
+              7.979166666666667,
+              8.498511904761905
+            ],
+            "delta_RGB": [
+              0.6294642857142847,
+              0.3125,
+              -0.025297619047618625
+            ]
+          },
+          {
+            "name": "upperright-mauve-field",
+            "source_native_bounds": [
+              31,
+              7,
+              41,
+              17
+            ],
+            "source_RGB": [
+              122.06,
+              84.29,
+              89.72
+            ],
+            "production_RGB": [
+              126.71625,
+              85.275625,
+              90.32
+            ],
+            "delta_RGB": [
+              4.65625,
+              0.9856249999999989,
+              0.5999999999999943
+            ]
+          },
+          {
+            "name": "lowerleft-shadow",
+            "source_native_bounds": [
+              7,
+              27,
+              15,
+              36
+            ],
+            "source_RGB": [
+              33.27777777777778,
+              25.15277777777778,
+              26.569444444444443
+            ],
+            "production_RGB": [
+              31.18923611111111,
+              23.29340277777778,
+              24.18576388888889
+            ],
+            "delta_RGB": [
+              -2.088541666666668,
+              -1.859375,
+              -2.3836805555555536
+            ]
+          }
+        ],
+        "pattern_phase": {
+          "pinkrim_row18_local_peak_positions": {
+            "source_left_peak_native": 14,
+            "production_left_peak_logical": 14.5,
+            "source_right_peak_native": 25,
+            "production_right_peak_logical": 25.0
+          },
+          "pinkrim_row22_local_peak_positions": {
+            "source_left_peak_native": 13,
+            "production_left_peak_logical": 13.25,
+            "source_right_peak_native": 29,
+            "production_right_peak_logical": 29.0
+          },
+          "pinkrim_row26_local_peak_positions": {
+            "source_left_peak_native": 14,
+            "production_left_peak_logical": 14.5,
+            "source_right_peak_native": 31,
+            "production_right_peak_logical": 31.75
+          },
+          "pinkrim_row30_local_peak_positions": {
+            "source_left_peak_native": 16,
+            "production_left_peak_logical": 17.0,
+            "source_right_peak_native": 32,
+            "production_right_peak_logical": 32.25
+          },
+          "pinkrim_row34_local_peak_positions": {
+            "source_left_peak_native": 21,
+            "production_left_peak_logical": 21.75,
+            "source_right_peak_native": 22,
+            "production_right_peak_logical": 22.5
+          }
+        },
+        "no_artist_RGB_patch": true,
+        "qualification": "Fullcanvas source/production read-only diagnostics. Values document material fidelity, not arbitrary automatic hold thresholds.",
+        "native_source_over_recipe": "Historical storedRGB/production once-premultiplied storedRGB + bg*(1-exact whole sourceA), bg24/192. Root final native typed/premul audit required."
+      },
+      "private_QA": {
+        "whole_source_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "native_dark_light_source_over_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Actual UITextures715→RPGPerks.Icon8/40/46/75, DBFormat/DataPerk.cpp22 imports pIcon and Main/iPerksPanel.cpp63 normalbutton renders pDBPerk->pIcon. Whole source48squareRGBA/RGB/A/NN16x, raw1254square and full native192squareRGBA/storedRGB/dark-light source-over inspected. Exactly one original tilted soft pink elliptical rim, one dark oval center and one broad dark lowerleft painted wash retain source count/material/UV; no extra ring, object, glyph, raised mechanical detail, hard new geometry or phototexture. Original asymmetry and intentionalblur remain; finer old painted tonal continuity does not reinterpret pixel blocks as new cells. Local left/right rim peaks across original rows18/22/26/30/34 remain within1logicalpixel at fixed sectors, no registration; exact samples retained. Upperpinkrim slightly brighter/warmer145.67/109.30/117.48→162.33/118.06/124.50 (+16.67/+8.76/+7.01), rightpink+4.71/+2.26/+1.66, lowerpink+2.27/−.93/−1.68; darkcenter+ .63/+.31/−.03 and mauvebackground+4.66/+.99/+.60 close. Modest existing upper light is disclosed for root palette/light-strength judgment, not an automatic peak cutoff. WholeRGB47.5512/34.0985/36.5881→48.3882/33.9078/36.0169; peaks238/185/183→255/221/216. Gain1.047393798828 matchesstoredluma37.13831432→37.13859796. FulloriginalAexact/defaultpaddingfilled0/cleared0, original nativeTransparent authoring/runtime preserved. No artworkRGBrepair/optout/retry. Root final native typed/premul audit remains; no selected child live/GPU claim.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Fresh actual UITextures/RPGPerks normalicon/runtime consumer proof retained. Root alone native/import/shared/build/Game/C++/Git. Source proof is not a selected child actual live/GPU claim; native typed/premul audit required for all Transparent selected sources."
+    }
+  ],
+  "held_ids": [
+    5033,
+    6452
+  ],
+  "held": [
+    {
+      "id": 5033,
+      "status": "held-new-inner-background-frame",
+      "source_record": {
+        "id": 5033,
+        "texture": {
+          "ID": 5033,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1306647273,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0093.tga",
+          "Format": "8888",
+          "UserName": "Store Melee Weapons",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 628,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Store Melee Weapons"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 628,
+              "name": "Store Melee Weapons",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "a5e5d46e3c99f04a5d69bd22f5c800f386184b59bc9069b071f08afc87cc7d67",
+        "source_rgba_sha256": "528700835c67c5c3a7800318488902d95abf69710fec7f653cef4f4f382d3aa6",
+        "release_rgba_sha256": "528700835c67c5c3a7800318488902d95abf69710fec7f653cef4f4f382d3aa6",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5033.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source48x48, production192x192. Exactly ONE existing diagonally placed painted knife silhouette runs from upperLEFT brown grip to lowerRIGHT muted gray blade. Preserve ONE brown grip, ONE small old gray end/pommel at upperleft, ONE existing brightgray short guard at the grip/blade transition, and ONE long gray blade in their exact original outline, widths and phase. These broad components are already visible in the source, not a request to reconstruct mechanical anatomy. The old grip has soft brown tonal patches only: no new pins, screws, rivets, wrap bands, grooves, wood grain, stitching or holes. Preserve existing dim coolgray blade edge/center light, including original weak source patches as soft paint; no new bevel lines, cutting notches, engraving, reflections or polished bright steel. Keep original dark olive square painted background, broad dim olive washes and black fullcanvas outer margins; no new frame, drop shadow, patterned field, concrete background or added objects. The original miniature icon stays deliberately softly painted, no enlarged block pattern or photo sharpening.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "2618942c51a566c68012a8d3fe315843df6d96373fbd6161d051a4a8763fa32c",
+            "ba20f7439eccc426a54e0cc19c63e62f601133cbb7e28d2006809129f4f2b336"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 5033,
+        "batch": "ui-twenty-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T07:28:16.305523+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing diagonally placed painted knife silhouette runs from upperLEFT brown grip to lowerRIGHT muted gray blade. Preserve ONE brown grip, ONE small old gray end/pommel at upperleft, ONE existing brightgray short guard at the grip/blade transition, and ONE long gray blade in their exact original outline, widths and phase. These broad components are already visible in the source, not a request to reconstruct mechanical anatomy. The old grip has soft brown tonal patches only: no new pins, screws, rivets, wrap bands, grooves, wood grain, stitching or holes. Preserve existing dim coolgray blade edge/center light, including original weak source patches as soft paint; no new bevel lines, cutting notches, engraving, reflections or polished bright steel. Keep original dark olive square painted background, broad dim olive washes and black fullcanvas outer margins; no new frame, drop shadow, patterned field, concrete background or added objects. The original miniature icon stays deliberately softly painted, no enlarged block pattern or photo sharpening.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5033-prompt.txt",
+        "prompt_sha256": "19fbd8ea594af47ea0df1e179c39a963b3efdf57cecd316cef7b5efb0a02562d",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5033.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5033-ui-twenty-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "2618942c51a566c68012a8d3fe315843df6d96373fbd6161d051a4a8763fa32c",
+            "ba20f7439eccc426a54e0cc19c63e62f601133cbb7e28d2006809129f4f2b336"
+          ]
+        },
+        "target_size": [
+          192,
+          192
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2384,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing diagonally placed painted knife silhouette runs from upperLEFT brown grip to lowerRIGHT muted gray blade. Preserve ONE brown grip, ONE small old gray end/pommel at upperleft, ONE existing brightgray short guard at the grip/blade transition, and ONE long gray blade in their exact original outline, widths and phase. These broad components are already visible in the source, not a request to reconstruct mechanical anatomy. The old grip has soft brown tonal patches only: no new pins, screws, rivets, wrap bands, grooves, wood grain, stitching or holes. Preserve existing dim coolgray blade edge/center light, including original weak source patches as soft paint; no new bevel lines, cutting notches, engraving, reflections or polished bright steel. Keep original dark olive square painted background, broad dim olive washes and black fullcanvas outer margins; no new frame, drop shadow, patterned field, concrete background or added objects. The original miniature icon stays deliberately softly painted, no enlarged block pattern or photo sharpening.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/5033.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5033-ui-twenty-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T07:29:17.676901+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-2881aa97-96a3-4ce3-b2fc-187c1465289b.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5033-raw.png",
+        "raw_sha256": "14148a844d6d05785761ec3d9aab2c1a1444cf4a50ef56d1fe4e49ce54202bc8",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 5033,
+        "batch": "ui-twenty-seventh",
+        "checked_utc": "2026-10-08T07:28:19.868428+00:00",
+        "sources_count": 2384,
+        "queue_count": 2846,
+        "sources_sha256": "b96cae1ad8fef570c92fd2b79f57d69583534f95bde1f25c84cc266e49dc9b4f",
+        "queue_sha256": "a0ae1146dfc29cd54a95842cd887c26ffa250a975ad955a8c2166b13d77cee44",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "528700835c67c5c3a7800318488902d95abf69710fec7f653cef4f4f382d3aa6",
+        "prompt_sha256": "19fbd8ea594af47ea0df1e179c39a963b3efdf57cecd316cef7b5efb0a02562d",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "2618942c51a566c68012a8d3fe315843df6d96373fbd6161d051a4a8763fa32c",
+            "ba20f7439eccc426a54e0cc19c63e62f601133cbb7e28d2006809129f4f2b336"
+          ]
+        },
+        "started_metadata_sha256": "c08e465c2538db2cf355cbb5f2d90f731c6c91dc8f3a48c50e9ff6197e1e63ae",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 5033,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source48x48, production192x192. Exactly ONE existing diagonally placed painted knife silhouette runs from upperLEFT brown grip to lowerRIGHT muted gray blade. Preserve ONE brown grip, ONE small old gray end/pommel at upperleft, ONE existing brightgray short guard at the grip/blade transition, and ONE long gray blade in their exact original outline, widths and phase. These broad components are already visible in the source, not a request to reconstruct mechanical anatomy. The old grip has soft brown tonal patches only: no new pins, screws, rivets, wrap bands, grooves, wood grain, stitching or holes. Preserve existing dim coolgray blade edge/center light, including original weak source patches as soft paint; no new bevel lines, cutting notches, engraving, reflections or polished bright steel. Keep original dark olive square painted background, broad dim olive washes and black fullcanvas outer margins; no new frame, drop shadow, patterned field, concrete background or added objects. The original miniature icon stays deliberately softly painted, no enlarged block pattern or photo sharpening.",
+        "source_RGBA_sha256": "528700835c67c5c3a7800318488902d95abf69710fec7f653cef4f4f382d3aa6",
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "source_numeric_phase_diagnostic": {
+          "component_count_proof": "Source48x48, production192x192. Exactly ONE existing diagonally placed painted knife silhouette runs from upperLEFT brown grip to lowerRIGHT muted gray blade. Preserve ONE brown grip, ONE small old gray end/pommel at upperleft, ONE existing brightgray short guard at the grip/blade transition, and ONE long gray blade in their exact original outline, widths and phase. These broad components are already visible in the source, not a request to reconstruct mechanical anatomy. The old grip has soft brown tonal patches only: no new pins, screws, rivets, wrap bands, grooves, wood grain, stitching or holes. Preserve existing dim coolgray blade edge/center light, including original weak source patches as soft paint; no new bevel lines, cutting notches, engraving, reflections or polished bright steel. Keep original dark olive square painted background, broad dim olive washes and black fullcanvas outer margins; no new frame, drop shadow, patterned field, concrete background or added objects. The original miniature icon stays deliberately softly painted, no enlarged block pattern or photo sharpening.",
+          "source_alpha_extrema": [
+            0,
+            255
+          ],
+          "fullcanvas_size": [
+            48,
+            48
+          ],
+          "source_black_outer_margin_columns": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ],
+          "source_black_outer_margin_rows": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        "runtime_qualification": {
+          "actual_UITextureID": 628,
+          "file": "Main/iStorePanel.cpp",
+          "line": 371,
+          "excerpt": "pColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );",
+          "qualification": "Fresh exact UITextures628→Textures5033, actual cold-steel tab runtime consumer; no selected live/GPU claim."
+        }
+      },
+      "numeric_preview": {
+        "id": 5033,
+        "source_native_type": "Transparent",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5033-raw.png",
+        "raw_sha256": "14148a844d6d05785761ec3d9aab2c1a1444cf4a50ef56d1fe4e49ce54202bc8",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          192,
+          192
+        ],
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "production_alpha_sha256": "8968bca646b2dbd8ca8783c37b8b363dde51ecef04e61496ae62b59d2ce3f680",
+        "native_premultiplied": true,
+        "scalar_gain": 1.03125,
+        "target_stored_luma": 34.68389435763889,
+        "actual_stored_luma": 34.6879079155816,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9881705572397813,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 904,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/5033-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/5033-native-stored-RGB.png"
+      },
+      "source_material_local_and_phase_diagnostics": {
+        "id": 5033,
+        "source_mean_RGB": [
+          30.15625,
+          37.24262152777778,
+          22.66970486111111
+        ],
+        "production_stored_mean_RGB": [
+          30.04812282986111,
+          37.49452039930556,
+          20.548421223958332
+        ],
+        "source_peak_RGB": [
+          255.0,
+          255.0,
+          255.0
+        ],
+        "production_peak_RGB": [
+          253.0,
+          255.0,
+          255.0
+        ],
+        "source_relative_ROI_diagnostics": [
+          {
+            "name": "brown-grip",
+            "source_native_bounds": [
+              10,
+              14,
+              18,
+              19
+            ],
+            "source_RGB": [
+              72.525,
+              57.275,
+              51.775
+            ],
+            "production_RGB": [
+              82.509375,
+              59.028125,
+              47.3078125
+            ],
+            "delta_RGB": [
+              9.984375,
+              1.7531250000000043,
+              -4.467187500000001
+            ]
+          },
+          {
+            "name": "gray-blade",
+            "source_native_bounds": [
+              27,
+              27,
+              38,
+              34
+            ],
+            "source_RGB": [
+              106.25974025974025,
+              116.3896103896104,
+              117.81818181818181
+            ],
+            "production_RGB": [
+              105.62256493506493,
+              117.03652597402598,
+              118.3823051948052
+            ],
+            "delta_RGB": [
+              -0.6371753246753258,
+              0.6469155844155807,
+              0.5641233766233853
+            ]
+          },
+          {
+            "name": "guard",
+            "source_native_bounds": [
+              20,
+              20,
+              25,
+              25
+            ],
+            "source_RGB": [
+              100.72,
+              101.16,
+              104.32
+            ],
+            "production_RGB": [
+              100.0875,
+              99.9025,
+              100.555
+            ],
+            "delta_RGB": [
+              -0.6324999999999932,
+              -1.2574999999999932,
+              -3.7649999999999864
+            ]
+          },
+          {
+            "name": "olive-background-topright",
+            "source_native_bounds": [
+              30,
+              6,
+              41,
+              18
+            ],
+            "source_RGB": [
+              36.40151515151515,
+              50.946969696969695,
+              23.356060606060606
+            ],
+            "production_RGB": [
+              35.87310606060606,
+              51.90056818181818,
+              20.312026515151516
+            ],
+            "delta_RGB": [
+              -0.5284090909090864,
+              0.9535984848484844,
+              -3.04403409090909
+            ]
+          },
+          {
+            "name": "olive-background-bottomleft",
+            "source_native_bounds": [
+              7,
+              30,
+              22,
+              40
+            ],
+            "source_RGB": [
+              39.48,
+              53.24666666666667,
+              22.846666666666668
+            ],
+            "production_RGB": [
+              38.73125,
+              54.5425,
+              19.5625
+            ],
+            "delta_RGB": [
+              -0.748749999999994,
+              1.2958333333333272,
+              -3.2841666666666676
+            ]
+          },
+          {
+            "name": "top-new-frame-check",
+            "source_native_bounds": [
+              7,
+              5,
+              40,
+              7
+            ],
+            "source_RGB": [
+              33.121212121212125,
+              46.333333333333336,
+              23.727272727272727
+            ],
+            "production_RGB": [
+              32.55681818181818,
+              47.59280303030303,
+              21.338068181818183
+            ],
+            "delta_RGB": [
+              -0.5643939393939448,
+              1.2594696969696955,
+              -2.389204545454543
+            ]
+          }
+        ],
+        "pattern_phase": {
+          "gray_existing_pommel_guard_blade_union_threshold_bounds": {
+            "source_native": [
+              9,
+              10,
+              41,
+              37
+            ],
+            "production_physical": [
+              32,
+              40,
+              164,
+              151
+            ],
+            "production_original_logical": [
+              8.0,
+              10.0,
+              41.0,
+              37.75
+            ]
+          },
+          "top_field_rows": [
+            {
+              "logical_y": 4,
+              "source_meanRGB": [
+                17.818181818181817,
+                24.96969696969697,
+                13.242424242424242
+              ],
+              "production_meanRGB": [
+                15.193181818181818,
+                22.598484848484848,
+                9.784090909090908
+              ]
+            },
+            {
+              "logical_y": 5,
+              "source_meanRGB": [
+                32.878787878787875,
+                46.0,
+                23.363636363636363
+              ],
+              "production_meanRGB": [
+                32.21969696969697,
+                47.121212121212125,
+                21.78409090909091
+              ]
+            },
+            {
+              "logical_y": 6,
+              "source_meanRGB": [
+                33.36363636363637,
+                46.666666666666664,
+                24.09090909090909
+              ],
+              "production_meanRGB": [
+                32.89393939393939,
+                48.06439393939394,
+                20.892045454545453
+              ]
+            },
+            {
+              "logical_y": 7,
+              "source_meanRGB": [
+                35.03030303030303,
+                48.39393939393939,
+                23.515151515151516
+              ],
+              "production_meanRGB": [
+                34.11742424242424,
+                49.34090909090909,
+                19.876893939393938
+              ]
+            },
+            {
+              "logical_y": 8,
+              "source_meanRGB": [
+                34.21212121212121,
+                47.54545454545455,
+                21.696969696969695
+              ],
+              "production_meanRGB": [
+                33.87310606060606,
+                49.01704545454545,
+                17.886363636363637
+              ]
+            },
+            {
+              "logical_y": 9,
+              "source_meanRGB": [
+                34.09090909090909,
+                47.06060606060606,
+                19.939393939393938
+              ],
+              "production_meanRGB": [
+                34.31818181818182,
+                49.00568181818182,
+                16.117424242424242
+              ]
+            }
+          ]
+        },
+        "no_artist_RGB_patch": true,
+        "qualification": "Fullcanvas source/production read-only diagnostics. Values document material fidelity, not arbitrary automatic hold thresholds.",
+        "native_source_over_recipe": "Historical storedRGB/production once-premultiplied storedRGB + bg*(1-exact whole sourceA), bg24/192. Root final native typed/premul audit required."
+      },
+      "private_QA": {
+        "whole_source_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "native_dark_light_source_over_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Actual UI628→iStorePanel.cpp371 cold-steel tab. Whole source48squareRGBA/RGB/A/NN16x, raw1254square and fullnative192squareRGBA/storedRGB/dark-light source-over inspected. One existing diagonal knife/brown grip/small gray end/short guard/gray blade maintained, no invented pins/grooves/text, original blade localmean106.26/116.39/117.82 to105.62/117.04/118.38 close; gray union bounds source[9,10,41,37]→logical[8,10,41,37.75], small broad outline expansion disclosed. Hold is actual extra rectangular inner dark-green frame/light edge inset from the painted-field boundary, visible in fullraw/native view. Original only outer soft square boundary/old dim washes; new straight inner frame creates double boundary, prohibited added line/UV/background form. Pureglobalgain1.03125 matchesluma34.68389436→34.68790792 but cannot remove added frame without forbidden artwork patch. Grip warmer+9.984R/+1.753G/−4.467B and backgroundblue−3 recorded, not sole automatic hold. Defaultpadding0/fulloriginalAexact/premultiplyonce, no sourceRGBrepair/crop/registration/optout/retry.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Fresh actual UITextures/RPGPerks normalicon/runtime consumer proof retained. Root alone native/import/shared/build/Game/C++/Git. Source proof is not a selected child actual live/GPU claim; native typed/premul audit required for all Transparent selected sources."
+    },
+    {
+      "id": 6452,
+      "status": "held-native-red-background-saturation-and-local-light-drift",
+      "source_record": {
+        "id": 6452,
+        "texture": {
+          "ID": 6452,
+          "Width": 48,
+          "Height": 48,
+          "NMips": 1,
+          "AverageColor": -1303175406,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Icons\\ICO_0123.tga",
+          "Format": "8888",
+          "UserName": "Command Tool",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "2D"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 849,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Command Tool"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 849,
+              "name": "Command Tool",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          48,
+          48
+        ],
+        "source_sha256": "8b7f4fcd246b4b1a3138520b4fd15bc4374a46643244ab44384ad8e46de453d6",
+        "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "release_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/6452.png",
+        "source_match": "Exact decoded RGBA and dimensions match release",
+        "source_detail_constraints": "Source48x48, production192x192. Exactly ONE existing diagonal screwdriver-like painted silhouette runs upperLEFT to lowerRIGHT. The source has ONE elongated dim olive/dark central grip mass, exactly TWO existing warm yellow-orange end fields at the upperleft end and the lower transition, and ONE muted gray narrow shaft extending lowerRIGHT. Preserve those broad parts and their exact source widths, lengths, centerline, diagonal placement and soft outlines; do not reconstruct hidden mechanics. The olive grip stays a soft dark painted mass with its existing weak internal tone bands, without new knurling, ribs, flutes, screws, logos, holes or crisp sculpted edges. Orange end fields retain original dim amber light and softened asymmetric contour, not bright glowing caps. Shaft preserves original gray tone and narrow rounded/blurry terminal shape, with no new tip detail, slit, chrome shine or blade. Preserve the old diffuse red/brown square background washes, their strength/phase and original outer black canvas margins; no new background frame, noise, lettering or objects. Fine original-scale painted continuity only.",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "03b413e3416ad5fb6a956fb78be718430ebb92b99e7abda4eb33e23b751a7c67",
+            "ef8204549ca32ba78915baa0568a82f56cb693284133f39a305cd8d53698721b"
+          ]
+        }
+      },
+      "generation_provenance": {
+        "id": 6452,
+        "batch": "ui-twenty-seventh",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T07:30:15.194826+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing diagonal screwdriver-like painted silhouette runs upperLEFT to lowerRIGHT. The source has ONE elongated dim olive/dark central grip mass, exactly TWO existing warm yellow-orange end fields at the upperleft end and the lower transition, and ONE muted gray narrow shaft extending lowerRIGHT. Preserve those broad parts and their exact source widths, lengths, centerline, diagonal placement and soft outlines; do not reconstruct hidden mechanics. The olive grip stays a soft dark painted mass with its existing weak internal tone bands, without new knurling, ribs, flutes, screws, logos, holes or crisp sculpted edges. Orange end fields retain original dim amber light and softened asymmetric contour, not bright glowing caps. Shaft preserves original gray tone and narrow rounded/blurry terminal shape, with no new tip detail, slit, chrome shine or blade. Preserve the old diffuse red/brown square background washes, their strength/phase and original outer black canvas margins; no new background frame, noise, lettering or objects. Fine original-scale painted continuity only.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6452-prompt.txt",
+        "prompt_sha256": "a26bfac742c2ed1a1261efea08fe6970037ac7eb8aa1e5dbf61097402ce98b89",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6452.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6452-ui-twenty-seventh-source-rgb-support.png"
+        ],
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "03b413e3416ad5fb6a956fb78be718430ebb92b99e7abda4eb33e23b751a7c67",
+            "ef8204549ca32ba78915baa0568a82f56cb693284133f39a305cd8d53698721b"
+          ]
+        },
+        "target_size": [
+          192,
+          192
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2384,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Faithfully enhance only the existing full original Silent Storm painted-game color texture. Image1 is exact historical fullRGBA; image2 is identical full historical storedRGB enlarged solely by nearest-neighbor, showing original forms and their UV phase. Use the ENTIRE square canvas in the exact retail orientation. Preserve exact normalized placement, size, outline, material boundaries, local palette, muted light strength and the number of source components. Only gently resolve fine existing painted tonal continuity at the original feature scale; retain deliberate original soft blur. No photographic materials, grain, embossing, raised relief, new geometry, sharp rims, highlights, holes, symbols, text or physical details. Do not reinterpret nearest-neighbor codec blocks as enlarged mosaic cells. Full source alpha is restored separately; preserve entire RGB authoring canvas and original black outside margins. Whole global numerical brightness follows without artwork RGB copying or patching. Do not crop, pad, rotate, register, recenter, repack, use bounding boxes or create comparisons. Return one entire texture. Source48x48, production192x192. Exactly ONE existing diagonal screwdriver-like painted silhouette runs upperLEFT to lowerRIGHT. The source has ONE elongated dim olive/dark central grip mass, exactly TWO existing warm yellow-orange end fields at the upperleft end and the lower transition, and ONE muted gray narrow shaft extending lowerRIGHT. Preserve those broad parts and their exact source widths, lengths, centerline, diagonal placement and soft outlines; do not reconstruct hidden mechanics. The olive grip stays a soft dark painted mass with its existing weak internal tone bands, without new knurling, ribs, flutes, screws, logos, holes or crisp sculpted edges. Orange end fields retain original dim amber light and softened asymmetric contour, not bright glowing caps. Shaft preserves original gray tone and narrow rounded/blurry terminal shape, with no new tip detail, slit, chrome shine or blade. Preserve the old diffuse red/brown square background washes, their strength/phase and original outer black canvas margins; no new background frame, noise, lettering or objects. Fine original-scale painted continuity only.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/6452.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6452-ui-twenty-seventh-source-rgb-support.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T07:30:53.682250+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-c06cfe2d-042a-4551-be5d-19742391480f.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6452-raw.png",
+        "raw_sha256": "d8de863f296d94333d5016fb4afbd49e9d9eb8161d84733ae2ebbf1172b799ab",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 6452,
+        "batch": "ui-twenty-seventh",
+        "checked_utc": "2026-10-08T07:30:18.790856+00:00",
+        "sources_count": 2384,
+        "queue_count": 2846,
+        "sources_sha256": "b96cae1ad8fef570c92fd2b79f57d69583534f95bde1f25c84cc266e49dc9b4f",
+        "queue_sha256": "a0ae1146dfc29cd54a95842cd887c26ffa250a975ad955a8c2166b13d77cee44",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "prompt_sha256": "a26bfac742c2ed1a1261efea08fe6970037ac7eb8aa1e5dbf61097402ce98b89",
+        "reference_recipe": {
+          "type": "whole-original-storedRGB-nearest",
+          "source_size": [
+            48,
+            48
+          ],
+          "guide_size": [
+            768,
+            768
+          ],
+          "source_bbox": [
+            0,
+            0,
+            48,
+            48
+          ],
+          "affine_prewarp": null,
+          "operations": "Whole source exact storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Whole generatedRGBA LANCZOS exactsource4x/defaultpad/pureglobal scalar/full originalA restoration. All selected Transparent: storedRGB native premultiplied once; root typednative audit required.",
+          "references_sha256": [
+            "03b413e3416ad5fb6a956fb78be718430ebb92b99e7abda4eb33e23b751a7c67",
+            "ef8204549ca32ba78915baa0568a82f56cb693284133f39a305cd8d53698721b"
+          ]
+        },
+        "started_metadata_sha256": "a558b058b21de07c79d4fd78b006459bdf9bd90e18f1d2702514af055eba907d",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 6452,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Source48x48, production192x192. Exactly ONE existing diagonal screwdriver-like painted silhouette runs upperLEFT to lowerRIGHT. The source has ONE elongated dim olive/dark central grip mass, exactly TWO existing warm yellow-orange end fields at the upperleft end and the lower transition, and ONE muted gray narrow shaft extending lowerRIGHT. Preserve those broad parts and their exact source widths, lengths, centerline, diagonal placement and soft outlines; do not reconstruct hidden mechanics. The olive grip stays a soft dark painted mass with its existing weak internal tone bands, without new knurling, ribs, flutes, screws, logos, holes or crisp sculpted edges. Orange end fields retain original dim amber light and softened asymmetric contour, not bright glowing caps. Shaft preserves original gray tone and narrow rounded/blurry terminal shape, with no new tip detail, slit, chrome shine or blade. Preserve the old diffuse red/brown square background washes, their strength/phase and original outer black canvas margins; no new background frame, noise, lettering or objects. Fine original-scale painted continuity only.",
+        "source_RGBA_sha256": "435497186b705e9cb8f1d4927634fe89fc678eb919c67dd5bca3a1eafb6acc07",
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "source_numeric_phase_diagnostic": {
+          "component_count_proof": "Source48x48, production192x192. Exactly ONE existing diagonal screwdriver-like painted silhouette runs upperLEFT to lowerRIGHT. The source has ONE elongated dim olive/dark central grip mass, exactly TWO existing warm yellow-orange end fields at the upperleft end and the lower transition, and ONE muted gray narrow shaft extending lowerRIGHT. Preserve those broad parts and their exact source widths, lengths, centerline, diagonal placement and soft outlines; do not reconstruct hidden mechanics. The olive grip stays a soft dark painted mass with its existing weak internal tone bands, without new knurling, ribs, flutes, screws, logos, holes or crisp sculpted edges. Orange end fields retain original dim amber light and softened asymmetric contour, not bright glowing caps. Shaft preserves original gray tone and narrow rounded/blurry terminal shape, with no new tip detail, slit, chrome shine or blade. Preserve the old diffuse red/brown square background washes, their strength/phase and original outer black canvas margins; no new background frame, noise, lettering or objects. Fine original-scale painted continuity only.",
+          "source_alpha_extrema": [
+            0,
+            255
+          ],
+          "fullcanvas_size": [
+            48,
+            48
+          ],
+          "source_black_outer_margin_columns": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ],
+          "source_black_outer_margin_rows": [
+            0,
+            1,
+            2,
+            3,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        "runtime_qualification": {
+          "actual_UITextureID": 849,
+          "file": "Main/iUnitIconBar.cpp",
+          "line": 320,
+          "excerpt": "CreateButton( 849, 850, CComplexButton::NORMAL, 4405, SLOT_R1C1, 1, NGame::UA_USETOOL, NWorld::CUnit::ST_NORMAL_TOOL, \"usetool\" );",
+          "qualification": "Actual runtime use-tool button, UITextures849→Textures6452. Previously source-only UI26 unselected/no call; truthful new exactsource re-audit. No selected live/GPU claim."
+        }
+      },
+      "numeric_preview": {
+        "id": 6452,
+        "source_native_type": "Transparent",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6452-raw.png",
+        "raw_sha256": "d8de863f296d94333d5016fb4afbd49e9d9eb8161d84733ae2ebbf1172b799ab",
+        "raw_size": [
+          1254,
+          1254
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          192,
+          192
+        ],
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "production_alpha_sha256": "8968bca646b2dbd8ca8783c37b8b363dde51ecef04e61496ae62b59d2ce3f680",
+        "native_premultiplied": true,
+        "scalar_gain": 1.1046142578125,
+        "target_stored_luma": 41.14153862847222,
+        "actual_stored_luma": 41.13787679036459,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.9837909653026902,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 34,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/6452-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-ui-twenty-seventh/native4x/6452-native-stored-RGB.png"
+      },
+      "source_material_local_and_phase_diagnostics": {
+        "id": 6452,
+        "source_mean_RGB": [
+          82.19140625,
+          31.23220486111111,
+          18.42621527777778
+        ],
+        "production_stored_mean_RGB": [
+          90.75070529513889,
+          29.00141059027778,
+          15.269639756944445
+        ],
+        "source_peak_RGB": [
+          255.0,
+          217.0,
+          154.0
+        ],
+        "production_peak_RGB": [
+          255.0,
+          236.0,
+          161.0
+        ],
+        "source_relative_ROI_diagnostics": [
+          {
+            "name": "upper-orange-field",
+            "source_native_bounds": [
+              10,
+              9,
+              16,
+              15
+            ],
+            "source_RGB": [
+              208.36111111111111,
+              142.19444444444446,
+              42.02777777777778
+            ],
+            "production_RGB": [
+              213.71527777777777,
+              143.63541666666666,
+              33.83506944444444
+            ],
+            "delta_RGB": [
+              5.354166666666657,
+              1.4409722222222001,
+              -8.192708333333336
+            ]
+          },
+          {
+            "name": "lower-orange-field",
+            "source_native_bounds": [
+              26,
+              26,
+              31,
+              31
+            ],
+            "source_RGB": [
+              214.84,
+              142.48,
+              38.52
+            ],
+            "production_RGB": [
+              234.8625,
+              152.48,
+              31.615
+            ],
+            "delta_RGB": [
+              20.022500000000008,
+              10.0,
+              -6.905000000000005
+            ]
+          },
+          {
+            "name": "central-olive-grip",
+            "source_native_bounds": [
+              16,
+              16,
+              23,
+              24
+            ],
+            "source_RGB": [
+              69.60714285714286,
+              66.60714285714286,
+              46.839285714285715
+            ],
+            "production_RGB": [
+              75.60602678571429,
+              69.87723214285714,
+              44.30580357142857
+            ],
+            "delta_RGB": [
+              5.998883928571431,
+              3.2700892857142776,
+              -2.533482142857146
+            ]
+          },
+          {
+            "name": "gray-shaft",
+            "source_native_bounds": [
+              33,
+              33,
+              39,
+              39
+            ],
+            "source_RGB": [
+              65.83333333333333,
+              45.5,
+              47.77777777777778
+            ],
+            "production_RGB": [
+              77.90104166666667,
+              55.56597222222222,
+              57.560763888888886
+            ],
+            "delta_RGB": [
+              12.067708333333343,
+              10.065972222222221,
+              9.782986111111107
+            ]
+          },
+          {
+            "name": "red-background-right",
+            "source_native_bounds": [
+              33,
+              10,
+              40,
+              25
+            ],
+            "source_RGB": [
+              155.0857142857143,
+              29.485714285714284,
+              17.485714285714284
+            ],
+            "production_RGB": [
+              176.20119047619048,
+              20.63809523809524,
+              10.560714285714285
+            ],
+            "delta_RGB": [
+              21.115476190476187,
+              -8.847619047619045,
+              -6.924999999999999
+            ]
+          },
+          {
+            "name": "dim-brown-background-bottomleft",
+            "source_native_bounds": [
+              7,
+              33,
+              17,
+              40
+            ],
+            "source_RGB": [
+              151.31428571428572,
+              35.58571428571429,
+              20.928571428571427
+            ],
+            "production_RGB": [
+              170.12767857142856,
+              28.830357142857142,
+              15.432142857142857
+            ],
+            "delta_RGB": [
+              18.813392857142844,
+              -6.755357142857147,
+              -5.49642857142857
+            ]
+          }
+        ],
+        "pattern_phase": {
+          "upper_orange_threshold_bounds": {
+            "source_native": [
+              9,
+              6,
+              18,
+              15
+            ],
+            "production_physical": [
+              36,
+              24,
+              72,
+              60
+            ],
+            "production_original_logical": [
+              9.0,
+              6.0,
+              18.0,
+              15.0
+            ]
+          },
+          "lower_orange_threshold_bounds": {
+            "source_native": [
+              24,
+              24,
+              33,
+              33
+            ],
+            "production_physical": [
+              96,
+              94,
+              133,
+              132
+            ],
+            "production_original_logical": [
+              24.0,
+              23.5,
+              33.25,
+              33.0
+            ]
+          }
+        },
+        "no_artist_RGB_patch": true,
+        "qualification": "Fullcanvas source/production read-only diagnostics. Values document material fidelity, not arbitrary automatic hold thresholds.",
+        "native_source_over_recipe": "Historical storedRGB/production once-premultiplied storedRGB + bg*(1-exact whole sourceA), bg24/192. Root final native typed/premul audit required."
+      },
+      "private_QA": {
+        "whole_source_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "native_dark_light_source_over_inspected": true,
+        "full_source_alpha_exact": true,
+        "source_material_pattern_UV_judgment": "Actual UI849→iUnitIconBar.cpp320 normal UA_USETOOL button. Truthful previous UI26 source-only unselected/no-call re-audit, first builtin here. Whole source48squareRGBA/RGB/A/NN16x, raw1254square and native192squareRGBA/storedRGB/dark-light source-over inspected. Original one diagonal tool, one dim olive grip, two warm end fields and one gray shaft retained; no added screws/ribs/glyph/hardware. Upperorange thresholdbounds[9,6,18,15] unchanged, lower[24,24,33,33]→logical[24,23.5,33.25,33], broad count/phase preserved. Hold actual native color/light-strength change: original dim red/brown field is substantially more saturated vivid red, rightbackground155.09/29.49/17.49→176.20/20.64/10.56 (+21.12R/−8.85G/−6.92B), lowerleft151.31/35.59/20.93→170.13/28.83/15.43. Amber lowerend214.84/142.48/38.52→234.86/152.48/31.62 brighter and more saturated; shaftROI+12.07/+10.07/+9.78 reinforces local lift. WholeRGB82.1914/31.2322/18.4262→90.7507/29.0014/15.2696 changes material palette even though scalar gain1.1046142578 matchesstoredluma41.14153863→41.13787679. This is visible wholeview material/color judgment, not automatic gain/peak cutoff. OriginalAexact/defaultpadding0/premultiplyonce; no RGBrepair/registration/crop/optout/retry.",
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false
+      },
+      "runtime_qualification": "Fresh actual UITextures/RPGPerks normalicon/runtime consumer proof retained. Root alone native/import/shared/build/Game/C++/Git. Source proof is not a selected child actual live/GPU claim; native typed/premul audit required for all Transparent selected sources."
+    }
+  ],
+  "source_only_ids": [
+    5035,
+    5037,
+    5800,
+    5801,
+    5811,
+    5812,
+    5813,
+    5817,
+    5818
+  ],
+  "source_only_deferred": [
+    {
+      "id": 5035,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI630 Store Grenades painted icon, one dark rounded body with original segmented gray patches and lever-like side outline. Whole sourceRGBA/RGB/A/parity/typedUI inspected; exact internal segmented pattern/part count needs independent proof before prompt. No call or invented physical hardware; genuine pending, not technical.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 630,
+          "name": "Store Grenades",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5035,
+        "source_record": {
+          "id": 5035,
+          "texture": {
+            "ID": 5035,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306844905,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0094.tga",
+            "Format": "8888",
+            "UserName": "Store Grenades",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 630,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Store Grenades"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 630,
+                "name": "Store Grenades",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "bc0e74efaae3ae74b9b3af546da96cf68d50b003183f20a51097a6b4b9b4d6bb",
+          "source_rgba_sha256": "0dcc0841ed0220a951e964578864b987bdffe69aa96f9ef1fce3bc72c4e72326",
+          "release_rgba_sha256": "0dcc0841ed0220a951e964578864b987bdffe69aa96f9ef1fce3bc72c4e72326",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5035.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5035,
+          "texture": {
+            "ID": 5035,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306844905,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0094.tga",
+            "Format": "8888",
+            "UserName": "Store Grenades",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 630,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Store Grenades"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 630,
+              "name": "Store Grenades",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "bc0e74efaae3ae74b9b3af546da96cf68d50b003183f20a51097a6b4b9b4d6bb",
+        "release_mmp_sha256": "bc0e74efaae3ae74b9b3af546da96cf68d50b003183f20a51097a6b4b9b4d6bb",
+        "original_png_sha256": "e5bfbed83087eb0f753f396ec01b969cdca1a3876b2a0e47cabc1993c8b75c6f",
+        "source_rgba_sha256": "0dcc0841ed0220a951e964578864b987bdffe69aa96f9ef1fce3bc72c4e72326",
+        "source_rgb_sha256": "b5d04c654d8001ed96cd5baeff77aa82442e6d5ed83b8159ac954c0e618ee0e5",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5037,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI632 Store Other painted tan/brown pouch-like icon, black upper curved loop and small muted pale patch. Whole sourceRGBA/RGB/A/parity/typedUI inspected. Soft ambiguous closure/loop anatomy has not been proved sufficiently for an exact-count prompt; zero calls, no guessed mechanism or extra hardware.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 632,
+          "name": "Store Other",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5037,
+        "source_record": {
+          "id": 5037,
+          "texture": {
+            "ID": 5037,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1304873426,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0095.tga",
+            "Format": "8888",
+            "UserName": "Store Other",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 632,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Store Other"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 632,
+                "name": "Store Other",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "e76bfa102e8e655cd1c71737ffd14a4be21d8590f9a7facd0623f68fd9814acf",
+          "source_rgba_sha256": "b286d8cc0a33c3a7ce2210da962cc19f121ee2f60647b494f0fcc724fdca5115",
+          "release_rgba_sha256": "b286d8cc0a33c3a7ce2210da962cc19f121ee2f60647b494f0fcc724fdca5115",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5037.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5037,
+          "texture": {
+            "ID": 5037,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1304873426,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Icons\\ICO_0095.tga",
+            "Format": "8888",
+            "UserName": "Store Other",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 632,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Store Other"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 632,
+              "name": "Store Other",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e76bfa102e8e655cd1c71737ffd14a4be21d8590f9a7facd0623f68fd9814acf",
+        "release_mmp_sha256": "e76bfa102e8e655cd1c71737ffd14a4be21d8590f9a7facd0623f68fd9814acf",
+        "original_png_sha256": "30a5cdb222fbd30dc5aea3ebe470bd37a6e2c0ab3b843758d7b8f8e5cc322715",
+        "source_rgba_sha256": "b286d8cc0a33c3a7ce2210da962cc19f121ee2f60647b494f0fcc724fdca5115",
+        "source_rgb_sha256": "16fe06ebbe5584a56c3348cceb374fc8a12b305e7ae565d6aaf8bf943d0f8df9",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5800,
+      "status": "source-only-unselected-genuine-art",
+      "reason": "Genuine UI716 Defence2 perk painted oval/circular gray-pink field on mauve, original broad lowerleft shadow. Fullsource/parity/actualUI→RPGPerks proof inspected. Unselected within three-call bound, no blanket rejection; future prompt must independently prove the solid-center/rim/weak cornerpatch and avoid interpreting tiny light patches as numerals.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 716,
+          "name": "Defence2",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 17,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 39,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 47,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5800,
+        "source_record": {
+          "id": 5800,
+          "texture": {
+            "ID": 5800,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1305073363,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Defence_02.tga",
+            "Format": "8888",
+            "UserName": "Defence2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 716,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Defence2"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 716,
+                "name": "Defence2",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 17,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 39,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 47,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "2acc7fdacb02431c4babb11fcd0e30996e05af549330e6162fac558b7ed1854c",
+          "source_rgba_sha256": "954d9ea6e399de4c92554969e2ca51eb58d115d544f58a323d6e24287b6b1811",
+          "release_rgba_sha256": "954d9ea6e399de4c92554969e2ca51eb58d115d544f58a323d6e24287b6b1811",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5800.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5800,
+          "texture": {
+            "ID": 5800,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1305073363,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Defence_02.tga",
+            "Format": "8888",
+            "UserName": "Defence2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 716,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Defence2"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 716,
+              "name": "Defence2",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 17,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 39,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 47,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "2acc7fdacb02431c4babb11fcd0e30996e05af549330e6162fac558b7ed1854c",
+        "release_mmp_sha256": "2acc7fdacb02431c4babb11fcd0e30996e05af549330e6162fac558b7ed1854c",
+        "original_png_sha256": "279f5a45191c06dd8c338af06b3c78340462ed338f521a546079da18404e47ad",
+        "source_rgba_sha256": "954d9ea6e399de4c92554969e2ca51eb58d115d544f58a323d6e24287b6b1811",
+        "source_rgb_sha256": "fc40787c99ae507e2c8eee624f3a7afb75ff9a670cd30b01ca3302b0474fe0b1",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5801,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI717 Defence3 painted orange/yellow light spot/trail on original mauve field. Fullsource/parity/actualUI inspected. Source brightness/soft falloff and tiny weak cornerpatch need independent source-phase/light-strength proof; no invented lettering, physical impact or analytic-original-only designation, zero calls.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 717,
+          "name": "Defence3",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 14,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5801,
+        "source_record": {
+          "id": 5801,
+          "texture": {
+            "ID": 5801,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1302907090,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Defence_03.tga",
+            "Format": "8888",
+            "UserName": "Defence3",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 717,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Defence3"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 717,
+                "name": "Defence3",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 14,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "400f7d94b1a14c8f69a356f313ce2b9f7684b1235fb9ff31f316d0b28f09d090",
+          "source_rgba_sha256": "cf10d8000b48bb2f3fa4304a8e08676c39f48bab470f0120ab6ab310e89dfbc0",
+          "release_rgba_sha256": "cf10d8000b48bb2f3fa4304a8e08676c39f48bab470f0120ab6ab310e89dfbc0",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5801.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5801,
+          "texture": {
+            "ID": 5801,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1302907090,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Defence_03.tga",
+            "Format": "8888",
+            "UserName": "Defence3",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 717,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Defence3"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 717,
+              "name": "Defence3",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 14,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "400f7d94b1a14c8f69a356f313ce2b9f7684b1235fb9ff31f316d0b28f09d090",
+        "release_mmp_sha256": "400f7d94b1a14c8f69a356f313ce2b9f7684b1235fb9ff31f316d0b28f09d090",
+        "original_png_sha256": "23e7ef0392920dc8c647a6bb4aec359e61ecef149e0b8911ed23ef24ff6f8773",
+        "source_rgba_sha256": "cf10d8000b48bb2f3fa4304a8e08676c39f48bab470f0120ab6ab310e89dfbc0",
+        "source_rgb_sha256": "2e3d36a0be8b01f744150b75162c1f1745e59c989bad3c7c4773508b07ef534e",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5811,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI727 Experience1 perk painted paired lobed oval silhouette on black RGB. Whole sourceRGBA/A/parity/typedUI inspected; layered internal lobe boundaries and repeated soft ribs require exact native-count/phase proof. No new sulci/anatomy/text and no entire-family ban; zero calls.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 727,
+          "name": "Experience1",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 11,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5811,
+        "source_record": {
+          "id": 5811,
+          "texture": {
+            "ID": 5811,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783471,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_01.tga",
+            "Format": "8888",
+            "UserName": "Experience1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 727,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Experience1"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 727,
+                "name": "Experience1",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 11,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "88fe06204f608a76e18bda859d8419bd2360f8ab1b09506af63899c4b73fb769",
+          "source_rgba_sha256": "05bae2f8c74b62f2a78d3c970eb64ff5ba471986b732cd9070b397ba41a08e40",
+          "release_rgba_sha256": "05bae2f8c74b62f2a78d3c970eb64ff5ba471986b732cd9070b397ba41a08e40",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5811.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5811,
+          "texture": {
+            "ID": 5811,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783471,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_01.tga",
+            "Format": "8888",
+            "UserName": "Experience1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 727,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Experience1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 727,
+              "name": "Experience1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 11,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "88fe06204f608a76e18bda859d8419bd2360f8ab1b09506af63899c4b73fb769",
+        "release_mmp_sha256": "88fe06204f608a76e18bda859d8419bd2360f8ab1b09506af63899c4b73fb769",
+        "original_png_sha256": "24d5111896207d4f2902743da8d1a1845bdde7c6f3cdfb5591288936b7e83d1d",
+        "source_rgba_sha256": "05bae2f8c74b62f2a78d3c970eb64ff5ba471986b732cd9070b397ba41a08e40",
+        "source_rgb_sha256": "dfb51313eca24478891431c089c9a90fc7997a262770e47c5588a26c155f3481",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5812,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI728 Experience2 layered paired-lobe painted icon. Whole sourceRGBA/A/parity/typedUI inspected. Fine horizontal/paired boundaries need independent exact-count/phase proof; no guessing lobes/ribs as a conventional anatomy model. Genuine pending, zero calls.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 728,
+          "name": "Experience2",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 60,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5812,
+        "source_record": {
+          "id": 5812,
+          "texture": {
+            "ID": 5812,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783470,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_02.tga",
+            "Format": "8888",
+            "UserName": "Experience2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 728,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Experience2"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 728,
+                "name": "Experience2",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 60,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "fee98ed840b536cddf086a03a4e7fec961cd542cf61e8e782fa1753c421bb63a",
+          "source_rgba_sha256": "2df73691642780479a301c1c5fbe82e3fab91a5f7d2d335ac7899f211925ce1f",
+          "release_rgba_sha256": "2df73691642780479a301c1c5fbe82e3fab91a5f7d2d335ac7899f211925ce1f",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5812.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5812,
+          "texture": {
+            "ID": 5812,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783470,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_02.tga",
+            "Format": "8888",
+            "UserName": "Experience2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 728,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Experience2"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 728,
+              "name": "Experience2",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 60,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "fee98ed840b536cddf086a03a4e7fec961cd542cf61e8e782fa1753c421bb63a",
+        "release_mmp_sha256": "fee98ed840b536cddf086a03a4e7fec961cd542cf61e8e782fa1753c421bb63a",
+        "original_png_sha256": "8ae2aa4504006ab74731405c3b143696de4b354130d651f1d0271b0db0dfc52e",
+        "source_rgba_sha256": "2df73691642780479a301c1c5fbe82e3fab91a5f7d2d335ac7899f211925ce1f",
+        "source_rgb_sha256": "5bd6198caf7782683c47bbd48d02dafe66a93ed24a55fccc0b612147cfc63cd6",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5813,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI729 Experience3 layered paired-lobe painted icon. Whole sourceRGBA/A/parity/typedUI inspected. Dense original softened nested pattern count has not been proven in this bounded package; no invented rib counts, no group exclusion or technical classification.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 729,
+          "name": "Experience3",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 61,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5813,
+        "source_record": {
+          "id": 5813,
+          "texture": {
+            "ID": 5813,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306981362,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_03.tga",
+            "Format": "8888",
+            "UserName": "Experience3",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 729,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Experience3"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 729,
+                "name": "Experience3",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 61,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "bb13c5f4aa211ab531046992d26507c6557f264a715442bdf8259c222411f586",
+          "source_rgba_sha256": "00905a8f05d645f813bdcf4ae665a521379350dc0d7a26b15b0e9a8fe4c378c9",
+          "release_rgba_sha256": "00905a8f05d645f813bdcf4ae665a521379350dc0d7a26b15b0e9a8fe4c378c9",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5813.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5813,
+          "texture": {
+            "ID": 5813,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306981362,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Exp_03.tga",
+            "Format": "8888",
+            "UserName": "Experience3",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 729,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Experience3"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 729,
+              "name": "Experience3",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 61,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "bb13c5f4aa211ab531046992d26507c6557f264a715442bdf8259c222411f586",
+        "release_mmp_sha256": "bb13c5f4aa211ab531046992d26507c6557f264a715442bdf8259c222411f586",
+        "original_png_sha256": "aed719f3ba70ee8af27e4d45a18a7f213dd863c3f4808b39b99c229b3d5d2f58",
+        "source_rgba_sha256": "00905a8f05d645f813bdcf4ae665a521379350dc0d7a26b15b0e9a8fe4c378c9",
+        "source_rgb_sha256": "00a9ee649fa066459f33b83eeec94b260f67a6963dfc372b2f103b0e481df8f6",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5817,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI733 Medicine1 hand/forearm-like painted icon on black storedRGB. Whole sourceRGBA/A/parity/typedUI inspected. Exact existing fingertip/overlap/palm contour count must be individually proved before generation, no guessed digits, anatomy or bandages. Genuine pending, no call.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 733,
+          "name": "Medicine1",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 56,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 62,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 63,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5817,
+        "source_record": {
+          "id": 5817,
+          "texture": {
+            "ID": 5817,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1307112440,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Healing_01.tga",
+            "Format": "8888",
+            "UserName": "Medicine1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 733,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Medicine1"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 733,
+                "name": "Medicine1",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 56,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 62,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 63,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "b444d7bb7356330add8f9df6bd89380b91452cd8de983ca8c9a39d4ddeea983d",
+          "source_rgba_sha256": "39d52824487d7a7b3928e2bd5908402c1640a787ff6955dcb02b8d866a6f6665",
+          "release_rgba_sha256": "39d52824487d7a7b3928e2bd5908402c1640a787ff6955dcb02b8d866a6f6665",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5817.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5817,
+          "texture": {
+            "ID": 5817,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1307112440,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Healing_01.tga",
+            "Format": "8888",
+            "UserName": "Medicine1",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 733,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Medicine1"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 733,
+              "name": "Medicine1",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 56,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 62,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 63,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "b444d7bb7356330add8f9df6bd89380b91452cd8de983ca8c9a39d4ddeea983d",
+        "release_mmp_sha256": "b444d7bb7356330add8f9df6bd89380b91452cd8de983ca8c9a39d4ddeea983d",
+        "original_png_sha256": "f61fad27f3d52cd5528b5a9b4459f7ec0aff6f2e6bce5c934389ea0e560c788e",
+        "source_rgba_sha256": "39d52824487d7a7b3928e2bd5908402c1640a787ff6955dcb02b8d866a6f6665",
+        "source_rgb_sha256": "be2b8daa965dce308344bbf62d4faa2f25ae32e581ad9fea7dd1773be74f2ff9",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5818,
+      "status": "source-only-deferred",
+      "reason": "Genuine UI734 Medicine2 hand/forearm painted icon with original dim gray wrap-like patch. Whole sourceRGBA/A/parity/typedUI inspected; soft overlapping finger contours and precise wrap boundary/count need independent proof. Genuine pending, not anatomy family ban; zero calls.",
+      "actual_UI_bindings": [
+        {
+          "ui_texture_id": 734,
+          "name": "Medicine2",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "RPGPerks",
+              "id": 24,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 57,
+              "field": "Icon"
+            },
+            {
+              "table": "RPGPerks",
+              "id": 58,
+              "field": "Icon"
+            }
+          ],
+          "cursors": []
+        }
+      ],
+      "source_check": {
+        "id": 5818,
+        "source_record": {
+          "id": 5818,
+          "texture": {
+            "ID": 5818,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783476,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Healing_02.tga",
+            "Format": "8888",
+            "UserName": "Medicine2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 734,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Medicine2"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 734,
+                "name": "Medicine2",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  48,
+                  48
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "RPGPerks",
+                    "id": 24,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 57,
+                    "field": "Icon"
+                  },
+                  {
+                    "table": "RPGPerks",
+                    "id": 58,
+                    "field": "Icon"
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            48,
+            48
+          ],
+          "source_sha256": "309e5673a45454b2283b4b7008484df68190a81ab9675e1f343cd23f4010250a",
+          "source_rgba_sha256": "fa6a40cc8c5df4202436e14a833386897b9c28d9fbe567b02543f975f3a18f9f",
+          "release_rgba_sha256": "fa6a40cc8c5df4202436e14a833386897b9c28d9fbe567b02543f975f3a18f9f",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5818.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5818,
+          "texture": {
+            "ID": 5818,
+            "Width": 48,
+            "Height": 48,
+            "NMips": 1,
+            "AverageColor": -1306783476,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\PerksPanel\\Icons\\Healing_02.tga",
+            "Format": "8888",
+            "UserName": "Medicine2",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "2D"
+          },
+          "logical_size": [
+            48,
+            48
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              48,
+              48
+            ],
+            "mips": 1,
+            "file_bytes": 9240,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 734,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Medicine2"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 734,
+              "name": "Medicine2",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                48,
+                48
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "RPGPerks",
+                  "id": 24,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 57,
+                  "field": "Icon"
+                },
+                {
+                  "table": "RPGPerks",
+                  "id": 58,
+                  "field": "Icon"
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "309e5673a45454b2283b4b7008484df68190a81ab9675e1f343cd23f4010250a",
+        "release_mmp_sha256": "309e5673a45454b2283b4b7008484df68190a81ab9675e1f343cd23f4010250a",
+        "original_png_sha256": "47d83750624df75f6b7d2bf18f4c82b3845cbb5aaf05013031b89464d584a35d",
+        "source_rgba_sha256": "fa6a40cc8c5df4202436e14a833386897b9c28d9fbe567b02543f975f3a18f9f",
+        "source_rgb_sha256": "52d1507748d1412688fa222570df5ecc2a35e56ebeb9116e80313b7bc14c40cd",
+        "source_alpha_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+        "dimensions": [
+          48,
+          48
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ],
+  "source_parity_count": 12,
+  "builtin_generation_calls": 3,
+  "recommended_original_only_ids": [],
+  "generation_unavailable_ids": [],
+  "scope_note": "Fresh interface discovery620remaining/553uncalled at2384registry snapshot. Twelve whole source/parity/actualtyped audits, three one-attempt built-in calls. Other541uncalled at snapshot uninspected here, not declared unsuitable. 6452 is truthful UI26 source-only unselected re-audit, no prior call/hold. No NPOT/alpha/Materials-only/complexpixels blanket exclusion; no source artwork RGB patch/repair, crop/BBox/registration/optout/retry. Forbidden printed bookcover replacement IDs3795/3796/3797/3953/6206/6207 untouched. UI26/25/24 and Heads stables immutable. Root sole shared/native/build/Game/C++/Git.",
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false
+}

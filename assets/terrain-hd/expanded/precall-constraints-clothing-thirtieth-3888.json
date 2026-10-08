@@ -1,0 +1,131 @@
+[
+  {
+    "id": 3888,
+    "exact_prompt": "Faithful HD PAINTED game diffuse atlas edit usingONLY supplied WHOLEoriginal8x-nearestRGBA reference. Keep entire squarecanvas, complete UV/layout/boundaries, existingdark/black support, original material, palette/lightnesshierarchy, markcount/pitch/phase andphysicalpatternscale. Refine original soft oldpaint transitions with restrainedfinepaintdetail at4x. Allsubduedflatfields/washes remainsoft/subdued; no stronger outlines/bevel/photofabricweave/leatherpores/newgrainornament/anatomy/newhardware or newmanufacturedparts. No cropping/padding/BBox/registration/objectcleanup. This is atextureatlas, not a character/scene render. Outputfull RGBsupportedcanvas, rootrestores exactfulloriginalA; do notturn opaqueRGBblack into transparentbackground. Keep originals' irregularshape/unequalhighlights rather than makingnew regular products.\nOriginal128x128 USSR01EngineerBody, reference1024square. Whole topstriphas EXACT NINEcomplete sourcechainloops: brightuppercap native(20,4),(32,4),(44,4),(56,4),(68,4),(80,4),(92,4),(104,4),(116,4), pitch12. Preserve ALL9loops andtheirunequal flatpaint/shadow contours; NOT8/10loops. Two distinct LEFTedge connectorwashes inoriginal[1,3,6,11] and[6,5,19,13] remainexactlytwo; rightedge'soriginalpartialconnectingstroke stayspartial, do notadd10thloop. Sourceinnerhole actualRGBAatnative23+12k,y7 is(0,0,0,0), butmanyother blacksupportpixels areA255; retainwholeRGBsupport androotrestoresonlyexactoriginal1684A0texels, includingholes. No genericwholecanvascutout. Firstloop andconnectors retainoriginalwarmer/unequalgrayhighlight, not matchingjewelry. Mainmaterial: dimgraywashstrip y17..41, brownwaistwash42..51, fadedkhakicentralcloth/twolongstraps y51..127, verydimbluegray sideclothfields. Allfainttinybeltmarks remain SAMEindistinctdarkpaintwash; do NOT reconstructthem into roundholes/newbuckle/letters. Keep graytrace/mutedclothsoftness andsourceexistingpale dot; nozipknots/shinychainembellishment.",
+    "prompt_constraints": {
+      "upper_chain_complete_loop_count": 9,
+      "upper_chain_bright_cap_native_xy": [
+        [
+          20,
+          4
+        ],
+        [
+          32,
+          4
+        ],
+        [
+          44,
+          4
+        ],
+        [
+          56,
+          4
+        ],
+        [
+          68,
+          4
+        ],
+        [
+          80,
+          4
+        ],
+        [
+          92,
+          4
+        ],
+        [
+          104,
+          4
+        ],
+        [
+          116,
+          4
+        ]
+      ],
+      "upper_chain_pitch_native": 12,
+      "upper_chain_loop_bounds_native": [
+        [
+          19,
+          3,
+          29,
+          13
+        ],
+        [
+          31,
+          3,
+          41,
+          13
+        ],
+        [
+          43,
+          3,
+          53,
+          13
+        ],
+        [
+          55,
+          3,
+          65,
+          13
+        ],
+        [
+          67,
+          3,
+          77,
+          13
+        ],
+        [
+          79,
+          3,
+          89,
+          13
+        ],
+        [
+          91,
+          3,
+          101,
+          13
+        ],
+        [
+          103,
+          3,
+          113,
+          13
+        ],
+        [
+          115,
+          3,
+          125,
+          13
+        ]
+      ],
+      "left_edge_connector_wash_count": 2,
+      "left_edge_connector_bounds_native": [
+        [
+          1,
+          3,
+          6,
+          11
+        ],
+        [
+          6,
+          5,
+          19,
+          13
+        ]
+      ],
+      "first_loop_color_variation_rule": "Firstloop/leftconnectors not identical toalllaterloopbrightness; retainoriginalwarmgraypaint/shadow variation.",
+      "top9hole_actualA_rule": "Actualsourcepixel insideeveryloop atnative23+12k,y7 isA0/RGB0; restore fullsourceA, do not infer allotherblackcanvastransparent.",
+      "mainmaterial_regions": [
+        "dimgraywash strip y17..41",
+        "brownwaistfield y42..51",
+        "khaki centralcloth/2longstraps y51..127",
+        "dimbluegray sideclothfields"
+      ],
+      "belt_faintmarks_rule": "Wholeoriginalsmallfaintdarkmarks remainuninterpretedpaintwash, no invented regularroundholes/buckles or letters."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "frozen_after_sourceproof_utc": "2026-10-08T07:41:09.363610+00:00",
+    "sourceproof_sha256": "304bf683aeb86e43e82edaa9b6c7a5e75b323a0fdaa47293f11ea28870f851f6"
+  }
+]
