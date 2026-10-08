@@ -1,0 +1,57 @@
+{
+  "id": 2205,
+  "batch": "ui-forty-sixth",
+  "status": "finished",
+  "builtin": true,
+  "tool": "image_gen.imagegen",
+  "started_utc": "2026-10-08T11:50:02.147075+00:00",
+  "exact_prompt": "Use case: precise-object-edit. Edit target image1 is the exact entire historical original RGBA bitmap. Reference image2 is its identical full stored RGB enlarged solely by nearest neighbor to expose old count, UV and phase. Faithfully enhance only existing fine painted continuity while preserving original native paint scale, intentional blur, whole UV, palette, weak/zero pigment and counts. Return one complete raster texture. Do not invent objects/physical details, sharpen ambiguous washes into material, add hardware/letters/rims/highlights, or regularize an old glyph. Whole original A and global scalar brightness are handled separately; no artist RGB repair, crop, bbox, registration or comparison. Entire original 26x26 soft painted Silent Storm UI texture. Preserve the original indistinct gray/tan/brown background washes, two pale side fields, their muted uneven upper and lower transitions, dark central wash and all black authoring margins. These are deliberately ambiguous sampled paint, NOT gun hardware, a physical metal casing, bullets, tubes, carved stone or reflective machinery: do not reconstruct an object, new seam, ridge, screw, panel, grain or relief. Keep the old background softness and local light strength, not a sharper newly uniform U-shaped physical object. Preserve the existing quiet red reticle pigment, every old weak red edge and native phase. No white/neon glints, extra target circle, new radial rays, letter, font, scratch, metallic rim or embellished background. Gently resolve only existing soft painted continuity. Supporting guide pixels are source samples, not hard mosaic/stair decoration. Full historical canvas orientation/UV/scale/margins; no crop, padding, registration, recentering or rotation. Actual source alpha is a 20x20 opaque rectangle at x3..22,y3..22 with A0 outside; opaque black RGB inside is intentional. Full original A will be restored independently, but this does not repair inner RGB geometry or black gaps. Keep those in generated RGB. Exactly ONE old small red circular reticle band, ONE horizontal red bar, ONE vertical red bar, and the original tiny opaque BLACK central RGB gap at (13,12). Retain original crossing geometry, not a completely solid plus: bright row12 red x8..12 and14..18, centerx13 is original black; vertical x13 bright y7..11 and13..17. The old ring has brighter samples(11,10),(15,10),(11,14),(15,14), preserve its weak reddish arcs, not four new dots or an extra ring. Source all676 RGBA cells capture the exact small black central field; restoring sourceA cannot restore this RGB gap. No new hole, socket, long black slit, multiple crossbars or extra target center. Keep original uneven source red intensity/paint blur and phase.",
+  "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2205-prompt.txt",
+  "prompt_sha256": "071cad317b9710af2e2a41c6810d9fc86eed2f3353ef83b600d815dc4bf63b73",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2205.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2205-ui-forty-sixth-source-rgb-support.png"
+  ],
+  "reference_recipe": {
+    "type": "whole-original-storedRGB-nearest",
+    "source_size": [
+      26,
+      26
+    ],
+    "guide_size": [
+      416,
+      416
+    ],
+    "source_bbox": [
+      0,
+      0,
+      26,
+      26
+    ],
+    "affine_prewarp": null,
+    "operations": "Whole original RGB NN16x only; whole rawRGBA Lanczos source4x/defaultpad/global scalar/fulloriginalA; Transparent native premultiply once/root gate. No crop/registration/RGB art repair.",
+    "references_sha256": [
+      "ef29b1baeb80933a3bb5c3f834731ebf97a1285a8936e311dd016268c51fce58",
+      "a001a4f3c45b60a97e9c79208b8a4e529e4c39cff5e96ce9c65099c268d88495"
+    ]
+  },
+  "target_size": [
+    104,
+    104
+  ],
+  "transparent_background": false,
+  "accepted_snapshot_at_call": 2451,
+  "actual_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Edit target image1 is the exact entire historical original RGBA bitmap. Reference image2 is its identical full stored RGB enlarged solely by nearest neighbor to expose old count, UV and phase. Faithfully enhance only existing fine painted continuity while preserving original native paint scale, intentional blur, whole UV, palette, weak/zero pigment and counts. Return one complete raster texture. Do not invent objects/physical details, sharpen ambiguous washes into material, add hardware/letters/rims/highlights, or regularize an old glyph. Whole original A and global scalar brightness are handled separately; no artist RGB repair, crop, bbox, registration or comparison. Entire original 26x26 soft painted Silent Storm UI texture. Preserve the original indistinct gray/tan/brown background washes, two pale side fields, their muted uneven upper and lower transitions, dark central wash and all black authoring margins. These are deliberately ambiguous sampled paint, NOT gun hardware, a physical metal casing, bullets, tubes, carved stone or reflective machinery: do not reconstruct an object, new seam, ridge, screw, panel, grain or relief. Keep the old background softness and local light strength, not a sharper newly uniform U-shaped physical object. Preserve the existing quiet red reticle pigment, every old weak red edge and native phase. No white/neon glints, extra target circle, new radial rays, letter, font, scratch, metallic rim or embellished background. Gently resolve only existing soft painted continuity. Supporting guide pixels are source samples, not hard mosaic/stair decoration. Full historical canvas orientation/UV/scale/margins; no crop, padding, registration, recentering or rotation. Actual source alpha is a 20x20 opaque rectangle at x3..22,y3..22 with A0 outside; opaque black RGB inside is intentional. Full original A will be restored independently, but this does not repair inner RGB geometry or black gaps. Keep those in generated RGB. Exactly ONE old small red circular reticle band, ONE horizontal red bar, ONE vertical red bar, and the original tiny opaque BLACK central RGB gap at (13,12). Retain original crossing geometry, not a completely solid plus: bright row12 red x8..12 and14..18, centerx13 is original black; vertical x13 bright y7..11 and13..17. The old ring has brighter samples(11,10),(15,10),(11,14),(15,14), preserve its weak reddish arcs, not four new dots or an extra ring. Source all676 RGBA cells capture the exact small black central field; restoring sourceA cannot restore this RGB gap. No new hole, socket, long black slit, multiple crossbars or extra target center. Keep original uneven source red intensity/paint blur and phase.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/2205.png",
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2205-ui-forty-sixth-source-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "finished_utc": "2026-10-08T11:50:44.737462+00:00",
+  "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-a0255eeb-1f7d-4b34-806b-eb4150a7ed21.png",
+  "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/2205-raw.png",
+  "raw_sha256": "89835e7ee0f1d8adec9998ae53728a339297d5322fd8bcae59ae058fc4c1c590",
+  "raw_saved": true
+}

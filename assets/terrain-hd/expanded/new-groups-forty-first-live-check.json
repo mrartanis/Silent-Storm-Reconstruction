@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2456,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 621991282,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 561384110,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 724446450,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 3.7100570117913843,
+  "frame_ms_mean": 269.3576,
+  "frame_ms_p95": 278.9365,
+  "normal_exit_code": 0,
+  "process_id": 12024,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2456-verified-on",
+      "sha256": "4ce50e55ac854dfb7d0b46587d1135c61992fc5437c67f202b4a04ccf66a6332"
+    },
+    {
+      "name": "hd2456-verified-options",
+      "sha256": "3be0b5fdbdacbe0d36fcc5d8e30acdc2059fae2d62d4319d4d23b1343d9e6774"
+    },
+    {
+      "name": "hd2456-verified-off",
+      "sha256": "84afa2ca29ef6c9e657445a5c376cf92b04c1b38dd68c9e85eb5e2e908c16e4b"
+    },
+    {
+      "name": "hd2456-verified-restored",
+      "sha256": "33f9de642e7b5cb49a062acacd66c8f1d6b37020c031493ed3f60c9d302a1dc1"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "first_HD_fps": 3.732522787467214,
+    "repeat_original_fps": 3.806621854856115,
+    "repeat_HD_fps": 3.7100570117913843,
+    "repeat_original_frame_ms_p95": 265.1909,
+    "repeat_HD_frame_ms_p95": 278.9365,
+    "first_HD_frames": 120,
+    "repeat_original_frames": 60,
+    "repeat_HD_frames": 120,
+    "repeat_HD_present_ms_mean": 266.16128833333335,
+    "repeat_HD_scene_ms_mean": 1.9204241666666666,
+    "repeat_HD_ui_ms_mean": 0.7115016666666667,
+    "both_runs_normal_quit": true,
+    "performance_acceptance_claim": false,
+    "qualification": "Functional native/material/alpha/UV/menu checks passed. Both original fallback and HD runs currently about3.7–3.8FPS; prior40 about60FPS is NOT reproduced. Current delay predominates in present; cause unestablished. No claim full performance regression passed, no driver/system/user-game changes. New5texture resources are outside loadedscene terrain11. Original prior2451source/PNG/native hashes remain exact. First and repeat evidence kept under distinct stems; no overwrites."
+  }
+}

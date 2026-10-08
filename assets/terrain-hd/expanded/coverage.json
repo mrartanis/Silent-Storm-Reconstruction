@@ -1,15 +1,15 @@
 {
   "date": "2026-10-08",
-  "scope_resources": 2921,
+  "scope_resources": 2927,
   "full_db_inventory_resources": 5801,
-  "hd_textures": 2451,
-  "native_aliases": 4902,
+  "hd_textures": 2456,
+  "native_aliases": 4912,
   "native_archives": 130,
-  "native_bytes": 7819875172,
+  "native_bytes": 7820948534,
   "status_counts": {
-    "validated": 2451,
+    "validated": 2456,
     "original-technical-map": 258,
-    "structural-mask-or-solid": 133,
+    "structural-mask-or-solid": 134,
     "missing-historical": 63,
     "generation-unavailable": 15,
     "release-mismatch": 1
@@ -19,11 +19,11 @@
     "trees": 30,
     "buildings-environment": 1754,
     "characters-clothing": 92,
-    "equipment": 141,
+    "equipment": 142,
     "weapons": 65,
     "heads-lshead": 24,
-    "interface-v5": 80,
-    "effects": 78,
+    "interface-v5": 82,
+    "effects": 80,
     "campaign-backgrounds": 4,
     "tutorials": 2,
     "other": 3
@@ -3328,6 +3328,13 @@
       "status": "structural-mask-or-solid",
       "reason": "Individually proven entire nativeRGBA exactly constant with actual material consumers; original UV/alpha retained, no painted detail to redraw; no category exclusion.",
       "source": "Characters\\Equipment\\Slots\\UK\\EyeglassesSilver.tga"
+    },
+    {
+      "id": 6780,
+      "category": "heads-lshead",
+      "status": "structural-mask-or-solid",
+      "reason": "Individually proven authoredRGB blackmask16383texels plus ONEwhiteopaqueauthoringcorner and two gradedalphabrowfootprints/actualFaceGenTHMID1 consumers; NOTconstantRGBA. Entire originalRGBA/UV retained/no varyingRGBpaintdetail/no categoryexclusion.",
+      "source": "LSHead\\AdvancedFaceGen\\Brows\\1_1.png"
     }
   ],
   "validation": "Every native archive hash, alias, dimensions, original mask and brightness passed; see Game/res-hd/validation.json"

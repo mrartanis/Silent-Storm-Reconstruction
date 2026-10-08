@@ -1,0 +1,1563 @@
+[
+  {
+    "id": 3783,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 3783,
+      "texture": {
+        "ID": 3783,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -14080226,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Terror\\USSR_Helmet.tga",
+        "Format": "dxt1",
+        "UserName": "USSR_Helmet",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2355,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1564,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2228,
+                "field": "Material0",
+                "material_template_id": 1564,
+                "geometry_id": 2447,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 1683,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6539,
+                "field": "Material0",
+                "material_template_id": 1564,
+                "geometry_id": 2447,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 4167,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "fefdbf7dd5bc6b9c51e0353b5b06f49e7d108523375885529303e632d31c1ca9",
+      "source_rgba_sha256": "d46b12fb1bb02e6935ce1426382563caed978672ef635514b143cca74d7317fd",
+      "release_rgba_sha256": "d46b12fb1bb02e6935ce1426382563caed978672ef635514b143cca74d7317fd",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/3783.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirtieth-before-call.json",
+      "source-check-equipment-thirtieth.json",
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "d46b12fb1bb02e6935ce1426382563caed978672ef635514b143cca74d7317fd",
+    "original_png_sha256": "5c3fe0d9c7e7e3fe9c88368363a7ded3e23d89a6cf85b338510dbb9b6baaaa00",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 2355,
+          "TextureID": 3783,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 1564,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 1564,
+          "UserName": "USSR_Helmet"
+        },
+        "actual_Models": [
+          {
+            "ID": 2228,
+            "Material0": 1564,
+            "Material1": 0,
+            "GeometryID": 2447,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 1683,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          },
+          {
+            "ID": 6539,
+            "Material0": 1564,
+            "Material1": 0,
+            "GeometryID": 2447,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4167,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 1683,
+            "UserName": "USSR_Helmet"
+          },
+          {
+            "ID": 4167,
+            "UserName": "USSR_Summer"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2447,
+            "AIGeometryID": 1448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.23477104306221008,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.21597513556480408,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.15789826214313507,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet",
+            "RootJoint": "USSR_Helmet"
+          },
+          {
+            "ID": 2447,
+            "AIGeometryID": 1448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.23477104306221008,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.21597513556480408,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.15789826214313507,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet",
+            "RootJoint": "USSR_Helmet"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Actual painted gray/olive atlas with tinyred stepped contour. Fullsource nativeRGBA/alpha inspected; precise faintred contour count and rightedge weaksupport paint remains genuine source-only pending, no call or technical label.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 5652,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 5652,
+      "texture": {
+        "ID": 5652,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -13488088,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Terror\\USSR_WinterHelmet.tga",
+        "Format": "dxt1",
+        "UserName": "USSR_WinterHelmet",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3701,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2356,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6057,
+                "field": "Material0",
+                "material_template_id": 2356,
+                "geometry_id": 2447,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 3907,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6536,
+                "field": "Material0",
+                "material_template_id": 2356,
+                "geometry_id": 2447,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 4168,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "4afc3fd5056a6b6da50ca80f45a011fbfa5df6e92bb03de88d7f6722f2141122",
+      "source_rgba_sha256": "35154718b4ecbedead0a1c23139ba08779d20f641ee7a41a42ebbb67e3640916",
+      "release_rgba_sha256": "35154718b4ecbedead0a1c23139ba08779d20f641ee7a41a42ebbb67e3640916",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/5652.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirtieth-before-call.json",
+      "source-check-equipment-thirtieth.json",
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "35154718b4ecbedead0a1c23139ba08779d20f641ee7a41a42ebbb67e3640916",
+    "original_png_sha256": "62fefb41eb6e0642fe6902a67d7b962dc29d80a6c54350dc0e3a104774f209b5",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 3701,
+          "TextureID": 5652,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2356,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2356,
+          "UserName": "USSR_WinterHelmet"
+        },
+        "actual_Models": [
+          {
+            "ID": 6057,
+            "Material0": 2356,
+            "Material1": 0,
+            "GeometryID": 2447,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 3907,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          },
+          {
+            "ID": 6536,
+            "Material0": 2356,
+            "Material1": 0,
+            "GeometryID": 2447,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4168,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4168,
+            "UserName": "USSR_Winter"
+          },
+          {
+            "ID": 3907,
+            "UserName": "USSR_WinterHelmet"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2447,
+            "AIGeometryID": 1448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.23477104306221008,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.21597513556480408,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.15789826214313507,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet",
+            "RootJoint": "USSR_Helmet"
+          },
+          {
+            "ID": 2447,
+            "AIGeometryID": 1448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.23477104306221008,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.21597513556480408,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.15789826214313507,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet",
+            "RootJoint": "USSR_Helmet"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine muted gray winterpaint variant; fullsource inspected. Tinyred exactcontour and faint left/right patches need bounded proof before anycall, no blankethardware exclusion.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 5677,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 5677,
+      "texture": {
+        "ID": 5677,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -12698056,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Terror\\USSR_Helmet_Close.tga",
+        "Format": "dxt1",
+        "UserName": "USSR_Helmet_Close",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3729,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2373,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6080,
+                "field": "Material0",
+                "material_template_id": 2373,
+                "geometry_id": 3722,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 3923,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6537,
+                "field": "Material0",
+                "material_template_id": 2373,
+                "geometry_id": 3722,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 4168,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "cdecccdd4ac33fed00bb43c3664d9ff88c3ae27c574c279f9a0f42119d7ae8a0",
+      "source_rgba_sha256": "584af182696046716d8feb22d6caaa6b959276876f7b986a964d10b2bf6719bd",
+      "release_rgba_sha256": "584af182696046716d8feb22d6caaa6b959276876f7b986a964d10b2bf6719bd",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/5677.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirtieth-before-call.json",
+      "source-check-equipment-thirtieth.json",
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "584af182696046716d8feb22d6caaa6b959276876f7b986a964d10b2bf6719bd",
+    "original_png_sha256": "2eed387ed1743fbb1f854d4a151c3aa823e206fb7617857afd41e8dbc2e2faff",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 3729,
+          "TextureID": 5677,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2373,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2373,
+          "UserName": "USSR_Helmet_Close"
+        },
+        "actual_Models": [
+          {
+            "ID": 6080,
+            "Material0": 2373,
+            "Material1": 0,
+            "GeometryID": 3722,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 3923,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          },
+          {
+            "ID": 6537,
+            "Material0": 2373,
+            "Material1": 0,
+            "GeometryID": 3722,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4168,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4168,
+            "UserName": "USSR_Winter"
+          },
+          {
+            "ID": 3923,
+            "UserName": "USSR_Helmet_Close"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 3722,
+            "AIGeometryID": 2448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.2107582539319992,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.3369165062904358,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.038081519305706024,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet_Close",
+            "RootJoint": "USSR_Helmet_Close"
+          },
+          {
+            "ID": 3722,
+            "AIGeometryID": 2448,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.2107582539319992,
+            "SizeY": 0.23253799974918365,
+            "SizeZ": 0.3369165062904358,
+            "CenterX": 0.0,
+            "CenterY": -0.04098886996507645,
+            "CenterZ": 0.038081519305706024,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Helmet_Close",
+            "RootJoint": "USSR_Helmet_Close"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine muted dark gray painted atlas, fullsource inspected. Tinyred and narrow gray wash contours pending exactweakphase proof, zero calls.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 6669,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 6669,
+      "texture": {
+        "ID": 6669,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -12571372,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Terror\\USSR_FieldCap.tga",
+        "Format": "8888",
+        "UserName": "USSR_FieldCap",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4643,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2711,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6526,
+                "field": "Material0",
+                "material_template_id": 2711,
+                "geometry_id": 3918,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 4163,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6534,
+                "field": "Material0",
+                "material_template_id": 2711,
+                "geometry_id": 3918,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 4167,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "9971fdc938099892d1a662cb647f42a75a96971185bbce364598acfd226cf2d5",
+      "source_rgba_sha256": "eee74df2b945cdf905a1870b8022de47ab4533bfa1472c6c33113259a5e3ee2b",
+      "release_rgba_sha256": "eee74df2b945cdf905a1870b8022de47ab4533bfa1472c6c33113259a5e3ee2b",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6669.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "eee74df2b945cdf905a1870b8022de47ab4533bfa1472c6c33113259a5e3ee2b",
+    "original_png_sha256": "7697961e4ad6ba7399e8a743de4b9a62c5c4451ef00b52f13d524c9eaaca4c35",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 4643,
+          "TextureID": 6669,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2711,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2711,
+          "UserName": "USSR_FieldCap"
+        },
+        "actual_Models": [
+          {
+            "ID": 6526,
+            "Material0": 2711,
+            "Material1": 0,
+            "GeometryID": 3918,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4163,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          },
+          {
+            "ID": 6534,
+            "Material0": 2711,
+            "Material1": 0,
+            "GeometryID": 3918,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4167,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4163,
+            "UserName": "USSR_FieldCap"
+          },
+          {
+            "ID": 4167,
+            "UserName": "USSR_Summer"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 3918,
+            "AIGeometryID": 802,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.1800040304660797,
+            "SizeY": 0.2159571647644043,
+            "SizeZ": 0.14540672302246094,
+            "CenterX": 0.0,
+            "CenterY": -0.03857511654496193,
+            "CenterZ": 0.15109217166900635,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_FieldCap",
+            "RootJoint": "USSR_FieldCap"
+          },
+          {
+            "ID": 3918,
+            "AIGeometryID": 802,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.1800040304660797,
+            "SizeY": 0.2159571647644043,
+            "SizeZ": 0.14540672302246094,
+            "CenterX": 0.0,
+            "CenterY": -0.03857511654496193,
+            "CenterZ": 0.15109217166900635,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_FieldCap",
+            "RootJoint": "USSR_FieldCap"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine tan painted cap material with complex red/gray stepped native emblem and lower curved wash. Exactsymbolcontour requires additionalsourceproof; no inventedstarpoints or technical label.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 4948,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 4948,
+      "texture": {
+        "ID": 4948,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -14934253,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\German\\GeneralCap.tga",
+        "Format": "dxt1",
+        "UserName": "GeneralCap",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3121,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1995,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5100,
+                "field": "Material0",
+                "material_template_id": 1995,
+                "geometry_id": 1922,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 3397,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "fd2252c4b4151ef46da7b81bf1e276234541378a97f08eb37917f0446f22abeb",
+      "source_rgba_sha256": "670f149d26f67fa905604d426a0cbb48c5e4c09b8ad86f1471789c4cf8d8cd09",
+      "release_rgba_sha256": "670f149d26f67fa905604d426a0cbb48c5e4c09b8ad86f1471789c4cf8d8cd09",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/4948.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirtieth-before-call.json",
+      "source-check-equipment-thirtieth.json",
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "670f149d26f67fa905604d426a0cbb48c5e4c09b8ad86f1471789c4cf8d8cd09",
+    "original_png_sha256": "d8d727bdd9ab1e5a501a9eebdf025613f80a328ddf357f7039600bdff3a3856f",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 3121,
+          "TextureID": 4948,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 1995,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 1995,
+          "UserName": "GeneralCap"
+        },
+        "actual_Models": [
+          {
+            "ID": 5100,
+            "Material0": 1995,
+            "Material1": 0,
+            "GeometryID": 1922,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 3397,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 3397,
+            "UserName": "GeneralCap"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 1922,
+            "AIGeometryID": 1023,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.23738087713718414,
+            "SizeY": 0.32016631960868835,
+            "SizeZ": 0.18841320276260376,
+            "CenterX": 1.3560056686401367e-06,
+            "CenterY": -0.027875512838363647,
+            "CenterZ": 0.1492336541414261,
+            "SrcName": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+            "UserName": "OfficerCap",
+            "RootJoint": "OfficerCap"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine olive curved materialfield plus thin gray/brown rightside strips, source fullRGB/A inspected. Weak brown upperright markings/count need additionalproof beforecall.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 3784,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 3784,
+      "texture": {
+        "ID": 3784,
+        "Width": 128,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -14474203,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Terror\\USSR_Cap.tga",
+        "Format": "dxt1",
+        "UserName": "USSR_Cap",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2357,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1565,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2230,
+                "field": "Material0",
+                "material_template_id": 1565,
+                "geometry_id": 2448,
+                "geometry": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+                "model_template_id": 1684,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        64
+      ],
+      "source_sha256": "4f7020249808f6ff3ec5c870c651cf5d8eeb81eb3a8afbee3781176a085e67fe",
+      "source_rgba_sha256": "06125f463021f4b906b5f7c4a3c8d7470ea0a161ba3325e45440d891fbf15c75",
+      "release_rgba_sha256": "06125f463021f4b906b5f7c4a3c8d7470ea0a161ba3325e45440d891fbf15c75",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/3784.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirtieth-before-call.json",
+      "source-check-equipment-thirtieth.json",
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "06125f463021f4b906b5f7c4a3c8d7470ea0a161ba3325e45440d891fbf15c75",
+    "original_png_sha256": "107bf961de5f4b35d1f542bd852680e531ad1c5afb19f3b55e740d1c24370c48",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 2357,
+          "TextureID": 3784,
+          "BRDFID": 0,
+          "BumpID": 3867,
+          "SpecColor": 0,
+          "TemplateID": 1565,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 1565,
+          "UserName": "USSR_Cap"
+        },
+        "actual_Models": [
+          {
+            "ID": 2230,
+            "Material0": 1565,
+            "Material1": 0,
+            "GeometryID": 2448,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 1684,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 1684,
+            "UserName": "USSR_Cap"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2448,
+            "AIGeometryID": 1449,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.20274952054023743,
+            "SizeY": 0.26582321524620056,
+            "SizeZ": 0.19274699687957764,
+            "CenterX": -0.015941210091114044,
+            "CenterY": -0.02227000892162323,
+            "CenterZ": 0.14145022630691528,
+            "SrcName": "Characters\\Equipment\\Slots\\TerrorStuff.mb",
+            "UserName": "USSR_Cap",
+            "RootJoint": "USSR_Cap"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine gray matte field with one small red trace and lower blue wash. Fullsource/alpha inspected; weakred exactshape and bluewash edge remain originalpending, not empty technical fill.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 2213,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 2213,
+      "texture": {
+        "ID": 2213,
+        "Width": 128,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -1372048614,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\German\\SniperHelmet.tga",
+        "Format": "dxt1",
+        "UserName": "SniperHelmet",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 1474,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "alpha_test",
+            "AddressMode": "Clamp",
+            "TemplateID": 1011,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 1460,
+                "field": "Material0",
+                "material_template_id": 1011,
+                "geometry_id": 1860,
+                "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+                "model_template_id": 1095,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        64
+      ],
+      "source_sha256": "57127a623d49a8457f27637344dd6c70b9539ab06c69eba3b6f1a9259cd14a89",
+      "source_rgba_sha256": "595f37a2625724d5efb0ab2ee9c4349f9a83b6903d5ee1261e417a4c94a06803",
+      "release_rgba_sha256": "595f37a2625724d5efb0ab2ee9c4349f9a83b6903d5ee1261e417a4c94a06803",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "original_png": "expanded/original/2213.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json",
+      "source-check-equipment-twenty-ninth-before-call.json",
+      "source-check-equipment-twenty-ninth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "595f37a2625724d5efb0ab2ee9c4349f9a83b6903d5ee1261e417a4c94a06803",
+    "original_png_sha256": "614d275f092533c3bd159f9196dd1fc386635e56b69ac936f863d6edb9fabdf8",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 1474,
+          "TextureID": 2213,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 1011,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 1011,
+          "UserName": "SniperHelmet"
+        },
+        "actual_Models": [
+          {
+            "ID": 1460,
+            "Material0": 1011,
+            "Material1": 0,
+            "GeometryID": 1860,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 1095,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 1095,
+            "UserName": "SniperHelmet"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 1860,
+            "AIGeometryID": 417,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.36810436844825745,
+            "SizeY": 0.4399968981742859,
+            "SizeZ": 0.34747743606567383,
+            "CenterX": 0.02478797733783722,
+            "CenterY": 0.015622667968273163,
+            "CenterZ": 0.15537193417549133,
+            "SrcName": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+            "UserName": "SniperHelmet",
+            "RootJoint": "SniperHelmet"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine olive foliage/equipment material, actualMaterial chain/sourceType/entiremixedA exact. Soft numerous foliage lobes/pigment silhouettes need further exact layoutproof, zero calls, not automatically unsuitable because mixedA.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 3384,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 3384,
+      "texture": {
+        "ID": 3384,
+        "Width": 64,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -14146268,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Slots\\Robots\\GerOptics.tga",
+        "Format": "dxt1",
+        "UserName": "GerOptics",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 2107,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1419,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 2006,
+                "field": "Material0",
+                "material_template_id": 1419,
+                "geometry_id": 2249,
+                "geometry": "Characters\\Equipment\\Slots\\RobotStuff.mb",
+                "model_template_id": 1526,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        64,
+        64
+      ],
+      "source_sha256": "36d1740bbcb303ea1d862be7bbbecda2ba250db0d3d27d59b4067dce29888d73",
+      "source_rgba_sha256": "35074fea98607b832544d57211dfaba108bf35c35ca24fdf41b9cc566ba62c67",
+      "release_rgba_sha256": "35074fea98607b832544d57211dfaba108bf35c35ca24fdf41b9cc566ba62c67",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/3384.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-check-equipment-thirty-fifth-before-call.json",
+      "source-check-equipment-thirty-fifth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "35074fea98607b832544d57211dfaba108bf35c35ca24fdf41b9cc566ba62c67",
+    "original_png_sha256": "3eb4d1758ce4a1089cb8194b8fd23982f304c5aeee1fd5b53be024c177becc97",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 2107,
+          "TextureID": 3384,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 1419,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 1419,
+          "UserName": "GerOptics"
+        },
+        "actual_Models": [
+          {
+            "ID": 2006,
+            "Material0": 1419,
+            "Material1": 0,
+            "GeometryID": 2249,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 1526,
+            "RPGArmorID": 0,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 1526,
+            "UserName": "GerOptics"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 2249,
+            "AIGeometryID": 0,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.16619843244552612,
+            "SizeY": 0.4552572965621948,
+            "SizeZ": 0.23749816417694092,
+            "CenterX": -0.10020790994167328,
+            "CenterY": -0.1364937722682953,
+            "CenterZ": 0.5234560370445251,
+            "SrcName": "Characters\\Equipment\\Slots\\RobotStuff.mb",
+            "UserName": "GerOptics",
+            "RootJoint": "GerOptics"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine dim browngray equipment atlas with multiple tiny irregular gray/olive partwashes. Fullsource inspected; exactweakcontours/openregions remain genuinepending, no physicalhardware inferred.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  },
+  {
+    "id": 6902,
+    "status": "source-only-genuine-art-pending",
+    "imagegen_calls": 0,
+    "source_record": {
+      "id": 6902,
+      "texture": {
+        "ID": 6902,
+        "Width": 256,
+        "Height": 64,
+        "NMips": 0,
+        "AverageColor": -14671584,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Equipment\\Items\\PKRepairTool\\PKRepairToolUK.tga",
+        "Format": "8888",
+        "UserName": "PKRepairToolUK",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "equipment",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4797,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2785,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6681,
+                "field": "Material0",
+                "material_template_id": 2785,
+                "geometry_id": 3952,
+                "geometry": "Characters\\Equipment\\Items\\SapperStuff.mb",
+                "model_template_id": 4244,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        256,
+        64
+      ],
+      "source_sha256": "34d7c4b143394c40c79f343519614a3aff49d4c579daa896f9939b31634f7006",
+      "source_rgba_sha256": "2488900d375302dbf2bb1bbc68e1cb63271e990b22d7e1f9303e9ce8b23e8e28",
+      "release_rgba_sha256": "2488900d375302dbf2bb1bbc68e1cb63271e990b22d7e1f9303e9ce8b23e8e28",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6902.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "honest_prior_source_only_reaudit": true,
+    "prior_sourceonly_audit_files": [
+      "source-only-equipment-thirty-eighth.json",
+      "source-check-equipment-thirty-eighth.json"
+    ],
+    "historical_release_original_wholeRGBA_exact": true,
+    "source_RGBA_sha256": "2488900d375302dbf2bb1bbc68e1cb63271e990b22d7e1f9303e9ce8b23e8e28",
+    "original_png_sha256": "1fa76c0306c99e971cc909744a5d152fd4d3a747014bb8fd540bb5207c819e2e",
+    "actual_static_MaterialTemplate_Model_chains": [
+      {
+        "actual_Material": {
+          "ID": 4797,
+          "TextureID": 6902,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 2785,
+          "GlossID": 6940,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        },
+        "actual_MaterialTemplate": {
+          "ID": 2785,
+          "UserName": "PKRepairToolUK"
+        },
+        "actual_Models": [
+          {
+            "ID": 6681,
+            "Material0": 2785,
+            "Material1": 0,
+            "GeometryID": 3952,
+            "Material2": 0,
+            "Material3": 0,
+            "SkeletonID": 0,
+            "TemplateID": 4244,
+            "RPGArmorID": 20,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        ],
+        "actual_ModelTemplates": [
+          {
+            "ID": 4244,
+            "UserName": "PKRepairToolUK"
+          }
+        ],
+        "actual_Geometries": [
+          {
+            "ID": 3952,
+            "AIGeometryID": 2576,
+            "AIGeometry2ID": 0,
+            "TriCountMaterial1": 0,
+            "TriCountMaterial2": 0,
+            "SizeX": 0.0884886384010315,
+            "SizeY": 0.23067344725131989,
+            "SizeZ": 1.1233251094818115,
+            "CenterX": 0.0038909055292606354,
+            "CenterY": 7.301568984985352e-07,
+            "CenterZ": 0.2547248601913452,
+            "SrcName": "Characters\\Equipment\\Items\\SapperStuff.mb",
+            "UserName": "PKRepairToolUK",
+            "RootJoint": "PKRepairToolUK"
+          }
+        ],
+        "actual_Heads": [],
+        "actual_ComplexHeads_hair_consumers": [],
+        "actual_TransformableHeadHairs": [],
+        "qualification": "Actual static equipment color through Materials.TextureIDР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћMaterialTemplatesР В Р вЂ Р Р†Р вЂљР’В Р Р†Р вЂљРІвЂћСћModels/Heads; exactAlpha/AddressMode fromactualMaterial, no dynamicFace inference."
+      }
+    ],
+    "fullsource_RGBA_RGB_A_NN_inspected": true,
+    "reason": "Genuine broad 4:1 steel/gray repairatlas, fullsource typed/parity/A inspected. Source upperstripes/narrowtrace/roundopenends need precisewholecount/phase beforecall; aspect4:1 alone not technical/unsuitable.",
+    "not_declared_unsuitable_or_technical": true,
+    "workerproductionacceptance": false
+  }
+]

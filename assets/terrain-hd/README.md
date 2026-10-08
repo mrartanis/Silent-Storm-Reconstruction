@@ -8,14 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,451 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 92 clothing, 141 equipment, 65 weapons,
-24 head/hair textures, 80 interface textures, 78 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,456 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 92 clothing, 142 equipment, 65 weapons,
+24 head/hair textures, 82 interface textures, 80 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,921 records, including 489 accepted new-group textures, the original
+contains 2,927 records, including 494 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-133 structural/solid masks, 63 unavailable historical sources, one release mismatch
+134 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and fifteen resource IDs whose original-preserving image generation was unavailable
 (fourteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,246 verified originals outside the shared queue, including next
+validation. There remain 1,240 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -565,8 +565,34 @@ Nativevalidation/realmenu11/0/11/fourprivateframes/normalquit:
 expanded/new-groups-fortieth-batch-check.json, expanded/new-groups-fortieth-live-check.json,
 expanded/new-groups-fortieth-runtime-check.json. Fivefrozenreviews/ordinaryGitPNG/RESbuiltwithGame.
 
-All 13,440 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (11,341,928,595 bytes before Git deduplication/compression).
+Forty-first accepted packet: effects4101/2575, UI3789/3886, equipment6668.
+Five separate builtin generations; scalar brightness only. Pack2,456 textures/4,912 aliases/
+130 archives/7,820,948,534 bytes. Prior2,451 source/PNG/native hashes unchanged.
+All5whole actualnativeRGBA equal privately reviewed4x predictions/fullsourceA/UV/material/
+count/nativepaintscale. Individual weakpalette/blur caveats disclosed in
+expanded/coordinator-art-review-forty-first.json. No artisticRGBrepair/retries.
+4101 THREEdimRGBdomains;2575 softwarmpaint/usefulRGB/A0/TransparentAdd;
+3789/3886 oldgoldcircle/darkannulus/blackglyph;6668 two dimUVfields/faintredwash/matte.
+Rootheld3045 steelgrain/directionalleather; sixworkerreviews frozen, rootdecision separate.
+Original6780 retained:16383blackRGB+ONEwhiteopaque authoringcorner/variabletwo-browAlpha,
+NOTconstantRGBA; exactsource/release/FaceGen40/THMID1/no builtin/noHDartentry.
+GPU3789/2575/4101 ninewholeprivate on/off/on frames/whole/middle/reverse/clippedUV/
+placement/density4vs1/fullA verified. Transparentpremulonce3789/4101;Add2575/noPremul.
+Original6780 actualFaceGen128/mip0/all3sameoriginal source+CPUatlas hashes match independent
+integeralpha/Vflip/FNV/fixed256atlas. DirectCTeamMarker UI524/530 consumers proven;
+genericprobes do not certify activechaptermap/particles/fullGPUhead appearance.
+Realmenu11/0/11/fourwholeprivateframes/normalquit0/ownedGameabsent verified.
+Current performance limited:HD3.71FPS/original3.81FPS, delay chiefly in present;
+prior60FPS not reproduced/cause unestablished/no performance acceptance claim.
+SixsourceSHA25unchanged/currentbuilt707EXEexact. Three known promptLF entries proven,
+oldmanifests frozen;Eq39 supplementalalias audit separately POSTCALLcorrected1818/noaliases,
+correctBEFOREaudit/raw/ref/call/reviews unchanged. Oldconsumerprose clarification:
+2079 UI399 Control1951only;1952 belongs2080/UI398. Proofs:
+expanded/new-groups-forty-first-batch-check.json, expanded/new-groups-forty-first-live-check.json,
+expanded/new-groups-forty-first-runtime-check.json. OrdinaryGitPNG/RESbuiltwithGame.
+
+All 13,512 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (11,362,548,427 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched
