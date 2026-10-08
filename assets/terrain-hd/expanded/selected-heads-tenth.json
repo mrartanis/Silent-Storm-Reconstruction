@@ -1,0 +1,253 @@
+[
+  {
+    "id": 6771,
+    "texture": {
+      "ID": 6771,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15395563,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Heads\\FaceGenHair\\Hair03_1.tga",
+      "Format": "dxt1",
+      "UserName": "Hair03_1",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "heads-lshead",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4695,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 2741,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6593,
+              "field": "Material0",
+              "material_template_id": 2741,
+              "geometry_id": 2222,
+              "geometry": "Characters\\Hair.mb",
+              "model_template_id": 4196,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "4d4a07b7974c2abd96f1543e21a98aeda6457469663a8d43131dd57bb34eda2f",
+    "source_rgba_sha256": "299f5c27fc0a367106249c4ae6d1116b994e304f878b9baca6dfd9acbedbff7b",
+    "release_rgba_sha256": "299f5c27fc0a367106249c4ae6d1116b994e304f878b9baca6dfd9acbedbff7b",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6771.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "ONE full diffuse painted hair field with TWO broad left/right swept halves about the original narrow descending central dark parting. Entire cool dim charcoal/blueblack original background and faint unused black UV margins remain at reference position. Upper left/right curved sweep bands and lower central descending fan with its existing weak marginal wavy/looping wash retain exact original direction, phase/scale/spacing; do not turn blurred weak curls into new sharply outlined independent rings. Source hairfield roughly x[5,121),y[0,119), lower existing dark horizontal empty band y[119,128) and right/left border tones stay unchanged. Full originalA255 and actualalpha_test material unchanged: unused blackUV is storedRGB, not a new transparent cutout. Preserve low original light strength and very muted highlights, no gloss/photographic strands/new clearer pale fibers.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        128,
+        128
+      ],
+      "guide_size": [
+        768,
+        768
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "affine_prewarp": null,
+      "operations": "Complete sourceRGBA and identical whole storedRGB nearest6 references; no crop/BBox/registration/padding/unpremultiply/artRGBrepair. Raw wholeLanczos512, fullsourceA/defaultpadding andpure scalarbrightness.",
+      "references_sha256": [
+        "f442b4fd45c7ef000bcf8c0d18f6543e70f5620118e097655338c5ad5237245a",
+        "2d061ad2ac4fb0131030e9086b4f62685af2f313200883bd1dc7c2dbe7857e39"
+      ]
+    }
+  },
+  {
+    "id": 6671,
+    "texture": {
+      "ID": 6671,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -5868978,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "LSHead\\AdvancedFaceGen\\FaceColor\\European.png",
+      "Format": "8888",
+      "UserName": "European",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "heads-lshead",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "TransformableFaceTextures",
+          "id": 1,
+          "field": "TextureID",
+          "role": "color",
+          "UserName": "European",
+          "THMID": 1,
+          "Priority": -1,
+          "TextureName": "European.0"
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "f2638f65c4361fe22b2b8fe2474c7580b05f72dacf6e253efe7de47a0e6b9d91",
+    "source_rgba_sha256": "ca3cb32ceb5e72cab337900ed19a64e89f2665417880ff9cb92f3a8b068af072",
+    "release_rgba_sha256": "ca3cb32ceb5e72cab337900ed19a64e89f2665417880ff9cb92f3a8b068af072",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6671.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Exact European.png source FaceColor layer identity: ONE soft central face paint field, exactly TWO existing narrow brown eye/slit marks near native x[43,58),x[69,85),y[44,51), ONE broad short nose near[57,53,71,62), ONE closed dark redbrown lip seam/upper-and-lower lip paint near[53,65,76,76), exactly TWO lateral ear paint fields near[20,43,30,64)/[99,43,110,64). No visible tooth/dental-strip field exists. Keep the original lip closure and expression, narrow eyes without adding eyeballs/pupils/eyelashes; do not draw new eyebrows or sharpen ambiguous lid anatomy. Forehead light patch near[44,28,85,43) and soft neck shadow[47,88,81,107) stay the same strength/size/phase. Original warm peach/brown skin tone, tiny original ear shadows and broad flat surrounding skinfill must match source, no whitening/reddening/portrait relighting or anatomy beautification.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        128,
+        128
+      ],
+      "guide_size": [
+        768,
+        768
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "affine_prewarp": null,
+      "operations": "Complete sourceRGBA and identical whole storedRGB nearest6 references; no crop/BBox/registration/padding/unpremultiply/artRGBrepair. Raw wholeLanczos512, fullsourceA/defaultpadding andpure scalarbrightness.",
+      "references_sha256": [
+        "e6b34407f356840438cbb2e737f4c4a87c603c828336e198114d74638b0b542c",
+        "c19d862c1077fe8e4fc10ebd5370290a6a3d9988e991cd1e82dd156e8120f85a"
+      ]
+    }
+  },
+  {
+    "id": 6678,
+    "texture": {
+      "ID": 6678,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -5736637,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "LSHead\\AdvancedFaceGen\\FaceColor\\Asian.png",
+      "Format": "8888",
+      "UserName": "Asian",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "heads-lshead",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "TransformableFaceTextures",
+          "id": 3,
+          "field": "TextureID",
+          "role": "color",
+          "UserName": "Asian",
+          "THMID": 1,
+          "Priority": 0,
+          "TextureName": "Asian.0"
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "2f209cd003abf08ec98fc61ca559910e73a6dab50f21fd60b8ac3c093b9ecd39",
+    "source_rgba_sha256": "c4e58a81bedef90a200f452d7f3e38df717b43db1df62b9972ddf6873676fd4f",
+    "release_rgba_sha256": "c4e58a81bedef90a200f452d7f3e38df717b43db1df62b9972ddf6873676fd4f",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6678.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Exact Asian.png source FaceColor layer identity: ONE soft central face paint field, exactly TWO narrow dark eye marks near native x[42,58),x[68,86),y[43,52), ONE short broad nose near[57,53,72,64), ONE closed muted brownred lip seam/soft lip paint near[52,66,76,76), exactly TWO lateral ear fields near[19,44,29,65)/[99,44,110,65). No visible tooth or separate dental-strip field. Keep mouth completely closed with same expression, subdued slit eyes without new eyeballs/pupils/eyelashes/brows. Preserve original softly painted amber/tan complexion and all relative skin/ears/lips/nose colors, faint brow/forehead shadows, original cheek/chin fullness, and existing low neck shadow[47,89,81,108); do not change ethnicity, proportions, age, anatomy or beautify.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        128,
+        128
+      ],
+      "guide_size": [
+        768,
+        768
+      ],
+      "source_bbox": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "affine_prewarp": null,
+      "operations": "Complete sourceRGBA and identical whole storedRGB nearest6 references; no crop/BBox/registration/padding/unpremultiply/artRGBrepair. Raw wholeLanczos512, fullsourceA/defaultpadding andpure scalarbrightness.",
+      "references_sha256": [
+        "794c96e9f81188ba5d2426325066521bb06c0ee9c2af9da45f65eadd927f3b6f",
+        "a5ae95532cf665ded8cfd8b94783718164935046cfa99dfdebce69bca9056417"
+      ]
+    }
+  }
+]

@@ -1,0 +1,1598 @@
+{
+  "version": 1,
+  "package": "clothing-twenty-fourth",
+  "finalized_utc": "2026-10-08T05:45:25.154778+00:00",
+  "selected_ids": [
+    7608,
+    7614,
+    1869
+  ],
+  "source_qa_audition_ids": [
+    7608,
+    7609,
+    7614,
+    7615,
+    7632,
+    7633,
+    6834,
+    6835,
+    6823,
+    7626,
+    1869,
+    2932
+  ],
+  "newly_uninspected_full_source_ids": [
+    7608,
+    7609,
+    7614,
+    7615,
+    7632,
+    7633,
+    6834,
+    6835,
+    6823,
+    7626
+  ],
+  "previously_source_only_reaudited_ids": [
+    1869,
+    2932
+  ],
+  "ready_ids": [
+    7614,
+    1869
+  ],
+  "artistically_ready_ids": [
+    7614,
+    1869
+  ],
+  "held_raw_ids": [
+    7608
+  ],
+  "source_only_ids": [
+    7609,
+    7615,
+    7632,
+    7633,
+    6834,
+    6835,
+    6823,
+    7626,
+    2932
+  ],
+  "pipeline_pending_ids": [],
+  "accepted_ids": [],
+  "tool_calls_attempted": 3,
+  "raw_success_count": 3,
+  "retry_count": 0,
+  "items": [
+    {
+      "id": 7608,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for source pale diagonal wash clarified into separate bright painted dabs. Native threshold classifier retains exactly4 source-connected groups, but complete target4x has7 components vs4 source-nearest: final3-pixel source group separates and faint x8/y75 wash becomes bright individual highlight. This is not a threshold-only inventedpart claim: fullraw visibly rounds and separates the paint marks, explicitly forbidden by prompt. Source trace mean155.86/114.56/65.90 becomes150.01/111.42/57.65 under scalar.86108398, so global or mean brightness is not the cause. Source angular motif further hardens, but no unsupported claim of eight mechanical buttons. Layout/wholeA255/defaultpad0 and maincloth palette pass. No retry/artRGB fix.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 7608,
+        "texture": {
+          "ID": 7608,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -15134962,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Body_Arab.tga",
+          "Format": "dxt1",
+          "UserName": "Body_Arab",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5778,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3089,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7725,
+                  "field": "Material0",
+                  "material_template_id": 3089,
+                  "geometry_id": 4255,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+                  "model_template_id": 4649,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "529584d007bea1174ed58bd9717c0596dc13e9aab6f269ed8793f894c0c5a8a4",
+        "source_rgba_sha256": "1426c5159e49c1a884de86a9abbc97b03bbb4ae32fcd4a6729dee7ad6756c78e",
+        "release_rgba_sha256": "1426c5159e49c1a884de86a9abbc97b03bbb4ae32fcd4a6729dee7ad6756c78e",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7608.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "94ac068e74cc946bc4066618b4057f049bf12cbebb2b5a2541bc411f277e77d0",
+      "exact_prompt_sha256": "b1ee3c188b88eebbe617afa9661da7701189d40244834741f42af798a2d37e39",
+      "reference_sha256": "c1fb99ed63d1494f21c64bcce88e8982c4fa5974d6d39e57f71afa9ee2d3fe38",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/7608-generation-call.json",
+      "generation_call_sha256": "27e555a924799112f14915e4334d2d560d7b00dacc8da32df00bee51e56123dc",
+      "source_count_phase_proof": {
+        "id": 7608,
+        "source_rgba_sha256": "1426c5159e49c1a884de86a9abbc97b03bbb4ae32fcd4a6729dee7ad6756c78e",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_Apositive_RGBblack_texels": 2828,
+        "source_center_RGBA": [
+          8,
+          12,
+          16,
+          255
+        ],
+        "source_corners_RGBA": [
+          [
+            57,
+            8,
+            8,
+            255
+          ],
+          [
+            16,
+            24,
+            24,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:38:51.551365+00:00",
+        "diagnostic_crop_reference_for_generation": false,
+        "diagonal_groups_native": [
+          {
+            "pixels_native": [
+              [
+                3,
+                72
+              ]
+            ],
+            "bounds_native": [
+              3,
+              72,
+              4,
+              73
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                5,
+                73
+              ]
+            ],
+            "bounds_native": [
+              5,
+              73,
+              6,
+              74
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                7,
+                74
+              ]
+            ],
+            "bounds_native": [
+              7,
+              74,
+              8,
+              75
+            ]
+          },
+          {
+            "pixels_native": [
+              [
+                9,
+                76
+              ],
+              [
+                10,
+                77
+              ],
+              [
+                11,
+                78
+              ]
+            ],
+            "bounds_native": [
+              9,
+              76,
+              12,
+              79
+            ]
+          }
+        ],
+        "angular_motif_bounds_native": [
+          2,
+          67,
+          6,
+          72
+        ],
+        "right_marker_bounds_native": [
+          106,
+          65,
+          108,
+          67
+        ],
+        "source_fields_native": {
+          "leftredwash": [
+            0,
+            0,
+            37,
+            127
+          ],
+          "leftochrewash": [
+            0,
+            54,
+            19,
+            102
+          ],
+          "middlegraystrip": [
+            54,
+            0,
+            63,
+            103
+          ],
+          "rightnavycloth": [
+            66,
+            0,
+            128,
+            127
+          ]
+        },
+        "method": "Fullnative and additionalsource-only magnification. Four diagnostic highlight groups are soft painted dabs, NOT eyelets or raised buttons; intervening faint native wash remains unsharpened. Three connected final pixels form one last group. One angular tiny source mark remains precisely washed shape, not invented buckle anatomy.",
+        "proved_source_counts": {
+          "source_width": 128,
+          "source_height": 128,
+          "new_hardware_anatomy_print_seams_allowed": 0,
+          "small_left_angular_painted_motif": 1,
+          "diagonal_pale_paint_groups": 4,
+          "diagonal_last_group_connected_native_pixels": 3,
+          "right_flap_pale_marker": 1,
+          "left_redbrown_wash_fields": 1,
+          "left_ochre_diagonal_wash_fields": 1,
+          "middle_long_bluegray_strip_fields": 1,
+          "right_darknavy_cloth_fields": 1
+        }
+      },
+      "numeric_private_proof": {
+        "id": 7608,
+        "gain": 0.861083984375,
+        "source_stored_luma": 16.827267382812497,
+        "actual_stored_luma": 16.819648861694336,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          512,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 7608,
+        "default_padding_texels": 0,
+        "cleared_texels": 0,
+        "default_padding_equal_unpadded": true,
+        "region_statistics": {
+          "navy": {
+            "bounds_native": [
+              66,
+              0,
+              128,
+              127
+            ],
+            "sourceRGB_mean": [
+              9.898526797053593,
+              12.55511811023622,
+              14.489712979425958
+            ],
+            "targetRGB_mean": [
+              8.241300482600964,
+              11.685674371348743,
+              15.496951993903988
+            ],
+            "sourceL_std": 8.364614833418202,
+            "targetL_std": 6.856601368898073
+          },
+          "redbrown": {
+            "bounds_native": [
+              0,
+              0,
+              26,
+              50
+            ],
+            "sourceRGB_mean": [
+              60.92923076923077,
+              13.232307692307693,
+              10.173076923076923
+            ],
+            "targetRGB_mean": [
+              65.76769230769231,
+              15.21076923076923,
+              8.82
+            ],
+            "sourceL_std": 7.93788662501884,
+            "targetL_std": 10.87877045640927
+          },
+          "ochre": {
+            "bounds_native": [
+              0,
+              63,
+              12,
+              78
+            ],
+            "sourceRGB_mean": [
+              153.04444444444445,
+              110.95,
+              64.21111111111111
+            ],
+            "targetRGB_mean": [
+              145.36666666666667,
+              106.55555555555556,
+              55.611111111111114
+            ],
+            "sourceL_std": 21.81080339786096,
+            "targetL_std": 23.976058141439736
+          },
+          "trace": {
+            "bounds_native": [
+              0,
+              72,
+              14,
+              80
+            ],
+            "sourceRGB_mean": [
+              155.85714285714286,
+              114.5625,
+              65.90178571428571
+            ],
+            "targetRGB_mean": [
+              150.00892857142858,
+              111.41964285714286,
+              57.651785714285715
+            ],
+            "sourceL_std": 19.24812332055353,
+            "targetL_std": 16.22444914049944
+          }
+        },
+        "native_top_sourceRGB_mean": [
+          22.703125,
+          9.6796875,
+          8.8046875
+        ],
+        "native_top_targetRGB_mean": [
+          24.4921875,
+          11.234375,
+          11.609375
+        ],
+        "native_bottom_sourceRGB_mean": [
+          15.4609375,
+          7.078125,
+          4.1328125
+        ],
+        "native_bottom_targetRGB_mean": [
+          15.671875,
+          6.7578125,
+          3.90625
+        ],
+        "native_pale_trace_group_count": 4,
+        "target4x_pale_trace_components": 7,
+        "target4x_pale_trace_component_bounds": [
+          {
+            "bounds_native": [
+              11,
+              288,
+              16,
+              293
+            ]
+          },
+          {
+            "bounds_native": [
+              20,
+              292,
+              25,
+              297
+            ]
+          },
+          {
+            "bounds_native": [
+              28,
+              296,
+              33,
+              301
+            ]
+          },
+          {
+            "bounds_native": [
+              32,
+              301,
+              36,
+              305
+            ]
+          },
+          {
+            "bounds_native": [
+              36,
+              304,
+              41,
+              309
+            ]
+          },
+          {
+            "bounds_native": [
+              40,
+              308,
+              44,
+              313
+            ]
+          },
+          {
+            "bounds_native": [
+              44,
+              312,
+              49,
+              317
+            ]
+          }
+        ],
+        "threshold_only_not_automatic_part_claim": true,
+        "status": "raw-held-original-artwork-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Held for source pale diagonal wash clarified into separate bright painted dabs. Native threshold classifier retains exactly4 source-connected groups, but complete target4x has7 components vs4 source-nearest: final3-pixel source group separates and faint x8/y75 wash becomes bright individual highlight. This is not a threshold-only inventedpart claim: fullraw visibly rounds and separates the paint marks, explicitly forbidden by prompt. Source trace mean155.86/114.56/65.90 becomes150.01/111.42/57.65 under scalar.86108398, so global or mean brightness is not the cause. Source angular motif further hardens, but no unsupported claim of eight mechanical buttons. Layout/wholeA255/defaultpad0 and maincloth palette pass. No retry/artRGB fix.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    },
+    {
+      "id": 7614,
+      "status": "artistically-ready-coordinator-review-pending",
+      "reason": "Artistically ready candidate with disclosed local paint/chroma lift and codec softening, pending independent root final QA. Exact9 broad source red stripes/8 gaps/pitch8 retained, full checker true4x cell centers preserve all48×21=1008 alternating phases with0 mismatches. Native-Lanczos threshold has209 mismatches from averaging checker boundaries, not changed count/phase: cannot claim209 wrong cells from minification. Checker mean77.71/61.73/43.79 becomes77.83/58.92/36.80; native checker contrast softens after reduction. Red stripe source52.11/12.22/10.14 becomes60.25/9.39/8.47 and Lstd5.87→7.64: mild stronger red/chroma paint disclosed for root palette review, no new print/raised hardware. Lowernavy15.94/17.93/20.25→16.90/18.59/20.41, nativeLstd5.87→7.33; fine irregular HD paint remains subdued and non-repeating. Source bottomnative y126/127 already brighter18.66/18.77G and target19.35/19.15G; no new margin/plate. Source angularleft motif/righttiny pale mark stay in nativephase, middle dark painted lobes/rect retained. Fullsource/raw/normalized512²/sourceA4x/native privately inspected, A255/defaultpad0, uniformgain.97842407 only.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 7614,
+        "texture": {
+          "ID": 7614,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14871789,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Legs_Arab.tga",
+          "Format": "dxt1",
+          "UserName": "Legs_Arab",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 5785,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 3091,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 7725,
+                  "field": "Material2",
+                  "material_template_id": 3091,
+                  "geometry_id": 4255,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+                  "model_template_id": 4649,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "1b944e2811bf816da1278962b1f71edb8a1aad032e6dae96ac93ed6d0c0fb2bf",
+        "source_rgba_sha256": "cfa943d454bededa197b794ee0f4fb6e15fea275317633d02cacf310d3205f27",
+        "release_rgba_sha256": "cfa943d454bededa197b794ee0f4fb6e15fea275317633d02cacf310d3205f27",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7614.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "0ab6500c9774b6ac81ef9aa0bd6250822494994f4299a611e5bd052f54f58dad",
+      "exact_prompt_sha256": "51be625e7f445f7fca5e7897b28514c2e536becfb70192b2e3a27a0c5f26f567",
+      "reference_sha256": "e7f1923772d66ce8a1323bb2e10d8142bad4ecce3908090acdb311637c2fb0ef",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/7614-generation-call.json",
+      "generation_call_sha256": "2df486c7e09d2b2e114a5387fe3bf28f90cfe4adb1d7bb2acdc8ee7010fa4c0d",
+      "source_count_phase_proof": {
+        "id": 7614,
+        "source_rgba_sha256": "cfa943d454bededa197b794ee0f4fb6e15fea275317633d02cacf310d3205f27",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_Apositive_RGBblack_texels": 1770,
+        "source_center_RGBA": [
+          5,
+          8,
+          10,
+          255
+        ],
+        "source_corners_RGBA": [
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            4,
+            8,
+            255
+          ],
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            24,
+            24,
+            24,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:38:51.552366+00:00",
+        "diagnostic_crop_reference_for_generation": false,
+        "stripe_intervals_native": [
+          [
+            0,
+            6
+          ],
+          [
+            9,
+            14
+          ],
+          [
+            17,
+            22
+          ],
+          [
+            25,
+            30
+          ],
+          [
+            33,
+            38
+          ],
+          [
+            41,
+            46
+          ],
+          [
+            49,
+            54
+          ],
+          [
+            57,
+            62
+          ],
+          [
+            65,
+            72
+          ]
+        ],
+        "dark_gap_intervals_native": [
+          [
+            6,
+            9
+          ],
+          [
+            14,
+            17
+          ],
+          [
+            22,
+            25
+          ],
+          [
+            30,
+            33
+          ],
+          [
+            38,
+            41
+          ],
+          [
+            46,
+            49
+          ],
+          [
+            54,
+            57
+          ],
+          [
+            62,
+            65
+          ]
+        ],
+        "minimum_pergap_native_contrast": [
+          5.535966666666667,
+          2.715546666666663,
+          4.761120000000002,
+          4.800986666666667,
+          4.962733333333336,
+          4.523940000000001,
+          4.054180000000001,
+          5.8287085714285745
+        ],
+        "checker_interior_bounds_native": [
+          80,
+          36,
+          128,
+          57
+        ],
+        "checker_upperleft_interior_cell_native": "light ochre at80,36; alternate each1pixel horizontally/vertically",
+        "checker_full_native_field": [
+          78,
+          35,
+          128,
+          57
+        ],
+        "checker_edge_caveat": "First two columns x78/79 and firstrow y35 are clipped original boundary/grayedge, not filled-in extra cells; lower y57 transitions to original dark field. Preserve entire source boundary, no regularization.",
+        "left_pale_motif_native": [
+          2,
+          79,
+          7,
+          86
+        ],
+        "right_pale_group_native": [
+          113,
+          117,
+          114,
+          118
+        ],
+        "source_fields_native": {
+          "redstripe": [
+            0,
+            0,
+            72,
+            90
+          ],
+          "upperright_darkcloth": [
+            78,
+            0,
+            128,
+            32
+          ],
+          "checker": [
+            78,
+            35,
+            128,
+            57
+          ],
+          "brownlowercheckerplate": [
+            78,
+            59,
+            128,
+            66
+          ],
+          "lowernavycloth": [
+            27,
+            67,
+            128,
+            128
+          ]
+        },
+        "method": "Source checker cells are genuine painted print, not procedural weave: exact alternating phase proved over48×21 interior with clipped fullfield edge. Keep lowcontrast9 broad red stripes, 8 gaps, small existing pale motifs and soft indistinct middlewash without interpreting new boot hardware.",
+        "proved_source_counts": {
+          "source_width": 128,
+          "source_height": 128,
+          "new_hardware_anatomy_print_seams_allowed": 0,
+          "broad_red_vertical_stripes": 9,
+          "dark_intervening_gaps": 8,
+          "interior_stripe_pitch_native": 8,
+          "checker_interior_columns": 48,
+          "checker_interior_rows": 21,
+          "checker_cell_pitch_native": 1,
+          "checker_repeat_pitch_native": 2,
+          "left_bottom_angular_pale_motif": 1,
+          "right_bottom_tiny_pale_group": 1,
+          "middle_dark_wash_upper_lobes": 2,
+          "middle_dark_wash_lower_rectangles": 1
+        }
+      },
+      "numeric_private_proof": {
+        "id": 7614,
+        "gain": 0.978424072265625,
+        "source_stored_luma": 20.97202314453125,
+        "actual_stored_luma": 20.97186795654297,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          512,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 7614,
+        "default_padding_texels": 0,
+        "cleared_texels": 0,
+        "default_padding_equal_unpadded": true,
+        "region_statistics": {
+          "redstripe": {
+            "bounds_native": [
+              0,
+              3,
+              72,
+              26
+            ],
+            "sourceRGB_mean": [
+              52.11050724637681,
+              12.222222222222221,
+              10.140700483091788
+            ],
+            "targetRGB_mean": [
+              60.2512077294686,
+              9.38888888888889,
+              8.470410628019323
+            ],
+            "sourceL_std": 5.86772149530905,
+            "targetL_std": 7.639133451134179
+          },
+          "checker": {
+            "bounds_native": [
+              80,
+              36,
+              128,
+              57
+            ],
+            "sourceRGB_mean": [
+              77.71130952380952,
+              61.726190476190474,
+              43.78769841269841
+            ],
+            "targetRGB_mean": [
+              77.83432539682539,
+              58.92460317460318,
+              36.804563492063494
+            ],
+            "sourceL_std": 38.19226819361585,
+            "targetL_std": 18.998277616270247
+          },
+          "lowernavy": {
+            "bounds_native": [
+              27,
+              67,
+              108,
+              128
+            ],
+            "sourceRGB_mean": [
+              15.940902651285166,
+              17.926735478648048,
+              20.251163732038048
+            ],
+            "targetRGB_mean": [
+              16.90467516697025,
+              18.588949605343046,
+              20.407002631046346
+            ],
+            "sourceL_std": 5.874563299279389,
+            "targetL_std": 7.3327547377357005
+          }
+        },
+        "native_top_sourceRGB_mean": [
+          12.4765625,
+          5.8828125,
+          6.390625
+        ],
+        "native_top_targetRGB_mean": [
+          13.96875,
+          7.265625,
+          7.8203125
+        ],
+        "native_bottom_sourceRGB_mean": [
+          14.671875,
+          15.9453125,
+          17.390625
+        ],
+        "native_bottom_targetRGB_mean": [
+          14.7890625,
+          15.734375,
+          16.8046875
+        ],
+        "checker_interior_phase_mismatched_cells": 209,
+        "lowercloth_bottom4rows_sourceRGB": [
+          [
+            11.728395061728396,
+            12.91358024691358,
+            13.975308641975309
+          ],
+          [
+            11.703703703703704,
+            12.851851851851851,
+            13.91358024691358
+          ],
+          [
+            16.753086419753085,
+            18.65432098765432,
+            20.80246913580247
+          ],
+          [
+            16.938271604938272,
+            18.765432098765434,
+            20.901234567901234
+          ]
+        ],
+        "lowercloth_bottom4rows_targetRGB": [
+          [
+            9.74074074074074,
+            10.654320987654321,
+            11.839506172839506
+          ],
+          [
+            10.45679012345679,
+            11.308641975308642,
+            12.493827160493828
+          ],
+          [
+            18.012345679012345,
+            19.34567901234568,
+            20.864197530864196
+          ],
+          [
+            17.88888888888889,
+            19.14814814814815,
+            20.728395061728396
+          ]
+        ],
+        "checker_4x_nativecell_center_thresholdRgt60_mismatches": 0,
+        "checker_4x_nativecell_center_mismatches_per_column": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "checker_4x_nativecell_center_mismatches_per_row": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": "artistically-ready-coordinator-review-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Artistically ready candidate with disclosed local paint/chroma lift and codec softening, pending independent root final QA. Exact9 broad source red stripes/8 gaps/pitch8 retained, full checker true4x cell centers preserve all48×21=1008 alternating phases with0 mismatches. Native-Lanczos threshold has209 mismatches from averaging checker boundaries, not changed count/phase: cannot claim209 wrong cells from minification. Checker mean77.71/61.73/43.79 becomes77.83/58.92/36.80; native checker contrast softens after reduction. Red stripe source52.11/12.22/10.14 becomes60.25/9.39/8.47 and Lstd5.87→7.64: mild stronger red/chroma paint disclosed for root palette review, no new print/raised hardware. Lowernavy15.94/17.93/20.25→16.90/18.59/20.41, nativeLstd5.87→7.33; fine irregular HD paint remains subdued and non-repeating. Source bottomnative y126/127 already brighter18.66/18.77G and target19.35/19.15G; no new margin/plate. Source angularleft motif/righttiny pale mark stay in nativephase, middle dark painted lobes/rect retained. Fullsource/raw/normalized512²/sourceA4x/native privately inspected, A255/defaultpad0, uniformgain.97842407 only.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    },
+    {
+      "id": 1869,
+      "status": "artistically-ready-coordinator-review-pending",
+      "reason": "Artistically ready gray-painted robot torso/leather candidate pending root final independent QA, no production acceptance claim. Whole source3 diagonal bands,2 lower angular buckle motifs, right round/darkrect and lower ring preserve count/source-scale and phase. Additional postcall fullnative detail profiles confirm existing side vent dark-slot locations: new hardware not inferred from visual sharpening; source/target columnmean minima agree. Left belt trace source20.8..10.0..21.2L vs target18.2..9.4..20.1, no added highcontrast eyelet claim. Torso44.81/46.54/45.71→41.84/44.10/45.76,Lstd14.32→14.25, lowergray23.27/24.09/23.67→23.38/24.30/24.64. Tiny buckle-left20.71/18.25/16.08→20.92/18.29/16.36 and right22.56/19.69/16.59→20.09/17.57/15.54. Fullraw HD contour/detail is more resolved than lowresolution original; preserved source angular hardware and painted surfaces, fine irregular grain without added repeating weave/ornament. Source upper/lower frame rowmeans stay close; originalA255/defaultpad0, scalar.833984375. ExactRGBA alias2932 source-only no secondcall. Root must independently assess more resolved contours/material.",
+      "actual_builtin_calls": 1,
+      "source_record": {
+        "id": 1869,
+        "texture": {
+          "ID": 1869,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -15395307,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Robots\\German\\Body.tga",
+          "Format": "dxt1",
+          "UserName": "Body",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1257,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 836,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1707,
+                  "field": "Material0",
+                  "material_template_id": 836,
+                  "geometry_id": 2017,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+                  "model_template_id": 1285,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 2067,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1398,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1930,
+                  "field": "Material0",
+                  "material_template_id": 1398,
+                  "geometry_id": 2017,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+                  "model_template_id": 1487,
+                  "flags": ""
+                }
+              ]
+            },
+            {
+              "table": "Materials",
+              "id": 2069,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1399,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1926,
+                  "field": "Material0",
+                  "material_template_id": 1399,
+                  "geometry_id": 2017,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+                  "model_template_id": 1485,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "7851021c10208b7782c8e15766fc80a946efa93096e3ff64dbea2e105b9e0f09",
+        "source_rgba_sha256": "8bd2759709e38d11c2c148088533882b1f1367c0cbb5d6ba45d37c2c78bc3631",
+        "release_rgba_sha256": "8bd2759709e38d11c2c148088533882b1f1367c0cbb5d6ba45d37c2c78bc3631",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/1869.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "d5b8873da0d6828badc080c7a0e10e2667e66f5f40e647da72d4905adba76cd1",
+      "exact_prompt_sha256": "d7a111ead8b57a412959dc08f35c30489ceef8964f6dc23324d5dd815e2ce407",
+      "reference_sha256": "238921b231aa5464f98cde20ac536b8db3f2c455cda3da0d71fd27e94ef0203f",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/1869-generation-call.json",
+      "generation_call_sha256": "370fb8007ee7bb4765eccd463adf6334dbbae27fa89934adf04de4f204b88f2e",
+      "source_count_phase_proof": {
+        "id": 1869,
+        "source_rgba_sha256": "8bd2759709e38d11c2c148088533882b1f1367c0cbb5d6ba45d37c2c78bc3631",
+        "source_alpha_extrema": [
+          255,
+          255
+        ],
+        "source_Apositive_RGBblack_texels": 1860,
+        "source_center_RGBA": [
+          54,
+          57,
+          60,
+          255
+        ],
+        "source_corners_RGBA": [
+          [
+            0,
+            0,
+            0,
+            255
+          ],
+          [
+            24,
+            24,
+            24,
+            255
+          ],
+          [
+            10,
+            10,
+            10,
+            255
+          ],
+          [
+            30,
+            28,
+            24,
+            255
+          ]
+        ],
+        "full_original_privately_inspected": true,
+        "proof_before_final_prompt_at_utc": "2026-10-08T05:38:51.554369+00:00",
+        "diagnostic_crop_reference_for_generation": false,
+        "source_fields_native": {
+          "diagonalstraps": [
+            24,
+            24,
+            62,
+            57
+          ],
+          "graytorso": [
+            27,
+            7,
+            98,
+            79
+          ],
+          "angledleftbelt": [
+            22,
+            61,
+            53,
+            84
+          ],
+          "horizontalbelt": [
+            52,
+            77,
+            96,
+            84
+          ],
+          "leftangularbuckle": [
+            39,
+            73,
+            47,
+            82
+          ],
+          "rightangularbuckle": [
+            69,
+            77,
+            79,
+            84
+          ],
+          "rightupperrounddark": [
+            106,
+            54,
+            122,
+            70
+          ],
+          "rightmiddlerectdark": [
+            106,
+            75,
+            121,
+            89
+          ],
+          "bottomroundring": [
+            81,
+            97,
+            94,
+            109
+          ]
+        },
+        "method": "Wholeoriginal plus separate strap/belt native nearest probes show3 parallel diagonal dark bands and2 existing angular buckle motifs. Preserve tiny original polygon paint shapes instead of making more resolved modern mechanical hardware. One bottom round dark ring wash is distinct from right upper round field. Whole atlas gray painted torso, dim brown leather belt and sidefields stay matte; no ornaments/new seams.",
+        "proved_source_counts": {
+          "source_width": 128,
+          "source_height": 128,
+          "new_hardware_anatomy_print_seams_allowed": 0,
+          "upperleft_diagonal_strap_bands": 3,
+          "lower_torso_angular_buckle_motifs": 2,
+          "right_upper_dark_round_fields": 1,
+          "right_middle_dark_rectangular_fields": 1,
+          "bottom_right_of_torso_dark_round_ring_washes": 1
+        }
+      },
+      "numeric_private_proof": {
+        "id": 1869,
+        "gain": 0.833984375,
+        "source_stored_luma": 21.1884119140625,
+        "actual_stored_luma": 21.19194192428589,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "premultiplied": false,
+        "source_alpha_exact_nearest4x": true,
+        "dimensions": [
+          512,
+          512
+        ],
+        "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+      },
+      "private_full_material_count_proof": {
+        "id": 1869,
+        "default_padding_texels": 0,
+        "cleared_texels": 0,
+        "default_padding_equal_unpadded": true,
+        "region_statistics": {
+          "graytorso": {
+            "bounds_native": [
+              35,
+              30,
+              92,
+              74
+            ],
+            "sourceRGB_mean": [
+              44.81140350877193,
+              46.542663476874004,
+              45.70574162679426
+            ],
+            "targetRGB_mean": [
+              41.84170653907496,
+              44.096092503987244,
+              45.7603668261563
+            ],
+            "sourceL_std": 14.317167342266568,
+            "targetL_std": 14.246715717310305
+          },
+          "belt": {
+            "bounds_native": [
+              40,
+              77,
+              95,
+              84
+            ],
+            "sourceRGB_mean": [
+              13.472727272727273,
+              11.192207792207792,
+              9.077922077922079
+            ],
+            "targetRGB_mean": [
+              12.176623376623377,
+              9.922077922077921,
+              8.366233766233766
+            ],
+            "sourceL_std": 16.09752357789409,
+            "targetL_std": 12.318816082153843
+          },
+          "plaqueleft": {
+            "bounds_native": [
+              39,
+              73,
+              47,
+              82
+            ],
+            "sourceRGB_mean": [
+              20.708333333333332,
+              18.25,
+              16.083333333333332
+            ],
+            "targetRGB_mean": [
+              20.916666666666668,
+              18.291666666666668,
+              16.36111111111111
+            ],
+            "sourceL_std": 22.645619528250133,
+            "targetL_std": 20.381886795584567
+          },
+          "plaqueright": {
+            "bounds_native": [
+              69,
+              77,
+              79,
+              84
+            ],
+            "sourceRGB_mean": [
+              22.557142857142857,
+              19.685714285714287,
+              16.585714285714285
+            ],
+            "targetRGB_mean": [
+              20.085714285714285,
+              17.571428571428573,
+              15.542857142857143
+            ],
+            "sourceL_std": 21.951929005627594,
+            "targetL_std": 16.96582293829039
+          },
+          "lowergray": {
+            "bounds_native": [
+              27,
+              111,
+              95,
+              124
+            ],
+            "sourceRGB_mean": [
+              23.26923076923077,
+              24.089366515837103,
+              23.673076923076923
+            ],
+            "targetRGB_mean": [
+              23.384615384615383,
+              24.29638009049774,
+              24.642533936651585
+            ],
+            "sourceL_std": 13.209707390559286,
+            "targetL_std": 14.178594403912333
+          }
+        },
+        "native_top_sourceRGB_mean": [
+          4.1171875,
+          4.140625,
+          4.1171875
+        ],
+        "native_top_targetRGB_mean": [
+          4.078125,
+          4.0703125,
+          4.1015625
+        ],
+        "native_bottom_sourceRGB_mean": [
+          10.453125,
+          10.3984375,
+          9.9296875
+        ],
+        "native_bottom_targetRGB_mean": [
+          10.5,
+          10.2109375,
+          9.8046875
+        ],
+        "additional_postcall_source_detail_diagnostics": {
+          "leftuppervents": {
+            "bounds": [
+              8,
+              55,
+              22,
+              69
+            ],
+            "sourceL_colmean": [
+              2.8173714285714277,
+              4.623885714285714,
+              11.256342857142856,
+              11.215657142857141,
+              2.4872714285714284,
+              4.119528571428571,
+              10.663857142857141,
+              10.663857142857141,
+              3.704342857142857,
+              2.204342857142857,
+              7.061485714285714,
+              14.653257142857143,
+              15.603599999999997,
+              16.342814285714283
+            ],
+            "targetL_colmean": [
+              3.714285714285715,
+              2.407942857142857,
+              16.153742857142856,
+              17.16987142857143,
+              2.6479285714285714,
+              3.2296714285714287,
+              15.741585714285716,
+              16.456242857142858,
+              6.342814285714285,
+              1.806342857142857,
+              4.8266857142857145,
+              19.169585714285716,
+              18.960742857142858,
+              16.57867142857143
+            ]
+          },
+          "leftlowervents": {
+            "bounds": [
+              8,
+              109,
+              25,
+              124
+            ],
+            "sourceL_colmean": [
+              25.451799999999995,
+              32.36468,
+              32.626266666666666,
+              16.253880000000002,
+              22.359479999999994,
+              32.78117333333333,
+              33.25666666666667,
+              26.51049333333333,
+              24.766706666666664,
+              39.298386666666666,
+              37.84932,
+              30.560160000000003,
+              17.64337333333333,
+              29.67496,
+              42.569013333333345,
+              33.226319999999994,
+              29.172159999999998
+            ],
+            "targetL_colmean": [
+              26.02746666666667,
+              33.01608,
+              33.29718666666667,
+              14.328173333333334,
+              19.385213333333336,
+              33.174626666666676,
+              33.05554666666667,
+              23.951173333333333,
+              22.327293333333333,
+              38.11037333333333,
+              37.50058666666666,
+              30.154573333333328,
+              15.36684,
+              27.10296,
+              42.93267999999999,
+              35.20022666666667,
+              28.30181333333333
+            ]
+          },
+          "rightmiddlevents": {
+            "bounds": [
+              105,
+              77,
+              122,
+              87
+            ],
+            "sourceL_colmean": [
+              16.22476,
+              7.63566,
+              22.073179999999997,
+              20.95652,
+              20.35652,
+              4.449859999999999,
+              3.4498599999999997,
+              4.74,
+              4.14,
+              2.3684800000000004,
+              2.4684800000000005,
+              24.391619999999996,
+              21.3986,
+              19.513199999999998,
+              8.079619999999998,
+              28.390679999999996,
+              29.662199999999995
+            ],
+            "targetL_colmean": [
+              16.37462,
+              4.891579999999999,
+              23.7321,
+              26.646139999999995,
+              20.4686,
+              3.1992000000000003,
+              3.0421199999999997,
+              6.104699999999999,
+              5.52006,
+              2.14172,
+              4.04802,
+              25.781439999999996,
+              23.71898,
+              20.47542,
+              6.38424,
+              28.907,
+              33.21342
+            ]
+          },
+          "rightbottomvents": {
+            "bounds": [
+              105,
+              118,
+              123,
+              128
+            ],
+            "sourceL_colmean": [
+              17.38356,
+              9.28962,
+              24.10598,
+              20.850099999999998,
+              21.499959999999998,
+              5.62976,
+              6.3728,
+              6.871519999999999,
+              4.95696,
+              4.256959999999999,
+              4.2424,
+              25.605699999999995,
+              23.227359999999997,
+              23.85584,
+              10.57216,
+              25.07536,
+              28.174200000000003,
+              28.7742
+            ],
+            "targetL_colmean": [
+              15.883960000000002,
+              6.2992,
+              23.110719999999997,
+              25.682359999999996,
+              21.88998,
+              5.07072,
+              4.94172,
+              6.206019999999999,
+              4.51364,
+              3.89238,
+              4.362979999999999,
+              25.875019999999996,
+              25.41164,
+              22.29708,
+              9.6984,
+              22.12998,
+              26.541499999999996,
+              27.11262
+            ]
+          },
+          "leftbelttrace": {
+            "bounds": [
+              28,
+              65,
+              40,
+              75
+            ],
+            "sourceL_colmean": [
+              20.837359999999997,
+              20.8161,
+              24.214779999999998,
+              19.52332,
+              15.67088,
+              14.4,
+              12.71456,
+              12.72912,
+              10.01834,
+              11.660739999999999,
+              19.9459,
+              21.196679999999997
+            ],
+            "targetL_colmean": [
+              18.1648,
+              18.70692,
+              22.462560000000003,
+              20.2354,
+              16.172940000000004,
+              14.48148,
+              13.060219999999997,
+              12.738559999999998,
+              9.36836,
+              10.16246,
+              15.947499999999996,
+              20.06286
+            ]
+          }
+        },
+        "status": "artistically-ready-coordinator-review-pending",
+        "full_original_raw_normalized4x_sourceA4x_native_privately_inspected": true,
+        "review_reason": "Artistically ready gray-painted robot torso/leather candidate pending root final independent QA, no production acceptance claim. Whole source3 diagonal bands,2 lower angular buckle motifs, right round/darkrect and lower ring preserve count/source-scale and phase. Additional postcall fullnative detail profiles confirm existing side vent dark-slot locations: new hardware not inferred from visual sharpening; source/target columnmean minima agree. Left belt trace source20.8..10.0..21.2L vs target18.2..9.4..20.1, no added highcontrast eyelet claim. Torso44.81/46.54/45.71→41.84/44.10/45.76,Lstd14.32→14.25, lowergray23.27/24.09/23.67→23.38/24.30/24.64. Tiny buckle-left20.71/18.25/16.08→20.92/18.29/16.36 and right22.56/19.69/16.59→20.09/17.57/15.54. Fullraw HD contour/detail is more resolved than lowresolution original; preserved source angular hardware and painted surfaces, fine irregular grain without added repeating weave/ornament. Source upper/lower frame rowmeans stay close; originalA255/defaultpad0, scalar.833984375. ExactRGBA alias2932 source-only no secondcall. Root must independently assess more resolved contours/material.",
+        "minorlocalbrightness_or_codecsoftedge_not_automatic_hold": true
+      }
+    }
+  ],
+  "source_check_sha256": "6860d22e8688e3ae7059f5819e4390c0f0838f24a3d8d9a4ff4669ed320f7124",
+  "scope": "Twelve fullgenuine typed/history-release-originalRGBA audited diffuse atlases, three independent onecall source-onlywholeoriginal edits. Beforeprompt sourcecount/phase/localpaint/A proofs immutable. Exactprompt/raw/refSHA immediatelysaved. Numeric scalar/fullsourceA/defaultpad0/wholeinverse4x only; no artRGBrepair/Falseflag/sourceRGBcomposite/crop/BBox/padding/retry. Localchromalift/softcodec boundaries disclosed not automatic rejection. Remainingunviewed art nevercalled unsuitable. Two workerartready candidates needrootfullnative/palette/materialQA, notproduction acceptance.",
+  "shared_metadata_Game_Git_Cpp": "Untouched; rootonly. All previousstable untouched."
+}

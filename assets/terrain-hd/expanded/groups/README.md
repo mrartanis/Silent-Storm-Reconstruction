@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 387 of these verified originals are accepted in the shared
+As of 2026-10-08, 392 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-fifth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-sixth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,356 IDs: clothing 218, equipment 137, weapons
-57, heads 178, UI 624, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,351 IDs: clothing 218, equipment 135, weapons
+57, heads 175, UI 624, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -355,3 +355,18 @@ Full native validation, actual graphics menu/private frames/normalquit:
 ../new-groups-twenty-fifth-facegen-runtime-check.json. Three original worker
 reviews frozen before import; exact prompts and PNG remain ordinary Git files.
 Held candidates retain reasons; do not regenerate accepted IDs.
+
+Twenty-sixth accepted packet: equipment5437/5436, hair6771 and dynamic
+face-color layers6671/6678. Pack:2,354 textures/4,708 aliases/127 archives/
+7,638,529,374 bytes. Prior2,349 source/PNG/native hashes unchanged; five nativeRGBA
+equal privately viewed whole4x predictions. Full sourcealpha/UV/material/count/
+scale retained. Faces preserve originalidentity/closedlips/softpaint, no teeth,
+new anatomy or photopores. Moderate localpalette/contrast changes disclosed in
+../coordinator-art-review-twenty-sixth.json; numerical brightness only.
+Actual6671/6678 resource-loader/CPU256atlas on/off/on matches independent integer
+alpha/Vflip/FNV references;9 realhead94 bakes/roundtrips passed. GameEXE and code
+unchanged since verified25, no fullheadGPU claim. Full nativevalidation, actual
+menu/four privately viewed frames/normalquit: ../new-groups-twenty-sixth-
+{batch,live}-check.json; actualCPU proof: ../new-groups-twenty-sixth-
+facegen-runtime-check.json. OrdinaryGit PNG/exactprompts and2 frozen workerreviews.
+Inspect next independentjobs before imagegen; do not regenerate accepted IDs.

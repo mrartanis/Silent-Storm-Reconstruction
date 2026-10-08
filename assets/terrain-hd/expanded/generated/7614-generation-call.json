@@ -1,0 +1,135 @@
+{
+  "id": 7614,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-1935c7c1-aed3-43c0-87c2-bfb2517d9be5.png",
+  "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nKeep exactly9 broad subdued dark-red vertical printed stripes separated by8 dark gaps. Native horizontal stripe intervals are[0,6),[9,14),[17,22),[25,30),[33,38),[41,46),[49,54),[57,62),[65,72); interior pitch8 native pixels. Preserve their washed source contrast. Upper-right ochre/dark checker PRINT is genuine source artwork, not new weave: interior native[80,36,128,57) contains exactly48 columns and21 rows, cell pitch1 native pixel (4 target pixels), repeat pitch2. Top-left interior cell x80,y36 is light; horizontal and vertical neighbors alternate. Full original checker field[78,35,128,57) has clipped boundary cells at x78/79 and first rowy35; copy those original edge shapes without extending/filling regularized cells. Preserve the original downward ochre shading and very dark navy surrounding cloth. Keep exactly one pale small angular motif at bottom-left native[2,79,7,86) and one tiny pale group native[113,117,114,118). Middle dark wash has two upper soft lobes and one lower dark rectangular field; retain their indistinct painted outlines, without inventing boots' laces, eyes, buckles, stitching or hard folds.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7614-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "0ab6500c9774b6ac81ef9aa0bd6250822494994f4299a611e5bd052f54f58dad",
+    "exact_prompt_file": "51be625e7f445f7fca5e7897b28514c2e536becfb70192b2e3a27a0c5f26f567",
+    "reference_png": "e7f1923772d66ce8a1323bb2e10d8142bad4ecce3908090acdb311637c2fb0ef"
+  },
+  "saved_at_utc": "2026-10-08T05:40:51.507302+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 7614,
+    "texture": {
+      "ID": 7614,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14871789,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Legs_Arab.tga",
+      "Format": "dxt1",
+      "UserName": "Legs_Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5785,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3091,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7725,
+              "field": "Material2",
+              "material_template_id": 3091,
+              "geometry_id": 4255,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+              "model_template_id": 4649,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "1b944e2811bf816da1278962b1f71edb8a1aad032e6dae96ac93ed6d0c0fb2bf",
+    "source_rgba_sha256": "cfa943d454bededa197b794ee0f4fb6e15fea275317633d02cacf310d3205f27",
+    "release_rgba_sha256": "cfa943d454bededa197b794ee0f4fb6e15fea275317633d02cacf310d3205f27",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7614.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "6860d22e8688e3ae7059f5819e4390c0f0838f24a3d8d9a4ff4669ed320f7124",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fourth-7614.json",
+  "source_count_phase_proof_sha256": "0776820f3b8dd27f275f62e2df721a23a967e907ecc4873df8cc357d0990bd90",
+  "precall_constraints_sha256": "7a1dd2060713ff4a4ecfeee3ebe8f2e4530fec4b8f5e70b0ec484d321b0126c5",
+  "exact_service_args": {
+    "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nKeep exactly9 broad subdued dark-red vertical printed stripes separated by8 dark gaps. Native horizontal stripe intervals are[0,6),[9,14),[17,22),[25,30),[33,38),[41,46),[49,54),[57,62),[65,72); interior pitch8 native pixels. Preserve their washed source contrast. Upper-right ochre/dark checker PRINT is genuine source artwork, not new weave: interior native[80,36,128,57) contains exactly48 columns and21 rows, cell pitch1 native pixel (4 target pixels), repeat pitch2. Top-left interior cell x80,y36 is light; horizontal and vertical neighbors alternate. Full original checker field[78,35,128,57) has clipped boundary cells at x78/79 and first rowy35; copy those original edge shapes without extending/filling regularized cells. Preserve the original downward ochre shading and very dark navy surrounding cloth. Keep exactly one pale small angular motif at bottom-left native[2,79,7,86) and one tiny pale group native[113,117,114,118). Middle dark wash has two upper soft lobes and one lower dark rectangular field; retain their indistinct painted outlines, without inventing boots' laces, eyes, buckles, stitching or hard folds.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7614-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 7614,
+    "gain": 0.978424072265625,
+    "source_stored_luma": 20.97202314453125,
+    "actual_stored_luma": 20.97186795654297,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically ready candidate with disclosed local paint/chroma lift and codec softening, pending independent root final QA. Exact9 broad source red stripes/8 gaps/pitch8 retained, full checker true4x cell centers preserve all48×21=1008 alternating phases with0 mismatches. Native-Lanczos threshold has209 mismatches from averaging checker boundaries, not changed count/phase: cannot claim209 wrong cells from minification. Checker mean77.71/61.73/43.79 becomes77.83/58.92/36.80; native checker contrast softens after reduction. Red stripe source52.11/12.22/10.14 becomes60.25/9.39/8.47 and Lstd5.87→7.64: mild stronger red/chroma paint disclosed for root palette review, no new print/raised hardware. Lowernavy15.94/17.93/20.25→16.90/18.59/20.41, nativeLstd5.87→7.33; fine irregular HD paint remains subdued and non-repeating. Source bottomnative y126/127 already brighter18.66/18.77G and target19.35/19.15G; no new margin/plate. Source angularleft motif/righttiny pale mark stay in nativephase, middle dark painted lobes/rect retained. Fullsource/raw/normalized512²/sourceA4x/native privately inspected, A255/defaultpad0, uniformgain.97842407 only."
+}

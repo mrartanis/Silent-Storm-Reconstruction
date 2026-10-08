@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1869,
+    "exact_prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the original dim gray-blue painted torso field and brown/near-black belt leather washes. Preserve exactly3 parallel diagonal dark strap bands at upper-left native[24,24,62,57). Preserve exactly2 tiny angular painted buckle motifs in the lower belt: left native[39,73,47,82) and right native[69,77,79,84), keeping their original polygon silhouettes and faint shading without adding mechanically resolved parts or extra holes. Keep one right-upper rounded dark field at[106,54,122,70), one right-middle rectangular dark field at[106,75,121,89), and one lower torso rounded dark ring wash at[81,97,94,109), unchanged in shape, count and UV phase. Keep the other lower folds and left-side vertical marks exactly in their washed original layout; they must remain matte painted marks without new machinery/raised straps, bright studs, or decorative textures.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "new_hardware_anatomy_print_seams_allowed": 0,
+      "upperleft_diagonal_strap_bands": 3,
+      "lower_torso_angular_buckle_motifs": 2,
+      "right_upper_dark_round_fields": 1,
+      "right_middle_dark_rectangular_fields": 1,
+      "bottom_right_of_torso_dark_round_ring_washes": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T05:39:33.490114+00:00",
+    "source_proof_sha256": "a049f12fb623ae431657b0b98c554fb368d725c68e955d16d09f946adfc1a258"
+  }
+]

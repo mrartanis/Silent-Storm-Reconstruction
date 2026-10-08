@@ -1,0 +1,177 @@
+{
+  "id": 1869,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-6b97e5a7-0d5c-46f2-925c-09f64badd5bc.png",
+  "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the original dim gray-blue painted torso field and brown/near-black belt leather washes. Preserve exactly3 parallel diagonal dark strap bands at upper-left native[24,24,62,57). Preserve exactly2 tiny angular painted buckle motifs in the lower belt: left native[39,73,47,82) and right native[69,77,79,84), keeping their original polygon silhouettes and faint shading without adding mechanically resolved parts or extra holes. Keep one right-upper rounded dark field at[106,54,122,70), one right-middle rectangular dark field at[106,75,121,89), and one lower torso rounded dark ring wash at[81,97,94,109), unchanged in shape, count and UV phase. Keep the other lower folds and left-side vertical marks exactly in their washed original layout; they must remain matte painted marks without new machinery/raised straps, bright studs, or decorative textures.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1869-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "d5b8873da0d6828badc080c7a0e10e2667e66f5f40e647da72d4905adba76cd1",
+    "exact_prompt_file": "d7a111ead8b57a412959dc08f35c30489ceef8964f6dc23324d5dd815e2ce407",
+    "reference_png": "238921b231aa5464f98cde20ac536b8db3f2c455cda3da0d71fd27e94ef0203f"
+  },
+  "saved_at_utc": "2026-10-08T05:41:34.597126+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 1869,
+    "texture": {
+      "ID": 1869,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15395307,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Robots\\German\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1257,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 836,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1707,
+              "field": "Material0",
+              "material_template_id": 836,
+              "geometry_id": 2017,
+              "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+              "model_template_id": 1285,
+              "flags": ""
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 2067,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1398,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1930,
+              "field": "Material0",
+              "material_template_id": 1398,
+              "geometry_id": 2017,
+              "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+              "model_template_id": 1487,
+              "flags": ""
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 2069,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1399,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1926,
+              "field": "Material0",
+              "material_template_id": 1399,
+              "geometry_id": 2017,
+              "geometry": "Characters\\Skeletons01\\Skins\\Robots\\GerRobot.mb",
+              "model_template_id": 1485,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "7851021c10208b7782c8e15766fc80a946efa93096e3ff64dbea2e105b9e0f09",
+    "source_rgba_sha256": "8bd2759709e38d11c2c148088533882b1f1367c0cbb5d6ba45d37c2c78bc3631",
+    "release_rgba_sha256": "8bd2759709e38d11c2c148088533882b1f1367c0cbb5d6ba45d37c2c78bc3631",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/1869.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "6860d22e8688e3ae7059f5819e4390c0f0838f24a3d8d9a4ff4669ed320f7124",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fourth-1869.json",
+  "source_count_phase_proof_sha256": "a049f12fb623ae431657b0b98c554fb368d725c68e955d16d09f946adfc1a258",
+  "precall_constraints_sha256": "71402878653d88efd060018915ba6a8b9d6aef629ab5628c93cd4248357eea22",
+  "exact_service_args": {
+    "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the original dim gray-blue painted torso field and brown/near-black belt leather washes. Preserve exactly3 parallel diagonal dark strap bands at upper-left native[24,24,62,57). Preserve exactly2 tiny angular painted buckle motifs in the lower belt: left native[39,73,47,82) and right native[69,77,79,84), keeping their original polygon silhouettes and faint shading without adding mechanically resolved parts or extra holes. Keep one right-upper rounded dark field at[106,54,122,70), one right-middle rectangular dark field at[106,75,121,89), and one lower torso rounded dark ring wash at[81,97,94,109), unchanged in shape, count and UV phase. Keep the other lower folds and left-side vertical marks exactly in their washed original layout; they must remain matte painted marks without new machinery/raised straps, bright studs, or decorative textures.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1869-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 1869,
+    "gain": 0.833984375,
+    "source_stored_luma": 21.1884119140625,
+    "actual_stored_luma": 21.19194192428589,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically ready gray-painted robot torso/leather candidate pending root final independent QA, no production acceptance claim. Whole source3 diagonal bands,2 lower angular buckle motifs, right round/darkrect and lower ring preserve count/source-scale and phase. Additional postcall fullnative detail profiles confirm existing side vent dark-slot locations: new hardware not inferred from visual sharpening; source/target columnmean minima agree. Left belt trace source20.8..10.0..21.2L vs target18.2..9.4..20.1, no added highcontrast eyelet claim. Torso44.81/46.54/45.71→41.84/44.10/45.76,Lstd14.32→14.25, lowergray23.27/24.09/23.67→23.38/24.30/24.64. Tiny buckle-left20.71/18.25/16.08→20.92/18.29/16.36 and right22.56/19.69/16.59→20.09/17.57/15.54. Fullraw HD contour/detail is more resolved than lowresolution original; preserved source angular hardware and painted surfaces, fine irregular grain without added repeating weave/ornament. Source upper/lower frame rowmeans stay close; originalA255/defaultpad0, scalar.833984375. ExactRGBA alias2932 source-only no secondcall. Root must independently assess more resolved contours/material."
+}

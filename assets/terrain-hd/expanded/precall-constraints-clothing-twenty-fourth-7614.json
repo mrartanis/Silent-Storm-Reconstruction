@@ -1,0 +1,25 @@
+[
+  {
+    "id": 7614,
+    "exact_prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nKeep exactly9 broad subdued dark-red vertical printed stripes separated by8 dark gaps. Native horizontal stripe intervals are[0,6),[9,14),[17,22),[25,30),[33,38),[41,46),[49,54),[57,62),[65,72); interior pitch8 native pixels. Preserve their washed source contrast. Upper-right ochre/dark checker PRINT is genuine source artwork, not new weave: interior native[80,36,128,57) contains exactly48 columns and21 rows, cell pitch1 native pixel (4 target pixels), repeat pitch2. Top-left interior cell x80,y36 is light; horizontal and vertical neighbors alternate. Full original checker field[78,35,128,57) has clipped boundary cells at x78/79 and first rowy35; copy those original edge shapes without extending/filling regularized cells. Preserve the original downward ochre shading and very dark navy surrounding cloth. Keep exactly one pale small angular motif at bottom-left native[2,79,7,86) and one tiny pale group native[113,117,114,118). Middle dark wash has two upper soft lobes and one lower dark rectangular field; retain their indistinct painted outlines, without inventing boots' laces, eyes, buckles, stitching or hard folds.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "new_hardware_anatomy_print_seams_allowed": 0,
+      "broad_red_vertical_stripes": 9,
+      "dark_intervening_gaps": 8,
+      "interior_stripe_pitch_native": 8,
+      "checker_interior_columns": 48,
+      "checker_interior_rows": 21,
+      "checker_cell_pitch_native": 1,
+      "checker_repeat_pitch_native": 2,
+      "left_bottom_angular_pale_motif": 1,
+      "right_bottom_tiny_pale_group": 1,
+      "middle_dark_wash_upper_lobes": 2,
+      "middle_dark_wash_lower_rectangles": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T05:39:33.491115+00:00",
+    "source_proof_sha256": "0776820f3b8dd27f275f62e2df721a23a967e907ecc4873df8cc357d0990bd90"
+  }
+]

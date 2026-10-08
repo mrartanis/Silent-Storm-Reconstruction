@@ -1,0 +1,135 @@
+{
+  "id": 7608,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-6b4cb980-0dbc-461f-bb4b-8124ecc5f2ea.png",
+  "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the one red-brown left wash field, one diagonal ochre field, one long blue-gray middle strip, and one very dark navy cloth field on the right. Keep the original right flap line and exactly one tiny pale marker at native x106..107/y65..66. In the ochre left region preserve exactly one tiny angular painted motif within native[2,67,6,72], in its source shape, without converting it into raised metal. Below it, the diagonal pale source trace has exactly4 soft highlight groups: native[3,72], [5,73], [7,74], and the final connected three-pixel group[9,76],[10,77],[11,78]. Preserve the faint intervening source wash including x8/y75; retain the groups' native cadence and low contrast without rounding them into buttons, studs or holes. All other original reddish and navy color washes remain as painted material, without extra creases or newly resolved anatomy.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7608-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "94ac068e74cc946bc4066618b4057f049bf12cbebb2b5a2541bc411f277e77d0",
+    "exact_prompt_file": "b1ee3c188b88eebbe617afa9661da7701189d40244834741f42af798a2d37e39",
+    "reference_png": "c1fb99ed63d1494f21c64bcce88e8982c4fa5974d6d39e57f71afa9ee2d3fe38"
+  },
+  "saved_at_utc": "2026-10-08T05:40:11.518521+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 7608,
+    "texture": {
+      "ID": 7608,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15134962,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Body_Arab.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5778,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3089,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7725,
+              "field": "Material0",
+              "material_template_id": 3089,
+              "geometry_id": 4255,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+              "model_template_id": 4649,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "529584d007bea1174ed58bd9717c0596dc13e9aab6f269ed8793f894c0c5a8a4",
+    "source_rgba_sha256": "1426c5159e49c1a884de86a9abbc97b03bbb4ae32fcd4a6729dee7ad6756c78e",
+    "release_rgba_sha256": "1426c5159e49c1a884de86a9abbc97b03bbb4ae32fcd4a6729dee7ad6756c78e",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7608.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "6860d22e8688e3ae7059f5819e4390c0f0838f24a3d8d9a4ff4669ed320f7124",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fourth-7608.json",
+  "source_count_phase_proof_sha256": "bb25ec86e269ef8178de749f666e2906ad48cfeba18e7d83692db59e3d209bd6",
+  "precall_constraints_sha256": "b20766a6efc6f5241b280331da700666aba779519be98e74c38bf53d2bf93cab",
+  "exact_service_args": {
+    "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the one red-brown left wash field, one diagonal ochre field, one long blue-gray middle strip, and one very dark navy cloth field on the right. Keep the original right flap line and exactly one tiny pale marker at native x106..107/y65..66. In the ochre left region preserve exactly one tiny angular painted motif within native[2,67,6,72], in its source shape, without converting it into raised metal. Below it, the diagonal pale source trace has exactly4 soft highlight groups: native[3,72], [5,73], [7,74], and the final connected three-pixel group[9,76],[10,77],[11,78]. Preserve the faint intervening source wash including x8/y75; retain the groups' native cadence and low contrast without rounding them into buttons, studs or holes. All other original reddish and navy color washes remain as painted material, without extra creases or newly resolved anatomy.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7608-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 7608,
+    "gain": 0.861083984375,
+    "source_stored_luma": 16.827267382812497,
+    "actual_stored_luma": 16.819648861694336,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for source pale diagonal wash clarified into separate bright painted dabs. Native threshold classifier retains exactly4 source-connected groups, but complete target4x has7 components vs4 source-nearest: final3-pixel source group separates and faint x8/y75 wash becomes bright individual highlight. This is not a threshold-only inventedpart claim: fullraw visibly rounds and separates the paint marks, explicitly forbidden by prompt. Source trace mean155.86/114.56/65.90 becomes150.01/111.42/57.65 under scalar.86108398, so global or mean brightness is not the cause. Source angular motif further hardens, but no unsupported claim of eight mechanical buttons. Layout/wholeA255/defaultpad0 and maincloth palette pass. No retry/artRGB fix."
+}
