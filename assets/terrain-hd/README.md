@@ -1,6 +1,6 @@
 # HD textures
 
-Current user scope (8 October 2026): finish entire heads/hair, clothing and world
+Current user scope (9 October 2026): finish entire heads/hair, clothing and world
 categories. Other unfinished categories are paused. One agent owns each whole
 category and performs visual and scripted review, with versioned artistic repairs
 of unaccepted results. One coordinator owns shared metadata and publication;
@@ -33,14 +33,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,493 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 95 clothing, 145 equipment, 71 weapons,
-24 head/hair textures, 103 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,649 HD textures**: 178 terrain assets, 30 tree
+assets, 1,758 building/environment assets, 95 clothing, 145 equipment, 71 weapons,
+176 head/hair textures, 103 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,975 records, including 531 accepted new-group textures, the original
+contains 3,129 records, including 683 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-143 structural/solid masks, 63 unavailable historical sources, one release mismatch
+141 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and seventeen resource IDs whose original-preserving image generation was unavailable
 (sixteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -53,7 +53,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,192 verified originals outside the shared queue, including next
+validation. There remain 1,038 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -1048,3 +1048,22 @@ crops, the previous HD version was about 16% / 24% brighter than the original;
 after calibration the crops are within approximately 1% / 5% of the original.
 The test retained about 60 FPS with v-sync. Alpha and texture layout are unchanged.
 The three-version comparison is under `lab/evidence/terrain-visible-hd-20261006/brightness`.
+
+
+## Whole heads/hair category completed, 9 October 2026
+
+All186 source IDs are accounted for:152 new HD,24 prior accepted immutable,
+10 individually qualified functional originals. Eligible artwork remaining0.
+All152 actual nativeRGBA equal the worker-reviewed forecasts; every actual
+source alpha byte, both aliases and all mip bytes pass. The complete Game pack
+has2,649 textures/5,298 aliases/140 archives/8,470,323,902 bytes. Prior2,497
+source objects, PNGs and native payload hashes are unchanged. Actual on/off/on
+menu, all41 new dynamic layers and nine FaceGen bakes pass; the own Game
+exited normally. The category agent inspected all16 actual frames; the
+coordinator did no artwork review. See expanded/new-groups-heads-complete-20261008-batch-check.json
+and heads-complete-20261008/native-runtime-visual-review-final.json. Full
+original frozen manifests also name local-only QA images; the separate
+publication manifest explicitly excludes those private montages/previews.
+World and heads/hair are complete. Clothing168 new artworks are worker-ready
+and await the next single whole-category build/publication. Other categories
+remain paused.

@@ -1,0 +1,182 @@
+{
+  "id": 6615,
+  "generation_variant": "heads-complete-20261008-v1",
+  "UTC": "2026-10-08T21:17:56.480867+00:00",
+  "fresh_registry_count": 2497,
+  "fresh_queue_count": 2975,
+  "source_audit_sha256": "26540c0ebff4322a9c2ceca173d1aef181b2fb858e5144e3cb867f734b881dd6",
+  "source_record": {
+    "id": 6615,
+    "accepted": false,
+    "actual_service_unavailable": false,
+    "shared_status": "pending",
+    "shared_reason": "",
+    "texture": {
+      "ID": 6615,
+      "Width": 256,
+      "Height": 256,
+      "NMips": 0,
+      "AverageColor": 1766672200,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Heads\\90.facegen_test\\0.tga",
+      "Format": "8888",
+      "UserName": "0",
+      "Type": "Ordinary",
+      "AddrType": "Wrap",
+      "StorageType": "Ordinary"
+    },
+    "texture_ref": {
+      "table": "Textures",
+      "id": 6615
+    },
+    "both_release_aliases": {
+      "6615": {
+        "payload_sha256": "c21fd8aa3e15ebcabfc339aa9e4171ce7579e396efe262eb4bee30e5367d46a8",
+        "historical_payload_sha256": "c21fd8aa3e15ebcabfc339aa9e4171ce7579e396efe262eb4bee30e5367d46a8",
+        "historical_release_payload_equal": true,
+        "RGBA_sha256": "483fb3627f56d8ef55f5c80886af9595cf5c81bae7c64a8c58ee5b325f105c06",
+        "size": [
+          256,
+          256
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ]
+        ],
+        "alpha_zero": 38035,
+        "alpha_255": 26372,
+        "black_A255": 166,
+        "unique_RGB": 3242
+      },
+      "16783831": {
+        "missing": true,
+        "error": "KeyError"
+      }
+    },
+    "actual_resource_selector": {
+      "gfx_texture_usedxt": 0,
+      "bIsDXT": false,
+      "resource_id": 6615,
+      "code": "Main/GTexture.cpp:GetRealTextureID; DBFormat/DataFormat.cpp:bIsDXT"
+    },
+    "original_png": "assets/terrain-hd/expanded/original/6615.png",
+    "original_png_sha256": "941ead8d400956ed7222fb6975e7875a6bf9e80c732c8bb88f50ce4a9a77f6b2",
+    "original_RGBA_sha256": "483fb3627f56d8ef55f5c80886af9595cf5c81bae7c64a8c58ee5b325f105c06",
+    "primary_original_fullRGBA_equal": true,
+    "actual_RGBA_equal_primary": true,
+    "actual_A_equal_primary": true,
+    "dynamic_bindings": [],
+    "static_bindings": [
+      {
+        "material": {
+          "table": "Materials",
+          "id": 4607
+        },
+        "template": {
+          "table": "MaterialTemplates",
+          "id": 2695
+        },
+        "Alpha": "alpha_test",
+        "AddressMode": "Wrap",
+        "Models": [],
+        "Heads": [],
+        "ComplexHeads_hair": []
+      }
+    ],
+    "existing_provenance": [],
+    "visual_review": "unviewed",
+    "call_count_this_packet": 0,
+    "actual_native_RGB_reference": "assets/terrain-hd/expanded/heads-complete-20261008/sources/6615-actual-native-rgb.png",
+    "actual_native_RGB_reference_sha256": "3f5ec31e45bcefd88725e8f8e8d19c94d9a36e5681eb439c1a1cce8c72e06397",
+    "actual_native_dominant_RGBA": [
+      {
+        "RGBA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "count": 36864
+      },
+      {
+        "RGBA": [
+          193,
+          193,
+          193,
+          255
+        ],
+        "count": 16384
+      },
+      {
+        "RGBA": [
+          95,
+          29,
+          32,
+          255
+        ],
+        "count": 4096
+      },
+      {
+        "RGBA": [
+          255,
+          255,
+          255,
+          0
+        ],
+        "count": 1171
+      },
+      {
+        "RGBA": [
+          128,
+          128,
+          128,
+          128
+        ],
+        "count": 258
+      },
+      {
+        "RGBA": [
+          191,
+          191,
+          191,
+          64
+        ],
+        "count": 226
+      }
+    ],
+    "primary_actual_RGBA_different_texels": 0,
+    "alpha_decision": "equal/fullprimaryA valid",
+    "brightness_basis": "PRIMARY original storedRGB; actual selected variant RGB inequality disclosed"
+  },
+  "actual_tool_arguments": {
+    "prompt": "Use case: identity-preserve. Edit ONLY this exact ENTIRE original Silent Storm facegen test UV color atlas into four-times finer paint resolution. Image1 is the complete actual native stored RGB edit target. Preserve ALL normalized UV coordinates, complete square size, source pigment and material, exact native shape/count/phase and ALL black unused fields. The lower-left 128x128 field is UNIFORMLY LIGHT GRAY, with NO face, hair or portrait. Keep it absolutely uniform gray, no invented anatomy or shading. Upper-left quarter contains the existing tiny lash strokes against WHITE support at the top edge, narrow low-contrast schematic dental strip below it, and flat maroon support beneath. Preserve every existing lash stroke and dental separation exactly; do not add eyelashes, brighter teeth or dental rows. Adjacent eye field contains one small blue-gray painted iris, one pupil and the source dim highlights on gray wash. Keep the original eye shape, positions, reflections and low contrast, no veins, new catchlights, sharp limbal ring or realistic sclera. All regions remain exactly where they are. No rotation, Vflip, cropping, rearranging, fitting, margins, registration or physical pattern scale changes. Improve only original soft painted edges; no grain, pores, fibers, metallic sheen, relief or new objects. Whole original alpha and brightness are restored programmatically; produce the entire opaque stored RGB canvas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/heads-complete-20261008/sources/6615-actual-native-rgb.png"
+    ],
+    "transparent_background": false
+  },
+  "original_png_sha256": "941ead8d400956ed7222fb6975e7875a6bf9e80c732c8bb88f50ce4a9a77f6b2",
+  "reference_sha256": "3f5ec31e45bcefd88725e8f8e8d19c94d9a36e5681eb439c1a1cce8c72e06397",
+  "selected_actual_RGBA_file_sha256": "941ead8d400956ed7222fb6975e7875a6bf9e80c732c8bb88f50ce4a9a77f6b2",
+  "source_resource_id": 6615,
+  "source_resource_selection_reason": "Actual typed Texture.Format bIsDXT and current gfx_texture_usedxt=0 select OR resource; software FaceGen GetSWTex -> GetRealTextureID through Scene texture path. Full selectedRGBA/A is authoring and brightness basis; PRIMARY stays immutable.",
+  "allfullsource_before_call_privately_inspected": true,
+  "constraints": "Whole exact sourceUV/count/phase/identity/nativepaint softness/materialscale, no preflip/registration/crop/BBox/artRGBpatch; full ACTUAL selectedA/scalar only",
+  "call_status": "prepared_not_yet_called"
+}

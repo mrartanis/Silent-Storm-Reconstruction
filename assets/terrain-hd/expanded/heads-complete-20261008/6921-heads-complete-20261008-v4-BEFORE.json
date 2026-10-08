@@ -1,0 +1,186 @@
+{
+  "id": 6921,
+  "generation_variant": "heads-complete-20261008-v4",
+  "UTC": "2026-10-08T22:15:50.146617+00:00",
+  "fresh_registry_count": 2497,
+  "fresh_queue_count": 2975,
+  "source_audit_sha256": "26540c0ebff4322a9c2ceca173d1aef181b2fb858e5144e3cb867f734b881dd6",
+  "source_record": {
+    "id": 6921,
+    "accepted": false,
+    "actual_service_unavailable": false,
+    "shared_status": "pending",
+    "shared_reason": "",
+    "texture": {
+      "ID": 6921,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": 119279371,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "LSHead\\AdvancedFaceGen\\FaceDamage\\09.png",
+      "Format": "8888",
+      "UserName": "09",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "texture_ref": {
+      "table": "Textures",
+      "id": 6921
+    },
+    "both_release_aliases": {
+      "6921": {
+        "payload_sha256": "85f9e44ba822e0a856043acdffc9d8b5ff8d7236b65bc742f1eab17b21a96e81",
+        "historical_payload_sha256": "85f9e44ba822e0a856043acdffc9d8b5ff8d7236b65bc742f1eab17b21a96e81",
+        "historical_release_payload_equal": true,
+        "RGBA_sha256": "0011039e25bb6e0b761a9f86cfa0c2d1850d5775661e47878f6b6e63f21c033d",
+        "size": [
+          128,
+          128
+        ],
+        "extrema": [
+          [
+            0,
+            189
+          ],
+          [
+            0,
+            168
+          ],
+          [
+            0,
+            168
+          ],
+          [
+            0,
+            255
+          ]
+        ],
+        "alpha_zero": 14024,
+        "alpha_255": 1,
+        "black_A255": 0,
+        "unique_RGB": 3661
+      },
+      "16784137": {
+        "missing": true,
+        "error": "KeyError"
+      }
+    },
+    "actual_resource_selector": {
+      "gfx_texture_usedxt": 0,
+      "bIsDXT": false,
+      "resource_id": 6921,
+      "code": "Main/GTexture.cpp:GetRealTextureID; DBFormat/DataFormat.cpp:bIsDXT"
+    },
+    "original_png": "assets/terrain-hd/expanded/original/6921.png",
+    "original_png_sha256": "29f55d2a8e5d7222cf812bc7c19138331eb1ac9a4d088707d26dcc90ae4ea8b8",
+    "original_RGBA_sha256": "0011039e25bb6e0b761a9f86cfa0c2d1850d5775661e47878f6b6e63f21c033d",
+    "primary_original_fullRGBA_equal": true,
+    "actual_RGBA_equal_primary": true,
+    "actual_A_equal_primary": true,
+    "dynamic_bindings": [
+      {
+        "layer": {
+          "table": "TransformableFaceTextures",
+          "id": 50
+        },
+        "THMID": {
+          "table": "TransformableHeadMaterials",
+          "id": 1
+        },
+        "Heads": [
+          {
+            "table": "Heads",
+            "id": 90
+          }
+        ],
+        "layer_name": null,
+        "layer_priority": 1,
+        "dynamic_qualified": true
+      }
+    ],
+    "static_bindings": [],
+    "existing_provenance": [],
+    "visual_review": "unviewed",
+    "call_count_this_packet": 0,
+    "actual_native_RGB_reference": "assets/terrain-hd/expanded/heads-complete-20261008/sources/6921-actual-native-rgb.png",
+    "actual_native_RGB_reference_sha256": "275301efa112476a1de29774a09bf10811f58e74972ab7ac93c267505dee92e9",
+    "actual_native_dominant_RGBA": [
+      {
+        "RGBA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "count": 12379
+      },
+      {
+        "RGBA": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "count": 36
+      },
+      {
+        "RGBA": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "count": 19
+      },
+      {
+        "RGBA": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "count": 18
+      },
+      {
+        "RGBA": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "count": 9
+      },
+      {
+        "RGBA": [
+          3,
+          1,
+          0,
+          0
+        ],
+        "count": 8
+      }
+    ],
+    "primary_actual_RGBA_different_texels": 0,
+    "alpha_decision": "equal/fullprimaryA valid",
+    "brightness_basis": "PRIMARY original storedRGB; actual selected variant RGB inequality disclosed"
+  },
+  "actual_tool_arguments": {
+    "prompt": "Use case: identity-preserve. Image1 is the exact original complete stored RGB 128x128 game texture, the edit target. Make a faithful four-times larger finely painted copy of THIS bitmap. Maximum fidelity: keep every original pigment region and original blurry softness. Do not reinterpret its indistinct marks as a face, modeled anatomy or new material. Do not add texture, sharpen anything, strengthen dark patches or enhance colors.\n\nExact canvas geometry: the original small irregular faded paint patch has native bounds x21..100,y18..85, center x60.5,y51.5, ABOVE canvas center. In the 512x512 bitmap these are x84..400,y72..340, center x242,y206. Do not enlarge the patch or recenter it. Preserve every original irregular edge, notch, muted gray/orange/brown region and black gap at its exact normalized pixel location. Copy the light gray region and weak dark gray openings particularly faithfully; do not turn them into deep-black eyes or mouth. No new holes, dark flecks, speckle, ridges, contrast, saturated orange, photographic skin or extra detail. The source is deliberately indistinct, flat low-contrast matte paint.\n\nOutput the complete square OPAQUE stored RGB canvas, including all black source support and painted RGB under source alpha-zero; full original native alpha is restored separately. Preserve original bottom-left authoring-corner texel only at its exact original tiny position. No crop, zoom, shift, flip, rotation, margins, borders, repacking, text or watermark. Only fine resolution of the EXISTING softly painted original pixel transitions; original UV, paint scale, color phase and deliberate blur take absolute precedence over new definition. Brightness is calibrated afterward.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/heads-complete-20261008/sources/6921-actual-native-rgb.png"
+    ],
+    "transparent_background": false
+  },
+  "original_png_sha256": "29f55d2a8e5d7222cf812bc7c19138331eb1ac9a4d088707d26dcc90ae4ea8b8",
+  "reference_sha256": "275301efa112476a1de29774a09bf10811f58e74972ab7ac93c267505dee92e9",
+  "selected_actual_RGBA_file_sha256": "29f55d2a8e5d7222cf812bc7c19138331eb1ac9a4d088707d26dcc90ae4ea8b8",
+  "source_resource_id": 6921,
+  "source_resource_selection_reason": "Actual typed Texture.Format bIsDXT and current gfx_texture_usedxt=0 select OR resource; software FaceGen GetSWTex -> GetRealTextureID through Scene texture path. Full selectedRGBA/A is authoring and brightness basis; PRIMARY stays immutable.",
+  "allfullsource_before_call_privately_inspected": true,
+  "constraints": "Whole exact sourceUV/count/phase/identity/nativepaint softness/materialscale, no preflip/registration/crop/BBox/artRGBpatch; full ACTUAL selectedA/scalar only",
+  "call_status": "prepared_not_yet_called"
+}

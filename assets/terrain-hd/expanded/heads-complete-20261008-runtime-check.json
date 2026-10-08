@@ -1,0 +1,2278 @@
+{
+  "date": "2026-10-08",
+  "pack_textures": 2649,
+  "game_SHA256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "source_files_SHA256": {
+    "Main/FaceGenTextureSampling.h": "79adf4fb5d777d9056dd01f882b52697bbe37155589ad8d3cb71b5d841a1f448",
+    "Main/LSHead.cpp": "5fca9be14f991f42e952eb68386f2904b322a482124ec5c23958ef9e500c216d",
+    "Main/LSHead.h": "6cf86685a2cac99d936fe67ca6d8a8f6d8039506de8d8d41a23d07c04b89591d",
+    "Game/Main.cpp": "c6efe78a5e345bc7bc9c68550f4db3c165c7ac4872573e0d7d310b2f20217528",
+    "diagnostics/FaceGenTextureSamplingTests.cpp": "0636ac43c89d84dbba271220ac1bb94f31b975c008cbe64d67847347ad6d4b60",
+    "CMakeLists.txt": "403db5292802cc94c9f6be2f87771bf043fa38237191aa4f21df7ba411965049"
+  },
+  "dynamic_layer_checks": [
+    {
+      "id": 6677,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "ad2a34243bb78aa7",
+          "atlashash": "57c9b4af8d312f13"
+        },
+        {
+          "sourcehash": "f20ce868ab63b683",
+          "atlashash": "e295ba7981add6fb"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6677\r\n[harness] facegen layer id=6677 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=ad2a34243bb78aa7 atlashash=57c9b4af8d312f13\r\n",
+        "[harness] cmd: facegenlayer 6677\r\n[harness] facegen layer id=6677 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=f20ce868ab63b683 atlashash=e295ba7981add6fb\r\n",
+        "[harness] cmd: facegenlayer 6677\r\n[harness] facegen layer id=6677 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=ad2a34243bb78aa7 atlashash=57c9b4af8d312f13\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 2
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 0,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 2,
+            "TextureID": 6677,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "African",
+            "TextureName": "African.0"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6685,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "2f91b512a795e783",
+          "atlashash": "a40277e414af5a9b"
+        },
+        {
+          "sourcehash": "d182a10ce0610c73",
+          "atlashash": "13ef5fa09cbdafff"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6685\r\n[harness] facegen layer id=6685 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=2f91b512a795e783 atlashash=a40277e414af5a9b\r\n",
+        "[harness] cmd: facegenlayer 6685\r\n[harness] facegen layer id=6685 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=d182a10ce0610c73 atlashash=13ef5fa09cbdafff\r\n",
+        "[harness] cmd: facegenlayer 6685\r\n[harness] facegen layer id=6685 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=2f91b512a795e783 atlashash=a40277e414af5a9b\r\n[network-render] unit=0000000000000000 replica=0 animation=000002636C38DF80 direct=0\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyeTextures",
+            "id": 2
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 2,
+            "TextureID": 6685,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Eyes_02",
+            "TextureName": "Eyes_02"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6687,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "35e772a94460b747",
+          "atlashash": "a5891468e710fbcb"
+        },
+        {
+          "sourcehash": "2846d376a511a44d",
+          "atlashash": "673447636f2995ed"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6687\r\n[harness] facegen layer id=6687 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=35e772a94460b747 atlashash=a5891468e710fbcb\r\n",
+        "[harness] cmd: facegenlayer 6687\r\n[harness] facegen layer id=6687 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=2846d376a511a44d atlashash=673447636f2995ed\r\n",
+        "[harness] cmd: facegenlayer 6687\r\n[harness] facegen layer id=6687 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=35e772a94460b747 atlashash=a5891468e710fbcb\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyeTextures",
+            "id": 4
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 4,
+            "TextureID": 6687,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Eyes_04",
+            "TextureName": "Eyes_04"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6689,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "034649e6f0e4acbb",
+          "atlashash": "1e4d685795abba5f"
+        },
+        {
+          "sourcehash": "72f372e02a901465",
+          "atlashash": "d3dfdbe073757bf5"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6689\r\n[harness] facegen layer id=6689 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=034649e6f0e4acbb atlashash=1e4d685795abba5f\r\n",
+        "[harness] cmd: facegenlayer 6689\r\n[harness] facegen layer id=6689 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=72f372e02a901465 atlashash=d3dfdbe073757bf5\r\n",
+        "[harness] cmd: facegenlayer 6689\r\n[harness] facegen layer id=6689 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=034649e6f0e4acbb atlashash=1e4d685795abba5f\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyeTextures",
+            "id": 6
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 6,
+            "TextureID": 6689,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Eyes_06",
+            "TextureName": "Eyes_06"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6691,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "d1a36e2b7fb74e06",
+          "atlashash": "59768ea622a1698e"
+        },
+        {
+          "sourcehash": "82080014a76a4b6f",
+          "atlashash": "ae7754f64daba377"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6691\r\n[harness] facegen layer id=6691 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=d1a36e2b7fb74e06 atlashash=59768ea622a1698e\r\n",
+        "[harness] cmd: facegenlayer 6691\r\n[harness] facegen layer id=6691 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=82080014a76a4b6f atlashash=ae7754f64daba377\r\n",
+        "[harness] cmd: facegenlayer 6691\r\n[harness] facegen layer id=6691 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=d1a36e2b7fb74e06 atlashash=59768ea622a1698e\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyeTextures",
+            "id": 8
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 0,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 8,
+            "TextureID": 6691,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "Eyes_Old",
+            "TextureName": "Eyes_Old"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6693,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "53b36ff9cbf705e0",
+          "atlashash": "3f7feddbff031282"
+        },
+        {
+          "sourcehash": "009bf88aa1388778",
+          "atlashash": "6200a5813ebd143c"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6693\r\n[harness] facegen layer id=6693 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=53b36ff9cbf705e0 atlashash=3f7feddbff031282\r\n",
+        "[harness] cmd: facegenlayer 6693\r\n[harness] facegen layer id=6693 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=009bf88aa1388778 atlashash=6200a5813ebd143c\r\n",
+        "[harness] cmd: facegenlayer 6693\r\n[harness] facegen layer id=6693 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=53b36ff9cbf705e0 atlashash=3f7feddbff031282\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 23
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 23,
+            "TextureID": 6693,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_02",
+            "TextureName": "Beards_02"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6694,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "6b0ee80eb8667143",
+          "atlashash": "65bcf8cf4222c39e"
+        },
+        {
+          "sourcehash": "6a467b6e51a3f080",
+          "atlashash": "2af8ccc3b09cb47f"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6694\r\n[harness] facegen layer id=6694 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=6b0ee80eb8667143 atlashash=65bcf8cf4222c39e\r\n",
+        "[harness] cmd: facegenlayer 6694\r\n[harness] facegen layer id=6694 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=6a467b6e51a3f080 atlashash=2af8ccc3b09cb47f\r\n",
+        "[harness] cmd: facegenlayer 6694\r\n[harness] facegen layer id=6694 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=6b0ee80eb8667143 atlashash=65bcf8cf4222c39e\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 24
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 24,
+            "TextureID": 6694,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_03",
+            "TextureName": "Beards_03"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6695,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "fc63b6037dbd47a4",
+          "atlashash": "6d62f61d0cbf6314"
+        },
+        {
+          "sourcehash": "525c2e753c43a0fe",
+          "atlashash": "6654aa7d9201e29b"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6695\r\n[harness] facegen layer id=6695 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=fc63b6037dbd47a4 atlashash=6d62f61d0cbf6314\r\n",
+        "[harness] cmd: facegenlayer 6695\r\n[harness] facegen layer id=6695 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=525c2e753c43a0fe atlashash=6654aa7d9201e29b\r\n",
+        "[harness] cmd: facegenlayer 6695\r\n[harness] facegen layer id=6695 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=fc63b6037dbd47a4 atlashash=6d62f61d0cbf6314\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 25
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 25,
+            "TextureID": 6695,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_04",
+            "TextureName": "Beards_04"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6696,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "8319a2db6961fc39",
+          "atlashash": "7e3dacd88b0def2b"
+        },
+        {
+          "sourcehash": "482d2abcb4643088",
+          "atlashash": "2af2a3779599883d"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6696\r\n[harness] facegen layer id=6696 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=8319a2db6961fc39 atlashash=7e3dacd88b0def2b\r\n",
+        "[harness] cmd: facegenlayer 6696\r\n[harness] facegen layer id=6696 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=482d2abcb4643088 atlashash=2af2a3779599883d\r\n",
+        "[harness] cmd: facegenlayer 6696\r\n[harness] facegen layer id=6696 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=8319a2db6961fc39 atlashash=7e3dacd88b0def2b\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 26
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 26,
+            "TextureID": 6696,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_05",
+            "TextureName": "Beards_05"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6697,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "16b5cb5effc39394",
+          "atlashash": "33c652aef241460d"
+        },
+        {
+          "sourcehash": "d16fab9c63490bcc",
+          "atlashash": "3f5e2e9825e39255"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6697\r\n[harness] facegen layer id=6697 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=16b5cb5effc39394 atlashash=33c652aef241460d\r\n",
+        "[harness] cmd: facegenlayer 6697\r\n[harness] facegen layer id=6697 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=d16fab9c63490bcc atlashash=3f5e2e9825e39255\r\n",
+        "[harness] cmd: facegenlayer 6697\r\n[harness] facegen layer id=6697 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=16b5cb5effc39394 atlashash=33c652aef241460d\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 27
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 27,
+            "TextureID": 6697,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_06",
+            "TextureName": "Beards_06"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6698,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "698d96c97a577511",
+          "atlashash": "1b04b04bf8ff7055"
+        },
+        {
+          "sourcehash": "8900f0329bcb41bb",
+          "atlashash": "64c77a5001a4710b"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6698\r\n[harness] facegen layer id=6698 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=698d96c97a577511 atlashash=1b04b04bf8ff7055\r\n",
+        "[harness] cmd: facegenlayer 6698\r\n[harness] facegen layer id=6698 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=8900f0329bcb41bb atlashash=64c77a5001a4710b\r\n",
+        "[harness] cmd: facegenlayer 6698\r\n[harness] facegen layer id=6698 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=698d96c97a577511 atlashash=1b04b04bf8ff7055\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 28
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 28,
+            "TextureID": 6698,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_07",
+            "TextureName": "Beards_07"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6699,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "d4990d08b9c98e66",
+          "atlashash": "eb31affa5745e80d"
+        },
+        {
+          "sourcehash": "95be7559fbad0a57",
+          "atlashash": "a8f0560c2ba04691"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6699\r\n[harness] facegen layer id=6699 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=d4990d08b9c98e66 atlashash=eb31affa5745e80d\r\n",
+        "[harness] cmd: facegenlayer 6699\r\n[harness] facegen layer id=6699 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=95be7559fbad0a57 atlashash=a8f0560c2ba04691\r\n",
+        "[harness] cmd: facegenlayer 6699\r\n[harness] facegen layer id=6699 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=d4990d08b9c98e66 atlashash=eb31affa5745e80d\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 29
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 29,
+            "TextureID": 6699,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_08",
+            "TextureName": "Beards_08"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6700,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "416fb60ce5956703",
+          "atlashash": "da8c4b86cca3b94c"
+        },
+        {
+          "sourcehash": "db4ec96db612faab",
+          "atlashash": "41fc772503951c29"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6700\r\n[harness] facegen layer id=6700 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=416fb60ce5956703 atlashash=da8c4b86cca3b94c\r\n",
+        "[harness] cmd: facegenlayer 6700\r\n[harness] facegen layer id=6700 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=db4ec96db612faab atlashash=41fc772503951c29\r\n",
+        "[harness] cmd: facegenlayer 6700\r\n[harness] facegen layer id=6700 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=416fb60ce5956703 atlashash=da8c4b86cca3b94c\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 30
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 30,
+            "TextureID": 6700,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_09",
+            "TextureName": "Beards_09"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6701,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "dc16a3b40c2ae3be",
+          "atlashash": "490a515ba88e8620"
+        },
+        {
+          "sourcehash": "70173061e4bef2da",
+          "atlashash": "6321fbea3c2a657d"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6701\r\n[harness] facegen layer id=6701 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=dc16a3b40c2ae3be atlashash=490a515ba88e8620\r\n",
+        "[harness] cmd: facegenlayer 6701\r\n[harness] facegen layer id=6701 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=70173061e4bef2da atlashash=6321fbea3c2a657d\r\n",
+        "[harness] cmd: facegenlayer 6701\r\n[harness] facegen layer id=6701 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=dc16a3b40c2ae3be atlashash=490a515ba88e8620\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 31
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 31,
+            "TextureID": 6701,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Beards_10",
+            "TextureName": "Beards_10"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6702,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "3955f8ec6945733b",
+          "atlashash": "63c50f1004e46e26"
+        },
+        {
+          "sourcehash": "f7ce828f669da93f",
+          "atlashash": "5b9b701f6d765c69"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6702\r\n[harness] facegen layer id=6702 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=3955f8ec6945733b atlashash=63c50f1004e46e26\r\n",
+        "[harness] cmd: facegenlayer 6702\r\n[harness] facegen layer id=6702 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=f7ce828f669da93f atlashash=5b9b701f6d765c69\r\n",
+        "[harness] cmd: facegenlayer 6702\r\n[harness] facegen layer id=6702 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=3955f8ec6945733b atlashash=63c50f1004e46e26\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 32
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 32,
+            "TextureID": 6702,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "01",
+            "TextureName": "01"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6704,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "4387b976d9a1c883",
+          "atlashash": "224afb35faf15419"
+        },
+        {
+          "sourcehash": "5eb4c6ac6a130e21",
+          "atlashash": "70ec6cfb1d12883b"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6704\r\n[harness] facegen layer id=6704 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=4387b976d9a1c883 atlashash=224afb35faf15419\r\n",
+        "[harness] cmd: facegenlayer 6704\r\n[harness] facegen layer id=6704 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=5eb4c6ac6a130e21 atlashash=70ec6cfb1d12883b\r\n",
+        "[harness] cmd: facegenlayer 6704\r\n[harness] facegen layer id=6704 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=4387b976d9a1c883 atlashash=224afb35faf15419\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 34
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 34,
+            "TextureID": 6704,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "03",
+            "TextureName": "03"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6705,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "cf31f9782599f236",
+          "atlashash": "1ea7ec7e5d78a37c"
+        },
+        {
+          "sourcehash": "41037d337da03d16",
+          "atlashash": "bd644149fa690504"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6705\r\n[harness] facegen layer id=6705 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=cf31f9782599f236 atlashash=1ea7ec7e5d78a37c\r\n",
+        "[harness] cmd: facegenlayer 6705\r\n[harness] facegen layer id=6705 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=41037d337da03d16 atlashash=bd644149fa690504\r\n",
+        "[harness] cmd: facegenlayer 6705\r\n[harness] facegen layer id=6705 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=cf31f9782599f236 atlashash=1ea7ec7e5d78a37c\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 35
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 35,
+            "TextureID": 6705,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "04",
+            "TextureName": "04"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6708,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "825177bc261d400b",
+          "atlashash": "ffdecab49f151be7"
+        },
+        {
+          "sourcehash": "05e429cb1aef19c9",
+          "atlashash": "78989d8d3a072fff"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6708\r\n[harness] facegen layer id=6708 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=825177bc261d400b atlashash=ffdecab49f151be7\r\n",
+        "[harness] cmd: facegenlayer 6708\r\n[harness] facegen layer id=6708 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=05e429cb1aef19c9 atlashash=78989d8d3a072fff\r\n",
+        "[harness] cmd: facegenlayer 6708\r\n[harness] facegen layer id=6708 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=825177bc261d400b atlashash=ffdecab49f151be7\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 38
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 38,
+            "TextureID": 6708,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "07",
+            "TextureName": "07"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6712,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "33301b60fe2e627b",
+          "atlashash": "9cc6eda009ac0fdb"
+        },
+        {
+          "sourcehash": "1d9db3ecca29ec2d",
+          "atlashash": "c15eb94f77104d6d"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6712\r\n[harness] facegen layer id=6712 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=33301b60fe2e627b atlashash=9cc6eda009ac0fdb\r\n",
+        "[harness] cmd: facegenlayer 6712\r\n[harness] facegen layer id=6712 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=1d9db3ecca29ec2d atlashash=c15eb94f77104d6d\r\n",
+        "[harness] cmd: facegenlayer 6712\r\n[harness] facegen layer id=6712 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=33301b60fe2e627b atlashash=9cc6eda009ac0fdb\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 19
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 19,
+            "TextureID": 6712,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "M01",
+            "TextureName": "M01"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6713,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "1e51a6dbc4489d59",
+          "atlashash": "f005e03e2116a9ca"
+        },
+        {
+          "sourcehash": "33f14b8136779eed",
+          "atlashash": "ede9b00259623ae7"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6713\r\n[harness] facegen layer id=6713 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=1e51a6dbc4489d59 atlashash=f005e03e2116a9ca\r\n",
+        "[harness] cmd: facegenlayer 6713\r\n[harness] facegen layer id=6713 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=33f14b8136779eed atlashash=ede9b00259623ae7\r\n",
+        "[harness] cmd: facegenlayer 6713\r\n[harness] facegen layer id=6713 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=1e51a6dbc4489d59 atlashash=f005e03e2116a9ca\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 20
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 20,
+            "TextureID": 6713,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "M02",
+            "TextureName": "M02"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6714,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "e9f0252c8857251a",
+          "atlashash": "a32e99f4b5cf7d6f"
+        },
+        {
+          "sourcehash": "47fffc551b07a663",
+          "atlashash": "9d13f3c4adcc37b4"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6714\r\n[harness] facegen layer id=6714 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=e9f0252c8857251a atlashash=a32e99f4b5cf7d6f\r\n",
+        "[harness] cmd: facegenlayer 6714\r\n[harness] facegen layer id=6714 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=47fffc551b07a663 atlashash=9d13f3c4adcc37b4\r\n",
+        "[harness] cmd: facegenlayer 6714\r\n[harness] facegen layer id=6714 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=e9f0252c8857251a atlashash=a32e99f4b5cf7d6f\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 21
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 21,
+            "TextureID": 6714,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "M03",
+            "TextureName": "M03"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6716,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "5a691586703d71c4",
+          "atlashash": "ed5a7f404d30897a"
+        },
+        {
+          "sourcehash": "b7f9492b0a37a9f9",
+          "atlashash": "51bb4299beed2476"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6716\r\n[harness] facegen layer id=6716 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=5a691586703d71c4 atlashash=ed5a7f404d30897a\r\n",
+        "[harness] cmd: facegenlayer 6716\r\n[harness] facegen layer id=6716 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=b7f9492b0a37a9f9 atlashash=51bb4299beed2476\r\n",
+        "[harness] cmd: facegenlayer 6716\r\n[harness] facegen layer id=6716 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=5a691586703d71c4 atlashash=ed5a7f404d30897a\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 7
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 7,
+            "TextureID": 6716,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_02",
+            "TextureName": "Hair_02"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6717,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "f74ddeb590fb9674",
+          "atlashash": "aa499d4f043b6b71"
+        },
+        {
+          "sourcehash": "65eea279360ca368",
+          "atlashash": "7d9008a02ac5c349"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6717\r\n[harness] facegen layer id=6717 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=f74ddeb590fb9674 atlashash=aa499d4f043b6b71\r\n",
+        "[harness] cmd: facegenlayer 6717\r\n[harness] facegen layer id=6717 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=65eea279360ca368 atlashash=7d9008a02ac5c349\r\n",
+        "[harness] cmd: facegenlayer 6717\r\n[harness] facegen layer id=6717 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=f74ddeb590fb9674 atlashash=aa499d4f043b6b71\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 8
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 8,
+            "TextureID": 6717,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_03",
+            "TextureName": "Hair_03"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6718,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "22ff56e584cb5916",
+          "atlashash": "09b9262fd3762b8f"
+        },
+        {
+          "sourcehash": "129a7165740332fa",
+          "atlashash": "4747c0f60de9a536"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6718\r\n[harness] facegen layer id=6718 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=22ff56e584cb5916 atlashash=09b9262fd3762b8f\r\n",
+        "[harness] cmd: facegenlayer 6718\r\n[harness] facegen layer id=6718 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=129a7165740332fa atlashash=4747c0f60de9a536\r\n",
+        "[harness] cmd: facegenlayer 6718\r\n[harness] facegen layer id=6718 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=22ff56e584cb5916 atlashash=09b9262fd3762b8f\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 9
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 9,
+            "TextureID": 6718,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_04",
+            "TextureName": "Hair_04"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6719,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "184f219601b20c5c",
+          "atlashash": "5bf5d3c033dfc7d2"
+        },
+        {
+          "sourcehash": "1df7700ab97dac2e",
+          "atlashash": "dee532015b671ac0"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6719\r\n[harness] facegen layer id=6719 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=184f219601b20c5c atlashash=5bf5d3c033dfc7d2\r\n",
+        "[harness] cmd: facegenlayer 6719\r\n[harness] facegen layer id=6719 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=1df7700ab97dac2e atlashash=dee532015b671ac0\r\n",
+        "[harness] cmd: facegenlayer 6719\r\n[harness] facegen layer id=6719 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=184f219601b20c5c atlashash=5bf5d3c033dfc7d2\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 10
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 10,
+            "TextureID": 6719,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_05",
+            "TextureName": "Hair_05"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6721,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "b5578bb4335fd2b8",
+          "atlashash": "fda0f8509538c589"
+        },
+        {
+          "sourcehash": "030966fe2dd87aba",
+          "atlashash": "fea235fbd2064499"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6721\r\n[harness] facegen layer id=6721 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=b5578bb4335fd2b8 atlashash=fda0f8509538c589\r\n",
+        "[harness] cmd: facegenlayer 6721\r\n[harness] facegen layer id=6721 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=030966fe2dd87aba atlashash=fea235fbd2064499\r\n",
+        "[harness] cmd: facegenlayer 6721\r\n[harness] facegen layer id=6721 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=b5578bb4335fd2b8 atlashash=fda0f8509538c589\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 12
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 12,
+            "TextureID": 6721,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_07",
+            "TextureName": "Hair_07"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6722,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "f0fd6ac742b6c373",
+          "atlashash": "e09defc42c973991"
+        },
+        {
+          "sourcehash": "3105fa21de89eb6d",
+          "atlashash": "d937d2d7d97563fb"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6722\r\n[harness] facegen layer id=6722 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=f0fd6ac742b6c373 atlashash=e09defc42c973991\r\n",
+        "[harness] cmd: facegenlayer 6722\r\n[harness] facegen layer id=6722 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=3105fa21de89eb6d atlashash=d937d2d7d97563fb\r\n",
+        "[harness] cmd: facegenlayer 6722\r\n[harness] facegen layer id=6722 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=f0fd6ac742b6c373 atlashash=e09defc42c973991\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 13
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 13,
+            "TextureID": 6722,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_08",
+            "TextureName": "Hair_08"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6723,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "76929667ce37f7d9",
+          "atlashash": "1fef5658db620e7d"
+        },
+        {
+          "sourcehash": "fa74a6deb0b9a924",
+          "atlashash": "7c2ae36df4f79cec"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6723\r\n[harness] facegen layer id=6723 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=76929667ce37f7d9 atlashash=1fef5658db620e7d\r\n",
+        "[harness] cmd: facegenlayer 6723\r\n[harness] facegen layer id=6723 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=fa74a6deb0b9a924 atlashash=7c2ae36df4f79cec\r\n",
+        "[harness] cmd: facegenlayer 6723\r\n[harness] facegen layer id=6723 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=76929667ce37f7d9 atlashash=1fef5658db620e7d\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 14
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 14,
+            "TextureID": 6723,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_09",
+            "TextureName": "Hair_09"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6724,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "6695d6753b7984aa",
+          "atlashash": "e29f817592e4d189"
+        },
+        {
+          "sourcehash": "1493e3649d251a11",
+          "atlashash": "a7a9890566f8929f"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6724\r\n[harness] facegen layer id=6724 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=6695d6753b7984aa atlashash=e29f817592e4d189\r\n",
+        "[harness] cmd: facegenlayer 6724\r\n[harness] facegen layer id=6724 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=1493e3649d251a11 atlashash=a7a9890566f8929f\r\n",
+        "[harness] cmd: facegenlayer 6724\r\n[harness] facegen layer id=6724 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=6695d6753b7984aa atlashash=e29f817592e4d189\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 15
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 15,
+            "TextureID": 6724,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "Hair_10",
+            "TextureName": "Hair_10"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6725,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "13caec1dabc05648",
+          "atlashash": "b8ee0ebab93ab887"
+        },
+        {
+          "sourcehash": "7ae6328ca3f7f7f1",
+          "atlashash": "eaea9f89d77cc0e0"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6725\r\n[harness] facegen layer id=6725 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=13caec1dabc05648 atlashash=b8ee0ebab93ab887\r\n",
+        "[harness] cmd: facegenlayer 6725\r\n[harness] facegen layer id=6725 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=7ae6328ca3f7f7f1 atlashash=eaea9f89d77cc0e0\r\n",
+        "[harness] cmd: facegenlayer 6725\r\n[harness] facegen layer id=6725 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=13caec1dabc05648 atlashash=b8ee0ebab93ab887\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyelashTeethTextures",
+            "id": 1
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 0,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 1,
+            "TextureID": 6725,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "T01",
+            "TextureName": "T01"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6726,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "55dfd2f163ef1b7f",
+          "atlashash": "b9973aa01de5ae70"
+        },
+        {
+          "sourcehash": "cbb614d46906b192",
+          "atlashash": "15c2b10edd8ee23d"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6726\r\n[harness] facegen layer id=6726 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=55dfd2f163ef1b7f atlashash=b9973aa01de5ae70\r\n",
+        "[harness] cmd: facegenlayer 6726\r\n[harness] facegen layer id=6726 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=cbb614d46906b192 atlashash=15c2b10edd8ee23d\r\n",
+        "[harness] cmd: facegenlayer 6726\r\n[harness] facegen layer id=6726 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=55dfd2f163ef1b7f atlashash=b9973aa01de5ae70\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyelashTeethTextures",
+            "id": 2
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 0,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 2,
+            "TextureID": 6726,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "T02",
+            "TextureName": "T02"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6727,
+      "logical_size": [
+        64,
+        64
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "be0962bf0acfd026",
+          "atlashash": "0ac3a0dfd64690e7"
+        },
+        {
+          "sourcehash": "56344fd9f587ba1a",
+          "atlashash": "0da3e9729a80dcc7"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6727\r\n[harness] facegen layer id=6727 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=be0962bf0acfd026 atlashash=0ac3a0dfd64690e7\r\n",
+        "[harness] cmd: facegenlayer 6727\r\n[harness] facegen layer id=6727 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=56344fd9f587ba1a atlashash=0da3e9729a80dcc7\r\n",
+        "[harness] cmd: facegenlayer 6727\r\n[harness] facegen layer id=6727 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=be0962bf0acfd026 atlashash=0ac3a0dfd64690e7\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableEyelashTeethTextures",
+            "id": 3
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 0,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 3,
+            "TextureID": 6727,
+            "THMID": 1,
+            "Priority": 0,
+            "UserName": "T03",
+            "TextureName": "T03"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6728,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "c52e5a6af08cd476",
+          "atlashash": "caf8541a90cefe41"
+        },
+        {
+          "sourcehash": "9565f2f7970decfb",
+          "atlashash": "e64a2211f5694f9e"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6728\r\n[harness] facegen layer id=6728 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=c52e5a6af08cd476 atlashash=caf8541a90cefe41\r\n",
+        "[harness] cmd: facegenlayer 6728\r\n[harness] facegen layer id=6728 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=9565f2f7970decfb atlashash=e64a2211f5694f9e\r\n",
+        "[harness] cmd: facegenlayer 6728\r\n[harness] facegen layer id=6728 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=c52e5a6af08cd476 atlashash=caf8541a90cefe41\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 39
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 39,
+            "TextureID": 6728,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "OLD",
+            "TextureName": "OLD"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6781,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "e20356ce553a791e",
+          "atlashash": "33fbda8785b37c49"
+        },
+        {
+          "sourcehash": "445613441e2a3454",
+          "atlashash": "494c9f14581d9c9b"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6781\r\n[harness] facegen layer id=6781 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=e20356ce553a791e atlashash=33fbda8785b37c49\r\n",
+        "[harness] cmd: facegenlayer 6781\r\n[harness] facegen layer id=6781 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=445613441e2a3454 atlashash=494c9f14581d9c9b\r\n",
+        "[harness] cmd: facegenlayer 6781\r\n[harness] facegen layer id=6781 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=e20356ce553a791e atlashash=33fbda8785b37c49\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 41
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 41,
+            "TextureID": 6781,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "1_2",
+            "TextureName": "1_2"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6782,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "7912c03c5d7ecc7f",
+          "atlashash": "3696283a0ccb5cec"
+        },
+        {
+          "sourcehash": "62ee2e92dabe3090",
+          "atlashash": "320a7c47ab69d70f"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6782\r\n[harness] facegen layer id=6782 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=7912c03c5d7ecc7f atlashash=3696283a0ccb5cec\r\n",
+        "[harness] cmd: facegenlayer 6782\r\n[harness] facegen layer id=6782 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=62ee2e92dabe3090 atlashash=320a7c47ab69d70f\r\n",
+        "[harness] cmd: facegenlayer 6782\r\n[harness] facegen layer id=6782 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=7912c03c5d7ecc7f atlashash=3696283a0ccb5cec\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 42
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 42,
+            "TextureID": 6782,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "1_3",
+            "TextureName": "1_3"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6784,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "64d5cbe379020b0d",
+          "atlashash": "8a1028806cedeaba"
+        },
+        {
+          "sourcehash": "d202eacbaea6c749",
+          "atlashash": "aacfff3f2056ab58"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6784\r\n[harness] facegen layer id=6784 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=64d5cbe379020b0d atlashash=8a1028806cedeaba\r\n",
+        "[harness] cmd: facegenlayer 6784\r\n[harness] facegen layer id=6784 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=d202eacbaea6c749 atlashash=aacfff3f2056ab58\r\n",
+        "[harness] cmd: facegenlayer 6784\r\n[harness] facegen layer id=6784 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=64d5cbe379020b0d atlashash=8a1028806cedeaba\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 44
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 44,
+            "TextureID": 6784,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "2_2",
+            "TextureName": "2_2"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6785,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "cabe859a137358cc",
+          "atlashash": "c71d189562c40d17"
+        },
+        {
+          "sourcehash": "dfcca7e7c603d80b",
+          "atlashash": "245c785ee14340ac"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6785\r\n[harness] facegen layer id=6785 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=cabe859a137358cc atlashash=c71d189562c40d17\r\n",
+        "[harness] cmd: facegenlayer 6785\r\n[harness] facegen layer id=6785 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=dfcca7e7c603d80b atlashash=245c785ee14340ac\r\n",
+        "[harness] cmd: facegenlayer 6785\r\n[harness] facegen layer id=6785 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=cabe859a137358cc atlashash=c71d189562c40d17\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 45
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 45,
+            "TextureID": 6785,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "2_3",
+            "TextureName": "2_3"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6787,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "27bcdcb579ba1add",
+          "atlashash": "0ff247c72fe4175d"
+        },
+        {
+          "sourcehash": "6d81052255014139",
+          "atlashash": "e98769afd77f48f8"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6787\r\n[harness] facegen layer id=6787 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=27bcdcb579ba1add atlashash=0ff247c72fe4175d\r\n",
+        "[harness] cmd: facegenlayer 6787\r\n[harness] facegen layer id=6787 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=6d81052255014139 atlashash=e98769afd77f48f8\r\n",
+        "[harness] cmd: facegenlayer 6787\r\n[harness] facegen layer id=6787 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=27bcdcb579ba1add atlashash=0ff247c72fe4175d\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 47
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 47,
+            "TextureID": 6787,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "3_2",
+            "TextureName": "3_2"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6788,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "13ccfeec101982d8",
+          "atlashash": "73e9c8f4f3d9898b"
+        },
+        {
+          "sourcehash": "055a5c70c7510c20",
+          "atlashash": "074ad05edf007cb9"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6788\r\n[harness] facegen layer id=6788 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=13ccfeec101982d8 atlashash=73e9c8f4f3d9898b\r\n",
+        "[harness] cmd: facegenlayer 6788\r\n[harness] facegen layer id=6788 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=055a5c70c7510c20 atlashash=074ad05edf007cb9\r\n",
+        "[harness] cmd: facegenlayer 6788\r\n[harness] facegen layer id=6788 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=13ccfeec101982d8 atlashash=73e9c8f4f3d9898b\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 48
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 48,
+            "TextureID": 6788,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "3_3",
+            "TextureName": "3_3"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6920,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "a338dbce62d2720c",
+          "atlashash": "d8914a525a48741b"
+        },
+        {
+          "sourcehash": "f7e74b7b041f735f",
+          "atlashash": "7cad59b47eb256ea"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6920\r\n[harness] facegen layer id=6920 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=a338dbce62d2720c atlashash=d8914a525a48741b\r\n",
+        "[harness] cmd: facegenlayer 6920\r\n[harness] facegen layer id=6920 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=f7e74b7b041f735f atlashash=7cad59b47eb256ea\r\n",
+        "[harness] cmd: facegenlayer 6920\r\n[harness] facegen layer id=6920 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=a338dbce62d2720c atlashash=d8914a525a48741b\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 49
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 49,
+            "TextureID": 6920,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "08",
+            "TextureName": "08"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    },
+    {
+      "id": 6921,
+      "logical_size": [
+        128,
+        128
+      ],
+      "SW_primary_source_and_integer_alpha_Vflip_compositor_exact": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "00c0cac1bad0bf1e",
+          "atlashash": "4ede0687c224c41d"
+        },
+        {
+          "sourcehash": "7216d810643d0f68",
+          "atlashash": "b473ca9b81cba1fa"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6921\r\n[harness] facegen layer id=6921 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=00c0cac1bad0bf1e atlashash=4ede0687c224c41d\r\n",
+        "[harness] cmd: facegenlayer 6921\r\n[harness] facegen layer id=6921 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=7216d810643d0f68 atlashash=b473ca9b81cba1fa\r\n",
+        "[harness] cmd: facegenlayer 6921\r\n[harness] facegen layer id=6921 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=00c0cac1bad0bf1e atlashash=4ede0687c224c41d\r\n"
+      ],
+      "real_DB_dynamic_bindings": [
+        {
+          "layer": {
+            "table": "TransformableFaceTextures",
+            "id": 50
+          },
+          "THMID": {
+            "table": "TransformableHeadMaterials",
+            "id": 1
+          },
+          "Heads": [
+            {
+              "table": "Heads",
+              "id": 90
+            }
+          ],
+          "layer_name": null,
+          "layer_priority": 1,
+          "dynamic_qualified": true,
+          "actual_layer_record": {
+            "ID": 50,
+            "TextureID": 6921,
+            "THMID": 1,
+            "Priority": 1,
+            "UserName": "09",
+            "TextureName": "09"
+          }
+        }
+      ],
+      "scope_limit": "Diagnostic fixed gray quadrant uses weight1. Exact real TextureName/Priority/THMID and consumer rectangles are recorded independently; no claim that this probe is the active appearance of every generated head."
+    }
+  ],
+  "actual_bakes_on_off_restored": [
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=0e6735e5fc77dbc5\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=ebef2a19040020cd\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=de323d1bd693a255\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=d3155898178747fc\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=0e6735e5fc77dbc5\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=ebef2a19040020cd\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=de323d1bd693a255\r\n"
+  ],
+  "bake_hashes": [
+    [
+      "0e6735e5fc77dbc5",
+      "ebef2a19040020cd",
+      "de323d1bd693a255"
+    ],
+    [
+      "e61211fd62cc6efc",
+      "d3155898178747fc",
+      "72eb80435311b3f3"
+    ],
+    [
+      "0e6735e5fc77dbc5",
+      "ebef2a19040020cd",
+      "de323d1bd693a255"
+    ]
+  ],
+  "actual_GPU_probe_states": [
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=1127 observed=1127 drawn=1 frames=360 frame=4540 logical=256x256 physical=1024x1024 density=4.000000x4.000000 holder=1024x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=7694 observed=7694 drawn=1 frames=360 frame=5101 logical=256x256 physical=1024x1024 density=4.000000x4.000000 holder=1024x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1\r\n[network-render] unit=0000000000000000 replica=0 animation=000002636C759870 direct=0\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6677 observed=6677 drawn=1 frames=360 frame=5659 logical=128x128 physical=512x512 density=4.000000x4.000000 holder=512x512 placement=0,0 mips=10 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6921 observed=6921 drawn=1 frames=360 frame=6220 logical=128x128 physical=512x512 density=4.000000x4.000000 holder=512x512 placement=0,0 mips=10 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=1127 observed=1127 drawn=1 frames=360 frame=10725 logical=256x256 physical=256x256 density=1.000000x1.000000 holder=256x256 placement=0,0 mips=9 pending=0 placeholder=0 hd=0\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=7694 observed=7694 drawn=1 frames=360 frame=11283 logical=256x256 physical=256x256 density=1.000000x1.000000 holder=256x256 placement=0,0 mips=9 pending=0 placeholder=0 hd=0\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6677 observed=6677 drawn=1 frames=360 frame=11839 logical=128x128 physical=128x128 density=1.000000x1.000000 holder=128x128 placement=0,0 mips=8 pending=0 placeholder=0 hd=0\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6921 observed=6921 drawn=1 frames=360 frame=12395 logical=128x128 physical=128x128 density=1.000000x1.000000 holder=128x128 placement=0,0 mips=8 pending=0 placeholder=0 hd=0\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=1127 observed=1127 drawn=1 frames=360 frame=16646 logical=256x256 physical=1024x1024 density=4.000000x4.000000 holder=1024x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=7694 observed=7694 drawn=1 frames=360 frame=17207 logical=256x256 physical=1024x1024 density=4.000000x4.000000 holder=1024x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6677 observed=6677 drawn=1 frames=360 frame=17765 logical=128x128 physical=512x512 density=4.000000x4.000000 holder=512x512 placement=0,0 mips=10 pending=0 placeholder=0 hd=1\r\n",
+    "[harness] cmd: uitextureprobe status\r\n[harness] uitextureprobe enabled=1 requested=6921 observed=6921 drawn=1 frames=360 frame=18326 logical=128x128 physical=512x512 density=4.000000x4.000000 holder=512x512 placement=0,0 mips=10 pending=0 placeholder=0 hd=1\r\n"
+  ],
+  "normal_exit_code": 0,
+  "own_process_absent_after_quit": true,
+  "own_process_id": 17700,
+  "screenshots": [
+    {
+      "name": "hd2649-heads-1127-on",
+      "SHA256": "d3628d16baa54eafa5718df274aadf6f19037a77074eb9c720d238142f75dc8a"
+    },
+    {
+      "name": "hd2649-heads-1127-off",
+      "SHA256": "eca14dc991c3eb68afcdc31a6133891613fa769e93a2836daba6d709e6827b63"
+    },
+    {
+      "name": "hd2649-heads-1127-restored",
+      "SHA256": "58c558689c597d3738f26221091968de83d6f07061d10f4a908d6bd37c0893fa"
+    },
+    {
+      "name": "hd2649-heads-7694-on",
+      "SHA256": "865d4b12410b49cd4c2d2296bda4ad47ce69998dd465a948cbb8a86734a97d2f"
+    },
+    {
+      "name": "hd2649-heads-7694-off",
+      "SHA256": "33e10ccab033a53a9864781aee3ce78230d900bdb10787699890be01f3ff126f"
+    },
+    {
+      "name": "hd2649-heads-7694-restored",
+      "SHA256": "a1f9e6176e5b28ca4421857f60110a9549efd70a05e187d732b6f5eb27a357b0"
+    },
+    {
+      "name": "hd2649-heads-6677-on",
+      "SHA256": "5fc0b70ff719a411853387cf6beb28ea85902ff6628662407c8d6b9b4db7caa8"
+    },
+    {
+      "name": "hd2649-heads-6677-off",
+      "SHA256": "d0aec70b429df87e34f5c0e2b7597e4f3f88072bfb5e07e5ae895924d59048d9"
+    },
+    {
+      "name": "hd2649-heads-6677-restored",
+      "SHA256": "d00afc98e8c00a97b15ce3922715bb84b1ad681706f51d97191216d4d84f062f"
+    },
+    {
+      "name": "hd2649-heads-6921-on",
+      "SHA256": "2bc4982a548eec0cb5084be8ad22b0ee4a385a1b59496fd710ee27365ce0ba19"
+    },
+    {
+      "name": "hd2649-heads-6921-off",
+      "SHA256": "936a9cf30a09689a0c662298d6ce685595b578952aff34dc515b7e1c8985d4a7"
+    },
+    {
+      "name": "hd2649-heads-6921-restored",
+      "SHA256": "c2d36053fc0b0ea6b29f0dd00d11eee0e08a987b57cc21665b6a321da99fe5f0"
+    }
+  ],
+  "visual_review": "Delegated to category agent per explicit user instruction; see independent frozen worker review."
+}
