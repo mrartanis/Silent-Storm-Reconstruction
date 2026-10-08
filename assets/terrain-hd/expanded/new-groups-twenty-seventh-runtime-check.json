@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-08",
+  "pack_textures": 2361,
+  "game_SHA256": "8b5507ccc62d24ad31dbc984b6cea73eb189fde0d67a7dbf605a77a335cbc45d",
+  "no_CPP_changes_since_verified25": true,
+  "actual_layer_checks": [
+    {
+      "id": 6679,
+      "logical_source_size": [
+        128,
+        128
+      ],
+      "all3_actual_SW_loader_source_and_CPU_hashes_match_independent_integer_alpha_Vflip_FNV": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "b8344eff127208be",
+          "atlashash": "5c084d49a6dc023e"
+        },
+        {
+          "sourcehash": "4617f8ee2a9063ca",
+          "atlashash": "be76128a9ad0cbe2"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6679\r\n[harness] facegen layer id=6679 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=b8344eff127208be atlashash=5c084d49a6dc023e\r\n",
+        "[harness] cmd: facegenlayer 6679\r\n[harness] facegen layer id=6679 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=4617f8ee2a9063ca atlashash=be76128a9ad0cbe2\r\n",
+        "[harness] cmd: facegenlayer 6679\r\n[harness] facegen layer id=6679 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=b8344eff127208be atlashash=5c084d49a6dc023e\r\n"
+      ],
+      "diagnostic_atlas_rect": [
+        0,
+        128,
+        128,
+        256
+      ],
+      "scope_note": "Actual full source and CPU compositor, not full head GPU appearance."
+    },
+    {
+      "id": 6672,
+      "logical_source_size": [
+        64,
+        64
+      ],
+      "all3_actual_SW_loader_source_and_CPU_hashes_match_independent_integer_alpha_Vflip_FNV": true,
+      "expected_HD_and_original": [
+        {
+          "sourcehash": "4ef08148e84a799e",
+          "atlashash": "2957cca288458a3a"
+        },
+        {
+          "sourcehash": "3e81b46885a2d552",
+          "atlashash": "16d92589e372e4d6"
+        }
+      ],
+      "actual_on_off_on": [
+        "[harness] cmd: facegenlayer 6672\r\n[harness] facegen layer id=6672 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=4ef08148e84a799e atlashash=2957cca288458a3a\r\n",
+        "[harness] cmd: facegenlayer 6672\r\n[harness] facegen layer id=6672 ok=1 physical=64x64 mip=0 source=64x64 sourcehash=3e81b46885a2d552 atlashash=16d92589e372e4d6\r\n",
+        "[harness] cmd: facegenlayer 6672\r\n[harness] facegen layer id=6672 ok=1 physical=256x256 mip=2 source=64x64 sourcehash=4ef08148e84a799e atlashash=2957cca288458a3a\r\n"
+      ],
+      "diagnostic_atlas_rect": [
+        0,
+        128,
+        128,
+        256
+      ],
+      "scope_note": "6672 diagnostic uses the fixed face probe quadrant. Real eye64 rectangle is covered by shared BlendLayer regression and actual DB head bakes; no GPU eye-placement claim."
+    }
+  ],
+  "actual_three_DB_head_bakes_per_state": [
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=5ada146710ea6cc4\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=a5f7ae238ccf7bef\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=344a12e8c545b01a\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=d3155898178747fc\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=5ada146710ea6cc4\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=a5f7ae238ccf7bef\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=344a12e8c545b01a\r\n"
+  ],
+  "bake_hashes_on_off_restored": [
+    [
+      "5ada146710ea6cc4",
+      "a5f7ae238ccf7bef",
+      "344a12e8c545b01a"
+    ],
+    [
+      "e61211fd62cc6efc",
+      "d3155898178747fc",
+      "72eb80435311b3f3"
+    ],
+    [
+      "5ada146710ea6cc4",
+      "a5f7ae238ccf7bef",
+      "344a12e8c545b01a"
+    ]
+  ],
+  "actual_GPU_diffuse_texture_ids": [
+    4655
+  ],
+  "actual_CFileTexture_states": [
+    "[harness] uitextureprobe enabled=1 requested=4655 observed=4655 drawn=1 frames=1024 frame=1719 logical=512x256 physical=2048x1024 density=4.000000x4.000000 holder=2048x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1",
+    "[harness] uitextureprobe enabled=1 requested=4655 observed=4655 drawn=1 frames=2271 frame=3136 logical=512x256 physical=512x256 density=1.000000x1.000000 holder=512x256 placement=0,0 mips=1 pending=0 placeholder=0 hd=0",
+    "[harness] uitextureprobe enabled=1 requested=4655 observed=4655 drawn=1 frames=3382 frame=4417 logical=512x256 physical=2048x1024 density=4.000000x4.000000 holder=2048x1024 placement=0,0 mips=11 pending=0 placeholder=0 hd=1"
+  ],
+  "screenshots": [
+    {
+      "name": "hd2361-ui-4655-on",
+      "sha256": "98bc73cd121c8e4146f955b5c191ad8044645b1dd61d6e152b57933d4934287f"
+    },
+    {
+      "name": "hd2361-ui-4655-off",
+      "sha256": "8cfa86b97bcea791028170013ac10731c6dc2be7d97fb52a86ae489a74449e0f"
+    },
+    {
+      "name": "hd2361-ui-4655-restored",
+      "sha256": "9ae4fcc7f5ac31656eda7a454b0b5887c5f72fa1ff723a0b31116da0b1c58ad8"
+    }
+  ],
+  "private_GPU_review": "All3 full GPU screenshots privately inspected for original full/middle/reversed UV and clipped geometry; irregular wall/rubblepaint and native scale retained, no new black band/atlas shift/padding. No public comparisons/HTML.",
+  "normal_exit_code": 0,
+  "own_process_absent_after_quit": true,
+  "own_process_id": 18384,
+  "scope_limit": "Actual4655 GPU sampler and6679/6672 SWloader/CPUcompositor tested, not complete GPU appearance of each head. Fixed256 FaceGen atlas unchanged."
+}

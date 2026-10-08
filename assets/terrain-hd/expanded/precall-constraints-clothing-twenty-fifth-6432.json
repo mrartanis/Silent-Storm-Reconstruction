@@ -1,0 +1,18 @@
+[
+  {
+    "id": 6432,
+    "exact_prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nWhole source alpha255 including all black areas. Retain dim brown trouser cloth[0,0,154,128), one very dark blueviolet striped panel[71,5,111,66), muted gray right camocloth[167,0,256,98) and lowcontrast redbrown footwash[170,98,256,128). Dark panel contains exactly6 dim vertical painted bands with native intervals[73,81),[82,89),[90,94),[95,98),[99,106),[107,110); exactly5 internal dark separator phases x81,89,94,98,106. Spacing is deliberately unequal: do not regularize pitch, add narrow stripes, brighten bars or alter clipped silhouette; x72 is the outerborder, not an extra internal line. Right pocket has exactly one tiny pale painted marker at native249,29: keep same count/position, not a bright newstud. Existing right brown/ochre camouflage wash contour, number, sizes and positions must follow exact source silhouettes as subdued paint, not procedural spots, new small blobs or shiny surface. Lower redbrown original footshade stays indistinct source wash, not a new lace/boot design. Improve only native coarse transitions with fine painted detail preserving original softcontrast.",
+    "prompt_constraints": {
+      "width": 256,
+      "height": 128,
+      "new_hardware_seams_weave_anatomy_allowed": 0,
+      "dark_panel_dim_vertical_paint_bands": 6,
+      "dark_panel_internal_dark_separators": 5,
+      "right_pocket_pale_markers": 1,
+      "middle_bottom_boot_wash_fields": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T05:52:50.234090+00:00",
+    "source_proof_sha256": "9315d6ba56f54cce0970a250ff2818e21b7404d3227277fc9b4eab0f64edb8b4"
+  }
+]

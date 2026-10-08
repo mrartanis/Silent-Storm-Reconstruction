@@ -1,0 +1,168 @@
+{
+  "id": 1884,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-8e3e4000-21d8-4f2e-a527-9e5e9d4a6689.png",
+  "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nKeep olive/gray left trouser cloth, long middle dark-brown field, olive right field and lower washed boot/sole shapes precisely in the reference. Left narrow source print native[0,0,9,85) has exactly20 horizontal subdued shadow bands, minima at y6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,82 (pitch4native pixels/16HDpixels). Preserve same phase and faint shading; don't replace with regularnewfabricweave. The right oval sole native[199,57,243,83) contains exactly6 interior light horizontal bars at y59,63,68,72,76,79: retain irregular original cadence and dim contrast, not new tread count. Original small gray clasp mark[45,46,49,51) stays one soft mark; two existing littleU-shaped marks at[104,92,113,100) and[132,92,141,100) remain exactly two, no added hardware. IMPORTANT original alpha is255 except416 alpha0/RGB0 pixels in irregular original native region[96,101,152,110) at the bottom edge of the middlepanel; retain that exact existing transparency. The other2118 RGB0 pixels are alpha255 opaque black, including the large surrounding black paint: never cut them out. Preserve originalalpha without guessing black holes from color. Original lower worn shoe wash remains soft existing shade, no newly defined laces or outlines.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1884-enlarged-source.png"
+  ],
+  "transparent_background": true,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "69a47a05dc4f413b439ec65bf20d2a819dac084c877683e1320716aa645dcc8e",
+    "exact_prompt_file": "567d308550646c499931553846b6291020fee755b98bc731b6eb3276265eb463",
+    "reference_png": "d49370a74e2b8d4240ff9f02f1203ce18f33cfc0d40277c0aa703a6e717b07bb"
+  },
+  "saved_at_utc": "2026-10-08T05:53:27.580400+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 1884,
+    "texture": {
+      "ID": 1884,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -47832041,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerSoldier\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "LegsArms",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1277,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 849,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1302,
+              "field": "Material2",
+              "material_template_id": 849,
+              "geometry_id": 1793,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerSoldier_100.mb",
+              "model_template_id": 951,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4817,
+              "field": "Material2",
+              "material_template_id": 849,
+              "geometry_id": 2779,
+              "geometry": "Interface\\CharScreen\\Ger_Soldier.mb",
+              "model_template_id": 3206,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5643,
+              "field": "Material2",
+              "material_template_id": 849,
+              "geometry_id": 3466,
+              "geometry": "HeadShotTest1.mb",
+              "model_template_id": 3723,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5645,
+              "field": "Material2",
+              "material_template_id": 849,
+              "geometry_id": 3467,
+              "geometry": "HeadShotTest2.mb",
+              "model_template_id": 3724,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "f347bb61fbb14f1802a2b78dad8c921951254f7efdfa29f76c74844cd3f5121a",
+    "source_rgba_sha256": "c7d4fef7d759448a96fa090740911bde25a3a7861ba72ba6b97d631a23d04ad5",
+    "release_rgba_sha256": "c7d4fef7d759448a96fa090740911bde25a3a7861ba72ba6b97d631a23d04ad5",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1884.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "15d5813c52855cf2aeaca99783f015055f82f4948f97487c8c746d44e3fee7aa",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fifth-1884.json",
+  "source_count_phase_proof_sha256": "dc0ec377412793afc052e07a910f54b643e66e8286fdf382dd99081d692a97e0",
+  "precall_constraints_sha256": "085e2ebaa0b67bb3b2b2aa06ca475b0b9c791dcf3f0fb8569a8e9c330c8f4359",
+  "exact_service_args": {
+    "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nKeep olive/gray left trouser cloth, long middle dark-brown field, olive right field and lower washed boot/sole shapes precisely in the reference. Left narrow source print native[0,0,9,85) has exactly20 horizontal subdued shadow bands, minima at y6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,82 (pitch4native pixels/16HDpixels). Preserve same phase and faint shading; don't replace with regularnewfabricweave. The right oval sole native[199,57,243,83) contains exactly6 interior light horizontal bars at y59,63,68,72,76,79: retain irregular original cadence and dim contrast, not new tread count. Original small gray clasp mark[45,46,49,51) stays one soft mark; two existing littleU-shaped marks at[104,92,113,100) and[132,92,141,100) remain exactly two, no added hardware. IMPORTANT original alpha is255 except416 alpha0/RGB0 pixels in irregular original native region[96,101,152,110) at the bottom edge of the middlepanel; retain that exact existing transparency. The other2118 RGB0 pixels are alpha255 opaque black, including the large surrounding black paint: never cut them out. Preserve originalalpha without guessing black holes from color. Original lower worn shoe wash remains soft existing shade, no newly defined laces or outlines.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1884-enlarged-source.png"
+    ],
+    "transparent_background": true
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 1884,
+    "gain": 0.8773193359375,
+    "defaultpad_padded_texels": 33347,
+    "defaultpad_cleared_texels": 265,
+    "defaultpad_applied": true,
+    "source_stored_luma": 35.08260834960937,
+    "actual_stored_luma": 35.0796783378601,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for lost source alpha-positive black canvas and resulting defaultedge fill, not minorpaintlift. Source416A0/RGB0 pixels are only irregular middlepanel bottom[96,101,152,110); source2118 otherRGB0 pixels A255. Sole builtin transparent_backgroundtrue was explicitly instructed to retain alpha255 black paint, but rawcutout made mostblackcanvas empty. Required defaultpad fills33347texels andclears265; fullsourceA restored exactly andgain.8773193359/sourceL35.082608→35.079678 numericalpass, yet1536native sourceopaque-black pixels now RGBmax>5 withmean15.02/13.14/7.30. Whole topRGB13.93/12.30/7.55→28.77/26.66/13.76 andbottom10.53/9.10/3.18→20.08/16.31/9.02. Fullraw additionallyresolves sourcegraycloth/sole edges morestrongly. AcceptableA alone cannotrestore originalblackfield/material withoutartRGB repair; no optout/patch/retry. Source/countproof genuine20shadowbands/6solebars/3clasp motifs was beforeprompt; counts notblanketcomplexityhold."
+}

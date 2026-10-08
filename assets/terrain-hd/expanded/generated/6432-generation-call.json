@@ -1,0 +1,138 @@
+{
+  "id": 6432,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-53dc02f2-e71e-4032-abdd-68ebe54ba29a.png",
+  "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nWhole source alpha255 including all black areas. Retain dim brown trouser cloth[0,0,154,128), one very dark blueviolet striped panel[71,5,111,66), muted gray right camocloth[167,0,256,98) and lowcontrast redbrown footwash[170,98,256,128). Dark panel contains exactly6 dim vertical painted bands with native intervals[73,81),[82,89),[90,94),[95,98),[99,106),[107,110); exactly5 internal dark separator phases x81,89,94,98,106. Spacing is deliberately unequal: do not regularize pitch, add narrow stripes, brighten bars or alter clipped silhouette; x72 is the outerborder, not an extra internal line. Right pocket has exactly one tiny pale painted marker at native249,29: keep same count/position, not a bright newstud. Existing right brown/ochre camouflage wash contour, number, sizes and positions must follow exact source silhouettes as subdued paint, not procedural spots, new small blobs or shiny surface. Lower redbrown original footshade stays indistinct source wash, not a new lace/boot design. Improve only native coarse transitions with fine painted detail preserving original softcontrast.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6432-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "d8421c4983cef860897ca8c299e712aa6cedda1643e6b446606f18939c0106a2",
+    "exact_prompt_file": "57f82cc4bccaec9328579ee09c78507bdc5d8832397d9d87509403da4b4739b8",
+    "reference_png": "09b95ddc2c84a1729996836493d79c5c483054f45acf21c8a8e2f4bf3d8febbd"
+  },
+  "saved_at_utc": "2026-10-08T05:55:26.356097+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6432,
+    "texture": {
+      "ID": 6432,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14410472,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Italy\\Soldier\\Legs.tga",
+      "Format": "8888",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4456,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2643,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6446,
+              "field": "Material2",
+              "material_template_id": 2643,
+              "geometry_id": 3881,
+              "geometry": "Characters\\Skeletons01\\Skins\\Italy\\Soldier.mb",
+              "model_template_id": 4118,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "131e7112174615d7aa7cafe85b017c7b0575e927e75287a6abe3144e1a75dae0",
+    "source_rgba_sha256": "9bde1f7fcc73432ae8aae6e0a5db6bb1f329a2031467ad8b6582aaf9f342e63e",
+    "release_rgba_sha256": "9bde1f7fcc73432ae8aae6e0a5db6bb1f329a2031467ad8b6582aaf9f342e63e",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6432.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "15d5813c52855cf2aeaca99783f015055f82f4948f97487c8c746d44e3fee7aa",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fifth-6432.json",
+  "source_count_phase_proof_sha256": "9315d6ba56f54cce0970a250ff2818e21b7404d3227277fc9b4eab0f64edb8b4",
+  "precall_constraints_sha256": "755173b9895a4791ba36781d67f347454e848341dc0451d69fbf70e931440deb",
+  "exact_service_args": {
+    "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nWhole source alpha255 including all black areas. Retain dim brown trouser cloth[0,0,154,128), one very dark blueviolet striped panel[71,5,111,66), muted gray right camocloth[167,0,256,98) and lowcontrast redbrown footwash[170,98,256,128). Dark panel contains exactly6 dim vertical painted bands with native intervals[73,81),[82,89),[90,94),[95,98),[99,106),[107,110); exactly5 internal dark separator phases x81,89,94,98,106. Spacing is deliberately unequal: do not regularize pitch, add narrow stripes, brighten bars or alter clipped silhouette; x72 is the outerborder, not an extra internal line. Right pocket has exactly one tiny pale painted marker at native249,29: keep same count/position, not a bright newstud. Existing right brown/ochre camouflage wash contour, number, sizes and positions must follow exact source silhouettes as subdued paint, not procedural spots, new small blobs or shiny surface. Lower redbrown original footshade stays indistinct source wash, not a new lace/boot design. Improve only native coarse transitions with fine painted detail preserving original softcontrast.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6432-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 6432,
+    "gain": 0.805419921875,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 30.242015185546872,
+    "actual_stored_luma": 30.23575951080322,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for substantial fullcanvas topUV fill andchanged paintedpanel identity, not subtlethresholdedge/count variation. Source6dim verticalpaintbands/5internal darkseparators are still atx81/89/94/98/106 minima, so noincorrectclaimmore/fewerstripes. But fullraw turns verydark faintpurpleprintedbands into individuallyraised boxed mechanicalribs withstrong border, darkpanelmean12.75/10.29/12.45→17.33/14.30/17.48 aftergain.8054199. Mainbrown/sourcecamouflage/localcolorhierarchy changes, rightgray43.65/40.08/43.12→38.74/35.48/36.37. Moreconclusive frameproof: sourcewholetoprowRGB1.03/.84/.61→25.79/21.08/15.50, formerlyblacktop field filledwithbrowncloth acrosslargewidth ratherthan1pixelsoftening;bottom6.90/6.43/5.47→11.45/11.26/10.58. SourceA255/defaultpad0 andscalar globallumapass donot repairUVfield fill/material. Originalpocket1pale point interpretedraisedbutton too. NoartRGBpatch/optout/crop/retry;genuineartpending nottechnical."
+}

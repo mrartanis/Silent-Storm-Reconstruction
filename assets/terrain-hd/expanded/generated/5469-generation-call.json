@@ -1,0 +1,138 @@
+{
+  "id": 5469,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-209045d8-594b-4f89-a854-0c9dc8fccd12.png",
+  "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nWhole source alpha255 including RGB-black areas. Preserve the muted light gray/lavender cloth fields, dark narrow farleft strip, soft original creases, and brown indistinct lower foot wash. Native pale source paint has8 diagnostic separate groups, which are NOT allbuttons:4clear smallsource motifs at[40,36,42,38),[40,52,42,54),[155,11,157,13),[155,17,157,19) must stay in exactphase/count/source shapes. Other4weak source highlights are flat border/fold/tail/foot washes at[4,0,6,1),[189,16,190,17),[45,96,47,98),[181,114,182,116); leave faint and indistinct, don't round them into hardware or add more dots. Keep one existing washed zigzag trace native[40,69,53,101), its two weak turns/source contour unchanged, never interpret it as text/glyph or sharpen it into stitched cord. Left cloth[30,0,105,128), middle[105,7,170,128), right[170,7,256,128) and lowerbrownfootwash[57,103,104,128) remain precisely original layout. Preserve source broad lowcontrast graypaint and fine mattegrain; avoid strengthening every source fold to hardgeometry.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5469-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "44a9a108bf808fad9e763a5c0b0934af986b1e16113a0ab690bad0b9abf5a59d",
+    "exact_prompt_file": "9cf7b9475b308e2d03c41509cfee9103a437b1d37cc8a742e93b277efc2b2fa6",
+    "reference_png": "e28d3c361c00002a8a72137067aa353b0daa09468eefe28b93dfc59ae17e0109"
+  },
+  "saved_at_utc": "2026-10-08T05:54:25.041508+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 5469,
+    "texture": {
+      "ID": 5469,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -11317163,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilMale\\Evil#2\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3567,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2288,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5719,
+              "field": "Material2",
+              "material_template_id": 2288,
+              "geometry_id": 2500,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale.mb",
+              "model_template_id": 3773,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "e4da802a702a5128cfcdf368f01d7c1caabd6c0414c4e59d741289b06196513d",
+    "source_rgba_sha256": "38b43666fb011d6274041cc02532d02d3073fdf7368d139894067e60ed9593f3",
+    "release_rgba_sha256": "38b43666fb011d6274041cc02532d02d3073fdf7368d139894067e60ed9593f3",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5469.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "15d5813c52855cf2aeaca99783f015055f82f4948f97487c8c746d44e3fee7aa",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-fifth-5469.json",
+  "source_count_phase_proof_sha256": "62e6665fc60858939453ad0e771368270cc21ee09fc7fa73feaa0b350c46c685",
+  "precall_constraints_sha256": "a90b2aa78cc84eb3a0f9a88b040152330ddbac4f1266a7949c5a836600b29ddf",
+  "exact_service_args": {
+    "prompt": "Precise original game texture edit. Image1 is the ONLY original edit target: complete original256x128 RGBA diffuse atlas, nearest enlarged to2048x1024. Output this same complete2:1 flat painted UV texture at fine HD detail; inverse wholecanvas will be1024x512. Preserve all fullcanvas bounds, original color material identity, field silhouettes, feature counts, native feature phase and physical pattern scale. Refine existing matte painted fine grain and soft gradients, faint folds and low-contrast transitions; do not create photo leather/weave, new embroidery, hatching, ornamental grain, stains, badges, letters, laces, eyes, seams, buckles, screws, holes or different garment anatomy. Dim source hue and relative lightness stay subdued; no fresh light source/specular lighting or raised machinery. Preserve source ambiguous washes as indistinct washes, never clarify them into new parts. No crop/padding/bbox/recentering/registration/letterbox/border/watermark. All visible fields must follow the exact original UV. Source RGB-black is not a transparency cue.\r\nWhole source alpha255 including RGB-black areas. Preserve the muted light gray/lavender cloth fields, dark narrow farleft strip, soft original creases, and brown indistinct lower foot wash. Native pale source paint has8 diagnostic separate groups, which are NOT allbuttons:4clear smallsource motifs at[40,36,42,38),[40,52,42,54),[155,11,157,13),[155,17,157,19) must stay in exactphase/count/source shapes. Other4weak source highlights are flat border/fold/tail/foot washes at[4,0,6,1),[189,16,190,17),[45,96,47,98),[181,114,182,116); leave faint and indistinct, don't round them into hardware or add more dots. Keep one existing washed zigzag trace native[40,69,53,101), its two weak turns/source contour unchanged, never interpret it as text/glyph or sharpen it into stitched cord. Left cloth[30,0,105,128), middle[105,7,170,128), right[170,7,256,128) and lowerbrownfootwash[57,103,104,128) remain precisely original layout. Preserve source broad lowcontrast graypaint and fine mattegrain; avoid strengthening every source fold to hardgeometry.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5469-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 5469,
+    "gain": 1.0250244140625,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 80.85346081542968,
+    "actual_stored_luma": 80.86366676635743,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically ready candidate pendingrootwhole/native/material review. Fulloriginal256x128→1024x512, sourceA255/defaultpad0, scalar1.0250244141. Four clearer originalpale motifs retain positions, shape/cadence; four weak border/fold/hem/foot groups remain softlypainted atoriginalpositions ratherthan addedbuttons. Native weak foldtip181/178/189→167/164/175, hem181/178/189→164/160/172 andfoot181/174/189→170/167/180 disclosed assoftcodec/highlight attenuation, not missinghardware claim. Primary2left and2uppermiddle palegroups remain. Leftgray94.72/91.28/98.28→93.80/91.56/99.13,Lstd26.83→26.92;rightgray101.62/99.10/105.86→101.43/99.58/107.10,Lstd21.79→21.79. Middlegray98.51/95.29/102.30→98.17/96.35/103.82,Lstd13.01→14.70. Originalleftzigtrace/leftdark longangularwash aremoreclearlyoutlinedfinepaint at4x but stay existing sourcecontours/countphase: localzig116.34/113.90/122.93→115.25/113.76/123.08,Lstd25.57→23.27. Darkleft24.38/23.12/20.94→26.89/25.08/23.68,Lstd17.43→19.63, modestexistingpaintlift disclosedforroot;no new weave/parts inferred. All sourcebeforecall nativecrops/sourcecount proof complete; sourceA/raw/native4x/fullframes inspected. Do notclaimproductionaccepted."
+}

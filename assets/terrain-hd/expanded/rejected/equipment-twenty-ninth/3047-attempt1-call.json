@@ -1,0 +1,142 @@
+{
+  "id": 3047,
+  "tool": "built-in image_gen.imagegen",
+  "tool_output": "exec-16380d3f-bda0-46db-b344-6c17d4dcac4e.png",
+  "tool_output_session": "01a116d4-8f32-7d43-96c1-c69a58216f1e",
+  "saved_utc": "2026-10-08T05:46:38.102721+00:00",
+  "generated": "assets/terrain-hd/expanded/generated/3047-raw.png",
+  "prompt_file": "assets/terrain-hd/expanded/generated/3047-prompt.txt",
+  "reference_pngs": [
+    "assets/terrain-hd/expanded/generated/3047-equipment-twenty-ninth-source-rgb-support.png"
+  ],
+  "transparent_background": false,
+  "raw_sha256": "3915d8ecbc300c2688c2eae0945ad0df67986fbe02932093e6971e9700363270",
+  "prompt_sha256": "512107742e9ef4ba9beaeb4545d1b08bbb634ec3806e3e8b97e2e308d2bbb568",
+  "exact_prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture; faithful subtle HD painted refinement, not a photograph or object render.\r\n\r\nEdit target: the sole attached opaque RGB guide is the ENTIRE original native128x128 canvas nearest-resized4x to512x512. Keep entire source framing, normalized UV coordinates, counts, silhouettes, black/shadow fields and source-scale pattern exactly; output fills the same square with no border, zoom, crop or padding.\r\n\r\nOne curved blade field on the left, its brown handle below-left, and the original dark sheath field on the right with the existing gold-colored small tip, two broad horizontal bands and two existing bottom extensions. Keep the exact original curved outline and every shadow/grain mark; do not make new seams, rivets or polished bevels.\r\n\r\nMaterials and tone: original subdued matte painted palette. Add only very fine paint detail inside existing source appearance, retaining its broad shading and softness. No photographic grain, new weave, stronger creases, raised rim, bright metallic rods/gloss, new stripes, scratches or marks. Dim original light patches stay dim, with original relative intensity hierarchy. Existing dark RGB is source color/shadow, not a reason to add geometry.\r\n\r\nExact source-native diagnostic assertions (positions refer to128x128 canvas; guide is4x): [{\"name\":\"one left curved blade\",\"diagnostic_native_domain\":[20,0,70,94],\"source_peak_xy\":[40,85],\"source_peak_RGB\":[247,231,198],\"source_RGB_mean\":[62.9468085106383,55.995106382978726,51.685531914893616]},{\"name\":\"one lower-left brown handle\",\"diagnostic_native_domain\":[0,75,45,128],\"source_peak_xy\":[0,81],\"source_peak_RGB\":[255,255,255],\"source_RGB_mean\":[45.88427672955975,32.28259958071279,20.065828092243187]},{\"name\":\"one right dark sheath with gold tip\",\"diagnostic_native_domain\":[70,0,128,128],\"source_peak_xy\":[101,12],\"source_peak_RGB\":[255,235,181],\"source_RGB_mean\":[37.621228448275865,32.71672952586207,28.62028556034483]}]\r\n\r\nConstraints: preserve the full source texture arrangement and exact detail count/phase/pattern-scale. Do not add or remove a tab, strap, loop, fastener, hole, band, line, symbol or blade part. Keep existing tiny details as faint painted shapes rather than sharper or larger hardware. The engine restores original source alpha separately; provide opaque storedRGB over all original source fields and black UV background. No text, logos, decorative curls or new repeating texture.",
+  "source_transform_recipe": {
+    "input": "assets/terrain-hd/expanded/original/3047.png",
+    "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST4x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+    "source_size": [
+      128,
+      128
+    ],
+    "source_bbox": [
+      0,
+      0,
+      128,
+      128
+    ],
+    "helper_size": [
+      512,
+      512
+    ],
+    "helper_bbox": [
+      0,
+      0,
+      512,
+      512
+    ],
+    "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+    "output": "assets/terrain-hd/expanded/generated/3047-equipment-twenty-ninth-source-rgb-support.png"
+  },
+  "reference_sha256": {
+    "assets/terrain-hd/expanded/generated/3047-equipment-twenty-ninth-source-rgb-support.png": "bb741f47af48c09df854e9dc63dfa97b7d8cc05572a858441d67222d22b03cee"
+  },
+  "source_rgba_sha256": "8538997806faeec2f071cd0bfa15cda1cba7446bbc7a6e7c723e52339f7c7a7b",
+  "prompt_serialization": "Exact actual built-in prompt UTF-8 argument including CRLF equals prompt file bytes; references portable identities resolved against current repo root.",
+  "reproducible_tool_arguments": {
+    "prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture; faithful subtle HD painted refinement, not a photograph or object render.\r\n\r\nEdit target: the sole attached opaque RGB guide is the ENTIRE original native128x128 canvas nearest-resized4x to512x512. Keep entire source framing, normalized UV coordinates, counts, silhouettes, black/shadow fields and source-scale pattern exactly; output fills the same square with no border, zoom, crop or padding.\r\n\r\nOne curved blade field on the left, its brown handle below-left, and the original dark sheath field on the right with the existing gold-colored small tip, two broad horizontal bands and two existing bottom extensions. Keep the exact original curved outline and every shadow/grain mark; do not make new seams, rivets or polished bevels.\r\n\r\nMaterials and tone: original subdued matte painted palette. Add only very fine paint detail inside existing source appearance, retaining its broad shading and softness. No photographic grain, new weave, stronger creases, raised rim, bright metallic rods/gloss, new stripes, scratches or marks. Dim original light patches stay dim, with original relative intensity hierarchy. Existing dark RGB is source color/shadow, not a reason to add geometry.\r\n\r\nExact source-native diagnostic assertions (positions refer to128x128 canvas; guide is4x): [{\"name\":\"one left curved blade\",\"diagnostic_native_domain\":[20,0,70,94],\"source_peak_xy\":[40,85],\"source_peak_RGB\":[247,231,198],\"source_RGB_mean\":[62.9468085106383,55.995106382978726,51.685531914893616]},{\"name\":\"one lower-left brown handle\",\"diagnostic_native_domain\":[0,75,45,128],\"source_peak_xy\":[0,81],\"source_peak_RGB\":[255,255,255],\"source_RGB_mean\":[45.88427672955975,32.28259958071279,20.065828092243187]},{\"name\":\"one right dark sheath with gold tip\",\"diagnostic_native_domain\":[70,0,128,128],\"source_peak_xy\":[101,12],\"source_peak_RGB\":[255,235,181],\"source_RGB_mean\":[37.621228448275865,32.71672952586207,28.62028556034483]}]\r\n\r\nConstraints: preserve the full source texture arrangement and exact detail count/phase/pattern-scale. Do not add or remove a tab, strap, loop, fastener, hole, band, line, symbol or blade part. Keep existing tiny details as faint painted shapes rather than sharper or larger hardware. The engine restores original source alpha separately; provide opaque storedRGB over all original source fields and black UV background. No text, logos, decorative curls or new repeating texture.",
+    "referenced_image_paths": [
+      "assets/terrain-hd/expanded/generated/3047-equipment-twenty-ninth-source-rgb-support.png"
+    ],
+    "transparent_background": false
+  },
+  "pattern_constraints": {
+    "id": 3047,
+    "source_native_size": [
+      128,
+      128
+    ],
+    "source_alpha_extrema": [
+      255,
+      255
+    ],
+    "source_rgba_sha256": "8538997806faeec2f071cd0bfa15cda1cba7446bbc7a6e7c723e52339f7c7a7b",
+    "pre_call_assertions": "Executed native fullcanvas assertions before prompt/tool. Diagnostic domains only; reference is entire sourceRGB nearest4x. No cropped reference, fitting or artistic inserts.",
+    "native_annotations": [
+      {
+        "name": "one left curved blade",
+        "diagnostic_native_domain": [
+          20,
+          0,
+          70,
+          94
+        ],
+        "source_peak_xy": [
+          40,
+          85
+        ],
+        "source_peak_RGB": [
+          247,
+          231,
+          198
+        ],
+        "source_RGB_mean": [
+          62.9468085106383,
+          55.995106382978726,
+          51.685531914893616
+        ]
+      },
+      {
+        "name": "one lower-left brown handle",
+        "diagnostic_native_domain": [
+          0,
+          75,
+          45,
+          128
+        ],
+        "source_peak_xy": [
+          0,
+          81
+        ],
+        "source_peak_RGB": [
+          255,
+          255,
+          255
+        ],
+        "source_RGB_mean": [
+          45.88427672955975,
+          32.28259958071279,
+          20.065828092243187
+        ]
+      },
+      {
+        "name": "one right dark sheath with gold tip",
+        "diagnostic_native_domain": [
+          70,
+          0,
+          128,
+          128
+        ],
+        "source_peak_xy": [
+          101,
+          12
+        ],
+        "source_peak_RGB": [
+          255,
+          235,
+          181
+        ],
+        "source_RGB_mean": [
+          37.621228448275865,
+          32.71672952586207,
+          28.62028556034483
+        ]
+      }
+    ],
+    "count": 3,
+    "count_semantics": "3047 three broad bitmap groups; 2984 three vertical strap-like painted fields; 3000 four vertical strap-like painted fields. Count describes source-visible bitmap patterns, not inferred mesh/hardware or globally regular ribs. Every existing small light/dark mark within each field stays exactly as source, no replacement icon/buckle/button.",
+    "material_constraint": "Fine subdued original paint, no photograin/new weave/raised metallic rim/gloss/geometry. Preserve narrow light and dark source relationships, not turn dim paint into white parts."
+  },
+  "pattern_constraints_file_sha256": "e81b8106b954abab435fb0d3440a02c3f5e44b60ee06fd838d30fc56e3d64d31"
+}
