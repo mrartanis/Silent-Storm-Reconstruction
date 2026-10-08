@@ -1,0 +1,46 @@
+{
+  "id": 1968,
+  "status": "service-blocked",
+  "builtin": true,
+  "started_utc": "2026-10-07T23:51:42.091541+00:00",
+  "prompt": "Edit the supplied existing video-game diffuse UV texture into a crisp HD painted texture. This is a flat 2:1 full-canvas UV atlas, NOT a weapon rendering or a product photograph. Reference 1 is the original authoritative RGBA source; reference 2 is its exact whole-canvas nearest-neighbor enlargement and adds NO new information. Keep every island, empty transparent region, edge silhouette, canvas-border clipping and normalized pixel-center position exactly. Do not move, crop, rotate, pad, recompose, complete cropped shapes, or redesign. Entire original 128x64 canvas must correspond linearly to entire output. Preserve original material colors: softly painted dark gray steel and understated warm brown wood where present, same shading direction and pattern scale. Improve fine material clarity within existing regions only. Keep original game-painted appearance; NO photorealistic weapon, new wear, damage, scratches, wood knots, curls, engraving, letters, logos, new hardware, holes, stripes, raised lips, or border bands. Compression/pixel blocks are not design ornaments; smooth existing material softly while obeying source shape and count. Preserve source transparency. Fine lines, black holes and tiny pale dots must stay at exact original UV centers and their original count/pitch/phase. Preserve broad plain warm orange-brown triangular wood stock and lower-left horizontal wood panel with its ONE shallow elongated inset, right curved wood region, and upper-middle separate stacked gray receiver forms/loop. Preserve top-left framed gray plate, lower-right long thin slot, lower-left tightly spaced pale vertical rib train with exact source rib count, pitch, length and edge phase. No wood knots/curls, no new holes or bars. Produce one HD full-canvas 2:1 atlas with no margin, no checkerboard, no caption and no comparison. Native lower rib phase: separate brighter edge bar at logical x27 plus THIRTEEN narrow pale ribs at x29,31,33,35,37,39,41,43,45,47,49,51,53 (native128x64 coordinate system), pitch exactly2. Preserve unequal lengths and dim final rib at53. Do not add a pale rib at55: that is the next separate bright panel boundary.",
+  "prompt_file": "assets/terrain-hd/expanded/generated/1968-prompt.txt",
+  "prompt_sha256": "1508011c0740278ac31ce2d088dc02b893e42cb1311b63c879b24773e8f26526",
+  "references": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1968.png",
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1968-weapons-eighth-source-reference.png"
+  ],
+  "reference_recipe": {
+    "type": "whole-source-only-nearest-guide",
+    "source_dimensions": [
+      128,
+      64
+    ],
+    "guide_dimensions": [
+      1024,
+      512
+    ],
+    "resampling": "nearest",
+    "affine_prewarp": null,
+    "references_sha256": [
+      "e6ed0ae2bae2aaba17709e69ca4b74dce67fe7fc13f0c88b77d142dab0aec849",
+      "977bc33894f048e80f87f2a69a55de67e2f35faa100ddf523d8e6e78a7fb49f5"
+    ]
+  },
+  "transparent_background": true,
+  "target_size": [
+    512,
+    256
+  ],
+  "finished_utc": "2026-10-07T23:52:08.940766+00:00",
+  "exact_service_error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID a09941c6-30ce-4bcb-b32f-6a2836c478cd. safety_violations=[illicit].\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"illicit\\\"\\n      ]\\n    }\\n  }\\n}\")\n",
+  "error": {
+    "http_status": 400,
+    "code": "moderation_blocked",
+    "category": "illicit",
+    "request_id": "a09941c6-30ce-4bcb-b32f-6a2836c478cd",
+    "moderation_stage": "output"
+  },
+  "raw_saved": false,
+  "retry_permitted": false
+}

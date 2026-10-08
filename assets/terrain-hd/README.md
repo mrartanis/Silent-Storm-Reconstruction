@@ -8,16 +8,16 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,239 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 58 clothing, 75 equipment, 64 weapons,
-2 heads, 25 interface icons, 47 effects, 4 camp atlases and 2 training targets.
+The completed pack contains **2,254 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 58 clothing, 86 equipment, 64 weapons,
+2 heads, 25 interface icons, 51 effects, 4 camp atlases and 2 training targets.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,644 records, including 277 accepted new-group textures, the original
+contains 2,662 records, including 292 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 257 technical maps,
 74 structural/solid masks, 63 unavailable historical sources, one release mismatch
-and ten resource IDs whose original-preserving image generation was unavailable
-(nine distinct source images). No entries in that queue remain pending.
+and thirteen resource IDs whose original-preserving image generation was unavailable
+(twelve distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
 by the old format filter: 5076, 5168, 5169, 6997 and 7581–7586. They are genuine
 bark, clock and medical-bed artwork, and all ten exactly match release pixels.
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,523 verified originals outside the shared queue, including next
+validation. There remain 1,505 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -137,8 +137,10 @@ Eleventh accepted packet: `expanded/jobs-new-groups-eleventh.json` adds6 equipme
 
 Twelfth accepted packet: `expanded/jobs-new-groups-twelfth.json` adds6 clothing,10 equipment and3 UI:2,239 textures/4,478 aliases/118 archives/7,176,096,190 bytes. Prior2,220 source/PNG/native hashes unchanged. All17 opaque native RGBA equal privately reviewed calibrated PNG; UI7115/7116 retain complete original alpha and exact premultiplied RGBA. Their source-only wholecanvas nearest affine3:1 helpers inverse-resize the complete raw to original4x, without crop/padding/BBox. Full validation, actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-twelfth-{batch,live}-check.json`. UI5111 original38x46 is held for NPOT support;5 otherUI,6 clothing and2 equipment attempts remain outside the pack as reviewed. Source/raw/exactprompt provenance retained and initial4010v1 archived before canonicalv2. Do not regenerate accepted IDs.
 
-All 11,651 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,364,610,669 bytes before Git deduplication/compression).
+Thirteenth accepted packet: `expanded/jobs-new-groups-thirteenth.json` adds11 equipment and4 effects:2,254 textures/4,508 aliases/119 archives/7,188,854,696 bytes. Prior2,239 source/PNG/native hashes unchanged. All11 opaque native RGBA equal privately reviewed calibrated PNG;4 additive frames preserve complete original alpha0 and exact calibrated native RGB. Full validation, actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-thirteenth-{batch,live}-check.json`. Weapons1953/1968/1974 retain originals after actual service refusals, with request IDs/exact arguments/fresh RGBA parity and no retries. Nine other weapon attempts, equipment4858 and8 effect attempts remain reviewed artwork holds, with full raw provenance; they are not accepted HD.
+
+All 11,787 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,430,004,217 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

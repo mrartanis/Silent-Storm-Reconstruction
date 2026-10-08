@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 277 of these verified originals are accepted in the shared
+As of 2026-10-08, 292 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twelfth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirteenth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,523 IDs: clothing 229, equipment 184, weapons
-62, heads 184, UI 672, effects 159, clues 17, final 3 and miscellaneous 13.
+remaining verified set contains 1,505 IDs: clothing 229, equipment 173, weapons
+59, heads 184, UI 672, effects 155, clues 17, final 3 and miscellaneous 13.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -194,3 +194,5 @@ accepted IDs. Next independent raw packets require coordinator review.
 Eleventh accepted packet: `../jobs-new-groups-eleventh.json` adds6 equipment,5 additive effect frames and UI5842 direct-original v3:2,220 textures/4,440 aliases/117 archives/7,118,248,712 bytes. Prior2,208 source/PNG/native hashes unchanged. Six opaque native RGBA equal reviewed PNG; five effects retain original zero alpha and exact calibrated RGB. UI5842 retains full source alpha, wholecanvas UV and reviewed premultiplied RGBA; localized RGB review resolved the earlier conservative v3 edge-color hold as original brown frame/gold X. v1/v2 remain rejected. Full validation and actual-menu HD on/off/on, normal isolated quit: `../new-groups-eleventh-{batch,live}-check.json`. UI1995 original107x39/native428x156 is held by the packer's NPOT assert; its original stays unchanged. All17 clues-first remain original:16 text/diagram/uncertain and5288 two shifted-rib attempts. Raw/prompt/provenance retained. Exact serviceCRLF prompt writing now avoids Windows CR duplication;12 byte comparisons passed before Git normalization. Do not regenerate accepted IDs.
 
 Twelfth accepted packet: `../jobs-new-groups-twelfth.json` adds6 clothing,10 equipment and3 UI:2,239 textures/4,478 aliases/118 archives/7,176,096,190 bytes. Prior2,220 source/PNG/native hashes unchanged. All17 opaque native RGBA equal privately reviewed calibrated PNG; UI7115/7116 retain complete original alpha and exact premultiplied RGBA. Their source-only wholecanvas nearest affine3:1 helpers inverse-resize the complete raw to original4x, without crop/padding/BBox. Full validation, actual-menu HD on/off/on, normal isolated quit: `../new-groups-twelfth-{batch,live}-check.json`. UI5111 original38x46 is held for NPOT support;5 otherUI,6 clothing and2 equipment attempts remain outside the pack as reviewed. Source/raw/exactprompt provenance retained and initial4010v1 archived before canonicalv2. Do not regenerate accepted IDs.
+
+Thirteenth accepted packet: `../jobs-new-groups-thirteenth.json` adds11 equipment and4 effects:2,254 textures/4,508 aliases/119 archives/7,188,854,696 bytes. Prior2,239 source/PNG/native hashes unchanged. All11 opaque native RGBA equal privately reviewed calibrated PNG;4 additive frames preserve complete original alpha0 and exact calibrated native RGB. Full validation, actual-menu HD on/off/on, normal isolated quit: `../new-groups-thirteenth-{batch,live}-check.json`. Weapons1953/1968/1974 retain originals after actual service refusals, with request IDs/exact arguments/fresh RGBA parity and no retries. Nine other weapon attempts, equipment4858 and8 effect attempts remain reviewed artwork holds, with full raw provenance; they are not accepted HD.
