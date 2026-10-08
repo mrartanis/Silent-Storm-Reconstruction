@@ -1,0 +1,4935 @@
+{
+  "batch": "ui-twenty-fourth",
+  "accepted_snapshot": 2361,
+  "remaining_interface_scope": 623,
+  "fresh_uncalled_count": 562,
+  "checked_utc": "2026-10-08T06:24:00.788926+00:00",
+  "source_checks": [
+    {
+      "id": 4741,
+      "source_record": {
+        "id": 4741,
+        "texture": {
+          "ID": 4741,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -9283254,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Folder_Axis.tga",
+          "Format": "dxt1",
+          "UserName": "Folder_Axis",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3007,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1932,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4959,
+                  "field": "Material0",
+                  "material_template_id": 1932,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3301,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+        "source_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+        "release_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4741.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4741,
+        "texture": {
+          "ID": 4741,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -9283254,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Folder_Axis.tga",
+          "Format": "dxt1",
+          "UserName": "Folder_Axis",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3007,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1932,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4959,
+                "field": "Material0",
+                "material_template_id": 1932,
+                "geometry_id": 3085,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3301,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3007,
+            "TextureID": 4741,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1932,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1932,
+            "UserName": "Folder_Axis"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4959,
+                "Material0": 1932,
+                "Material1": 1935,
+                "GeometryID": 3085,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 79,
+                "TemplateID": 3301,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3301,
+                "UserName": "Folder_Axis"
+              },
+              "geometry": {
+                "ID": 3085,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5383596420288086,
+                "SizeY": 0.4402945041656494,
+                "SizeZ": 0.04644446074962616,
+                "CenterX": 0.05378568172454834,
+                "CenterY": -0.006411314010620117,
+                "CenterZ": 0.12813624739646912,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Folder",
+                "RootJoint": "skinCluster3"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+      "release_mmp_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+      "original_png_sha256": "6cc3dfc475f8d76625f5b52bbb1b8dbbf54123cc4ddcab94156450e1b771a308",
+      "source_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+      "source_rgb_sha256": "83a22d33f52ab98e6a565be29e002748b35b4a8e97ac57d34b0543fa767c7ef9",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4742,
+      "source_record": {
+        "id": 4742,
+        "texture": {
+          "ID": 4742,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -11447736,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Folder_Allies.tga",
+          "Format": "dxt1",
+          "UserName": "Folder_Allies",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3009,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1933,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4961,
+                  "field": "Material0",
+                  "material_template_id": 1933,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3302,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+        "source_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+        "release_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4742.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4742,
+        "texture": {
+          "ID": 4742,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -11447736,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Folder_Allies.tga",
+          "Format": "dxt1",
+          "UserName": "Folder_Allies",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3009,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1933,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4961,
+                "field": "Material0",
+                "material_template_id": 1933,
+                "geometry_id": 3085,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3302,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3009,
+            "TextureID": 4742,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1933,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1933,
+            "UserName": "Folder_Allies"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4961,
+                "Material0": 1933,
+                "Material1": 1935,
+                "GeometryID": 3085,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 79,
+                "TemplateID": 3302,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3302,
+                "UserName": "Folder_Allies"
+              },
+              "geometry": {
+                "ID": 3085,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5383596420288086,
+                "SizeY": 0.4402945041656494,
+                "SizeZ": 0.04644446074962616,
+                "CenterX": 0.05378568172454834,
+                "CenterY": -0.006411314010620117,
+                "CenterZ": 0.12813624739646912,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Folder",
+                "RootJoint": "skinCluster3"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+      "release_mmp_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+      "original_png_sha256": "b8e374925a5ceea4aacc335dfd3a9d3f04ee784e3b993c78526261fb0edc0072",
+      "source_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+      "source_rgb_sha256": "2b903643f3e4c85a9425069d51618d354160a91800b9437e4b3b6c82b5605d72",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4743,
+      "source_record": {
+        "id": 4743,
+        "texture": {
+          "ID": 4743,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -8423314,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Paper.tga",
+          "Format": "dxt1",
+          "UserName": "Paper",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3011,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1934,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4957,
+                  "field": "Material0",
+                  "material_template_id": 1934,
+                  "geometry_id": 3087,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3300,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4963,
+                  "field": "Material0",
+                  "material_template_id": 1934,
+                  "geometry_id": 3088,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3303,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+        "source_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+        "release_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4743.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4743,
+        "texture": {
+          "ID": 4743,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -8423314,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Paper.tga",
+          "Format": "dxt1",
+          "UserName": "Paper",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 65560,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3011,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1934,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4957,
+                "field": "Material0",
+                "material_template_id": 1934,
+                "geometry_id": 3087,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3300,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 4963,
+                "field": "Material0",
+                "material_template_id": 1934,
+                "geometry_id": 3088,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3303,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3011,
+            "TextureID": 4743,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1934,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1934,
+            "UserName": "Paper"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4957,
+                "Material0": 1934,
+                "Material1": 0,
+                "GeometryID": 3087,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 80,
+                "TemplateID": 3300,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3300,
+                "UserName": "Paper01"
+              },
+              "geometry": {
+                "ID": 3087,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5048571825027466,
+                "SizeY": 0.3326539397239685,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.01564824767410755,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Paper01",
+                "RootJoint": "skinCluster2"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4963,
+                "Material0": 1934,
+                "Material1": 0,
+                "GeometryID": 3088,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 81,
+                "TemplateID": 3303,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3303,
+                "UserName": "Paper02"
+              },
+              "geometry": {
+                "ID": 3088,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5048571825027466,
+                "SizeY": 0.3326539397239685,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.015648242086172104,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Paper02",
+                "RootJoint": "paper_skinCluster2"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+      "release_mmp_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+      "original_png_sha256": "255e2e65b0bd5d5853faf483a5341958d0358e481ba8f1ded3b2f68d53936f97",
+      "source_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+      "source_rgb_sha256": "8c093418c96a497a9fe03935fbf7c9ff858153fd0d1b2355d7e04c1917d7a776",
+      "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 4745,
+      "source_record": {
+        "id": 4745,
+        "texture": {
+          "ID": 4745,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -10462381,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Paper_Block.tga",
+          "Format": "dxt1",
+          "UserName": "Paper_Block",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3013,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1935,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4959,
+                  "field": "Material1",
+                  "material_template_id": 1935,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3301,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4961,
+                  "field": "Material1",
+                  "material_template_id": 1935,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3302,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4965,
+                  "field": "Material0",
+                  "material_template_id": 1935,
+                  "geometry_id": 3086,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3304,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          256
+        ],
+        "source_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+        "source_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+        "release_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4745.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 4745,
+        "texture": {
+          "ID": 4745,
+          "Width": 256,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -10462381,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\SelectScreen\\Paper_Block.tga",
+          "Format": "dxt1",
+          "UserName": "Paper_Block",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          256,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            256,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 32792,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3013,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1935,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 4959,
+                "field": "Material1",
+                "material_template_id": 1935,
+                "geometry_id": 3085,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3301,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 4961,
+                "field": "Material1",
+                "material_template_id": 1935,
+                "geometry_id": 3085,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3302,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 4965,
+                "field": "Material0",
+                "material_template_id": 1935,
+                "geometry_id": 3086,
+                "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                "model_template_id": 3304,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3013,
+            "TextureID": 4745,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 1935,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 1935,
+            "UserName": "Paper_Block"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 4959,
+                "Material0": 1932,
+                "Material1": 1935,
+                "GeometryID": 3085,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 79,
+                "TemplateID": 3301,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3301,
+                "UserName": "Folder_Axis"
+              },
+              "geometry": {
+                "ID": 3085,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5383596420288086,
+                "SizeY": 0.4402945041656494,
+                "SizeZ": 0.04644446074962616,
+                "CenterX": 0.05378568172454834,
+                "CenterY": -0.006411314010620117,
+                "CenterZ": 0.12813624739646912,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Folder",
+                "RootJoint": "skinCluster3"
+              }
+            },
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 4961,
+                "Material0": 1933,
+                "Material1": 1935,
+                "GeometryID": 3085,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 79,
+                "TemplateID": 3302,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3302,
+                "UserName": "Folder_Allies"
+              },
+              "geometry": {
+                "ID": 3085,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5383596420288086,
+                "SizeY": 0.4402945041656494,
+                "SizeZ": 0.04644446074962616,
+                "CenterX": 0.05378568172454834,
+                "CenterY": -0.006411314010620117,
+                "CenterZ": 0.12813624739646912,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Folder",
+                "RootJoint": "skinCluster3"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 4965,
+                "Material0": 1935,
+                "Material1": 0,
+                "GeometryID": 3086,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3304,
+                "RPGArmorID": 25,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3304,
+                "UserName": "Paper_Block"
+              },
+              "geometry": {
+                "ID": 3086,
+                "AIGeometryID": 1969,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.0,
+                "SizeY": 0.0,
+                "SizeZ": 0.0,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                "UserName": "Paper_Block",
+                "RootJoint": "Paper_Block"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+      "release_mmp_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+      "original_png_sha256": "dab7844096df7cdd6441c438e4b437cd881d0c66b76daee3625e24de884aa344",
+      "source_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+      "source_rgb_sha256": "e3debe9ca797c942de5875bbba8760dc5ff3e93ae9fd83f16f4ad5aac7624e09",
+      "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 2938,
+      "source_record": {
+        "id": 2938,
+        "texture": {
+          "ID": 2938,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -1990437558,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Options\\00.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 476,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 476,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1216,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 163,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 1231,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 162,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 1278,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 161,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 1296,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 170,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 1302,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 164,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2530,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 436,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "source_sha256": "9797c7f9e642b8459d0b06fdbd835f81c4e54e050c2fcb86e2fe4731aa35bce7",
+        "source_rgba_sha256": "09f33ccfbb622f6ab8eeb2896293024bb9a49d2e772bb465be92398ae9776acc",
+        "release_rgba_sha256": "09f33ccfbb622f6ab8eeb2896293024bb9a49d2e772bb465be92398ae9776acc",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/2938.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 2938,
+        "texture": {
+          "ID": 2938,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -1990437558,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Options\\00.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            1024,
+            1024
+          ],
+          "mips": 1,
+          "file_bytes": 4194328,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 476,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 476,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              1024,
+              1024
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 1216,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 163,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 1231,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 162,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 1278,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 161,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 1296,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 170,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 1302,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 164,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2530,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 436,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "9797c7f9e642b8459d0b06fdbd835f81c4e54e050c2fcb86e2fe4731aa35bce7",
+      "release_mmp_sha256": "9797c7f9e642b8459d0b06fdbd835f81c4e54e050c2fcb86e2fe4731aa35bce7",
+      "original_png_sha256": "0fe9e2c49d36231003bf90be865d9339019e2a75ed8bee42c48ad53e61aa84de",
+      "source_rgba_sha256": "09f33ccfbb622f6ab8eeb2896293024bb9a49d2e772bb465be92398ae9776acc",
+      "source_rgb_sha256": "0a8bcf6e7c7f48f03cb63ec14e4002675df6c2e109de748429742fe2d75f603b",
+      "source_alpha_sha256": "2a7f1f2870878080593d325758adc2ac192593410d056b0d4b7862cbb4848f6b",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source1024x1024, production4096x4096. Genuine transparent Options book illustration. ONE open book with exactly TWO pages occupies only the original LOWER portion of the square; the large upper source area remains black/empty. Preserve darkbrown cover perimeter, central vertical gutter at source x508, left graytaupe page and slightly warmer lighter right page, narrow page-stack edges and original bottomright curled corner. EXACTLY SEVEN existing table rows on the left page and one separate lower footer band; keep the narrow existing left number-column and two narrow right vertical columns. Source measured left horizontal lines are at y504,561,618,675,732,789,846,901,945: first is topborder, next6 rowdividers, y901 is row-body bottom, y945 footer bottom. Rightpage retains only its existing sparse full-width horizontal divisions, NOT seven new right rows. Exactly SEVEN existing tiny row glyph-like marks one per row in the original left narrow column; exactly TWO existing tiny page-label glyph clusters near the page tops; exactly ONE original yellow/dark outlined corner cross at bottomright. Preserve the precise source shapes, spacing, strokes and upside-down/retail orientation of every existing mark as printed in the reference; do not transcribe/rewrite/guess their meaning, invent numbers/text, reverse or clean them into new font. Preserve faint existing broad waterstain rings and uneven soft oldpaper shading at the same source phase, not new dots/fibers/stains/holes/ornament. No additional lines, frames, page folds or hardware. Fine source matte game-paint only.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          1024,
+          1024
+        ],
+        "guide_size": [
+          2048,
+          2048
+        ],
+        "source_bbox": [
+          0,
+          0,
+          1024,
+          1024
+        ],
+        "affine_prewarp": null,
+        "operations": "Exact whole source storedRGB nearest2x entire canvas; no crop/padding/registration/unpremultiply/RGB repair. Whole generatedRGBA LANCZOS exactsource4x, whole originalA LANCZOS restore, existing defaultpad and pure global scalar. Transparent native RGB premultiplied once; root typednative/premul audit mandatory.",
+        "references_sha256": [
+          "0fe9e2c49d36231003bf90be865d9339019e2a75ed8bee42c48ad53e61aa84de",
+          "b84a534f6f6bd2dc646b1a1099f7b0de7e82f5b6a9f1fa6bc3dd04392b8e2728"
+        ]
+      },
+      "actual_runtime_binding": {
+        "file": "Main/iOptionsMenu.cpp",
+        "lines": [
+          1333,
+          1337,
+          1341,
+          1345
+        ],
+        "actual_UITextureID": 476,
+        "actual_UIControls": [
+          1216,
+          1231,
+          1278,
+          1296,
+          1302,
+          2530
+        ],
+        "actual_containers": [
+          163,
+          162,
+          161,
+          170,
+          164,
+          436
+        ],
+        "qualification": "Fresh UIControls.Texture0→UITextures476→Textures2938. Actual options loader uses these sourcecontainers; not a selected art live/GPU claim."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 3027,
+      "source_record": {
+        "id": 3027,
+        "texture": {
+          "ID": 3027,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -878472839,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\ChapterView\\00_01.tga",
+          "Format": "8888",
+          "UserName": "AxisText Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 486,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "AxisText Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 486,
+              "name": "AxisText Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                512
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1330,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    512,
+                    512
+                  ],
+                  "container": 176,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          512
+        ],
+        "source_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+        "source_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+        "release_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/3027.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 3027,
+        "texture": {
+          "ID": 3027,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -878472839,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\ChapterView\\00_01.tga",
+          "Format": "8888",
+          "UserName": "AxisText Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            512,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 1048600,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 486,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "AxisText Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 486,
+            "name": "AxisText Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              512,
+              512
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 1330,
+                "field": "Texture0",
+                "control_name": "background",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  512,
+                  512
+                ],
+                "container": 176,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+      "release_mmp_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+      "original_png_sha256": "f120b0da56f2d5fd9c8d841ddf5819c619dfd3e54cf576623993e7baa8a14a55",
+      "source_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+      "source_rgb_sha256": "bd91a5f018d5e62cc8de5f13a734afbe5e5c541e09b1f73ab0fdc9896241ba08",
+      "source_alpha_sha256": "b3be832daacd0348d2168bf0812ca1667a438675d0c948df7ff58a7393edb0fa",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5188,
+      "source_record": {
+        "id": 5188,
+        "texture": {
+          "ID": 5188,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": 2053069652,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Dialog\\29.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 637,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 637,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                256
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1936,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 357,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2025,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    416
+                  ],
+                  "container": 371,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2048,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 379,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2474,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 420,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2715,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 453,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+        "source_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+        "release_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5188.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5188,
+        "texture": {
+          "ID": 5188,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": 2053069652,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Dialog\\29.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          256
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            512,
+            256
+          ],
+          "mips": 1,
+          "file_bytes": 524312,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 637,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 637,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              512,
+              256
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 1936,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  353,
+                  204,
+                  704,
+                  424
+                ],
+                "container": 357,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2025,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  353,
+                  204,
+                  704,
+                  416
+                ],
+                "container": 371,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2048,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  353,
+                  204,
+                  704,
+                  424
+                ],
+                "container": 379,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2474,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  353,
+                  204,
+                  704,
+                  424
+                ],
+                "container": 420,
+                "string_id": 0
+              },
+              {
+                "table": "UIControls",
+                "id": 2715,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  353,
+                  204,
+                  704,
+                  424
+                ],
+                "container": 453,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+      "release_mmp_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+      "original_png_sha256": "9807532ecebf7b608d4219954b6c782e74cdb1e1f4644bd1db394c16a6298c2c",
+      "source_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+      "source_rgb_sha256": "937e490e5cbe471a4a46fac08ac65bbb7d442d6daf8518c44119b94079d33d8f",
+      "source_alpha_sha256": "27d87e392e0636a63d255267df15eaba8cbd333a74ce1e24433f72e3455cca06",
+      "dimensions": [
+        512,
+        256
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5203,
+      "source_record": {
+        "id": 5203,
+        "texture": {
+          "ID": 5203,
+          "Width": 1024,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13427439,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\30.tga",
+          "Format": "dxt1",
+          "UserName": "Background",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 638,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 638,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                512
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          512
+        ],
+        "source_sha256": "faedfd3481b8778643f6bac68d550a3a8709408acbf8908fd8d81be09ddf4885",
+        "source_rgba_sha256": "158eaa724d5899b8d1a577e51917a6d6d9aefe73bef90cee1ec1bb8ce7e26dee",
+        "release_rgba_sha256": "158eaa724d5899b8d1a577e51917a6d6d9aefe73bef90cee1ec1bb8ce7e26dee",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5203.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5203,
+        "texture": {
+          "ID": 5203,
+          "Width": 1024,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -13427439,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\FaceGen\\30.tga",
+          "Format": "dxt1",
+          "UserName": "Background",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            1024,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 262168,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 638,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 638,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              1024,
+              512
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "faedfd3481b8778643f6bac68d550a3a8709408acbf8908fd8d81be09ddf4885",
+      "release_mmp_sha256": "faedfd3481b8778643f6bac68d550a3a8709408acbf8908fd8d81be09ddf4885",
+      "original_png_sha256": "01cc91d4f387cf48dd346076232999af3d4870334d290660438d5aafa2393ec6",
+      "source_rgba_sha256": "158eaa724d5899b8d1a577e51917a6d6d9aefe73bef90cee1ec1bb8ce7e26dee",
+      "source_rgb_sha256": "eb4b736273374d609ecac81792f9b3c34efa975eca3fcdbfe999cd3267c5c1e4",
+      "source_alpha_sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f",
+      "dimensions": [
+        1024,
+        512
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source1024x512, production4096x2048. Genuine ordinary opaque color background registered in historical UITextures638. Preserve its deliberately VERY SOFT blurred warm darkbrown/taupe painted color field, exact full-canvas broad forms and local color-flow phase. The dark outer sides and top remain dark; two broad dim taupe vertical washes stand toward left and right, two smaller warmorange lower washes and one soft low curved light band remain at the source positions and original blur strength. Preserve broad source color variation and dim brown center, not a constant fill, and do not separate extra countable elements from these connected ambiguous washes. Do not infer what they depict: no face, eyes, mouth, portrait, head/hat, fire/flames, candles, room/background objects, machinery or photographic forms. Do not resolve blurred areas into anatomical or physical detail, hard edges, sharp texture or new glow cores. Only fine smooth painted tonal continuity while retaining the intentionally blurred appearance and exact source contrast/UV/material. No new lines, glyphs or marks.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          1024,
+          512
+        ],
+        "guide_size": [
+          2048,
+          1024
+        ],
+        "source_bbox": [
+          0,
+          0,
+          1024,
+          512
+        ],
+        "affine_prewarp": null,
+        "operations": "Exact whole source storedRGB nearest2x entire canvas; no crop/padding/registration/unpremultiply/RGB repair. Whole generatedRGBA LANCZOS exactsource4x, whole originalA LANCZOS restore, existing defaultpad and pure global scalar. Transparent native RGB premultiplied once; root typednative/premul audit mandatory.",
+        "references_sha256": [
+          "01cc91d4f387cf48dd346076232999af3d4870334d290660438d5aafa2393ec6",
+          "19f26dcb707ff6dd429c4f4ac8324c997d3d90ec3a9841027c9b564811cc0f69"
+        ]
+      },
+      "actual_runtime_binding": {
+        "actual_UITextureID": 638,
+        "actual_UIControls": [],
+        "actual_current_sourcecode_638_binding_found": false,
+        "qualification": "Genuine historical UITextures638 registration/source FaceGen color background proved. No current typedUIControl638 or sourcecode direct638 reference found; not claiming an active FaceGen background instance or actual selected render. Registration absence of UIcontrol is not a technical/control-map classification."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 5760,
+      "source_record": {
+        "id": 5760,
+        "texture": {
+          "ID": 5760,
+          "Width": 512,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -329689781,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TeamMngMenu\\18_03.tga",
+          "Format": "dxt1",
+          "UserName": "Biography Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 688,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Biography Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 688,
+              "name": "Biography Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2064,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    512,
+                    768
+                  ],
+                  "container": 382,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          1024
+        ],
+        "source_sha256": "8d8f39d18b92762bf5dff034d1a1e62be05826cf91786ba4d04e4adf20e1bf9d",
+        "source_rgba_sha256": "d5f6b9d016173db1f4e9a725c49e7564a4a3a6c42a90439ebfd2cf02554bfb1d",
+        "release_rgba_sha256": "d5f6b9d016173db1f4e9a725c49e7564a4a3a6c42a90439ebfd2cf02554bfb1d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/5760.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5760,
+        "texture": {
+          "ID": 5760,
+          "Width": 512,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -329689781,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\TeamMngMenu\\18_03.tga",
+          "Format": "dxt1",
+          "UserName": "Biography Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            512,
+            1024
+          ],
+          "mips": 1,
+          "file_bytes": 262168,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 688,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Biography Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 688,
+            "name": "Biography Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              512,
+              1024
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2064,
+                "field": "Texture0",
+                "control_name": "",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  512,
+                  768
+                ],
+                "container": 382,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "8d8f39d18b92762bf5dff034d1a1e62be05826cf91786ba4d04e4adf20e1bf9d",
+      "release_mmp_sha256": "8d8f39d18b92762bf5dff034d1a1e62be05826cf91786ba4d04e4adf20e1bf9d",
+      "original_png_sha256": "8851c862c90434d795e5eb3f0a8c9550341a0dbd69012cb268bf0e217ce069ca",
+      "source_rgba_sha256": "d5f6b9d016173db1f4e9a725c49e7564a4a3a6c42a90439ebfd2cf02554bfb1d",
+      "source_rgb_sha256": "a126c290371b3f96f7c3c4458ab311d4bf51cf55ad38a931c502f2f027e09247",
+      "source_alpha_sha256": "03747fc5b07bee5282208f368f996419ab7bd4f0171219a394ea0a8eadcab82c",
+      "dimensions": [
+        512,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+      "source_count_phase_constraints": "Source512x1024, production2048x4096. Genuine transparent Biography panel illustration. ONE matte lightgray/taupe book page occupies only the original LOWER region, with original black upper area, soft darkbrown top cover strips and bottomright curl. EXACTLY SIX existing dim gray square painted marks form one horizontal row near the page top, with original pitch/width/phase; do not turn them into holes, raised buttons or printed symbols. Keep ONE faint existing horizontal fold/rule around source y630. EXACTLY ONE existing slightly tilted lightgray photographic-placeholder border at lowerleft surrounds its original nearblack/transparent interior; keep it EMPTY, no new photograph/portrait. EXACTLY ONE existing thin gray paperclip-like elongated loop near the border lower-right, and exactly ONE original yellow/dark outlined corner cross at page bottomright. Exactly FOUR existing tiny white handwritten glyph-like marks inside the placeholder near native x20..66,y719..736: original brightstroke islands x20..32,y720..736; x31..39,y723..731; x43..53,y722..733; x57..66,y719..734. Preserve these source glyph forms, spacing, irregular strokes and orientation exactly, never replace them with readable invented letters/numbers. These bounds document existing phase only; complete references define exact outlines and original border tilt. Preserve faint scattered broad ring-like stains and slight paper tone at their old locations, source matte softness/grain scale, soft edges and all dark margins. No new clips/loops/pins/folds/text/slots/ornament, no crisp new bevels or noisy pulp texture.",
+      "reference_recipe": {
+        "type": "whole-original-storedRGB-nearest",
+        "source_size": [
+          512,
+          1024
+        ],
+        "guide_size": [
+          1024,
+          2048
+        ],
+        "source_bbox": [
+          0,
+          0,
+          512,
+          1024
+        ],
+        "affine_prewarp": null,
+        "operations": "Exact whole source storedRGB nearest2x entire canvas; no crop/padding/registration/unpremultiply/RGB repair. Whole generatedRGBA LANCZOS exactsource4x, whole originalA LANCZOS restore, existing defaultpad and pure global scalar. Transparent native RGB premultiplied once; root typednative/premul audit mandatory.",
+        "references_sha256": [
+          "8851c862c90434d795e5eb3f0a8c9550341a0dbd69012cb268bf0e217ce069ca",
+          "606e271fd086075540df252446221de89c0f15ab87752c86c2ef6d90e3ef5bf3"
+        ]
+      },
+      "actual_runtime_binding": {
+        "file": "Main/iTeamMngMenu.cpp",
+        "line": 1111,
+        "excerpt": "LoadTemplate( pPanel, NDb::GetUIContainer( 382 ) );",
+        "actual_UITextureID": 688,
+        "actual_UIControlID": 2064,
+        "actual_UIContainerID": 382,
+        "qualification": "Actual PANEL_BIOGRAPHY loads historical container382 with image-control2064→UITextures688→Textures5760; root live/GPU gate separate."
+      },
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 6516,
+      "source_record": {
+        "id": 6516,
+        "texture": {
+          "ID": 6516,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -878472839,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\ChapterView\\00_02.tga",
+          "Format": "8888",
+          "UserName": "AlliesText Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 852,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "AlliesText Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 852,
+              "name": "AlliesText Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                512
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          512
+        ],
+        "source_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+        "source_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+        "release_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "original_png": "expanded/original/6516.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 6516,
+        "texture": {
+          "ID": 6516,
+          "Width": 512,
+          "Height": 512,
+          "NMips": 1,
+          "AverageColor": -878472839,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\ChapterView\\00_02.tga",
+          "Format": "8888",
+          "UserName": "AlliesText Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          512,
+          512
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            512,
+            512
+          ],
+          "mips": 1,
+          "file_bytes": 1048600,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 852,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "AlliesText Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 852,
+            "name": "AlliesText Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              512,
+              512
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+      "release_mmp_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+      "original_png_sha256": "9e13a06a45d88b24a99cc1ac928422b5ebdf765eb8b13151b3633b60c2abc675",
+      "source_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+      "source_rgb_sha256": "93e72860040034eb4efc70052e58df4ffa36510f6c773b746268bada2a04fbc3",
+      "source_alpha_sha256": "b3be832daacd0348d2168bf0812ca1667a438675d0c948df7ff58a7393edb0fa",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7293,
+      "source_record": {
+        "id": 7293,
+        "texture": {
+          "ID": 7293,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -12901606,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Credits\\Background.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 938,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 938,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "source_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+        "source_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+        "release_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7293.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7293,
+        "texture": {
+          "ID": 7293,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -12901606,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\Credits\\Background.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            1024,
+            1024
+          ],
+          "mips": 1,
+          "file_bytes": 4194328,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 938,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 938,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              1024,
+              1024
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+      "release_mmp_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+      "original_png_sha256": "5f0d801a855224440ead128e298d1787798e2d3ec31b004c5fe6189e57c7f319",
+      "source_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+      "source_rgb_sha256": "1a60ab22875d09ebbf49b5208ac43c92821852d276b5cccc02296b26de833341",
+      "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    },
+    {
+      "id": 7702,
+      "source_record": {
+        "id": 7702,
+        "texture": {
+          "ID": 7702,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -10398392,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MultiPlayer\\hs_01.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 954,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 954,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2684,
+                  "field": "Texture0",
+                  "control_name": "view",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 449,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ]
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "source_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+        "source_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+        "release_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+        "source_native_format": 6,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/7702.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 7702,
+        "texture": {
+          "ID": 7702,
+          "Width": 1024,
+          "Height": 1024,
+          "NMips": 1,
+          "AverageColor": -10398392,
+          "InstantLoad": 1,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MultiPlayer\\hs_01.tga",
+          "Format": "8888",
+          "UserName": "Background",
+          "Type": "Transparent",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          1024,
+          1024
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 6,
+          "physical_size": [
+            1024,
+            1024
+          ],
+          "mips": 1,
+          "file_bytes": 4194328,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "UITextures",
+            "id": 954,
+            "field": "R_1024x768",
+            "role": "color",
+            "UserName": "Background"
+          }
+        ],
+        "ui_links": [
+          {
+            "ui_texture_id": 954,
+            "name": "Background",
+            "resolution_field": "R_1024x768",
+            "ui_logical_size": [
+              1024,
+              1024
+            ],
+            "logical_size_from": "R_1024x768",
+            "controls_and_uses": [
+              {
+                "table": "UIControls",
+                "id": 2684,
+                "field": "Texture0",
+                "control_name": "view",
+                "type": 2,
+                "rect": [
+                  0,
+                  0,
+                  1024,
+                  768
+                ],
+                "container": 449,
+                "string_id": 0
+              }
+            ],
+            "cursors": []
+          }
+        ],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [],
+      "actual_material_alpha_modes": [],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+      "release_mmp_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+      "original_png_sha256": "7ff63bc29da98c907843c4da5548479de587e63491037797f373f55b4153e043",
+      "source_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+      "source_rgb_sha256": "3417080d4d503cc9b308d4ba2aef319c5d7acc1411d52918b08c9891f40ae96a",
+      "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": true,
+      "full_source_RGBA_RGB_A_privately_inspected": true
+    }
+  ],
+  "shared_modified": false,
+  "source_parity_count": 12,
+  "imagegen_calls_at_selection": 0,
+  "finalized_utc": "2026-10-08T06:46:57.710480+00:00",
+  "builtin_generation_calls": 3,
+  "source_only_deferred": [
+    {
+      "id": 4741,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu folder UV diffuse: broad blank matte region plus right label/text/emblem/ribbon artwork. Whole RGBA/A and material-template-model/parity inspected. Exact fine glyph/emblem/ribbon forms and phase not yet proved; no call, no technical fallback.",
+      "source_check": {
+        "id": 4741,
+        "source_record": {
+          "id": 4741,
+          "texture": {
+            "ID": 4741,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -9283254,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Folder_Axis.tga",
+            "Format": "dxt1",
+            "UserName": "Folder_Axis",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3007,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1932,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4959,
+                    "field": "Material0",
+                    "material_template_id": 1932,
+                    "geometry_id": 3085,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3301,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+          "source_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+          "release_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4741.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4741,
+          "texture": {
+            "ID": 4741,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -9283254,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Folder_Axis.tga",
+            "Format": "dxt1",
+            "UserName": "Folder_Axis",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3007,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1932,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4959,
+                  "field": "Material0",
+                  "material_template_id": 1932,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3301,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3007,
+              "TextureID": 4741,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1932,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1932,
+              "UserName": "Folder_Axis"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4959,
+                  "Material0": 1932,
+                  "Material1": 1935,
+                  "GeometryID": 3085,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 79,
+                  "TemplateID": 3301,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3301,
+                  "UserName": "Folder_Axis"
+                },
+                "geometry": {
+                  "ID": 3085,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5383596420288086,
+                  "SizeY": 0.4402945041656494,
+                  "SizeZ": 0.04644446074962616,
+                  "CenterX": 0.05378568172454834,
+                  "CenterY": -0.006411314010620117,
+                  "CenterZ": 0.12813624739646912,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Folder",
+                  "RootJoint": "skinCluster3"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+        "release_mmp_sha256": "3668d4a5dc827542fabe6ff9481711809432f97069c35a8434b438bf3b15ce96",
+        "original_png_sha256": "6cc3dfc475f8d76625f5b52bbb1b8dbbf54123cc4ddcab94156450e1b771a308",
+        "source_rgba_sha256": "fff467237bf059ee7e364461a04de58292ad725b6d2394a6b7d10724e623adc0",
+        "source_rgb_sha256": "83a22d33f52ab98e6a565be29e002748b35b4a8e97ac57d34b0543fa767c7ef9",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4742,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu alternate folder UV, blank matte region plus detailed label/text/ornament. Whole source and typed/parity inspected. Fine original label/emblem strokes require independent source form proof, no guessed transcription or call.",
+      "source_check": {
+        "id": 4742,
+        "source_record": {
+          "id": 4742,
+          "texture": {
+            "ID": 4742,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -11447736,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Folder_Allies.tga",
+            "Format": "dxt1",
+            "UserName": "Folder_Allies",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3009,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1933,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4961,
+                    "field": "Material0",
+                    "material_template_id": 1933,
+                    "geometry_id": 3085,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3302,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+          "source_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+          "release_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4742.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4742,
+          "texture": {
+            "ID": 4742,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -11447736,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Folder_Allies.tga",
+            "Format": "dxt1",
+            "UserName": "Folder_Allies",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3009,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1933,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4961,
+                  "field": "Material0",
+                  "material_template_id": 1933,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3302,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3009,
+              "TextureID": 4742,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1933,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1933,
+              "UserName": "Folder_Allies"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4961,
+                  "Material0": 1933,
+                  "Material1": 1935,
+                  "GeometryID": 3085,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 79,
+                  "TemplateID": 3302,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3302,
+                  "UserName": "Folder_Allies"
+                },
+                "geometry": {
+                  "ID": 3085,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5383596420288086,
+                  "SizeY": 0.4402945041656494,
+                  "SizeZ": 0.04644446074962616,
+                  "CenterX": 0.05378568172454834,
+                  "CenterY": -0.006411314010620117,
+                  "CenterZ": 0.12813624739646912,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Folder",
+                  "RootJoint": "skinCluster3"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+        "release_mmp_sha256": "1b9751203c741a2e061195812b9887b2a0d1fe37f96b43d1855002b16e2b3a03",
+        "original_png_sha256": "b8e374925a5ceea4aacc335dfd3a9d3f04ee784e3b993c78526261fb0edc0072",
+        "source_rgba_sha256": "d321b0fbebd8c5daffbc5908250cfa61cce910181515e40fcfe9dbd08e4ce408",
+        "source_rgb_sha256": "2b903643f3e4c85a9425069d51618d354160a91800b9437e4b3b6c82b5605d72",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4743,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque MainMenu paper atlas with three vertical fields: blank paper, soldier engraving/diagram plus text, dense printed page. Whole source/parity/material inspected. Fine figure/glyph/line forms and compound UV need proof; no cropping blank left to fabricate whole atlas HD, zero calls.",
+      "source_check": {
+        "id": 4743,
+        "source_record": {
+          "id": 4743,
+          "texture": {
+            "ID": 4743,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -8423314,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Paper.tga",
+            "Format": "dxt1",
+            "UserName": "Paper",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3011,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1934,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4957,
+                    "field": "Material0",
+                    "material_template_id": 1934,
+                    "geometry_id": 3087,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3300,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 4963,
+                    "field": "Material0",
+                    "material_template_id": 1934,
+                    "geometry_id": 3088,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3303,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+          "source_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+          "release_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4743.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4743,
+          "texture": {
+            "ID": 4743,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -8423314,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Paper.tga",
+            "Format": "dxt1",
+            "UserName": "Paper",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 65560,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3011,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1934,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4957,
+                  "field": "Material0",
+                  "material_template_id": 1934,
+                  "geometry_id": 3087,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3300,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4963,
+                  "field": "Material0",
+                  "material_template_id": 1934,
+                  "geometry_id": 3088,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3303,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3011,
+              "TextureID": 4743,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1934,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1934,
+              "UserName": "Paper"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4957,
+                  "Material0": 1934,
+                  "Material1": 0,
+                  "GeometryID": 3087,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 80,
+                  "TemplateID": 3300,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3300,
+                  "UserName": "Paper01"
+                },
+                "geometry": {
+                  "ID": 3087,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5048571825027466,
+                  "SizeY": 0.3326539397239685,
+                  "SizeZ": 0.0,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.01564824767410755,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Paper01",
+                  "RootJoint": "skinCluster2"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4963,
+                  "Material0": 1934,
+                  "Material1": 0,
+                  "GeometryID": 3088,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 81,
+                  "TemplateID": 3303,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3303,
+                  "UserName": "Paper02"
+                },
+                "geometry": {
+                  "ID": 3088,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5048571825027466,
+                  "SizeY": 0.3326539397239685,
+                  "SizeZ": 0.0,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.015648242086172104,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Paper02",
+                  "RootJoint": "paper_skinCluster2"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+        "release_mmp_sha256": "fe090a0f9609bde5707b9b64289045610288e59df938818365336f7a78cdd1a0",
+        "original_png_sha256": "255e2e65b0bd5d5853faf483a5341958d0358e481ba8f1ded3b2f68d53936f97",
+        "source_rgba_sha256": "e03afe1f5cdbf4324d99c386f2802a24b8ec9c9f0f906cac1beb224b8abb6ba4",
+        "source_rgb_sha256": "8c093418c96a497a9fe03935fbf7c9ff858153fd0d1b2355d7e04c1917d7a776",
+        "source_alpha_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 4745,
+      "status": "source-only-deferred",
+      "reason": "Genuine opaque Paper_Block compound UV with existing printed page edge, tiny text and skull-like graphic beside dark fields. Whole source/parity/material inspected; exact tiny glyph/engraving identities unresolved, genuine deferred no call.",
+      "source_check": {
+        "id": 4745,
+        "source_record": {
+          "id": 4745,
+          "texture": {
+            "ID": 4745,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10462381,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Paper_Block.tga",
+            "Format": "dxt1",
+            "UserName": "Paper_Block",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3013,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "opaque",
+                "AddressMode": "Clamp",
+                "TemplateID": 1935,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 4959,
+                    "field": "Material1",
+                    "material_template_id": 1935,
+                    "geometry_id": 3085,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3301,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 4961,
+                    "field": "Material1",
+                    "material_template_id": 1935,
+                    "geometry_id": 3085,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3302,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 4965,
+                    "field": "Material0",
+                    "material_template_id": 1935,
+                    "geometry_id": 3086,
+                    "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                    "model_template_id": 3304,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            256
+          ],
+          "source_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+          "source_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+          "release_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/4745.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 4745,
+          "texture": {
+            "ID": 4745,
+            "Width": 256,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": -10462381,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\SelectScreen\\Paper_Block.tga",
+            "Format": "dxt1",
+            "UserName": "Paper_Block",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 32792,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3013,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1935,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4959,
+                  "field": "Material1",
+                  "material_template_id": 1935,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3301,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4961,
+                  "field": "Material1",
+                  "material_template_id": 1935,
+                  "geometry_id": 3085,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3302,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 4965,
+                  "field": "Material0",
+                  "material_template_id": 1935,
+                  "geometry_id": 3086,
+                  "geometry": "Interface\\SelectCampaign\\Paper.mb",
+                  "model_template_id": 3304,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3013,
+              "TextureID": 4745,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 1935,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 1935,
+              "UserName": "Paper_Block"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4959,
+                  "Material0": 1932,
+                  "Material1": 1935,
+                  "GeometryID": 3085,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 79,
+                  "TemplateID": 3301,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3301,
+                  "UserName": "Folder_Axis"
+                },
+                "geometry": {
+                  "ID": 3085,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5383596420288086,
+                  "SizeY": 0.4402945041656494,
+                  "SizeZ": 0.04644446074962616,
+                  "CenterX": 0.05378568172454834,
+                  "CenterY": -0.006411314010620117,
+                  "CenterZ": 0.12813624739646912,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Folder",
+                  "RootJoint": "skinCluster3"
+                }
+              },
+              {
+                "slot": "Material1",
+                "model": {
+                  "ID": 4961,
+                  "Material0": 1933,
+                  "Material1": 1935,
+                  "GeometryID": 3085,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 79,
+                  "TemplateID": 3302,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3302,
+                  "UserName": "Folder_Allies"
+                },
+                "geometry": {
+                  "ID": 3085,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.5383596420288086,
+                  "SizeY": 0.4402945041656494,
+                  "SizeZ": 0.04644446074962616,
+                  "CenterX": 0.05378568172454834,
+                  "CenterY": -0.006411314010620117,
+                  "CenterZ": 0.12813624739646912,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Folder",
+                  "RootJoint": "skinCluster3"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 4965,
+                  "Material0": 1935,
+                  "Material1": 0,
+                  "GeometryID": 3086,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3304,
+                  "RPGArmorID": 25,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3304,
+                  "UserName": "Paper_Block"
+                },
+                "geometry": {
+                  "ID": 3086,
+                  "AIGeometryID": 1969,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.0,
+                  "SizeY": 0.0,
+                  "SizeZ": 0.0,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0,
+                  "SrcName": "Interface\\SelectCampaign\\Paper.mb",
+                  "UserName": "Paper_Block",
+                  "RootJoint": "Paper_Block"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "opaque"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+        "release_mmp_sha256": "228e99a9c993d866f26015030b6dd84e64dec34d54e8171baaa95509b753aaf4",
+        "original_png_sha256": "dab7844096df7cdd6441c438e4b437cd881d0c66b76daee3625e24de884aa344",
+        "source_rgba_sha256": "de0c8878736847273ec5c9a4afea475f383c49a46b3944eeacca285dd4838190",
+        "source_rgb_sha256": "e3debe9ca797c942de5875bbba8760dc5ff3e93ae9fd83f16f4ad5aac7624e09",
+        "source_alpha_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+        "dimensions": [
+          256,
+          256
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 3027,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualUI chapter Axis aged-paper background with original title/handwritten marks and detailed emblem. Whole sourceRGBA/A and exact parity/typed UI inspected. Exact existing glyph/heraldic contours/phase not proved, no call and no invented transcription.",
+      "source_check": {
+        "id": 3027,
+        "source_record": {
+          "id": 3027,
+          "texture": {
+            "ID": 3027,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -878472839,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\00_01.tga",
+            "Format": "8888",
+            "UserName": "AxisText Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 486,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "AxisText Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 486,
+                "name": "AxisText Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  512,
+                  512
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1330,
+                    "field": "Texture0",
+                    "control_name": "background",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      512,
+                      512
+                    ],
+                    "container": 176,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            512
+          ],
+          "source_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+          "source_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+          "release_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/3027.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 3027,
+          "texture": {
+            "ID": 3027,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -878472839,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\00_01.tga",
+            "Format": "8888",
+            "UserName": "AxisText Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              512,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 1048600,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 486,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "AxisText Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 486,
+              "name": "AxisText Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                512
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1330,
+                  "field": "Texture0",
+                  "control_name": "background",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    512,
+                    512
+                  ],
+                  "container": 176,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+        "release_mmp_sha256": "6a66db1da01040392b2afd9f895ea19749cb1822ee1c8d8d309a9ab66769ebaf",
+        "original_png_sha256": "f120b0da56f2d5fd9c8d841ddf5819c619dfd3e54cf576623993e7baa8a14a55",
+        "source_rgba_sha256": "b4970ac92bbdc2f23bad2e4880da8fd6cde43e15173e97d62df1c1ddd87f9901",
+        "source_rgb_sha256": "bd91a5f018d5e62cc8de5f13a734afbe5e5c541e09b1f73ab0fdc9896241ba08",
+        "source_alpha_sha256": "b3be832daacd0348d2168bf0812ca1667a438675d0c948df7ff58a7393edb0fa",
+        "dimensions": [
+          512,
+          512
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 5188,
+      "status": "source-only-deferred",
+      "reason": "Genuine dialogue matte-paper UI with tan backing and mostly blank front, actual UITexture637/control/container chains proved. Full source inspection reveals faint marks along narrow lower strip; their original forms/count not proved. No crop or original RGB composite to avoid marks, zero calls.",
+      "source_check": {
+        "id": 5188,
+        "source_record": {
+          "id": 5188,
+          "texture": {
+            "ID": 5188,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": 2053069652,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Dialog\\29.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 637,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 637,
+                "name": "Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  512,
+                  256
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 1936,
+                    "field": "Texture0",
+                    "control_name": "",
+                    "type": 2,
+                    "rect": [
+                      353,
+                      204,
+                      704,
+                      424
+                    ],
+                    "container": 357,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2025,
+                    "field": "Texture0",
+                    "control_name": "",
+                    "type": 2,
+                    "rect": [
+                      353,
+                      204,
+                      704,
+                      416
+                    ],
+                    "container": 371,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2048,
+                    "field": "Texture0",
+                    "control_name": "",
+                    "type": 2,
+                    "rect": [
+                      353,
+                      204,
+                      704,
+                      424
+                    ],
+                    "container": 379,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2474,
+                    "field": "Texture0",
+                    "control_name": "",
+                    "type": 2,
+                    "rect": [
+                      353,
+                      204,
+                      704,
+                      424
+                    ],
+                    "container": 420,
+                    "string_id": 0
+                  },
+                  {
+                    "table": "UIControls",
+                    "id": 2715,
+                    "field": "Texture0",
+                    "control_name": "",
+                    "type": 2,
+                    "rect": [
+                      353,
+                      204,
+                      704,
+                      424
+                    ],
+                    "container": 453,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            256
+          ],
+          "source_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+          "source_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+          "release_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5188.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5188,
+          "texture": {
+            "ID": 5188,
+            "Width": 512,
+            "Height": 256,
+            "NMips": 1,
+            "AverageColor": 2053069652,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Dialog\\29.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            256
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              512,
+              256
+            ],
+            "mips": 1,
+            "file_bytes": 524312,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 637,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 637,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                256
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 1936,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 357,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2025,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    416
+                  ],
+                  "container": 371,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2048,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 379,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2474,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 420,
+                  "string_id": 0
+                },
+                {
+                  "table": "UIControls",
+                  "id": 2715,
+                  "field": "Texture0",
+                  "control_name": "",
+                  "type": 2,
+                  "rect": [
+                    353,
+                    204,
+                    704,
+                    424
+                  ],
+                  "container": 453,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+        "release_mmp_sha256": "9ae2038623b6f0b4a27a51d17558ed79be47c8d90a89aeda5026f8892305cd93",
+        "original_png_sha256": "9807532ecebf7b608d4219954b6c782e74cdb1e1f4644bd1db394c16a6298c2c",
+        "source_rgba_sha256": "9eacb5deeb0e180a29c4698bf6ea1de6f6468bd623189473a52a9960d41cf154",
+        "source_rgb_sha256": "937e490e5cbe471a4a46fac08ac65bbb7d442d6daf8518c44119b94079d33d8f",
+        "source_alpha_sha256": "27d87e392e0636a63d255267df15eaba8cbd333a74ce1e24433f72e3455cca06",
+        "dimensions": [
+          512,
+          256
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 6516,
+      "status": "source-only-deferred",
+      "reason": "Genuine actualUI chapter Allies aged-paper background containing original glyph clusters/handwriting/emblem. Whole sourceRGBA/A/parity/typed UI inspected. Exact strokes/content phase need further proof, no technical classification or call.",
+      "source_check": {
+        "id": 6516,
+        "source_record": {
+          "id": 6516,
+          "texture": {
+            "ID": 6516,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -878472839,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\00_02.tga",
+            "Format": "8888",
+            "UserName": "AlliesText Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 852,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "AlliesText Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 852,
+                "name": "AlliesText Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  512,
+                  512
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            512,
+            512
+          ],
+          "source_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+          "source_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+          "release_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/6516.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 6516,
+          "texture": {
+            "ID": 6516,
+            "Width": 512,
+            "Height": 512,
+            "NMips": 1,
+            "AverageColor": -878472839,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\ChapterView\\00_02.tga",
+            "Format": "8888",
+            "UserName": "AlliesText Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            512,
+            512
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              512,
+              512
+            ],
+            "mips": 1,
+            "file_bytes": 1048600,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 852,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "AlliesText Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 852,
+              "name": "AlliesText Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                512,
+                512
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+        "release_mmp_sha256": "4a0afc1d30a837810cd72f9636aaf0d3a64aed27398645ec1fdfb68abeff6be9",
+        "original_png_sha256": "9e13a06a45d88b24a99cc1ac928422b5ebdf765eb8b13151b3633b60c2abc675",
+        "source_rgba_sha256": "d2eeac50506f8e9349e3aaa65bf19c45dfb50854346ef00a84b9cf35d4c27883",
+        "source_rgb_sha256": "93e72860040034eb4efc70052e58df4ffa36510f6c773b746268bada2a04fbc3",
+        "source_alpha_sha256": "b3be832daacd0348d2168bf0812ca1667a438675d0c948df7ff58a7393edb0fa",
+        "dimensions": [
+          512,
+          512
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7293,
+      "status": "source-only-deferred",
+      "reason": "Genuine registered Credits UI illustration, black upper canvas and detailed lower battle/ruins/fire scene. Whole sourceRGBA/A/parity/typed UI inspected. Original architecture/flame/object boundaries and counts not proved; honest complex art pending, no analytical fallback/call.",
+      "source_check": {
+        "id": 7293,
+        "source_record": {
+          "id": 7293,
+          "texture": {
+            "ID": 7293,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -12901606,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Credits\\Background.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 938,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 938,
+                "name": "Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  1024,
+                  1024
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "source_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+          "source_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+          "release_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7293.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7293,
+          "texture": {
+            "ID": 7293,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -12901606,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\Credits\\Background.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              1024,
+              1024
+            ],
+            "mips": 1,
+            "file_bytes": 4194328,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 938,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 938,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+        "release_mmp_sha256": "a67b1b425d25759a888db2c1f84d9b4d1e88c2e1a6314d120e0acb42061551aa",
+        "original_png_sha256": "5f0d801a855224440ead128e298d1787798e2d3ec31b004c5fe6189e57c7f319",
+        "source_rgba_sha256": "5578a607d11efa6fa749a792b90a17127d849f0e0f24d1eecaaa11c2a4d5e2c8",
+        "source_rgb_sha256": "1a60ab22875d09ebbf49b5208ac43c92821852d276b5cccc02296b26de833341",
+        "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+        "dimensions": [
+          1024,
+          1024
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    },
+    {
+      "id": 7702,
+      "status": "source-only-deferred",
+      "reason": "Genuine multiplayer interface skin with repeated beige rows/bars and actual type2 UI consumer. Whole sourceRGBA/A/parity inspected. Individual runtime analytical/structural role and exact layout not established here; not labelled technical merely because flat CImage. Honest source-only pending, zero calls.",
+      "source_check": {
+        "id": 7702,
+        "source_record": {
+          "id": 7702,
+          "texture": {
+            "ID": 7702,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -10398392,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MultiPlayer\\hs_01.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "UITextures",
+                "id": 954,
+                "field": "R_1024x768",
+                "role": "color",
+                "UserName": "Background"
+              }
+            ],
+            "ui_links": [
+              {
+                "ui_texture_id": 954,
+                "name": "Background",
+                "resolution_field": "R_1024x768",
+                "ui_logical_size": [
+                  1024,
+                  1024
+                ],
+                "logical_size_from": "R_1024x768",
+                "controls_and_uses": [
+                  {
+                    "table": "UIControls",
+                    "id": 2684,
+                    "field": "Texture0",
+                    "control_name": "view",
+                    "type": 2,
+                    "rect": [
+                      0,
+                      0,
+                      1024,
+                      768
+                    ],
+                    "container": 449,
+                    "string_id": 0
+                  }
+                ],
+                "cursors": []
+              }
+            ]
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "source_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+          "source_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+          "release_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            255,
+            255
+          ],
+          "original_png": "expanded/original/7702.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 7702,
+          "texture": {
+            "ID": 7702,
+            "Width": 1024,
+            "Height": 1024,
+            "NMips": 1,
+            "AverageColor": -10398392,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\MultiPlayer\\hs_01.tga",
+            "Format": "8888",
+            "UserName": "Background",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            1024,
+            1024
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              1024,
+              1024
+            ],
+            "mips": 1,
+            "file_bytes": 4194328,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "UITextures",
+              "id": 954,
+              "field": "R_1024x768",
+              "role": "color",
+              "UserName": "Background"
+            }
+          ],
+          "ui_links": [
+            {
+              "ui_texture_id": 954,
+              "name": "Background",
+              "resolution_field": "R_1024x768",
+              "ui_logical_size": [
+                1024,
+                1024
+              ],
+              "logical_size_from": "R_1024x768",
+              "controls_and_uses": [
+                {
+                  "table": "UIControls",
+                  "id": 2684,
+                  "field": "Texture0",
+                  "control_name": "view",
+                  "type": 2,
+                  "rect": [
+                    0,
+                    0,
+                    1024,
+                    768
+                  ],
+                  "container": 449,
+                  "string_id": 0
+                }
+              ],
+              "cursors": []
+            }
+          ],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [],
+        "actual_material_alpha_modes": [],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+        "release_mmp_sha256": "5c56ff33c5df98e04df8eb7249d3487450db9a692ce6e946813487e4b3dfe5be",
+        "original_png_sha256": "7ff63bc29da98c907843c4da5548479de587e63491037797f373f55b4153e043",
+        "source_rgba_sha256": "2bee0a6c28a3292b99fddc081f1a147b4905fa7cbf82f44371b66f6f3c0752d7",
+        "source_rgb_sha256": "3417080d4d503cc9b308d4ba2aef319c5d7acc1411d52918b08c9891f40ae96a",
+        "source_alpha_sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+        "dimensions": [
+          1024,
+          1024
+        ],
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_or_structural_disposition_claim": false
+    }
+  ],
+  "source_registry_snapshot_qualification": {
+    "recorded_utc": "2026-10-08T06:46:57.159087+00:00",
+    "published_validated_source_count_at_discovery": 2361,
+    "published_commit": "3619daae",
+    "per_call_source_registry_counts": {
+      "2938": 2361,
+      "5760": 2361,
+      "5203": 2371
+    },
+    "per_call_queue_counts": {
+      "2938": 2823,
+      "5760": 2823,
+      "5203": 2833
+    },
+    "2371_qualification": "Trusted root update: ten new package28 source registrations are generated-pending-validation/build. 2371 is source-list guard count, not a claim all entries are accepted/native-validated. Published validated baseline remains2361 at this recorded stage.",
+    "legacy_call_field_qualification": "accepted_snapshot_at_call in canonical immediate call metadata is legacy source registry length. Exact existing call bytes are retained; this separate qualification supplies acceptance semantics.",
+    "shared_written": false
+  }
+}

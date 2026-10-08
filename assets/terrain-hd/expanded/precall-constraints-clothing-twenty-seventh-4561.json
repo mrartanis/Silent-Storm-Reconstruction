@@ -1,0 +1,22 @@
+[
+  {
+    "id": 4561,
+    "exact_prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve original left olive/yellowgreen sleevepaint[0,0,87,128), right olive bodypaint[87,0,256,128), and SINGLE horizontal brown belt[86,56,256,68). Original dimgray angular bracketwash is ONE field[111,56,129,67), leftgrayrail[113,56,115,66), broken/open rightgrayrail[126,56,129,66), and ONE existing tiny pale tip at[128,61]. Preserve its exact irregular openwash contour; do not close the brokenrail, fill a grayplate, add central pin/prong/hardware or specular bevel. EXACTLY4 source darkpip groups: ONE inside at[118,61]+[117,62], THREE outside at[133,61]+[132,62], [139,61]+[138,62], [145,61]+[144,62]; the3outside groups have nativepitch6. These dim2pixel slantedmarks remain weak paintwashes, not newly reconstructed roundholes or grommets. All greencloth folds remain lowcontrast originalsourcepaint with fine detail of the same scale; no new warm/chrome buckle, seam or fabric grid.",
+    "prompt_constraints": {
+      "width": 256,
+      "height": 128,
+      "wholecanvas_alpha_positive": true,
+      "new_weave_hardware_marks_allowed": 0,
+      "horizontal_brown_belt_fields": 1,
+      "dim_gray_angular_beltbracket_fields": 1,
+      "bracket_inner_dark_pips": 1,
+      "belt_outer_dark_pips": 3,
+      "outer_darkpip_native_pitch": 6,
+      "leftolive_sleeve_paintfields": 1,
+      "rightolive_body_paintfields": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "frozen_after_sourceproofUTC": "2026-10-08T06:29:00.017184+00:00",
+    "sourceproofSHA": "9bcb1d020271a9fb7af9656b9ce49f0733a1eb456a0b8f952de8133b00781539"
+  }
+]

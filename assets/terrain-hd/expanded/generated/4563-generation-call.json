@@ -1,0 +1,148 @@
+{
+  "id": 4563,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-d2330a99-3bd1-4190-b0c3-072ffe73a9b3.png",
+  "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve left tancloth[0,26,75,128), middle olivecloth[75,25,156,128), right browncloth[156,0,256,128), original upper reddish-brown bootwash[0,0,144,25), and lowerbronze bootwash[188,105,234,128). Lefttanfield repeatstrip[2,68,70,80) has EXACTLY8 inverted-U/zig paintedunits at pitch8nativepixels, source cappositions[8,69],[16,69],[24,69],[32,69],[40,69],[48,69],[56,69],[64,69]. First7 caps are clearer graywashedpaint; the8th is warmer/dimmer PARTIAL at the rightend, RGB173/146/99 versusfirst173/154/148, with weakbroken rightstroke. Keep this inequality and partialstroke intact: do notcomplete or close/equalize the8th, no bottombridge, no steelbuckles, no knots/rosettes or extra9thunit. These are flat sourcepaintmarks, not real manufactured loops. Lowerbronze angularbootwash is ONE soft originalcontour with TWO weak darkinterior fields; keep them soft exactly as reference, not letterB/number8/logo or new device. Keep original reddish sourcewash andbootscale, no anatomicalfeature invention or hard new prong. Preserve localpaint intensity and matte originalmaterial, not photographic leather or metallic embossedgrain.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4563-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "8882e7498098475a898ab138ffc927bcaa257537135a9c457378bedbe6115d09",
+    "exact_prompt_file": "c1b81e0901feeacd7cf85c4db38e9951fe2ffa4f30685011053abb6686e12084",
+    "reference_png": "596127f137812552cb6dbfa821b979523076e419556534a3944fc4b4c24e4bf1"
+  },
+  "saved_at_utc": "2026-10-08T06:31:30.774215+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 4563,
+    "texture": {
+      "ID": 4563,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13754099,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\UKSniperFemale\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "LegsArms",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2843,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1828,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1903,
+              "field": "Material2",
+              "material_template_id": 1828,
+              "geometry_id": 2194,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\UKSniperFemale_100.mb",
+              "model_template_id": 1467,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4835,
+              "field": "Material2",
+              "material_template_id": 1828,
+              "geometry_id": 2998,
+              "geometry": "Interface\\CharScreen\\UKSniperFemale.mb",
+              "model_template_id": 3215,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "d8e67ea987b2eb3c81c6e6bcf9723db33a6e21dda22a9bec67d4db21531c9959",
+    "source_rgba_sha256": "b2de58fcd20eb8ebff942de14fc46b2fddc78a825bf769b2125e88faee0bf36c",
+    "release_rgba_sha256": "b2de58fcd20eb8ebff942de14fc46b2fddc78a825bf769b2125e88faee0bf36c",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4563.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "1a78030b26a71ba4fa10b55a926c428a87b1587da05de84d2ab76ea565f60256",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-seventh-4563.json",
+  "source_count_phase_proof_sha256": "58c1fd4eebd638b33225665aaed6914e643d72e864fb4a943bf8ee596d992ce9",
+  "precall_constraints_sha256": "c917edf6ae112699f4f822a09ef50b55f9201b97d0486d2eed62e2ec16f01a81",
+  "exact_service_args": {
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve left tancloth[0,26,75,128), middle olivecloth[75,25,156,128), right browncloth[156,0,256,128), original upper reddish-brown bootwash[0,0,144,25), and lowerbronze bootwash[188,105,234,128). Lefttanfield repeatstrip[2,68,70,80) has EXACTLY8 inverted-U/zig paintedunits at pitch8nativepixels, source cappositions[8,69],[16,69],[24,69],[32,69],[40,69],[48,69],[56,69],[64,69]. First7 caps are clearer graywashedpaint; the8th is warmer/dimmer PARTIAL at the rightend, RGB173/146/99 versusfirst173/154/148, with weakbroken rightstroke. Keep this inequality and partialstroke intact: do notcomplete or close/equalize the8th, no bottombridge, no steelbuckles, no knots/rosettes or extra9thunit. These are flat sourcepaintmarks, not real manufactured loops. Lowerbronze angularbootwash is ONE soft originalcontour with TWO weak darkinterior fields; keep them soft exactly as reference, not letterB/number8/logo or new device. Keep original reddish sourcewash andbootscale, no anatomicalfeature invention or hard new prong. Preserve localpaint intensity and matte originalmaterial, not photographic leather or metallic embossedgrain.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4563-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4563,
+    "gain": 0.72613525390625,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 33.692266387939455,
+    "actual_stored_luma": 33.69073521499634,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending rootfull4x originalmaterial/softness QA. Whole256x128→1024x512, sourceA255/defaultpad0/scalar.72613525390625, L33.692266→33.690735. Exactbeforeprompt eightinvertedU/zig flatpaintunit caps at native8/16/24/32/40/48/56/64,y69, pitch8; seven clearer graycaps+one warmerrightpartialcap proved. All8phasesandgray-vs-warmer eighth inequality remain; sourcefirst173/154/148→130/120/114 andlast173/146/99→104/78/43, graycaps attenuated byglobalgain+inversecodec. Fullraw repeats more defined outlinedrope/loop-like thanwashedsource, but postcallnativefullrepeatcrop shows same8originalsourcepaintcontours; partialrightunit remainswarmer, not adding ninth. No claimeverymicroscopic weak eighthstroke pixelexact; partialstroke strength needs root4xsoftnesscheck. Lefttan78.12/50.28/13.26→82.28/51.63/10.92 Lstd18.18→17.77;middleolive31.74/28.39/10.63→28.45/28.95/10.99 Lstd11.95→9.97;rightbrown38.48/26.50/12.86→39.18/26.14/12.89 Lstd14.31→12.64. Lowerbronze29.79/18.35/9.74→28.42/17.86/11.01 Lstd13.65→13.21; source andnativecrop retain1outerangularwash/two dimdarkinnerwashes, not demonstratedB→Dglyph/device invention. Upperreddishbootwash sourcecurves remain, mean36.36/24.54/19.68→34.24/22.10/18.05; more sharpoutline/paintgrain/articulated folds in fullraw disclosedrootmaterialgrainreview. No regular repeated ornament/photopores observed; HDmattefinepaint improvement notautomaticallyhold. Top.38/.07/0→1.30/.59/.41 tinyoriginaledgeblend, not newwideUVmargin."
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "id": 5389,
+    "generated": "assets/terrain-hd/expanded/generated/5389-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture, faithful subtle HD painted refinement. Preserve the original bitmap material and UV layout, never render/photograph a replacement object.\r\n\r\nOnly input is ENTIRE original storedRGB opaque nearest guide; same complete source aspect and normalized canvas required. Keep all source fields, part/paint count, faint local marks, source scale and irregular soft edges. No crop, zoom, margin, padding, auto-fitting or moving sections.\r\n\r\nNative64x32, sourceRGB NN8x512x256. Preserve exactly four original visible paint fields: large left irregular fine-grain gray field, lower-middle soft brown field, small lower-right fine-grain gray field, and upper-right wide darkbrown field. The upper field has EXACTLY TWO existing light tonal bands with native row peaks y1 and4 inside x29..62,y0..11 (prominence>5); preserve their original strength/phase and never add extra stripes/rings. Keep original gray fine pigment stipple at exact source scale/positions, broad brown soft shading, all original black gaps. Do not turn grain or brown shading into rocks/stones/pores/chunks/a new circular beveled object, no new spots or creases.\r\n\r\nMaterial and light: original subdued palette and soft source paint/wash. Add ONLY extremely subtle finer painted detail compatible with current fine source surface, keeping original broad shading and local light hierarchy. No newly invented photograin, relief, gloss, bright rims/bevels, tubes/rods/collars, grooves/threads, fabric weave, rust, wood pattern, dirt/crack geometry or new regular grid. Do not lighten original black UV or sharpen source pale paint; do not enlarge faint stains or generate text from them.\r\n\r\nConstraints: preserve exact original shapes/count/positions/phase, every tiny light/dark source mark and component. No added/removed hole/line/tab/fastener/symbol/letter/number. Entire opaque RGB texture canvas only; engine restores full original native source alpha separately. Fine source softness retained, no new object perspective/depth/background/logo.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5389.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        32
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        32
+      ],
+      "helper_size": [
+        512,
+        256
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        256
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5389-equipment-thirty-second-source-rgb-support.png"
+    }
+  },
+  {
+    "id": 5404,
+    "generated": "assets/terrain-hd/expanded/generated/5404-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture, faithful subtle HD painted refinement. Preserve the original bitmap material and UV layout, never render/photograph a replacement object.\r\n\r\nOnly input is ENTIRE original storedRGB opaque nearest guide; same complete source aspect and normalized canvas required. Keep all source fields, part/paint count, faint local marks, source scale and irregular soft edges. No crop, zoom, margin, padding, auto-fitting or moving sections.\r\n\r\nNative32x64, sourceRGB NN8x256x512. Preserve the entire original DIM grayblue painted wash silhouette and original faint outlines. In native domain x10..24,y6..25 source soft horizontal tonal maxima are exactly y10,12,14,16,18,20,22: six clearer2native-pixel-pitch maxima10..20 plus the VERY WEAK final local maximum22. These are weak painted tonal ripples, NOT physical threads/ribs/knurl: do not make raised rings, lines, cuts or geometry. Preserve existing broad diagonal pale upper wash, original narrow gray vertical contours and long lower rectangular grayblue outline with its single short dim bottom paintmark. Keep source wash/relative faint marks without brightening pale edges into a shiny key/tool/hardware. Original actualA0..255 separately restored; same UV dark/shadow fields unchanged.\r\n\r\nMaterial and light: original subdued palette and soft source paint/wash. Add ONLY extremely subtle finer painted detail compatible with current fine source surface, keeping original broad shading and local light hierarchy. No newly invented photograin, relief, gloss, bright rims/bevels, tubes/rods/collars, grooves/threads, fabric weave, rust, wood pattern, dirt/crack geometry or new regular grid. Do not lighten original black UV or sharpen source pale paint; do not enlarge faint stains or generate text from them.\r\n\r\nConstraints: preserve exact original shapes/count/positions/phase, every tiny light/dark source mark and component. No added/removed hole/line/tab/fastener/symbol/letter/number. Entire opaque RGB texture canvas only; engine restores full original native source alpha separately. Fine source softness retained, no new object perspective/depth/background/logo.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5404.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        32,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        32,
+        64
+      ],
+      "helper_size": [
+        256,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5404-equipment-thirty-second-source-rgb-support.png"
+    }
+  }
+]

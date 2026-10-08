@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 409 of these verified originals are accepted in the shared
+As of 2026-10-08, 417 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-eighth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-ninth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,334 IDs: clothing 213, equipment 128, weapons
-57, heads 172, UI 622, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,326 IDs: clothing 208, equipment 126, weapons
+57, heads 172, UI 621, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -407,3 +407,21 @@ frames/normalquit: ../new-groups-twenty-eighth-batch-check.json and
 ../new-groups-twenty-eighth-live-check.json; eye/UI integration:
 ../new-groups-twenty-eighth-runtime-check.json. Six workerreviews frozen
 beforeimport, ordinaryGit PNG/exactprompts. Check next readyjobs before imagegen.
+
+Twenty-ninth accepted packet: equipment5389/5404, clothing4571/4561/4563,
+UI5203 and exact3255/4066 reuse of accepted1869/6761. Six separate builtin
+generations, two reused results with no new calls. Pack:2,379 textures/4,758
+aliases/128 archives/7,736,048,308 bytes. Prior2,371 source/PNG/native hashes
+unchanged; all8 nativeRGBA equal privately viewed whole4x predictions. Full
+sourcealpha/UV/material/count/scale retained, localpaint changes disclosed in
+../coordinator-art-review-twenty-ninth.json. Only numericalbrightness,
+no artisticRGB inserts. Duplicate productionpayloads equal accepted donors:
+../coordinator-reuse-check-twenty-ninth.json. Deliberately blurred5203
+reviewed in actual GPU whole/middle/reverse/clipped draws on/off/on. UITextures638
+registration is proven; active-widget binding remains unconfirmed. This certifies
+the generic sampler. GameEXE/six codefile hashes unchanged since verified25.
+Full nativevalidation/realmenu/four privateframes/normalquit:
+../new-groups-twenty-ninth-batch-check.json and
+../new-groups-twenty-ninth-live-check.json; GPU integration:
+../new-groups-twenty-ninth-runtime-check.json. Three worker reviews frozen
+before import. OrdinaryGit PNG; accepted IDs must not be regenerated.

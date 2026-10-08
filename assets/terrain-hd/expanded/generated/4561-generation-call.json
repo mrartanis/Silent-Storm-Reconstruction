@@ -1,0 +1,148 @@
+{
+  "id": 4561,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-7f7b57be-b89b-4459-b0dc-c5057c6075ad.png",
+  "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve original left olive/yellowgreen sleevepaint[0,0,87,128), right olive bodypaint[87,0,256,128), and SINGLE horizontal brown belt[86,56,256,68). Original dimgray angular bracketwash is ONE field[111,56,129,67), leftgrayrail[113,56,115,66), broken/open rightgrayrail[126,56,129,66), and ONE existing tiny pale tip at[128,61]. Preserve its exact irregular openwash contour; do not close the brokenrail, fill a grayplate, add central pin/prong/hardware or specular bevel. EXACTLY4 source darkpip groups: ONE inside at[118,61]+[117,62], THREE outside at[133,61]+[132,62], [139,61]+[138,62], [145,61]+[144,62]; the3outside groups have nativepitch6. These dim2pixel slantedmarks remain weak paintwashes, not newly reconstructed roundholes or grommets. All greencloth folds remain lowcontrast originalsourcepaint with fine detail of the same scale; no new warm/chrome buckle, seam or fabric grid.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4561-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "ee314ed14fe06432510d95fc21337a8eb5b38cbdab9c69e126e23b381efeaa26",
+    "exact_prompt_file": "727d9970d7a0ff5ecacbfc5db4f15bb355d9af7c5a9306f909f8c7e70fa11c7a",
+    "reference_png": "862c1f723d7309b6eff7a48ed0642def288a7f1433adc8ef7cac44cf731fd346"
+  },
+  "saved_at_utc": "2026-10-08T06:30:31.367900+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 4561,
+    "texture": {
+      "ID": 4561,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14014194,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\UKSniperFemale\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2839,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1826,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1903,
+              "field": "Material0",
+              "material_template_id": 1826,
+              "geometry_id": 2194,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\UKSniperFemale_100.mb",
+              "model_template_id": 1467,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 4835,
+              "field": "Material0",
+              "material_template_id": 1826,
+              "geometry_id": 2998,
+              "geometry": "Interface\\CharScreen\\UKSniperFemale.mb",
+              "model_template_id": 3215,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "8db2effc5859701be8a2b4fdae077c3e6cd1f94f1eee250869051def654b0848",
+    "source_rgba_sha256": "c4ece87b918641fa1f51f8c32ee6648ca53d08f57857b3460b4a34027c1291b3",
+    "release_rgba_sha256": "c4ece87b918641fa1f51f8c32ee6648ca53d08f57857b3460b4a34027c1291b3",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4561.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "1a78030b26a71ba4fa10b55a926c428a87b1587da05de84d2ab76ea565f60256",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-seventh-4561.json",
+  "source_count_phase_proof_sha256": "9bcb1d020271a9fb7af9656b9ce49f0733a1eb456a0b8f952de8133b00781539",
+  "precall_constraints_sha256": "6a860138dded8741131b2d4646bd55867733811450ef00f6d6a6eb53765700ef",
+  "exact_service_args": {
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve original left olive/yellowgreen sleevepaint[0,0,87,128), right olive bodypaint[87,0,256,128), and SINGLE horizontal brown belt[86,56,256,68). Original dimgray angular bracketwash is ONE field[111,56,129,67), leftgrayrail[113,56,115,66), broken/open rightgrayrail[126,56,129,66), and ONE existing tiny pale tip at[128,61]. Preserve its exact irregular openwash contour; do not close the brokenrail, fill a grayplate, add central pin/prong/hardware or specular bevel. EXACTLY4 source darkpip groups: ONE inside at[118,61]+[117,62], THREE outside at[133,61]+[132,62], [139,61]+[138,62], [145,61]+[144,62]; the3outside groups have nativepitch6. These dim2pixel slantedmarks remain weak paintwashes, not newly reconstructed roundholes or grommets. All greencloth folds remain lowcontrast originalsourcepaint with fine detail of the same scale; no new warm/chrome buckle, seam or fabric grid.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4561-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4561,
+    "gain": 0.77911376953125,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 38.70780532226562,
+    "actual_stored_luma": 38.70896629295349,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending rootfull4x material/softness review. SourceA255/defaultpad0/scalar.77911376953125, full256x128→1024x512, L38.707805→38.708966. Beforeprompt source1 angulargraybeltwash,1inner+3outside diagonal2pixelblackpaint groups at118/133/139/145,y61..62, outsidepitch6 proved; raw retainsfourgroupcount/nativepositions and slantedpaintcadence without added hole. Source blacknativepips0→target12/8/4,15/11/6,8/4/0→18/14/7,0→11/9/5 softenedbyinversecodec, not addedgrommets. Whole source grayrails andoriginalpale tip preserved native; fullraw sharplydefined rail/brownarrowlike end surfaces aremoremanufactured-looking than sourceweakwash, disclosedrootsoftnesscheck. Source andnativecrop shows originalbroadgrayrail/endshape, not claimwholly absent newdevice orloop. Leftolive44.75/45.75/15.59→39.06/41.81/17.90 Lstd32.32→33.10;rightolive40.71/37.37/12.87→40.01/39.99/16.75 Lstd12.50→13.20; belt37.88/27.44/8.89→40.73/30.36/14.35 Lstd12.36→11.94. Existing leftgreenwash silhouettes aremoreclearlyarticulated/camo-like at4x; no semantic camopatch count provedbeforecall, onlyfullsourcecontour/material/pixelcadence, so disclose strongerboundaries rather than assert exhaustiveprintedobjectcounts. Angularregion53.94/41.81/19.86→52.19/41.34/25.13 Lstd25.08→20.13. Native fullUV/materialfield placement remains, mattepaint no demonstratednewregularweave/ornament. Productiondecisionneeds root exactmaterial palette/grayrail softness QA. Top21.17/17.88/5.52→19.42/18.75/7.20, bottom5.92/4.15/.53→2.84/2.44/.87, original wholeA still255 includingblack."
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 5389,
+    "generated": "assets/terrain-hd/expanded/generated/5389-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture, faithful subtle HD painted refinement. Preserve the original bitmap material and UV layout, never render/photograph a replacement object.\r\n\r\nOnly input is ENTIRE original storedRGB opaque nearest guide; same complete source aspect and normalized canvas required. Keep all source fields, part/paint count, faint local marks, source scale and irregular soft edges. No crop, zoom, margin, padding, auto-fitting or moving sections.\r\n\r\nNative64x32, sourceRGB NN8x512x256. Preserve exactly four original visible paint fields: large left irregular fine-grain gray field, lower-middle soft brown field, small lower-right fine-grain gray field, and upper-right wide darkbrown field. The upper field has EXACTLY TWO existing light tonal bands with native row peaks y1 and4 inside x29..62,y0..11 (prominence>5); preserve their original strength/phase and never add extra stripes/rings. Keep original gray fine pigment stipple at exact source scale/positions, broad brown soft shading, all original black gaps. Do not turn grain or brown shading into rocks/stones/pores/chunks/a new circular beveled object, no new spots or creases.\r\n\r\nMaterial and light: original subdued palette and soft source paint/wash. Add ONLY extremely subtle finer painted detail compatible with current fine source surface, keeping original broad shading and local light hierarchy. No newly invented photograin, relief, gloss, bright rims/bevels, tubes/rods/collars, grooves/threads, fabric weave, rust, wood pattern, dirt/crack geometry or new regular grid. Do not lighten original black UV or sharpen source pale paint; do not enlarge faint stains or generate text from them.\r\n\r\nConstraints: preserve exact original shapes/count/positions/phase, every tiny light/dark source mark and component. No added/removed hole/line/tab/fastener/symbol/letter/number. Entire opaque RGB texture canvas only; engine restores full original native source alpha separately. Fine source softness retained, no new object perspective/depth/background/logo.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5389.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        64,
+        32
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        32
+      ],
+      "helper_size": [
+        512,
+        256
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        256
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5389-equipment-thirty-second-source-rgb-support.png"
+    }
+  },
+  {
+    "id": 5404,
+    "generated": "assets/terrain-hd/expanded/generated/5404-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset: existing game diffuse texture, faithful subtle HD painted refinement. Preserve the original bitmap material and UV layout, never render/photograph a replacement object.\r\n\r\nOnly input is ENTIRE original storedRGB opaque nearest guide; same complete source aspect and normalized canvas required. Keep all source fields, part/paint count, faint local marks, source scale and irregular soft edges. No crop, zoom, margin, padding, auto-fitting or moving sections.\r\n\r\nNative32x64, sourceRGB NN8x256x512. Preserve the entire original DIM grayblue painted wash silhouette and original faint outlines. In native domain x10..24,y6..25 source soft horizontal tonal maxima are exactly y10,12,14,16,18,20,22: six clearer2native-pixel-pitch maxima10..20 plus the VERY WEAK final local maximum22. These are weak painted tonal ripples, NOT physical threads/ribs/knurl: do not make raised rings, lines, cuts or geometry. Preserve existing broad diagonal pale upper wash, original narrow gray vertical contours and long lower rectangular grayblue outline with its single short dim bottom paintmark. Keep source wash/relative faint marks without brightening pale edges into a shiny key/tool/hardware. Original actualA0..255 separately restored; same UV dark/shadow fields unchanged.\r\n\r\nMaterial and light: original subdued palette and soft source paint/wash. Add ONLY extremely subtle finer painted detail compatible with current fine source surface, keeping original broad shading and local light hierarchy. No newly invented photograin, relief, gloss, bright rims/bevels, tubes/rods/collars, grooves/threads, fabric weave, rust, wood pattern, dirt/crack geometry or new regular grid. Do not lighten original black UV or sharpen source pale paint; do not enlarge faint stains or generate text from them.\r\n\r\nConstraints: preserve exact original shapes/count/positions/phase, every tiny light/dark source mark and component. No added/removed hole/line/tab/fastener/symbol/letter/number. Entire opaque RGB texture canvas only; engine restores full original native source alpha separately. Fine source softness retained, no new object perspective/depth/background/logo.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5404.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST8x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        32,
+        64
+      ],
+      "source_bbox": [
+        0,
+        0,
+        32,
+        64
+      ],
+      "helper_size": [
+        256,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/5404-equipment-thirty-second-source-rgb-support.png"
+    }
+  },
+  {
+    "id": 4571,
+    "generated": "assets/terrain-hd/expanded/generated/4571-raw.png",
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve left brown cloth[0,0,94,128), middle brown cloth[95,0,190,99), right warm stripefield[197,0,256,104), and lower gray bootstrip[91,99,256,128). The right stripefield has EXACTLY6 broad warm verticalpaint bands with EXACTLY5 internal darker separator lines at native x208,217,226,235,244, pitch9pixels. The sixth band245..255 is partial at rightcanvas edge; do notcomplete/pad/equalize it. These are soft paintedstripes, not stiff ridges or raised panels. Preserve two stacked dim middle bootwasher washes at[78,48,94,59) and[78,67,94,80): originally darklowcontrast curved/rectangular paint, retain their exact source silhouette with irregular darkinterior, do not sharpen into new mechanical fittings. Keep all softlywashed existing toe/heel/lace-like graypixels in the lowergraystrip at nativecadence with no additional regular laces, new round eyelets or black threadshadow. Keep original broad brown/gray gradients and gentlethin sourcecreases, never embossed raised zig-edge or stronglylit leather.",
+    "reference_png": "assets/terrain-hd/expanded/generated/4571-enlarged-source.png",
+    "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only."
+  },
+  {
+    "id": 4561,
+    "generated": "assets/terrain-hd/expanded/generated/4561-raw.png",
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve original left olive/yellowgreen sleevepaint[0,0,87,128), right olive bodypaint[87,0,256,128), and SINGLE horizontal brown belt[86,56,256,68). Original dimgray angular bracketwash is ONE field[111,56,129,67), leftgrayrail[113,56,115,66), broken/open rightgrayrail[126,56,129,66), and ONE existing tiny pale tip at[128,61]. Preserve its exact irregular openwash contour; do not close the brokenrail, fill a grayplate, add central pin/prong/hardware or specular bevel. EXACTLY4 source darkpip groups: ONE inside at[118,61]+[117,62], THREE outside at[133,61]+[132,62], [139,61]+[138,62], [145,61]+[144,62]; the3outside groups have nativepitch6. These dim2pixel slantedmarks remain weak paintwashes, not newly reconstructed roundholes or grommets. All greencloth folds remain lowcontrast originalsourcepaint with fine detail of the same scale; no new warm/chrome buckle, seam or fabric grid.",
+    "reference_png": "assets/terrain-hd/expanded/generated/4561-enlarged-source.png",
+    "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only."
+  },
+  {
+    "id": 4563,
+    "generated": "assets/terrain-hd/expanded/generated/4563-raw.png",
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve left tancloth[0,26,75,128), middle olivecloth[75,25,156,128), right browncloth[156,0,256,128), original upper reddish-brown bootwash[0,0,144,25), and lowerbronze bootwash[188,105,234,128). Lefttanfield repeatstrip[2,68,70,80) has EXACTLY8 inverted-U/zig paintedunits at pitch8nativepixels, source cappositions[8,69],[16,69],[24,69],[32,69],[40,69],[48,69],[56,69],[64,69]. First7 caps are clearer graywashedpaint; the8th is warmer/dimmer PARTIAL at the rightend, RGB173/146/99 versusfirst173/154/148, with weakbroken rightstroke. Keep this inequality and partialstroke intact: do notcomplete or close/equalize the8th, no bottombridge, no steelbuckles, no knots/rosettes or extra9thunit. These are flat sourcepaintmarks, not real manufactured loops. Lowerbronze angularbootwash is ONE soft originalcontour with TWO weak darkinterior fields; keep them soft exactly as reference, not letterB/number8/logo or new device. Keep original reddish sourcewash andbootscale, no anatomicalfeature invention or hard new prong. Preserve localpaint intensity and matte originalmaterial, not photographic leather or metallic embossedgrain.",
+    "reference_png": "assets/terrain-hd/expanded/generated/4563-enlarged-source.png",
+    "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only."
+  },
+  {
+    "id": 5203,
+    "generated": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5203-raw.png",
+    "prompt": "Use case: precise-object-edit. Enhance only the existing complete Silent Storm painted-game UI color map. Image1 is the exact original full RGBA; image2 is the identical whole stored historical RGB enlarged by nearest-neighbor, only a source layout/phase guide. Keep entire original canvas, aspect, orientation, every normalized contour/UV position and original feature/pattern scale. Preserve complete source black/empty authoring areas. Only gently resolve the existing matte painted tones at higher resolution, retaining restrained source local brightness, color hierarchy, softness and all existing forms. No photographic materials, new relief, screws, hard grid/mosaic surface, grain speckles, new shadow bands, added shine or sharpening of ambiguous washes into new physical features. The full original alpha is authoritative and restored separately; pure numerical global brightness/native encoding only. No crop/padding/BBox/repack/registration/rotation or source artistic RGB copying/compositing. No comparisons, labels or extra pictures. Source1024x512, production4096x2048. Genuine ordinary opaque color background registered in historical UITextures638. Preserve its deliberately VERY SOFT blurred warm darkbrown/taupe painted color field, exact full-canvas broad forms and local color-flow phase. The dark outer sides and top remain dark; two broad dim taupe vertical washes stand toward left and right, two smaller warmorange lower washes and one soft low curved light band remain at the source positions and original blur strength. Preserve broad source color variation and dim brown center, not a constant fill, and do not separate extra countable elements from these connected ambiguous washes. Do not infer what they depict: no face, eyes, mouth, portrait, head/hat, fire/flames, candles, room/background objects, machinery or photographic forms. Do not resolve blurred areas into anatomical or physical detail, hard edges, sharp texture or new glow cores. Only fine smooth painted tonal continuity while retaining the intentionally blurred appearance and exact source contrast/UV/material. No new lines, glyphs or marks."
+  },
+  {
+    "id": 3255,
+    "generated": "assets/terrain-hd/expanded/generated/1869-raw.png",
+    "prompt": "Edit only the attached complete original game texture atlas, retaining its exact complete square UV canvas, every source field boundary, silhouette, dark painted region, and feature position. This is a flat painted diffuse texture, not a rendered object. Produce fine HD painted transitions at four times native resolution. Preserve dim original relative color/lightness hierarchy and material identity. Improve only the existing soft shading and fine irregular painted grain; keep subdued low-contrast washes, faint folds and diffuse edges. Do not invent fabric weave, crosshatching, embroidery, ornamental grain, photographic pores, bevels, seams, hardware, anatomy, lettering, new outlines or objects. Do not reframe, crop, pad, move parts, or add a border. Source is entirely alpha255, including RGB-black fields: those are opaque black paint, never transparent holes. Preserve original black fields, source-native physical pattern scale, and all original weak marks as weak paint. The source reference is an exact nearest enlargement of the original128x128 whole atlas.\r\nRetain the original dim gray-blue painted torso field and brown/near-black belt leather washes. Preserve exactly3 parallel diagonal dark strap bands at upper-left native[24,24,62,57). Preserve exactly2 tiny angular painted buckle motifs in the lower belt: left native[39,73,47,82) and right native[69,77,79,84), keeping their original polygon silhouettes and faint shading without adding mechanically resolved parts or extra holes. Keep one right-upper rounded dark field at[106,54,122,70), one right-middle rectangular dark field at[106,75,121,89), and one lower torso rounded dark ring wash at[81,97,94,109), unchanged in shape, count and UV phase. Keep the other lower folds and left-side vertical marks exactly in their washed original layout; they must remain matte painted marks without new machinery/raised straps, bright studs, or decorative textures.",
+    "reference_png": "assets/terrain-hd/expanded/generated/1869-enlarged-source.png",
+    "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+    "reuse_source_id": 1869,
+    "reuse_input_stage": "exact committed accepted donor raw; wholecanvas normalization/scalar once with identicalsource",
+    "reuse_reason": "Exact historical/release/sourceRGBA, dimensions, alphatype and atlaslayout; previously accepted and pushed donor, zero newgeneration"
+  },
+  {
+    "id": 4066,
+    "generated": "assets/terrain-hd/expanded/generated/6761-raw.png",
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted diffuse UV color map ID6761, existing neck/hands color material.\r\nImage1 is the ONLY edit target/reference: entire original128x128 RGBA texture enlarged nearest8x1024x1024. Refine only the existing three soft painted wash groups at four times source resolution; output the exact same complete square UV map with the same broad color, shape bounds and phase. This is a mostly FLAT COLOR map, not a depiction of a hand, skin photograph, body, face or scene.\r\nActual original background RGBA164/107/69/255. The complete native y36..127 area is exactly constant RGB164/107/69. Keep it perfectly FLAT and uniform: no pores, noise, grain, hair, creases, shadows, fabric pattern, anatomy or new marks. Do not add surface detail to constant fields. Keep the original warm brown/ochre painted hue and relative lightness; no recoloring/beautification.\r\nSource has exactly THREE substantial existing soft shading groups near the upperedge: one dim upper-right softly banded wash native bounds[96,1,120,17], one darker upper-middle irregular wash[60,2,83,17], and one soft pale left wash[1,10,13,26]. Preserve their actual irregular source silhouettes, lowcontrast softness, source color hierarchy and boundaries, with the original faint quantized surrounding transitions remaining faint. No new shapes or interpretation of the washed pixels. The rightwash has THREE existing soft horizontal darker bands with native minima at y6,9,13 (measured over x99..116): keep the same phase and subdued contrast, not new sharp lines. Keep all source shading inside original bounds, no spreading into the flatfield.\r\nDo not transform these three washes into eyes, a mouth, knuckles, fingernails, wounds, badges, hardware, glyphs, teeth or new anatomical parts. Preserve source ambiguity. Improve only the existing source soft transitions in those wash groups, not the number or prominence of marks; no photographic skin texture, strokes, dots, rings or sharp outlines.\r\nOriginal alpha255 everywhere, including the flatfield and all corners. Wholecanvas UV and fullalpha remain; no crop, padding, letterbox, bbox recentering, registration, new border/margin, text, labels, watermark, objects or scene. Output only this same original painted map, at the same relative material/shading scale.",
+    "reference_png": "assets/terrain-hd/expanded/generated/6761-enlarged-source.png",
+    "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+    "reuse_source_id": 6761,
+    "reuse_input_stage": "exact committed accepted donor raw; wholecanvas normalization/scalar once with identicalsource",
+    "reuse_reason": "Exact historical/release/sourceRGBA, dimensions, alphatype and atlaslayout; previously accepted and pushed donor, zero newgeneration"
+  }
+]
