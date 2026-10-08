@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Приняты 2 280 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
-61 одежды, 92 экипировки, 64 оружия, 2 лиц, 32 UI, 58 эффектов,
+Приняты 2 297 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+62 одежды, 103 экипировки, 64 оружия, 2 лиц, 32 UI, 63 эффекта,
 4 лагерных атласа, 2 учебные мишени и 3 прочие художественные карты.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 318 текстур новых групп; всего 2 695 записей общей очереди, pending нет.
+Приняты 335 текстур новых групп; всего 2 712 записей общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -156,6 +156,12 @@ UI6658 и пять других UI остаются художественным
 
 Equipment-eleventh/twelfth и effects-eleventh могут иметь stable raw/reviews для16порции; clothing-tenth/equipment-thirteenth/effects-twelfth могут работать. У1819/1825 root увидел top-padding/верхний inlet UV concern, несмотря на правильное число6/7 marks; сначала проверь wholecanvas.
 
+Шестнадцатая порция принята: jobs-new-groups-sixteenth (17): equipment-eleventh6, equipment-twelfth5, effects-eleventh5 и clothing-tenth1. Пакет: 2 297 текстур/4 594 алиаса/124 архива/7 469 525 932 байта. Все прежние 2 280 source/PNG/native хеши сохранены. Все17 native RGBA совпадают с частно осмотренными production4x прогнозами; у12 непрозрачных совпадают с PNG, у5 бумажных эффектов сохранена полная исходная альфа и правильное premultiply. Материалы/компоненты/масштаб/wholecanvas UV проверены; crop/BBox/художественной RGB-подмены нет. Полная native-валидация, реальное меню HD on/off/on и штатный quit: new-groups-sixteenth-{batch,live}-check.json. Не генерировать принятые ID повторно.
+
+Ранние root concerns1819/1825 о верхних полях разрешены прямой сверкой native source pixels: у1819 исходная первая строка уже чёрная, у1825 широкая верхняя пластина уже занимает y0–3, тёмный inlet y4–5; wholecanvas raw сохраняет фазу.3343 сохраняет частичный обрезанный красный крест и исходную серую угловую отметку.119 уже существовавших принятых нормализованных PNG добавлены обычными файлами в Git (102 прежних и17 новых), без генерации/изменения пикселей. Все объявленные stages источников теперь в Git: accepted-git-stage-completeness-sixteenth.json. Непринятые попытки и причины сохранены; clothing-eleventh пока0ready.
+
+Equipment-thirteenth/effects-twelfth/exact-donors-sixteenth имеют stable candidate raw/proofs для17порции. Effects-thirteenth/weapons-ninth/heads-fourth→UI-tenth могут работать. До импортов проверяй actual source/Type/материалы; genuine alpha_test diffuse не исключай автоматически.
+
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
 
@@ -178,9 +184,9 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-fifteenth-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 472: одежда 226, экипировка 166, оружие 59, головы 184, UI 665,
-эффекты 148, clues 17, final 3, miscellaneous 4. Снимки source-queues сохраняют
+`new-groups-sixteenth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 455: одежда 225, экипировка 155, оружие 59, головы 184, UI 665,
+эффекты 143, clues 17, final 3, miscellaneous 4. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена
 сабагентами. Проверяй ready jobs/reviews до новых вызовов imagegen. Продолжай отдельными небольшими

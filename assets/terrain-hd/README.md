@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,280 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 61 clothing, 92 equipment, 64 weapons,
-2 heads, 32 interface icons, 58 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,297 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 62 clothing, 103 equipment, 64 weapons,
+2 heads, 32 interface icons, 63 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,695 records, including 318 accepted new-group textures, the original
+contains 2,712 records, including 335 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
 79 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,472 verified originals outside the shared queue, including next
+validation. There remain 1,455 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -143,8 +143,10 @@ Fourteenth accepted packet: `expanded/jobs-new-groups-fourteenth.json` adds six 
 
 Fifteenth accepted packet: `expanded/jobs-new-groups-fifteenth.json` adds17: two clothing, five equipment, two effects and eight exact duplicates (5455←4012,903←704,904←701,905←702,906←700,2529←5265,4858←2974,4730←2060):2,280 textures/4,560 aliases/123 archives/7,458,165,418 bytes. Prior2,263 source/PNG/native hashes unchanged. All17 native RGBA equal privately reviewed predictions;10 opaque native RGBA equal PNG;7 retain full source alpha. All8 native MMP payloads equal accepted donors byte for byte with zero new imagegen calls; reused raw inputs are donor normalized uncalibrated fullcanvas PNG, with original donor raw/prompt/registration retained. Rejected4858 attempt archived. Full validation and actual-menu HD on/off/on, normal isolated quit: `expanded/new-groups-fifteenth-{batch,live}-check.json`.7658 original retained after actual input service refusal without retry; exact arguments/requestID/refSHA and persistence-time basis recorded. Five structural fills/frames1/3135/3517/5755/7480 and functional font7675 retain original pixels after fresh typed/source parity and full private inspection.5755 is actual zeroRGBA opaque Bedford diffuse, not invented artwork.903/905 unresolved definitions108/139 remain explicitly recorded; identical native reuse changes no DB/UV and does not claim missing blend/Wrap semantics. Do not regenerate accepted IDs.
 
-All 11,947 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,574,518,922 bytes before Git deduplication/compression).
+Sixteenth accepted packet: `expanded/jobs-new-groups-sixteenth.json` adds17: eleven equipment, five paper effects and one clothing atlas:2,297 textures/4,594 aliases/124 archives/7,469,525,932 bytes. Prior2,280 source/PNG/native hashes unchanged. All17 native RGBA equal privately reviewed production4x predictions;12 opaque native RGBA equal PNG,5 effects retain full source alpha and correct premultiplication. Fullcanvas UV/materials/component counts/scale retained, no crop/BBox/artistic sourceRGB repair. Actual-menu HD on/off/on, full native validation and isolated normal quit: `expanded/new-groups-sixteenth-{batch,live}-check.json`. Original native pixel checks resolved provisional1819/1825 topedge concerns: source1819 row0 alreadyblack; source1825 existing topplate y0..3/inlet y4..5 retained.3343 clipped partial redcross and original angular gray mark retained.119 existing approved normalization stages (102 earlier+17new) now ordinary Git PNGs without regeneration/pixel mutation; all declared accepted source stages in Git (`expanded/accepted-git-stage-completeness-sixteenth.json`). Failed independent attempts remain outside pack with provenance; clothing-eleventh0ready. Do not regenerate accepted IDs.
+
+All 12,160 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,706,073,896 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

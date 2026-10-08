@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 318 of these verified originals are accepted in the shared
+As of 2026-10-08, 335 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-fifteenth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-sixteenth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,472 IDs: clothing 226, equipment 166, weapons
-59, heads 184, UI 665, effects 148, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,455 IDs: clothing 225, equipment 155, weapons
+59, heads 184, UI 665, effects 143, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -200,3 +200,5 @@ Thirteenth accepted packet: `../jobs-new-groups-thirteenth.json` adds11 equipmen
 Fourteenth accepted packet: `../jobs-new-groups-fourteenth.json` adds six UI (2940,3958,3959,4049,4438v2,7226) and three miscellaneous artwork maps (1727,7475,7695):2,263 textures/4,526 aliases/123 archives/7,439,814,418 bytes. Prior2,254 source/PNG/native hashes unchanged. Seven opaque native RGBA equal reviewed PNG;2940/4049 retain complete source alpha and exact premultiplied RGBA.2940 uses a wholecanvas source-only affine guide and full inverse without crop/padding/BBox.4438v2 uses direct original builtin generation with quiet original gray fields;v1 archived. Full validation and actual-menu HD on/off/on, normal isolated quit: `../new-groups-fourteenth-{batch,live}-check.json`. UI6658/five other UI remain artwork holds; three Final sky/Earth/cloud maps remain genuine source artwork without generation. Miscellaneous technical candidates await separate disposition. Do not regenerate accepted IDs.
 
 Fifteenth accepted packet: `../jobs-new-groups-fifteenth.json` adds17: two clothing, five equipment, two effects and eight exact duplicates (5455←4012,903←704,904←701,905←702,906←700,2529←5265,4858←2974,4730←2060):2,280 textures/4,560 aliases/123 archives/7,458,165,418 bytes. Prior2,263 source/PNG/native hashes unchanged. All17 native RGBA equal privately reviewed predictions;10 opaque native RGBA equal PNG;7 retain full source alpha. All8 native MMP payloads equal accepted donors byte for byte with zero new imagegen calls; reused raw inputs are donor normalized uncalibrated fullcanvas PNG, with original donor raw/prompt/registration retained. Rejected4858 attempt archived. Full validation and actual-menu HD on/off/on, normal isolated quit: `../new-groups-fifteenth-{batch,live}-check.json`.7658 original retained after actual input service refusal without retry; exact arguments/requestID/refSHA and persistence-time basis recorded. Five structural fills/frames1/3135/3517/5755/7480 and functional font7675 retain original pixels after fresh typed/source parity and full private inspection.5755 is actual zeroRGBA opaque Bedford diffuse, not invented artwork.903/905 unresolved definitions108/139 remain explicitly recorded; identical native reuse changes no DB/UV and does not claim missing blend/Wrap semantics. Do not regenerate accepted IDs.
+
+Sixteenth accepted packet: `../jobs-new-groups-sixteenth.json` adds17: eleven equipment, five paper effects and one clothing atlas:2,297 textures/4,594 aliases/124 archives/7,469,525,932 bytes. Prior2,280 source/PNG/native hashes unchanged. All17 native RGBA equal privately reviewed production4x predictions;12 opaque native RGBA equal PNG,5 effects retain full source alpha and correct premultiplication. Fullcanvas UV/materials/component counts/scale retained, no crop/BBox/artistic sourceRGB repair. Actual-menu HD on/off/on, full native validation and isolated normal quit: `../new-groups-sixteenth-{batch,live}-check.json`. Original native pixel checks resolved provisional1819/1825 topedge concerns: source1819 row0 alreadyblack; source1825 existing topplate y0..3/inlet y4..5 retained.3343 clipped partial redcross and original angular gray mark retained.119 existing approved normalization stages (102 earlier+17new) now ordinary Git PNGs without regeneration/pixel mutation; all declared accepted source stages in Git (`../accepted-git-stage-completeness-sixteenth.json`). Failed independent attempts remain outside pack with provenance; clothing-eleventh0ready. Do not regenerate accepted IDs.

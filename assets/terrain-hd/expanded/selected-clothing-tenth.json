@@ -1,0 +1,1131 @@
+[
+  {
+    "id": 6818,
+    "texture": {
+      "ID": 6818,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13095646,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale\\Body_Asian.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Asia",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4731,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1632,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 2368,
+              "field": "Material0",
+              "material_template_id": 1632,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 1768,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "b0530d565136ef7b2893d0c5a0a23f429965488f9f67aa8a67eefef6f59d5e8f",
+    "source_rgba_sha256": "6ded0a8b347f6b65653ea7339dcf0d5ac27e348454d33223d57865fd23955a2f",
+    "release_rgba_sha256": "6ded0a8b347f6b65653ea7339dcf0d5ac27e348454d33223d57865fd23955a2f",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6818.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.129337+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "6ded0a8b347f6b65653ea7339dcf0d5ac27e348454d33223d57865fd23955a2f",
+      "source_rgb_sha256": "8328ee1c348f2b568802177894b48ae09d686c0e8e30b9e9d2416fe0812f585d",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "b0530d565136ef7b2893d0c5a0a23f429965488f9f67aa8a67eefef6f59d5e8f",
+      "release_mmp_sha256": "b0530d565136ef7b2893d0c5a0a23f429965488f9f67aa8a67eefef6f59d5e8f",
+      "original_png_sha256": "1603ba4c9ccda301ea154e2c07154cd3ca60e3cf80a8e643827b4a764530ad48",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/6818-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "2fae9f7cfe30ae320ef8eb28977ea0fedf2260b8ab44065bf4f2ac99c258e241",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.248203+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 1632,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 4731,
+              "TextureID": 6818,
+              "BRDFID": 0,
+              "BumpID": 4059,
+              "SpecColor": 0,
+              "TemplateID": 1632,
+              "GlossID": 4077,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "13"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 2368,
+                  "Material0": 1632,
+                  "Material1": 1684,
+                  "GeometryID": 2501,
+                  "Material2": 1633,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 1768,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple plain warm-brown civilian cloth atlas. Large right brown field keeps ONE long fine vertical seam, the original faint left-edge triangular fold at native approximately(68,41), ONE horizontal right tab with exactly ONE pale dot at approximately(106,66), and lower arch-shaped black void. Center long brown strip stays smooth shaded cloth; left gray-blue folded cloth fields and small lower-left painted skin fragment keep all source boundaries and colors. The fine blue-gray edging along skin/cloth border is a plain source edge, retain exact narrow stepped contour and muted fragments; no necklace/chain/beads/jewelry. Skin palette is this ORIGINAL image variant only, do not replace with another tone. No other buttons/hardware exist.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "1603ba4c9ccda301ea154e2c07154cd3ca60e3cf80a8e643827b4a764530ad48",
+        "2fae9f7cfe30ae320ef8eb28977ea0fedf2260b8ab44065bf4f2ac99c258e241"
+      ]
+    }
+  },
+  {
+    "id": 6819,
+    "texture": {
+      "ID": 6819,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13226975,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale\\Body_African.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4733,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1632,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 2368,
+              "field": "Material0",
+              "material_template_id": 1632,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 1768,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "c6b2ca16770406aa4f51d0bae5858b6d51b3dd0c9870c022d5140626e6ec6104",
+    "source_rgba_sha256": "7ccf337f2c778b11862086a08dbda8603bfae70a6c2d84d6d2839f48f1ad25cb",
+    "release_rgba_sha256": "7ccf337f2c778b11862086a08dbda8603bfae70a6c2d84d6d2839f48f1ad25cb",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6819.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.139738+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "7ccf337f2c778b11862086a08dbda8603bfae70a6c2d84d6d2839f48f1ad25cb",
+      "source_rgb_sha256": "98bc4ff5e8dbe866a46a232d467d9369ebf3d83f902272b2a51bf09ad41ebae7",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "c6b2ca16770406aa4f51d0bae5858b6d51b3dd0c9870c022d5140626e6ec6104",
+      "release_mmp_sha256": "c6b2ca16770406aa4f51d0bae5858b6d51b3dd0c9870c022d5140626e6ec6104",
+      "original_png_sha256": "e718b40fd1fd9c0a2c4344a3944c587f6cf1cd81a8b57c15f3638995d65f5851",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/6819-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "78dc758afc83ab79399e192df73269d6eea6c674ae0bf46db9e9ba9edaa3b232",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.276486+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 1632,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 4733,
+              "TextureID": 6819,
+              "BRDFID": 0,
+              "BumpID": 4059,
+              "SpecColor": 0,
+              "TemplateID": 1632,
+              "GlossID": 4077,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "12"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 2368,
+                  "Material0": 1632,
+                  "Material1": 1684,
+                  "GeometryID": 2501,
+                  "Material2": 1633,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 1768,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple plain warm-brown civilian cloth atlas. Large right brown field keeps ONE long fine vertical seam, the original faint left-edge triangular fold at native approximately(68,41), ONE horizontal right tab with exactly ONE pale dot at approximately(106,66), and lower arch-shaped black void. Center long brown strip stays smooth shaded cloth; left gray-blue folded cloth fields and small lower-left painted skin fragment keep all source boundaries and colors. The fine blue-gray edging along skin/cloth border is a plain source edge, retain exact narrow stepped contour and muted fragments; no necklace/chain/beads/jewelry. Skin palette is this ORIGINAL image variant only, do not replace with another tone. No other buttons/hardware exist.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "e718b40fd1fd9c0a2c4344a3944c587f6cf1cd81a8b57c15f3638995d65f5851",
+        "78dc758afc83ab79399e192df73269d6eea6c674ae0bf46db9e9ba9edaa3b232"
+      ]
+    }
+  },
+  {
+    "id": 6820,
+    "texture": {
+      "ID": 6820,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13095390,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale\\Body_Arab.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4732,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1632,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 2368,
+              "field": "Material0",
+              "material_template_id": 1632,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 1768,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "255c480f58a08cf48a595540145062a342280d45632ad05fea23a6b0be3dd205",
+    "source_rgba_sha256": "aee1f5c25a32b73b8f691471211b18739d7d29704afb34b940385041d408e584",
+    "release_rgba_sha256": "aee1f5c25a32b73b8f691471211b18739d7d29704afb34b940385041d408e584",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6820.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.151918+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "aee1f5c25a32b73b8f691471211b18739d7d29704afb34b940385041d408e584",
+      "source_rgb_sha256": "940905601b2d0ef10caba0b7a99660eaaffa4b58b737be07ade82c21040247b8",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "255c480f58a08cf48a595540145062a342280d45632ad05fea23a6b0be3dd205",
+      "release_mmp_sha256": "255c480f58a08cf48a595540145062a342280d45632ad05fea23a6b0be3dd205",
+      "original_png_sha256": "57b235e82df7afa2036fea06af01111e85b15eb01398527948e3495b788c15fc",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/6820-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "10d4e094e0bd386fbab6ab8708555ae682f9e0f37d30a17b3c4f14c8d06e8665",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.302834+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 1632,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 4732,
+              "TextureID": 6820,
+              "BRDFID": 0,
+              "BumpID": 4059,
+              "SpecColor": 0,
+              "TemplateID": 1632,
+              "GlossID": 4077,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "11"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 2368,
+                  "Material0": 1632,
+                  "Material1": 1684,
+                  "GeometryID": 2501,
+                  "Material2": 1633,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 1768,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple plain warm-brown civilian cloth atlas. Large right brown field keeps ONE long fine vertical seam, the original faint left-edge triangular fold at native approximately(68,41), ONE horizontal right tab with exactly ONE pale dot at approximately(106,66), and lower arch-shaped black void. Center long brown strip stays smooth shaded cloth; left gray-blue folded cloth fields and small lower-left painted skin fragment keep all source boundaries and colors. The fine blue-gray edging along skin/cloth border is a plain source edge, retain exact narrow stepped contour and muted fragments; no necklace/chain/beads/jewelry. Skin palette is this ORIGINAL image variant only, do not replace with another tone. No other buttons/hardware exist.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "57b235e82df7afa2036fea06af01111e85b15eb01398527948e3495b788c15fc",
+        "10d4e094e0bd386fbab6ab8708555ae682f9e0f37d30a17b3c4f14c8d06e8665"
+      ]
+    }
+  },
+  {
+    "id": 7589,
+    "texture": {
+      "ID": 7589,
+      "Width": 64,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15004148,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilMale\\CivilMale#3\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5761,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3086,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7691,
+              "field": "Material0",
+              "material_template_id": 3086,
+              "geometry_id": 4254,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilMale01.mb",
+              "model_template_id": 4643,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      128
+    ],
+    "source_sha256": "3c5ebc5d645bf4a5a4692478f87f4e49734b2bb4ff84ae63f7781f80ace5cadb",
+    "source_rgba_sha256": "46a88ad3b65b78957fc1534c64a1c4857320b752b2c1d57869ee7a165b849f01",
+    "release_rgba_sha256": "46a88ad3b65b78957fc1534c64a1c4857320b752b2c1d57869ee7a165b849f01",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7589.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.333137+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "46a88ad3b65b78957fc1534c64a1c4857320b752b2c1d57869ee7a165b849f01",
+      "source_rgb_sha256": "83a7ce7890a010fef412b5212f4877cbf5251de8c8a8b2fb6843f97e54897076",
+      "dimensions": [
+        64,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "3c5ebc5d645bf4a5a4692478f87f4e49734b2bb4ff84ae63f7781f80ace5cadb",
+      "release_mmp_sha256": "3c5ebc5d645bf4a5a4692478f87f4e49734b2bb4ff84ae63f7781f80ace5cadb",
+      "original_png_sha256": "b83fa7a43f767f8d5f8e876904730fc1c33de4457c5c74a43ed55bdda92fefe8",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/7589-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "9f719470e6aa54ff463d18f61b58d742ce0e570f1a6ec7010e52ffa8a8d86c03",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.328491+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 3086,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 5761,
+              "TextureID": 7589,
+              "BRDFID": 0,
+              "BumpID": 7587,
+              "SpecColor": 0,
+              "TemplateID": 3086,
+              "GlossID": 7597,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 7691,
+                  "Material0": 3086,
+                  "Material1": 378,
+                  "GeometryID": 4254,
+                  "Material2": 3087,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 4643,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Tall plain deep burgundy civilian shirt texture. Top narrow black/olive-brown belt retains exactly ONE small pale rectangular buckle frame and its existing short middle pin at source native top center, no extra holes/dots/belt perforations. Tall burgundy field has only source broad smooth folds and dark left/right edges, no buttons, pockets, extra seams or leather grain. At bottom exactly TWO softly shaded pale gray triangular collar/lapel fields flank the original central black arch opening; keep their curves, tiny source central notch and light/dark gray shading. Do not turn pale collar cloth into reflective metal or add crinkled leather. Whole source64x128 aspect fixed.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        64,
+        128
+      ],
+      "guide_dimensions": [
+        512,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "b83fa7a43f767f8d5f8e876904730fc1c33de4457c5c74a43ed55bdda92fefe8",
+        "9f719470e6aa54ff463d18f61b58d742ce0e570f1a6ec7010e52ffa8a8d86c03"
+      ]
+    }
+  },
+  {
+    "id": 7624,
+    "texture": {
+      "ID": 7624,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14276823,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_03\\Body_African.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5794,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3092,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7735,
+              "field": "Material0",
+              "material_template_id": 3092,
+              "geometry_id": 4255,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+              "model_template_id": 4652,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "6fab02e7e331257eb6839f126524b8bae0fed09fb750cdcb838b64672eac020f",
+    "source_rgba_sha256": "06302723415870a8fb504ca6f115022202eff2e5a8748ea8189b8dbaec3ad999",
+    "release_rgba_sha256": "06302723415870a8fb504ca6f115022202eff2e5a8748ea8189b8dbaec3ad999",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7624.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.447355+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "06302723415870a8fb504ca6f115022202eff2e5a8748ea8189b8dbaec3ad999",
+      "source_rgb_sha256": "6ffdeaf23f629e058d9aebb382e864ecab0d5ae7baa88582cfcf99c476ab7f95",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "6fab02e7e331257eb6839f126524b8bae0fed09fb750cdcb838b64672eac020f",
+      "release_mmp_sha256": "6fab02e7e331257eb6839f126524b8bae0fed09fb750cdcb838b64672eac020f",
+      "original_png_sha256": "af77d17c5d7a0692e844ed6640e780c664149543c0fe9baa59efb507594a1a73",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/7624-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "d8a057a2779a1e27372ca93f916186b282eb8f5a5aa93526127becac449706ff",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.354652+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 3092,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 5794,
+              "TextureID": 7624,
+              "BRDFID": 0,
+              "BumpID": 7622,
+              "SpecColor": 0,
+              "TemplateID": 3092,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "12"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 7735,
+                  "Material0": 3092,
+                  "Material1": 1684,
+                  "GeometryID": 4255,
+                  "Material2": 3094,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 4652,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple plain blue-gray civilian cloth atlas. Large right blue-gray field keeps ONE original long vertical seam, the faint triangular fold at native approximately(68,41), ONE horizontal right tab with exactly ONE pale dot at approximately(106,66), and lower arch-shaped black void. Center long darker gray-blue strip remains plain shaded cloth. Left upper deep navy plain cloth and lower ivory-gray folded cloth, small painted skin fragment and narrow beige edge keep exact source shape/color. Thin segmented pale edging along original skin/cloth boundary remains same flat stepped source contour and exact phase; NO chain, necklace, beads, pendant or jewelry reinterpretation. Preserve this original skin variant palette, no copying another tone. No new seams/stitchrows or buttons. Source native edging contains exactly SEVEN muted pale stepped fragment marks at approximately(1,71),(3..4,71..72),(5,73),(7..8,74),(9..10,76),(11,78),(13,80). Retain seven flat tiny source fragments at their unequal original spacing/phase, including faint end marks; do not make beads, stitches, chain links or add an eighth clipped end mark.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "af77d17c5d7a0692e844ed6640e780c664149543c0fe9baa59efb507594a1a73",
+        "d8a057a2779a1e27372ca93f916186b282eb8f5a5aa93526127becac449706ff"
+      ]
+    },
+    "actual_native_edge_fragment_count": 7
+  },
+  {
+    "id": 7625,
+    "texture": {
+      "ID": 7625,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14145494,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_03\\Body_Arab.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5793,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3092,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7735,
+              "field": "Material0",
+              "material_template_id": 3092,
+              "geometry_id": 4255,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+              "model_template_id": 4652,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "ad5513e1a9b4454c3c471f4aa593d53aee3018c3594f5df90f9e7a386775d048",
+    "source_rgba_sha256": "cde2e1861de7f4cb1c6f52e5fd519c2dbc96a715b37eeab68059502d0d6610c5",
+    "release_rgba_sha256": "cde2e1861de7f4cb1c6f52e5fd519c2dbc96a715b37eeab68059502d0d6610c5",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7625.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.447355+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "cde2e1861de7f4cb1c6f52e5fd519c2dbc96a715b37eeab68059502d0d6610c5",
+      "source_rgb_sha256": "4f3e05e780807d04b09f02e1be9235d34e7d6bc1090d50b1b50186c45ac20397",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "ad5513e1a9b4454c3c471f4aa593d53aee3018c3594f5df90f9e7a386775d048",
+      "release_mmp_sha256": "ad5513e1a9b4454c3c471f4aa593d53aee3018c3594f5df90f9e7a386775d048",
+      "original_png_sha256": "1b504b3a25758409f66b63fe6650e3c2207396fa75146653c54937df302b66d2",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/7625-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "6eada43fbfa7e39c67b69dbd0d01a5dc8efb78c01b3e9a360a358c56c50f6022",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.381229+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 3092,
+              "UserName": "Body"
+            },
+            "actual_material_row": {
+              "ID": 5793,
+              "TextureID": 7625,
+              "BRDFID": 0,
+              "BumpID": 7622,
+              "SpecColor": 0,
+              "TemplateID": 3092,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "11"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material0",
+                "actual_model_row": {
+                  "ID": 7735,
+                  "Material0": 3092,
+                  "Material1": 1684,
+                  "GeometryID": 4255,
+                  "Material2": 3094,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 4652,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple plain blue-gray civilian cloth atlas. Large right blue-gray field keeps ONE original long vertical seam, the faint triangular fold at native approximately(68,41), ONE horizontal right tab with exactly ONE pale dot at approximately(106,66), and lower arch-shaped black void. Center long darker gray-blue strip remains plain shaded cloth. Left upper deep navy plain cloth and lower ivory-gray folded cloth, small painted skin fragment and narrow beige edge keep exact source shape/color. Thin segmented pale edging along original skin/cloth boundary remains same flat stepped source contour and exact phase; NO chain, necklace, beads, pendant or jewelry reinterpretation. Preserve this original skin variant palette, no copying another tone. No new seams/stitchrows or buttons. Source native edging contains exactly SEVEN muted pale stepped fragment marks at approximately(1,71),(3..4,71..72),(5,73),(7..8,74),(9..10,76),(11,78),(13,80). Retain seven flat tiny source fragments at their unequal original spacing/phase, including faint end marks; do not make beads, stitches, chain links or add an eighth clipped end mark.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "1b504b3a25758409f66b63fe6650e3c2207396fa75146653c54937df302b66d2",
+        "6eada43fbfa7e39c67b69dbd0d01a5dc8efb78c01b3e9a360a358c56c50f6022"
+      ]
+    },
+    "actual_native_edge_fragment_count": 7
+  },
+  {
+    "id": 7686,
+    "texture": {
+      "ID": 7686,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13885163,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\Engineer\\EBasePKPersone\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5879,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3121,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7827,
+              "field": "Material2",
+              "material_template_id": 3121,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 4696,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "bf023de6ff0a72be3bc180c87e8eff802a027fe424a2369dd681ebdbb9fdf39b",
+    "source_rgba_sha256": "7503c74ef9a91c04fb3563261f5913ca0d64ac63d39f27fd67717466d0d0d23c",
+    "release_rgba_sha256": "7503c74ef9a91c04fb3563261f5913ca0d64ac63d39f27fd67717466d0d0d23c",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7686.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:32:51.569858+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "7503c74ef9a91c04fb3563261f5913ca0d64ac63d39f27fd67717466d0d0d23c",
+      "source_rgb_sha256": "0873fb326ca8d7e1cea74052639f8579427d10639dfffeac7761d2af5f2541bf",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "bf023de6ff0a72be3bc180c87e8eff802a027fe424a2369dd681ebdbb9fdf39b",
+      "release_mmp_sha256": "bf023de6ff0a72be3bc180c87e8eff802a027fe424a2369dd681ebdbb9fdf39b",
+      "original_png_sha256": "b746f537be78831e82eef449be254d6d1db2fcd234e0fcea3896455e3559868e",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/7686-clothing-tenth-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "2467447358bf2c838b295c73bc80be50fe481f036c0e344fd40c266c78a4d965",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T00:37:31.460813+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 3121,
+              "UserName": "Legs"
+            },
+            "actual_material_row": {
+              "ID": 5879,
+              "TextureID": 7686,
+              "BRDFID": 0,
+              "BumpID": 7684,
+              "SpecColor": 0,
+              "TemplateID": 3121,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material2",
+                "actual_model_row": {
+                  "ID": 7827,
+                  "Material0": 3120,
+                  "Material1": 378,
+                  "GeometryID": 2502,
+                  "Material2": 3121,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 4696,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Simple gray/brown plain cloth/leather fragment atlas without buttons or hardware. Left gray field preserves broad original soft vertical folds and faint darker elbow-like patch; bottom-left wider gray folded band stays full original shape/width. Large right warm dark-brown field preserves ONE long faint center vertical seam, broad original folds and ONE small lower diagonal dark seam/corner path. All coarse codec blocks are shading, do not turn gray field into plaid/checks/patchwork, do not draw a new shoe/laces or mechanical details. No dot/button/rivet holes. Keep whole source edges and soft local materials.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "b746f537be78831e82eef449be254d6d1db2fcd234e0fcea3896455e3559868e",
+        "2467447358bf2c838b295c73bc80be50fe481f036c0e344fd40c266c78a4d965"
+      ]
+    }
+  }
+]

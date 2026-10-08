@@ -1,0 +1,163 @@
+[
+  {
+    "id": 6809,
+    "texture": {
+      "ID": 6809,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -8889804,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerGrenaderFemale\\Hands_Arab.tga",
+      "Format": "dxt1",
+      "UserName": "Hands_Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4723,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1759,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4585,
+              "field": "Material2",
+              "material_template_id": 1759,
+              "geometry_id": 2702,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerGrenaderFemale_100.mb",
+              "model_template_id": 3066,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "966d176b7b056d13da957c6ff50ec309933fe58a16af0a569ef75ffcc47a5a66",
+    "source_rgba_sha256": "73f04285881fc0770074413e165ab6ddf29c0b42552ce566ddaa0ed116361f42",
+    "release_rgba_sha256": "73f04285881fc0770074413e165ab6ddf29c0b42552ce566ddaa0ed116361f42",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6809.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "independent_source_recheck": {
+      "checked_utc": "2026-10-08T00:57:50.367040+00:00",
+      "historical_release_original_png_exact": true,
+      "rgba_sha256": "73f04285881fc0770074413e165ab6ddf29c0b42552ce566ddaa0ed116361f42",
+      "source_rgb_sha256": "99dfb35bb02ea5564049dfead4a2bc184acf461a84f892fb04f56252ed8f5f07",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "typed_diffuse_only": true,
+      "typed_database_sha256_fresh_rechecked": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_mmp_sha256": "966d176b7b056d13da957c6ff50ec309933fe58a16af0a569ef75ffcc47a5a66",
+      "release_mmp_sha256": "966d176b7b056d13da957c6ff50ec309933fe58a16af0a569ef75ffcc47a5a66",
+      "original_png_sha256": "2683e45f24e1273d8588c05a920c73f45532d0d539b1bc0bc594abbb0ff8b219",
+      "actual_native_format": 1,
+      "fresh_audit": "Actual DB SHA independently verified unchanged; actual Materials.TemplateID joins Models.Material slot consumers; all direct uses color and opaque.",
+      "source_guide": "assets/terrain-hd/expanded/generated/6809-clothing-eleventh-source-reference.png",
+      "guide_scale": 8,
+      "guide_resampling": "Nearest original entire canvas only; no alpha/RGB edits",
+      "guide_sha256": "15f19b3171a044454ef1d60149ffce988ce2d3b849eee515ce3945f2ab662ab7",
+      "fresh_actual_typed_chain": {
+        "checked_utc": "2026-10-08T01:02:31.667038+00:00",
+        "database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "material_template_to_material_to_model_color_opaque_verified": true,
+        "chains": [
+          {
+            "actual_material_template_row": {
+              "ID": 1759,
+              "UserName": "Hands"
+            },
+            "actual_material_row": {
+              "ID": 4723,
+              "TextureID": 6809,
+              "BRDFID": 0,
+              "BumpID": 4427,
+              "SpecColor": 0,
+              "TemplateID": 1759,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "Flags": "11"
+            },
+            "color_texture_field": "TextureID",
+            "actual_model_consumers": [
+              {
+                "material_slot": "Material2",
+                "actual_model_row": {
+                  "ID": 4585,
+                  "Material0": 1758,
+                  "Material1": 1760,
+                  "GeometryID": 2702,
+                  "Material2": 1759,
+                  "Material3": 0,
+                  "SkeletonID": 8,
+                  "TemplateID": 3066,
+                  "RPGArmorID": 1,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "source_detail_constraints": "Whole square source atlas: left dark charcoal cloth/leather strip occupies native x0..34 including exact near-black frame/voids, a long original vertical smooth folded inset and small bottom shaded pieces. Preserve long narrow seam-like highlights and every existing tiny source edge mark without adding buttons, slots, punched holes or buckles. Right skin field begins at native x35, keeps same broad source soft shading and FOUR existing soft pale highlight lobes: two upper small lobes around native(92,60),(110,60), two larger lower lobes around(72,91),(107,91). Bottom broad skin highlight rising from edge and dark V-shaped shading remain exact position/scale. These are flat texture shading, not a rendered hand, fingers or new anatomy. Preserve this ORIGINAL variant skin RGB relationships to unchanged dark gray cloth; no orange/copper lightening, no other skin tone.",
+    "original_fullcanvas_and_nearest_guide_privately_inspected_before_generation": true,
+    "reference_recipe": {
+      "type": "whole-source-only-nearest-guide",
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "guide_dimensions": [
+        1024,
+        1024
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": null,
+      "references_sha256": [
+        "2683e45f24e1273d8588c05a920c73f45532d0d539b1bc0bc594abbb0ff8b219",
+        "15f19b3171a044454ef1d60149ffce988ce2d3b849eee515ce3945f2ab662ab7"
+      ]
+    }
+  }
+]
