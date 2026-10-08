@@ -1,0 +1,69 @@
+[
+  {
+    "id": 3882,
+    "texture": {
+      "ID": 3882,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -164746454,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\Scientist\\Lebedev\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2463,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 1616,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 2352,
+              "field": "Material0",
+              "material_template_id": 1616,
+              "geometry_id": 2503,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Scientist.mb",
+              "model_template_id": 1760,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "4fa708c53ac6d34ad000106b485baca4087a82ae3d1dd3ffa4229743cd28eb81",
+    "source_rgba_sha256": "6858f8e9c71bc8fa5e5393dd470d7196b0d74c213a2a2f1eb4b5ab6bf0cc10ff",
+    "release_rgba_sha256": "6858f8e9c71bc8fa5e5393dd470d7196b0d74c213a2a2f1eb4b5ab6bf0cc10ff",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/3882.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  }
+]

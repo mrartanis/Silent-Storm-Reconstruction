@@ -11,8 +11,8 @@ sources.json, expanded/queue.json, coverage.json и full-texture-inventory.json.
 `G:/SS/Silent-Storm/Complete/Textures` и `G:/SS/lab/baseline/res` только читай.
 Оригинальную установку Steam не изменяй. На другой машине найди фактические источники.
 
-Приняты 2 305 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
-63 одежды, 106 экипировки, 65 оружия, 2 лиц, 32 UI, 66 эффектов,
+Приняты 2 309 HD-текстур: 178 ландшафта, 30 деревьев, 1 754 окружения,
+63 одежды, 106 экипировки, 65 оружия, 2 лиц, 32 UI, 70 эффектов,
 4 лагерных атласа, 2 учебные мишени и 3 прочие художественные карты.
 Десять RGB565 5076, 5168, 5169, 6997, 7581–7586 уже завершены; НЕ генерируй их снова.
 `expanded/rgb565-batch-check.json` подтверждает повторное совпадение RGBA с релизом,
@@ -21,7 +21,7 @@ Windows Game-сборку и полную native-валидацию 1 962 тек
 Это не вся игра. Встроенный imagegen использован отдельно для каждого изображения.
 Калибровка числовая. У часов сохранена исходная ориентация печати и явная регистрация
 островов UV; не переносить её автоматически на другие атласы.
-Приняты 343 текстуры новых групп; всего 2 730 записей общей очереди, pending нет.
+Приняты 347 текстур новых групп; всего 2 734 записи общей очереди, pending нет.
 `new-groups-first-batch-check.json` подтверждает первые 20, а
 `new-groups-second-batch-check.json` — следующие 29 и тогдашний пакет:
 2 011 текстур, 4 022 алиаса, 111 архивов, 6 706 321 654 байта.
@@ -160,11 +160,15 @@ Equipment-eleventh/twelfth и effects-eleventh могут иметь stable raw/
 
 Ранние root concerns1819/1825 о верхних полях разрешены прямой сверкой native source pixels: у1819 исходная первая строка уже чёрная, у1825 широкая верхняя пластина уже занимает y0–3, тёмный inlet y4–5; wholecanvas raw сохраняет фазу.3343 сохраняет частичный обрезанный красный крест и исходную серую угловую отметку.119 уже существовавших принятых нормализованных PNG добавлены обычными файлами в Git (102 прежних и17 новых), без генерации/изменения пикселей. Все объявленные stages источников теперь в Git: accepted-git-stage-completeness-sixteenth.json. Непринятые попытки и причины сохранены; clothing-eleventh пока0ready.
 
-Equipment-thirteenth/effects-twelfth/weapons-ninth/exact-donors-sixteenth уже приняты в17порции. Effects-thirteenth ready4 частно проверены root для18порции:1567/1577/5120/5275. Effects-fourteenth/weapons-tenth/clothing-twelfth stable0ready, не импортировать. Effects-fifteenth/equipment-fourteenth/weapons-eleventh/clothing-thirteenth могут работать. До импортов проверяй actual source/Type/материалы; genuine alpha_test diffuse и actual Races-only color consumers не исключай автоматически.
+Equipment-thirteenth/effects-twelfth/weapons-ninth/exact-donors-sixteenth уже приняты в17порции. Effects-thirteenth1567/1577/5120/5275 уже приняты в18порции. Effects-fourteenth/weapons-tenth/clothing-twelfth stable0ready, не импортировать. Effects-fifteenth stable0calls/0ready. Equipment-fourteenth/weapons-eleventh/clothing-thirteenth→UI могут работать; сначала ищи сохранённые raw/jobs/reviews. До импортов проверяй actual source/Type/материалы; genuine alpha_test diffuse и actual Races-only color consumers не исключай автоматически.
 
 Семнадцатая порция принята: jobs-new-groups-seventeenth (8): equipment-thirteenth3, effects-twelfth3, weapons-ninth1 и точный дубль одежды5453←4010 без нового вызова imagegen. Пакет: 2 305 текстур/4 610 алиасов/124 архива/7 477 827 592 байта. Прежние2 297 source/PNG/native хеши сохранены; все8 nativeRGBA равны частно осмотренным production4x прогнозам, полная исходная альфа и blend modes сохранены.1936 использует source-only wholecanvas3:1 affine guide/обратное целое4x без crop/BBox и явное source_mask_rgb_padding=False: стандартная заливка ошибочно закрашивала alpha-positive чёрные UV поля. Исходная альфа остаётся полной, RGB художественно не подменяется; scalar gain0.997734. Изменение по умолчанию не применяется к прежним текстурам; новые2 regression tests и прежние2 sourceRGB-region tests проходят. Реальное меню HD on/off/on, все4 кадра частно осмотрены, штатный quit/Game отсутствует: new-groups-seventeenth-{batch,live}-check.json. Интеграционная сцена проверяет слой/меню, не показ каждого нового атласа. Все заявленные стадии принятых источников в Git: accepted-git-stage-completeness-seventeenth.json.
 
 Девять исходных5363–5371 сохранены без генерации: точные двухцветные/однотонные16x16 CFrame заливки и рамки, runtime UICommCtrls.cpp684–692/UITextures654–662 подтверждает использование. Это не исключение художественных UI.1941 сохраняет оригинал после реального OUTPUT moderation refusal, точный prompt/refSHA/requestID2cde57e5-5062-4754-ba19-2240dc393004 сохранён, не повторять. Старый отклонённый5453v1 архивирован в generated/rejected-clothing-ninth-5453-v1; canonical raw теперь reuse4010, не прежняя попытка. Непринятые raw с причинами сохранены вне пакета. Принятые ID не генерировать заново.
+
+Восемнадцатая порция принята: jobs-new-groups-eighteenth (4), effects-thirteenth1567/1577/5120/5275. Пакет:2 309 текстур/4 618 алиасов/124 архива/7 479 225 912 байт. Прежние2 305 source/PNG/native хеши сохранены; все4 nativeRGBA равны частно осмотренным production4x прогнозам. Полная исходная альфа, Transparent premultiply, материалы бумаги/мягкого эффекта попадания, исходные части/рисунок/wholecanvas UV сохранены. Небольшое усиление существующих складок/ободка частно оценено в4x; новые складки/компоненты/жёсткая геометрия не добавлены. Калибровка скалярная, без crop/BBox/художественной RGB-подмены. Полная native-валидация, реальное меню HD on/off/on, частный осмотр всех4 кадров и штатный quit/Game отсутствует: new-groups-eighteenth-{batch,live}-check.json. Интеграционная сцена проверяет HD слой/меню, не демонстрацию каждого эффекта. Все объявленные стадии принятых источников в Git: accepted-git-stage-completeness-eighteenth.json.
+
+Непринятые попытки effects-thirteenth/fourteenth, weapons-tenth и clothing-twelfth сохранены с точными raw/prompts/refSHA/metadata и причинами вне пакета: материал, новые детали или смещение цвета в чёрные UV поля. Effects-fifteenth —0calls, только source-only аудит. Не выдавать их за ready и не применять1936 optout автоматически к другим raw. Принятые текстуры не генерировать заново.
 
 Прежде чем продолжать, проверь актуальные статусы, сырые результаты
 и jobs, чтобы не повторить уже выполненный вызов imagegen.
@@ -188,9 +192,9 @@ jobs-next-groups-b, jobs-effects-second и jobs-camp-tutorial-first уже пр�
 Семь RGB565 экипировки 6197/6199/6200/6247–6250 тоже завершены.
 
 Точный список оставшихся проверенных ID находится в
-`new-groups-seventeenth-batch-check.json:remaining_verified_source_queue_ids`.
-Всего 1 437: одежда 224, экипировка 152, оружие 57, головы 184, UI 656,
-эффекты 140, clues 17, final 3, miscellaneous 4. Снимки source-queues сохраняют
+`new-groups-eighteenth-batch-check.json:remaining_verified_source_queue_ids`.
+Всего 1 433: одежда 224, экипировка 152, оружие 57, головы 184, UI 656,
+эффекты 136, clues 17, final 3, miscellaneous 4. Снимки source-queues сохраняют
 исходные pending-статусы; текущую готовность всегда проверяй по sources/shared queue.
 Эта цифра означает ещё не принятый HD; часть raw уже может быть подготовлена
 сабагентами. Проверяй ready jobs/reviews до новых вызовов imagegen. Продолжай отдельными небольшими
