@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1133,
+    "texture": {
+      "ID": 1133,
+      "Width": 16,
+      "Height": 16,
+      "NMips": 0,
+      "AverageColor": -6553600,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "LSHead\\Red.tga",
+      "Format": "dxt1",
+      "UserName": "Red",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "heads-lshead",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 743,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Wrap",
+          "TemplateID": 518,
+          "consumers": []
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      16,
+      16
+    ],
+    "source_sha256": "84a67be203d042bc8b5811fdbda7b160b4cd014ac16e20b5aac129124431b79e",
+    "source_rgba_sha256": "0a1076f1935949b496fb2249a7f585fdc542d0b1fddf79995a3d08990b7c218e",
+    "release_rgba_sha256": "0a1076f1935949b496fb2249a7f585fdc542d0b1fddf79995a3d08990b7c218e",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/1133.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "worker_original_only_recommendation": {
+      "id": 1133,
+      "status": "individual-original-only-entireconstantRGBA-recommendation-rootreview",
+      "logical_size": [
+        16,
+        16
+      ],
+      "pixel_count": 256,
+      "every_RGBA": [
+        156,
+        0,
+        0,
+        255
+      ],
+      "fullRGBA_constant": true,
+      "actual_consumer": [
+        {
+          "actual_material_ref": {
+            "table": "Materials",
+            "id": 743,
+            "canonical_record_SHA256": "54115908e2b8fdca4ab91e4471cda62ee3f4465232bb8d64fbbaf6139e0b893a"
+          },
+          "actual_material_template_ref": {
+            "table": "MaterialTemplates",
+            "id": 518,
+            "canonical_record_SHA256": "1eb9898d81b52f7fbba8d9b3a17df7fc3cc08e2bffb1e46150e03bade85f0ecc"
+          },
+          "all_actual_model_consumer_refs": [],
+          "actual_Heads_refs": [],
+          "actual_Races_refs": [],
+          "actual_ComplexHeads_hair_refs": [],
+          "actual_TransformableHeadHairs_refs": [],
+          "actual_Alpha_AddressMode": [
+            "opaque",
+            "Wrap"
+          ],
+          "qualification": "Actual Materials.TextureID diffuse/template consumers; static hair/head only when exact linked records prove it. Runtime/model meshUV unknown, no fake model or dynamic layer inference."
+        }
+      ],
+      "historical_release_original_parity_ref": {
+        "path": "assets/terrain-hd/expanded/source-check-heads-twenty-fourth.json",
+        "file_SHA256": "881cefb57fa8948ca240bd703ae7cec4ec66ea5e1efb542110ad705d9517d5fd",
+        "id": 1133
+      },
+      "native_matrix_ref": {
+        "path": "assets/terrain-hd/expanded/native-matrices-heads-twenty-fourth.json",
+        "file_SHA256": "be3dd3ca22579749f007dbe8fffce5774b6161984c9ddc696ba3ed94ac4ec902",
+        "source_key": "1133",
+        "source_RGBA_SHA256": "0a1076f1935949b496fb2249a7f585fdc542d0b1fddf79995a3d08990b7c218e"
+      },
+      "qualification": "ActualMaterial743 opaqueWrap→Template518, no actualModels/Heads found; runtime dispatch unknown. Entire source constantRGBA onecolor independentlyproven, retainoriginal no inventedtexture/colorparts. Root sole classification/runtime acceptance; sourcequeue nameLSHeadRed is not proof."
+    }
+  }
+]

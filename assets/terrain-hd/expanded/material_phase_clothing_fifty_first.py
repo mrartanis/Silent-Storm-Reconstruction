@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,numpy as np
+from PIL import Image,ImageFilter
+B=Path(__file__).resolve().parent;ST='clothing-fifty-first';OUT=B/f'private-{ST}/native4x'
+rows=[]
+common_ref={'path':'assets/terrain-hd/expanded/native-matrices-clothing-fifty-first.json','file_SHA256':__import__('hashlib').sha256((B/'native-matrices-clothing-fifty-first.json').read_bytes()).hexdigest()}
+productions={}
+for i in [6834]:
+ if not (B/f'generated/{i}-raw.png').exists():continue
+ o=Image.open(B/f'original/{i}.png').convert('RGBA');s=o.convert('RGB').resize((o.width*4,o.height*4),Image.Resampling.LANCZOS)
+ g=Image.open(OUT/f'{i}-stored-rgb-private.png').convert('RGB');n=Image.open(OUT/f'{i}-calibrated-native-alpha-private.png').convert('RGBA');a=np.array(n.getchannel('A'));straight=np.array(n.convert('RGB'))
+ assert n.getchannel('A').tobytes()==o.getchannel('A').resize(n.size,Image.Resampling.LANCZOS).tobytes()
+ sr=np.asarray(s,dtype=float);pr=np.asarray(g,dtype=float);sh=sr-np.asarray(s.filter(ImageFilter.GaussianBlur(1)),dtype=float);ph=pr-np.asarray(g.filter(ImageFilter.GaussianBlur(1)),dtype=float)
+ prod=np.asarray(g.resize(o.size,Image.Resampling.LANCZOS));source=np.asarray(o.convert('RGB'));yy,xx=np.unravel_index(prod.mean(2).argmax(),prod.shape[:2]);zer=source.max(2)==0
+ rows.append({'id':i,'diagnostic':'ENTIRE native storedRGB from defaultscalar/fullsourceA/Typepack behavior, RGB FIRST then wholeinverse native dimensions. No perregion gain/RGBrepair/crop. TransparentAdd A0 usefulRGB retained, no packpremultiply. Transparent premultiplied by originalA downstream; storedRGB comparison is native color diagnostic, not straight-alpha compositing or renderer test.','source_nativeA_extrema':list(o.getchannel('A').getextrema()),'originalA4x_byteexact':True,'production_storedRGB_peak_mean_xy':[int(xx),int(yy)],'production_peak_RGB':prod[yy,xx].tolist(),'original_at_same_peak_RGB':source[yy,xx].tolist(),'source_native_matrix_ref':{**common_ref,'source_key':str(i)},'production_inverse_matrix_key':str(i),'highpass_radius1_source_std_RGB':sh.std((0,1)).tolist(),'highpass_radius1_production_std_RGB':ph.std((0,1)).tolist(),'prepack_corrected_RGB255_pixels_inside_positive_sourceA':int(((straight.max(2)==255)&(a>0)).sum()),'prepack_corrected_allRGB255_pixels_inside_positive_sourceA':int(((straight.min(2)==255)&(a>0)).sum()),'positive_original_sourceA4x_pixels':int((a>0).sum()),'original_native_zeroRGB_locations_max_production_RGB':prod[zer].max(0).tolist()if zer.any()else None,'zeroRGB_locations_with_production_max_gt5':int(((prod.max(2)>5)&zer).sum()),'interpretation':'Clipping/halo/pigment matrices diagnostic only, not guessed physicalparticle counts or newfragment claims.'})
+ productions[str(i)]={'id':i,'native_size':list(o.size),'complete_inverse_native_storedRGB':prod.tolist()}
+ print(i,'positiveA/clipped/allwhite',int((a>0).sum()),rows[-1]['prepack_corrected_RGB255_pixels_inside_positive_sourceA'],rows[-1]['prepack_corrected_allRGB255_pixels_inside_positive_sourceA'],'peak',[int(xx),int(yy)],prod[yy,xx].tolist(),'HPstd',rows[-1]['highpass_radius1_source_std_RGB'],rows[-1]['highpass_radius1_production_std_RGB'])
+(B/f'production-matrices-{ST}.json').write_text(json.dumps({'sources':productions,'recipe':'Entire private standardstoredRGB RGB-FIRST native LANCZOS inverse, numericdiagnostic only/no artistpatch.'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(B/f'material-phase-{ST}.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

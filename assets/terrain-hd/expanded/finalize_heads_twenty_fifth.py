@@ -1,0 +1,117 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import json, hashlib, shutil
+import numpy as np
+from PIL import Image
+B = Path(__file__).resolve().parent
+ROOT = B.parents[2]
+ST = 'heads-twenty-fifth'
+CALL = [3117]
+READY = []
+HELD = CALL
+
+def read(p):
+    return json.loads(p.read_text(encoding='utf-8'))
+
+def sha(p):
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+def rel(p):
+    return p.relative_to(ROOT).as_posix()
+
+def ref(p):
+    return {'path': rel(p), 'file_SHA256': sha(p)}
+
+def save(n, v):
+    (B / n).write_text(json.dumps(v, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+before = B / f'source-check-{ST}-before-call.json'
+source = B / f'source-check-{ST}.json'
+assert source.read_bytes() == before.read_bytes()
+P = read(before)
+selected = read(B / f'selected-{ST}.json')
+scope = read(B / f'scope-{ST}.json')
+assert len(P) == len(selected) == 12
+actual = read(B / f'actual-records-{ST}.json')
+matrices = read(B / f'native-matrices-{ST}.json')['sources']
+canon = lambda r: hashlib.sha256(json.dumps(r, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')).hexdigest()
+for table, rows in actual['tables'].items():
+    for k, r in rows.items():
+        assert canon(r) == actual['record_SHA256'][table][k]
+for r in P:
+    i = r['id']
+    o = Image.open(B / f'original/{i}.png').convert('RGBA')
+    assert np.array(matrices[str(i)]['native_RGBA_matrix'], dtype=np.uint8).tobytes() == o.tobytes()
+    assert sha(B / f'original/{i}.png') == r['original_PNG_file_SHA256'] and r['source_RGBA_RGB_A_NN_privately_inspected']
+    assert r['imagegen_call_count'] == 0
+    for k in ['native_matrix_ref', 'common_actual_records']:
+        assert sha(ROOT / r[k]['path']) == r[k]['file_SHA256']
+    h = ROOT / r['helper_recipe']['output']
+    assert Image.open(h).size == o.size and Image.open(h).convert('RGB').tobytes() == o.convert('RGB').tobytes()
+notes = {3117: 'Worker HELD pending root separate fullsourcepaint/material/nativeweakphase review, not permanent refusal or human/dental/hair/variableA familyban. ONE FIRST3117 actual static diffuseMat1921→Template1288→Head41 ANDMat5554→Template3036→Heads94/98, modelmesh/runtimeunknown, no dynamicTHMID invented. Native256 Ordinary straightRGB/A0..255 full historical/release/originalRGBA/POT parity/52actualDBrows, sourceRGB/A usefulblack/domains not empty assumption. Entire nativeopaqueRGBtoolref/NNonlyprivate; raw1254→whole1024 RGB-FIRST LANCZOS/scalar0.967132568359375/defaultpad0/clear0/completeoriginalAbyteexact/noPremul/zero255clips. Broad ONEinverted face/TWOoldshadoweyes/TWObrows/TWOears/ONEclosedmouth/ONEseparateeyeiris/pupil/TWOupperdental-lashUVstrips andblack/redfields retained; not claimed newphysicalteeth/hair/anatomy/count. Hold specifically sourcepaintblur/material/graystripshape andweakphase: original upperdental graymicrofields become roundedstronger delineated shapes with displacedlocaledges, old eye/face contours andhairpaint more defined/directional, originalflatred field gets mildgradient/texture. Source row44/54/59 luminance maximum arrays in exactbefore versusnaturalRGBroundtrip andproduction complete; not physicaltooth/eyelash counters or acceptance thresholds. Adjacent uppergrayoldedge23,48 source90/69/57→126/109/108 vsnatural80/61/52 givesmaxlocalmeanlift42.333, next22,48 source107/85/90→42/36/35 vsnatural98/78/81 givesmaxloss−56.333, indicates redistributedoldgrayfootprint not simplyglobalgain. Native flatredx0..63/y64..127 entire original96/29/32 std0→mean94.114/27.342/30.524 std1.123/1.306/.729. Same oldlower eye paleRGBpatch96..97/103 source181/162/140→167/146/126 and166/145/127 vsnatural178/158/136 and178/159/138; nextrow96,104 source148/118/104→158/137/118 vsnatural151/122/107, oldpatch redistributed vertically, no extra newcatchlight countclaimed. Pupil97,98 source10/2/0→10/3/1, sameonepupil. Sourcepeak64,197 RGB214/162/123→206/158/128; productionpeak64,199 RGB214/171/143 vsoriginal214/162/123/natural212/160/122, nosepeaks/localgraybrownpaint changedstrongerblue. Closedmouth64,185 source165/97/82→172/101/88 vsnatural168/99/85, originalclosedshape retained. Corner0,255 source66/40/16→68/40/13 vsnatural65/39/15; farblack255,255 source0/0/0/A0→1/1/0, smoothingcontext only not artpatch/empty interpretation. Highpassstd.657/.536/.442→1.576/1.292/1.044 andcorr.9978 numericalcontext not approvalthreshold; moderatefinepaint/onepixel alone notautohold. Qualitative actual oldgraygeometry/nativeblur andsubfieldconstantmaterial concern, no inventedanatomicalparts/fakephysicalcount. Elevenother genuine fullhead coloratlases pending0call for specificweakcount/material/identity audits, not banned facial/dental/hair family. EntireRGBA fullsource matrices+typedref sourcebefore immutable, exactarg+ONE LF/refSHA/raw/call immediatelysaved; no source/prompt errors found, no RGBrepair/crop/BBox/registration/rotation/paddingoptout/localgain/retry. All12new IDs outsideHeads1–24 priorselected, no generated exactRGBA donor. Root sole sharedmetadata/import/native/Game/Git/finalacceptance.'}
+corrections = read(B / f'postcall-corrections-{ST}.json')
+save(f'postcall-corrections-{ST}.json', corrections)
+metrics = {r['id']: r for r in read(B / f'metrics-{ST}.json')}
+details = {r['id']: r for r in read(B / f'detail-metrics-{ST}.json')}
+phases = {r['id']: r for r in read(B / f'material-phase-{ST}.json')}
+records = []
+post = []
+jobs = []
+for i in CALL:
+    cp = B / f'generated/{i}-{ST}-call.json'
+    c = read(cp)
+    assert sha(ROOT / c['generated']) == c['raw_sha256']
+    assert (ROOT / c['prompt_file']).read_bytes() == (c['exact_prompt'] + '\n').encode('utf-8') and sha(ROOT / c['prompt_file']) == c['prompt_sha256']
+    assert all((sha(ROOT / p) == h for p, h in c['reference_sha256'].items()))
+    for k in ['pattern_constraints_ref', 'native_matrix_ref', 'common_actual_records', 'source_before_call_ref']:
+        assert sha(ROOT / c[k]['path']) == c[k]['file_SHA256']
+    assert c['literal_actual_tool_arguments'] == {'prompt': c['exact_prompt'], 'referenced_image_paths': [(ROOT / p).as_posix() for p in c['reference_pngs']], 'transparent_background': False}
+    o = Image.open(B / f'original/{i}.png').convert('RGBA')
+    n = Image.open(B / f'private-{ST}/native4x/{i}-calibrated-native-alpha-private.png').convert('RGBA')
+    assert n.size == (o.width * 4, o.height * 4) and n.getchannel('A').tobytes() == o.getchannel('A').resize(n.size, Image.Resampling.LANCZOS).tobytes()
+    assert Image.open(ROOT / c['generated']).convert('RGBA').getchannel('A').getextrema() == (255, 255)
+    status = 'worker-ready-candidate-pending-root-art-native-acceptance' if i in READY else 'held-original-matte-paint-material-localstrength-review'
+    r = {'id': i, 'status': status, 'call_count': 1, 'reason': notes[i], 'generated': c['generated'], 'raw_sha256': c['raw_sha256'], 'prompt_file': c['prompt_file'], 'prompt_argument_sha256': c['prompt_argument_sha256'], 'prompt_canonical_sha256': c['prompt_sha256'], 'call_metadata': ref(cp), 'reference_sha256': c['reference_sha256'], 'source_transform_recipe': c['source_transform_recipe'], 'metrics': metrics[i], 'detail_metrics': details[i], 'material_phase': phases[i], 'repeat_phase_ref': {**ref(B / f'repeat-phase-{ST}.json'), 'id': i}, 'source_specific_probes_ref': ref(B / f'postcall-source-specific-probes-{ST}.json'), 'postcall_material_details_ref': {**ref(B / f'postcall-material-details-{ST}.json'), 'id': i}, 'production_matrix_ref': {**ref(B / f'production-matrices-{ST}.json'), 'source_key': str(i)}, 'fullsource_fullraw_defaultnative4x_RGB_A_privately_inspected': True}
+    if i in READY:
+        jobs.append({'id': i, 'generated': c['generated'], 'prompt': c['exact_prompt'], 'reference_png': c['reference_pngs'][0], 'reference_recipe': c['source_transform_recipe'], 'worker_status': status, 'worker_review_note': notes[i]})
+    else:
+        rd = B / f'rejected/{ST}'
+        rd.mkdir(parents=True, exist_ok=True)
+        for suffix, p in [('raw.png', ROOT / c['generated']), ('prompt.txt', ROOT / c['prompt_file']), ('call.json', cp)]:
+            target = rd / f'{i}-attempt1-{suffix}'
+            assert not target.exists()
+            shutil.copyfile(p, target)
+        save(f'rejected/{ST}/{i}-attempt1-reason.json', {'id': i, 'status': status, 'reason': notes[i], 'raw_sha256': c['raw_sha256'], 'no_repeat': True, 'not_permanent_refusal': True})
+        r['rejected_raw'] = rel(rd / f'{i}-attempt1-raw.png')
+    records.append(r)
+    post.append({'id': i, 'imagegen_call_count': 1, 'postcall_status': status, 'sourcebefore_zero_call_snapshot_immutable': True, 'fullsource_fullraw_native4x_storedRGB_fullA_privately_reviewed': True})
+sourceonly = []
+for r in P:
+    if r['id'] in CALL:
+        continue
+    d = {'id': r['id'], 'status': 'genuine-head-face-color-pending-nativephase-material-review', 'call_count': 0, 'reason': r['source_only_reason'], 'native_matrix_ref': r['native_matrix_ref'], 'common_actual_records': r['common_actual_records'], 'actual_static_consumers': r['fresh_actual_static_consumers'], 'native_RGB_distinct_count': r['native_RGB_distinct_count'], 'dominant_RGB_count_values': r['dominant_RGB_count_values'], 'recommended_original_only': False}
+    sourceonly.append(d)
+    records.append(d)
+orig = read(B / f'original-only-proof-{ST}.json')
+origids = {r['id'] for r in orig}
+for d in sourceonly:
+    if d['id'] in origids:
+        d.update(status='individual-original-only-entireconstantRGBA-recommendation-rootreview', recommended_original_only=True, original_only_proof_ref={**ref(B / f'original-only-proof-{ST}.json'), 'id': d['id']}, not_runtimeaccepted=True)
+save(f'source-only-detail-{ST}.json', sourceonly)
+save(f'jobs-{ST}.json', jobs)
+save(f'postcall-source-status-{ST}.json', post)
+S = read(B.parent / 'sources.json')['textures']
+Q = read(B / 'queue.json')
+ex = read(B / f'exclusions-{ST}.json')
+assert not set(scope['selected_ids']).intersection(ex['ids']) and all((r['source_rgba_sha256'] not in ex['blocked_hashes'] for r in P))
+guards = {'utc': datetime.now(timezone.utc).isoformat(), 'before_source_entry_count': ex['source_entry_count'], 'before_queue_count': ex['queue_count'], 'postcall_source_entry_count': len(S), 'postcall_queue_count': len(Q), 'source_entry_count_not_finalaccepted_claim': True, 'source_current_status_counts': {st: sum((r.get('status') == st for r in S)) for st in sorted({str(r.get('status')) for r in S})}, 'own_postcall_overlap': [{'id': r['id'], 'status': r.get('status')} for r in S + Q if r['id'] in scope['selected_ids']], 'sources_SHA256': sha(B.parent / 'sources.json'), 'queue_SHA256': sha(B / 'queue.json'), 'calls': 1, 'retries': 0, 'shared_writes': False, 'policy': 'FreshS/Q/globalraw/jobs/calls/prompts/held/refusals/exactRGBA before each solefirstcall. Previous source-only0call views honestly reaudited, no fake never-viewed claim. Concurrentrootwrites not worker.'}
+save(f'final-guards-{ST}.json', guards)
+recordcount = sum((len(v) for v in actual['tables'].values()))
+save(f'review-{ST}.json', {'batch': ST, 'status': 'stable-complete-held-bounded-review', 'selected_ids': scope['selected_ids'], 'unique_native_RGBA_count': scope['unique_native_RGBA_count'], 'generated_ids': CALL, 'ready_ids': READY, 'held_ids': HELD, 'genuine_pending_uncalled_ids': scope['genuine_pending_uncalled_ids'], 'recommended_original_only_ids': [], 'call_count': 1, 'max_authorized_calls': 3, 'no_retries': True, 'records': records, 'source_before_call': ref(before), 'source_check': ref(source), 'pattern_before_call': ref(B / f'pattern-constraints-{ST}.json'), 'native_matrix': ref(B / f'native-matrices-{ST}.json'), 'actual_records': ref(B / f'actual-records-{ST}.json'), 'production_matrix': ref(B / f'production-matrices-{ST}.json'), 'natural_RGB_roundtrip': ref(B / f'natural-RGB-roundtrip-{ST}.json'), 'repeat_phase': ref(B / f'repeat-phase-{ST}.json'), 'postcall_corrections_ref': ref(B / f'postcall-corrections-{ST}.json'), 'source_parity': 'Fresh12 genuinepending fullsource256POT/12uniqueRGBA/ALLoutsideHeads1–24 priorselected/historyrelease originalfullRGBA/nativeType/A exactparity/52actualuniqueDBrows. Actual staticMaterials→TemplateID→Heads; no missingstaticModels means unused inference, no dynamicTHMID falselyattached. Sourceclosedmouth3117/literalfullweakpigment/domaincounts/pale2pixel eyeRGBpatch provenbefore, original sourceA complete. No individualoriginalrecommendation, allartgenuinepending orheld.', 'QA': 'Worker HELD pending root separate fullsourcepaint/material/nativeweakphase review, not permanent refusal or human/dental/hair/variableA familyban. ONE FIRST3117 actual static diffuseMat1921→Template1288→Head41 ANDMat5554→Template3036→Heads94/98, modelmesh/runtimeunknown, no dynamicTHMID invented. Native256 Ordinary straightRGB/A0..255 full historical/release/originalRGBA/POT parity/52actualDBrows, sourceRGB/A usefulblack/domains not empty assumption. Entire nativeopaqueRGBtoolref/NNonlyprivate; raw1254→whole1024 RGB-FIRST LANCZOS/scalar0.967132568359375/defaultpad0/clear0/completeoriginalAbyteexact/noPremul/zero255clips. Broad ONEinverted face/TWOoldshadoweyes/TWObrows/TWOears/ONEclosedmouth/ONEseparateeyeiris/pupil/TWOupperdental-lashUVstrips andblack/redfields retained; not claimed newphysicalteeth/hair/anatomy/count. Hold specifically sourcepaintblur/material/graystripshape andweakphase: original upperdental graymicrofields become roundedstronger delineated shapes with displacedlocaledges, old eye/face contours andhairpaint more defined/directional, originalflatred field gets mildgradient/texture. Source row44/54/59 luminance maximum arrays in exactbefore versusnaturalRGBroundtrip andproduction complete; not physicaltooth/eyelash counters or acceptance thresholds. Adjacent uppergrayoldedge23,48 source90/69/57→126/109/108 vsnatural80/61/52 givesmaxlocalmeanlift42.333, next22,48 source107/85/90→42/36/35 vsnatural98/78/81 givesmaxloss−56.333, indicates redistributedoldgrayfootprint not simplyglobalgain. Native flatredx0..63/y64..127 entire original96/29/32 std0→mean94.114/27.342/30.524 std1.123/1.306/.729. Same oldlower eye paleRGBpatch96..97/103 source181/162/140→167/146/126 and166/145/127 vsnatural178/158/136 and178/159/138; nextrow96,104 source148/118/104→158/137/118 vsnatural151/122/107, oldpatch redistributed vertically, no extra newcatchlight countclaimed. Pupil97,98 source10/2/0→10/3/1, sameonepupil. Sourcepeak64,197 RGB214/162/123→206/158/128; productionpeak64,199 RGB214/171/143 vsoriginal214/162/123/natural212/160/122, nosepeaks/localgraybrownpaint changedstrongerblue. Closedmouth64,185 source165/97/82→172/101/88 vsnatural168/99/85, originalclosedshape retained. Corner0,255 source66/40/16→68/40/13 vsnatural65/39/15; farblack255,255 source0/0/0/A0→1/1/0, smoothingcontext only not artpatch/empty interpretation. Highpassstd.657/.536/.442→1.576/1.292/1.044 andcorr.9978 numericalcontext not approvalthreshold; moderatefinepaint/onepixel alone notautohold. Qualitative actual oldgraygeometry/nativeblur andsubfieldconstantmaterial concern, no inventedanatomicalparts/fakephysicalcount. Elevenother genuine fullhead coloratlases pending0call for specificweakcount/material/identity audits, not banned facial/dental/hair family. EntireRGBA fullsource matrices+typedref sourcebefore immutable, exactarg+ONE LF/refSHA/raw/call immediatelysaved; no source/prompt errors found, no RGBrepair/crop/BBox/registration/rotation/paddingoptout/localgain/retry. All12new IDs outsideHeads1–24 priorselected, no generated exactRGBA donor. Root sole sharedmetadata/import/native/Game/Git/finalacceptance.', 'ownership': 'Own Heads25 only; frozenHeads24/23/Clothing51 andallold scopes unchanged. Root sole shared/import/native/build/Game/C++/Git/finalacceptance.'})
+assert before.read_bytes() == source.read_bytes()
+mp = B / f'sha256-{ST}.json'
+files = list(B.glob(f'*{ST}*.json')) + list(B.glob('*heads_twenty_fifth*.py')) + list((B / 'generated').glob(f'*{ST}*.png')) + list((B / 'generated').glob(f'*{ST}*-call.json')) + list((B / 'generated').glob(f'*{ST}*-exact-call-argument.txt')) + list((B / f'private-{ST}').rglob('*')) + list((B / f'rejected/{ST}').rglob('*'))
+for i in CALL:
+    files.extend([B / f'generated/{i}-raw.png', B / f'generated/{i}-prompt.txt'])
+save(mp.name, {rel(p): sha(p) for p in sorted(set(files)) if p.is_file() and p != mp})
+assert all((sha(ROOT / p) == h for p, h in read(mp).items()))
+print(json.dumps({'ready': READY, 'held': HELD, 'FIRST_calls': 1, 'genuine_pending0call': len(scope['genuine_pending_uncalled_ids']), 'originalrecommend0call': [], 'actualDB_unique_rows': recordcount, 'manifest_entries': len(read(mp)), 'manifest_differences': 0, 'source_before_byteunchanged': True, 'sourceentries_queue_current': [len(S), len(Q)], 'SHA256': {n: sha(B / f'{n}-{ST}.json') for n in ['jobs', 'review', 'source-check', 'selected', 'sha256']}}, indent=2))

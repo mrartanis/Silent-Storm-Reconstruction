@@ -1,0 +1,39 @@
+[
+  {
+    "id": 5407,
+    "generated": "assets/terrain-hd/expanded/generated/5407-raw.png",
+    "prompt": "Use case: precise-object-edit. Edit only the SAME entire original softly hand-painted equipment UV color texture into finer faithful HD paint. Preserve original completeUV/layout, material/color hierarchy/sourceblur and native patternscale. No new physical key or separate scene.\n\nImage1 is the ENTIRE exact original storedRGB32x128 mapped WHOLE source-only NEAREST affine to128x384 (1:3). Native coordinates/counts below refer to ORIGINAL32x128; helperxy scales4.0 and3.0. Exact nativeRGB inverse roundtrip was proved. NOcrop/padding/BBox/islandfit/registration. OriginalfullsourceA is restored independently after WHOLEgeneratedRGB inverse to128x512.\n\nPreserve the SAME source subdued dark brass/olivebrown painted atlas: ONE narrow original vertical brasspaint stem at left with every original tiny weak light/dark paintmark and old nativephase, the original upperright notched brasspaint field with EXACT THREE existing rightward painted/alpha-positive projections at nativey7..12,17..24,29..33, ONE original soft oval painted wash in the middle, and the original lower painted star-like silhouette with EXACT FIVE original tips. Five source tips native(13,93),(27,93),(11,111),(28,111),(20,123) and original sourcevalleys/nativealpha remain exactly positioned. Preserve the source small indistinct darkmark inside the oval as a weak painted mark, no new punched hole/reflection/anatomy/letter. Entire original silhouette/materialpaint remains same source, not newly designed hardware.\n\nConfirmed source paint constraints: {\"whole_source_canvas\": 1, \"original_left_vertical_brasspaint_strip\": 1, \"original_upper_right_notchedpaint_projections\": 3, \"original_oval_painted_wash\": 1, \"original_lower_star_like_painted_tip_count\": 5}. SourceAlpha explicitlyproves every tip/notch contour and each rowphase BEFOREprompt. Complete sourceA restored separately, but RGBpaint boundaries still match original. Some original blacksupport isA255 and remains authoredblack; actualA0 cutouts remain fulloriginalA, not a wholetransparentbackground assumption. Preserve original softdim pigment/localpale hierarchy and old narrow paint edges.\n\nHD improvement ONLY finer old handpaint transitions and original subdued pigment. Brass stays dim matte oldpaint in its originalbrown/olive/yellow palette; NO photographic brass/sparklingmachinedmetal/abrasivegrain/engraving/griptexture/newmottle/woodweave/pores/raisedhardware/new beads/screws/rivets/newrings/extra points/newteeth/facets/newglints/white reflections/sharp outlines/symbols/letters/regularized geometry. Original weak paint spots remain equally indistinct rather than newphysicalknobs. No reinterpretation of soft ovalwash as optics/eyeball/device.\n\nOutput ONLY the SAME ENTIRE opaqueRGB 1:3 helper canvas. Whole output inverse128x512 restores original1:4normalizedUV. Keep ENTIREsource including edges/authoreddarkRGB/sourceA/nativeblur/paintscale. No letterbox/whitemargin/newblackmargin/crop/zoom/recenter/BBox/registration/UVfitting/repack/artistRGB/sourcecomposite.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/5407.png",
+      "operations": "ENTIREoriginal storedRGB32x128→ENTIRE128x384 source-only NEAREST affine1:4→1:3. Exact NEAREST inverse nativeRGB byteequal asserted. No crop/padding/BBox/registration/islandfit/sourceRGBpatch/unpremultiply. Original source countphase coords remain32x128; helperxy scales4/3. Entire sourceA separate.",
+      "source_size": [
+        32,
+        128
+      ],
+      "source_bbox": [
+        0,
+        0,
+        32,
+        128
+      ],
+      "helper_size": [
+        128,
+        384
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        128,
+        384
+      ],
+      "private_NN_coordinate_view": "assets/terrain-hd/expanded/private-equipment-forty-sixth/survey/5407-source-rgb-nearest512.png",
+      "inverse": "ENTIRE service rawRGB-FIRST Lanczos→original4x128x512, inversewholeguideaspect. CompleteoriginalA independentlyLanczos4x/defaultpad/oneglobalscalar/Ordinary straightRGB. No RGBrepair/crop/BBox/padding/register/optout.",
+      "output": "assets/terrain-hd/expanded/generated/5407-equipment-forty-sixth-source-rgb-affine1x3.png",
+      "source_native_to_helper_affine_xy_scale": [
+        4,
+        3
+      ],
+      "source_RGB_NEAREST_guide_inverse_native_byteexact": true
+    }
+  }
+]

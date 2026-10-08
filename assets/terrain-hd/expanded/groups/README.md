@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 518 of these verified originals are accepted in the shared
+As of 2026-10-08, 523 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-ninth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-fiftieth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,209 IDs: clothing 191, equipment 110, weapons
-50, heads 155, UI 576, effects 103, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,204 IDs: clothing 191, equipment 109, weapons
+50, heads 155, UI 572, effects 103, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -813,3 +813,23 @@ Menu11/0/11/pending0/fourwholeprivateframes/120HDframes:59.96FPS/p9516.84ms/
 normalquit/ownGameabsent. Prior41independentoriginal+HDslow/42–45slow and46–48near60 retained/causeunestablished/
 no source-driver-systemchangesbyroot/no causalfix/generalperformanceacceptanceclaim.
 Proofs:../new-groups-forty-ninth-{batch,live,runtime}-check.json;1,209verifiedoriginalsremain.
+
+Fiftieth accepted packet: equipment5407 and normal/disabled class icons7448/7450/7449/7451.
+Five separate builtin calls, fullUV/sourceA/scalar brightness; pack2,485textures/4,970aliases/
+130archives/7,851,873,410bytes, prior2,480source/PNG/native hashes unchanged.
+5407whole1:4->NEAREST1:3guide exactinverseRGB->ENTIRErawinverse1:4; THREEprojections/FIVEtips/
+ONEoval/leftstem retained, olddarkpigment notnewhole. OrdinarystraightRGB; fourTransparent
+sourceA/nativepremulONCE, sourceorientation/oldloops/U anddimdisabledroles retained with
+cleareroldedges/localsoftphase/washstrength caveats. No newhardware/photosurface.
+Sevenfrozen workerreviews/fiveworkerheld/no rootwholeallheldview claim. Rootheld1930 separate
+from immutableworkerready: oldsoftbrownwash becomesdirectionallines/lowergrayweakcadence changes.
+No retry/RGBrepair; individualoriginalpurpose recommendations pending rootoriginalGPU.
+FreshtypedDBMaterials/Templates/Models/RPGClasses/RPGPers/DataRPG/iCharGen564 consumers,
+genericGPU notactualactiveequipmentmodel/CharacterCreationwidget. All15wholeprivateGPUframes
+andfourmenu frames reviewed/full-middle-reverse-clippedUV/density4vs1/pending0/menu11/0/11.
+FiveactualnativeRGBA equalpredictions/allpackvalidated/source6SHA25/current707EXE/no newFaceGenbake.
+All5alreadyactualarg+ONE LF/knownLF0/oldraw-call-ref-BEFORE-flat-custom exact.
+PNGordinaryGit/RESbuiltwithGame/120HDframes60.00FPS/p9516.97ms/normalquit0/ownGameabsent.
+Historical41independentoriginal+HDslow/42–45slow/46–49near60 retained/causeunestablished/
+no rootcode-driver-systemchange/no causalfix/generalperformanceacceptanceclaim.
+Proofs: ../new-groups-fiftieth-{batch,live,runtime}-check.json;1,204 verified originals remain.

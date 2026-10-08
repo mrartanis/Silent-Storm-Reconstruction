@@ -1,0 +1,28 @@
+{
+  "batch": "ui-sixty-fifth",
+  "readonly": true,
+  "source_excerpts": [
+    {
+      "file": "DBFormat/DataRPG.h",
+      "first_line": 641,
+      "last_line": 654,
+      "source_excerpt": "641: class CRPGClass: public CDBRecord\n642: {\n643: \tOBJECT_BASIC_METHODS(CRPGClass);\n644: public:\n645: \tZDATA_(CDBRecord)\n646: \tint nPerkTreeID;\n647: \tSRPGSkills skills;\n648: \t////\n649: \tCPtr<CString> pToolTip;\n650: \tCPtr<CUITexture> pIcon;\n651: \tCPtr<CUITexture> pIconDisabled;\n652: \tCPtr<CUIContainer> pPerksPanel;\n653: \tZEND int operator&( CStructureSaver &f ) { f.Add(1,(CDBRecord*)this); f.Add(2,&nPerkTreeID); f.Add(3,&skills); f.Add(4,&pToolTip); f.Add(5,&pIcon); f.Add(6,&pIconDisabled); f.Add(7,&pPerksPanel); return 0; }\n654: \tvirtual void Import();",
+      "sha256": "d979caabe329a85dcb3b30e6de515390345674fa9d20b347eef4c04e9f78b89b"
+    },
+    {
+      "file": "DBFormat/DataRPG.cpp",
+      "first_line": 781,
+      "last_line": 790,
+      "source_excerpt": "781: void CRPGClass::Import()\n782: {\n783: \tImportSkills( skills.skills );\n784: \tNDatabase::ImportField( \"PerkTreeID\", &nPerkTreeID );\n785: \t////\n786: \tNDatabase::ImportField( \"ToolTip\", &pToolTip );\n787: \tNDatabase::ImportField( \"Icon\", &pIcon );\n788: \tNDatabase::ImportField( \"IconDisabled\", &pIconDisabled );\n789: \tNDatabase::ImportField( \"PerksPanel\", &pPerksPanel );\n790: }",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9"
+    },
+    {
+      "file": "Main/iCharGen.cpp",
+      "first_line": 553,
+      "last_line": 570,
+      "source_excerpt": "553: \n554: \t\t\tconst vector<CPtr<NDb::CRPGPers> > &classes = pSide->malePersesSet;\n555: \n556: \t\t\tclassIconsSet.resize( ARRAY_SIZE( sClassTable ) );\n557: \t\t\tfor ( int nTemp = 0; nTemp < ARRAY_SIZE( sClassTable ); nTemp++ )\n558: \t\t\t{\n559: \t\t\t\tCPtr<NDb::CRPGPers> pTempPers = classes[sClassTable[nTemp].eClass];\n560: \t\t\t\tCPtr<CComplexButton> pButton = new CComplexButton( sEvent.pLoader->GetControl( sClassTable[nTemp].pszID ), 0, 0, NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n561: \n562: \t\t\t\tif ( IsValid( pTempPers ) && IsValid( pTempPers->pClass ) )\n563: \t\t\t\t{\n564: \t\t\t\t\tpButton->Set( pTempPers->pClass->pIcon, pTempPers->pClass->pIconDisabled, CComplexButton::UNCHECKED );\n565: \t\t\t\t\t// The class description is DATA-DRIVEN by the control's own TooltipID (container 345:\n566: \t\t\t\t\t// medic/scout/sniper/soldier/engineer/grenadier carry TooltipID 11086-11091). Retail\n567: \t\t\t\t\t// (CCharGenUI::ProcessMessage @0x1b5da0) sets tooltips ONLY on the nationality icons\n568: \t\t\t\t\t// (national_0/1/2 have TooltipID=0 so they MUST be set in code); it does NOT touch the class\n569: \t\t\t\t\t// icons. The dev's GetToolTip()->SetText( pClass->pToolTip ) here wrote an empty/invalid\n570: \t\t\t\t\t// string over the good data-driven tooltip -> the class description stopped appearing.",
+      "sha256": "3f3a94f34b6bf317b82796a3eb12fc858beb4d2c5e9aaa07ce056b90b65b60d8"
+    }
+  ],
+  "qualification": "RPGClasses Icon/IconDisabled typedCUITexture actualimports→real iCharGen564 dynamicclassbutton. FreshRPGPers classIDs linked. Existingsharedbroadinterfaceaudit omitsRPGClasses; worker added independentproof only, no sharedtool/metadata edit. No currentlyvisible Game/UI claimed."
+}
