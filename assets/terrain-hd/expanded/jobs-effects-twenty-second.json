@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1078,
+    "generated": "assets/terrain-hd/expanded/generated/1078-raw.png",
+    "prompt": "Use case: precise-object-edit. Asset: exact historical Silent Storm soft painted COLOR effect bitmap edit, restrained finer original paint.\r\n\r\nImage1 is the ENTIRE actual storedRGB original texture made opaque only by wholecanvas nearest-neighbor enlargement. Native originalA is zero but this RGB is genuinely useful in TransparentAdd, not an empty texture. Original COMPLETE A0 will be restored downstream; do not generate a transparent cutout or alpha premultiplication. Keep same entire square source canvas edge-to-edge and normalized UV, every source pigment value relationship, black gap, count/position/phase/scale and ORIGINAL SOFT BLUR.\r\n\r\nONE original compact softly painted yellow-orange diffuse color field in its exact native16x16 footprint. Preserve its original asymmetric central lighter yellow/cream area and dim reddish-brown soft lower/outer halo, no new field or flare. It is the same tiny warm blurred pigment, not a flame photograph. No flame tongues, bright-white center, rough largecells or individual sparks. Smooth only original sampling into fine subtle paint while retaining the original soft low-frequency blur and all existing code-value support.\r\n\r\nExact native dimensions are [16, 16]; original whole CHANNEL maxima RGB[255, 242, 128] (individual channel extrema, not permission for a newwhite point). Original brightest mean-RGB location native[8, 7] has RGB[255, 242, 128]. Preserve that same source local dominance and all dim original halos. One global scalar corrects brightness later, so do NOT locally strengthen the center, make dim edge support brighter, or add tonal fields. No new coarsecells/photonoise/materialgrain, sharpened rims, rays, curls or cauliflowerturbulence.\r\n\r\nOutput the ENTIRE opaque source storedRGB COLOR canvas at exactly same normalized fullUV; all original black/dim color support remains. No crop/zoom/padding/whitespace/frame/recenter/fit/BBox/registration/sourceRGB artistic patch. No new forms/text/marks/physical anatomy. Retain original material softness, native relative palette and pattern scale.",
+    "source_transform_recipe": {
+      "input": "assets/terrain-hd/expanded/original/1078.png",
+      "operations": "Native stored RGBA→opaqueRGB, wholecanvas NEAREST32x. No crop/padding/rotate/UV fitting/unpremultiply/art inserted. SourceA separately restored by root.",
+      "source_size": [
+        16,
+        16
+      ],
+      "source_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "helper_size": [
+        512,
+        512
+      ],
+      "helper_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "inverse": "ENTIRE raw LANCZOS to original4x; sourceA LANCZOS separately; scalar brightness and original native Type handling by root.",
+      "output": "assets/terrain-hd/expanded/generated/1078-effects-twenty-second-source-rgb-support.png"
+    }
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1937,
+    "texture": {
+      "ID": 1937,
+      "Width": 256,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -13362419,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Weapons\\Rifles\\LeeEnfield_Mk1.tga",
+      "Format": "dxt1",
+      "UserName": "LeeEnfield_Mk1",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "weapons",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 1333,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "alpha_test",
+          "AddressMode": "Clamp",
+          "TemplateID": 891,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 1345,
+              "field": "Material0",
+              "material_template_id": 891,
+              "geometry_id": 1758,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 990,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 1346,
+              "field": "Material0",
+              "material_template_id": 891,
+              "geometry_id": 1759,
+              "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+              "model_template_id": 991,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      64
+    ],
+    "source_sha256": "fe82b05791f4c767ed01be402d9990d49f0cb18b117b1530a9add231abcd795c",
+    "source_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+    "release_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/1937.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Full original logical256x64, production1024x256. Preserve FIVE separate broad muted graypaint islands across upperLEFT/middle: TWO tall plain left fragments, TWO horizontal plain shaded fragments just to their right (one above and one below), ONE smaller roughly square shaded fragment around native89..102/y3..24. Their faint tonal edgepaint remains soft, no added pins/holes/engraving/fasteners or inset panels. Preserve ONE continuous broad warm brown wood length across lowerhalf, its existing long subtle orange/brown grainwash and right sloping shoulder/stock that reaches original rightcanvasedge; no woodknots, photo grain, scratches or new darkcuts. Preserve ONE broad middle gray band near native63..69/y37..62 and original narrower leftedge gray strips including canvas-clipped fragments. Preserve ONE old dim gray/dark loop silhouette above the wood near native163..179/y20..35 with its ONE source black aperture and small old triangular shaded patch to its left; no new or brighter loop, cap or extra rings. Lower-middle/right old gray receiverpaint field near120..188/y51..63 stays clipped at original bottomcanvasedge. Retain all its existing faint dark/pale bars and rectangular tone patches in exact phase and size, but keep them ambiguous paint rather than inventing mechanical parts. Source native meanRGB>100 row53 has TWO lightintervals x133..135 and174..179; row55 has FIVE x128..131,133..136,158..160,166..171,174..175. These are existing sourcepaint lightstrokes, NOT proof of screws/vent/chamber identities. Preserve their count/phase/softness; no new screws, slots, drilled dots, rib trains, chambervents, handles or brightoutlined boundaries. Source lowerfield has NO new lettering or symbols and nothing extends beyond original croppedbottom. Source dark black unusedUV areas remain blackRGB even ifsourceApositive, never fillwithwood/metal. Muted gray/tan paint material only, no metallic chrome rim or glints, fine original tone detail only. All tiny weak areas stay softoldpaint rather than new hardgeometry.",
+    "reference_recipe": {
+      "type": "source-only-entire-canvas-affine3to1-nearest",
+      "source_dimensions": [
+        256,
+        64
+      ],
+      "guide_dimensions": [
+        768,
+        256
+      ],
+      "resampling": "nearest",
+      "affine_prewarp": {
+        "fullcanvas": true,
+        "source_aspect": "4:1",
+        "guide_aspect": "3:1",
+        "scale_x": 3,
+        "scale_y": 4,
+        "inverse": "Entire generatedoutput wholeLanczos1024x256 only; no crop/padding/bbox/registration"
+      },
+      "references_sha256": [
+        "7c0abe29774861e17a4edafb697386b0ee7bb59676fc4b97d3f9735e1d087f5a",
+        "f946c35b82d065da111c7286a9104ae8bcc9d9c342a9e097779aeb7bfce19648"
+      ]
+    }
+  }
+]

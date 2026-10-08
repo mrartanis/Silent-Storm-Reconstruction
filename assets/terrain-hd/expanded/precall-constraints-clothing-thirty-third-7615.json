@@ -1,0 +1,218 @@
+[
+  {
+    "id": 7615,
+    "exact_prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into faithful4x HD old painted game art. Exact128square original whole diffuse, source-only nearest8x1024square RGBA guide. Preserve the ENTIRE source UV canvas, exact material boundaries, source edges and physical pattern scale; no crop/BBox/padding/UV-fitting/recenter/margins. Actual sourceA255 EVERYWHERE including1770 intentional opaque RGB-black pixels, never treat black as alpha.\nUpper-left subdued DARK RED cloth has EXACTLY NINE light red bands centersx3/11/19/27/35/43/51/59/67 and EIGHT dark cuts centered7/15/23/31/39/47/55/63, source pitch8. Preserve whole source phase and downward fading; printendsx72, original opaque blackgapx72..76 is not10th stripe. Keep dim source contrast and soft folds, no raised woven strips.\nONE upper-right darkgray field[78,0,128,35]; ONE warm/darkgray CHECKER PAINT field[78,35,128,57], entire50nativecolumns by22nativerows with original downward pigment fading. Clear INNER grid[84,35,128,57] is EXACT44nativecolumns by22rows, one-native-pixel cells, two-native-pixel repeat: at(84,35)dark,(85,35)warm,(84,36)warm,(85,36)dark, keep parity/phase/count. The SIX left transition columnsx78..83 contain original irregular warm border and gray seam, do NOT replace them with a uniform grid or add columns. This is the existing tiny painted pattern, not a newly woven/raised fishnet fabric or larger squares. Preserve ONE brown horizontal wash[78,59,128,67] with every original thin gray vertical seam trace; no buckle interpretation. ONE lower darkbluegray clothfield[25,67,128,128] keeps original soft folds and hue.\nONE dim gray-black bootwash[27,30,78,67] retains broad diagonal/V shading as indistinct PAINT without interpreting weak pixels as eyelets/laces/zipper/knots or inventing hardware anatomy. ONE tiny lower-left angular graypaintwash[2,79,7,86] preserves its original boundaries and darkinset, no metallic polished buckle. ONE tiny pale lower-right point(113,117) remains. HD only refines existing subdued paint gradients/weak fine grain; preserve blur/local pigment strength and gray/red/blue/warm relative lightness. No photographic pores/leather/weave, new seams/hardware/symbols/objects/bevels or new foldgeometry. Return ONLY the same entire diffuse atlas.",
+    "proved_source_counts": {
+      "upper_left_striped_field_count": 1,
+      "light_band_count": 9,
+      "dark_separator_count": 8,
+      "native_light_band_centers": [
+        3,
+        11,
+        19,
+        27,
+        35,
+        43,
+        51,
+        59,
+        67
+      ],
+      "native_dark_separator_centers": [
+        7,
+        15,
+        23,
+        31,
+        39,
+        47,
+        55,
+        63
+      ],
+      "native_repeat_pitch": 8,
+      "upper_striped_field_end_exclusive_x": 72,
+      "black_gap_native_x": [
+        72,
+        77
+      ],
+      "black_gap_is_alpha_positive": true,
+      "source_horizontal_profile_y_bounds": [
+        4,
+        20
+      ],
+      "boot_painted_wash_count": 1,
+      "boot_painted_wash_bounds": [
+        27,
+        30,
+        78,
+        67
+      ],
+      "boot_faint_trace_semantics": "Actual dim diagonal/V/crossed shading preserved as indistinct original paint; no inferred number of laces/eyelets/hardware parts from weak raster. Whole native RGBA phase recorded without invented semantic parts.",
+      "lower_left_single_angular_graywash_count": 1,
+      "lower_left_single_angular_graywash_bounds": [
+        2,
+        79,
+        7,
+        86
+      ],
+      "angular_graywash_semantics": "Exact source gray boundary and dark inset only; no guessed open-vs-closed hardware structure, shiny rim, pin, buckle anatomy.",
+      "lower_right_original_pale_point_count": 1,
+      "lower_right_original_pale_point_xy": [
+        113,
+        117
+      ],
+      "upper_right_darkgrayfield_bounds": [
+        78,
+        0,
+        128,
+        35
+      ],
+      "whole_checker_field_count": 1,
+      "whole_checker_bounds": [
+        78,
+        35,
+        128,
+        57
+      ],
+      "whole_checker_width_height_native": [
+        50,
+        22
+      ],
+      "whole_checker_left_transition_columns": 6,
+      "clear_inner_checker_bounds": [
+        84,
+        35,
+        128,
+        57
+      ],
+      "clear_inner_checker_native_cell_columns": 44,
+      "clear_inner_checker_native_cell_rows": 22,
+      "clear_inner_checker_cell_pitch": 1,
+      "clear_inner_checker_repeat_pitch": 2,
+      "clear_inner_checker_full_period_columns_rows": [
+        22,
+        11
+      ],
+      "clear_inner_checker_phase": "At native84,35 DARK;85,35 WARM;84,36 WARM;85,36 DARK. Exactly alternating parity (x+y) even warm, odd dark in44x22innerfield. Wholeleft6columns contain original warm edge/grayverticalseam transition, NOT forced uniform grid.",
+      "lower_right_brown_horizontalfield_bounds": [
+        78,
+        59,
+        128,
+        67
+      ],
+      "lower_large_bluegray_field_bounds": [
+        25,
+        67,
+        128,
+        128
+      ],
+      "pigment": "Subdued dark red stripes, very darkbootwash, warm/darkgray checker with original downward fade, darkbluegray lowercloth; no raised woven mesh."
+    },
+    "prompt_constraints": {
+      "upper_left_striped_field_count": 1,
+      "light_band_count": 9,
+      "dark_separator_count": 8,
+      "native_light_band_centers": [
+        3,
+        11,
+        19,
+        27,
+        35,
+        43,
+        51,
+        59,
+        67
+      ],
+      "native_dark_separator_centers": [
+        7,
+        15,
+        23,
+        31,
+        39,
+        47,
+        55,
+        63
+      ],
+      "native_repeat_pitch": 8,
+      "upper_striped_field_end_exclusive_x": 72,
+      "black_gap_native_x": [
+        72,
+        77
+      ],
+      "black_gap_is_alpha_positive": true,
+      "source_horizontal_profile_y_bounds": [
+        4,
+        20
+      ],
+      "boot_painted_wash_count": 1,
+      "boot_painted_wash_bounds": [
+        27,
+        30,
+        78,
+        67
+      ],
+      "boot_faint_trace_semantics": "Actual dim diagonal/V/crossed shading preserved as indistinct original paint; no inferred number of laces/eyelets/hardware parts from weak raster. Whole native RGBA phase recorded without invented semantic parts.",
+      "lower_left_single_angular_graywash_count": 1,
+      "lower_left_single_angular_graywash_bounds": [
+        2,
+        79,
+        7,
+        86
+      ],
+      "angular_graywash_semantics": "Exact source gray boundary and dark inset only; no guessed open-vs-closed hardware structure, shiny rim, pin, buckle anatomy.",
+      "lower_right_original_pale_point_count": 1,
+      "lower_right_original_pale_point_xy": [
+        113,
+        117
+      ],
+      "upper_right_darkgrayfield_bounds": [
+        78,
+        0,
+        128,
+        35
+      ],
+      "whole_checker_field_count": 1,
+      "whole_checker_bounds": [
+        78,
+        35,
+        128,
+        57
+      ],
+      "whole_checker_width_height_native": [
+        50,
+        22
+      ],
+      "whole_checker_left_transition_columns": 6,
+      "clear_inner_checker_bounds": [
+        84,
+        35,
+        128,
+        57
+      ],
+      "clear_inner_checker_native_cell_columns": 44,
+      "clear_inner_checker_native_cell_rows": 22,
+      "clear_inner_checker_cell_pitch": 1,
+      "clear_inner_checker_repeat_pitch": 2,
+      "clear_inner_checker_full_period_columns_rows": [
+        22,
+        11
+      ],
+      "clear_inner_checker_phase": "At native84,35 DARK;85,35 WARM;84,36 WARM;85,36 DARK. Exactly alternating parity (x+y) even warm, odd dark in44x22innerfield. Wholeleft6columns contain original warm edge/grayverticalseam transition, NOT forced uniform grid.",
+      "lower_right_brown_horizontalfield_bounds": [
+        78,
+        59,
+        128,
+        67
+      ],
+      "lower_large_bluegray_field_bounds": [
+        25,
+        67,
+        128,
+        128
+      ],
+      "pigment": "Subdued dark red stripes, very darkbootwash, warm/darkgray checker with original downward fade, darkbluegray lowercloth; no raised woven mesh."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "source_count_proof_sha256": "2b4ca122e0fd63acc3649d29d29a5402f9b78e8fe35f9e8c125fd8e22359e643",
+    "source_check_sha256": "1ffe096930e185103bc08190a2a7262f48488148fcd9c4ceaf69eab75b59bd7a",
+    "frozen_before_tool_utc": "2026-10-08T09:02:00.558437+00:00"
+  }
+]

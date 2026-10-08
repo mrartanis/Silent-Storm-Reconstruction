@@ -1,0 +1,4176 @@
+{
+  "batch": "weapons-thirteenth",
+  "finalized_utc": "2026-10-08T08:59:01.979680+00:00",
+  "source_registry_snapshot_qualification": {
+    "source_registry_count_at_discovery": 2407,
+    "source_registry_count_before_call": 2407,
+    "queue_count_before_call": 2869,
+    "qualification": "Trusted root Weapons13 task: published/nativevalidated accepted2400/q2862 commitc30f7b43; root independent pending33 added7 to source-list. Actual own discovery/pretool read2407/q2869, guard snapshot not claiming all2407 accepted/nativevalidated/published. Legacy accepted_snapshot_at_call equals source-list length at call. New Weapons13 artifact unimported/held, no selected native/GPU/live acceptance claim. Root sole finalgate."
+  },
+  "ready_ids": [],
+  "ready": [],
+  "held_ids": [
+    1937
+  ],
+  "held": [
+    {
+      "id": 1937,
+      "status": "art-reviewed-held-material-and-paintstroke-phase",
+      "source_record": {
+        "id": 1937,
+        "source_record": {
+          "id": 1937,
+          "texture": {
+            "ID": 1937,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -13362419,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\LeeEnfield_Mk1.tga",
+            "Format": "dxt1",
+            "UserName": "LeeEnfield_Mk1",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1333,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 891,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1345,
+                    "field": "Material0",
+                    "material_template_id": 891,
+                    "geometry_id": 1758,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 990,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1346,
+                    "field": "Material0",
+                    "material_template_id": 891,
+                    "geometry_id": 1759,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 991,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "fe82b05791f4c767ed01be402d9990d49f0cb18b117b1530a9add231abcd795c",
+          "source_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+          "release_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1937.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1937,
+          "texture": {
+            "ID": 1937,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -13362419,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\LeeEnfield_Mk1.tga",
+            "Format": "dxt1",
+            "UserName": "LeeEnfield_Mk1",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1333,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 891,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1345,
+                  "field": "Material0",
+                  "material_template_id": 891,
+                  "geometry_id": 1758,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 990,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1346,
+                  "field": "Material0",
+                  "material_template_id": 891,
+                  "geometry_id": 1759,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 991,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1333,
+              "TextureID": 1937,
+              "BRDFID": 0,
+              "BumpID": 2728,
+              "SpecColor": 0,
+              "TemplateID": 891,
+              "GlossID": 2745,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 891,
+              "UserName": "LeeEnfield_Mk1"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1345,
+                  "Material0": 891,
+                  "Material1": 0,
+                  "GeometryID": 1758,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 990,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1758,
+                  "AIGeometryID": 884,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1315476894378662,
+                  "SizeY": 0.042536698281764984,
+                  "SizeZ": 0.20745578408241272,
+                  "CenterX": 0.28872811794281006,
+                  "CenterY": 2.7008354663848877e-08,
+                  "CenterZ": 0.007691666483879089,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "LeeEnfield_Mk1",
+                  "RootJoint": "LeeEnfield_Mk1"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1346,
+                  "Material0": 891,
+                  "Material1": 901,
+                  "GeometryID": 1759,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 991,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1759,
+                  "AIGeometryID": 885,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1311898231506348,
+                  "SizeY": 0.04431702941656113,
+                  "SizeZ": 0.2073899805545807,
+                  "CenterX": 0.2462868094444275,
+                  "CenterY": -0.001456097699701786,
+                  "CenterZ": 0.0678548663854599,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "LeeEnfield_Mk1_sniper",
+                  "RootJoint": "LeeEnfield_Mk1_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "fe82b05791f4c767ed01be402d9990d49f0cb18b117b1530a9add231abcd795c",
+        "release_mmp_sha256": "fe82b05791f4c767ed01be402d9990d49f0cb18b117b1530a9add231abcd795c",
+        "original_png_sha256": "7c0abe29774861e17a4edafb697386b0ee7bb59676fc4b97d3f9735e1d087f5a",
+        "source_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+        "source_rgb_sha256": "a98dd88d06993d2630c11ea49791761825b6e42dbf4bd9a574ebb55aed25195f",
+        "source_alpha_sha256": "8c0342b2ce7365b4f4504880e566a6bbeadc6fffc8822c559604d8d217354e9a",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_and_wholeNN_privately_inspected_before_prompt": true,
+        "source_count_phase_constraints": "Full original logical256x64, production1024x256. Preserve FIVE separate broad muted graypaint islands across upperLEFT/middle: TWO tall plain left fragments, TWO horizontal plain shaded fragments just to their right (one above and one below), ONE smaller roughly square shaded fragment around native89..102/y3..24. Their faint tonal edgepaint remains soft, no added pins/holes/engraving/fasteners or inset panels. Preserve ONE continuous broad warm brown wood length across lowerhalf, its existing long subtle orange/brown grainwash and right sloping shoulder/stock that reaches original rightcanvasedge; no woodknots, photo grain, scratches or new darkcuts. Preserve ONE broad middle gray band near native63..69/y37..62 and original narrower leftedge gray strips including canvas-clipped fragments. Preserve ONE old dim gray/dark loop silhouette above the wood near native163..179/y20..35 with its ONE source black aperture and small old triangular shaded patch to its left; no new or brighter loop, cap or extra rings. Lower-middle/right old gray receiverpaint field near120..188/y51..63 stays clipped at original bottomcanvasedge. Retain all its existing faint dark/pale bars and rectangular tone patches in exact phase and size, but keep them ambiguous paint rather than inventing mechanical parts. Source native meanRGB>100 row53 has TWO lightintervals x133..135 and174..179; row55 has FIVE x128..131,133..136,158..160,166..171,174..175. These are existing sourcepaint lightstrokes, NOT proof of screws/vent/chamber identities. Preserve their count/phase/softness; no new screws, slots, drilled dots, rib trains, chambervents, handles or brightoutlined boundaries. Source lowerfield has NO new lettering or symbols and nothing extends beyond original croppedbottom. Source dark black unusedUV areas remain blackRGB even ifsourceApositive, never fillwithwood/metal. Muted gray/tan paint material only, no metallic chrome rim or glints, fine original tone detail only. All tiny weak areas stay softoldpaint rather than new hardgeometry.",
+        "reference_recipe": {
+          "type": "source-only-entire-canvas-affine3to1-nearest",
+          "source_dimensions": [
+            256,
+            64
+          ],
+          "guide_dimensions": [
+            768,
+            256
+          ],
+          "resampling": "nearest",
+          "affine_prewarp": {
+            "fullcanvas": true,
+            "source_aspect": "4:1",
+            "guide_aspect": "3:1",
+            "scale_x": 3,
+            "scale_y": 4,
+            "inverse": "Entire generatedoutput wholeLanczos1024x256 only; no crop/padding/bbox/registration"
+          },
+          "references_sha256": [
+            "7c0abe29774861e17a4edafb697386b0ee7bb59676fc4b97d3f9735e1d087f5a",
+            "f946c35b82d065da111c7286a9104ae8bcc9d9c342a9e097779aeb7bfce19648"
+          ]
+        },
+        "actual_runtime_binding": {
+          "actual_material_model_chains": [
+            {
+              "actual_material": {
+                "ID": 1333,
+                "TextureID": 1937,
+                "BRDFID": 0,
+                "BumpID": 2728,
+                "SpecColor": 0,
+                "TemplateID": 891,
+                "GlossID": 2745,
+                "MirrorID": 0,
+                "CastShadow": 1,
+                "SpecFactor": 0.0,
+                "RndWeight": 1.0,
+                "MetalMirror": 0.0,
+                "DielMirror": 0.0,
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "Flags": ""
+              },
+              "actual_template": {
+                "ID": 891,
+                "UserName": "LeeEnfield_Mk1"
+              },
+              "actual_consumers": [
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 1345,
+                    "Material0": 891,
+                    "Material1": 0,
+                    "GeometryID": 1758,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 990,
+                    "RPGArmorID": 28,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "geometry": {
+                    "ID": 1758,
+                    "AIGeometryID": 884,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 1.1315476894378662,
+                    "SizeY": 0.042536698281764984,
+                    "SizeZ": 0.20745578408241272,
+                    "CenterX": 0.28872811794281006,
+                    "CenterY": 2.7008354663848877e-08,
+                    "CenterZ": 0.007691666483879089,
+                    "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                    "UserName": "LeeEnfield_Mk1",
+                    "RootJoint": "LeeEnfield_Mk1"
+                  }
+                },
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 1346,
+                    "Material0": 891,
+                    "Material1": 901,
+                    "GeometryID": 1759,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 991,
+                    "RPGArmorID": 28,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "geometry": {
+                    "ID": 1759,
+                    "AIGeometryID": 885,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 1.1311898231506348,
+                    "SizeY": 0.04431702941656113,
+                    "SizeZ": 0.2073899805545807,
+                    "CenterX": 0.2462868094444275,
+                    "CenterY": -0.001456097699701786,
+                    "CenterZ": 0.0678548663854599,
+                    "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                    "UserName": "LeeEnfield_Mk1_sniper",
+                    "RootJoint": "LeeEnfield_Mk1_sniper"
+                  }
+                }
+              ]
+            }
+          ],
+          "actual_material_alpha_modes": [
+            "alpha_test"
+          ],
+          "qualification": "Fresh actual DB Materials.TextureID1937→MaterialTemplates→Models1345/1346 MaterialN/geometry chains retained, genuine diffuse alpha_test; no assumed material-only consumer or selected generatedart actual live/GPU claim."
+        },
+        "source_only_prior_audit_history": "Weapons9/12 uncalled genuine source-only deferred; fresh fullsource/NN13 broadcomponent and exact lower lightstroke phase proof now retained, no previousraw retry. Unknown mechanical identities not asserted.",
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "generation_provenance": {
+        "id": 1937,
+        "batch": "weapons-thirteenth",
+        "status": "finished",
+        "builtin": true,
+        "tool": "image_gen.imagegen",
+        "started_utc": "2026-10-08T08:54:02.010370+00:00",
+        "exact_prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into faithful HD PAINTED material artwork. Image2 is SAME ORIGINAL source-only wholecanvas nearest guide with uniform affine prewarp4:1 to3:1; no added information. Return whole3:1 helper atlas with normalized UV identity; final inverse is entire-image Lanczos to original4:1 production dimensions. NO crop/padding/zoom/repack/reframe/rotation/registration/bbox or assembled/rendered object. Every source island/edge/alpha cutout/black unused area and clipping stays exact normalized location/shape/scale. Preserve native source alpha_test material; pipeline restores whole exact original alpha. Black original UV fields stay RGBblack; NO nearest-color filling or newly drawn material there. Plain painted brown wood/darkgray metal keep muted original local hue/value/shading hierarchy and source softness/lightstrength, soft fine restrained existing tone only. Codecblocks/tonal pixels are shading, never structural new hardware. No new holes/screws/vents/chambers/rivets/marks/glyphs/engraving/raisedrim/slats/scratches/damage/stains/woodknots or photograin. Source tiny pale flecks stay muted irregular paint, never new bright defined ornaments. Existing dark/pale marks/frames/bars/insets retain exact count/pitch/phase; no semantic redesign. Later ONE global numeric gain only, do not artistically relight. Full original logical256x64, production1024x256. Preserve FIVE separate broad muted graypaint islands across upperLEFT/middle: TWO tall plain left fragments, TWO horizontal plain shaded fragments just to their right (one above and one below), ONE smaller roughly square shaded fragment around native89..102/y3..24. Their faint tonal edgepaint remains soft, no added pins/holes/engraving/fasteners or inset panels. Preserve ONE continuous broad warm brown wood length across lowerhalf, its existing long subtle orange/brown grainwash and right sloping shoulder/stock that reaches original rightcanvasedge; no woodknots, photo grain, scratches or new darkcuts. Preserve ONE broad middle gray band near native63..69/y37..62 and original narrower leftedge gray strips including canvas-clipped fragments. Preserve ONE old dim gray/dark loop silhouette above the wood near native163..179/y20..35 with its ONE source black aperture and small old triangular shaded patch to its left; no new or brighter loop, cap or extra rings. Lower-middle/right old gray receiverpaint field near120..188/y51..63 stays clipped at original bottomcanvasedge. Retain all its existing faint dark/pale bars and rectangular tone patches in exact phase and size, but keep them ambiguous paint rather than inventing mechanical parts. Source native meanRGB>100 row53 has TWO lightintervals x133..135 and174..179; row55 has FIVE x128..131,133..136,158..160,166..171,174..175. These are existing sourcepaint lightstrokes, NOT proof of screws/vent/chamber identities. Preserve their count/phase/softness; no new screws, slots, drilled dots, rib trains, chambervents, handles or brightoutlined boundaries. Source lowerfield has NO new lettering or symbols and nothing extends beyond original croppedbottom. Source dark black unusedUV areas remain blackRGB even ifsourceApositive, never fillwithwood/metal. Muted gray/tan paint material only, no metallic chrome rim or glints, fine original tone detail only. All tiny weak areas stay softoldpaint rather than new hardgeometry. ONE entire atlas, no border/caption/comparison.",
+        "prompt_file": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1937-prompt.txt",
+        "prompt_sha256": "17a0eec0e78d7c2e40df3c6888a10afa09d600e75bfae60991838553b2e85df8",
+        "references": [
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1937.png",
+          "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1937-weapons-thirteenth-affine-source-reference.png"
+        ],
+        "reference_recipe": {
+          "type": "source-only-entire-canvas-affine3to1-nearest",
+          "source_dimensions": [
+            256,
+            64
+          ],
+          "guide_dimensions": [
+            768,
+            256
+          ],
+          "resampling": "nearest",
+          "affine_prewarp": {
+            "fullcanvas": true,
+            "source_aspect": "4:1",
+            "guide_aspect": "3:1",
+            "scale_x": 3,
+            "scale_y": 4,
+            "inverse": "Entire generatedoutput wholeLanczos1024x256 only; no crop/padding/bbox/registration"
+          },
+          "references_sha256": [
+            "7c0abe29774861e17a4edafb697386b0ee7bb59676fc4b97d3f9735e1d087f5a",
+            "f946c35b82d065da111c7286a9104ae8bcc9d9c342a9e097779aeb7bfce19648"
+          ]
+        },
+        "target_size": [
+          1024,
+          256
+        ],
+        "transparent_background": false,
+        "accepted_snapshot_at_call": 2407,
+        "actual_tool_arguments": {
+          "prompt": "Use case: precise-object-edit. Edit image1 ORIGINAL historical game diffuse UV atlas into faithful HD PAINTED material artwork. Image2 is SAME ORIGINAL source-only wholecanvas nearest guide with uniform affine prewarp4:1 to3:1; no added information. Return whole3:1 helper atlas with normalized UV identity; final inverse is entire-image Lanczos to original4:1 production dimensions. NO crop/padding/zoom/repack/reframe/rotation/registration/bbox or assembled/rendered object. Every source island/edge/alpha cutout/black unused area and clipping stays exact normalized location/shape/scale. Preserve native source alpha_test material; pipeline restores whole exact original alpha. Black original UV fields stay RGBblack; NO nearest-color filling or newly drawn material there. Plain painted brown wood/darkgray metal keep muted original local hue/value/shading hierarchy and source softness/lightstrength, soft fine restrained existing tone only. Codecblocks/tonal pixels are shading, never structural new hardware. No new holes/screws/vents/chambers/rivets/marks/glyphs/engraving/raisedrim/slats/scratches/damage/stains/woodknots or photograin. Source tiny pale flecks stay muted irregular paint, never new bright defined ornaments. Existing dark/pale marks/frames/bars/insets retain exact count/pitch/phase; no semantic redesign. Later ONE global numeric gain only, do not artistically relight. Full original logical256x64, production1024x256. Preserve FIVE separate broad muted graypaint islands across upperLEFT/middle: TWO tall plain left fragments, TWO horizontal plain shaded fragments just to their right (one above and one below), ONE smaller roughly square shaded fragment around native89..102/y3..24. Their faint tonal edgepaint remains soft, no added pins/holes/engraving/fasteners or inset panels. Preserve ONE continuous broad warm brown wood length across lowerhalf, its existing long subtle orange/brown grainwash and right sloping shoulder/stock that reaches original rightcanvasedge; no woodknots, photo grain, scratches or new darkcuts. Preserve ONE broad middle gray band near native63..69/y37..62 and original narrower leftedge gray strips including canvas-clipped fragments. Preserve ONE old dim gray/dark loop silhouette above the wood near native163..179/y20..35 with its ONE source black aperture and small old triangular shaded patch to its left; no new or brighter loop, cap or extra rings. Lower-middle/right old gray receiverpaint field near120..188/y51..63 stays clipped at original bottomcanvasedge. Retain all its existing faint dark/pale bars and rectangular tone patches in exact phase and size, but keep them ambiguous paint rather than inventing mechanical parts. Source native meanRGB>100 row53 has TWO lightintervals x133..135 and174..179; row55 has FIVE x128..131,133..136,158..160,166..171,174..175. These are existing sourcepaint lightstrokes, NOT proof of screws/vent/chamber identities. Preserve their count/phase/softness; no new screws, slots, drilled dots, rib trains, chambervents, handles or brightoutlined boundaries. Source lowerfield has NO new lettering or symbols and nothing extends beyond original croppedbottom. Source dark black unusedUV areas remain blackRGB even ifsourceApositive, never fillwithwood/metal. Muted gray/tan paint material only, no metallic chrome rim or glints, fine original tone detail only. All tiny weak areas stay softoldpaint rather than new hardgeometry. ONE entire atlas, no border/caption/comparison.",
+          "referenced_image_paths": [
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/original/1937.png",
+            "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1937-weapons-thirteenth-affine-source-reference.png"
+          ],
+          "transparent_background": false
+        },
+        "finished_utc": "2026-10-08T08:54:45.033474+00:00",
+        "builtin_output_path": "C:/Users/artanis/.codex/generated_images/01a11837-e163-7f23-bae1-a016094f60c6/exec-2bee5a18-9734-41c5-b8a5-bfd0d7b71fad.png",
+        "saved_raw": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1937-raw.png",
+        "raw_sha256": "90f212e6dfca0115fe29ac38f3599e5012b892db148abd1f64730cd0d4138727",
+        "raw_saved": true
+      },
+      "fresh_before_builtin_guard": {
+        "id": 1937,
+        "batch": "weapons-thirteenth",
+        "checked_utc": "2026-10-08T08:54:05.645388+00:00",
+        "sources_count": 2407,
+        "queue_count": 2869,
+        "sources_sha256": "b0073fe2c2f73775b7911aa875359d0ef715715561b7a3a06f9610f891f14069",
+        "queue_sha256": "c975acee4e06bac2e0c6534b0e59d23ce3af27eb9aef48224dade7d98c10fea6",
+        "accepted_aliases_called_selected_held_anyraw_sameRGBA_guard_passed": true,
+        "source_actual_typed_diffuse_model_historical_release_original_RGBA_guard_passed": true,
+        "source_rgba_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+        "prompt_sha256": "17a0eec0e78d7c2e40df3c6888a10afa09d600e75bfae60991838553b2e85df8",
+        "reference_recipe": {
+          "type": "source-only-entire-canvas-affine3to1-nearest",
+          "source_dimensions": [
+            256,
+            64
+          ],
+          "guide_dimensions": [
+            768,
+            256
+          ],
+          "resampling": "nearest",
+          "affine_prewarp": {
+            "fullcanvas": true,
+            "source_aspect": "4:1",
+            "guide_aspect": "3:1",
+            "scale_x": 3,
+            "scale_y": 4,
+            "inverse": "Entire generatedoutput wholeLanczos1024x256 only; no crop/padding/bbox/registration"
+          },
+          "references_sha256": [
+            "7c0abe29774861e17a4edafb697386b0ee7bb59676fc4b97d3f9735e1d087f5a",
+            "f946c35b82d065da111c7286a9104ae8bcc9d9c342a9e097779aeb7bfce19648"
+          ]
+        },
+        "started_metadata_sha256": "96462a046a4f349990fd9b7532ee0f281a94636c82998b34762c00b3a5a086b0",
+        "shared_modified": false
+      },
+      "source_count_phase_before_prompt": {
+        "id": 1937,
+        "full_source_inspected_before_prompt": true,
+        "source_count_phase": "Full original logical256x64, production1024x256. Preserve FIVE separate broad muted graypaint islands across upperLEFT/middle: TWO tall plain left fragments, TWO horizontal plain shaded fragments just to their right (one above and one below), ONE smaller roughly square shaded fragment around native89..102/y3..24. Their faint tonal edgepaint remains soft, no added pins/holes/engraving/fasteners or inset panels. Preserve ONE continuous broad warm brown wood length across lowerhalf, its existing long subtle orange/brown grainwash and right sloping shoulder/stock that reaches original rightcanvasedge; no woodknots, photo grain, scratches or new darkcuts. Preserve ONE broad middle gray band near native63..69/y37..62 and original narrower leftedge gray strips including canvas-clipped fragments. Preserve ONE old dim gray/dark loop silhouette above the wood near native163..179/y20..35 with its ONE source black aperture and small old triangular shaded patch to its left; no new or brighter loop, cap or extra rings. Lower-middle/right old gray receiverpaint field near120..188/y51..63 stays clipped at original bottomcanvasedge. Retain all its existing faint dark/pale bars and rectangular tone patches in exact phase and size, but keep them ambiguous paint rather than inventing mechanical parts. Source native meanRGB>100 row53 has TWO lightintervals x133..135 and174..179; row55 has FIVE x128..131,133..136,158..160,166..171,174..175. These are existing sourcepaint lightstrokes, NOT proof of screws/vent/chamber identities. Preserve their count/phase/softness; no new screws, slots, drilled dots, rib trains, chambervents, handles or brightoutlined boundaries. Source lowerfield has NO new lettering or symbols and nothing extends beyond original croppedbottom. Source dark black unusedUV areas remain blackRGB even ifsourceApositive, never fillwithwood/metal. Muted gray/tan paint material only, no metallic chrome rim or glints, fine original tone detail only. All tiny weak areas stay softoldpaint rather than new hardgeometry.",
+        "source_RGBA_sha256": "997715343ed8ee67d00ced878adba5156e9305722e1edda470421f26aa545b0d",
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "source_numeric_phase_diagnostic": {
+          "lower_original_lightstroke_row_intervals_meanRGB_above100": {
+            "51": [],
+            "53": [
+              [
+                133,
+                135
+              ],
+              [
+                174,
+                179
+              ]
+            ],
+            "55": [
+              [
+                128,
+                131
+              ],
+              [
+                133,
+                136
+              ],
+              [
+                158,
+                160
+              ],
+              [
+                166,
+                171
+              ],
+              [
+                174,
+                175
+              ]
+            ],
+            "57": [
+              [
+                120,
+                121
+              ],
+              [
+                122,
+                125
+              ],
+              [
+                151,
+                155
+              ],
+              [
+                156,
+                163
+              ],
+              [
+                170,
+                171
+              ],
+              [
+                172,
+                174
+              ]
+            ],
+            "59": [
+              [
+                120,
+                121
+              ],
+              [
+                122,
+                126
+              ],
+              [
+                127,
+                131
+              ],
+              [
+                133,
+                141
+              ],
+              [
+                142,
+                144
+              ],
+              [
+                150,
+                155
+              ],
+              [
+                156,
+                166
+              ],
+              [
+                167,
+                174
+              ]
+            ],
+            "61": [
+              [
+                127,
+                132
+              ],
+              [
+                133,
+                141
+              ],
+              [
+                142,
+                148
+              ],
+              [
+                150,
+                155
+              ],
+              [
+                156,
+                174
+              ]
+            ],
+            "63": []
+          },
+          "source_region": [
+            120,
+            51,
+            188,
+            64
+          ],
+          "qualification": "Read-only original lightstroke counts/phase, not mechanicalidentity or geometric reconstruction; no sourceRGBcopy."
+        },
+        "runtime_qualification": {
+          "actual_material_model_chains": [
+            {
+              "actual_material": {
+                "ID": 1333,
+                "TextureID": 1937,
+                "BRDFID": 0,
+                "BumpID": 2728,
+                "SpecColor": 0,
+                "TemplateID": 891,
+                "GlossID": 2745,
+                "MirrorID": 0,
+                "CastShadow": 1,
+                "SpecFactor": 0.0,
+                "RndWeight": 1.0,
+                "MetalMirror": 0.0,
+                "DielMirror": 0.0,
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "Flags": ""
+              },
+              "actual_template": {
+                "ID": 891,
+                "UserName": "LeeEnfield_Mk1"
+              },
+              "actual_consumers": [
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 1345,
+                    "Material0": 891,
+                    "Material1": 0,
+                    "GeometryID": 1758,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 990,
+                    "RPGArmorID": 28,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "geometry": {
+                    "ID": 1758,
+                    "AIGeometryID": 884,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 1.1315476894378662,
+                    "SizeY": 0.042536698281764984,
+                    "SizeZ": 0.20745578408241272,
+                    "CenterX": 0.28872811794281006,
+                    "CenterY": 2.7008354663848877e-08,
+                    "CenterZ": 0.007691666483879089,
+                    "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                    "UserName": "LeeEnfield_Mk1",
+                    "RootJoint": "LeeEnfield_Mk1"
+                  }
+                },
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 1346,
+                    "Material0": 891,
+                    "Material1": 901,
+                    "GeometryID": 1759,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 991,
+                    "RPGArmorID": 28,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "geometry": {
+                    "ID": 1759,
+                    "AIGeometryID": 885,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 1.1311898231506348,
+                    "SizeY": 0.04431702941656113,
+                    "SizeZ": 0.2073899805545807,
+                    "CenterX": 0.2462868094444275,
+                    "CenterY": -0.001456097699701786,
+                    "CenterZ": 0.0678548663854599,
+                    "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                    "UserName": "LeeEnfield_Mk1_sniper",
+                    "RootJoint": "LeeEnfield_Mk1_sniper"
+                  }
+                }
+              ]
+            }
+          ],
+          "actual_material_alpha_modes": [
+            "alpha_test"
+          ],
+          "qualification": "Fresh actual DB Materials.TextureID1937→MaterialTemplates→Models1345/1346 MaterialN/geometry chains retained, genuine diffuse alpha_test; no assumed material-only consumer or selected generatedart actual live/GPU claim."
+        }
+      },
+      "postcall_correction": {
+        "id": 1937,
+        "batch": "weapons-thirteenth",
+        "recorded_utc": "2026-10-08T08:59:01.979680+00:00",
+        "immutable_before_call_proof_path": "G:/SS/Silent-Storm-Reconstruction/build/weapons-thirteenth-private/1937-fresh-before-builtin-guard.json",
+        "immutable_before_call_proof_sha256": "481289838bfcb07ef39109654145a6dd122370b58f4115b0d0b25df96b5270fb",
+        "immutable_before_prompt_source_count_phase_path": "G:/SS/Silent-Storm-Reconstruction/build/weapons-thirteenth-private/source-count-phase.json",
+        "immutable_before_prompt_source_count_phase_sha256": "71c104005b699902390b42aacbd3168842e143e8081eb1fbdd4d3f8326c92790",
+        "exact_prompt_sha256": "17a0eec0e78d7c2e40df3c6888a10afa09d600e75bfae60991838553b2e85df8",
+        "raw_sha256": "90f212e6dfca0115fe29ac38f3599e5012b892db148abd1f64730cd0d4138727",
+        "status": "art-reviewed-held-material-and-paintstroke-phase",
+        "correction_qualification": "Separate postcall review. Original beforeprompt broadfivefields and read-only lower lightstroke interval proof are preserved byte-for-byte; they prove original paintphase, not physical fastener anatomy. Previously deferred Weapons9/12 tinyreceiver ambiguity is recorded honestly. New single firstattempt failed preservation; no rewrite of source counts to fit output.",
+        "note": "HELD actual full material/pattern drift. Whole source256x64RGBA/RGB/A/NN6 plus source-only affine768x256 seen beforeprompt; exactactual Materials1333→MaterialTemplates→Models1345/1346/geometry alpha_test chains retained. Broad5uppergrayfields/wood/loop layout preserved, fullsourceA restored/defaultpadding0, but lowerreceiver paintstroke phase/count not retained: source row51 had zero meanRGB>100 intervals, production has[157.25,164.25]; source row53 two[133,135]/[174,179]→three[127.5,128]/[133.5,135]/[164.5,166]; row55 oldfive intervals[128,131]/[133,136]/[158,160]/[166,171]/[174,175] replaced by shifted/extended strokes including[133.25,148.5]. Read-only threshold supports actual wholeview mismatch, not a mechanicalcount inferred from pixels. Vague original lowerpaint becomes defined tiny fastener/pit-like darkmarks/receiver detail, wood and graymetal acquire stronger fine mottling/physicalgrain than old smoothpaint wash. Original softpaint uncertainty is not repaired through invented mechanicalidentity. Old woodleft143.20/69.73/18.14→127.41/61.92/19.37, woodmiddle148.01/72.40/19.07→131.52/63.75/19.88 darkened; firstplainuppergray+11.85/+13.15/+12.70 and smalluppergray+12.63/+13.52/+13.21 brighter, lowerreceiver−17.24/−12.95/−10.62. WholeRGB51.2034/27.0110/12.4004→48.5445/27.6229/14.1315. Gain.8642578125 matchesstoredluma31.09940190→31.09674546 but cannot fix local material/pattern. One source aperture remains from sourceA; ordinary nonpremultRGB/native alpha_test unchanged. Raw2172x724 entire inverseLanczos1024x256 only, no crop/BBox/registration/optout/RGBrepair/retry. Sourcealpha0 strips not claimed additional generatedparts. No selected actual Game/native/GPU claim.",
+        "artist_RGB_patch": false,
+        "retry": false,
+        "shared_modified": false
+      },
+      "numeric_preview": {
+        "id": 1937,
+        "source_native_type": "Ordinary",
+        "raw_path": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/1937-raw.png",
+        "raw_sha256": "90f212e6dfca0115fe29ac38f3599e5012b892db148abd1f64730cd0d4138727",
+        "raw_size": [
+          2172,
+          724
+        ],
+        "raw_alpha_extrema": [
+          255,
+          255
+        ],
+        "production_size": [
+          1024,
+          256
+        ],
+        "source_alpha_extrema": [
+          0,
+          255
+        ],
+        "production_alpha_sha256": "886000e380ef5d14c142b636669399b59097af090804c652df82da8c74c58ec8",
+        "native_premultiplied": false,
+        "scalar_gain": 0.8642578125,
+        "target_stored_luma": 31.099401904296876,
+        "actual_stored_luma": 31.096745456695555,
+        "rounding": "Nearest 8-bit RGB lookup",
+        "source_RGB_vs_production_stored_spatial_correlation": 0.8574730961904417,
+        "default_padding_filled_texels": 0,
+        "default_source_empty_cleared_texels": 0,
+        "source_A_positive_black_regions_texels": 88499,
+        "default_missing_alpha_in_visible_black_regions_texels": 0,
+        "source_mask_rgb_padding_default_diagnostic": "No blanket opt-out; root decides only if a visible original black-gap fill is actually shown.",
+        "recipe": "Whole raw RGBA LANCZOS exact source4x; authoritative whole sourceA LANCZOS restored; existing default pad_rgb_under_source_mask + pure scalar match_cell calibrated in native encoding; Transparent premultiply exactlyonce in storedRGB preview. No registration/crop/source artistic RGB composites/patches.",
+        "private_RGBA_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-weapons-thirteenth/native4x/1937-calibrated-source-alpha.png",
+        "private_stored_RGB_preview": "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/private-weapons-thirteenth/native4x/1937-native-stored-RGB.png"
+      },
+      "source_material_local_and_phase_diagnostics": {
+        "id": 1937,
+        "source_mean_RGB": [
+          51.203369140625,
+          27.010986328125,
+          12.400390625
+        ],
+        "production_stored_mean_RGB": [
+          48.544471740722656,
+          27.62289810180664,
+          14.13149642944336
+        ],
+        "source_peak_RGB": [
+          255.0,
+          243.0,
+          222.0
+        ],
+        "production_peak_RGB": [
+          220.0,
+          213.0,
+          207.0
+        ],
+        "source_relative_ROI_diagnostics": [
+          {
+            "name": "source-wood-left",
+            "source_native_bounds": [
+              15,
+              45,
+              58,
+              60
+            ],
+            "source_RGB": [
+              143.1968992248062,
+              69.72868217054264,
+              18.13798449612403
+            ],
+            "production_RGB": [
+              127.4077519379845,
+              61.92432170542636,
+              19.373255813953488
+            ],
+            "delta_RGB": [
+              -15.789147286821702,
+              -7.804360465116282,
+              1.2352713178294579
+            ]
+          },
+          {
+            "name": "source-wood-middle",
+            "source_native_bounds": [
+              74,
+              46,
+              116,
+              60
+            ],
+            "source_RGB": [
+              148.00850340136054,
+              72.39625850340136,
+              19.066326530612244
+            ],
+            "production_RGB": [
+              131.51987670068027,
+              63.749149659863946,
+              19.88467261904762
+            ],
+            "delta_RGB": [
+              -16.48862670068027,
+              -8.64710884353741,
+              0.8183460884353764
+            ]
+          },
+          {
+            "name": "source-wood-stock",
+            "source_native_bounds": [
+              196,
+              10,
+              239,
+              29
+            ],
+            "source_RGB": [
+              57.23378212974296,
+              18.86903304773562,
+              0.0
+            ],
+            "production_RGB": [
+              58.52708078335373,
+              23.914320685434518,
+              2.951728886168911
+            ],
+            "delta_RGB": [
+              1.2932986536107691,
+              5.045287637698898,
+              2.951728886168911
+            ]
+          },
+          {
+            "name": "upper-first-plain-gray",
+            "source_native_bounds": [
+              7,
+              9,
+              18,
+              29
+            ],
+            "source_RGB": [
+              55.8,
+              41.05,
+              30.854545454545455
+            ],
+            "production_RGB": [
+              67.65426136363637,
+              54.19659090909091,
+              43.553125
+            ],
+            "delta_RGB": [
+              11.854261363636368,
+              13.14659090909091,
+              12.698579545454546
+            ]
+          },
+          {
+            "name": "upper-horizontal-plain-gray",
+            "source_native_bounds": [
+              40,
+              16,
+              72,
+              23
+            ],
+            "source_RGB": [
+              28.071428571428573,
+              21.857142857142858,
+              17.821428571428573
+            ],
+            "production_RGB": [
+              21.113560267857142,
+              16.684988839285715,
+              13.034319196428571
+            ],
+            "delta_RGB": [
+              -6.957868303571431,
+              -5.172154017857142,
+              -4.787109375000002
+            ]
+          },
+          {
+            "name": "upper-small-gray",
+            "source_native_bounds": [
+              91,
+              8,
+              99,
+              20
+            ],
+            "source_RGB": [
+              64.07291666666667,
+              47.8125,
+              35.53125
+            ],
+            "production_RGB": [
+              76.70572916666667,
+              61.330078125,
+              48.741536458333336
+            ],
+            "delta_RGB": [
+              12.6328125,
+              13.517578125,
+              13.210286458333336
+            ]
+          },
+          {
+            "name": "loop-shade-source-positive",
+            "source_native_bounds": [
+              167,
+              22,
+              170,
+              28
+            ],
+            "source_RGB": [
+              19.72222222222222,
+              18.22222222222222,
+              18.055555555555557
+            ],
+            "production_RGB": [
+              21.618055555555557,
+              20.10763888888889,
+              19.29513888888889
+            ],
+            "delta_RGB": [
+              1.8958333333333357,
+              1.8854166666666679,
+              1.2395833333333321
+            ]
+          },
+          {
+            "name": "lower-receiver-source-paint",
+            "source_native_bounds": [
+              125,
+              54,
+              178,
+              62
+            ],
+            "source_RGB": [
+              105.17216981132076,
+              91.01179245283019,
+              80.67216981132076
+            ],
+            "production_RGB": [
+              87.92954009433963,
+              78.06426886792453,
+              70.05675117924528
+            ],
+            "delta_RGB": [
+              -17.242629716981128,
+              -12.947523584905667,
+              -10.615418632075475
+            ]
+          }
+        ],
+        "pattern_phase": {
+          "lower_original_lightstroke_row51": {
+            "source_native_intervals": [],
+            "production_original_logical_intervals": [
+              [
+                157.25,
+                164.25
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row53": {
+            "source_native_intervals": [
+              [
+                133.0,
+                135.0
+              ],
+              [
+                174.0,
+                179.0
+              ]
+            ],
+            "production_original_logical_intervals": [
+              [
+                127.5,
+                128.0
+              ],
+              [
+                133.5,
+                135.0
+              ],
+              [
+                164.5,
+                166.0
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row55": {
+            "source_native_intervals": [
+              [
+                128.0,
+                131.0
+              ],
+              [
+                133.0,
+                136.0
+              ],
+              [
+                158.0,
+                160.0
+              ],
+              [
+                166.0,
+                171.0
+              ],
+              [
+                174.0,
+                175.0
+              ]
+            ],
+            "production_original_logical_intervals": [
+              [
+                127.25,
+                131.25
+              ],
+              [
+                133.25,
+                148.5
+              ],
+              [
+                149.0,
+                150.25
+              ],
+              [
+                151.0,
+                153.0
+              ],
+              [
+                155.0,
+                155.25
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row57": {
+            "source_native_intervals": [
+              [
+                120.0,
+                121.0
+              ],
+              [
+                122.0,
+                125.0
+              ],
+              [
+                151.0,
+                155.0
+              ],
+              [
+                156.0,
+                163.0
+              ],
+              [
+                170.0,
+                171.0
+              ],
+              [
+                172.0,
+                174.0
+              ]
+            ],
+            "production_original_logical_intervals": [
+              [
+                120.5,
+                121.0
+              ],
+              [
+                122.5,
+                122.75
+              ],
+              [
+                123.0,
+                124.5
+              ],
+              [
+                125.25,
+                126.25
+              ],
+              [
+                133.25,
+                134.5
+              ],
+              [
+                149.5,
+                155.25
+              ],
+              [
+                164.5,
+                165.25
+              ],
+              [
+                165.75,
+                166.0
+              ],
+              [
+                171.25,
+                174.0
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row59": {
+            "source_native_intervals": [
+              [
+                120.0,
+                121.0
+              ],
+              [
+                122.0,
+                126.0
+              ],
+              [
+                127.0,
+                131.0
+              ],
+              [
+                133.0,
+                141.0
+              ],
+              [
+                142.0,
+                144.0
+              ],
+              [
+                150.0,
+                155.0
+              ],
+              [
+                156.0,
+                166.0
+              ],
+              [
+                167.0,
+                174.0
+              ]
+            ],
+            "production_original_logical_intervals": [
+              [
+                122.5,
+                123.0
+              ],
+              [
+                124.0,
+                124.5
+              ],
+              [
+                125.25,
+                126.25
+              ],
+              [
+                127.5,
+                128.0
+              ],
+              [
+                133.25,
+                134.25
+              ],
+              [
+                136.5,
+                137.25
+              ],
+              [
+                137.5,
+                138.25
+              ],
+              [
+                139.0,
+                141.25
+              ],
+              [
+                142.5,
+                144.25
+              ],
+              [
+                150.25,
+                155.25
+              ],
+              [
+                156.25,
+                174.0
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row61": {
+            "source_native_intervals": [
+              [
+                127.0,
+                132.0
+              ],
+              [
+                133.0,
+                141.0
+              ],
+              [
+                142.0,
+                148.0
+              ],
+              [
+                150.0,
+                155.0
+              ],
+              [
+                156.0,
+                174.0
+              ]
+            ],
+            "production_original_logical_intervals": [
+              [
+                133.25,
+                134.25
+              ],
+              [
+                139.5,
+                141.25
+              ],
+              [
+                142.5,
+                148.25
+              ]
+            ],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          },
+          "lower_original_lightstroke_row63": {
+            "source_native_intervals": [],
+            "production_original_logical_intervals": [],
+            "qualification": "Same fixed originalcolorphase threshold as BEFOREprompt; number reflects lightpaint strokes, not fasteners."
+          }
+        },
+        "no_artist_RGB_patch": true,
+        "qualification": "Wholecanvas read-only material/lightstroke phase diagnostics, not automated localpixel hold. Original uncertain microbars stay sourcepaint; no mechanical identities inferred.",
+        "alpha_composite_qualification": "Private originalA source-over composite only, source/production RGB multiplied by fullrestoredA here because Ordinary RGB is not premultiplied; actual alpha_test shader cutoff/blend unchanged, root final native gate. No production premultiply or asset modifications."
+      },
+      "private_QA": {
+        "whole_source_RGBA_RGB_A_and_NN_inspected_before_prompt": true,
+        "whole_raw_and_native4x_RGBA_storedRGB_inspected": true,
+        "sourceA_dark_light_composite_inspected": true,
+        "full_source_alpha_exact": true,
+        "default_source_mask_RGB_padding": true,
+        "pure_global_scalar_only": true,
+        "native_premultiplied": false,
+        "source_RGB_restored_or_artist_RGB_patch": false,
+        "crop_bbox_registration_or_repack": false,
+        "retry_performed": false,
+        "source_material_pattern_UV_judgment": "HELD actual full material/pattern drift. Whole source256x64RGBA/RGB/A/NN6 plus source-only affine768x256 seen beforeprompt; exactactual Materials1333→MaterialTemplates→Models1345/1346/geometry alpha_test chains retained. Broad5uppergrayfields/wood/loop layout preserved, fullsourceA restored/defaultpadding0, but lowerreceiver paintstroke phase/count not retained: source row51 had zero meanRGB>100 intervals, production has[157.25,164.25]; source row53 two[133,135]/[174,179]→three[127.5,128]/[133.5,135]/[164.5,166]; row55 oldfive intervals[128,131]/[133,136]/[158,160]/[166,171]/[174,175] replaced by shifted/extended strokes including[133.25,148.5]. Read-only threshold supports actual wholeview mismatch, not a mechanicalcount inferred from pixels. Vague original lowerpaint becomes defined tiny fastener/pit-like darkmarks/receiver detail, wood and graymetal acquire stronger fine mottling/physicalgrain than old smoothpaint wash. Original softpaint uncertainty is not repaired through invented mechanicalidentity. Old woodleft143.20/69.73/18.14→127.41/61.92/19.37, woodmiddle148.01/72.40/19.07→131.52/63.75/19.88 darkened; firstplainuppergray+11.85/+13.15/+12.70 and smalluppergray+12.63/+13.52/+13.21 brighter, lowerreceiver−17.24/−12.95/−10.62. WholeRGB51.2034/27.0110/12.4004→48.5445/27.6229/14.1315. Gain.8642578125 matchesstoredluma31.09940190→31.09674546 but cannot fix local material/pattern. One source aperture remains from sourceA; ordinary nonpremultRGB/native alpha_test unchanged. Raw2172x724 entire inverseLanczos1024x256 only, no crop/BBox/registration/optout/RGBrepair/retry. Sourcealpha0 strips not claimed additional generatedparts. No selected actual Game/native/GPU claim."
+      },
+      "runtime_qualification": {
+        "actual_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 1333,
+              "TextureID": 1937,
+              "BRDFID": 0,
+              "BumpID": 2728,
+              "SpecColor": 0,
+              "TemplateID": 891,
+              "GlossID": 2745,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 891,
+              "UserName": "LeeEnfield_Mk1"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1345,
+                  "Material0": 891,
+                  "Material1": 0,
+                  "GeometryID": 1758,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 990,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1758,
+                  "AIGeometryID": 884,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1315476894378662,
+                  "SizeY": 0.042536698281764984,
+                  "SizeZ": 0.20745578408241272,
+                  "CenterX": 0.28872811794281006,
+                  "CenterY": 2.7008354663848877e-08,
+                  "CenterZ": 0.007691666483879089,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "LeeEnfield_Mk1",
+                  "RootJoint": "LeeEnfield_Mk1"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1346,
+                  "Material0": 891,
+                  "Material1": 901,
+                  "GeometryID": 1759,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 991,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1759,
+                  "AIGeometryID": 885,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1311898231506348,
+                  "SizeY": 0.04431702941656113,
+                  "SizeZ": 0.2073899805545807,
+                  "CenterX": 0.2462868094444275,
+                  "CenterY": -0.001456097699701786,
+                  "CenterZ": 0.0678548663854599,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "LeeEnfield_Mk1_sniper",
+                  "RootJoint": "LeeEnfield_Mk1_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "qualification": "Fresh actual DB Materials.TextureID1937→MaterialTemplates→Models1345/1346 MaterialN/geometry chains retained, genuine diffuse alpha_test; no assumed material-only consumer or selected generatedart actual live/GPU claim."
+      }
+    }
+  ],
+  "source_only_ids": [
+    1930,
+    1931,
+    1932,
+    1933,
+    1934,
+    1935,
+    1939,
+    1940,
+    1942,
+    1945,
+    1950
+  ],
+  "source_only_deferred": [
+    {
+      "id": 1930,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Fine lowerreceiver microbars and small dark/pale slot topology remain individually unclear. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1930,
+        "source_record": {
+          "id": 1930,
+          "texture": {
+            "ID": 1930,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11125721,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\AVS_36.tga",
+            "Format": "dxt1",
+            "UserName": "AVS_36",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1326,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 884,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1336,
+                    "field": "Material0",
+                    "material_template_id": 884,
+                    "geometry_id": 1749,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 981,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "9086095cded6c1880ac264a003ea66eec2fdcdbdf7e49c35bd54ce773a1d71c2",
+          "source_rgba_sha256": "7b7b0e47eada1631146dc1ce729cdd8cd11139ba6cf6008a6a2231d363d1945c",
+          "release_rgba_sha256": "7b7b0e47eada1631146dc1ce729cdd8cd11139ba6cf6008a6a2231d363d1945c",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1930.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1930,
+          "texture": {
+            "ID": 1930,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11125721,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\AVS_36.tga",
+            "Format": "dxt1",
+            "UserName": "AVS_36",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1326,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 884,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1336,
+                  "field": "Material0",
+                  "material_template_id": 884,
+                  "geometry_id": 1749,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 981,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1326,
+              "TextureID": 1930,
+              "BRDFID": 0,
+              "BumpID": 2721,
+              "SpecColor": 0,
+              "TemplateID": 884,
+              "GlossID": 2738,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 884,
+              "UserName": "AVS_36"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1336,
+                  "Material0": 884,
+                  "Material1": 0,
+                  "GeometryID": 1749,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 981,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1749,
+                  "AIGeometryID": 875,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2522239685058594,
+                  "SizeY": 0.034275129437446594,
+                  "SizeZ": 0.18955430388450623,
+                  "CenterX": 0.3545338213443756,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.00985880196094513,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "AVS_36",
+                  "RootJoint": "AVS_36"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "9086095cded6c1880ac264a003ea66eec2fdcdbdf7e49c35bd54ce773a1d71c2",
+        "release_mmp_sha256": "9086095cded6c1880ac264a003ea66eec2fdcdbdf7e49c35bd54ce773a1d71c2",
+        "original_png_sha256": "850f7f41c7b51ac2de62876acf83f539d7681202d326d8c7f99f128dc9871255",
+        "source_rgba_sha256": "7b7b0e47eada1631146dc1ce729cdd8cd11139ba6cf6008a6a2231d363d1945c",
+        "source_rgb_sha256": "8ebcdc2edac9758cfa6cc91039153a94a382b6a9a7347229df447a5c4dd6598f",
+        "source_alpha_sha256": "460fb434c57fa6e9357ed9b2a9b74d800f90603b1576896a5ff17c0c79fad9e5",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1931,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Upper grouped narrow ribs/receiver slits and tiny lowerfields need exact source phase/count proof. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1931,
+        "source_record": {
+          "id": 1931,
+          "texture": {
+            "ID": 1931,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11125724,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_1938.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_1938",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1327,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 885,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1337,
+                    "field": "Material0",
+                    "material_template_id": 885,
+                    "geometry_id": 1750,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 982,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "e082abb9d0edd33cada5822206ad466c7eae569072423f0275b605ab9f9cbe56",
+          "source_rgba_sha256": "2fd45007ad1c1c3d20f105a3366520672cdfcc72cc95825887e64a5b7f0f0af5",
+          "release_rgba_sha256": "2fd45007ad1c1c3d20f105a3366520672cdfcc72cc95825887e64a5b7f0f0af5",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1931.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1931,
+          "texture": {
+            "ID": 1931,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11125724,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_1938.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_1938",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1327,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 885,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1337,
+                  "field": "Material0",
+                  "material_template_id": 885,
+                  "geometry_id": 1750,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 982,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1327,
+              "TextureID": 1931,
+              "BRDFID": 0,
+              "BumpID": 2722,
+              "SpecColor": 0,
+              "TemplateID": 885,
+              "GlossID": 2739,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 885,
+              "UserName": "Carbine_1938"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1337,
+                  "Material0": 885,
+                  "Material1": 0,
+                  "GeometryID": 1750,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 982,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1750,
+                  "AIGeometryID": 876,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.0163332223892212,
+                  "SizeY": 0.034157924354076385,
+                  "SizeZ": 0.20536208152770996,
+                  "CenterX": 0.24526256322860718,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.013040423393249512,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "Carbine_1938",
+                  "RootJoint": "Carbine_1938"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e082abb9d0edd33cada5822206ad466c7eae569072423f0275b605ab9f9cbe56",
+        "release_mmp_sha256": "e082abb9d0edd33cada5822206ad466c7eae569072423f0275b605ab9f9cbe56",
+        "original_png_sha256": "f76ff59b45b74f03ce4642577ed65e0bba70606265288e2d5e4f37d3d59310eb",
+        "source_rgba_sha256": "2fd45007ad1c1c3d20f105a3366520672cdfcc72cc95825887e64a5b7f0f0af5",
+        "source_rgb_sha256": "217710de7d5eb4eda9988266d17bc32af80e7cea0c54d9ef0eecf7419fb910bc",
+        "source_alpha_sha256": "1d306d1df16de4c17ea4ed3a8ad8ac98ba1aa61760257f5c21e4af2246762efa",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1932,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Dense lower stripe train and tiny receiver hardwarepaint remain unproven. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1932,
+        "source_record": {
+          "id": 1932,
+          "texture": {
+            "ID": 1932,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11585246,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_98K.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_98K",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1328,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 886,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1338,
+                    "field": "Material0",
+                    "material_template_id": 886,
+                    "geometry_id": 1751,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 983,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 5585,
+                    "field": "Material0",
+                    "material_template_id": 886,
+                    "geometry_id": 3402,
+                    "geometry": "Characters\\Weapons\\Silencers.mb",
+                    "model_template_id": 3675,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "c40becbee5bd05dfbc3cac329ef4b35800f2d840b3a56d1d6d261146e13f159a",
+          "source_rgba_sha256": "882261d6b95ed9960031e380a00b261b148248a39460746d722531da7eff1114",
+          "release_rgba_sha256": "882261d6b95ed9960031e380a00b261b148248a39460746d722531da7eff1114",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1932.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1932,
+          "texture": {
+            "ID": 1932,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11585246,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_98K.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_98K",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1328,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 886,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1338,
+                  "field": "Material0",
+                  "material_template_id": 886,
+                  "geometry_id": 1751,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 983,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5585,
+                  "field": "Material0",
+                  "material_template_id": 886,
+                  "geometry_id": 3402,
+                  "geometry": "Characters\\Weapons\\Silencers.mb",
+                  "model_template_id": 3675,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1328,
+              "TextureID": 1932,
+              "BRDFID": 0,
+              "BumpID": 2723,
+              "SpecColor": 0,
+              "TemplateID": 886,
+              "GlossID": 2740,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 886,
+              "UserName": "Carbine_98K"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1338,
+                  "Material0": 886,
+                  "Material1": 902,
+                  "GeometryID": 1751,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 983,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1751,
+                  "AIGeometryID": 877,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1110402345657349,
+                  "SizeY": 0.03816132992506027,
+                  "SizeZ": 0.1872563660144806,
+                  "CenterX": 0.2434748113155365,
+                  "CenterY": 1.257285475730896e-08,
+                  "CenterZ": 0.06354203820228577,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "Carbine_98K_sniper",
+                  "RootJoint": "Carbine_98K_sniper"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 5585,
+                  "Material0": 886,
+                  "Material1": 902,
+                  "GeometryID": 3402,
+                  "Material2": 2222,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3675,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 3402,
+                  "AIGeometryID": 2255,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1110402345657349,
+                  "SizeY": 0.044492267072200775,
+                  "SizeZ": 0.17692133784294128,
+                  "CenterX": 0.47331199049949646,
+                  "CenterY": 7.140140034778142e-09,
+                  "CenterZ": 0.06278692185878754,
+                  "SrcName": "Characters\\Weapons\\Silencers.mb",
+                  "UserName": "Carabine_98K_Silencer",
+                  "RootJoint": "Carabine_98K_Silencer"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "c40becbee5bd05dfbc3cac329ef4b35800f2d840b3a56d1d6d261146e13f159a",
+        "release_mmp_sha256": "c40becbee5bd05dfbc3cac329ef4b35800f2d840b3a56d1d6d261146e13f159a",
+        "original_png_sha256": "c0fccf1056305f73543e3f83ef695fd5f9d2f72596c1525e3f76032df54bbe52",
+        "source_rgba_sha256": "882261d6b95ed9960031e380a00b261b148248a39460746d722531da7eff1114",
+        "source_rgb_sha256": "9c25f5bfe15f48f7536710e9f06f420a5a5b9e355a6aff68ae013e6cb8f72331",
+        "source_alpha_sha256": "3e9f35704638d768aa0f9d6bb39a4bd1748dbc0406e251e59212ccf3f5dde80e",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1933,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "WholeNN viewed: lower fine repeated lightbars and uppermulti-column dark/pale strips require counted phase proof; no assumed newhardware. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1933,
+        "source_record": {
+          "id": 1933,
+          "texture": {
+            "ID": 1933,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11454431,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_M1_1936.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_M1_1936",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1329,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 887,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1339,
+                    "field": "Material0",
+                    "material_template_id": 887,
+                    "geometry_id": 1752,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 984,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1578,
+                    "field": "Material0",
+                    "material_template_id": 887,
+                    "geometry_id": 1932,
+                    "geometry": "Characters\\Weapons\\RiflesClips.mb",
+                    "model_template_id": 1190,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "f20f121ef3f08f2fccbb05bd8ef99effbea94eba448fd9a65d3de85161d162c1",
+          "source_rgba_sha256": "e60a4df42bef54b7f313ec7917115ae4e1c0d5e47f3a1c96f98e309391c45547",
+          "release_rgba_sha256": "e60a4df42bef54b7f313ec7917115ae4e1c0d5e47f3a1c96f98e309391c45547",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1933.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1933,
+          "texture": {
+            "ID": 1933,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11454431,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Carbine_M1_1936.tga",
+            "Format": "dxt1",
+            "UserName": "Carbine_M1_1936",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1329,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 887,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1339,
+                  "field": "Material0",
+                  "material_template_id": 887,
+                  "geometry_id": 1752,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 984,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1578,
+                  "field": "Material0",
+                  "material_template_id": 887,
+                  "geometry_id": 1932,
+                  "geometry": "Characters\\Weapons\\RiflesClips.mb",
+                  "model_template_id": 1190,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1329,
+              "TextureID": 1933,
+              "BRDFID": 0,
+              "BumpID": 2724,
+              "SpecColor": 0,
+              "TemplateID": 887,
+              "GlossID": 2741,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 887,
+              "UserName": "Carbine_M1_1936"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1339,
+                  "Material0": 887,
+                  "Material1": 0,
+                  "GeometryID": 1752,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 984,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1752,
+                  "AIGeometryID": 878,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.9027105569839478,
+                  "SizeY": 0.035348959267139435,
+                  "SizeZ": 0.17418046295642853,
+                  "CenterX": 0.19415247440338135,
+                  "CenterY": 2.421438694000244e-08,
+                  "CenterZ": -0.0016233846545219421,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "Carbine_M1_1936",
+                  "RootJoint": "Carbine_M1_1936"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1578,
+                  "Material0": 887,
+                  "Material1": 0,
+                  "GeometryID": 1932,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 1190,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1932,
+                  "AIGeometryID": 1086,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.04984605312347412,
+                  "SizeY": 0.012864366173744202,
+                  "SizeZ": 0.09269285202026367,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0,
+                  "SrcName": "Characters\\Weapons\\RiflesClips.mb",
+                  "UserName": "Carbine_M1_1936Clip",
+                  "RootJoint": "Carbine_M1_1936Clip"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "f20f121ef3f08f2fccbb05bd8ef99effbea94eba448fd9a65d3de85161d162c1",
+        "release_mmp_sha256": "f20f121ef3f08f2fccbb05bd8ef99effbea94eba448fd9a65d3de85161d162c1",
+        "original_png_sha256": "59e2dd938663fbfc7a4baf3a1b5ed4b58f9c6b8a92c9a835e8d0f2ac19c06dc0",
+        "source_rgba_sha256": "e60a4df42bef54b7f313ec7917115ae4e1c0d5e47f3a1c96f98e309391c45547",
+        "source_rgb_sha256": "33cf1542603789ee1c6f4430c67956110ea38ec0c75717c4c1072c2b5f035ee4",
+        "source_alpha_sha256": "910e614eff2775ac6be33c6933a3727ee4849237b05c5c0e857ea0202b623ff5",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1934,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Dense stacked ribs/ventpaint lines and tiny grouped dots require individual count/pitch proof. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1934,
+        "source_record": {
+          "id": 1934,
+          "texture": {
+            "ID": 1934,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -13356240,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\FG42.tga",
+            "Format": "dxt1",
+            "UserName": "FG42",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1330,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 888,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1340,
+                    "field": "Material0",
+                    "material_template_id": 888,
+                    "geometry_id": 1753,
+                    "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                    "model_template_id": 985,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1576,
+                    "field": "Material0",
+                    "material_template_id": 888,
+                    "geometry_id": 1931,
+                    "geometry": "Characters\\Weapons\\SubMachineGunsClips.mb",
+                    "model_template_id": 1189,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "426369c66b0f96908e49077f2119a1d6b9003b77a2a3acc3d13cf520b954c476",
+          "source_rgba_sha256": "61649d7b479cde10d142d5a5213f8da0dbb9b8bfb24bfa2adc5d2c99f6c212e4",
+          "release_rgba_sha256": "61649d7b479cde10d142d5a5213f8da0dbb9b8bfb24bfa2adc5d2c99f6c212e4",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1934.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1934,
+          "texture": {
+            "ID": 1934,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -13356240,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\FG42.tga",
+            "Format": "dxt1",
+            "UserName": "FG42",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1330,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 888,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1340,
+                  "field": "Material0",
+                  "material_template_id": 888,
+                  "geometry_id": 1753,
+                  "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                  "model_template_id": 985,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1576,
+                  "field": "Material0",
+                  "material_template_id": 888,
+                  "geometry_id": 1931,
+                  "geometry": "Characters\\Weapons\\SubMachineGunsClips.mb",
+                  "model_template_id": 1189,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1330,
+              "TextureID": 1934,
+              "BRDFID": 0,
+              "BumpID": 2725,
+              "SpecColor": 0,
+              "TemplateID": 888,
+              "GlossID": 2742,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 888,
+              "UserName": "FG42"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1340,
+                  "Material0": 888,
+                  "Material1": 0,
+                  "GeometryID": 1753,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 985,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1753,
+                  "AIGeometryID": 879,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.9758166074752808,
+                  "SizeY": 0.18933896720409393,
+                  "SizeZ": 0.18850168585777283,
+                  "CenterX": 0.17807184159755707,
+                  "CenterY": 0.07227254658937454,
+                  "CenterZ": 0.0912119448184967,
+                  "SrcName": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                  "UserName": "FG42",
+                  "RootJoint": "FG42"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1576,
+                  "Material0": 888,
+                  "Material1": 0,
+                  "GeometryID": 1931,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 1189,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1931,
+                  "AIGeometryID": 1087,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.09593528509140015,
+                  "SizeY": 0.017357349395751953,
+                  "SizeZ": 0.15000444650650024,
+                  "CenterX": 0.0,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0,
+                  "SrcName": "Characters\\Weapons\\SubMachineGunsClips.mb",
+                  "UserName": "FG42Clip",
+                  "RootJoint": "FG42Clip"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "426369c66b0f96908e49077f2119a1d6b9003b77a2a3acc3d13cf520b954c476",
+        "release_mmp_sha256": "426369c66b0f96908e49077f2119a1d6b9003b77a2a3acc3d13cf520b954c476",
+        "original_png_sha256": "428d7b41f252c3e07cbec24f8e7389a670b6b199e19553cf5716fe296352c67e",
+        "source_rgba_sha256": "61649d7b479cde10d142d5a5213f8da0dbb9b8bfb24bfa2adc5d2c99f6c212e4",
+        "source_rgb_sha256": "bd2d58f760da2fee2af8c8f4d4d9f0c1fa2419c1683fda267e4202878020786f",
+        "source_alpha_sha256": "63ed7bc3c8ce2db472958bb9e023e361e551f82f697a40d90758b62cda5f8719",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1935,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Lower repeated microbars and upperend interlocking paint boundaries remain uncertain. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1935,
+        "source_record": {
+          "id": 1935,
+          "texture": {
+            "ID": 1935,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11258596,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\G41V.tga",
+            "Format": "dxt1",
+            "UserName": "G41V",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1331,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 889,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1341,
+                    "field": "Material0",
+                    "material_template_id": 889,
+                    "geometry_id": 1754,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 986,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1342,
+                    "field": "Material0",
+                    "material_template_id": 889,
+                    "geometry_id": 1755,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 987,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "8f5d33d41cb797014d5e3142f2bcafd4c77ef64929f9d3a15ca7a7e7ed56147e",
+          "source_rgba_sha256": "03cd1c67d0e530eefeee05138d846fd8fe8e9ec91dfa297568ff652c4e7528e8",
+          "release_rgba_sha256": "03cd1c67d0e530eefeee05138d846fd8fe8e9ec91dfa297568ff652c4e7528e8",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1935.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1935,
+          "texture": {
+            "ID": 1935,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -11258596,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\G41V.tga",
+            "Format": "dxt1",
+            "UserName": "G41V",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1331,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 889,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1341,
+                  "field": "Material0",
+                  "material_template_id": 889,
+                  "geometry_id": 1754,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 986,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1342,
+                  "field": "Material0",
+                  "material_template_id": 889,
+                  "geometry_id": 1755,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 987,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1331,
+              "TextureID": 1935,
+              "BRDFID": 0,
+              "BumpID": 2726,
+              "SpecColor": 0,
+              "TemplateID": 889,
+              "GlossID": 2743,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 889,
+              "UserName": "G41V"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1341,
+                  "Material0": 889,
+                  "Material1": 0,
+                  "GeometryID": 1754,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 986,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1754,
+                  "AIGeometryID": 880,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1418521404266357,
+                  "SizeY": 0.03990478441119194,
+                  "SizeZ": 0.20322968065738678,
+                  "CenterX": 0.3016422390937805,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.017244569957256317,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "G41V",
+                  "RootJoint": "G41V"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1342,
+                  "Material0": 889,
+                  "Material1": 902,
+                  "GeometryID": 1755,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 987,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1755,
+                  "AIGeometryID": 881,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1413938999176025,
+                  "SizeY": 0.03988876938819885,
+                  "SizeZ": 0.20314814150333405,
+                  "CenterX": 0.24717268347740173,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.07715974003076553,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "G41V_sniper",
+                  "RootJoint": "G41V_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8f5d33d41cb797014d5e3142f2bcafd4c77ef64929f9d3a15ca7a7e7ed56147e",
+        "release_mmp_sha256": "8f5d33d41cb797014d5e3142f2bcafd4c77ef64929f9d3a15ca7a7e7ed56147e",
+        "original_png_sha256": "9b385f0036ad240f175fc89325bf4643081bab076f6a0125ac8e860b729587d3",
+        "source_rgba_sha256": "03cd1c67d0e530eefeee05138d846fd8fe8e9ec91dfa297568ff652c4e7528e8",
+        "source_rgb_sha256": "af90d831e8e448677040fa7d0d35f2babff974611e1a89ab3e419c4906d18f51",
+        "source_alpha_sha256": "9c504cb029022b9847138bca9b46787ddf4cf53e5922fc6bb17e7ded98529348",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1939,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Grouped lower receiver small dots/slits and insetpaint boundaries need exact phase/count proof. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1939,
+        "source_record": {
+          "id": 1939,
+          "texture": {
+            "ID": 1939,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10666721,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\ManlicherCarcano_M38.tga",
+            "Format": "dxt1",
+            "UserName": "ManlicherCarcano_M38",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1335,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 893,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1348,
+                    "field": "Material0",
+                    "material_template_id": 893,
+                    "geometry_id": 1761,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 993,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "8bf304d4918b57d028a3440876b14fc6af9fc1cded2cd7c4fb5862eca404e800",
+          "source_rgba_sha256": "8b16de5ac3f4afee423ac7db934d66aa1a793ec2a70e240f3ffbac4bf97271d0",
+          "release_rgba_sha256": "8b16de5ac3f4afee423ac7db934d66aa1a793ec2a70e240f3ffbac4bf97271d0",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1939.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1939,
+          "texture": {
+            "ID": 1939,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10666721,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\ManlicherCarcano_M38.tga",
+            "Format": "dxt1",
+            "UserName": "ManlicherCarcano_M38",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1335,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 893,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1348,
+                  "field": "Material0",
+                  "material_template_id": 893,
+                  "geometry_id": 1761,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 993,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1335,
+              "TextureID": 1939,
+              "BRDFID": 0,
+              "BumpID": 2729,
+              "SpecColor": 0,
+              "TemplateID": 893,
+              "GlossID": 2746,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 893,
+              "UserName": "ManlicherCarcano_M38"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1348,
+                  "Material0": 893,
+                  "Material1": 0,
+                  "GeometryID": 1761,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 993,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1761,
+                  "AIGeometryID": 887,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.0209829807281494,
+                  "SizeY": 0.02943335473537445,
+                  "SizeZ": 0.17947566509246826,
+                  "CenterX": 0.26501986384391785,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.0031787939369678497,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "ManlicherCarcano_M38",
+                  "RootJoint": "ManlicherCarcano_M38"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "8bf304d4918b57d028a3440876b14fc6af9fc1cded2cd7c4fb5862eca404e800",
+        "release_mmp_sha256": "8bf304d4918b57d028a3440876b14fc6af9fc1cded2cd7c4fb5862eca404e800",
+        "original_png_sha256": "52df3e5ea6244e86508d599c51e7b12284123cedb6177edad04b0411c5c9ff9a",
+        "source_rgba_sha256": "8b16de5ac3f4afee423ac7db934d66aa1a793ec2a70e240f3ffbac4bf97271d0",
+        "source_rgb_sha256": "d4db28f45bbe69d1a96fabc2e3e1064461811031e7cda027ead02864f4bc7579",
+        "source_alpha_sha256": "c3cbdb37dd9cb473c54847df398fb2094391761dd6c736b773a3f7a59fd7ebee",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1940,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "WholeNN viewed: smallupper grouped tabs/blackintervals and lowerreceiver cap/strip train count uncertain. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1940,
+        "source_record": {
+          "id": 1940,
+          "texture": {
+            "ID": 1940,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10337497,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\ManlicherCarcano_M91_24_sniper.tga",
+            "Format": "dxt1",
+            "UserName": "ManlicherCarcano_M91_24_sniper",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1336,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 894,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1349,
+                    "field": "Material0",
+                    "material_template_id": 894,
+                    "geometry_id": 1762,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 994,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "e6d575815326dd65bac806a61e127b4372055c7f4b2e54d9083f3315c84db50a",
+          "source_rgba_sha256": "a21618b7d2b61bba363ed6f2602d699d6906381e191d3cc3add4b51e583e0b1f",
+          "release_rgba_sha256": "a21618b7d2b61bba363ed6f2602d699d6906381e191d3cc3add4b51e583e0b1f",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1940.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1940,
+          "texture": {
+            "ID": 1940,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10337497,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\ManlicherCarcano_M91_24_sniper.tga",
+            "Format": "dxt1",
+            "UserName": "ManlicherCarcano_M91_24_sniper",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1336,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 894,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1349,
+                  "field": "Material0",
+                  "material_template_id": 894,
+                  "geometry_id": 1762,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 994,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1336,
+              "TextureID": 1940,
+              "BRDFID": 0,
+              "BumpID": 2730,
+              "SpecColor": 0,
+              "TemplateID": 894,
+              "GlossID": 2747,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 894,
+              "UserName": "ManlicherCarcano_M91_24_sniper"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1349,
+                  "Material0": 894,
+                  "Material1": 902,
+                  "GeometryID": 1762,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 994,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1762,
+                  "AIGeometryID": 888,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.1715588569641113,
+                  "SizeY": 0.0419309176504612,
+                  "SizeZ": 0.1895957589149475,
+                  "CenterX": 0.27462896704673767,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.06358876824378967,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "ManlicherCarcano_M91_24_sniper",
+                  "RootJoint": "ManlicherCarcano_M91_24_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "e6d575815326dd65bac806a61e127b4372055c7f4b2e54d9083f3315c84db50a",
+        "release_mmp_sha256": "e6d575815326dd65bac806a61e127b4372055c7f4b2e54d9083f3315c84db50a",
+        "original_png_sha256": "fa7ae1269158118c3c2cb10d927e5666c3d09423e8170893a30bcc3502a04181",
+        "source_rgba_sha256": "a21618b7d2b61bba363ed6f2602d699d6906381e191d3cc3add4b51e583e0b1f",
+        "source_rgb_sha256": "71d58e175643d32f1644bf4d5cdb7185e11d48b95b3dcc9fa8b52c2bc5cee3ae",
+        "source_alpha_sha256": "2b4f6426d8427d9f362c3e6c977da4a204e86d29d0aa493619ebd992766da621",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1942,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Lowerreceiver narrow repeated strips and tiny fastener-like paintflecks need actualphase proof. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1942,
+        "source_record": {
+          "id": 1942,
+          "texture": {
+            "ID": 1942,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10140633,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Mosin_1891_1930.tga",
+            "Format": "dxt1",
+            "UserName": "Mosin_1891_1930",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1338,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 896,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1351,
+                    "field": "Material0",
+                    "material_template_id": 896,
+                    "geometry_id": 1764,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 996,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1352,
+                    "field": "Material0",
+                    "material_template_id": 896,
+                    "geometry_id": 1765,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 997,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "f7689bbcd5777edfa7b70b1f7ea95cebf0b58165f721c347a76e16eb85701ef0",
+          "source_rgba_sha256": "aae6ec4bb28c3790e6497682b88ae34647a3bb375264ac840401c9916df1a723",
+          "release_rgba_sha256": "aae6ec4bb28c3790e6497682b88ae34647a3bb375264ac840401c9916df1a723",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1942.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1942,
+          "texture": {
+            "ID": 1942,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10140633,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\Mosin_1891_1930.tga",
+            "Format": "dxt1",
+            "UserName": "Mosin_1891_1930",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1338,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 896,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1351,
+                  "field": "Material0",
+                  "material_template_id": 896,
+                  "geometry_id": 1764,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 996,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1352,
+                  "field": "Material0",
+                  "material_template_id": 896,
+                  "geometry_id": 1765,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 997,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1338,
+              "TextureID": 1942,
+              "BRDFID": 0,
+              "BumpID": 2733,
+              "SpecColor": 0,
+              "TemplateID": 896,
+              "GlossID": 2750,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 896,
+              "UserName": "Mosin_1891_1930"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1351,
+                  "Material0": 896,
+                  "Material1": 0,
+                  "GeometryID": 1764,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 996,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1764,
+                  "AIGeometryID": 890,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2285077571868896,
+                  "SizeY": 0.03448997437953949,
+                  "SizeZ": 0.18338190019130707,
+                  "CenterX": 0.3502861559391022,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.01708409935235977,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "Mosin_1891_1930",
+                  "RootJoint": "Mosin_1891_1930"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1352,
+                  "Material0": 896,
+                  "Material1": 903,
+                  "GeometryID": 1765,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 997,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1765,
+                  "AIGeometryID": 891,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2287185192108154,
+                  "SizeY": 0.04858757555484772,
+                  "SizeZ": 0.18341337144374847,
+                  "CenterX": 0.2705994248390198,
+                  "CenterY": -0.002932574599981308,
+                  "CenterZ": 0.07310514152050018,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "Mosin_1891_1930_sniper",
+                  "RootJoint": "Mosin_1891_1930_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "f7689bbcd5777edfa7b70b1f7ea95cebf0b58165f721c347a76e16eb85701ef0",
+        "release_mmp_sha256": "f7689bbcd5777edfa7b70b1f7ea95cebf0b58165f721c347a76e16eb85701ef0",
+        "original_png_sha256": "437cfddefd6d81f363dd3bfb04335437b2677b888a256fc280a0bf11f5e54e69",
+        "source_rgba_sha256": "aae6ec4bb28c3790e6497682b88ae34647a3bb375264ac840401c9916df1a723",
+        "source_rgb_sha256": "e8e2dac03e2f721a55bdf1b411451d0c9def72b101d40dc48751a1f8183d61ba",
+        "source_alpha_sha256": "4ee15c5003c2ea4cf7b9dec36b6cbacf059b86111705287af465454887bcf878",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1945,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Dense lower microbar/teeth-like train and upperright interlocking tiny marks remain unresolved. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1945,
+        "source_record": {
+          "id": 1945,
+          "texture": {
+            "ID": 1945,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10929374,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\SVT40.tga",
+            "Format": "dxt1",
+            "UserName": "SVT40",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1341,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 899,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1355,
+                    "field": "Material0",
+                    "material_template_id": 899,
+                    "geometry_id": 1768,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 1000,
+                    "flags": ""
+                  },
+                  {
+                    "table": "Models",
+                    "id": 1356,
+                    "field": "Material0",
+                    "material_template_id": 899,
+                    "geometry_id": 1769,
+                    "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                    "model_template_id": 1001,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "d346adcebdcee854d270f264d1ae83ef12747166b2eb85727a235236f29f8ac1",
+          "source_rgba_sha256": "7becb806a18dfcc8bb3bd35de903ea81af2ad12497314f871083ecdc82352a46",
+          "release_rgba_sha256": "7becb806a18dfcc8bb3bd35de903ea81af2ad12497314f871083ecdc82352a46",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1945.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1945,
+          "texture": {
+            "ID": 1945,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -10929374,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\Rifles\\SVT40.tga",
+            "Format": "dxt1",
+            "UserName": "SVT40",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1341,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 899,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1355,
+                  "field": "Material0",
+                  "material_template_id": 899,
+                  "geometry_id": 1768,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 1000,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 1356,
+                  "field": "Material0",
+                  "material_template_id": 899,
+                  "geometry_id": 1769,
+                  "geometry": "Characters\\Weapons\\Rifles_Real.mb",
+                  "model_template_id": 1001,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1341,
+              "TextureID": 1945,
+              "BRDFID": 0,
+              "BumpID": 2737,
+              "SpecColor": 0,
+              "TemplateID": 899,
+              "GlossID": 2754,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 899,
+              "UserName": "SVT40"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1355,
+                  "Material0": 899,
+                  "Material1": 0,
+                  "GeometryID": 1768,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 1000,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1768,
+                  "AIGeometryID": 894,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.225964069366455,
+                  "SizeY": 0.035523563623428345,
+                  "SizeZ": 0.17171940207481384,
+                  "CenterX": 0.35421398282051086,
+                  "CenterY": 0.0,
+                  "CenterZ": 0.019074197858572006,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "SVT40",
+                  "RootJoint": "SVT40"
+                }
+              },
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1356,
+                  "Material0": 899,
+                  "Material1": 903,
+                  "GeometryID": 1769,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 1001,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1769,
+                  "AIGeometryID": 895,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 1.2252819538116455,
+                  "SizeY": 0.04775843769311905,
+                  "SizeZ": 0.17162390053272247,
+                  "CenterX": 0.27112650871276855,
+                  "CenterY": -0.0028825304470956326,
+                  "CenterZ": 0.07318741083145142,
+                  "SrcName": "Characters\\Weapons\\Rifles_Real.mb",
+                  "UserName": "SVT40_sniper",
+                  "RootJoint": "SVT40_sniper"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "d346adcebdcee854d270f264d1ae83ef12747166b2eb85727a235236f29f8ac1",
+        "release_mmp_sha256": "d346adcebdcee854d270f264d1ae83ef12747166b2eb85727a235236f29f8ac1",
+        "original_png_sha256": "ef99ddabe5118c45df95a6d43b7940e65e8ae88b52cb479caab14f454675245a",
+        "source_rgba_sha256": "7becb806a18dfcc8bb3bd35de903ea81af2ad12497314f871083ecdc82352a46",
+        "source_rgb_sha256": "d5466fa017be20e02a04b26c8cf72cd4ddbeb9741d13b2d7a2f4680900f8c670",
+        "source_alpha_sha256": "8646d0363dc109a18f681034967359809434c252bdcf2353209f4c59da5eb2ff",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    },
+    {
+      "id": 1950,
+      "status": "source-only-genuine-art-deferred",
+      "reason": "Two dense staggered perforationpaint rows and fine lower repeated bars require exact sourcecount/pitch proof. Fresh entireRGB/A/historicalrelease/original/sourceconsumer inspection repeated honestly after Weapons12 source-only0calls. Genuine artwork, not technical/unsuitable; no invented source count or glyph. Zero imagegen calls.",
+      "source_check": {
+        "id": 1950,
+        "source_record": {
+          "id": 1950,
+          "texture": {
+            "ID": 1950,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -29152481,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\SubMachineGuns\\Beretta_M1938A.tga",
+            "Format": "dxt1",
+            "UserName": "Beretta_M1938A",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "weapons",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 1346,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "alpha_test",
+                "AddressMode": "Clamp",
+                "TemplateID": 904,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 1358,
+                    "field": "Material0",
+                    "material_template_id": 904,
+                    "geometry_id": 1771,
+                    "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                    "model_template_id": 1003,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            256,
+            64
+          ],
+          "source_sha256": "0a372624262bd9d195f2eee3e0c4b26f12a3815f2a82081fe92a32f7d1acec88",
+          "source_rgba_sha256": "f7d69618a15b50fcce115a2b461f0b9cbb557caec7af11d9996b0d3e1eb848db",
+          "release_rgba_sha256": "f7d69618a15b50fcce115a2b461f0b9cbb557caec7af11d9996b0d3e1eb848db",
+          "source_native_format": 1,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/1950.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 1950,
+          "texture": {
+            "ID": 1950,
+            "Width": 256,
+            "Height": 64,
+            "NMips": 0,
+            "AverageColor": -29152481,
+            "InstantLoad": 0,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Characters\\Weapons\\SubMachineGuns\\Beretta_M1938A.tga",
+            "Format": "dxt1",
+            "UserName": "Beretta_M1938A",
+            "Type": "Ordinary",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            256,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 1,
+            "physical_size": [
+              256,
+              64
+            ],
+            "mips": 5,
+            "file_bytes": 10936,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 1346,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "TemplateID": 904,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1358,
+                  "field": "Material0",
+                  "material_template_id": 904,
+                  "geometry_id": 1771,
+                  "geometry": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                  "model_template_id": 1003,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_chains": [
+          {
+            "actual_material": {
+              "ID": 1346,
+              "TextureID": 1950,
+              "BRDFID": 0,
+              "BumpID": 2791,
+              "SpecColor": 0,
+              "TemplateID": 904,
+              "GlossID": 2790,
+              "MirrorID": 0,
+              "CastShadow": 1,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "alpha_test",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 904,
+              "UserName": "Beretta_M1938A"
+            },
+            "actual_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 1358,
+                  "Material0": 904,
+                  "Material1": 0,
+                  "GeometryID": 1771,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 1003,
+                  "RPGArmorID": 28,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "geometry": {
+                  "ID": 1771,
+                  "AIGeometryID": 897,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.934177577495575,
+                  "SizeY": 0.042910702526569366,
+                  "SizeZ": 0.26858872175216675,
+                  "CenterX": 0.20727583765983582,
+                  "CenterY": -3.28943133354187e-06,
+                  "CenterZ": 0.018128424882888794,
+                  "SrcName": "Characters\\Weapons\\SubMachineGuns_Real.mb",
+                  "UserName": "Beretta_M1938A",
+                  "RootJoint": "Beretta_M1938A"
+                }
+              }
+            ]
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "alpha_test"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "0a372624262bd9d195f2eee3e0c4b26f12a3815f2a82081fe92a32f7d1acec88",
+        "release_mmp_sha256": "0a372624262bd9d195f2eee3e0c4b26f12a3815f2a82081fe92a32f7d1acec88",
+        "original_png_sha256": "ae9fdc3e12adc49c3af334224fab7b3331aa44656dd1099edad2553373d10d73",
+        "source_rgba_sha256": "f7d69618a15b50fcce115a2b461f0b9cbb557caec7af11d9996b0d3e1eb848db",
+        "source_rgb_sha256": "602436194424d079cc47041d8fa1877bd5c2c51302cbcbccbd46b0fcd4c44261",
+        "source_alpha_sha256": "390b5483a1a5ac2723957902fee2dfe72f5ce31599a85c39dc875bb2b996307d",
+        "dimensions": [
+          256,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_source_RGBA_RGB_A_privately_inspected": true
+      },
+      "imagegen_calls": 0,
+      "technical_disposition_claim": false
+    }
+  ],
+  "source_parity_count": 12,
+  "builtin_generation_calls": 1,
+  "recommended_original_only_ids": [],
+  "generation_unavailable_ids": [],
+  "scope_note": "Fresh remaining57weapon sourcequeue:32notcalled by broaddiscovery,12freshwhole exactsource/typed modelconsumer audits,1firstsolebuiltin held. Other20uncalled uninspected here, not declared unsuitable/exhausted. Old held4590/4591/5072/5086 not called; no RGBrepair/retry, no1936paddingoptout propagation. No raw accepted. All UI32/31/olderstables unchanged. Root sole shared/import/build/Game/C++/Git/native/finalacceptance.",
+  "shared_modified": false,
+  "Cplusplus_modified": false,
+  "Game_build_or_run": false,
+  "Git_modified": false
+}

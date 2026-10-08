@@ -1,0 +1,164 @@
+[
+  {
+    "id": 6822,
+    "exact_prompt": "Edit the attached ORIGINAL COMPLETE CLOTHING UV ATLAS into faithful4x HD old painted game art. Exact128square original diffuse; wholeRGBA nearest8x1024square guide only. Entire source UV, all source edges/material fields/paint scale stay unchanged; no crop/BBox/UV-fitting/padding/recenter/margins. Actual source alpha255 everywhere, including1344 intentional opaque RGBblack pixels: preserve opaque black, no transparency inference.\nUpper-left dark subdued BLUEGRAY striped cloth has exactly NINE light bands with native centers x3/11/19/27/35/43/51/59/67 and EIGHT darker cuts centered7/15/23/31/39/47/55/63, pitch8native pixels. Preserve whole strip phase, the weak last band and original downward fading/folds. Print endsx72; x72..76 is the original opaque-black gap, not tenth band. Keep original LOW-CONTRAST stripe pigment strength, no brighter contrasting ribbons or woven ridges. ONE upper-right gray paintfield[78,0,128,17], ONE soft warm flat painted wash[78,17,128,67] and ONE large lower brown clothfield[25,67,128,128] retain source color/blur/fine matte paint, no anatomy/pores or invented wrinkles.\nONE very dim black-gray boot paintwash at[27,30,78,67] keeps every original broad diagonal/V/shadow trace indistinct and soft. Do NOT reinterpret faint raster marks as separate eyelets, laces, knots, holes, zipper teeth or polished hardware; no new component count/anatomy. ONE tiny lower-left angular gray PAINT wash[2,79,7,86] keeps its original gray boundary/dark inset exactly as source, no shiny buckle/pin/frame assembly. ONE faint lower-right pale point at(113,117) remains tiny at source strength. Refine only existing painted transitions and weak fine grain, preserving gray/blue/warm/brown relative local lightness. No photo leather/weave, new seams/hardware/symbols/objects, strong outline/bevel or new fold geometry. Return ONLY this same entire diffuse atlas.",
+    "proved_source_counts": {
+      "upper_left_striped_field_count": 1,
+      "light_band_count": 9,
+      "dark_separator_count": 8,
+      "native_light_band_centers": [
+        3,
+        11,
+        19,
+        27,
+        35,
+        43,
+        51,
+        59,
+        67
+      ],
+      "native_dark_separator_centers": [
+        7,
+        15,
+        23,
+        31,
+        39,
+        47,
+        55,
+        63
+      ],
+      "native_repeat_pitch": 8,
+      "upper_striped_field_end_exclusive_x": 72,
+      "black_gap_native_x": [
+        72,
+        77
+      ],
+      "black_gap_is_alpha_positive": true,
+      "source_horizontal_profile_y_bounds": [
+        4,
+        20
+      ],
+      "boot_painted_wash_count": 1,
+      "boot_painted_wash_bounds": [
+        27,
+        30,
+        78,
+        67
+      ],
+      "boot_faint_trace_semantics": "Actual dim diagonal/V/crossed shading preserved as indistinct original paint; no inferred number of laces/eyelets/hardware parts from weak raster. Whole native RGBA phase recorded without invented semantic parts.",
+      "lower_left_single_angular_graywash_count": 1,
+      "lower_left_single_angular_graywash_bounds": [
+        2,
+        79,
+        7,
+        86
+      ],
+      "angular_graywash_semantics": "Exact source gray boundary and dark inset only; no guessed open-vs-closed hardware structure, shiny rim, pin, buckle anatomy.",
+      "lower_right_original_pale_point_count": 1,
+      "lower_right_original_pale_point_xy": [
+        113,
+        117
+      ],
+      "upper_right_grayfield_bounds": [
+        78,
+        0,
+        128,
+        17
+      ],
+      "warm_painted_wash_bounds": [
+        78,
+        17,
+        128,
+        67
+      ],
+      "lower_brownfield_bounds": [
+        25,
+        67,
+        128,
+        128
+      ],
+      "pigment": "Subdued bluegray stripes/dimblackgray boots/soft warmwash/matte brown lower cloth; keep local contrast strength/source hue."
+    },
+    "prompt_constraints": {
+      "upper_left_striped_field_count": 1,
+      "light_band_count": 9,
+      "dark_separator_count": 8,
+      "native_light_band_centers": [
+        3,
+        11,
+        19,
+        27,
+        35,
+        43,
+        51,
+        59,
+        67
+      ],
+      "native_dark_separator_centers": [
+        7,
+        15,
+        23,
+        31,
+        39,
+        47,
+        55,
+        63
+      ],
+      "native_repeat_pitch": 8,
+      "upper_striped_field_end_exclusive_x": 72,
+      "black_gap_native_x": [
+        72,
+        77
+      ],
+      "black_gap_is_alpha_positive": true,
+      "source_horizontal_profile_y_bounds": [
+        4,
+        20
+      ],
+      "boot_painted_wash_count": 1,
+      "boot_painted_wash_bounds": [
+        27,
+        30,
+        78,
+        67
+      ],
+      "boot_faint_trace_semantics": "Actual dim diagonal/V/crossed shading preserved as indistinct original paint; no inferred number of laces/eyelets/hardware parts from weak raster. Whole native RGBA phase recorded without invented semantic parts.",
+      "lower_left_single_angular_graywash_count": 1,
+      "lower_left_single_angular_graywash_bounds": [
+        2,
+        79,
+        7,
+        86
+      ],
+      "angular_graywash_semantics": "Exact source gray boundary and dark inset only; no guessed open-vs-closed hardware structure, shiny rim, pin, buckle anatomy.",
+      "lower_right_original_pale_point_count": 1,
+      "lower_right_original_pale_point_xy": [
+        113,
+        117
+      ],
+      "upper_right_grayfield_bounds": [
+        78,
+        0,
+        128,
+        17
+      ],
+      "warm_painted_wash_bounds": [
+        78,
+        17,
+        128,
+        67
+      ],
+      "lower_brownfield_bounds": [
+        25,
+        67,
+        128,
+        128
+      ],
+      "pigment": "Subdued bluegray stripes/dimblackgray boots/soft warmwash/matte brown lower cloth; keep local contrast strength/source hue."
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "source_count_proof_sha256": "6ab2077e7fd6377e2f82846b8bf09efb79d39a06c7859d0b7e2519e46e115c27",
+    "source_check_sha256": "1ffe096930e185103bc08190a2a7262f48488148fcd9c4ceaf69eab75b59bd7a",
+    "frozen_before_tool_utc": "2026-10-08T09:02:00.558437+00:00"
+  }
+]
