@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-08",
+  "platform": "Windows x64 / D3D11",
+  "scene": "bugs_after_headquarters_scene",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "hd_pack_textures": 2467,
+  "sequence": [
+    "HD enabled",
+    "HD disabled through actual graphics menu",
+    "HD reenabled through actual graphics menu"
+  ],
+  "states": [
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 622178666,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 0,
+      "tracked_gpu_bytes": 561384110,
+      "pending_fallbacks": 0
+    },
+    {
+      "terrain_hd": 11,
+      "tracked_gpu_bytes": 724628122,
+      "pending_fallbacks": 0
+    }
+  ],
+  "frames": 120,
+  "fps": 59.82989907198799,
+  "frame_ms_mean": 16.613664166666666,
+  "frame_ms_p95": 17.7351,
+  "normal_exit_code": 0,
+  "process_id": 12916,
+  "game_sha256": "707a588b448c050f6eb04a75bf486be49c50c16e789144426da7aaf90be13d8b",
+  "screenshots": [
+    {
+      "name": "hd2467-on",
+      "sha256": "1b17f544f9fdb0756f95093991d703517917f03a119ca11ec7568bd76bbc4245"
+    },
+    {
+      "name": "hd2467-options",
+      "sha256": "056894fbd04b87d21c9f9203f2680fcf62438e3300150ecac57fcfbe8d558155"
+    },
+    {
+      "name": "hd2467-off",
+      "sha256": "41d9c8dda54a7a553cb8f18cddf4bbc62e8b798b31817b41f19028da9c92c197"
+    },
+    {
+      "name": "hd2467-restored",
+      "sha256": "a119fc9e2e7cc44b36e6662a2ad4064f0d97a3d09db074eaa50003e574c66eff"
+    }
+  ],
+  "evidence_directory": "G:\\SS\\lab\\runs\\hd-groups-20261007-01\\evidence",
+  "visual_review": "All scene states and real graphics menu privately inspected. Own isolated process quit normally. This scene does not certify every new model or UI state. No public comparisons or HTML.",
+  "own_process_absent_after_quit": true,
+  "current_runtime_performance_qualification": {
+    "current_120frame_fps": 59.82989907198799,
+    "current_frame_ms_p95": 17.7351,
+    "performance_acceptance_claim": false,
+    "limitation": "Current singleHD120frame59.829899FPS/p9517.7351ms independently measured. Prior41original~3.81HD~3.71/42–45HD~3.74slow records preserved. Cause of transition unestablished; root changed no driver/system/source. This measurement does not establish a causal fix or general performance acceptance. FunctionalUV/alpha/resource checks independent.",
+    "prior_independent_original_HD_qualification": "new-groups-forty-first-batch-check.json:current_runtime_performance_qualification"
+  }
+}

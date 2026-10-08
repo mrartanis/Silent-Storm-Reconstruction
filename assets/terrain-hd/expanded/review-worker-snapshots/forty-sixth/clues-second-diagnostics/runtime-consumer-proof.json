@@ -1,0 +1,55 @@
+{
+  "batch": "clues-second",
+  "code_readonly": true,
+  "evidence": [
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataRPG.h",
+      "sha256": "d979caabe329a85dcb3b30e6de515390345674fa9d20b347eef4c04e9f78b89b",
+      "start": 215,
+      "end": 230,
+      "purpose": "CRPGItem.pModel pointer-domain CTRndModel",
+      "exact_excerpt": "class CRPGItem: public CDBRecord\n{\n\tOBJECT_BASIC_METHODS(CRPGItem);\npublic:\n\tint nWeight; // in grams\n\tint nSubTypePriority;\n\tEItemSubType subType;\n\tCTPoint<int> sSize;\n\tCPtr<CString> pToolTip;\n\tCPtr<CString> pName;\n\tCPtr<CString> pDescription;\n\tCPtr<CTRndModel> pModel;\n\tCPtr<CTRndModel> pModelActive;\n\tCPtr<CTRndModel> pModelInactive;\n\tvector<SUniformItem> looks;\n\tSCameraParams sCameras[CAMERA_MAX_VALUE];"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataRPG.cpp",
+      "sha256": "629af5046a79627f9472d4eca63beb30b98d1095114466360ac0fc7d964d24a9",
+      "start": 58,
+      "end": 66,
+      "purpose": "RPGItems.ModelID/ModelActive1/Model1 import model-template refs",
+      "exact_excerpt": "void CRPGItem::Import()\n{\n\tNDatabase::ImportField( \"Weight\", &nWeight );\n\tNDatabase::ImportField( \"SizeX\",\t&sSize.x );\n\tNDatabase::ImportField( \"SizeY\",\t&sSize.y );\n\tNDatabase::ImportField( \"TooltipID\", &pToolTip );\n\tNDatabase::ImportField( \"ModelID\", &pModel );\n\tNDatabase::ImportField( \"ModelActive1\", &pModelActive );\n\tNDatabase::ImportField( \"Model1\", &pModelInactive );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/DBFormat/DataFormat.cpp",
+      "sha256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "start": 2093,
+      "end": 2094,
+      "purpose": "ModelTemplates registers CTRndModel; ContainerModels registers CRndContainerModel",
+      "exact_excerpt": "\tREGISTER_DATABASE_CLASS( 32, \"ModelTemplates\", CTRndModel );\n\tREGISTER_DATABASE_CLASS( 33, \"ContainerModels\", CRndContainerModel );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iCommonUI.cpp",
+      "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8",
+      "start": 913,
+      "end": 936,
+      "purpose": "CShowItemModel::Set uses actual inventory GetDBItem/pModel and creates its real model in a scene",
+      "exact_excerpt": "void CShowItemModel::Set( NGScene::IGameView *pView, NWorld::CUnit *_pUnit, NRPG::IInventoryItem *_pItem, NDb::ECameraType eCameraType )\n{\n\tpItem = _pItem;\n\tpUnit = _pUnit;\n\n\t// retail @0x1c0f50 calls GetItemInfo unconditionally -- no null-item guard exists there.\n\tCPtr<NDb::CRPGItem> pRPGItem( pItem->GetDBItem() );\n\n\tSRand sRnd;\n\tif ( pRPGItem->pModel )\n\t{\n\t\tconst NDb::SCameraParams &sCamera = pRPGItem->sCameras[eCameraType];\n\n\t\tCVec3 vForwardDir;\n\t\tCQuat q = CQuat( sCamera.fYaw, V3_AXIS_Z ) * CQuat( sCamera.fPitch, V3_AXIS_X );\n\t\tq.GetYAxis( &vForwardDir );\n\n\t\tCVec3 vCP( sCamera.vAnchor - vForwardDir * sCamera.fDistance );\n\t\tSHMatrix sCameraTransform;\n\t\tMakeMatrix( &sCameraTransform, sCamera.fPitch, sCamera.fYaw, sCamera.fRoll, vCP );\n\n\t\tSetScene( pView, true );\n\t\tSetModel( pRPGItem->pModel->CreateModel( &sRnd ) );\n\t\tSetCameraTransform( sCameraTransform );"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/iCommonUI.cpp",
+      "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8",
+      "start": 953,
+      "end": 958,
+      "purpose": "same item UI recognizes IClueItem",
+      "exact_excerpt": "\tCDynamicCast<NRPG::IToolItem> pTool( pItem );\n\tCDynamicCast<NRPG::IPicklockItem> pPicklock( pItem );\n\tCDynamicCast<NRPG::IMineItem> pMine( pItem );\n\tCDynamicCast<NRPG::IKeyItem> pKey( pItem );\n\tCDynamicCast<NRPG::IClueItem> pClue( pItem );\n"
+    },
+    {
+      "path": "G:/SS/Silent-Storm-Reconstruction/Main/wDebris.cpp",
+      "sha256": "870a291e441bf464517e680039e492813cc9a968e80369ba70074219f9618939",
+      "start": 390,
+      "end": 404,
+      "purpose": "generic actual inventory-item model path can create a world frozen item",
+      "exact_excerpt": "// retail public overload @0x34b340: (pMap, pos, rot, pInvItem, bool bTemporaryVisible, int nFloor);\n// @0x74b45d forwards bTemporaryVisible as the inner overload's arg 6 and hardwires bVisibleGated 0.\nCDFrozenItem* CDebrisController::AddFrozenItem( NAI::IAIMap *pMap, const CVec3 &pos, const CQuat &rot, NRPG::IInventoryItem *pInvItem, bool bTemporaryVisible, int nFloor )\n{\n\tCPtr<NRPG::IInventoryItem> pHold( pInvItem );\n\tif ( !IsValid( pInvItem->GetDBItem()->pModel ) )\n\t{\n\t\tASSERT( 0 );\n\t\treturn 0;\n\t}\n\tSRand rnd;\n\tSHMatrix m;\n\tMakeMatrix( &m, pos, rot );\n\tCDFrozenItem *pWorldItem = AddFrozenItem( pMap, m, pInvItem, pInvItem->GetDBItem()->pModel->CreateModel( &rnd ), nFloor, bTemporaryVisible );\n\treturn pWorldItem;"
+    }
+  ],
+  "qualification": "Exact DB RPGItems.ModelID links refer to actual Models/MaterialTemplates consumers through the correct CTRndModel domain. Generic item-display/world runtime code supports these bindings; this is not mere material-only registration. No claim any specific item/chapter/current-screen is live, and no Game/GPU/native runtime was run by this worker."
+}

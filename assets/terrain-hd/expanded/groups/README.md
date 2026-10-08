@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 503 of these verified originals are accepted in the shared
+As of 2026-10-08, 505 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-forty-fifth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-forty-sixth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,227 IDs: clothing 194, equipment 110, weapons
-57, heads 155, UI 583, effects 104, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,225 IDs: clothing 194, equipment 110, weapons
+57, heads 155, UI 581, effects 104, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -728,3 +728,21 @@ p95278.43ms/normalquit/ownedGameabsent. Performanceacceptanceclaim:false;
 prior41independentoriginalandHDslow qualified/causeunestablished.
 Proofs:../new-groups-forty-fifth-{batch,live,runtime}-check.json.
 OrdinaryGitPNG/RESbuiltwithGame;1,227verified originals remain.
+
+Forty-sixth accepted packet:UI4841/4842,2 separate builtin calls.
+Pack2,467textures/4,934aliases/130archives/7,825,177,498bytes; prior2,465source/PNG/nativehashes exact.
+Two wholeactualnativeRGBA equal private4x predictions/fullsourceA0..255/UV/material/count/nativepaintscale/scalar/defaultpad0.
+Each oldJapanesedisk/softpaintfield/oldblackmargins/nativecontour kept;4841richerred/warmbeigecloth,
+4842faintgraymottle slightlyclearer/colorcentroid caveats disclosed, no exactRGB/contouridentity claim.
+Transparentpremulonce/GPU6wholeprivateonoffonframes/whole+middle+reverse+clippedUV/placement/density4vs1/pending0.
+ActualNationalities6UI588/589/Sides1,3Nationality3/iCharGen550pNation3Set(normal,disabled) proven;
+genericGPU notactiveCharacterScreen/flag3Dappearance. No original-only/newFaceGenbake/source6SHA25/current707EXE exact.
+Sevenfrozenworkerreviews/eightotherworkerheld preserved;no rootwholeprivateview claim forallworkerheld.
+Rootheld6812/6816 moreexplicitfiber/metalgrain/oldgrayrimcontrast,2523moreconcretecentralgroovecontrast/brighteroldflecks.
+Twoovals/oldswirl/flecks already source, notnewphysicalparts;workerreadyreviews remainimmutable/rootdecisions separate.
+No RGBartrepair/retries;raw/prompts/call/ref/BEFORE unchanged. Bothcanonicalprompts alreadyexactargument+oneadditionalLF,
+no manifest rewriting;customUI54/55/clues2 allfilesverified. Menu11/0/11/pending0/fourprivateframes,
+120frames59.83FPS/p9517.74ms/normalquit/ownedGameabsent.
+CurrentHD120frame againnear60FPS; prior41independentoriginalandHDslow/42–45HDslow retained. Causeoftransitionunestablished; no source/driver/systemchanges byroot/no causalfix/generalperformanceacceptanceclaim.
+Proofs:../new-groups-forty-sixth-{batch,live,runtime}-check.json.
+OrdinaryGitPNG/RESbuiltwithGame;1,225verified originals remain.

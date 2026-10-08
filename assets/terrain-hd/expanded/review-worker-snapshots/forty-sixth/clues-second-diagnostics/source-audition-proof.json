@@ -1,0 +1,2774 @@
+{
+  "batch": "clues-second",
+  "accepted_snapshot": 2465,
+  "remaining_interface_scope": 17,
+  "fresh_uncalled_count": 16,
+  "checked_utc": "2026-10-08T14:24:28.935176+00:00",
+  "source_checks": [
+    {
+      "id": 5280,
+      "source_record": {
+        "id": 5280,
+        "texture": {
+          "ID": 5280,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11056578,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\CodeBook.tga",
+          "Format": "dxt1",
+          "UserName": "CodeBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3430,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2197,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5508,
+                  "field": "Material0",
+                  "material_template_id": 2197,
+                  "geometry_id": 3350,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3628,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "41288116563b9aac1ca125ecb2959446beddd0c7ee1afddd7b71008cb8ecd03b",
+        "source_rgba_sha256": "dd09fb6b858c0b5f4577f1195b8c778506b7d6979faebfdfd0c3ba83fc86c9dc",
+        "release_rgba_sha256": "dd09fb6b858c0b5f4577f1195b8c778506b7d6979faebfdfd0c3ba83fc86c9dc",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5280.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5280,
+        "texture": {
+          "ID": 5280,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11056578,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\CodeBook.tga",
+          "Format": "dxt1",
+          "UserName": "CodeBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 5480,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3430,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2197,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5508,
+                "field": "Material0",
+                "material_template_id": 2197,
+                "geometry_id": 3350,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3628,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3430,
+            "TextureID": 5280,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2197,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2197,
+            "UserName": "CodeBook"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5508,
+                "Material0": 2197,
+                "Material1": 0,
+                "GeometryID": 3350,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3628,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3628,
+                "UserName": "CodeBook"
+              },
+              "geometry": {
+                "ID": 3350,
+                "AIGeometryID": 2218,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.6231383085250854,
+                "SizeY": 0.5701351165771484,
+                "SizeZ": 0.14111217856407166,
+                "CenterX": 0.0,
+                "CenterY": -0.017913207411766052,
+                "CenterZ": 0.07380954921245575,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "CodeBook",
+                "RootJoint": "CodeBook"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "41288116563b9aac1ca125ecb2959446beddd0c7ee1afddd7b71008cb8ecd03b",
+      "release_mmp_sha256": "41288116563b9aac1ca125ecb2959446beddd0c7ee1afddd7b71008cb8ecd03b",
+      "original_png_sha256": "db47f1554279ecb912f969803083832d58d276eee6a11d9b69cf08252e5201c1",
+      "source_rgba_sha256": "dd09fb6b858c0b5f4577f1195b8c778506b7d6979faebfdfd0c3ba83fc86c9dc",
+      "source_rgb_sha256": "4ba5d23f5d18798dd91f605d443de8ee6f0a8c6d70d368c8c0c8bbadf9ec0003",
+      "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+      "dimensions": [
+        128,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5281,
+      "source_record": {
+        "id": 5281,
+        "texture": {
+          "ID": 5281,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9610161,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\CodeBookPage.tga",
+          "Format": "dxt1",
+          "UserName": "CodeBookPage",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3431,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2198,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5509,
+                  "field": "Material0",
+                  "material_template_id": 2198,
+                  "geometry_id": 3351,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3629,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "089709df5a73f6d47faf61fb77be555ce92c11e8bf24a0b6ad2bbf1969485721",
+        "source_rgba_sha256": "8bb973ebb44df3e6590fc1194db7b023b8008bfcfa1279c217ace0f6593c1da7",
+        "release_rgba_sha256": "8bb973ebb44df3e6590fc1194db7b023b8008bfcfa1279c217ace0f6593c1da7",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5281.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5281,
+        "texture": {
+          "ID": 5281,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -9610161,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\CodeBookPage.tga",
+          "Format": "dxt1",
+          "UserName": "CodeBookPage",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 2752,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3431,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2198,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5509,
+                "field": "Material0",
+                "material_template_id": 2198,
+                "geometry_id": 3351,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3629,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3431,
+            "TextureID": 5281,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2198,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2198,
+            "UserName": "CodeBookPage"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5509,
+                "Material0": 2198,
+                "Material1": 0,
+                "GeometryID": 3351,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3629,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3629,
+                "UserName": "CodeBookPage"
+              },
+              "geometry": {
+                "ID": 3351,
+                "AIGeometryID": 2217,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.22730408608913422,
+                "SizeY": 0.5150806307792664,
+                "SizeZ": 0.06781627237796783,
+                "CenterX": -0.03153363615274429,
+                "CenterY": 0.0,
+                "CenterZ": 0.04789126664400101,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "CodeBookPage",
+                "RootJoint": "CodeBookPage"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "089709df5a73f6d47faf61fb77be555ce92c11e8bf24a0b6ad2bbf1969485721",
+      "release_mmp_sha256": "089709df5a73f6d47faf61fb77be555ce92c11e8bf24a0b6ad2bbf1969485721",
+      "original_png_sha256": "972b418bfa3790566af0a785764440c77c6100c8897acfcbda4e6b6822b609ff",
+      "source_rgba_sha256": "8bb973ebb44df3e6590fc1194db7b023b8008bfcfa1279c217ace0f6593c1da7",
+      "source_rgb_sha256": "8f23aba2c7510534a744c09f0a9bf8a2ef381d4ec8815d2fbd23333d5346733e",
+      "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5282,
+      "source_record": {
+        "id": 5282,
+        "texture": {
+          "ID": 5282,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -10267838,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Envelope.tga",
+          "Format": "dxt1",
+          "UserName": "Envelope",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3432,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2199,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5510,
+                  "field": "Material0",
+                  "material_template_id": 2199,
+                  "geometry_id": 3352,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3630,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 5511,
+                  "field": "Material0",
+                  "material_template_id": 2199,
+                  "geometry_id": 3353,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3631,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "6c80c2e83bfad6ad15969d4867802dec23e8a386853cb3da9cb827bad2901aad",
+        "source_rgba_sha256": "773b06f7b7f4cbc80427d7a4338594769fdbb15ef48c71461da9374ea9f08dcc",
+        "release_rgba_sha256": "773b06f7b7f4cbc80427d7a4338594769fdbb15ef48c71461da9374ea9f08dcc",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5282.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5282,
+        "texture": {
+          "ID": 5282,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -10267838,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Envelope.tga",
+          "Format": "dxt1",
+          "UserName": "Envelope",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 5480,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3432,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2199,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5510,
+                "field": "Material0",
+                "material_template_id": 2199,
+                "geometry_id": 3352,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3630,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 5511,
+                "field": "Material0",
+                "material_template_id": 2199,
+                "geometry_id": 3353,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3631,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3432,
+            "TextureID": 5282,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2199,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2199,
+            "UserName": "Envelope"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5510,
+                "Material0": 2199,
+                "Material1": 0,
+                "GeometryID": 3352,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3630,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3630,
+                "UserName": "Envelope"
+              },
+              "geometry": {
+                "ID": 3352,
+                "AIGeometryID": 2220,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.3261857330799103,
+                "SizeY": 0.31431394815444946,
+                "SizeZ": 0.1441853642463684,
+                "CenterX": 0.0,
+                "CenterY": -0.03417825698852539,
+                "CenterZ": 0.07758331298828125,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "Envelope",
+                "RootJoint": "Envelope"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5511,
+                "Material0": 2199,
+                "Material1": 2200,
+                "GeometryID": 3353,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3631,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3631,
+                "UserName": "EnvelopePaper"
+              },
+              "geometry": {
+                "ID": 3353,
+                "AIGeometryID": 2219,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.3868212103843689,
+                "SizeY": 0.4885047376155853,
+                "SizeZ": 0.1609439253807068,
+                "CenterX": -0.060808103531599045,
+                "CenterY": 0.08229246735572815,
+                "CenterZ": 0.07216089963912964,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "EnvelopePaper",
+                "RootJoint": "EnvelopePaper"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "6c80c2e83bfad6ad15969d4867802dec23e8a386853cb3da9cb827bad2901aad",
+      "release_mmp_sha256": "6c80c2e83bfad6ad15969d4867802dec23e8a386853cb3da9cb827bad2901aad",
+      "original_png_sha256": "f95cc126399bc38b7fa9696199132f755b07c6aa077cc0ce1684938d188766af",
+      "source_rgba_sha256": "773b06f7b7f4cbc80427d7a4338594769fdbb15ef48c71461da9374ea9f08dcc",
+      "source_rgb_sha256": "b433956b13d34eeddd59d38f76e4c86b2bb18691fb794b043c6a7c4a8aa58ae8",
+      "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+      "dimensions": [
+        128,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5283,
+      "source_record": {
+        "id": 5283,
+        "texture": {
+          "ID": 5283,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -8882833,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\EnvelopePaper.tga",
+          "Format": "dxt1",
+          "UserName": "EnvelopePaper",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3433,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2200,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5511,
+                  "field": "Material1",
+                  "material_template_id": 2200,
+                  "geometry_id": 3353,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3631,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "be3922c0640c6f5461fed4d27adc3ed32d2d1e624caba8aeba1a9a98312258d1",
+        "source_rgba_sha256": "ad43929fe02a57225d4e03473db0f05bc00a1fb5c1b21869f7bbc9252abc59c6",
+        "release_rgba_sha256": "ad43929fe02a57225d4e03473db0f05bc00a1fb5c1b21869f7bbc9252abc59c6",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5283.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5283,
+        "texture": {
+          "ID": 5283,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -8882833,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\EnvelopePaper.tga",
+          "Format": "dxt1",
+          "UserName": "EnvelopePaper",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 2752,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3433,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2200,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5511,
+                "field": "Material1",
+                "material_template_id": 2200,
+                "geometry_id": 3353,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3631,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3433,
+            "TextureID": 5283,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2200,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2200,
+            "UserName": "EnvelopePaper"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material1",
+              "model": {
+                "ID": 5511,
+                "Material0": 2199,
+                "Material1": 2200,
+                "GeometryID": 3353,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3631,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3631,
+                "UserName": "EnvelopePaper"
+              },
+              "geometry": {
+                "ID": 3353,
+                "AIGeometryID": 2219,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.3868212103843689,
+                "SizeY": 0.4885047376155853,
+                "SizeZ": 0.1609439253807068,
+                "CenterX": -0.060808103531599045,
+                "CenterY": 0.08229246735572815,
+                "CenterZ": 0.07216089963912964,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "EnvelopePaper",
+                "RootJoint": "EnvelopePaper"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "be3922c0640c6f5461fed4d27adc3ed32d2d1e624caba8aeba1a9a98312258d1",
+      "release_mmp_sha256": "be3922c0640c6f5461fed4d27adc3ed32d2d1e624caba8aeba1a9a98312258d1",
+      "original_png_sha256": "f817127bed91e977de3eacf00e10149d5f80bc758a2c317cbbbdf55fe76369df",
+      "source_rgba_sha256": "ad43929fe02a57225d4e03473db0f05bc00a1fb5c1b21869f7bbc9252abc59c6",
+      "source_rgb_sha256": "7e8a560fe28d3ddd41e7b56e72811e936066e0a2d18483c2eb677f3ffbf21a87",
+      "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5284,
+      "source_record": {
+        "id": 5284,
+        "texture": {
+          "ID": 5284,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11388114,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\LogBook.tga",
+          "Format": "dxt1",
+          "UserName": "LogBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3434,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2201,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5512,
+                  "field": "Material0",
+                  "material_template_id": 2201,
+                  "geometry_id": 3354,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3632,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "9fb812d7c9571b45d68d9161b2983d167ad07897f472f2d9c80732a05388b271",
+        "source_rgba_sha256": "ea396c56610aaa6c424758727a6f8edc2fa33bb11b315a61e0ad018c6fbec7eb",
+        "release_rgba_sha256": "ea396c56610aaa6c424758727a6f8edc2fa33bb11b315a61e0ad018c6fbec7eb",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5284.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5284,
+        "texture": {
+          "ID": 5284,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11388114,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\LogBook.tga",
+          "Format": "dxt1",
+          "UserName": "LogBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 5480,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3434,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2201,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5512,
+                "field": "Material0",
+                "material_template_id": 2201,
+                "geometry_id": 3354,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3632,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3434,
+            "TextureID": 5284,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2201,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2201,
+            "UserName": "LogBook"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5512,
+                "Material0": 2201,
+                "Material1": 0,
+                "GeometryID": 3354,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3632,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3632,
+                "UserName": "LogBook"
+              },
+              "geometry": {
+                "ID": 3354,
+                "AIGeometryID": 2221,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.44837552309036255,
+                "SizeY": 0.6249673962593079,
+                "SizeZ": 0.08364085853099823,
+                "CenterX": -0.017163433134555817,
+                "CenterY": 0.0,
+                "CenterZ": 0.04617202281951904,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "LogBook",
+                "RootJoint": "LogBook"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "9fb812d7c9571b45d68d9161b2983d167ad07897f472f2d9c80732a05388b271",
+      "release_mmp_sha256": "9fb812d7c9571b45d68d9161b2983d167ad07897f472f2d9c80732a05388b271",
+      "original_png_sha256": "234bf9154fd6c6c09a7b92a1a892e2b432e6bfe5b7b2e5fa424d262faa4732af",
+      "source_rgba_sha256": "ea396c56610aaa6c424758727a6f8edc2fa33bb11b315a61e0ad018c6fbec7eb",
+      "source_rgb_sha256": "40e18eac9a2dde9e7843e41b9493eec8ccfc948eeed1b2a0bcc62628c2d719d1",
+      "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+      "dimensions": [
+        128,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5285,
+      "source_record": {
+        "id": 5285,
+        "texture": {
+          "ID": 5285,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11778239,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Maps.tga",
+          "Format": "dxt1",
+          "UserName": "Maps",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3435,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2202,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5513,
+                  "field": "Material0",
+                  "material_template_id": 2202,
+                  "geometry_id": 3355,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3633,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          64
+        ],
+        "source_sha256": "5aaace76815ac5d9fff6f0c3d0ec20fe09430ec0c7f6c80fc2e33bc1af53e825",
+        "source_rgba_sha256": "b0bc5b9845b18205d8012ca29d70cb80af3502f5c1a0b4a1c2ca1d422876300d",
+        "release_rgba_sha256": "b0bc5b9845b18205d8012ca29d70cb80af3502f5c1a0b4a1c2ca1d422876300d",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5285.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5285,
+        "texture": {
+          "ID": 5285,
+          "Width": 128,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11778239,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Maps.tga",
+          "Format": "dxt1",
+          "UserName": "Maps",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 5480,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3435,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2202,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5513,
+                "field": "Material0",
+                "material_template_id": 2202,
+                "geometry_id": 3355,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3633,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3435,
+            "TextureID": 5285,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2202,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2202,
+            "UserName": "Maps"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5513,
+                "Material0": 2202,
+                "Material1": 0,
+                "GeometryID": 3355,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3633,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3633,
+                "UserName": "Maps"
+              },
+              "geometry": {
+                "ID": 3355,
+                "AIGeometryID": 2222,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5839706659317017,
+                "SizeY": 0.7619566917419434,
+                "SizeZ": 0.04214037209749222,
+                "CenterX": -0.04131875932216644,
+                "CenterY": 0.019821181893348694,
+                "CenterZ": 0.026824835687875748,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "Maps",
+                "RootJoint": "Maps"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "5aaace76815ac5d9fff6f0c3d0ec20fe09430ec0c7f6c80fc2e33bc1af53e825",
+      "release_mmp_sha256": "5aaace76815ac5d9fff6f0c3d0ec20fe09430ec0c7f6c80fc2e33bc1af53e825",
+      "original_png_sha256": "289c6dddc00d704a9e0af86c852e86521919ac17d3c4b05bfbf75c5a7833ec65",
+      "source_rgba_sha256": "b0bc5b9845b18205d8012ca29d70cb80af3502f5c1a0b4a1c2ca1d422876300d",
+      "source_rgb_sha256": "6eda9325cfcb21dbce0c3eac1de6de3ecf449f9961e8b604916476adc5e52564",
+      "source_alpha_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+      "dimensions": [
+        128,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5286,
+      "source_record": {
+        "id": 5286,
+        "texture": {
+          "ID": 5286,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11052709,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\NoteBook.tga",
+          "Format": "dxt1",
+          "UserName": "NoteBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3436,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2203,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5514,
+                  "field": "Material0",
+                  "material_template_id": 2203,
+                  "geometry_id": 3356,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3634,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "efae2c7519a9e7184f58f2cd696811636663796b3e13c0fb4c82400bbf0853f1",
+        "source_rgba_sha256": "a5b4370e2199433661fc7fb94250a27e0a8855f510848e71a35a075f8d847e36",
+        "release_rgba_sha256": "a5b4370e2199433661fc7fb94250a27e0a8855f510848e71a35a075f8d847e36",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5286.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5286,
+        "texture": {
+          "ID": 5286,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -11052709,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\NoteBook.tga",
+          "Format": "dxt1",
+          "UserName": "NoteBook",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 2752,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3436,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2203,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5514,
+                "field": "Material0",
+                "material_template_id": 2203,
+                "geometry_id": 3356,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3634,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3436,
+            "TextureID": 5286,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2203,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2203,
+            "UserName": "NoteBook"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5514,
+                "Material0": 2203,
+                "Material1": 0,
+                "GeometryID": 3356,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3634,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3634,
+                "UserName": "NoteBook"
+              },
+              "geometry": {
+                "ID": 3356,
+                "AIGeometryID": 2223,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.2606666088104248,
+                "SizeY": 0.37160977721214294,
+                "SizeZ": 0.07126745581626892,
+                "CenterX": 6.376951932907104e-05,
+                "CenterY": -0.007213622331619263,
+                "CenterZ": 0.04290838539600372,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "NoteBook",
+                "RootJoint": "NoteBook"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "efae2c7519a9e7184f58f2cd696811636663796b3e13c0fb4c82400bbf0853f1",
+      "release_mmp_sha256": "efae2c7519a9e7184f58f2cd696811636663796b3e13c0fb4c82400bbf0853f1",
+      "original_png_sha256": "96f9c6aba323869dd5c818114cbe643c9c12917e9f3568aa0282841267da66f6",
+      "source_rgba_sha256": "a5b4370e2199433661fc7fb94250a27e0a8855f510848e71a35a075f8d847e36",
+      "source_rgb_sha256": "f9daccdfba6b75f01688d29f9ad2049995b13b1dcbbf911c67dac1033c7071c2",
+      "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5287,
+      "source_record": {
+        "id": 5287,
+        "texture": {
+          "ID": 5287,
+          "Width": 64,
+          "Height": 32,
+          "NMips": 0,
+          "AverageColor": -12113886,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Pass.tga",
+          "Format": "dxt1",
+          "UserName": "Pass",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3437,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2204,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5515,
+                  "field": "Material0",
+                  "material_template_id": 2204,
+                  "geometry_id": 3357,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3635,
+                  "flags": ""
+                },
+                {
+                  "table": "Models",
+                  "id": 6047,
+                  "field": "Material0",
+                  "material_template_id": 2204,
+                  "geometry_id": 3708,
+                  "geometry": "Clues\\Documetns4show.mb",
+                  "model_template_id": 3901,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          32
+        ],
+        "source_sha256": "f399235261e89ee67257d0a580b8e599d9a78cbda5f5583528bc993a7d0c80b0",
+        "source_rgba_sha256": "39298978f4a01ea9382a1341a7622e8082bf54a456294b25bd33d3b935099de3",
+        "release_rgba_sha256": "39298978f4a01ea9382a1341a7622e8082bf54a456294b25bd33d3b935099de3",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5287.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5287,
+        "texture": {
+          "ID": 5287,
+          "Width": 64,
+          "Height": 32,
+          "NMips": 0,
+          "AverageColor": -12113886,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Pass.tga",
+          "Format": "dxt1",
+          "UserName": "Pass",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          32
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            32
+          ],
+          "mips": 4,
+          "file_bytes": 1384,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3437,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2204,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5515,
+                "field": "Material0",
+                "material_template_id": 2204,
+                "geometry_id": 3357,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3635,
+                "flags": ""
+              },
+              {
+                "table": "Models",
+                "id": 6047,
+                "field": "Material0",
+                "material_template_id": 2204,
+                "geometry_id": 3708,
+                "geometry": "Clues\\Documetns4show.mb",
+                "model_template_id": 3901,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3437,
+            "TextureID": 5287,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2204,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2204,
+            "UserName": "Pass"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5515,
+                "Material0": 2204,
+                "Material1": 0,
+                "GeometryID": 3357,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3635,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3635,
+                "UserName": "Pass"
+              },
+              "geometry": {
+                "ID": 3357,
+                "AIGeometryID": 2224,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.30824512243270874,
+                "SizeY": 0.25547248125076294,
+                "SizeZ": 0.04371264949440956,
+                "CenterX": 0.0,
+                "CenterY": 0.0,
+                "CenterZ": 0.025696510449051857,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "Pass",
+                "RootJoint": "Pass"
+              }
+            },
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 6047,
+                "Material0": 2204,
+                "Material1": 0,
+                "GeometryID": 3708,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3901,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3901,
+                "UserName": "Pass"
+              },
+              "geometry": {
+                "ID": 3708,
+                "AIGeometryID": 2437,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15547919273376465,
+                "SizeY": 0.17837950587272644,
+                "SizeZ": 0.261483371257782,
+                "CenterX": 0.02582104317843914,
+                "CenterY": 0.014318503439426422,
+                "CenterZ": -0.019360963255167007,
+                "SrcName": "Clues\\Documetns4show.mb",
+                "UserName": "Pass",
+                "RootJoint": "Pass"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "f399235261e89ee67257d0a580b8e599d9a78cbda5f5583528bc993a7d0c80b0",
+      "release_mmp_sha256": "f399235261e89ee67257d0a580b8e599d9a78cbda5f5583528bc993a7d0c80b0",
+      "original_png_sha256": "700565ca1f404531e88474464feb11e92737b0e2f188c4231bbc56e8efdc82b8",
+      "source_rgba_sha256": "39298978f4a01ea9382a1341a7622e8082bf54a456294b25bd33d3b935099de3",
+      "source_rgb_sha256": "e1531b385a6840f84826f874c611e1de338dbd70925344ffbc566d9994803bef",
+      "source_alpha_sha256": "d0ff1b294b5288d1ae1421eadf5b2d38a8752b76d472ff30bed9028e25b1c5b8",
+      "dimensions": [
+        64,
+        32
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5289,
+      "source_record": {
+        "id": 5289,
+        "texture": {
+          "ID": 5289,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -13754090,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Scrap.tga",
+          "Format": "dxt1",
+          "UserName": "Scrap",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3439,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2206,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5517,
+                  "field": "Material0",
+                  "material_template_id": 2206,
+                  "geometry_id": 3359,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3637,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          64,
+          64
+        ],
+        "source_sha256": "ee84f463fc772bf598e7290d241bdaaf79e0e32afb11b1fac693ef66dfae3d24",
+        "source_rgba_sha256": "eaf0289884b544a7f2c6991e620fdaf1bf46bee34fe4f7bfc716c0c23c8742b2",
+        "release_rgba_sha256": "eaf0289884b544a7f2c6991e620fdaf1bf46bee34fe4f7bfc716c0c23c8742b2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5289.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5289,
+        "texture": {
+          "ID": 5289,
+          "Width": 64,
+          "Height": 64,
+          "NMips": 0,
+          "AverageColor": -13754090,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Scrap.tga",
+          "Format": "dxt1",
+          "UserName": "Scrap",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          64,
+          64
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            64,
+            64
+          ],
+          "mips": 5,
+          "file_bytes": 2752,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3439,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2206,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5517,
+                "field": "Material0",
+                "material_template_id": 2206,
+                "geometry_id": 3359,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3637,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3439,
+            "TextureID": 5289,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2206,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2206,
+            "UserName": "Scrap"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5517,
+                "Material0": 2206,
+                "Material1": 0,
+                "GeometryID": 3359,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3637,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3637,
+                "UserName": "Scrap"
+              },
+              "geometry": {
+                "ID": 3359,
+                "AIGeometryID": 2226,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.3184618353843689,
+                "SizeY": 0.35949188470840454,
+                "SizeZ": 0.0,
+                "CenterX": -0.013107165694236755,
+                "CenterY": 0.02575145661830902,
+                "CenterZ": 0.0,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "Scrap",
+                "RootJoint": "Scrap"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "ee84f463fc772bf598e7290d241bdaaf79e0e32afb11b1fac693ef66dfae3d24",
+      "release_mmp_sha256": "ee84f463fc772bf598e7290d241bdaaf79e0e32afb11b1fac693ef66dfae3d24",
+      "original_png_sha256": "9d2c1a109f075890c51fa766ca70f0977f6e3d2f2ae31ee272a7433421358153",
+      "source_rgba_sha256": "eaf0289884b544a7f2c6991e620fdaf1bf46bee34fe4f7bfc716c0c23c8742b2",
+      "source_rgb_sha256": "74a2eb61526f8018327d70b5eed67734febe1ab4400c01b5726262d0ab68afb3",
+      "source_alpha_sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "dimensions": [
+        64,
+        64
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5290,
+      "source_record": {
+        "id": 5290,
+        "texture": {
+          "ID": 5290,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14798280,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\SecretFolder01.tga",
+          "Format": "dxt1",
+          "UserName": "SecretFolder01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3440,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2207,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5518,
+                  "field": "Material0",
+                  "material_template_id": 2207,
+                  "geometry_id": 3360,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3638,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "c2590b98a481d07f04147e2a7637c134d91ac6b127adbd30d28fb7e856d326cc",
+        "source_rgba_sha256": "f280a2afa7f6a1804802625fdc83bee89f9ed6732899cb2c9c8d3824581eacd4",
+        "release_rgba_sha256": "f280a2afa7f6a1804802625fdc83bee89f9ed6732899cb2c9c8d3824581eacd4",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5290.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5290,
+        "texture": {
+          "ID": 5290,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14798280,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\SecretFolder01.tga",
+          "Format": "dxt1",
+          "UserName": "SecretFolder01",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 6,
+          "file_bytes": 10944,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3440,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2207,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5518,
+                "field": "Material0",
+                "material_template_id": 2207,
+                "geometry_id": 3360,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3638,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3440,
+            "TextureID": 5290,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2207,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2207,
+            "UserName": "SecretFolder01"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5518,
+                "Material0": 2207,
+                "Material1": 0,
+                "GeometryID": 3360,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3638,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3638,
+                "UserName": "SecretFolder01"
+              },
+              "geometry": {
+                "ID": 3360,
+                "AIGeometryID": 2227,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5867064595222473,
+                "SizeY": 0.7681783437728882,
+                "SizeZ": 0.1905476301908493,
+                "CenterX": 0.00930824875831604,
+                "CenterY": 0.0,
+                "CenterZ": 0.08365478366613388,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "SecretFolder01",
+                "RootJoint": "SecretFolder01"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "c2590b98a481d07f04147e2a7637c134d91ac6b127adbd30d28fb7e856d326cc",
+      "release_mmp_sha256": "c2590b98a481d07f04147e2a7637c134d91ac6b127adbd30d28fb7e856d326cc",
+      "original_png_sha256": "ed92597e125df8a52d19d5c620a4d0e4aafa9d02a48df6e8736a059dd84190e8",
+      "source_rgba_sha256": "f280a2afa7f6a1804802625fdc83bee89f9ed6732899cb2c9c8d3824581eacd4",
+      "source_rgb_sha256": "acd3f7391de599fad568d38689d0601d4eeef3f59d8c690d620b6dd470e48c3a",
+      "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5292,
+      "source_record": {
+        "id": 5292,
+        "texture": {
+          "ID": 5292,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13028561,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\SecretPack.tga",
+          "Format": "dxt1",
+          "UserName": "SecretPack",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3442,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2209,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5520,
+                  "field": "Material0",
+                  "material_template_id": 2209,
+                  "geometry_id": 3362,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3640,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "f2426c84f32519512cff632e3dba2e6b4a52942a9f6fb8e879df562d48d083bf",
+        "source_rgba_sha256": "c6d94265095ec976e824688c7ba536a4ad7f2331608487457dce17e6c95f400b",
+        "release_rgba_sha256": "c6d94265095ec976e824688c7ba536a4ad7f2331608487457dce17e6c95f400b",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5292.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5292,
+        "texture": {
+          "ID": 5292,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13028561,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\SecretPack.tga",
+          "Format": "dxt1",
+          "UserName": "SecretPack",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 6,
+          "file_bytes": 10944,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3442,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2209,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5520,
+                "field": "Material0",
+                "material_template_id": 2209,
+                "geometry_id": 3362,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3640,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3442,
+            "TextureID": 5292,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2209,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2209,
+            "UserName": "SecretPack"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5520,
+                "Material0": 2209,
+                "Material1": 0,
+                "GeometryID": 3362,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3640,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3640,
+                "UserName": "SecretPack"
+              },
+              "geometry": {
+                "ID": 3362,
+                "AIGeometryID": 2229,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.5960121154785156,
+                "SizeY": 0.8457419276237488,
+                "SizeZ": 0.22773197293281555,
+                "CenterX": 0.0,
+                "CenterY": -0.002341657876968384,
+                "CenterZ": 0.11591161787509918,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "SecretPack",
+                "RootJoint": "SecretPack"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "f2426c84f32519512cff632e3dba2e6b4a52942a9f6fb8e879df562d48d083bf",
+      "release_mmp_sha256": "f2426c84f32519512cff632e3dba2e6b4a52942a9f6fb8e879df562d48d083bf",
+      "original_png_sha256": "bfce38bf41c74137d235406cad82908ca6c918b061baa0b0b636d80428190722",
+      "source_rgba_sha256": "c6d94265095ec976e824688c7ba536a4ad7f2331608487457dce17e6c95f400b",
+      "source_rgb_sha256": "8826fd2f96e673812e6b8a629c325660175e20bc4af32d2915aeb54962345c84",
+      "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    },
+    {
+      "id": 5295,
+      "source_record": {
+        "id": 5295,
+        "texture": {
+          "ID": 5295,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14211289,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Tubule.tga",
+          "Format": "dxt1",
+          "UserName": "Tubule",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "clues",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3445,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 2212,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5523,
+                  "field": "Material0",
+                  "material_template_id": 2212,
+                  "geometry_id": 3365,
+                  "geometry": "Clues\\clues.mb",
+                  "model_template_id": 3643,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "200df2cae7be426549547cda032ce7f61bfee18962237bc16e78fdaac4807be3",
+        "source_rgba_sha256": "3916c11c3c3bdd1c0dd0d5d6454790183004d70e3c37f9f4c0d74a0c0f78cdf2",
+        "release_rgba_sha256": "3916c11c3c3bdd1c0dd0d5d6454790183004d70e3c37f9f4c0d74a0c0f78cdf2",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/5295.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "fresh_actual_usage": {
+        "id": 5295,
+        "texture": {
+          "ID": 5295,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -14211289,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Clues\\Tubule.tga",
+          "Format": "dxt1",
+          "UserName": "Tubule",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "logical_size": [
+          128,
+          128
+        ],
+        "historical_header": {
+          "available": true,
+          "native_format": 1,
+          "physical_size": [
+            128,
+            128
+          ],
+          "mips": 6,
+          "file_bytes": 10944,
+          "release_rgba_match": "not checked by scope audit"
+        },
+        "disposition": "candidate-source-pixel-validation-required",
+        "technical_reasons": [],
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3445,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2212,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 5523,
+                "field": "Material0",
+                "material_template_id": 2212,
+                "geometry_id": 3365,
+                "geometry": "Clues\\clues.mb",
+                "model_template_id": 3643,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": [],
+        "source_pixel_validation": "required before adding to generation queue",
+        "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+      },
+      "fresh_actual_typed_material_model_chains": [
+        {
+          "actual_material": {
+            "ID": 3445,
+            "TextureID": 5295,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2212,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 1,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2212,
+            "UserName": "Tubule"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5523,
+                "Material0": 2212,
+                "Material1": 0,
+                "GeometryID": 3365,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3643,
+                "RPGArmorID": 28,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3643,
+                "UserName": "Tubule"
+              },
+              "geometry": {
+                "ID": 3365,
+                "AIGeometryID": 2232,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.4739745259284973,
+                "SizeY": 1.2692742347717285,
+                "SizeZ": 0.18586218357086182,
+                "CenterX": -0.08759552240371704,
+                "CenterY": 0.02409502863883972,
+                "CenterZ": 0.09321793913841248,
+                "SrcName": "Clues\\clues.mb",
+                "UserName": "Tubule",
+                "RootJoint": "Tubule"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ],
+      "actual_material_alpha_modes": [
+        "opaque"
+      ],
+      "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "historical_release_original_fullRGBA_dimensions_exact": true,
+      "historical_release_exact_native_bytes": true,
+      "historical_mmp_sha256": "200df2cae7be426549547cda032ce7f61bfee18962237bc16e78fdaac4807be3",
+      "release_mmp_sha256": "200df2cae7be426549547cda032ce7f61bfee18962237bc16e78fdaac4807be3",
+      "original_png_sha256": "47b9ec9355b9ce781364da48fe9339d8d8bc6cc52f8df2fa742762ca30642f28",
+      "source_rgba_sha256": "3916c11c3c3bdd1c0dd0d5d6454790183004d70e3c37f9f4c0d74a0c0f78cdf2",
+      "source_rgb_sha256": "60bce4fa0bcc179160901fb85d4e7699f5843c863102a4a580d65eba4a54724d",
+      "source_alpha_sha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "full_source_privately_inspected": false
+    }
+  ],
+  "shared_modified": false
+}
