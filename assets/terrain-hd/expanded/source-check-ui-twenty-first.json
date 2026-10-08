@@ -1,0 +1,158 @@
+{
+  "batch": "ui-twenty-first",
+  "source_checks": [
+    {
+      "id": 4660,
+      "checked_utc": "2026-10-08T05:10:13.473191+00:00",
+      "accepted_snapshot": 2345,
+      "queue_snapshot": 2806,
+      "all_accepted_prior_calls_jobs_ID_guard_passed": true,
+      "database_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+      "source_record": {
+        "id": 4660,
+        "texture": {
+          "ID": 4660,
+          "Width": 512,
+          "Height": 256,
+          "NMips": 1,
+          "AverageColor": -15329000,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Interface v5.0\\MainMenu\\M2_Element03.tga",
+          "Format": "dxt1",
+          "UserName": "M2_Element03",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "interface-v5",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 2904,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1869,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4855,
+                  "field": "Material0",
+                  "material_template_id": 1869,
+                  "geometry_id": 3012,
+                  "geometry": "Interface\\MainMenu.mb",
+                  "model_template_id": 3229,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          512,
+          256
+        ],
+        "source_sha256": "00aaf8d5828aa6a7b5a55a2a424777bf7691d74b5f0f13f421589789623cdd52",
+        "source_rgba_sha256": "8599bb92979798d1405a7bbc903567cdf9d9a4e0b6d8ee2a7fcf75e7e04db936",
+        "release_rgba_sha256": "8599bb92979798d1405a7bbc903567cdf9d9a4e0b6d8ee2a7fcf75e7e04db936",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/4660.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "actual_texture": {
+        "ID": 4660,
+        "Width": 512,
+        "Height": 256,
+        "NMips": 1,
+        "AverageColor": -15329000,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Interface v5.0\\MainMenu\\M2_Element03.tga",
+        "Format": "dxt1",
+        "UserName": "M2_Element03",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "actual_materials": [
+        {
+          "ID": 2904,
+          "TextureID": 4660,
+          "BRDFID": 0,
+          "BumpID": 0,
+          "SpecColor": 0,
+          "TemplateID": 1869,
+          "GlossID": 0,
+          "MirrorID": 0,
+          "CastShadow": 1,
+          "SpecFactor": 0.0,
+          "RndWeight": 1.0,
+          "MetalMirror": 0.0,
+          "DielMirror": 0.0,
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "Flags": ""
+        }
+      ],
+      "actual_UITextures": [],
+      "actual_material_templates": [
+        {
+          "ID": 1869,
+          "UserName": "M2_Element03"
+        }
+      ],
+      "actual_model_consumers": [
+        {
+          "field": "Material0",
+          "model": {
+            "ID": 4855,
+            "Material0": 1869,
+            "Material1": 2170,
+            "GeometryID": 3012,
+            "Material2": 1870,
+            "Material3": 1860,
+            "SkeletonID": 0,
+            "TemplateID": 3229,
+            "RPGArmorID": 4,
+            "RndWeight": 1.0,
+            "Flags": ""
+          }
+        }
+      ],
+      "historical_MMP_SHA256": "00aaf8d5828aa6a7b5a55a2a424777bf7691d74b5f0f13f421589789623cdd52",
+      "release_MMP_SHA256": "00aaf8d5828aa6a7b5a55a2a424777bf7691d74b5f0f13f421589789623cdd52",
+      "original_RGBA_SHA256": "8599bb92979798d1405a7bbc903567cdf9d9a4e0b6d8ee2a7fcf75e7e04db936",
+      "historical_release_original_RGBA_exact": true,
+      "full_source_RGBA_and_A_privately_inspected": true,
+      "source_A_extrema": [
+        255,
+        255
+      ],
+      "source_pattern": "Whole original dark matte painted irregular rubble/plaster fields and wooden UV strips with opaque black gutters; lower-right individual rubble polygons/broken diagonal plank segments retain original source shapes/phase/scale. No assumed regular grid/count; original fullsource defines all individual irregular fragments. Fullraw and nativeinverse phase/material QA required after solecall.",
+      "reference_recipe": "Entire original512x256 storedRGB nearest2x1024x512. No crop/padding/BBox/rotate/unpremultiply/artisticRGB edit. Whole generatedLanczos2048x1024/sourceA independently/scalar only.",
+      "reference_SHA256": [
+        "1156830b082c8df3a9656f90868d3662de0eeae4ba600c61809a92238e7650c6",
+        "b25ed6904840835485b57927565c3b20df87c8e7235ae79892f68d63cda8d920"
+      ],
+      "exact_prompt_SHA256": "8d47a8daec0a77dc158bc92980370fe898c996af26c0e4abae7e2372f88d27e8",
+      "imagegen_calls_at_proof": 0
+    }
+  ]
+}

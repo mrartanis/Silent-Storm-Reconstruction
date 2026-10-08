@@ -8,14 +8,14 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,345 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 67 clothing, 118 equipment, 65 weapons,
-7 head/hair textures, 47 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,349 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 68 clothing, 120 equipment, 65 weapons,
+8 head/hair textures, 47 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,806 records, including 383 accepted new-group textures, the original
+contains 2,811 records, including 387 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
-124 structural/solid masks, 63 unavailable historical sources, one release mismatch
+125 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and fifteen resource IDs whose original-preserving image generation was unavailable
 (fourteen distinct source images). No entries in that queue remain pending.
 An additional read-only audit found ten ordinary color RGB565 resources excluded
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,361 verified originals outside the shared queue, including next
+validation. There remain 1,356 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -280,8 +280,26 @@ frozen original worker reviews:expanded/accepted-git-stage-completeness-twenty-f
 expanded/coordinator-review-provenance-twenty-fourth.json. Held5405/5388/3041/6768/
 6766/7627/3864/2153/6827 retain raw/reasons. Inspect next jobs before newcalls.
 
-All 12,547 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,964,041,509 bytes before Git deduplication/compression).
+Twenty-fifth accepted packet: equipment6403/7659, neck/hands color6762
+and dynamic FaceGen hair layer6715. Pack:2,349 textures/4,698 aliases/
+126 archives/7,632,936,686 bytes. Prior2,345 source/PNG/native hashes unchanged;
+four nativeRGBA images equal privately reviewed whole4x predictions. Full source
+alpha/UV/material/scale preserved, numerical brightness only, no artisticRGB
+insertion/crop/BBox. Source2378 individually retained:4096 identical RGBA68/52/35/255
+pixels, zero generation; no equipment category exclusion.
+FaceGen now reads the complete logical mip of HD layers, retaining retail
+straight-alpha blending/Vflip and256square atlas. Live preview invalidates on
+HD revision. New23 regression checks and4 selected CTest pass. Actual6715
+resource loader/CPU blend on/off/on matches independent integer/FNV references;
+9 real head94 bakes/roundtrips pass. This does not certify every head on GPU.
+Full native validation, actual graphics menu/private frames/normalquit:
+expanded/new-groups-twenty-fifth-{batch,live}-check.json; actual CPU proof:
+expanded/new-groups-twenty-fifth-facegen-runtime-check.json. Three original worker
+reviews frozen before import; exact prompts and PNG remain ordinary Git files.
+Held candidates retain reasons; do not regenerate accepted IDs.
+
+All 12,602 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,993,672,594 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

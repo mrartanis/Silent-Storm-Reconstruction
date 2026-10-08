@@ -1,0 +1,137 @@
+{
+  "id": 6807,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-11151d17-66e7-4003-942f-6f46cd631427.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted gray-clothing/body diffuse UV atlas ID6807.\r\nImage1 is the ONLY edit target: exact entire original256x128 RGBA enlarged nearest8x2048x1024. Refine this SAME whole landscape2:1 UV atlas at four-times source resolution. Maintain the exact wholecanvas two-to-one composition, all native field endpoints/UV/part counts/phase/contours/source palette/material identity and original physical pattern scale. Output only this texture map, no person, garments photographed separately, scene or extra object.\r\nPreserve the original subdued gray cloth fields, muted dark straps, soft dark red-brown skin-color fields and washed brown/black right-hand material. Improve only existing fine painted mottling and soft transitions. Keep original lowcontrast cloth folds/washed marks, no newly raised fold geometry, photographic pores/weave/leather, coarsegrain, regular decorative pattern, new stitches, seams or hardware. The dim red-brown color fields remain soft sourcepaint without invented anatomy/nails/hands or whitening.\r\nKeep EXACTLY TWO long vertical dark straps, source native bounds[22,3,30,124] and[74,4,82,65]. Each has exactly FOUR existing light crossbars with native y-phase41,48,54,58, measured independently in the original. Preserve their original widths, spacing, low-resolution painted shapes and local gray material; no extra holes/studs/bars or chrome bevels.\r\nKeep EXACTLY TWO existing small solid gray clips bounds[23,44,29,49] and[75,44,81,49], and EXACTLY TWO existing lower double-dark-slot frames bounds[22,50,30,60] and[74,50,82,60]. Each lowerframe has exactly TWO original dark painted slots at native[23,51,29,54],[23,55,29,58] and[75,51,81,54],[75,55,81,58]. Preserve the original faint/partial upperedges as they appear, do not invent a closed extra metal loop or new mechanical structure. Do not subdivide the slots, change their count, fill them or add fastening furniture.\r\nPreserve ONE existing large rounded bottom ringwash at[129,67,140,81], exact source contour and how it meets the original vertical strap and two diagonal dark bands. No additional ring, buckle, lace, hole or new closure. Preserve ONE upperbelt gray plaque with its existing washed angular motif at[45,3,59,14]: retain the source irregular painted silhouette and indistinct inner marks, no newly readable symbol, glyph, insignia, character, face or new decorative emblem. This is preservation of the original painted patch, not creation of a logo.\r\nKeep all original rightbrownfield broad washed marks/contours at their original scale/positions, without denser patterns or extra objects. Finer HD paint may clarify existing soft transitions but keep local shading hierarchy and part silhouettes.\r\nOriginal alpha255 over EVERY texel including opaque black separators/corners. Black RGB is NOT transparency. Keep full2:1 opaque canvas, no crop, padding, BBox, letterbox, recentering, registration, new border/margin/text/labels/watermark. Preserve the entire originalUV atlas in place.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6807-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "99368026a953a226dc2ac3f1a54328642463dadf704f59586ee7f400e85b6e30",
+    "exact_prompt_file": "5eaf676552fab8d791243926aa9d80a1b1f1aa71657c568e9d95c04ab17f03d2",
+    "reference_png": "5d8e9d7ea837358b4f754b76840f64640708194f8b7a8b92cfa5ceb8a612a30b"
+  },
+  "saved_at_utc": "2026-10-08T05:25:33.224335+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6807,
+    "texture": {
+      "ID": 6807,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13424350,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerGrenaderFemale\\Body_African.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4681,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1758,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4585,
+              "field": "Material0",
+              "material_template_id": 1758,
+              "geometry_id": 2702,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerGrenaderFemale_100.mb",
+              "model_template_id": 3066,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "83b3055847c6b4a1727c9ad8367b7bd83b61b7e65892843b82cc177ce9b18afc",
+    "source_rgba_sha256": "b64e0d40347bcefa16f1860bc9e22f8720ee4e14fca0b89d25dea800a5e8e65e",
+    "release_rgba_sha256": "b64e0d40347bcefa16f1860bc9e22f8720ee4e14fca0b89d25dea800a5e8e65e",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6807.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twenty-third.json",
+  "source_check_sha256": "46b475728481e80c8f9fd549aeaff73a34223e34ac39d4e38fb292aacfb0796c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-third-6807.json",
+  "source_count_phase_proof_sha256": "ebbc8f7e0f55ddad147d3c8f26b034494fecec6ed372806f9b1a3d0599f06da4",
+  "precall_constraints_sha256": "85bda775491f9c8b91b5c591a87a83c412ab7809efd89749f7bfbe92bfb1a4a1",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted gray-clothing/body diffuse UV atlas ID6807.\r\nImage1 is the ONLY edit target: exact entire original256x128 RGBA enlarged nearest8x2048x1024. Refine this SAME whole landscape2:1 UV atlas at four-times source resolution. Maintain the exact wholecanvas two-to-one composition, all native field endpoints/UV/part counts/phase/contours/source palette/material identity and original physical pattern scale. Output only this texture map, no person, garments photographed separately, scene or extra object.\r\nPreserve the original subdued gray cloth fields, muted dark straps, soft dark red-brown skin-color fields and washed brown/black right-hand material. Improve only existing fine painted mottling and soft transitions. Keep original lowcontrast cloth folds/washed marks, no newly raised fold geometry, photographic pores/weave/leather, coarsegrain, regular decorative pattern, new stitches, seams or hardware. The dim red-brown color fields remain soft sourcepaint without invented anatomy/nails/hands or whitening.\r\nKeep EXACTLY TWO long vertical dark straps, source native bounds[22,3,30,124] and[74,4,82,65]. Each has exactly FOUR existing light crossbars with native y-phase41,48,54,58, measured independently in the original. Preserve their original widths, spacing, low-resolution painted shapes and local gray material; no extra holes/studs/bars or chrome bevels.\r\nKeep EXACTLY TWO existing small solid gray clips bounds[23,44,29,49] and[75,44,81,49], and EXACTLY TWO existing lower double-dark-slot frames bounds[22,50,30,60] and[74,50,82,60]. Each lowerframe has exactly TWO original dark painted slots at native[23,51,29,54],[23,55,29,58] and[75,51,81,54],[75,55,81,58]. Preserve the original faint/partial upperedges as they appear, do not invent a closed extra metal loop or new mechanical structure. Do not subdivide the slots, change their count, fill them or add fastening furniture.\r\nPreserve ONE existing large rounded bottom ringwash at[129,67,140,81], exact source contour and how it meets the original vertical strap and two diagonal dark bands. No additional ring, buckle, lace, hole or new closure. Preserve ONE upperbelt gray plaque with its existing washed angular motif at[45,3,59,14]: retain the source irregular painted silhouette and indistinct inner marks, no newly readable symbol, glyph, insignia, character, face or new decorative emblem. This is preservation of the original painted patch, not creation of a logo.\r\nKeep all original rightbrownfield broad washed marks/contours at their original scale/positions, without denser patterns or extra objects. Finer HD paint may clarify existing soft transitions but keep local shading hierarchy and part silhouettes.\r\nOriginal alpha255 over EVERY texel including opaque black separators/corners. Black RGB is NOT transparency. Keep full2:1 opaque canvas, no crop, padding, BBox, letterbox, recentering, registration, new border/margin/text/labels/watermark. Preserve the entire originalUV atlas in place.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6807-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "source_only_guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false,
+    "sourceRGB_patch_composite": false
+  },
+  "private_numeric_proof": {
+    "id": 6807,
+    "gain": 0.88995361328125,
+    "source_stored_luma": 42.21549757080078,
+    "actual_stored_luma": 42.21523342666626,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for sharpenedplaque/material identity aftersole originaledit; not automaticallyheld solelybecause1nativephase shift. Whole2:1layout256x128→1024x512,2straps/2smallclips/2lowerframes with2darkslots/1bottomring preserved broadly. Source4crossbarphases41/48/54/58; native41/48/54stay,lowerpeak58→59onbothstraps recorded asrealopticalphasecaveat (leftsourceL58/59=106.64/87.46→73.47/122.49), noclaimnew6barsfromminorlocalmaxima52/56. Aftergain.8899536 maingray63.21/62.91/62.85→61.00/59.31/59.08 andrightbrown46.78/38.52/23.23→49.89/38.38/24.31close; sourceplaque68.99/72.48/66.66→81.11/81.18/75.72, washedangularmotif now muchmoredefinedroundraisedemblem/metaloutline, andplainstraps developrepeatingcrosshatched mottledsurface beyondsourcefinerandomwash. Source redbrown76.06/48.77/37.55→79.42/44.62/32.17 shiftschromahierarchy. Strongerplaque/specificsurfacepattern materialhold, nottinybrightnessnoise/thresholdbbox. Fulloriginal/raw/numeric4x/native andsourceA255/defaultpad0 proof; no croppedreference/padding/artRGBpatch/falseflags/retry."
+}

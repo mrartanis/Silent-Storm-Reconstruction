@@ -1,0 +1,137 @@
+{
+  "id": 6811,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-405d64c8-89d2-4ca3-aa13-1e53ea2d4561.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted arms/hands clothing and skin-color diffuse UV atlas ID6811.\r\nImage1 is the ONLY edit target: entire original128x128 RGBA enlarged nearest8x1024x1024. Refine only this same original complete square UV map at four-times source resolution, preserving the original field silhouettes/bounds/shadingphase/counts/material/color identity and local detail scale. This is a UV paintmap, not a rendered hand, body, face, photograph or scene.\r\nKeep the original dim red-brown right painted color field native[35,0,128,128], original flat/subdued portions and broad soft gradients. Preserve exactly TWO existing lower pale soft diffuse lobes native[62,75,86,110] and[86,81,120,110], and ONE upper pale soft diffuse wash near[99,50,118,69]. They are existing indistinct painted shading, NOT new anatomical parts; no new anatomy, knuckles, fingertips, nails, creases, pores, hair, scars, eyes or beautification. Keep their original dark muted hue and lowcontrast, without whitening/bright highlights or new segmentation.\r\nLeft narrow gray/olive cloth paint contains FOUR existing soft wash envelopes native[7,3,29,21],[2,24,30,111],[0,112,12,128],[12,111,30,128]. Preserve those source contours and all existing soft dark curves in place; keep them as subdued paint washes, not sharply edged folds, hard outlines, leather wrinkles, pinched seams or mechanical parts. Refine the existing soft painted transitions and fine existing material mottling only; no photographic weave/grit/coarsegrain/crosshatching/new cuff ribs/stitches/buttons/hardware.\r\nKeep the exact wholecanvas native field boundaries and endpoint shapes, especially the left-to-right field boundaryx35 and bottom leftwashed pieces. Preserve source ambiguity and relative leftgray/rightredbrown local brightness. Output only this same old-game painted texture map with clearer existing transitions at4x.\r\nOriginal alpha255 everywhere, including dark/black background texels/corners: black RGB is NOT transparency. Fullopaque canvas, no crop, padding, letterbox, BBox, recentering, registration, new margins/borders, objects, anatomy, text, labels or watermark. No new pattern or reinterpretation of washed pixels.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6811-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "feb8956bad09aa3189f9e9571b1807972feec80619782215f4420885bd14e675",
+    "exact_prompt_file": "0db557c5cddaf18d8c987bff76aa5c0b93c1d04df2999bb041d26f2c89cf6447",
+    "reference_png": "22909472459577ef52ee37b8373037507ea8dae1a2545156e114408371e322f5"
+  },
+  "saved_at_utc": "2026-10-08T05:20:22.411839+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6811,
+    "texture": {
+      "ID": 6811,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -12967398,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Classes\\GerGrenaderFemale\\Hands_African.tga",
+      "Format": "dxt1",
+      "UserName": "Hands_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4724,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1759,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4585,
+              "field": "Material2",
+              "material_template_id": 1759,
+              "geometry_id": 2702,
+              "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerGrenaderFemale_100.mb",
+              "model_template_id": 3066,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "4352bbb2bd61c3b63b47e5a64f8addbd6b80f83c3e92d4efa2ff36abb769dd33",
+    "source_rgba_sha256": "0340821e87b7dd032fd67c94f06f6f5a0e910d105582d41932bb98860e9cb9f5",
+    "release_rgba_sha256": "0340821e87b7dd032fd67c94f06f6f5a0e910d105582d41932bb98860e9cb9f5",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6811.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twenty-third.json",
+  "source_check_sha256": "46b475728481e80c8f9fd549aeaff73a34223e34ac39d4e38fb292aacfb0796c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-third-6811.json",
+  "source_count_phase_proof_sha256": "f996aa34aa4bc3a47b6b92445b415588baeb97a599a30f9f7ba6655a4dd24ee0",
+  "precall_constraints_sha256": "e556da8d78a7bee15b3b6d4f7863d2b16e0194e3c4c62ae115f0b85baa91234c",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted arms/hands clothing and skin-color diffuse UV atlas ID6811.\r\nImage1 is the ONLY edit target: entire original128x128 RGBA enlarged nearest8x1024x1024. Refine only this same original complete square UV map at four-times source resolution, preserving the original field silhouettes/bounds/shadingphase/counts/material/color identity and local detail scale. This is a UV paintmap, not a rendered hand, body, face, photograph or scene.\r\nKeep the original dim red-brown right painted color field native[35,0,128,128], original flat/subdued portions and broad soft gradients. Preserve exactly TWO existing lower pale soft diffuse lobes native[62,75,86,110] and[86,81,120,110], and ONE upper pale soft diffuse wash near[99,50,118,69]. They are existing indistinct painted shading, NOT new anatomical parts; no new anatomy, knuckles, fingertips, nails, creases, pores, hair, scars, eyes or beautification. Keep their original dark muted hue and lowcontrast, without whitening/bright highlights or new segmentation.\r\nLeft narrow gray/olive cloth paint contains FOUR existing soft wash envelopes native[7,3,29,21],[2,24,30,111],[0,112,12,128],[12,111,30,128]. Preserve those source contours and all existing soft dark curves in place; keep them as subdued paint washes, not sharply edged folds, hard outlines, leather wrinkles, pinched seams or mechanical parts. Refine the existing soft painted transitions and fine existing material mottling only; no photographic weave/grit/coarsegrain/crosshatching/new cuff ribs/stitches/buttons/hardware.\r\nKeep the exact wholecanvas native field boundaries and endpoint shapes, especially the left-to-right field boundaryx35 and bottom leftwashed pieces. Preserve source ambiguity and relative leftgray/rightredbrown local brightness. Output only this same old-game painted texture map with clearer existing transitions at4x.\r\nOriginal alpha255 everywhere, including dark/black background texels/corners: black RGB is NOT transparency. Fullopaque canvas, no crop, padding, letterbox, BBox, recentering, registration, new margins/borders, objects, anatomy, text, labels or watermark. No new pattern or reinterpretation of washed pixels.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6811-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "source_only_guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false,
+    "sourceRGB_patch_composite": false
+  },
+  "private_numeric_proof": {
+    "id": 6811,
+    "gain": 1.0166015625,
+    "source_stored_luma": 38.49463781738281,
+    "actual_stored_luma": 38.48855015563965,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for changed sourcepaint/material/chroma aftersole originaledit. Fullsource4leftgraywashenvelopes/2lowerredbrownlobes/1upperwash remainbroadlylocated, A255/defaultpad0/sourceA4x andwholeUV pass. But sourcegrayleft mean25.55/24.12/21.36→30.76/28.23/22.95,Lstd15.89→20.57 and fullraw develops coarse mottled/diagonalgrain with stronger darkcurved outlines instead of subdued originalwashedcloth. Rightredbrown source70.25/37.71/27.14→75.05/34.67/21.36; skin-color washes become redder/morechromatic andlowerpaleleftR81.27→90.16 whileG/B47.03/34.58→46.35/30.74, altering relativepigment/shading. Uniformscalar1.01660 cannotrepair localpalette/material andnonewinterpreted anatomy permissible. No exactpixelconstant constraint orwholefamilyskip used; no retry/artRGBfix."
+}

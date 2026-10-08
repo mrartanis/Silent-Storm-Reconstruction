@@ -1,0 +1,137 @@
+{
+  "id": 6824,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-e7ba6db7-4c0c-4f57-961e-b9d19e2dbffb.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted clothing/body diffuse UV atlas ID6824.\r\nImage1 is the ONLY original edit target: full original128x128 RGBA enlarged nearest8x1024x1024, without any crop. Produce this SAME whole square UV atlas with finer painted transitions/detail for four-times source resolution. Preserve the original field contours, boundaries, source shading phase, source-relative local palette and physical pattern scale. Output only this texture map, no body, person or scene.\r\nOriginal materials: muted gray-brown clothing in the entire right large field, darkgray vertical middle strip, bluegray lowerleft cloth, dark red-brown left painted color fields and their existing broad horizontal shading. Keep those materials and their dim hierarchy. Refine only existing fine painted mottling/soft gradients; do not replace them with photographic weave, leather pores, shiny plastic, coarse grain, new folds or raised edges.\r\nPreserve the THREE existing small cool pale diagonal painted groups at native bounds[0,71,2,72],[3,72,11,77],[11,78,14,81]. They are faint segmented washed color traces, with existing weak joining pixels already present; preserve their actual source contours/gaps and fade, NOT new stitches, chain links, rings, letters or garment hardware. Do not invent more marks, sharpen them into a chain, close their faint gaps or brighten them substantially.\r\nThe right flap has ONE small pale existing paint group. Keep that one small irregular source shape at original native phase near[105,65], and keep the existing dark horizontal flap field native[103,62,128,69] just as subdued. No new flap border, button, metal rim, hole, pocket stitching or duplicate mark.\r\nRightgraycloth field native[65,0,128,127], middle strip[39,0,65,102], lowerleftbluegraycloth[17,78,37,128], leftbrownwash[0,0,39,73] stay in their exact wholecanvas UV position. Preserve all native top/bottom/side field endpoints and original ambiguous small dark/brown washes. No interpretive anatomy, nails, hands, face or new garment pieces.\r\nSource alpha255 over the ENTIRE canvas, including opaque black separators/corners: black RGB is NOT a transparent hole. Keep the wholecanvas opaque. No crop, padding, letterbox, recentering, registration, new margin, text, labels, logos or watermark. Preserve the soft old-game painted appearance; fine HD refinement improves existing paint, not number/geometry/prominence of details.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6824-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "daa7945d0580c8fd8355518d64d51385eda52ca641bdb1d16961ea5494df2425",
+    "exact_prompt_file": "80aa34efe7ea26f2d956591a081e6ef3f5570254b8d5ec505338d7a95588eaab",
+    "reference_png": "46383851cb7ecfa731c17a7a23523da342587b1a5d6d024f263f95eb267060c6"
+  },
+  "saved_at_utc": "2026-10-08T05:18:20.900198+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6824,
+    "texture": {
+      "ID": 6824,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -12700113,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_02\\Body_African.tga",
+      "Format": "dxt1",
+      "UserName": "Body_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4739,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2343,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6036,
+              "field": "Material0",
+              "material_template_id": 2343,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 3895,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "d1d84eee8d3693b2081d2b2f4376972874d5ae4541b1aa679fd37b86a4ec1f55",
+    "source_rgba_sha256": "11df9d3d1846af648aa6f62e00d2ec41d9bb3a64e619e0a991ba2db6bb970301",
+    "release_rgba_sha256": "11df9d3d1846af648aa6f62e00d2ec41d9bb3a64e619e0a991ba2db6bb970301",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6824.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twenty-third.json",
+  "source_check_sha256": "46b475728481e80c8f9fd549aeaff73a34223e34ac39d4e38fb292aacfb0796c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-third-6824.json",
+  "source_count_phase_proof_sha256": "c8743a088e648e32ccf7e4d30b34220ed7265dcd7e6ed872a51876a419d554ae",
+  "precall_constraints_sha256": "31128e8bfe028b97804b655be8c5e21a1dc8c0442459963d60790504283b847c",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted clothing/body diffuse UV atlas ID6824.\r\nImage1 is the ONLY original edit target: full original128x128 RGBA enlarged nearest8x1024x1024, without any crop. Produce this SAME whole square UV atlas with finer painted transitions/detail for four-times source resolution. Preserve the original field contours, boundaries, source shading phase, source-relative local palette and physical pattern scale. Output only this texture map, no body, person or scene.\r\nOriginal materials: muted gray-brown clothing in the entire right large field, darkgray vertical middle strip, bluegray lowerleft cloth, dark red-brown left painted color fields and their existing broad horizontal shading. Keep those materials and their dim hierarchy. Refine only existing fine painted mottling/soft gradients; do not replace them with photographic weave, leather pores, shiny plastic, coarse grain, new folds or raised edges.\r\nPreserve the THREE existing small cool pale diagonal painted groups at native bounds[0,71,2,72],[3,72,11,77],[11,78,14,81]. They are faint segmented washed color traces, with existing weak joining pixels already present; preserve their actual source contours/gaps and fade, NOT new stitches, chain links, rings, letters or garment hardware. Do not invent more marks, sharpen them into a chain, close their faint gaps or brighten them substantially.\r\nThe right flap has ONE small pale existing paint group. Keep that one small irregular source shape at original native phase near[105,65], and keep the existing dark horizontal flap field native[103,62,128,69] just as subdued. No new flap border, button, metal rim, hole, pocket stitching or duplicate mark.\r\nRightgraycloth field native[65,0,128,127], middle strip[39,0,65,102], lowerleftbluegraycloth[17,78,37,128], leftbrownwash[0,0,39,73] stay in their exact wholecanvas UV position. Preserve all native top/bottom/side field endpoints and original ambiguous small dark/brown washes. No interpretive anatomy, nails, hands, face or new garment pieces.\r\nSource alpha255 over the ENTIRE canvas, including opaque black separators/corners: black RGB is NOT a transparent hole. Keep the wholecanvas opaque. No crop, padding, letterbox, recentering, registration, new margin, text, labels, logos or watermark. Preserve the soft old-game painted appearance; fine HD refinement improves existing paint, not number/geometry/prominence of details.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6824-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "source_only_guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false,
+    "sourceRGB_patch_composite": false
+  },
+  "private_numeric_proof": {
+    "id": 6824,
+    "gain": 0.9085693359375,
+    "source_stored_luma": 55.174859655761715,
+    "actual_stored_luma": 55.168471315002435,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held aftersole originaledit for clarification/material ofsmallsourcewash, not blankethardware/camouflage exclusion orminorbrightness alone. Sourceconnected3cooldiagonalpaintgroups remain3atnative statedclassifier, buttheir connectivity changes: firsttwo sourcewashedgroups joinwhile lastsourcegroup divides; target4x coolmask4components versus source3. Threshold signature alone isnot anautomatic newpartclaim. Fullrawvisuallyturns the washed diagonal pixels into distinctrounded bluebead-like highlights, whichprompt explicitly forbade interpreting aslinks/studs. Rightsmallpalegroup stays1 but crispoutlinedrightflap and triangularcloth edge more raised than softsourcewash. Wholefieldpalettemostlyclose: sourcegray78.03/71.17/62.74→84.37/75.34/62.88 afterscalar.9085693; modest disclosedRGB lift isnot itselfhold. Fullsource/raw/sourceA4x/native inspected, defaultpad0/cleared0/A255 exact; no crop/retry/artRGB repair."
+}

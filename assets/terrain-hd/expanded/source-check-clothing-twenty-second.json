@@ -1,0 +1,1124 @@
+[
+  {
+    "id": 6764,
+    "source_record": {
+      "id": 6764,
+      "texture": {
+        "ID": 6764,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -12048868,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\RaceHands\\hands04.tga",
+        "Format": "dxt1",
+        "UserName": "Africa",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4682,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2731,
+            "consumers": [
+              {
+                "table": "Races",
+                "id": 3,
+                "field": "MaterialID",
+                "material_template_id": 2731
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "2f7bee867451b31950053ba7445480fdaf383ab27df371f6b3d97b7d197cf6e8",
+      "source_rgba_sha256": "1461fc53d17fc4b0697650db1ae764906c0df76ac3036070c31fe2557ea61a90",
+      "release_rgba_sha256": "1461fc53d17fc4b0697650db1ae764906c0df76ac3036070c31fe2557ea61a90",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6764.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "2f7bee867451b31950053ba7445480fdaf383ab27df371f6b3d97b7d197cf6e8",
+    "release_binary_sha256": "2f7bee867451b31950053ba7445480fdaf383ab27df371f6b3d97b7d197cf6e8",
+    "original_png_sha256": "767f0a36d9b1f7d8153e63123ac9262fed2aa765a6b9131bf7fcf1d6f4350c84",
+    "source_rgba_sha256": "1461fc53d17fc4b0697650db1ae764906c0df76ac3036070c31fe2557ea61a90",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      128,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 4682,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 2731,
+        "consumers": [
+          {
+            "table": "Races",
+            "id": 3,
+            "field": "MaterialID",
+            "material_template_id": 2731
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 4682,
+        "TextureID": 6764,
+        "BRDFID": 0,
+        "BumpID": 0,
+        "SpecColor": 0,
+        "TemplateID": 2731,
+        "GlossID": 0,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": "11"
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 2731,
+        "UserName": "Africa"
+      }
+    ],
+    "actual_models": [],
+    "actual_model_geometries": [],
+    "actual_heads": [],
+    "actual_races": [
+      {
+        "ID": 3,
+        "MaterialID": 2731,
+        "RaceAttributeID": 12,
+        "RaceSliderPos": 0.3499999940395355,
+        "UserName": "African"
+      }
+    ],
+    "actual_complexhead_race_consumers": [
+      {
+        "ID": 38,
+        "HeadID": 43,
+        "Hair": 0,
+        "HairInCap": 0,
+        "Mesh0": 0,
+        "Mesh1": 0,
+        "Mesh2": 0,
+        "Mesh3": 0,
+        "IFMesh0": 0,
+        "IFMesh1": 0,
+        "IFMesh2": 0,
+        "IFMesh3": 0,
+        "IsFemale": 0,
+        "CanBeListed": 0,
+        "BodyColor": 3,
+        "UserName": "Nessie"
+      },
+      {
+        "ID": 93,
+        "HeadID": 11,
+        "Hair": 0,
+        "HairInCap": 0,
+        "Mesh0": 0,
+        "Mesh1": 0,
+        "Mesh2": 0,
+        "Mesh3": 0,
+        "IFMesh0": 0,
+        "IFMesh1": 0,
+        "IFMesh2": 0,
+        "IFMesh3": 0,
+        "IsFemale": 0,
+        "CanBeListed": 0,
+        "BodyColor": 3,
+        "UserName": "Test"
+      }
+    ],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/6764-whole-source-guide.png",
+      "sha256": "10183f45863b21dccafc8798439d362230b827531dbc7354aad0f84b51fd4c9e",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.064786+00:00"
+  },
+  {
+    "id": 5621,
+    "source_record": {
+      "id": 5621,
+      "texture": {
+        "ID": 5621,
+        "Width": 256,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -12439010,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\UK\\Soldier\\UkSaboteur\\Legs.tga",
+        "Format": "dxt1",
+        "UserName": "Legs",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 3656,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 2332,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 6017,
+                "field": "Material2",
+                "material_template_id": 2332,
+                "geometry_id": 1920,
+                "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+                "model_template_id": 3885,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        256,
+        128
+      ],
+      "source_sha256": "b3ca0133e4f833b2868221fe320d135241a31f84f4dda5c610818ff71f892826",
+      "source_rgba_sha256": "51bb27a259c2ac5cbef8c7572919d093e7f24340b4738fa32df72afc1ed990fb",
+      "release_rgba_sha256": "51bb27a259c2ac5cbef8c7572919d093e7f24340b4738fa32df72afc1ed990fb",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/5621.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "b3ca0133e4f833b2868221fe320d135241a31f84f4dda5c610818ff71f892826",
+    "release_binary_sha256": "b3ca0133e4f833b2868221fe320d135241a31f84f4dda5c610818ff71f892826",
+    "original_png_sha256": "1c9a28fb75a67dc3d71bfa3888355ee87ce8bbb2e8e3c8606f3e70850c45244d",
+    "source_rgba_sha256": "51bb27a259c2ac5cbef8c7572919d093e7f24340b4738fa32df72afc1ed990fb",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      256,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 3656,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 2332,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 6017,
+            "field": "Material2",
+            "material_template_id": 2332,
+            "geometry_id": 1920,
+            "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+            "model_template_id": 3885,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 3656,
+        "TextureID": 5621,
+        "BRDFID": 0,
+        "BumpID": 5619,
+        "SpecColor": 0,
+        "TemplateID": 2332,
+        "GlossID": 913,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": ""
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 2332,
+        "UserName": "Legs"
+      }
+    ],
+    "actual_models": [
+      {
+        "ID": 6017,
+        "Material0": 2331,
+        "Material1": 397,
+        "GeometryID": 1920,
+        "Material2": 2332,
+        "Material3": 0,
+        "SkeletonID": 8,
+        "TemplateID": 3885,
+        "RPGArmorID": 1,
+        "RndWeight": 1.0,
+        "Flags": ""
+      }
+    ],
+    "actual_model_geometries": [
+      {
+        "ID": 1920,
+        "AIGeometryID": 34,
+        "AIGeometry2ID": 0,
+        "TriCountMaterial1": 0,
+        "TriCountMaterial2": 0,
+        "SizeX": 1.7477362155914307,
+        "SizeY": 0.32613763213157654,
+        "SizeZ": 1.5066100358963013,
+        "CenterX": -3.725290298461914e-09,
+        "CenterY": -0.025194473564624786,
+        "CenterZ": 1.2140922546386719,
+        "SrcName": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+        "UserName": "Officer",
+        "RootJoint": "skinCluster1"
+      }
+    ],
+    "actual_heads": [],
+    "actual_races": [],
+    "actual_complexhead_race_consumers": [],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/5621-whole-source-guide.png",
+      "sha256": "61be5f4c86d9502ad346bd0b0c535d8e516fcf2fcc36c03fbb82d79ac1390703",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.112665+00:00"
+  },
+  {
+    "id": 7613,
+    "source_record": {
+      "id": 7613,
+      "texture": {
+        "ID": 7613,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -15069167,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Legs_African.tga",
+        "Format": "dxt1",
+        "UserName": "Legs_Africa",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5786,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 3091,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7725,
+                "field": "Material2",
+                "material_template_id": 3091,
+                "geometry_id": 4255,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+                "model_template_id": 4649,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "2840acab2e5a2e1c1fb448aa2762d7caeef1e8d05c1a16e0b4c77ea43dafacee",
+      "source_rgba_sha256": "70424b9d1f0184aa2ac461102346aa168226f59d6c74edd632305be20c78829e",
+      "release_rgba_sha256": "70424b9d1f0184aa2ac461102346aa168226f59d6c74edd632305be20c78829e",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/7613.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "2840acab2e5a2e1c1fb448aa2762d7caeef1e8d05c1a16e0b4c77ea43dafacee",
+    "release_binary_sha256": "2840acab2e5a2e1c1fb448aa2762d7caeef1e8d05c1a16e0b4c77ea43dafacee",
+    "original_png_sha256": "6b741cb6621423a5e95b95afb0fe64b1996a95ef37d2736dcd472bdcea2c9c7d",
+    "source_rgba_sha256": "70424b9d1f0184aa2ac461102346aa168226f59d6c74edd632305be20c78829e",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      128,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 5786,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 3091,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 7725,
+            "field": "Material2",
+            "material_template_id": 3091,
+            "geometry_id": 4255,
+            "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+            "model_template_id": 4649,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 5786,
+        "TextureID": 7613,
+        "BRDFID": 0,
+        "BumpID": 7606,
+        "SpecColor": 0,
+        "TemplateID": 3091,
+        "GlossID": 7617,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": "12"
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 3091,
+        "UserName": "Legs"
+      }
+    ],
+    "actual_models": [
+      {
+        "ID": 7725,
+        "Material0": 3089,
+        "Material1": 1684,
+        "GeometryID": 4255,
+        "Material2": 3091,
+        "Material3": 0,
+        "SkeletonID": 8,
+        "TemplateID": 4649,
+        "RPGArmorID": 1,
+        "RndWeight": 1.0,
+        "Flags": ""
+      }
+    ],
+    "actual_model_geometries": [
+      {
+        "ID": 4255,
+        "AIGeometryID": 34,
+        "AIGeometry2ID": 0,
+        "TriCountMaterial1": 0,
+        "TriCountMaterial2": 0,
+        "SizeX": 1.7188788652420044,
+        "SizeY": 0.4016687572002411,
+        "SizeZ": 1.5049023628234863,
+        "CenterX": -0.0005323688383214176,
+        "CenterY": -0.017507173120975494,
+        "CenterZ": 1.11102294921875,
+        "SrcName": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+        "UserName": "CivilFemale01",
+        "RootJoint": "skinCluster1"
+      }
+    ],
+    "actual_heads": [],
+    "actual_races": [],
+    "actual_complexhead_race_consumers": [],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/7613-whole-source-guide.png",
+      "sha256": "38f26a1756a95e9e8f4ec8707ded95fd22f34dcffe38900cab22732a24f6e0fd",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.151838+00:00"
+  },
+  {
+    "id": 7631,
+    "source_record": {
+      "id": 7631,
+      "texture": {
+        "ID": 7631,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -15001060,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\CivilFemale_03\\Legs_African.tga",
+        "Format": "8888",
+        "UserName": "Legs_Africa",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5801,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 3094,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7735,
+                "field": "Material2",
+                "material_template_id": 3094,
+                "geometry_id": 4255,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+                "model_template_id": 4652,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "2c7df5571a9a1fa6e2e87f76a5c27c606a11ba3154a86d211cc2a78004b401b8",
+      "source_rgba_sha256": "b549335979fff06057e464f796ec198269b37e423d18d45a2427ed9b69c72fc7",
+      "release_rgba_sha256": "b549335979fff06057e464f796ec198269b37e423d18d45a2427ed9b69c72fc7",
+      "source_native_format": 6,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/7631.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "2c7df5571a9a1fa6e2e87f76a5c27c606a11ba3154a86d211cc2a78004b401b8",
+    "release_binary_sha256": "2c7df5571a9a1fa6e2e87f76a5c27c606a11ba3154a86d211cc2a78004b401b8",
+    "original_png_sha256": "f91930f894a1699416bd9dd33dc887756a0c1f5c1d2976bca4198bef8200229d",
+    "source_rgba_sha256": "b549335979fff06057e464f796ec198269b37e423d18d45a2427ed9b69c72fc7",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      128,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 5801,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 3094,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 7735,
+            "field": "Material2",
+            "material_template_id": 3094,
+            "geometry_id": 4255,
+            "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+            "model_template_id": 4652,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 5801,
+        "TextureID": 7631,
+        "BRDFID": 0,
+        "BumpID": 7623,
+        "SpecColor": 0,
+        "TemplateID": 3094,
+        "GlossID": 0,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": "12"
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 3094,
+        "UserName": "Legs"
+      }
+    ],
+    "actual_models": [
+      {
+        "ID": 7735,
+        "Material0": 3092,
+        "Material1": 1684,
+        "GeometryID": 4255,
+        "Material2": 3094,
+        "Material3": 0,
+        "SkeletonID": 8,
+        "TemplateID": 4652,
+        "RPGArmorID": 1,
+        "RndWeight": 1.0,
+        "Flags": ""
+      }
+    ],
+    "actual_model_geometries": [
+      {
+        "ID": 4255,
+        "AIGeometryID": 34,
+        "AIGeometry2ID": 0,
+        "TriCountMaterial1": 0,
+        "TriCountMaterial2": 0,
+        "SizeX": 1.7188788652420044,
+        "SizeY": 0.4016687572002411,
+        "SizeZ": 1.5049023628234863,
+        "CenterX": -0.0005323688383214176,
+        "CenterY": -0.017507173120975494,
+        "CenterZ": 1.11102294921875,
+        "SrcName": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+        "UserName": "CivilFemale01",
+        "RootJoint": "skinCluster1"
+      }
+    ],
+    "actual_heads": [],
+    "actual_races": [],
+    "actual_complexhead_race_consumers": [],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/7631-whole-source-guide.png",
+      "sha256": "d9b227effd8085f75eee5e5f6bb96bd9a8efc9e3c5306beed1eb3abe532728fd",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.189341+00:00"
+  },
+  {
+    "id": 7607,
+    "source_record": {
+      "id": 7607,
+      "texture": {
+        "ID": 7607,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -15266291,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\NPC\\CivilFemale_01\\Body_African.tga",
+        "Format": "dxt1",
+        "UserName": "Body_Africa",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 5779,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 3089,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 7725,
+                "field": "Material0",
+                "material_template_id": 3089,
+                "geometry_id": 4255,
+                "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+                "model_template_id": 4649,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "4d684f3c11393f6bbbfabaea3cb130e75710936c2b66e17b16072c8ad7d8a620",
+      "source_rgba_sha256": "1a0a755a0c3d60130d91c0b331af0c96893b791c8b33c152148d394550c2ceb4",
+      "release_rgba_sha256": "1a0a755a0c3d60130d91c0b331af0c96893b791c8b33c152148d394550c2ceb4",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/7607.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "4d684f3c11393f6bbbfabaea3cb130e75710936c2b66e17b16072c8ad7d8a620",
+    "release_binary_sha256": "4d684f3c11393f6bbbfabaea3cb130e75710936c2b66e17b16072c8ad7d8a620",
+    "original_png_sha256": "fe986ea3a10e0743acfd76dbfc6b9130a49df14d978f1104cc426834e21a008d",
+    "source_rgba_sha256": "1a0a755a0c3d60130d91c0b331af0c96893b791c8b33c152148d394550c2ceb4",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      128,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 5779,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 3089,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 7725,
+            "field": "Material0",
+            "material_template_id": 3089,
+            "geometry_id": 4255,
+            "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+            "model_template_id": 4649,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 5779,
+        "TextureID": 7607,
+        "BRDFID": 0,
+        "BumpID": 7605,
+        "SpecColor": 0,
+        "TemplateID": 3089,
+        "GlossID": 7612,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": "12"
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 3089,
+        "UserName": "Body"
+      }
+    ],
+    "actual_models": [
+      {
+        "ID": 7725,
+        "Material0": 3089,
+        "Material1": 1684,
+        "GeometryID": 4255,
+        "Material2": 3091,
+        "Material3": 0,
+        "SkeletonID": 8,
+        "TemplateID": 4649,
+        "RPGArmorID": 1,
+        "RndWeight": 1.0,
+        "Flags": ""
+      }
+    ],
+    "actual_model_geometries": [
+      {
+        "ID": 4255,
+        "AIGeometryID": 34,
+        "AIGeometry2ID": 0,
+        "TriCountMaterial1": 0,
+        "TriCountMaterial2": 0,
+        "SizeX": 1.7188788652420044,
+        "SizeY": 0.4016687572002411,
+        "SizeZ": 1.5049023628234863,
+        "CenterX": -0.0005323688383214176,
+        "CenterY": -0.017507173120975494,
+        "CenterZ": 1.11102294921875,
+        "SrcName": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale01.mb",
+        "UserName": "CivilFemale01",
+        "RootJoint": "skinCluster1"
+      }
+    ],
+    "actual_heads": [],
+    "actual_races": [],
+    "actual_complexhead_race_consumers": [],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/7607-whole-source-guide.png",
+      "sha256": "4d96c2b632a781ddf8e3062cf77d6a1b5225166b28e2a46bcd2b8e258b04c3c3",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.227447+00:00"
+  },
+  {
+    "id": 6833,
+    "source_record": {
+      "id": 6833,
+      "texture": {
+        "ID": 6833,
+        "Width": 128,
+        "Height": 128,
+        "NMips": 0,
+        "AverageColor": -14869479,
+        "InstantLoad": 0,
+        "MappingSize": 2.0,
+        "BumpGain": 1.0,
+        "SrcName": "Characters\\Skins\\Classes\\GerEngeneerFemale\\Body_Asian.tga",
+        "Format": "dxt1",
+        "UserName": "Body_Asia",
+        "Type": "Ordinary",
+        "AddrType": "Clamp",
+        "StorageType": "Ordinary"
+      },
+      "category": "characters-clothing",
+      "role": "typed-db-color-candidate",
+      "status": "pending",
+      "usage": {
+        "direct_texture_uses": [
+          {
+            "table": "Materials",
+            "id": 4746,
+            "field": "TextureID",
+            "role": "color",
+            "Alpha": "opaque",
+            "AddressMode": "Clamp",
+            "TemplateID": 1421,
+            "consumers": [
+              {
+                "table": "Models",
+                "id": 1762,
+                "field": "Material0",
+                "material_template_id": 1421,
+                "geometry_id": 2068,
+                "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerEngeneerFemale_100.mb",
+                "model_template_id": 1335,
+                "flags": ""
+              }
+            ]
+          }
+        ],
+        "ui_links": []
+      },
+      "review_requirements": [
+        "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+        "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+        "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+      ],
+      "logical_size": [
+        128,
+        128
+      ],
+      "source_sha256": "bdb0bd7945dce465cb1d4998fb55df8ccbb7e4fb19acdb4e8998937677f527f8",
+      "source_rgba_sha256": "047f13ca1e06eaaef17bff5698c138d1380bb4dd110b7420ba181a62bb345686",
+      "release_rgba_sha256": "047f13ca1e06eaaef17bff5698c138d1380bb4dd110b7420ba181a62bb345686",
+      "source_native_format": 1,
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "original_png": "expanded/original/6833.png",
+      "source_match": "Exact decoded RGBA and dimensions match release"
+    },
+    "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "historical_binary_sha256": "bdb0bd7945dce465cb1d4998fb55df8ccbb7e4fb19acdb4e8998937677f527f8",
+    "release_binary_sha256": "bdb0bd7945dce465cb1d4998fb55df8ccbb7e4fb19acdb4e8998937677f527f8",
+    "original_png_sha256": "20186d44b1ed00bf6ec2674c98b95ed0d203e74c2cafb454841f5ebd19362a38",
+    "source_rgba_sha256": "047f13ca1e06eaaef17bff5698c138d1380bb4dd110b7420ba181a62bb345686",
+    "historical_release_original_fullRGBA_and_dimensions_exact": true,
+    "logical_physical_size_exact": [
+      128,
+      128
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "fresh_all_direct_roles": [
+      {
+        "table": "Materials",
+        "id": 4746,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 1421,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 1762,
+            "field": "Material0",
+            "material_template_id": 1421,
+            "geometry_id": 2068,
+            "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerEngeneerFemale_100.mb",
+            "model_template_id": 1335,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "actual_material_records": [
+      {
+        "ID": 4746,
+        "TextureID": 6833,
+        "BRDFID": 0,
+        "BumpID": 3394,
+        "SpecColor": 0,
+        "TemplateID": 1421,
+        "GlossID": 3397,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": "13"
+      }
+    ],
+    "actual_template_records": [
+      {
+        "ID": 1421,
+        "UserName": "Body"
+      }
+    ],
+    "actual_models": [
+      {
+        "ID": 1762,
+        "Material0": 1421,
+        "Material1": 1422,
+        "GeometryID": 2068,
+        "Material2": 1423,
+        "Material3": 0,
+        "SkeletonID": 8,
+        "TemplateID": 1335,
+        "RPGArmorID": 1,
+        "RndWeight": 1.0,
+        "Flags": ""
+      }
+    ],
+    "actual_model_geometries": [
+      {
+        "ID": 2068,
+        "AIGeometryID": 34,
+        "AIGeometry2ID": 0,
+        "TriCountMaterial1": 0,
+        "TriCountMaterial2": 0,
+        "SizeX": 1.7476558685302734,
+        "SizeY": 0.3312841057777405,
+        "SizeZ": 1.5188796520233154,
+        "CenterX": 4.014869773527607e-05,
+        "CenterY": -0.017117885872721672,
+        "CenterZ": 1.1718858480453491,
+        "SrcName": "Characters\\Skeletons01\\Skins\\Classes\\GerEngeneerFemale_100.mb",
+        "UserName": "GerEngineerFemale",
+        "RootJoint": "skinCluster1"
+      }
+    ],
+    "actual_heads": [],
+    "actual_races": [],
+    "actual_complexhead_race_consumers": [],
+    "typed_chain": "Model/Head MaterialN and Races.MaterialID are MaterialTemplates IDs, resolved to actual Materials.TemplateID; only actual Materials.TextureID color links counted as diffuse. Gloss/Bump fields kept separately in all_direct_roles, not artistic diffuse inference. Races-only color eligible even with no static Model.MaterialN match.",
+    "races_runtime_proof": {
+      "schema": "DBFormat/DataFaceGen.cpp77-82 imports Races.MaterialID into CTMaterial, whose template resolves Materials.TemplateID. Main/LSHead.cpp1164-1165 attaches ComplexHeads.BodyColor to CHeadInfo. Main/RWGame.cpp97-122 ChooseBodyColor resolves Race.pMaterial.GetMaterial and assigns body Model.pMaterials[1] before skin submission: actual neck/hands skin color use.",
+      "files_sha256": {
+        "DBFormat/DataFaceGen.cpp": "2a8bae2acf3dc1c0a5ecd41986f6f82dc371236111348a5deda11e7045640512",
+        "Main/LSHead.cpp": "8cf3debb66ae3e4d1eae606bbbf9af93826265afc8a69be17d945a06e3afc23a",
+        "Main/RWGame.cpp": "94a4dbd78d5e8a14c81c647cb1a1893402788bf7b27190da1e2efcf82f54959a"
+      }
+    },
+    "sourceguide": {
+      "path": "build/hd-clothing-twenty-second/6833-whole-source-guide.png",
+      "sha256": "c15895dfca492058053720169ddfac3871b4babb856eee1759889a8edf8e9336",
+      "scale": 8,
+      "method": "Exact original complete RGBA canvas nearest only, no crop/padding/bbox/artistic RGB repair."
+    },
+    "full_original_privately_inspected": true,
+    "pre_call_checked_at_utc": "2026-10-08T05:05:41.265279+00:00"
+  }
+]

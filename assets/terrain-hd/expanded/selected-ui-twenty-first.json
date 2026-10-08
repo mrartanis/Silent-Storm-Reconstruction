@@ -1,0 +1,69 @@
+[
+  {
+    "id": 4660,
+    "texture": {
+      "ID": 4660,
+      "Width": 512,
+      "Height": 256,
+      "NMips": 1,
+      "AverageColor": -15329000,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\MainMenu\\M2_Element03.tga",
+      "Format": "dxt1",
+      "UserName": "M2_Element03",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2904,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1869,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4855,
+              "field": "Material0",
+              "material_template_id": 1869,
+              "geometry_id": 3012,
+              "geometry": "Interface\\MainMenu.mb",
+              "model_template_id": 3229,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      512,
+      256
+    ],
+    "source_sha256": "00aaf8d5828aa6a7b5a55a2a424777bf7691d74b5f0f13f421589789623cdd52",
+    "source_rgba_sha256": "8599bb92979798d1405a7bbc903567cdf9d9a4e0b6d8ee2a7fcf75e7e04db936",
+    "release_rgba_sha256": "8599bb92979798d1405a7bbc903567cdf9d9a4e0b6d8ee2a7fcf75e7e04db936",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4660.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  }
+]

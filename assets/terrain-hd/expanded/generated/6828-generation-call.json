@@ -1,0 +1,137 @@
+{
+  "id": 6828,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-3e81d0ff-f201-4bf6-ae85-66f421a96593.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted legs/clothing diffuse wholeUV atlas ID6828.\r\nImage1 is the ONLY original edit target: exact full original128x128 RGBA enlarged nearest8x1024x1024. Refine this SAME full square UV map into four-times source-resolution fine painted texture; same layout/borders/palette/materials/counts/sourcephase/physical pattern scale. No person, legs photograph, shoe product, new scene or extra object.\r\nUpperleft contains EXACTLY NINE broad existing dim olive vertical painted stripes separated by EXACTLY EIGHT darker gaps. Native stripe intervals[0,6],[9,14],[17,22],[25,30],[33,38],[41,46],[49,54],[57,62],[65,72], native gap intervals[6,9],[14,17],[22,25],[30,33],[38,41],[46,49],[54,57],[62,65]. Interior pitch is8nativepixels, not fine woven ribs. Keep all9/8 counts, width/phase and original weak lowcontrast olive paint, including first/last differing widths and the original clipped field shape. No additional lines, stitches, weave, ribs, embroidery or new stripe frequencies.\r\nPreserve exactly TWO small pale painted groups: one original3-nativepixel group bounds[2,84,5,85] and one original1-nativepixel point[113,117,114,118]. Keep their size/phase/faint surrounding transition, do not turn them into buckles, studs, holes, knots or letters.\r\nExisting upperright consists of one brown plate/wash[78,0,128,13], one thin gray band[78,13,128,17], one large dark red-brown soft painted wash[78,17,128,67]. Lower maincloth remains muted warmgray[25,67,108,128], and rightdarkfield stays[108,67,128,128].\r\nMiddle upper brown washes have TWO broad subdued lobes at[30,31,53,53] and[52,27,78,56], plus ONE lowerbrown rectangularwash[33,54,78,67]. Preserve their exact original washed contours/lowcontrast dark angular traces, which may be indistinct. Do not reinterpret those pixels into crisp footwear hardware, laces, eyelets, a tied knot, stitching, new seams or new fold geometry. Refine existing softpaint at4x, keep uncertain traces uncertain. Fine existingclothmottle may soften smoothly atHD but no photographic fabric/grain or new materialpattern.\r\nOriginal alpha255 everywhere, including the opaque black borders/gaps. Black RGB is not transparency. Keep fullcanvas/wholeUV/source field endpoints. No crop/padding/BBox/recentering/registration/newborder/margin/text/watermark or artistic reinterpretation. Preserve original dim palette and relative material lightness, allowing only fine source-faithful painted transitions.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6828-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "c40b551a7101c8a1d81b7f087ff60199ad589072f4a121cb7b1695b66d74bc42",
+    "exact_prompt_file": "a95510b2204cff3e4babad2d4885733f7b351f5d84b234dd1bd5459aa4230044",
+    "reference_png": "e119a17eb77eb2a0f7927affbc87f0d89eba388305a164f45d89508967e5ed73"
+  },
+  "saved_at_utc": "2026-10-08T05:19:19.849059+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6828,
+    "texture": {
+      "ID": 6828,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -13358304,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\NPC\\CivilFemale_02\\Legs_African.tga",
+      "Format": "8888",
+      "UserName": "Legs_Africa",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4742,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2345,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6036,
+              "field": "Material2",
+              "material_template_id": 2345,
+              "geometry_id": 2501,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\CivilFemale.mb",
+              "model_template_id": 3895,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "bba1ef8e5a983932f5ae336ee86b39f729dc97bc2bbef8ad22f10e8c476b87cf",
+    "source_rgba_sha256": "b82c6029efb2a596cacdcf3f02cb7d2d897bf370d21cb9cbe2a73f682299783a",
+    "release_rgba_sha256": "b82c6029efb2a596cacdcf3f02cb7d2d897bf370d21cb9cbe2a73f682299783a",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6828.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twenty-third.json",
+  "source_check_sha256": "46b475728481e80c8f9fd549aeaff73a34223e34ac39d4e38fb292aacfb0796c",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-third-6828.json",
+  "source_count_phase_proof_sha256": "d5903e3a368c17d12610c3e3d974885461068aa381a33dc2ae15534c14a7cdb3",
+  "precall_constraints_sha256": "cefb5862413d3f88e58f5005c685f3dcde74c8b248a08122e8dc9a3b920d0664",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted legs/clothing diffuse wholeUV atlas ID6828.\r\nImage1 is the ONLY original edit target: exact full original128x128 RGBA enlarged nearest8x1024x1024. Refine this SAME full square UV map into four-times source-resolution fine painted texture; same layout/borders/palette/materials/counts/sourcephase/physical pattern scale. No person, legs photograph, shoe product, new scene or extra object.\r\nUpperleft contains EXACTLY NINE broad existing dim olive vertical painted stripes separated by EXACTLY EIGHT darker gaps. Native stripe intervals[0,6],[9,14],[17,22],[25,30],[33,38],[41,46],[49,54],[57,62],[65,72], native gap intervals[6,9],[14,17],[22,25],[30,33],[38,41],[46,49],[54,57],[62,65]. Interior pitch is8nativepixels, not fine woven ribs. Keep all9/8 counts, width/phase and original weak lowcontrast olive paint, including first/last differing widths and the original clipped field shape. No additional lines, stitches, weave, ribs, embroidery or new stripe frequencies.\r\nPreserve exactly TWO small pale painted groups: one original3-nativepixel group bounds[2,84,5,85] and one original1-nativepixel point[113,117,114,118]. Keep their size/phase/faint surrounding transition, do not turn them into buckles, studs, holes, knots or letters.\r\nExisting upperright consists of one brown plate/wash[78,0,128,13], one thin gray band[78,13,128,17], one large dark red-brown soft painted wash[78,17,128,67]. Lower maincloth remains muted warmgray[25,67,108,128], and rightdarkfield stays[108,67,128,128].\r\nMiddle upper brown washes have TWO broad subdued lobes at[30,31,53,53] and[52,27,78,56], plus ONE lowerbrown rectangularwash[33,54,78,67]. Preserve their exact original washed contours/lowcontrast dark angular traces, which may be indistinct. Do not reinterpret those pixels into crisp footwear hardware, laces, eyelets, a tied knot, stitching, new seams or new fold geometry. Refine existing softpaint at4x, keep uncertain traces uncertain. Fine existingclothmottle may soften smoothly atHD but no photographic fabric/grain or new materialpattern.\r\nOriginal alpha255 everywhere, including the opaque black borders/gaps. Black RGB is not transparency. Keep fullcanvas/wholeUV/source field endpoints. No crop/padding/BBox/recentering/registration/newborder/margin/text/watermark or artistic reinterpretation. Preserve original dim palette and relative material lightness, allowing only fine source-faithful painted transitions.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6828-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "source_only_guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false,
+    "sourceRGB_patch_composite": false
+  },
+  "private_numeric_proof": {
+    "id": 6828,
+    "gain": 0.854400634765625,
+    "source_stored_luma": 43.690083203125,
+    "actual_stored_luma": 43.68839610671997,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held for substantial source-relativeprint prominence aftersole originaledit. Proved9stripes/8gaps/pitch8 andbothpalegroups EXACTLYsource nativebounds retained. Lowergray88.57/80.88/71.11→86.72/78.63/68.77 and bottomnativegrayrow12790.83/82.57/72.27→87.69/78.98/68.91 close: no newbottommargin claim. But originaldimoliveprintedmean16.84/16.13/.47→22.66/22.43/.89 andnativeLstd3.88→7.80 afterscalar.8544006, almostdoublepatterncontrast, whilegraydarkensslightly. This ismorethan smalllocalbrightlift orcodecedgesoftening; count/scale phasepass doesnot preserve originalpatternprominence. Brownwash additionallyhardensfaint curves into moreoutlinedfootwear-likecontours, withoutunsupported newlace/hardwarecountclaim. Defaultpad0/A255 wholeUV/native4x verified; no retry/sourceRGB flattening orpatch."
+}

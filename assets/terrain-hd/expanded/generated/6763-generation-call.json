@@ -1,0 +1,112 @@
+{
+  "id": 6763,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-db056fef-3892-4d00-be29-071e0f6ae4b7.png",
+  "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted diffuse UV color map ID6763, existing neck/hands color material.\r\nImage1 is the ONLY edit target/reference: entire original128x128 RGBA texture enlarged nearest8x1024x1024. Refine only the existing three soft painted wash groups at four times source resolution; output the exact same complete square UV map with the same broad color, shape bounds and phase. This is a mostly FLAT COLOR map, not a depiction of a hand, skin photograph, body, face or scene.\r\nActual original background RGBA159/117/65/255. The complete native y36..127 area is exactly constant RGB159/117/65. Keep it perfectly FLAT and uniform: no pores, noise, grain, hair, creases, shadows, fabric pattern, anatomy or new marks. Do not add surface detail to constant fields. Keep the original warm brown/ochre painted hue and relative lightness; no recoloring/beautification.\r\nSource has exactly THREE substantial existing soft shading groups near the upperedge: one dim upper-right softly banded wash native bounds[96,1,121,17], one darker upper-middle irregular wash[59,1,82,17], and one soft pale left wash[0,11,13,27]. Preserve their actual irregular source silhouettes, lowcontrast softness, source color hierarchy and boundaries, with the original faint quantized surrounding transitions remaining faint. No new shapes or interpretation of the washed pixels. The rightwash has THREE existing soft horizontal darker bands with native minima at y6,9,13 (measured over x99..116): keep the same phase and subdued contrast, not new sharp lines. Keep all source shading inside original bounds, no spreading into the flatfield.\r\nDo not transform these three washes into eyes, a mouth, knuckles, fingernails, wounds, badges, hardware, glyphs, teeth or new anatomical parts. Preserve source ambiguity. Improve only the existing source soft transitions in those wash groups, not the number or prominence of marks; no photographic skin texture, strokes, dots, rings or sharp outlines.\r\nOriginal alpha255 everywhere, including the flatfield and all corners. Wholecanvas UV and fullalpha remain; no crop, padding, letterbox, bbox recentering, registration, new border/margin, text, labels, watermark, objects or scene. Output only this same original painted map, at the same relative material/shading scale.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6763-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "710501a3a638759edda75fa5ea9af81816a810e505b9ba6b30cd6b9aeeeae875",
+    "exact_prompt_file": "7f46830cdedb3a22271ac3563965eee5e9faf202db9759bb76b1627595d53ede",
+    "reference_png": "356bfe47e922bbcccc15fdb189656ac31967c824a9dbe8c6fa82889d37b4e60c"
+  },
+  "saved_at_utc": "2026-10-08T05:02:04.185831+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 6763,
+    "texture": {
+      "ID": 6763,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -6326975,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\RaceHands\\hands03.tga",
+      "Format": "dxt1",
+      "UserName": "Arab",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 4684,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2732,
+          "consumers": [
+            {
+              "table": "Races",
+              "id": 2,
+              "field": "MaterialID",
+              "material_template_id": 2732
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "771261fb592f55a24a783d53d70f2d19efd95387e20ef48584e38e6e1b0ec2ea",
+    "source_rgba_sha256": "141e8dbdf0014e6e051b9016f303d962a05a6e4af3bfc26d52a61fb760e4c378",
+    "release_rgba_sha256": "141e8dbdf0014e6e051b9016f303d962a05a6e4af3bfc26d52a61fb760e4c378",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/6763.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-twenty-first.json",
+  "source_check_sha256": "51f5be1ec127b1de51a7e8aa82fcb958b038872cf9ce1d3b3610df56d7745bfb",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-first-6763.json",
+  "source_count_phase_proof_sha256": "4b2d9296b876a226dd2a186eeec0c41de0775b85a055cafbbadd85ca4e8525be",
+  "precall_constraints_sha256": "33e367cb408467b6544b76d5537d2230870b024a8be5928b31f6f33eab6464ae",
+  "exact_service_args": {
+    "prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted diffuse UV color map ID6763, existing neck/hands color material.\r\nImage1 is the ONLY edit target/reference: entire original128x128 RGBA texture enlarged nearest8x1024x1024. Refine only the existing three soft painted wash groups at four times source resolution; output the exact same complete square UV map with the same broad color, shape bounds and phase. This is a mostly FLAT COLOR map, not a depiction of a hand, skin photograph, body, face or scene.\r\nActual original background RGBA159/117/65/255. The complete native y36..127 area is exactly constant RGB159/117/65. Keep it perfectly FLAT and uniform: no pores, noise, grain, hair, creases, shadows, fabric pattern, anatomy or new marks. Do not add surface detail to constant fields. Keep the original warm brown/ochre painted hue and relative lightness; no recoloring/beautification.\r\nSource has exactly THREE substantial existing soft shading groups near the upperedge: one dim upper-right softly banded wash native bounds[96,1,121,17], one darker upper-middle irregular wash[59,1,82,17], and one soft pale left wash[0,11,13,27]. Preserve their actual irregular source silhouettes, lowcontrast softness, source color hierarchy and boundaries, with the original faint quantized surrounding transitions remaining faint. No new shapes or interpretation of the washed pixels. The rightwash has THREE existing soft horizontal darker bands with native minima at y6,9,13 (measured over x99..116): keep the same phase and subdued contrast, not new sharp lines. Keep all source shading inside original bounds, no spreading into the flatfield.\r\nDo not transform these three washes into eyes, a mouth, knuckles, fingernails, wounds, badges, hardware, glyphs, teeth or new anatomical parts. Preserve source ambiguity. Improve only the existing source soft transitions in those wash groups, not the number or prominence of marks; no photographic skin texture, strokes, dots, rings or sharp outlines.\r\nOriginal alpha255 everywhere, including the flatfield and all corners. Wholecanvas UV and fullalpha remain; no crop, padding, letterbox, bbox recentering, registration, new border/margin, text, labels, watermark, objects or scene. Output only this same original painted map, at the same relative material/shading scale.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/6763-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "private_numeric_proof": {
+    "id": 6763,
+    "gain": 1.004364013671875,
+    "source_stored_luma": 121.80517729492188,
+    "actual_stored_luma": 121.8292216758728,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held after solebuiltin call: counts3/rightbandphase6,9,13/sourceA255/defaultpad0 allpass and flatpalette source159/117/65→native159.03/116.98/65.64 close, normalizedflatstd~.71. However upperright faint paintedwash tail narrows: source RGBdelta>8 group[96,1,121,17]→target[96,2,116,17]. Native x116 source meanRGBdelta11.71→4.51, x1179.94→3.18 and x1187.47→2.26; sourceweak margin locallyattenuated while centerwash preserved. Scalar cannot recover localfalloff. No countfailure/technicallabel; originalartpending, no retry/siblingcalls/artisticRGBfix."
+}

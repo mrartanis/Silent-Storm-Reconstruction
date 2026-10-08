@@ -1,0 +1,17 @@
+[
+  {
+    "id": 6811,
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted arms/hands clothing and skin-color diffuse UV atlas ID6811.\r\nImage1 is the ONLY edit target: entire original128x128 RGBA enlarged nearest8x1024x1024. Refine only this same original complete square UV map at four-times source resolution, preserving the original field silhouettes/bounds/shadingphase/counts/material/color identity and local detail scale. This is a UV paintmap, not a rendered hand, body, face, photograph or scene.\r\nKeep the original dim red-brown right painted color field native[35,0,128,128], original flat/subdued portions and broad soft gradients. Preserve exactly TWO existing lower pale soft diffuse lobes native[62,75,86,110] and[86,81,120,110], and ONE upper pale soft diffuse wash near[99,50,118,69]. They are existing indistinct painted shading, NOT new anatomical parts; no new anatomy, knuckles, fingertips, nails, creases, pores, hair, scars, eyes or beautification. Keep their original dark muted hue and lowcontrast, without whitening/bright highlights or new segmentation.\r\nLeft narrow gray/olive cloth paint contains FOUR existing soft wash envelopes native[7,3,29,21],[2,24,30,111],[0,112,12,128],[12,111,30,128]. Preserve those source contours and all existing soft dark curves in place; keep them as subdued paint washes, not sharply edged folds, hard outlines, leather wrinkles, pinched seams or mechanical parts. Refine the existing soft painted transitions and fine existing material mottling only; no photographic weave/grit/coarsegrain/crosshatching/new cuff ribs/stitches/buttons/hardware.\r\nKeep the exact wholecanvas native field boundaries and endpoint shapes, especially the left-to-right field boundaryx35 and bottom leftwashed pieces. Preserve source ambiguity and relative leftgray/rightredbrown local brightness. Output only this same old-game painted texture map with clearer existing transitions at4x.\r\nOriginal alpha255 everywhere, including dark/black background texels/corners: black RGB is NOT transparency. Fullopaque canvas, no crop, padding, letterbox, BBox, recentering, registration, new margins/borders, objects, anatomy, text, labels or watermark. No new pattern or reinterpretation of washed pixels.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "new_anatomy_hardware_print_seams_allowed": 0,
+      "left_graypaint_wash_envelopes": 4,
+      "right_large_redbrown_paint_fields": 1,
+      "lower_redbrown_softpale_lobes": 2,
+      "upper_redbrown_softpale_wash_groups": 1
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T05:17:16.390Z"
+  }
+]

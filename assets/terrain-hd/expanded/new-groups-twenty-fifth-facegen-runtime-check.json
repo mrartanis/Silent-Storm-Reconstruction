@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-08",
+  "pack_textures": 2349,
+  "actual_texture_id": 6715,
+  "game_SHA256": "8b5507ccc62d24ad31dbc984b6cea73eb189fde0d67a7dbf605a77a335cbc45d",
+  "own_process_id": 552,
+  "own_process_absent_after_quit": true,
+  "normal_exit_code": 0,
+  "source_and_atlas_hashes_match_independent_integer_alpha_reference": true,
+  "expected_HD_and_original": [
+    {
+      "sourcehash": "834ea8062530b5e1",
+      "atlashash": "98b1665bbbe32f0e"
+    },
+    {
+      "sourcehash": "734cf4a633996af9",
+      "atlashash": "4f9dc53873ec5ce2"
+    }
+  ],
+  "actual_on_off_on": [
+    "[harness] cmd: facegenlayer 6715\r\n[harness] facegen layer id=6715 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=834ea8062530b5e1 atlashash=98b1665bbbe32f0e\r\n",
+    "[harness] cmd: facegenlayer 6715\r\n[harness] facegen layer id=6715 ok=1 physical=128x128 mip=0 source=128x128 sourcehash=734cf4a633996af9 atlashash=4f9dc53873ec5ce2\r\n",
+    "[harness] cmd: facegenlayer 6715\r\n[harness] facegen layer id=6715 ok=1 physical=512x512 mip=2 source=128x128 sourcehash=834ea8062530b5e1 atlashash=98b1665bbbe32f0e\r\n"
+  ],
+  "actual_three_DB_head_bakes_per_state": [
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=0ccc0cc1bed74557\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=d3155898178747fc\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n",
+    "[harness] cmd: facegenbake\r\n[harness] facegen bake case=0 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=e61211fd62cc6efc\r\n[harness] facegen bake case=1 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=0ccc0cc1bed74557\r\n[harness] facegen bake case=2 ok=1 head=94 static=1 textured=1 roundtrip=1 animator=21970 pixels=28672 hash=72eb80435311b3f3\r\n"
+  ],
+  "bake_hashes_on_off_restored": [
+    [
+      "e61211fd62cc6efc",
+      "0ccc0cc1bed74557",
+      "72eb80435311b3f3"
+    ],
+    [
+      "e61211fd62cc6efc",
+      "d3155898178747fc",
+      "72eb80435311b3f3"
+    ],
+    [
+      "e61211fd62cc6efc",
+      "0ccc0cc1bed74557",
+      "72eb80435311b3f3"
+    ]
+  ],
+  "whole_source_and_V_flip_preserved": true,
+  "source_RGBA_straight_alpha_blend": true,
+  "fixed_retail_atlas_size": [
+    256,
+    256
+  ],
+  "scope_limit": "Actual resource loader and CPU compositor validated; this does not claim a 1024 atlas or complete head GPU appearance. Revision invalidation of live previews is source-reviewed; probe independently reconstructs each state.",
+  "source_files_SHA256": {
+    "Main/FaceGenTextureSampling.h": "79adf4fb5d777d9056dd01f882b52697bbe37155589ad8d3cb71b5d841a1f448",
+    "Main/LSHead.cpp": "5fca9be14f991f42e952eb68386f2904b322a482124ec5c23958ef9e500c216d",
+    "Main/LSHead.h": "6cf86685a2cac99d936fe67ca6d8a8f6d8039506de8d8d41a23d07c04b89591d",
+    "Game/Main.cpp": "c6efe78a5e345bc7bc9c68550f4db3c165c7ac4872573e0d7d310b2f20217528",
+    "diagnostics/FaceGenTextureSamplingTests.cpp": "0636ac43c89d84dbba271220ac1bb94f31b975c008cbe64d67847347ad6d4b60",
+    "CMakeLists.txt": "403db5292802cc94c9f6be2f87771bf043fa38237191aa4f21df7ba411965049"
+  },
+  "selected_CTest_tests": [
+    "TextureSamplingTests",
+    "FaceGenTextureSamplingTests",
+    "NativeHeadResourceTests",
+    "NativeHeadSequenceRuntimeTests"
+  ]
+}

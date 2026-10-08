@@ -1081,6 +1081,18 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 				kind, IsValid( pSeq ) ? pSeq->GetRecordID() : -1 );
 		}
 	}
+	else if ( sCmd.compare(0,12,"facegenlayer") == 0 )
+	{
+		int textureId = 0; char extra = 0;
+		const char *enabled = getenv("S2_TEXTURE_DIAGNOSTICS");
+		NLSHead::SFaceGenLayerProbeResult result;
+		const bool ok = enabled && enabled[0]=='1' &&
+			sscanf(sCmd.c_str(),"facegenlayer %d %c",&textureId,&extra)==1 &&
+			NLSHead::ProbeFaceGenLayer(textureId,&result);
+		SaveLoadDiag("[harness] facegen layer id=%d ok=%d physical=%dx%d mip=%d source=%dx%d sourcehash=%016llx atlashash=%016llx\n",
+			textureId,ok?1:0,result.physicalWidth,result.physicalHeight,result.sourceMip,
+			result.sourceWidth,result.sourceHeight,result.sourceHash,result.atlasHash);
+	}
 	else if ( sCmd == "facegenbake" )
 	{
 		for ( int i = 0; i < 3; ++i )

@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 383 of these verified originals are accepted in the shared
+As of 2026-10-08, 387 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-fourth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-fifth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,361 IDs: clothing 219, equipment 140, weapons
-57, heads 179, UI 624, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,356 IDs: clothing 218, equipment 137, weapons
+57, heads 178, UI 624, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -337,3 +337,21 @@ scene certifies layer/menu, not every model. Ordinary Git PNG/prompt stages and
 frozen original worker reviews:../accepted-git-stage-completeness-twenty-fourth.json,
 ../coordinator-review-provenance-twenty-fourth.json. Held5405/5388/3041/6768/
 6766/7627/3864/2153/6827 retain raw/reasons. Inspect next jobs before newcalls.
+
+Twenty-fifth accepted packet: equipment6403/7659, neck/hands color6762
+and dynamic FaceGen hair layer6715. Pack:2,349 textures/4,698 aliases/
+126 archives/7,632,936,686 bytes. Prior2,345 source/PNG/native hashes unchanged;
+four nativeRGBA images equal privately reviewed whole4x predictions. Full source
+alpha/UV/material/scale preserved, numerical brightness only, no artisticRGB
+insertion/crop/BBox. Source2378 individually retained:4096 identical RGBA68/52/35/255
+pixels, zero generation; no equipment category exclusion.
+FaceGen now reads the complete logical mip of HD layers, retaining retail
+straight-alpha blending/Vflip and256square atlas. Live preview invalidates on
+HD revision. New23 regression checks and4 selected CTest pass. Actual6715
+resource loader/CPU blend on/off/on matches independent integer/FNV references;
+9 real head94 bakes/roundtrips pass. This does not certify every head on GPU.
+Full native validation, actual graphics menu/private frames/normalquit:
+../new-groups-twenty-fifth-{batch,live}-check.json; actual CPU proof:
+../new-groups-twenty-fifth-facegen-runtime-check.json. Three original worker
+reviews frozen before import; exact prompts and PNG remain ordinary Git files.
+Held candidates retain reasons; do not regenerate accepted IDs.

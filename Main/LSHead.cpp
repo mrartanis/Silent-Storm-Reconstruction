@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "../diagnostics/FrameProfiler.h"
 #include "LSHead.h"
+#include "FaceGenTextureSampling.h"
 #include "GResource.h"
 #include "HeadResourceData.h"
 #include "GGeometry.h"
@@ -1039,27 +1040,11 @@ static bool MixTexture( CArray2D<NGfx::SPixel8888> &dst, int x0, int y0, int x1,
 		if ( !pSWD || pSWD->mips.empty() )
 			continue;
 		bBlended = true;
-		CArray2D<NGfx::SPixel8888> &srcImg = pSWD->mips[0];
-		int rectW = x1 - x0, rectH = y1 - y0;
-		int w = ( rectW < srcImg.GetXSize() ) ? rectW : srcImg.GetXSize();
-		int h = ( rectH < srcImg.GetYSize() ) ? rectH : srcImg.GetYSize();
-		for ( int ry = 0; ry < h; ++ry )
-		{
-			for ( int rx = 0; rx < w; ++rx )
-			{
-				NGfx::SPixel8888 &dp = dst[ (y1 - 1) - ry ][ x0 + rx ];   // V-flip on dst
-				const NGfx::SPixel8888 &sp = srcImg[ry][rx];
-				float alpha = sp.a * weight * ( 1.0f / 255.0f );
-				float inv = 1.0f - alpha;
-				int r = (int)( sp.r * alpha + dp.r * inv + 0.5f );
-				int g = (int)( sp.g * alpha + dp.g * inv + 0.5f );
-				int b = (int)( sp.b * alpha + dp.b * inv + 0.5f );
-				dp.r = r < 0 ? 0 : ( r > 255 ? 255 : r );
-				dp.g = g < 0 ? 0 : ( g > 255 ? 255 : g );
-				dp.b = b < 0 ? 0 : ( b > 255 ? 255 : b );
-				dp.a = 0xFF;
-			}
-		}
+		const int sourceMip = S2FaceGenTextureSampling::LogicalSourceMip(
+			pSWD->GetXSize(), pSWD->GetYSize(), pSWD->texelScaleX,
+			pSWD->texelScaleY, (int)pSWD->mips.size());
+		CArray2D<NGfx::SPixel8888> &srcImg = pSWD->mips[sourceMip];
+		S2FaceGenTextureSampling::BlendLayer(dst, srcImg, x0, y0, x1, y1, weight);
 	}
 	return bBlended;
 }
@@ -1082,6 +1067,42 @@ static bool CreateFaceTexture( CArray2D<NGfx::SPixel8888> &dst, LifeStudioHeadAP
 	vector<SMixTex> none; vector<float> nw;
 	MixTexture( dst, 0x00, 0x40, 0x40, 0x080, none,    nw, 0xFF5F1D20 );   // SKIN-BROWN base x[0,64) y[64,128)
 	return bBlended;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+bool ProbeFaceGenLayer(int textureId, SFaceGenLayerProbeResult *result)
+{
+	if ( !result || !NDb::GetTexture(textureId) ) return false;
+	*result = SFaceGenLayerProbeResult();
+	vector<SMixTex> layers(1);
+	layers[0].pTex = NGScene::GetSWTex(NDb::GetTexture(textureId));
+	layers[0].pTex.Refresh();
+	NGScene::CSWTextureData *data = layers[0].pTex->GetValue();
+	if ( !data || data->mips.empty() ) return false;
+	result->physicalWidth = data->GetXSize();
+	result->physicalHeight = data->GetYSize();
+	result->sourceMip = S2FaceGenTextureSampling::LogicalSourceMip(
+		data->GetXSize(), data->GetYSize(), data->texelScaleX,
+		data->texelScaleY, (int)data->mips.size());
+	const CArray2D<NGfx::SPixel8888> &source = data->mips[result->sourceMip];
+	result->sourceWidth = source.GetXSize();
+	result->sourceHeight = source.GetYSize();
+	CArray2D<NGfx::SPixel8888> atlas(256,256);
+	atlas.FillZero();
+	vector<float> weights(1,1.0f);
+	if ( !MixTexture(atlas,0,128,128,256,layers,weights,0xFF808080) ) return false;
+	auto hashImage = [](const CArray2D<NGfx::SPixel8888> &image) {
+		unsigned long long hash = 14695981039346656037ULL;
+		for ( int y=0; y<image.GetYSize(); ++y )
+			for ( int x=0; x<image.GetXSize(); ++x )
+				for ( int byte=0; byte<4; ++byte ) {
+					hash ^= (image[y][x].color >> (byte*8)) & 255;
+					hash *= 1099511628211ULL;
+				}
+		return hash;
+	};
+	result->sourceHash = hashImage(source);
+	result->atlasHash = hashImage(atlas);
+	return true;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CHeadTextureTransformer -- the LIVE editor-preview face-texture node (see the LSHead.h banner). Shares the
@@ -1112,7 +1133,8 @@ bool CHeadTextureTransformer::NeedUpdate()
 		return false;
 	if ( !IsValid( pValue ) )
 		return true;
-	return nLastStamp != pTransformInfo->GetTensionStamp();
+	return nLastStamp != pTransformInfo->GetTensionStamp() ||
+		nLastTextureRevision != NGScene::GetTextureResourceRevision();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CHeadTextureTransformer::Recalc()
@@ -1129,6 +1151,7 @@ void CHeadTextureTransformer::Recalc()
 		image.FillZero();
 		bool bRec = CreateFaceTexture( image, pW, face, eye, eyelash );
 		nLastStamp = pTransformInfo->GetTensionStamp();
+		nLastTextureRevision = NGScene::GetTextureResourceRevision();
 		if ( !bRec )
 			return;   // channels didn't resolve -> leave pValue (head keeps its base material)
 		if ( !IsValid( pValue ) )

@@ -61,6 +61,14 @@ struct SFaceGenBakeProbeResult
   int animatorBytes = 0;
 };
 bool ProbeFaceGenBake(int caseIndex, SFaceGenBakeProbeResult *result);
+struct SFaceGenLayerProbeResult
+{
+  int physicalWidth = 0, physicalHeight = 0;
+  int sourceMip = 0, sourceWidth = 0, sourceHeight = 0;
+  unsigned long long sourceHash = 0, atlasHash = 0;
+};
+// Diagnostic fixed-weight bake through the actual SW loader and MixTexture.
+bool ProbeFaceGenLayer(int textureId, SFaceGenLayerProbeResult *result);
 class CHeadInfo;
 // Inspect a committed head after an ordinary game slot reload.
 bool ProbeCommittedFaceGenHead(CHeadInfo *head, SFaceGenBakeProbeResult *result);
@@ -466,6 +474,7 @@ public:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pTransformInfo); f.Add(3,&face); f.Add(4,&eye); f.Add(5,&eyelash); return 0; }
 private:
 	int nLastStamp;                       // last-baked CHeadTransformInfo tension stamp (re-bake only when it changes)
+	unsigned nLastTextureRevision = 0;   // transient HD-layer revision; never serialized
 protected:
 	virtual bool NeedUpdate();
 	virtual void Recalc();

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 6762,
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted diffuse UV color map ID6762, existing neck/hands color material.\r\nImage1 is the ONLY edit target/reference: entire original128x128 RGBA texture enlarged nearest8x1024x1024. Refine only the existing three soft painted wash groups at four times source resolution; output the exact same complete square UV map with the same broad color, shape bounds and phase. This is a mostly FLAT COLOR map, not a depiction of a hand, skin photograph, body, face or scene.\r\nActual original background RGBA162/113/60/255. The complete native y36..127 area is exactly constant RGB162/113/60. Keep it perfectly FLAT and uniform: no pores, noise, grain, hair, creases, shadows, fabric pattern, anatomy or new marks. Do not add surface detail to constant fields. Keep the original warm brown/ochre painted hue and relative lightness; no recoloring/beautification.\r\nSource has exactly THREE substantial existing soft shading groups near the upperedge: one dim upper-right softly banded wash native bounds[96,2,118,17], one darker upper-middle irregular wash[60,1,82,18], and one soft pale left wash[0,11,14,26]. Preserve their actual irregular source silhouettes, lowcontrast softness, source color hierarchy and boundaries, with the original faint quantized surrounding transitions remaining faint. No new shapes or interpretation of the washed pixels. The rightwash has THREE existing soft horizontal darker bands with native minima at y6,9,13 (measured over x99..116): keep the same phase and subdued contrast, not new sharp lines. Keep all source shading inside original bounds, no spreading into the flatfield.\r\nDo not transform these three washes into eyes, a mouth, knuckles, fingernails, wounds, badges, hardware, glyphs, teeth or new anatomical parts. Preserve source ambiguity. Improve only the existing source soft transitions in those wash groups, not the number or prominence of marks; no photographic skin texture, strokes, dots, rings or sharp outlines.\r\nOriginal alpha255 everywhere, including the flatfield and all corners. Wholecanvas UV and fullalpha remain; no crop, padding, letterbox, bbox recentering, registration, new border/margin, text, labels, watermark, objects or scene. Output only this same original painted map, at the same relative material/shading scale.",
+    "prompt_constraints": {
+      "source_width": 128,
+      "source_height": 128,
+      "substantial_painted_wash_groups": 3,
+      "left_softpale_wash_groups": 1,
+      "uppermiddle_darksoft_wash_groups": 1,
+      "upperright_softbanded_wash_groups": 1,
+      "background_color_fields": 1,
+      "background_modal_RGBA": [
+        162,
+        113,
+        60,
+        255
+      ],
+      "exactly_constant_lower_field_native_y": 36,
+      "new_anatomy_or_parts_allowed": 0,
+      "new_pores_creases_weave_or_grain_allowed": 0,
+      "upperright_soft_horizontal_darkband_rows": [
+        6,
+        9,
+        13
+      ],
+      "upperright_soft_horizontal_darkband_count": 3
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T04:59:42.298Z"
+  }
+]

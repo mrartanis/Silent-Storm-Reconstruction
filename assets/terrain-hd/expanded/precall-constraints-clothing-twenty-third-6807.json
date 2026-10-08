@@ -1,0 +1,26 @@
+[
+  {
+    "id": 6807,
+    "exact_prompt": "Use case: precise-object-edit\r\nAsset type: original Silent Storm painted gray-clothing/body diffuse UV atlas ID6807.\r\nImage1 is the ONLY edit target: exact entire original256x128 RGBA enlarged nearest8x2048x1024. Refine this SAME whole landscape2:1 UV atlas at four-times source resolution. Maintain the exact wholecanvas two-to-one composition, all native field endpoints/UV/part counts/phase/contours/source palette/material identity and original physical pattern scale. Output only this texture map, no person, garments photographed separately, scene or extra object.\r\nPreserve the original subdued gray cloth fields, muted dark straps, soft dark red-brown skin-color fields and washed brown/black right-hand material. Improve only existing fine painted mottling and soft transitions. Keep original lowcontrast cloth folds/washed marks, no newly raised fold geometry, photographic pores/weave/leather, coarsegrain, regular decorative pattern, new stitches, seams or hardware. The dim red-brown color fields remain soft sourcepaint without invented anatomy/nails/hands or whitening.\r\nKeep EXACTLY TWO long vertical dark straps, source native bounds[22,3,30,124] and[74,4,82,65]. Each has exactly FOUR existing light crossbars with native y-phase41,48,54,58, measured independently in the original. Preserve their original widths, spacing, low-resolution painted shapes and local gray material; no extra holes/studs/bars or chrome bevels.\r\nKeep EXACTLY TWO existing small solid gray clips bounds[23,44,29,49] and[75,44,81,49], and EXACTLY TWO existing lower double-dark-slot frames bounds[22,50,30,60] and[74,50,82,60]. Each lowerframe has exactly TWO original dark painted slots at native[23,51,29,54],[23,55,29,58] and[75,51,81,54],[75,55,81,58]. Preserve the original faint/partial upperedges as they appear, do not invent a closed extra metal loop or new mechanical structure. Do not subdivide the slots, change their count, fill them or add fastening furniture.\r\nPreserve ONE existing large rounded bottom ringwash at[129,67,140,81], exact source contour and how it meets the original vertical strap and two diagonal dark bands. No additional ring, buckle, lace, hole or new closure. Preserve ONE upperbelt gray plaque with its existing washed angular motif at[45,3,59,14]: retain the source irregular painted silhouette and indistinct inner marks, no newly readable symbol, glyph, insignia, character, face or new decorative emblem. This is preservation of the original painted patch, not creation of a logo.\r\nKeep all original rightbrownfield broad washed marks/contours at their original scale/positions, without denser patterns or extra objects. Finer HD paint may clarify existing soft transitions but keep local shading hierarchy and part silhouettes.\r\nOriginal alpha255 over EVERY texel including opaque black separators/corners. Black RGB is NOT transparency. Keep full2:1 opaque canvas, no crop, padding, BBox, letterbox, recentering, registration, new border/margin/text/labels/watermark. Preserve the entire originalUV atlas in place.",
+    "prompt_constraints": {
+      "source_width": 256,
+      "source_height": 128,
+      "long_vertical_straps": 2,
+      "light_crossbars_per_strap": 4,
+      "light_crossbars_native_y": [
+        41,
+        48,
+        54,
+        58
+      ],
+      "small_solid_gray_clips": 2,
+      "lower_double_darkslot_frames": 2,
+      "dark_slots_per_lower_frame": 2,
+      "large_bottom_rounded_ringwash": 1,
+      "upperbelt_grayplaque_washed_angularmotif": 1,
+      "new_hardware_anatomy_holes_seams_symbols_allowed": 0
+    },
+    "assert_prompt_constraints_equal_proved_source_counts": true,
+    "final_prompt_frozen_after_source_proof_utc": "2026-10-08T05:24:26.038Z"
+  }
+]
