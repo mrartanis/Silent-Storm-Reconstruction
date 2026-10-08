@@ -1,29 +1,29 @@
 {
   "date": "2026-10-08",
-  "scope_resources": 2671,
+  "scope_resources": 2695,
   "full_db_inventory_resources": 5801,
-  "hd_textures": 2263,
-  "native_aliases": 4526,
+  "hd_textures": 2280,
+  "native_aliases": 4560,
   "native_archives": 123,
-  "native_bytes": 7439814418,
+  "native_bytes": 7458165418,
   "status_counts": {
-    "validated": 2263,
-    "original-technical-map": 257,
-    "structural-mask-or-solid": 74,
+    "validated": 2280,
+    "original-technical-map": 258,
+    "structural-mask-or-solid": 79,
     "missing-historical": 63,
-    "generation-unavailable": 13,
+    "generation-unavailable": 14,
     "release-mismatch": 1
   },
   "hd_categories": {
     "terrain": 178,
     "trees": 30,
     "buildings-environment": 1754,
-    "characters-clothing": 58,
-    "equipment": 86,
+    "characters-clothing": 61,
+    "equipment": 92,
     "weapons": 64,
     "heads-lshead": 2,
-    "interface-v5": 31,
-    "effects": 51,
+    "interface-v5": 32,
+    "effects": 58,
     "campaign-backgrounds": 4,
     "tutorials": 2,
     "other": 3
@@ -2894,6 +2894,55 @@
       "status": "generation-unavailable",
       "reason": "Built-in imagegen source-preserving diffuse atlas edit rejected at output stage (moderation_blocked illicit). Original retained; no retry or bypass.",
       "source": "Characters\\Weapons\\SubMachineGuns\\PPSH41_modifiedDisk.tga"
+    },
+    {
+      "id": 7658,
+      "category": "equipment",
+      "status": "generation-unavailable",
+      "reason": "Builtin imagegen input request rejected by service moderation. Original retained, no retry or bypass.",
+      "source": "Characters\\Equipment\\Slots\\German\\RHelmet_02.tga"
+    },
+    {
+      "id": 1,
+      "category": "other",
+      "status": "structural-mask-or-solid",
+      "reason": "Full original source is white fill with exact one-pixel black outer frame. Actual diffuse model consumers retained; structural frame has no material artwork to generate.",
+      "source": "untitled.bmp"
+    },
+    {
+      "id": 3135,
+      "category": "other",
+      "status": "structural-mask-or-solid",
+      "reason": "Actual MapEditor Black diffuse/control fill: almost uniform gray49 with five source codec/palette values. Preserve this structural color/control value, do not invent texture grain.",
+      "source": "MapEditor\\Black.tga"
+    },
+    {
+      "id": 3517,
+      "category": "other",
+      "status": "structural-mask-or-solid",
+      "reason": "Actual Invisible native8x8 fullRGBA0 diffuse fill, no artwork; retain complete alpha0/RGB0.",
+      "source": "Invisible.tga"
+    },
+    {
+      "id": 5755,
+      "category": "other",
+      "status": "structural-mask-or-solid",
+      "reason": "Actual opaque Bedford vehicle Material3780→Model6121 references native512x512 fullRGBA0. This is an existing zero fill, not missing historical pixels or permission to imagine a vehicle texture; preserve source exactly.",
+      "source": "Tests\\Lena\\Bedford_OYD.tga"
+    },
+    {
+      "id": 7480,
+      "category": "other",
+      "status": "structural-mask-or-solid",
+      "reason": "Actual Invisible native8x8 fullRGBA0 diffuse fill with all actual consumers retained; no artwork.",
+      "source": "Invisible.tga"
+    },
+    {
+      "id": 7675,
+      "category": "other",
+      "status": "original-technical-map",
+      "reason": "Actual Fonts.TextureID CourierBold20pt glyph atlas; native256x256 character positions/metrics and sourcealpha are functional data, retain original font pixels.",
+      "source": "16"
     }
   ],
   "validation": "Every native archive hash, alias, dimensions, original mask and brightness passed; see Game/res-hd/validation.json"

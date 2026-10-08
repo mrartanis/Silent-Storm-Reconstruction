@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "id": 7658,
+  "disposition": "generation-unavailable-preserve-original",
+  "service_call": {
+    "tool": "image_gen.imagegen",
+    "arguments": {
+      "prompt": "Use case: precise-object-edit\nInput: Image1 is the entire original Silent Storm opaque equipment diffuse atlas enlarged exactly8x nearest-neighbor solely to reveal source shape.\nRequest: Faithful HD material reconstruction; return the complete same wide2:1 flat opaque UV atlas only.\nSource inventory: Wide2:1 plain muted brown/olive painted-steel helmet atlas. Preserve original broad curved shaded helmet panel and its original pale irregular upper-left arc, original large rounded black UV cutout at right, source broad muted brown/olive color fields, and exactly TWO existing tiny pale surface flecks inside the curved shaded panel. Flecks stay irregular pale flecks at exact scale/location; never reinterpret them as round holes, rivets or buttons. No added camouflage patches, new edge lines, wear chips, dents or ornaments.\nUV/content lock: Every contour, island, gap, seam, baked fold/shadow, mark and existing detail stays at exact normalized coordinates with identical count, shape and scale. No crop, zoom, margins, rotation, repacking or bbox registration. Preserve all source materials and opaque black padding. Do not infer extra objects from texture fragments.\nMaterial detail: Fine smooth irregular non-repeating material grain only, at original surface scale. No visible crosshatch, herringbone, weave, decorative loops or regular diagonal texture pattern at full output size. Plain felt/cloth/leather and painted metal must remain plain. No curled, swirling, embossed, decorative, ornamental or repeating patterns, no ornamental strokes at any scale. Smooth original compression blocks without retaining block grids or converting them into geometric seams. Preserve exact original mark/detail counts, pitch, phase and silhouettes, including tiny glints. Do not add folds or surface marks. Original blank padding remains plain. Keep source muted palette/dark exposure, later brightness matched numerically.\nAvoid: New hardware, screws, rivets, buttons, holes, eyelets, lacing, stripes, ribs, stitching, patches, damage, labels, letters, logos, insignia or any invented recognizable component. No rendered item, perspective, scene or artistic redesign. Preserve exact source detail cadence, UV layout and material identity.",
+      "referenced_image_paths": [
+        "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/7658-enlarged-source.png"
+      ],
+      "transparent_background": false
+    }
+  },
+  "error": {
+    "http_status": 400,
+    "error": {
+      "message": "Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 87dceca0-6b74-43ed-a0d1-b2ce9728323c. safety_violations=[sexual].",
+      "type": "image_generation_user_error",
+      "param": null,
+      "code": "moderation_blocked",
+      "moderation_details": {
+        "moderation_stage": "input",
+        "categories": [
+          "sexual"
+        ]
+      }
+    }
+  },
+  "request_id": "87dceca0-6b74-43ed-a0d1-b2ce9728323c",
+  "utc": "2026-10-08T00:19:35.987626+00:00",
+  "utc_basis": "NTFS creation timestamp of failure provenance file, written immediately after failed service response; service response supplied no UTC timestamp. This is first failure persistence time, not asserted service timestamp.",
+  "reference_sha256": "aadeb5e3848946a851098844388b524fe22b064e5e71bcb7df22a253eaeae02f",
+  "prompt_sha256": "a4bd61aad62e689655d56cd1483758e46a7e62e4bff04dede822c4889f81d634",
+  "raw_saved": false,
+  "raw_created": false,
+  "call_attempts": 1,
+  "retries": 0,
+  "reference_recipe": "Exact entire original8x nearest sourceguide; no crop/padding/bbox/artistic edits.",
+  "source_record": {
+    "id": 7658,
+    "texture": {
+      "ID": 7658,
+      "Width": 128,
+      "Height": 64,
+      "NMips": 0,
+      "AverageColor": -12569046,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Equipment\\Slots\\German\\RHelmet_02.tga",
+      "Format": "dxt1",
+      "UserName": "RHelmet02",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "equipment",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 5827,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 3102,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 7786,
+              "field": "Material2",
+              "material_template_id": 3102,
+              "geometry_id": 4270,
+              "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+              "model_template_id": 4675,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      64
+    ],
+    "source_sha256": "449d075ae30a171d5ab4d16d5609c9f17af3cb16c76ff41c3ece7289f677a993",
+    "source_rgba_sha256": "6536b1e3ea4f5168004d310e6189a8c28f1ca6dd946c9bacd6dcee426b43587b",
+    "release_rgba_sha256": "6536b1e3ea4f5168004d310e6189a8c28f1ca6dd946c9bacd6dcee426b43587b",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/7658.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "fresh_source_check": {
+    "id": 7658,
+    "source_rgba_sha256": "6536b1e3ea4f5168004d310e6189a8c28f1ca6dd946c9bacd6dcee426b43587b",
+    "source_binary_sha256": "449d075ae30a171d5ab4d16d5609c9f17af3cb16c76ff41c3ece7289f677a993",
+    "logical_size": [
+      128,
+      64
+    ],
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "typed_roles": [
+      "color"
+    ],
+    "fresh_typed_audit_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+    "opaque_material_model_bindings": [
+      {
+        "table": "Materials",
+        "id": 5827,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 3102,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 7786,
+            "field": "Material2",
+            "material_template_id": 3102,
+            "geometry_id": 4270,
+            "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+            "model_template_id": 4675,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "sourceguide_scale": 8,
+    "sourceguide_resampling": "Nearest only no artistic edit.",
+    "parity": "Fresh actual historical/release/original decoded RGBA and dimensions byte-identical."
+  },
+  "note": "Opaque painted steel helmet source is nonsexual; source preserved after actual builtin refusal without alternate/revised calls."
+}

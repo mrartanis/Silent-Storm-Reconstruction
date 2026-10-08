@@ -1,0 +1,180 @@
+{
+  "id": 4858,
+  "donor_id": 2974,
+  "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "source_RGBA_dimensions_Type_layout_exact": true,
+  "source_rgba_sha256": "911a2593385f46f763b49fd5c8762970ae921d50e0f73f4c49f3a289919e7d55",
+  "fresh_source_record": {
+    "texture": {
+      "ID": 4858,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15329515,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Equipment\\Slots\\Terror\\TerEliteSoldier_BackPack.tga",
+      "Format": "dxt1",
+      "UserName": "TerEliteSoldier_BackPack",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "equipment",
+    "role": "typed-db-color-candidate",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3085,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1974,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5139,
+              "field": "Material0",
+              "material_template_id": 1974,
+              "geometry_id": 2037,
+              "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+              "model_template_id": 3427,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ]
+  },
+  "fresh_donor_record": {
+    "id": 2974,
+    "texture": {
+      "ID": 2974,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15329515,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Equipment\\Slots\\German\\GerSoldier_BackPack.tga",
+      "Format": "dxt1",
+      "UserName": "GerSoldier_BackPack",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "logical_size": [
+      128,
+      128
+    ],
+    "historical_header": {
+      "available": true,
+      "native_format": 1,
+      "physical_size": [
+        128,
+        128
+      ],
+      "mips": 6,
+      "file_bytes": 10944,
+      "release_rgba_match": "not checked by scope audit"
+    },
+    "disposition": "accepted-do-not-regenerate",
+    "technical_reasons": [],
+    "direct_texture_uses": [
+      {
+        "table": "Materials",
+        "id": 1814,
+        "field": "TextureID",
+        "role": "color",
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "TemplateID": 1219,
+        "consumers": [
+          {
+            "table": "Models",
+            "id": 6835,
+            "field": "Material0",
+            "material_template_id": 1219,
+            "geometry_id": 4026,
+            "geometry": "Characters\\Equipment\\Slots\\GermanStuff.mb",
+            "model_template_id": 4319,
+            "flags": ""
+          }
+        ]
+      }
+    ],
+    "ui_links": [],
+    "source_pixel_validation": "required before adding to generation queue",
+    "layout_validation": "private original/UV/atlas inspection required; no guessed layout",
+    "shared_queue_status": "validated"
+  },
+  "accepted_donor_source_record": {
+    "id": 2974,
+    "material": "GerSoldier_BackPack",
+    "category": "equipment",
+    "png": "expanded/generated/2974-balanced.png",
+    "uncalibrated_png": "expanded/generated/2974.png",
+    "reference_png": "expanded/original/2974.png",
+    "logical_size": [
+      128,
+      128
+    ],
+    "calibration_grid": [
+      1,
+      1
+    ],
+    "source": "Nival historical Complete/Textures/2974",
+    "source_rgba_sha256": "911a2593385f46f763b49fd5c8762970ae921d50e0f73f4c49f3a289919e7d55",
+    "source_match": "Exact decoded RGBA match to baseline release resource",
+    "generated_png": "expanded/generated/2974-raw.png",
+    "generated_size": [
+      1254,
+      1254
+    ],
+    "prompt_file": "expanded/generated/2974-prompt.txt",
+    "generation": "Built-in image_gen; source-preserving upscale; offline native-size resampling",
+    "brightness_calibration": {
+      "method": "Uniform RGB gain per original atlas cell, measured in native encoding",
+      "before_png": "expanded/generated/2974.png",
+      "reference_png": "expanded/original/2974.png",
+      "grid": [
+        1,
+        1
+      ],
+      "alpha_unchanged": true,
+      "cells": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "rgb_gain": 0.89990234375,
+          "quantization": "Nearest 8-bit RGB lookup",
+          "rgb_padding_texels": 0,
+          "rgb_hidden_clear_texels": 0,
+          "original_luma": 22.721169812011716,
+          "before_luma": 25.257173451232912,
+          "corrected_luma": 22.702886742401123
+        }
+      ],
+      "original_luma": 22.721169812011716,
+      "before_luma": 25.257173451232912,
+      "corrected_luma": 22.702886742401123
+    }
+  },
+  "no_new_imagegen_call": true,
+  "private_source_and_donor_material_review": true,
+  "accepted_donor_raw_sha256": "fba2a4d6da6e6bdaacfdb32d9d860c061b275419084f2c8aa8e1c9200ae9ed75",
+  "reused_input_sha256": "4a51fa1ac6b438a3054e87399ae6ab0633f9eb010fd77a114213d91abda391ec",
+  "input_stage": "Accepted donor normalized uncalibrated fullcanvas PNG; no new imagegen call or crop. Donor original raw/prompt and prior registration retained in provenance."
+}
