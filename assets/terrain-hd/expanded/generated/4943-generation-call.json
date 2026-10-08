@@ -1,0 +1,148 @@
+{
+  "id": 4943,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-eed3c60f-ba6b-4688-af14-2899ebebaf71.png",
+  "prompt": "Edit the attached ORIGINAL WHOLE CLOTHING UV ATLAS into a faithful 4x HD painted game texture. This is one complete 128x128 UV canvas, not a garment scene. The reference is only its exact RGBA nearest8x guide. Preserve every UV field, corner, material boundary and source physical pattern scale; use the entire unchanged canvas without crop, bounding-box fitting, padding, recentering or new margins. All source pixels have A255, including 267 intentional opaque RGB-black pixels: keep full RGB support, do not cut black out.\nKeep the original dim olive green matte painted cloth and subdued low-contrast gradients, gentle existing folds and fine old painted grain. HD refinement may soften codec steps and clarify existing paint transitions, never replace them with photographic weave, embossed leather, embroidery, extra stitching or newly raised hardware. Exactly FOUR pocket fields remain at source native bounds [14,5,43,35],[54,5,87,36],[22,58,44,85],[57,58,79,85]. Exactly FOUR pocket glints remain at native (27,26),(73,26),(33,78),(68,78). Exactly FOUR central placket glints remain at (49,55),(49,69),(49,83),(49,97), pitch14; keep unequal original dim gold strengths, no fifth button. Keep the ONE gray angular waist wash at [42,38,59,49] as its exact soft gray outer bars/dark angular inner wash: unresolved painted pixels remain unresolved, no newly readable letter, badge, screw or mechanical pin. Preserve the existing lower-right horizontal paint trace and lower pale collar contours. Retain original local olive hue/lightness hierarchy and black wash areas; all subtle markings keep their exact position, count, shape and scale. No new objects, seams, buckles, holes, letters, numbers, logos, ornaments, periodic cloth texture or dramatic highlights. Return ONLY this same complete painted diffuse atlas.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4943-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "reference_recipe": "Exact original128square wholeRGBA nearest8x1024square; no crop/padding/BBox/artistic edit; inverse wholeLanczos512square, default numericgain and complete originalA only.",
+  "artifact_sha256": {
+    "raw": "5bf9dc1e2a8a1090a05840372738f11ab2ce2e759a3ff4329c8dfa1af6d3dcde",
+    "exact_prompt_file": "15cedd182eb14eb1b1cfa75506bd499ca24933742c4f3e9c7e5f7e476f14e385",
+    "reference_png": "9852b512321068558e5b7e5b7bbc09f08993e233cfa5efa84f10486bc03a5ccf"
+  },
+  "saved_at_utc": "2026-10-08T08:14:00.907225+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "source_record": {
+    "id": 4943,
+    "texture": {
+      "ID": 4943,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -14800876,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\German\\Officer\\General\\Body.tga",
+      "Format": "dxt1",
+      "UserName": "Body",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3113,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1991,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 5098,
+              "field": "Material0",
+              "material_template_id": 1991,
+              "geometry_id": 3278,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\GermanGeneral.mb",
+              "model_template_id": 3396,
+              "flags": ""
+            },
+            {
+              "table": "Models",
+              "id": 5400,
+              "field": "Material0",
+              "material_template_id": 1991,
+              "geometry_id": 3278,
+              "geometry": "Characters\\Skeletons01\\Skins\\German\\GermanGeneral.mb",
+              "model_template_id": 3545,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "e9daa059d5d3b17bca7f82172762b528607c8378f1b22e4a4deb6ff9a3258190",
+    "source_rgba_sha256": "a040986e32963ebb6a82194b19d57505fb8efb07aa6dd4e958b95395fe4475d0",
+    "release_rgba_sha256": "a040986e32963ebb6a82194b19d57505fb8efb07aa6dd4e958b95395fe4475d0",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4943.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "5d68a2b92f7780bd42a9f1a82aca9f087c8cb24389bae79dc5354ff957e22e78",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-thirty-first-4943.json",
+  "source_count_phase_proof_sha256": "8c84438deb6d5cc9dc62d87f1e0b0e00a24ef82656c62b97bd59bc3f40140dd9",
+  "precall_constraints_sha256": "6c613e292213eecfb0c4f3c47b58a4b90eb5cb04f925cdbf7e43ff1393f2ee7b",
+  "exact_service_args": {
+    "prompt": "Edit the attached ORIGINAL WHOLE CLOTHING UV ATLAS into a faithful 4x HD painted game texture. This is one complete 128x128 UV canvas, not a garment scene. The reference is only its exact RGBA nearest8x guide. Preserve every UV field, corner, material boundary and source physical pattern scale; use the entire unchanged canvas without crop, bounding-box fitting, padding, recentering or new margins. All source pixels have A255, including 267 intentional opaque RGB-black pixels: keep full RGB support, do not cut black out.\nKeep the original dim olive green matte painted cloth and subdued low-contrast gradients, gentle existing folds and fine old painted grain. HD refinement may soften codec steps and clarify existing paint transitions, never replace them with photographic weave, embossed leather, embroidery, extra stitching or newly raised hardware. Exactly FOUR pocket fields remain at source native bounds [14,5,43,35],[54,5,87,36],[22,58,44,85],[57,58,79,85]. Exactly FOUR pocket glints remain at native (27,26),(73,26),(33,78),(68,78). Exactly FOUR central placket glints remain at (49,55),(49,69),(49,83),(49,97), pitch14; keep unequal original dim gold strengths, no fifth button. Keep the ONE gray angular waist wash at [42,38,59,49] as its exact soft gray outer bars/dark angular inner wash: unresolved painted pixels remain unresolved, no newly readable letter, badge, screw or mechanical pin. Preserve the existing lower-right horizontal paint trace and lower pale collar contours. Retain original local olive hue/lightness hierarchy and black wash areas; all subtle markings keep their exact position, count, shape and scale. No new objects, seams, buckles, holes, letters, numbers, logos, ornaments, periodic cloth texture or dramatic highlights. Return ONLY this same complete painted diffuse atlas.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/4943-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 4943,
+    "gain": 0.825775146484375,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 35.831646044921875,
+    "actual_stored_luma": 35.834605312347406,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Held raw-original-artwork-pending, no retry. Full128square to512square/sourceA255/defaultpad0/gain.825775146484375/globalL35.831646 to35.834605. CorrectprepromptFOURpockets/fourpocketglints andFOURplacketglints55/69/83/97 pitch14 preserved, notcountfailure. Actualwhole/source native grayplaque [42,38,59,49] hasplain angulararch graywash/darkinnerfield; rawconverted into clearly crossed diagonal blackstrokes motif/emblem onbrightmanufacturedmetalplaque. Exactsource/4x grayplaqueproof confirmsnew motif/materialinterpretation, notmerelyfinergrain/globalbrightness. Plaquemean32.19/37.61/35.55 to39.43/42.18/42.66,Lstd28.78 to31.45. Oliveclothmeanupper28.31/39.17/18.55 to32.01/40.69/19.03;lower31.47/42.23/20.82 to33.04/41.52/19.99;paintgrain/folds strongerbutnotsolehold. Holdnewemblem/metallicgraywash, nofake technicalclassification/artistRGBrepair/optout/retry."
+}

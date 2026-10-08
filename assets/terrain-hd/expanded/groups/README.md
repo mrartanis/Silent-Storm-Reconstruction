@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 438 of these verified originals are accepted in the shared
+As of 2026-10-08, 445 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-thirty-second-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirty-third-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,305 IDs: clothing 201, equipment 125, weapons
-57, heads 170, UI 611, effects 117, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,298 IDs: clothing 200, equipment 122, weapons
+57, heads 170, UI 608, effects 117, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -472,4 +472,18 @@ unchangedverified25. Nativevalidation/realmenu/fourprivateframes/normalquit:
 ../new-groups-thirty-second-batch-check.json,
 ../new-groups-thirty-second-live-check.json and
 ../new-groups-thirty-second-runtime-check.json. Six reviews frozen beforeimport;
+ordinaryGit PNG, accepted IDs must not be regenerated.
+
+Thirty-third accepted packet: equipment4867/5676/7653, clothing4544,
+UI2089/2093/2257. Seven separate builtin generations. Pack:2,407 textures/4,814
+aliases/129 archives/7,786,446,964 bytes. Prior2,400 source/PNG/native hashes unchanged;
+all7 nativeRGBA equal privately viewed whole4x predictions. Fullsourcealpha,
+UV/material/count/paintscale retained; individual localpaint changes disclosed in
+../coordinator-art-review-thirty-third.json. Numericalbrightness only,
+no artisticRGB inserts. Actual2093 GPU whole/middle/reverse/clipped on/off/on
+and atlasplacement reviewed; UI388 FirstAid consumer proven, actual activepanel
+appearance not certified. GameEXE/code unchangedverified25. Nativevalidation/
+realmenu/fourprivateframes/normalquit: ../new-groups-thirty-third-batch-check.json,
+../new-groups-thirty-third-live-check.json and
+../new-groups-thirty-third-runtime-check.json. Four reviews frozen beforeimport;
 ordinaryGit PNG, accepted IDs must not be regenerated.
