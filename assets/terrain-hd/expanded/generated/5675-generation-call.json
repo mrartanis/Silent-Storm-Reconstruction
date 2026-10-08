@@ -1,0 +1,138 @@
+{
+  "id": 5675,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-e0000158-d6fc-497f-974f-8fea40f0eb2e.png",
+  "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native128x128 complete square atlas; whole1024x1024 nearest reference; finalwhole512x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nVerydark gray/olive mattecloth original, blackpaint background A255, keep washedlowcontrast material andsoftfolds. Leftdarkfield[0,0,55,128), rightdarkfield[55,0,128,128). Upper smallgrayovalwash[25,13,40,39) has EXACT6 horizontal graypaintbars native y16,20,24,28,32,36 atpitch4, plus ONE distinct shorttopcap at y13. Lastregularbar36 intersects originalsoftterminalwash; don'tadd a full seventhbar orregularize theend. Lower largergrayovalwash[63,80,90,112) has EXACT6 fullregular graypaintbars y83,87,91,95,99,103 atpitch4 and ONE shorter partialpaintbar at y107; TWO smallterminalcaps y80top/y111bottom are not extra fullregularbars. Preserve tapered sourcebar lengths/graypixelcadence. These are dimflat paintedwashbands, NOT reconstructedsteel grilles, shinynewribpads or embossedchannels. Neverfill darkgaps, add edgeframes/screws/loops/raisedborders or invent endbars. Keep two original weakbrown diagonal bandwashes in lowerarea andONE tinygrayLwash[40,111,46,117) asweakpaint not chrome buckle. Preserve originalbroad black/darkgray hierarchy and faint mottling; HDdefinition improves only existingsoft painttransitions without manufacturedparts.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5675-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original128x128 wholeRGBA nearest8x1024x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos512x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "ef2350e9f71fde2f61252e5848453b8cc7f0314b52d406979144e82fe07907a9",
+    "exact_prompt_file": "7b832e030bf254d61eef24cfa2b57f61731df254f3195baa4ecc1d32610253a0",
+    "reference_png": "c95ad76e3606e68eed864a46bc7ae5b9e3c2223052c5dfd28ffc4b3d1cfe8de0"
+  },
+  "saved_at_utc": "2026-10-08T06:51:36.092289+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "raw-held-original-artwork-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 5675,
+    "texture": {
+      "ID": 5675,
+      "Width": 128,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -15395564,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\Terror\\PkPilot\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3725,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2371,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6072,
+              "field": "Material2",
+              "material_template_id": 2371,
+              "geometry_id": 2502,
+              "geometry": "Characters\\Skeletons01\\Skins\\NPC\\Engineer.mb",
+              "model_template_id": 3919,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      128,
+      128
+    ],
+    "source_sha256": "b524dc2f5e6167671671fdf40ecd5f0103f58594be0827d4ca76a1a8979ba9cd",
+    "source_rgba_sha256": "7223e60407f2578b50cb00b528a3591883e2c5b3607289998849fb020f59e012",
+    "release_rgba_sha256": "7223e60407f2578b50cb00b528a3591883e2c5b3607289998849fb020f59e012",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5675.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "cc05cb9c5be1d3bfda89fb9a1d9a1730d6d3dca0b1bb63ba65f589f5105caf32",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-eighth-5675.json",
+  "source_count_phase_proof_sha256": "7a32ea3fef03bbafb837014e1510674ab0e5d28c50eca0b64d04fddd52b722c2",
+  "precall_constraints_sha256": "8e20a859da3122fad8e819f0cef1e7457e84bb813038cee313e7ecd26b14875e",
+  "exact_service_args": {
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native128x128 complete square atlas; whole1024x1024 nearest reference; finalwhole512x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nVerydark gray/olive mattecloth original, blackpaint background A255, keep washedlowcontrast material andsoftfolds. Leftdarkfield[0,0,55,128), rightdarkfield[55,0,128,128). Upper smallgrayovalwash[25,13,40,39) has EXACT6 horizontal graypaintbars native y16,20,24,28,32,36 atpitch4, plus ONE distinct shorttopcap at y13. Lastregularbar36 intersects originalsoftterminalwash; don'tadd a full seventhbar orregularize theend. Lower largergrayovalwash[63,80,90,112) has EXACT6 fullregular graypaintbars y83,87,91,95,99,103 atpitch4 and ONE shorter partialpaintbar at y107; TWO smallterminalcaps y80top/y111bottom are not extra fullregularbars. Preserve tapered sourcebar lengths/graypixelcadence. These are dimflat paintedwashbands, NOT reconstructedsteel grilles, shinynewribpads or embossedchannels. Neverfill darkgaps, add edgeframes/screws/loops/raisedborders or invent endbars. Keep two original weakbrown diagonal bandwashes in lowerarea andONE tinygrayLwash[40,111,46,117) asweakpaint not chrome buckle. Preserve originalbroad black/darkgray hierarchy and faint mottling; HDdefinition improves only existingsoft painttransitions without manufacturedparts.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5675-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      128,
+      128
+    ],
+    "guide_dimensions": [
+      1024,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      512,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 5675,
+    "gain": 0.90283203125,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 20.229039379882813,
+    "actual_stored_luma": 20.229273434448242,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      512,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Raw held for material/local brightness hierarchy drift, not unknown-count or soft1px rejection. Whole128square to512square, originalA255/defaultpad0, scalar.90283203125; sourceL20.229039 to20.229273 globally matched. Sourceupper six regular dim horizontal paintbars at16/20/24/28/32/36 plus short topcap13 andlower sixfullbars83/87/91/95/99/103 plus shortpartial107 andcaps80/111 were proven BEFOREprompt; repeats remain in corresponding phase, no claim extra fullbar. But upper native barL24.14..32.00 becomes39.63..65.86, first five strongbarL26.29..32.00 becomes58.94..65.86, approximately2.1 to2.3x despite scalar. Uppergrayfield mean21.57/21.25/21.44 to33.46/32.67/31.10, Lstd6.71 to19.27; lowerfield26.30/24.72/24.12 to31.84/30.08/27.25, Lstd10.62 to19.07. Whole raw and4x now show hard outlined gray grille-like inserts/caps against nearlyunchanged dim cloth, instead of subduedsource graypaint washes. Broad rightmaterial also has stronger mottled contrast/grain; not independentproof of newrepeatcount, but reinforces wrong subduedmaterial identity. Lowerpartial107L25.31 to25.58 andbottomcap111L30.61 to30.50 do remain faint, so hold is actual upper/lower local field hierarchy/material drift, not a blanket family count failure. Keep exact onecall raw/prompt/reference/provenance; no retry/artist repair/optout."
+}

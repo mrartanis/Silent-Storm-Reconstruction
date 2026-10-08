@@ -1,0 +1,310 @@
+[
+  {
+    "id": 4621,
+    "texture": {
+      "ID": 4621,
+      "Width": 1024,
+      "Height": 1024,
+      "NMips": 1,
+      "AverageColor": -13686234,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\CharScreen\\Wall.tga",
+      "Format": "dxt1",
+      "UserName": "Wall_Axis",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 2890,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1857,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4844,
+              "field": "Material0",
+              "material_template_id": 1857,
+              "geometry_id": 3003,
+              "geometry": "Interface\\CharScreen\\Flags.mb",
+              "model_template_id": 3220,
+              "flags": ""
+            }
+          ]
+        },
+        {
+          "table": "Materials",
+          "id": 3027,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 1942,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 4977,
+              "field": "Material0",
+              "material_template_id": 1942,
+              "geometry_id": 3003,
+              "geometry": "Interface\\CharScreen\\Flags.mb",
+              "model_template_id": 3310,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      1024,
+      1024
+    ],
+    "source_sha256": "65db184726180373d5205abfefffb0e8dd57665d9c2e986015116996c74f05fc",
+    "source_rgba_sha256": "bb46af1dfbff6064db91fec00ddef84afa447acab9ae7300747b48746dfaffd7",
+    "release_rgba_sha256": "bb46af1dfbff6064db91fec00ddef84afa447acab9ae7300747b48746dfaffd7",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/4621.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Source1024 square, production4096 square. Exactly TWO broad side-by-side old painted wall/material fields occupy the ENTIRE canvas: dim rough brown/taupe left field and dim bluegreen/taupe right field; EXACTLY ONE original nearblack vertical separator strip between these two wall fields: left field ends at native x362, separator begins x363, right field begins x402. Preserve this complete narrow nearblack strip at its exact width/phase, without filling it with either wall material. Exactly ONE existing large round softly edged warm light patch enters the right field from the right edge, at the original center/radius/phase: it is baked paint/light, NOT a new raised circular disk, hole or fixture. Keep every original broad vertical seam/band, thin existing horizontal cracks and faint pale scuff at the original UV locations and source roughness scale. Preserve original left dark soft shading and the right dark teal outside the warm light patch. The faint pale marks remain irregular existing paint scuffs, not letters or hardware. Gently resolve source wall gamepaint only, do not add new brick/grid/mortar courses, screws, chips, stone lumps or gritty photographic noise; do not make the old thin cracks thicker or invent a new crack network. No new lighting/shadow boundaries.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        1024,
+        1024
+      ],
+      "guide_size": [
+        2048,
+        2048
+      ],
+      "source_bbox": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "affine_prewarp": null,
+      "operations": "Exact full source storedRGB NN2x; no crop/padding/registration/unpremultiply/artRGBrepair. Entire rawRGBA LANCZOS source4x; defaultpad/pureglobal scalar and complete originalA restored. Transparent storedRGB premultiplied once; root final typednative audit required.",
+      "references_sha256": [
+        "7e39471412df5dd5b5c0e3e4373eee973a2dc7daf14929fc16c6c72e3f87260f",
+        "735b142d97145350d6b4f131905de8959c318324d4d8cef458f832e3574cea1e"
+      ]
+    }
+  },
+  {
+    "id": 5766,
+    "texture": {
+      "ID": 5766,
+      "Width": 64,
+      "Height": 240,
+      "NMips": 1,
+      "AverageColor": 134349314,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\TeamMngMenu\\18_03_01.tga",
+      "Format": "8888",
+      "UserName": "Biography Scroll Background",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 689,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Biography Scroll Background"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 689,
+          "name": "Biography Scroll Background",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            64,
+            240
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [
+            {
+              "table": "UIControls",
+              "id": 2106,
+              "field": "Texture0",
+              "control_name": "",
+              "type": 2,
+              "rect": [
+                0,
+                0,
+                64,
+                240
+              ],
+              "container": 383,
+              "string_id": 0
+            }
+          ],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      64,
+      240
+    ],
+    "source_sha256": "b0301c37b104520316a46730529befe5002f738d57dd37d7e571066b78f019cf",
+    "source_rgba_sha256": "872537b4109ca626fe64f4e73a34f9e33c433724caafa15a37062935dd04a1c5",
+    "release_rgba_sha256": "872537b4109ca626fe64f4e73a34f9e33c433724caafa15a37062935dd04a1c5",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/5766.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Source64x240 narrow portrait NPOT, production256x960. Existing sparse very dim purple-gray painted scroll decoration on the exact black RGB canvas. Exactly ONE continuous thin curved bracket-like stroke runs from the upper left across the top, down near the right edge and curls inward at the bottom. Exactly TWO small existing chevron/arrowhead-like marks near the right stroke: upper points upward, lower points downward. Keep their original contour, phase, softness, stroke thickness and old tiny neighboring purple end marks/looplike spots as defined by the reference, without guessing text or adding letters. Original sourceAlpha is authoritative; keep the nearblack/transparent interior empty and black. Do not brighten the purple to white, chrome, saturated neon, add glow, bevels, new scrolling arrows, a filled track, opposite left border or rectangular frame. This is faint old painted curved ink, not a sharp technical CAD vector or bright ornamental metal. Original entire curve silhouette and sparse marks must be identical in normalized UV space, with no crop or extra padding.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        64,
+        240
+      ],
+      "guide_size": [
+        256,
+        960
+      ],
+      "source_bbox": [
+        0,
+        0,
+        64,
+        240
+      ],
+      "affine_prewarp": null,
+      "operations": "Exact full source storedRGB NN4x; no crop/padding/registration/unpremultiply/artRGBrepair. Entire rawRGBA LANCZOS source4x; defaultpad/pureglobal scalar and complete originalA restored. Transparent storedRGB premultiplied once; root final typednative audit required.",
+      "references_sha256": [
+        "407ec6d69f8c30931f9e408b59380a4975e217442179cae486cf8d56b7b11a9f",
+        "fb159a9d803e90c94c775ec316386403e7e0a5b1e8be0a300732e1948edb0740"
+      ]
+    }
+  },
+  {
+    "id": 5018,
+    "texture": {
+      "ID": 5018,
+      "Width": 48,
+      "Height": 48,
+      "NMips": 1,
+      "AverageColor": -1306450151,
+      "InstantLoad": 1,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Interface v5.0\\Icons\\ICO_0089.tga",
+      "Format": "8888",
+      "UserName": "Store Pistols",
+      "Type": "Transparent",
+      "AddrType": "Clamp",
+      "StorageType": "2D"
+    },
+    "category": "interface-v5",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "UITextures",
+          "id": 620,
+          "field": "R_1024x768",
+          "role": "color",
+          "UserName": "Store Pistols"
+        }
+      ],
+      "ui_links": [
+        {
+          "ui_texture_id": 620,
+          "name": "Store Pistols",
+          "resolution_field": "R_1024x768",
+          "ui_logical_size": [
+            48,
+            48
+          ],
+          "logical_size_from": "R_1024x768",
+          "controls_and_uses": [],
+          "cursors": []
+        }
+      ]
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      48,
+      48
+    ],
+    "source_sha256": "64c191256ac65ac843f9af339379b11ff0df25203251de9c1300b1334c434e7d",
+    "source_rgba_sha256": "cc6dbde42fef63d52846d1eca152fd23be7e711c10c3d3c0a43e5e13bb9adba3",
+    "release_rgba_sha256": "cc6dbde42fef63d52846d1eca152fd23be7e711c10c3d3c0a43e5e13bb9adba3",
+    "source_native_format": 6,
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "original_png": "expanded/original/5018.png",
+    "source_match": "Exact decoded RGBA and dimensions match release",
+    "source_detail_constraints": "Source48x48 square, production192x192. Exactly ONE existing small painted pistol-like silhouette on ONE muted olive square field with the exact surrounding nearblack margins. Preserve the original retail inverted orientation: broad gray sloping body runs from lowerleft to lowerright, ONE brown grip-like vertical field rises toward upperleft. Preserve only the existing broad outline, muted gray/brown/olive palette and restrained soft highlight along the lower gray edge at the same native positions. Keep all ambiguous tiny gray/black patches as original painted tonal patches; do not decide a firearm model or complete new mechanics. No new trigger loop, screw, sight, muzzle hole, vents, serration rows, cartridges, logos, letters, grip texture or extra hardware. No photographic steel/reflection or fresh white gleam, no sharpened black outline or changed silhouette. Only gentle existing paint-tone resolving; every component count/placement comes from the unchanged complete source, not newly invented tiny parts.",
+    "reference_recipe": {
+      "type": "whole-original-storedRGB-nearest",
+      "source_size": [
+        48,
+        48
+      ],
+      "guide_size": [
+        768,
+        768
+      ],
+      "source_bbox": [
+        0,
+        0,
+        48,
+        48
+      ],
+      "affine_prewarp": null,
+      "operations": "Exact full source storedRGB NN16x; no crop/padding/registration/unpremultiply/artRGBrepair. Entire rawRGBA LANCZOS source4x; defaultpad/pureglobal scalar and complete originalA restored. Transparent storedRGB premultiplied once; root final typednative audit required.",
+      "references_sha256": [
+        "ba95a6297048552deb03d5be6aa5283558e7481b4bc593c48423b8d233c39e2e",
+        "1a65d7dc03a3c3e6f5d7f21d7d69aa7d8f4cea04fb1ab64ce5e76c1f9b2168c0"
+      ]
+    }
+  }
+]

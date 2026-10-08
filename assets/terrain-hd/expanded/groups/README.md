@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 417 of these verified originals are accepted in the shared
+As of 2026-10-08, 422 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-ninth-batch-check.json` and
+unchanged for provenance: consult `../new-groups-thirtieth-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,326 IDs: clothing 208, equipment 126, weapons
-57, heads 172, UI 621, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,321 IDs: clothing 206, equipment 126, weapons
+57, heads 170, UI 620, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -425,3 +425,22 @@ Full nativevalidation/realmenu/four privateframes/normalquit:
 ../new-groups-twenty-ninth-live-check.json; GPU integration:
 ../new-groups-twenty-ninth-runtime-check.json. Three worker reviews frozen
 before import. OrdinaryGit PNG; accepted IDs must not be regenerated.
+
+Thirtieth accepted packet: clothing5482/5621, dynamic eyes6688/6690,
+Storepistols5018. Five separate builtin generations. Pack:2,384 textures/4,768
+aliases/128 archives/7,742,536,642 bytes. Prior2,379 source/PNG/native hashes unchanged;
+all5 nativeRGBA equal privately viewed whole4x predictions. Fullsourcealpha/UV/
+material/count/scale retained;5482 stripes17/16/21 pitch4 and5621 fivepairedglints
+pitch10 retained. Localpaint/reflection changes disclosed in
+../coordinator-art-review-thirtieth.json. Numericalbrightness only,
+no artisticRGB insertion. Complete5018 originalalpha restored/premultiplyonce.
+Actual6688/6690 wholelogicalSWsource/CPUcompositor on/off/on hashes match
+independent integeralpha/Vflip/FNV;9actualhead94 bakes/roundtrips passed.
+Fixedface diagnostic quadrant does not certify actualGPUeye placement.
+Actual5018 GPU whole/middle/reverse/clipped draws andatlasplacement reviewed.
+UI620/iStorePanel367binding proven; actualStorepanel opening notclaimed.
+GameEXE/six codefile hashes unchanged since verified25. Fullnativevalidation/
+realmenu/fourprivateframes/normalquit: ../new-groups-thirtieth-batch-check.json
+and ../new-groups-thirtieth-live-check.json; eye/GPU integration:
+../new-groups-thirtieth-runtime-check.json. Three worker reviews frozen
+beforeimport. OrdinaryGit PNG; accepted IDs must not be regenerated.

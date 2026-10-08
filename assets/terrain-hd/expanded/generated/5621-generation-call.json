@@ -1,0 +1,138 @@
+{
+  "id": 5621,
+  "tool": "built-in image_gen edit",
+  "tool_output": "C:\\Users\\artanis\\.codex\\generated_images\\01a11842-209d-7390-8c0a-98acfb1bcaf6\\exec-77a011e7-60b0-48e2-b346-acd9086c0f2a.png",
+  "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve leftgraybootpaint[0,0,32,128), upper tanfield[62,0,142,51), lower tan/olive sourcecamoprint[31,51,142,128), right tan/olive sourcecamoprint[144,0,256,128) and everyoriginalpatch silhouette/scale/position. Upperfield graypairedpaint strip[94,2,109,49) has EXACT5 original pairedglint motifs, centersnative y6,16,26,36,46/pitch10, EXACT10small glintsubfields, left boundsx95..100 andrightx103..107. Keep each originaltiny angularpixelwash shape andits unequalgray/tan shading. These5pairedflatpaintwashes alreadyexist; doNOTinterpret into manufacturedknots/raisedbuttons/loopfurniture or newzipteeth. The darkverticalwash andfaint existinginterveningdiagonal graypixels remainsoftsourcepaint, no newconnector ring/bridge. Leftboottinycheckerwash has9stronger diagnosticgraynativepixels at[24,23],[28,27],[19,28],[30,29],[21,30],[32,31],[23,32],[25,34],[27,36]; faint[26,25] staysfaint. These are NOT9eyelet/holes, preserve originalsoftpixelcadence without hardroundhardware/blackthread. PreserveONE upperleftgrayUframe wash andONE existinglowercamopale point aspaint, not newbutton. Allsourcecamoprint remainswashedmatte mutedtan/olive without newprintpatches or new weave/ornament.",
+  "referenced_image_paths": [
+    "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5621-enlarged-source.png"
+  ],
+  "transparent_background": false,
+  "reference_recipe": "Exact original256x128 wholeRGBA nearest8x2048x1024; no crop/padding/BBox/artistic edit; inverse wholeLanczos1024x512, numeric gain and complete original A only.",
+  "artifact_sha256": {
+    "raw": "3841eddfa9d907f223ad566e337ea42137b264c91b49fa4dc7f66e4e9426cbf9",
+    "exact_prompt_file": "385b2a5b426d132cac26cf440662f98975fc9ec1adbe273f4a0b3e92b0ab8d04",
+    "reference_png": "61be5f4c86d9502ad346bd0b0c535d8e516fcf2fcc36c03fbb82d79ac1390703"
+  },
+  "saved_at_utc": "2026-10-08T06:53:20.485769+00:00",
+  "raw_saved": true,
+  "exact_service_prompt_file_matches": true,
+  "status": "artistically-ready-coordinator-review-pending",
+  "actual_builtin_calls": 1,
+  "retry_count": 0,
+  "source_record": {
+    "id": 5621,
+    "texture": {
+      "ID": 5621,
+      "Width": 256,
+      "Height": 128,
+      "NMips": 0,
+      "AverageColor": -12439010,
+      "InstantLoad": 0,
+      "MappingSize": 2.0,
+      "BumpGain": 1.0,
+      "SrcName": "Characters\\Skins\\UK\\Soldier\\UkSaboteur\\Legs.tga",
+      "Format": "dxt1",
+      "UserName": "Legs",
+      "Type": "Ordinary",
+      "AddrType": "Clamp",
+      "StorageType": "Ordinary"
+    },
+    "category": "characters-clothing",
+    "role": "typed-db-color-candidate",
+    "status": "pending",
+    "usage": {
+      "direct_texture_uses": [
+        {
+          "table": "Materials",
+          "id": 3656,
+          "field": "TextureID",
+          "role": "color",
+          "Alpha": "opaque",
+          "AddressMode": "Clamp",
+          "TemplateID": 2332,
+          "consumers": [
+            {
+              "table": "Models",
+              "id": 6017,
+              "field": "Material2",
+              "material_template_id": 2332,
+              "geometry_id": 1920,
+              "geometry": "Characters\\Skeletons01\\Skins\\UK\\UKOfficer_100.mb",
+              "model_template_id": 3885,
+              "flags": ""
+            }
+          ]
+        }
+      ],
+      "ui_links": []
+    },
+    "review_requirements": [
+      "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+      "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+      "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+    ],
+    "logical_size": [
+      256,
+      128
+    ],
+    "source_sha256": "b3ca0133e4f833b2868221fe320d135241a31f84f4dda5c610818ff71f892826",
+    "source_rgba_sha256": "51bb27a259c2ac5cbef8c7572919d093e7f24340b4738fa32df72afc1ed990fb",
+    "release_rgba_sha256": "51bb27a259c2ac5cbef8c7572919d093e7f24340b4738fa32df72afc1ed990fb",
+    "source_native_format": 1,
+    "alpha_extrema": [
+      255,
+      255
+    ],
+    "original_png": "expanded/original/5621.png",
+    "source_match": "Exact decoded RGBA and dimensions match release"
+  },
+  "source_check_sha256": "cc05cb9c5be1d3bfda89fb9a1d9a1730d6d3dca0b1bb63ba65f589f5105caf32",
+  "source_count_phase_proof_file": "assets/terrain-hd/expanded/precall-source-proof-clothing-twenty-eighth-5621.json",
+  "source_count_phase_proof_sha256": "c9f6dd9e4df80cf2cbe76083174c0e74dc5c233921a046159dba2e617de60855",
+  "precall_constraints_sha256": "351707bc8f95e05d228b6d973d5aab7183046c888d726350df575e946023b71e",
+  "exact_service_args": {
+    "prompt": "Use case: precise-original-texture edit. Image1 is the ONLY full original painted game UV atlas, enlarged with whole-canvas nearest-neighbor. Increase its painted definition for a 4x HD diffuse texture while preserving every whole-canvas UV boundary, original material, silhouette, existing painted mark count/phase and native physical pattern scale. Keep subdued matte painted gradients, soft weak folds and original local lightness/color hierarchy. Refine only existing transitions and tiny irregular paint grain; no photographic cloth weave/leather/skin pores, embossed or raised plates, hardware reconstruction, new seams/eyelets/knots/rosettes, regular hatching, embroidery or ornament. Keep indistinct source pixels as indistinct soft color washes instead of interpreting them into new anatomy or mechanics. No scene/rendered garment, letters, numbers, new parts or symbols. Native256x128 complete2:1 atlas; whole2048x1024 nearest reference; finalwhole1024x512. Source A255 everywhere, including sourceRGBblack paint: retain black painted background/fields opaque. No cutout, new UV fill/margins, border, crop, padding, BBox, registration, recentering, or layout regularization.\r\nPreserve leftgraybootpaint[0,0,32,128), upper tanfield[62,0,142,51), lower tan/olive sourcecamoprint[31,51,142,128), right tan/olive sourcecamoprint[144,0,256,128) and everyoriginalpatch silhouette/scale/position. Upperfield graypairedpaint strip[94,2,109,49) has EXACT5 original pairedglint motifs, centersnative y6,16,26,36,46/pitch10, EXACT10small glintsubfields, left boundsx95..100 andrightx103..107. Keep each originaltiny angularpixelwash shape andits unequalgray/tan shading. These5pairedflatpaintwashes alreadyexist; doNOTinterpret into manufacturedknots/raisedbuttons/loopfurniture or newzipteeth. The darkverticalwash andfaint existinginterveningdiagonal graypixels remainsoftsourcepaint, no newconnector ring/bridge. Leftboottinycheckerwash has9stronger diagnosticgraynativepixels at[24,23],[28,27],[19,28],[30,29],[21,30],[32,31],[23,32],[25,34],[27,36]; faint[26,25] staysfaint. These are NOT9eyelet/holes, preserve originalsoftpixelcadence without hardroundhardware/blackthread. PreserveONE upperleftgrayUframe wash andONE existinglowercamopale point aspaint, not newbutton. Allsourcecamoprint remainswashedmatte mutedtan/olive without newprintpatches or new weave/ornament.",
+    "referenced_image_paths": [
+      "G:/SS/Silent-Storm-Reconstruction/assets/terrain-hd/expanded/generated/5621-enlarged-source.png"
+    ],
+    "transparent_background": false
+  },
+  "reference_recipe_details": {
+    "original_dimensions": [
+      256,
+      128
+    ],
+    "guide_dimensions": [
+      2048,
+      1024
+    ],
+    "guide_filter": "WholeRGBA nearest8x",
+    "inverse_dimensions": [
+      1024,
+      512
+    ],
+    "inverse_filter": "WholeLanczos",
+    "crop": false,
+    "padding": false,
+    "BBox": false,
+    "artRGB_edit": false
+  },
+  "private_numeric_proof": {
+    "id": 5621,
+    "gain": 0.77587890625,
+    "defaultpad_padded_texels": 0,
+    "defaultpad_cleared_texels": 0,
+    "defaultpad_applied": true,
+    "source_stored_luma": 51.626373748779294,
+    "actual_stored_luma": 51.632430839157095,
+    "rounding": "Nearest 8-bit RGB lookup",
+    "premultiplied": false,
+    "source_alpha_exact_nearest4x": true,
+    "dimensions": [
+      1024,
+      512
+    ],
+    "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+  },
+  "review_reason": "Artistically-ready candidate pending coordinator full4x originalpaint, palette and graytrace softness QA; not productionaccepted. Whole256x128 to1024x512, exactA255/defaultpad0, scalar.77587890625; sourceL51.626374 to51.632431. Beforeprompt fullsource/native proved exactly5 pairedgray glint washes at y6/16/26/36/46, pitch10, ten unevenpaint subfields andoriginal dim diagonalconnectingwash; private fullraw/scalar4x/native retains5pair phases andsource asymmetries. Graymarks now lookmore angular outlined at4x; native pairedregion mean76.46/58.68/39.99 to72.87/55.76/37.36,Lstd17.77 to18.33, not demonstrated extra knots/rings, but root must assess originalsoftness. Uppergray bootnine stronger diagnosticpaintpixels plusfaint26,25 were not semantic9eyelets; full native/source crop shows original checker/diagonal painted cadence, target sharper/checker-like with sourcegreywash positions retained. Upperwhole tanfield darktopline ISoriginal atsourcey2..3 L41.26/38.09 to39.95/32.61; y0L57.00 to58.28 andy1L56.85 to58.82, bottomy48..50 L26.01/24.32/33.11 to27.86/22.23/31.00: no new widepanel/margin. Original olive/brown camouflage broad patchsilhouette andwholefields are clearer at4x; beforeprompt fullsource contours/scale wereproved, no exhaustive connectedpatch componentcount claim becausesoftsource colors fuse. Uppertan mean70.41/48.52/25.83 to68.85/47.08/23.14;lowercamo73.35/55.10/31.74 to73.71/54.88/29.52;rightcamo73.59/54.25/30.30 to74.96/54.94/28.46;grayboot29.78/29.73/29.71 to30.08/29.90/29.87. Slight localwarmth/chromalift andmore definedexistingpaintpatchedges disclosed, no claimedpixelperfectpattern or fabricated hardware. Fine paintedgrain stronger at4x/fullraw without observedregularnewweave; coordinatorpalette/material check required. No artisticRGB repair, crop/registration/sourceRGBcomposite."
+}
