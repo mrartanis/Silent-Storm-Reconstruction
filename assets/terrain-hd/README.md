@@ -8,11 +8,11 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,327 HD textures**: 178 terrain assets, 30 tree
-assets, 1,754 building/environment assets, 64 clothing, 111 equipment, 65 weapons,
-2 heads, 44 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+The completed pack contains **2,332 HD textures**: 178 terrain assets, 30 tree
+assets, 1,754 building/environment assets, 65 clothing, 113 equipment, 65 weapons,
+2 heads, 46 interface textures, 70 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 2,787 records, including 365 accepted new-group textures, the original
+contains 2,792 records, including 370 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
 Original fallback covers 258 technical maps,
 123 structural/solid masks, 63 unavailable historical sources, one release mismatch
@@ -28,7 +28,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 1,380 verified originals outside the shared queue, including next
+validation. There remain 1,375 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -218,8 +218,27 @@ for4784 is recorded honestly. Painted particle/alpha art is not generally exclud
 See expanded/coordinator-original-only-effects-eighteenth.json. Held independent
 attempts retain exact raw/prompt/reason provenance.
 
-All 12,421 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
-are ordinary Git files (10,884,833,634 bytes before Git deduplication/compression).
+Twenty-second accepted packet: 1746/2447/6831/1997/3974, two equipment,
+one clothing and two interface backgrounds. Pack: 2,332 textures / 4,664 aliases /
+126 archives / 7,612,401,150 bytes. All prior 2,327 source/PNG/native
+hashes unchanged; five nativeRGBA images exactly match privately reviewed whole
+production4x predictions. Full original alpha/UV/material/field count/pattern
+scale retained; existing edge/paint/warmth refinements disclosed in
+expanded/coordinator-art-review-twenty-second.json without claiming exact localRGB identity.
+1997/3974 retain entire NPOT255x130→1020x520 and103x104→412x416 without padding,
+rounding/crop/BBox. Only scalar numeric brightness, no artistic RGB insertion.
+ActualGPU on/off/on for both UI covers whole/middle/reversedUV/clipping:
+expanded/new-groups-twenty-second-ui-runtime-check.json. Full native validation,
+real-menu HD switching, all frames privately inspected and isolated normal quit:
+expanded/new-groups-twenty-second-{batch,live}-check.json. Integration scene does
+not certify every new model atlas. Declared PNG/exact-prompt stages are ordinary
+Git files: expanded/accepted-git-stage-completeness-twenty-second.json.
+6832/6815 remain held for palette and local shape/UV drift; exact raw/prompt/proofs
+retained. Never regenerate accepted IDs; inspect current independent jobs/reviews
+before new calls.
+
+All 12,454 original, raw AI-generated, normalized, calibrated, helper and rejected PNGs
+are ordinary Git files (10,901,308,465 bytes before Git deduplication/compression).
 No ZIP, LFS or release download is required after cloning. Large asset additions
 are committed and pushed in bounded batches to stay below GitHub's push limit.
 The initial import used 17 data pushes. Every remote PNG blob ID and size matched

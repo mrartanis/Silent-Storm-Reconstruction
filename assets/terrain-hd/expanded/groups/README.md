@@ -91,14 +91,14 @@ materials, damage, count/scale of details, character identity and blend mode.
 Solid/structural maps discovered during that examination retain their originals.
 Duplicate reuse requires exact RGBA, logical size, alpha semantics and layout.
 
-As of 2026-10-08, 365 of these verified originals are accepted in the shared
+As of 2026-10-08, 370 of these verified originals are accepted in the shared
 queue/native pack, and tutorial 6265 is retained as an original structural color
 gradient with its original alpha (0–251). All 15 missing historical sources are
 explicitly registered as original fallback. The source-queue snapshots stay
-unchanged for provenance: consult `../new-groups-twenty-first-batch-check.json` and
+unchanged for provenance: consult `../new-groups-twenty-second-batch-check.json` and
 `../../sources.json` rather than re-importing these entire lists. The exact
-remaining verified set contains 1,380 IDs: clothing 222, equipment 147, weapons
-57, heads 184, UI 628, effects 118, clues 17, final 3 and miscellaneous 4.
+remaining verified set contains 1,375 IDs: clothing 221, equipment 145, weapons
+57, heads 184, UI 626, effects 118, clues 17, final 3 and miscellaneous 4.
 All four camp atlases and both artistic training targets are now complete.
 
 `first-batches/characters-clothing.json` contains 798, 800, 915, 917 (German/UK
@@ -275,3 +275,22 @@ Identical RGBA masks do not authorize material substitution. Missing definition2
 for4784 is recorded honestly. Painted particle/alpha art is not generally excluded.
 See ../coordinator-original-only-effects-eighteenth.json. Held independent
 attempts retain exact raw/prompt/reason provenance.
+
+Twenty-second accepted packet: 1746/2447/6831/1997/3974, two equipment,
+one clothing and two interface backgrounds. Pack: 2,332 textures / 4,664 aliases /
+126 archives / 7,612,401,150 bytes. All prior 2,327 source/PNG/native
+hashes unchanged; five nativeRGBA images exactly match privately reviewed whole
+production4x predictions. Full original alpha/UV/material/field count/pattern
+scale retained; existing edge/paint/warmth refinements disclosed in
+../coordinator-art-review-twenty-second.json without claiming exact localRGB identity.
+1997/3974 retain entire NPOT255x130→1020x520 and103x104→412x416 without padding,
+rounding/crop/BBox. Only scalar numeric brightness, no artistic RGB insertion.
+ActualGPU on/off/on for both UI covers whole/middle/reversedUV/clipping:
+../new-groups-twenty-second-ui-runtime-check.json. Full native validation,
+real-menu HD switching, all frames privately inspected and isolated normal quit:
+../new-groups-twenty-second-{batch,live}-check.json. Integration scene does
+not certify every new model atlas. Declared PNG/exact-prompt stages are ordinary
+Git files: ../accepted-git-stage-completeness-twenty-second.json.
+6832/6815 remain held for palette and local shape/UV drift; exact raw/prompt/proofs
+retained. Never regenerate accepted IDs; inspect current independent jobs/reviews
+before new calls.

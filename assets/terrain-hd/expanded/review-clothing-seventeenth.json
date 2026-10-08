@@ -1,0 +1,1290 @@
+{
+  "version": 1,
+  "package": "clothing-seventeenth",
+  "finalized_utc": "2026-10-08T03:57:13.337946+00:00",
+  "selected_ids": [
+    6831,
+    6832,
+    6815
+  ],
+  "source_qa_audition_ids": [
+    6812,
+    6815,
+    4453,
+    4549,
+    4563,
+    4571,
+    6831,
+    6832
+  ],
+  "ready_ids": [
+    6831
+  ],
+  "artistically_ready_ids": [
+    6831
+  ],
+  "held_raw_ids": [
+    6832,
+    6815
+  ],
+  "source_only_ids": [
+    6812,
+    4453,
+    4549,
+    4563,
+    4571
+  ],
+  "pipeline_pending_ids": [],
+  "accepted_ids": [],
+  "tool_calls_attempted": 3,
+  "raw_success_count": 3,
+  "retry_count": 0,
+  "precall_sourcecount_phase_assert": true,
+  "status": "Stable1readycandidate/2rawheld/5source-only from8complete sources; coordinator final6831 palette/native QA required.",
+  "source_check_file": "assets/terrain-hd/expanded/source-check-clothing-seventeenth.json",
+  "source_check_sha256": "29f5183cf384a9d45c3920c1ee0dd08e5f537af729cfd110819b5aafcec6340d",
+  "source_only_sha256": "6592531f78526fad2ea4c612acc319ad6ed1ad1bd4eb845605dcd1e76d1dd467",
+  "items": [
+    {
+      "id": 6831,
+      "status": "artistically-ready-coordinator-review-required",
+      "reason": "Artistically ready candidate, coordinator final palette/native review required. Whole128²→512²; three existing soft painted fields and irregular original gray lower-band extension/weak brown diagonal shadow retained, no new resolved hardware, weave, photographic skin, sharp outlines or new anatomical shapes. Fine matte paint variation refines source wash. Source narrow central brown streak is original: native source column92/93 meanluma32.33/26.64 and generated31.24/27.35, so its mere visibility is not invented seam claim. Scalar.96142578/sourceA255 exact. Honest palette notes gray56.98/52.54/46.98→59.09/53.44/47.77; skin157.13/114.48/63.46→161.96/112.02/58.00; brown36.70/26.89/13.74→38.34/26.11/10.37. Original broad hue/brightness hierarchy stays, slightly warmer paint noted for root final QA. Not accepted production claim.",
+      "actual_builtin_calls": 1,
+      "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+      "source_record": {
+        "id": 6831,
+        "texture": {
+          "ID": 6831,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -12767202,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\Engineer\\USSR02\\Legs_Arab.tga",
+          "Format": "dxt1",
+          "UserName": "Legs_Arab",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4744,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1743,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4536,
+                  "field": "Material2",
+                  "material_template_id": 1743,
+                  "geometry_id": 2669,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\USSR_Engineer.mb",
+                  "model_template_id": 3034,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "7844d349b95f23eb2bcca12c482a197213e0b894dbbe1b977310ce47d267a746",
+        "source_rgba_sha256": "f0c1f55aab7022df58d379f54074fb6b2e7be55e9d4d2b49af6abba7dec0bfd5",
+        "release_rgba_sha256": "f0c1f55aab7022df58d379f54074fb6b2e7be55e9d4d2b49af6abba7dec0bfd5",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6831.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "0f4476e5935e6ce52a5922d3e8df3ad68801d682c4ef7ad18590fd24ded05dc8",
+      "exact_prompt_sha256": "4911c8d984d72cf134131c816c1378328dbee75236e3027e0db0c4102c5b1353",
+      "reference_sha256": "bc40c238f09bef4121582bd5de9510a9602f6e7809f7c97f80c312f03f8972c3",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6831-generation-call.json",
+      "generation_call_sha256": "b404fb20220e1186f911630340e4bb9f0e8d026cd635fd6482b412d72a5f18c0",
+      "private_proof_file": "build/hd-clothing-seventeenth/6831-full-material-count-alpha-proof.json",
+      "private_proof_sha256": "276a559556eefb2b53a335fdfeea660d6479fd06c8f1b70ef87a97067a9070b8",
+      "full_material_count_alpha_proof": {
+        "id": 6831,
+        "before_call_source_parts_phase_proof": {
+          "id": 6831,
+          "proved_source_counts": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "native_source_bounds": {
+            "gray_main_native_rect": [
+              0,
+              0,
+              55,
+              66
+            ],
+            "gray_original_lower_band_native_rect": [
+              0,
+              66,
+              57,
+              79
+            ],
+            "skin_native_rect": [
+              0,
+              81,
+              55,
+              128
+            ],
+            "brown_main_native_rect": [
+              55,
+              0,
+              128,
+              128
+            ]
+          },
+          "bounds_note": "Gray lower source band really protrudes x55..56 y66..78 into nominal brown field. Do not make a straight vertical x55 border through that band. Skin starts y81 with faint original separator; no rectangle registration/crop.",
+          "source_palette": {
+            "gray": {
+              "native_rect": [
+                0,
+                0,
+                53,
+                78
+              ],
+              "source_mean_RGB": [
+                56.9811320754717,
+                52.536768263183355,
+                46.97556845670053
+              ]
+            },
+            "skin": {
+              "native_rect": [
+                0,
+                84,
+                53,
+                128
+              ],
+              "source_mean_RGB": [
+                157.1295025728988,
+                114.47512864493997,
+                63.458404802744425
+              ]
+            },
+            "brown": {
+              "native_rect": [
+                57,
+                0,
+                128,
+                128
+              ],
+              "source_mean_RGB": [
+                36.69806338028169,
+                26.887984154929576,
+                13.74306778169014
+              ]
+            }
+          },
+          "source_rgba_sha256": "f0c1f55aab7022df58d379f54074fb6b2e7be55e9d4d2b49af6abba7dec0bfd5",
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "center_rgba": [
+            33,
+            21,
+            13,
+            255
+          ],
+          "opaque_RGBblack_texels": 0,
+          "full_original_privately_inspected": true,
+          "source_pattern_scope": "Three broad painted UV color fields proven on whole native canvas. Gray coarse source sampled blocks are soft irregular wash, no strict regular print/discrete hardware asserted. One faint original diagonal dark shadow in lower-right brown field preserved softly, not concretized into strap/seam.",
+          "proof_before_prompt_at_utc": "2026-10-08T03:46:59.899482+00:00"
+        },
+        "before_call_prompt_assert": {
+          "id": 6831,
+          "proved_source_counts": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "prompt_constraints": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "phase_and_bounds_text_asserted_before_call": true,
+          "exact_prompt": "Faithful HD edit of the supplied COMPLETE ORIGINAL clothing/legs game UV texture6831. Original128x128 RGBA, exact nearest8x whole source guide1024x1024. Preserve every painted material field, complete frame, source field boundary/corner and original diffuse color identity at identical normalized UV. Output the same entire square atlas, no crop, padding, bbox, margins, letterbox, rotation or registration.\r\n\r\nThe actual source inventory and bounds were proven BEFORE this request: exactly 3 major painted color fields, 1 gray upper-left field, 1 flat skin-color lower-left field, 1 large dark brown right field. The main vertical boundary is native x55. IMPORTANT: the original gray lower band protrudes across x55..56 for native y66..78; preserve this existing irregular extension, do not straighten or remove it. The flat skin field starts at native y81 and reaches the left and bottom edges. The brown field touches the top, right and bottom edges. Exactly 1 existing faint diagonal dark shadow sweep near the lower-right brown field stays at its original source phase, softness, contrast and footprint; do not resolve it into a strap, cut, deep crease or stitched seam. There are 0 new discrete hardware parts, 0 new resolved buttons and 0 new resolved buckles allowed. The gray coarse sampled blocks are a soft irregular painted wash, not instructions to draw a crisp plaid, grid, checker, tread pattern or separate anatomical features.\r\n\r\nKeep the original low-contrast subdued painted gradients, very weak folds and soft broad washes. Only refine existing soft color transitions and tiny fine paint variation for the intended4x texture. These materials must stay simple flat hand-painted diffuse fields. Do not replace them with photo leather, scratched hide, woven fabric, repeating grain, curls, hatching, outlines, raised borders, heavy seams, deep shadows or new folds. Keep the gray source patches washed and low contrast, not sharp square cells. Keep the right brown field plain and dark with the same weak warm/olive source tint, not redder, glossier or more contrasty. Keep the existing gray lower band soft and flat, no bevel or new bright rim.\r\n\r\nThe lower-left skin-color field is a plain diffuse COLOR wash, without any face, anatomy or person: preserve its exact original tone identity and broad shadow/highlight. Its source meanRGB is approximately157.1/114.5/63.5; gray approximately57.0/52.5/47.0 and brown36.7/26.9/13.7. These describe the source palette, not printed labels. Preserve their original relative brightness and hue hierarchy. Do not lighten or change the skin-color identity, add pores, freckles, wrinkles, anatomy, highlights or beautification. Preserve its original uniform softness.\r\n\r\nActual original sourceA is255 everywhere, including dark pixels. Entire output opaque; no transparency or holes. Retain the original UV layout and palette rather than drawing a new garment or inventing details. No text, symbols, ornaments, closures, hardware, stripes, objects, new sewing or semantic reinterpretation of ambiguous pixel blocks. Output only the faithful complete soft-painted texture.\r\n"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 0,
+          "source_center_RGBA": [
+            33,
+            21,
+            13,
+            255
+          ],
+          "sourceA_complete_4x_exact": true,
+          "opaque_dark_pixels_are_not_transparent_holes": true
+        },
+        "private_numeric_proof": {
+          "id": 6831,
+          "gain": 0.96142578125,
+          "source_stored_luma": 48.87638188476562,
+          "actual_stored_luma": 48.86570146408081,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "gray": {
+            "source_meanRGB": [
+              56.9811320754717,
+              52.536768263183355,
+              46.97556845670053
+            ],
+            "generated_meanRGB": [
+              59.088277092404454,
+              53.443396226415096,
+              47.76578374455733
+            ],
+            "source_luma_std": 12.467623363513166,
+            "generated_luma_std": 11.151218222355627,
+            "native_luma_correlation": 0.9409894831963345
+          },
+          "skin": {
+            "source_meanRGB": [
+              157.1295025728988,
+              114.47512864493997,
+              63.458404802744425
+            ],
+            "generated_meanRGB": [
+              161.95819039451115,
+              112.02208404802744,
+              58.0
+            ],
+            "source_luma_std": 7.9316327574865175,
+            "generated_luma_std": 7.998841183673782,
+            "native_luma_correlation": 0.9839680439072424
+          },
+          "brown": {
+            "source_meanRGB": [
+              36.69806338028169,
+              26.887984154929576,
+              13.74306778169014
+            ],
+            "generated_meanRGB": [
+              38.33559363996479,
+              26.105248679577464,
+              10.37215283890845
+            ],
+            "source_luma_std": 6.226906208700405,
+            "generated_luma_std": 5.772525864536232,
+            "native_luma_correlation": 0.9572439160557163
+          }
+        },
+        "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+        "no_crop_padding_bbox_registration_or_artistic_RGB_source_composite": true,
+        "source_broad_field_count": 3,
+        "generated_broad_field_count": 3,
+        "original_gray_band_protrusion_x55_56_retained": true,
+        "source_or_generated_lower_skin_RGB_unknown_anatomy_claim": false,
+        "existing_brown_central_streak_native_columns85to95": {
+          "source_luma": [
+            30.90761333333335,
+            31.473677777777798,
+            31.77460888888892,
+            30.21803777777781,
+            29.460191111111115,
+            29.614337777777788,
+            29.434793333333346,
+            32.32756000000001,
+            26.636333333333322,
+            31.44993777777777,
+            28.49729111111109
+          ],
+          "generated_luma": [
+            30.00172236111112,
+            30.028418333333345,
+            29.74651791666667,
+            28.915356250000002,
+            28.403110833333322,
+            28.324239305555558,
+            28.484383055555558,
+            31.240869027777777,
+            27.346693333333334,
+            29.99918458333332,
+            27.81408402777777
+          ],
+          "scope": "Native phase of original subtle streak, not a newly inferred garment seam/count."
+        }
+      }
+    },
+    {
+      "id": 6832,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for original source color/relativepalette identity after solecall: three soft fields/wholeUV and sourceA remain, no new anatomy/hardware count claim, but dark skin-color wash meanRGB71.02/37.72/27.01→86.16/38.17/23.01 (red+21.3%) and brown36.70/26.89/13.74→39.20/25.42/8.30 after scalar.833984. This increases red/chroma relative to source rather than preserving source skin-color identity. No retry or artisticRGBrepair; source original remains pending.",
+      "actual_builtin_calls": 1,
+      "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+      "source_record": {
+        "id": 6832,
+        "texture": {
+          "ID": 6832,
+          "Width": 128,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -13622247,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\NPC\\Engineer\\USSR02\\Legs_African.tga",
+          "Format": "dxt1",
+          "UserName": "Legs_Africa",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4745,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1743,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 4536,
+                  "field": "Material2",
+                  "material_template_id": 1743,
+                  "geometry_id": 2669,
+                  "geometry": "Characters\\Skeletons01\\Skins\\NPC\\USSR_Engineer.mb",
+                  "model_template_id": 3034,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          128,
+          128
+        ],
+        "source_sha256": "6590d859846f1030d869a706a05a802635422a67d0928cbc06931dc8c8778374",
+        "source_rgba_sha256": "3558ede23d6a15a841ffd436b325a0f508ad2e5dcb844da34e480ab64476a0e5",
+        "release_rgba_sha256": "3558ede23d6a15a841ffd436b325a0f508ad2e5dcb844da34e480ab64476a0e5",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6832.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "1d3d2b65129cf2d143c8b0b8947abe668b36cef691b1839460505ffb0ae100f8",
+      "exact_prompt_sha256": "cce1e38ec10491751a6571edf06bf71c7d87580b680178d6aa5fd289502b6038",
+      "reference_sha256": "545c27f590bddcb752ad369923316d22b54436914805e8d314d9cacfa80b4e9f",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6832-generation-call.json",
+      "generation_call_sha256": "a64dec223ec99c96ce5c102cbb2d08925db8436c8f142b9bfc8c5f2ef4ba1f5d",
+      "private_proof_file": "build/hd-clothing-seventeenth/6832-full-material-count-alpha-proof.json",
+      "private_proof_sha256": "4b3ce76d39cc0c40aa734273060290f659b6e6f9b623f157fd2c84a8764855da",
+      "full_material_count_alpha_proof": {
+        "id": 6832,
+        "before_call_source_parts_phase_proof": {
+          "id": 6832,
+          "proved_source_counts": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "native_source_bounds": {
+            "gray_main_native_rect": [
+              0,
+              0,
+              55,
+              66
+            ],
+            "gray_original_lower_band_native_rect": [
+              0,
+              66,
+              57,
+              79
+            ],
+            "skin_native_rect": [
+              0,
+              81,
+              55,
+              128
+            ],
+            "brown_main_native_rect": [
+              55,
+              0,
+              128,
+              128
+            ]
+          },
+          "bounds_note": "Gray lower source band really protrudes x55..56 y66..78 into nominal brown field. Do not make a straight vertical x55 border through that band. Skin starts y81 with faint original separator; no rectangle registration/crop.",
+          "source_palette": {
+            "gray": {
+              "native_rect": [
+                0,
+                0,
+                53,
+                78
+              ],
+              "source_mean_RGB": [
+                56.9811320754717,
+                52.536768263183355,
+                46.97556845670053
+              ]
+            },
+            "skin": {
+              "native_rect": [
+                0,
+                84,
+                53,
+                128
+              ],
+              "source_mean_RGB": [
+                71.01886792452831,
+                37.72126929674099,
+                27.013293310463123
+              ]
+            },
+            "brown": {
+              "native_rect": [
+                57,
+                0,
+                128,
+                128
+              ],
+              "source_mean_RGB": [
+                36.69806338028169,
+                26.887984154929576,
+                13.74306778169014
+              ]
+            }
+          },
+          "source_rgba_sha256": "3558ede23d6a15a841ffd436b325a0f508ad2e5dcb844da34e480ab64476a0e5",
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "center_rgba": [
+            33,
+            21,
+            13,
+            255
+          ],
+          "opaque_RGBblack_texels": 0,
+          "full_original_privately_inspected": true,
+          "source_pattern_scope": "Three broad painted UV color fields proven on whole native canvas. Gray coarse source sampled blocks are soft irregular wash, no strict regular print/discrete hardware asserted. One faint original diagonal dark shadow in lower-right brown field preserved softly, not concretized into strap/seam.",
+          "proof_before_prompt_at_utc": "2026-10-08T03:46:59.900483+00:00"
+        },
+        "before_call_prompt_assert": {
+          "id": 6832,
+          "proved_source_counts": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "prompt_constraints": {
+            "major_color_fields": 3,
+            "gray_upper_left_fields": 1,
+            "flat_skin_lower_left_fields": 1,
+            "brown_right_fields": 1,
+            "new_discrete_hardware_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "original_diagonal_dark_shadow_sweeps": 1,
+            "strict_regular_print_pattern_claimed": false
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "phase_and_bounds_text_asserted_before_call": true,
+          "exact_prompt": "Faithful HD edit of the supplied COMPLETE ORIGINAL clothing/legs game UV texture6832. Original128x128 RGBA, exact nearest8x whole source guide1024x1024. Preserve every painted material field, complete frame, source field boundary/corner and original diffuse color identity at identical normalized UV. Output the same entire square atlas, no crop, padding, bbox, margins, letterbox, rotation or registration.\r\n\r\nThe actual source inventory and bounds were proven BEFORE this request: exactly 3 major painted color fields, 1 gray upper-left field, 1 flat skin-color lower-left field, 1 large dark brown right field. The main vertical boundary is native x55. IMPORTANT: the original gray lower band protrudes across x55..56 for native y66..78; preserve this existing irregular extension, do not straighten or remove it. The flat skin field starts at native y81 and reaches the left and bottom edges. The brown field touches the top, right and bottom edges. Exactly 1 existing faint diagonal dark shadow sweep near the lower-right brown field stays at its original source phase, softness, contrast and footprint; do not resolve it into a strap, cut, deep crease or stitched seam. There are 0 new discrete hardware parts, 0 new resolved buttons and 0 new resolved buckles allowed. The gray coarse sampled blocks are a soft irregular painted wash, not instructions to draw a crisp plaid, grid, checker, tread pattern or separate anatomical features.\r\n\r\nKeep the original low-contrast subdued painted gradients, very weak folds and soft broad washes. Only refine existing soft color transitions and tiny fine paint variation for the intended4x texture. These materials must stay simple flat hand-painted diffuse fields. Do not replace them with photo leather, scratched hide, woven fabric, repeating grain, curls, hatching, outlines, raised borders, heavy seams, deep shadows or new folds. Keep the gray source patches washed and low contrast, not sharp square cells. Keep the right brown field plain and dark with the same weak warm/olive source tint, not redder, glossier or more contrasty. Keep the existing gray lower band soft and flat, no bevel or new bright rim.\r\n\r\nThe lower-left skin-color field is a plain diffuse COLOR wash, without any face, anatomy or person: preserve its exact original tone identity and broad shadow/highlight. Its source meanRGB is approximately71.0/37.7/27.0; gray approximately57.0/52.5/47.0 and brown36.7/26.9/13.7. These describe the source palette, not printed labels. Preserve their original relative brightness and hue hierarchy. Do not lighten or change the skin-color identity, add pores, freckles, wrinkles, anatomy, highlights or beautification. Preserve its original uniform softness.\r\n\r\nActual original sourceA is255 everywhere, including dark pixels. Entire output opaque; no transparency or holes. Retain the original UV layout and palette rather than drawing a new garment or inventing details. No text, symbols, ornaments, closures, hardware, stripes, objects, new sewing or semantic reinterpretation of ambiguous pixel blocks. Output only the faithful complete soft-painted texture.\r\n"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 0,
+          "source_center_RGBA": [
+            33,
+            21,
+            13,
+            255
+          ],
+          "sourceA_complete_4x_exact": true,
+          "opaque_dark_pixels_are_not_transparent_holes": true
+        },
+        "private_numeric_proof": {
+          "id": 6832,
+          "gain": 0.833984375,
+          "source_stored_luma": 37.13307785644531,
+          "actual_stored_luma": 37.14967625579834,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "gray": {
+            "source_meanRGB": [
+              56.9811320754717,
+              52.536768263183355,
+              46.97556845670053
+            ],
+            "generated_meanRGB": [
+              59.62584663763909,
+              52.04221093372037,
+              44.805137276245766
+            ],
+            "source_luma_std": 12.467623363513166,
+            "generated_luma_std": 11.538691629723944,
+            "native_luma_correlation": 0.950318412435803
+          },
+          "skin": {
+            "source_meanRGB": [
+              71.01886792452831,
+              37.72126929674099,
+              27.013293310463123
+            ],
+            "generated_meanRGB": [
+              86.15943932246998,
+              38.16914129502573,
+              23.00672705831904
+            ],
+            "source_luma_std": 3.7809584911557432,
+            "generated_luma_std": 4.375552169178782,
+            "native_luma_correlation": 0.9553962178672428
+          },
+          "brown": {
+            "source_meanRGB": [
+              36.69806338028169,
+              26.887984154929576,
+              13.74306778169014
+            ],
+            "generated_meanRGB": [
+              39.20378521126761,
+              25.423518650968308,
+              8.301695917693662
+            ],
+            "source_luma_std": 6.226906208700405,
+            "generated_luma_std": 5.6660542628242165,
+            "native_luma_correlation": 0.9570883141755296
+          }
+        },
+        "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+        "no_crop_padding_bbox_registration_or_artistic_RGB_source_composite": true,
+        "source_broad_field_count": 3,
+        "generated_broad_field_count": 3,
+        "original_gray_band_protrusion_x55_56_retained": true,
+        "source_or_generated_lower_skin_RGB_unknown_anatomy_claim": false
+      }
+    },
+    {
+      "id": 6815,
+      "status": "raw-held-original-artwork-pending",
+      "reason": "Held for source contour/tiny-mark reinterpretation after solecall. Major8paint swatches remain and overall scalar.995697/sourceA opaque exact; neutral gray color is close. However original lowcontrast lowerleft angular brown/pale lobes are concretized into2 clearly circular disc/ring-like parts, changing tiny shape/material semantics. Large left blueblack field has new cut-off/outlined trouser-hem-like contours: source nativey110 luma>25 spansx0..26, generatedx5..26; sourcey126 hasgrayx24..26, generatednone. Exact numeric sourcefield edge proof confirms change, not inferred purely from fullimage impression. No cropped source/registration/padding used. Source incomplete soft markers are genuine artwork, not technical or unsuitable by complexity. No retry or artistRGBrepair; related6812 no call after this drift.",
+      "actual_builtin_calls": 1,
+      "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+      "source_record": {
+        "id": 6815,
+        "texture": {
+          "ID": 6815,
+          "Width": 256,
+          "Height": 128,
+          "NMips": 0,
+          "AverageColor": -11910599,
+          "InstantLoad": 0,
+          "MappingSize": 2.0,
+          "BumpGain": 1.0,
+          "SrcName": "Characters\\Skins\\Classes\\GerMedicFemale\\Legs_Asian.tga",
+          "Format": "dxt1",
+          "UserName": "Legs_Asia",
+          "Type": "Ordinary",
+          "AddrType": "Clamp",
+          "StorageType": "Ordinary"
+        },
+        "category": "characters-clothing",
+        "role": "typed-db-color-candidate",
+        "status": "pending",
+        "usage": {
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 4728,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "opaque",
+              "AddressMode": "Clamp",
+              "TemplateID": 1770,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 1764,
+                  "field": "Material2",
+                  "material_template_id": 1770,
+                  "geometry_id": 2069,
+                  "geometry": "Characters\\Skeletons01\\Skins\\Classes\\GerMedicFemale_100.mb",
+                  "model_template_id": 1336,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": []
+        },
+        "review_requirements": [
+          "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+          "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+          "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+        ],
+        "logical_size": [
+          256,
+          128
+        ],
+        "source_sha256": "5a37d2ec19ff4285c19bfac056433e8e71abe4f29a39ba46255e87f9c629c3ff",
+        "source_rgba_sha256": "99dbeaa9ea750c648d241e90686475449e2c656080863ec189a165de5c98709c",
+        "release_rgba_sha256": "99dbeaa9ea750c648d241e90686475449e2c656080863ec189a165de5c98709c",
+        "source_native_format": 1,
+        "alpha_extrema": [
+          255,
+          255
+        ],
+        "original_png": "expanded/original/6815.png",
+        "source_match": "Exact decoded RGBA and dimensions match release"
+      },
+      "raw_sha256": "41f25c7919f6768f0f538ef13658daab757e186c7a8c2078891f59c172e271f9",
+      "exact_prompt_sha256": "3a8324b6bf0779e5ed7d340c990502bdaf578b66532a5b73562de2e90cea2b49",
+      "reference_sha256": "bce2b7330a90c2cd12bfc1008d58b9724cb83dc703b86090ecc55858cdfeb455",
+      "generation_call_file": "assets/terrain-hd/expanded/generated/6815-generation-call.json",
+      "generation_call_sha256": "4bc2409a60652676faa44b314c54c13b14d73fbd09181a95c6abc105fb6b6992",
+      "private_proof_file": "build/hd-clothing-seventeenth/6815-full-material-count-alpha-proof.json",
+      "private_proof_sha256": "f8652ccdc9a89680059d74a36947705f8f7eb5a053d062d682a5812ea79bff01",
+      "full_material_count_alpha_proof": {
+        "id": 6815,
+        "before_call_source_parts_phase_proof": {
+          "id": 6815,
+          "proved_source_counts": {
+            "whole_source_width": 256,
+            "whole_source_height": 128,
+            "major_painted_UV_swatch_groups": 8,
+            "large_middle_gray_fields": 2,
+            "upperright_flat_skin_color_fields": 1,
+            "lowerleft_faint_brown_patch_groups": 1,
+            "lowerleft_soft_brown_lobes": 2,
+            "new_resolved_hardware_allowed": 0,
+            "new_resolved_punched_holes_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "strict_regular_print_or_weave_claimed": false
+          },
+          "manual_fullsource_UV_inventory": [
+            {
+              "name": "left_blueblack_large_field",
+              "native_bounds_envelope": [
+                0,
+                0,
+                95,
+                128
+              ]
+            },
+            {
+              "name": "middle_upper_gray_field",
+              "native_bounds_envelope": [
+                95,
+                0,
+                186,
+                34
+              ]
+            },
+            {
+              "name": "middle_lower_gray_field",
+              "native_bounds_envelope": [
+                95,
+                34,
+                187,
+                102
+              ]
+            },
+            {
+              "name": "upperright_flat_skin_color_field",
+              "native_bounds_envelope": [
+                186,
+                0,
+                256,
+                83
+              ]
+            },
+            {
+              "name": "lower_middle_soft_brown_gray_strip",
+              "native_bounds_envelope": [
+                97,
+                102,
+                194,
+                128
+              ]
+            },
+            {
+              "name": "small_lower_right_brown_gray_wash",
+              "native_bounds_envelope": [
+                194,
+                84,
+                214,
+                128
+              ]
+            },
+            {
+              "name": "lower_right_blueblack_field",
+              "native_bounds_envelope": [
+                214,
+                83,
+                256,
+                128
+              ]
+            },
+            {
+              "name": "lowerleft_faint_brown_patch_group",
+              "native_bounds_envelope": [
+                31,
+                108,
+                70,
+                127
+              ]
+            }
+          ],
+          "bounds_scope": "Envelopes of existing irregular UV swatches overlap where source islands/shading intrude. They are not replacement rectangular masks or instructions to straighten source contour. Exact full originalRGBA overrides envelope sketch. Native important anchors gray fields x95, separator y34, skin x186 and lower bound83 privately inspected and numeric spot checked.",
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "opaque_RGBblack_texels": 1283,
+          "center_RGBA": [
+            115,
+            117,
+            115,
+            255
+          ],
+          "source_rgba_sha256": "99dbeaa9ea750c648d241e90686475449e2c656080863ec189a165de5c98709c",
+          "source_palette": {
+            "middle_gray": {
+              "native_rect": [
+                100,
+                38,
+                180,
+                96
+              ],
+              "source_meanRGB": [
+                110.93469827586208,
+                110.79181034482758,
+                110.93469827586208
+              ]
+            },
+            "skin": {
+              "native_rect": [
+                188,
+                3,
+                250,
+                80
+              ],
+              "source_meanRGB": [
+                156.36217008797655,
+                108.03330540427315,
+                59.59991621281944
+              ]
+            },
+            "blueblack": {
+              "native_rect": [
+                3,
+                3,
+                90,
+                59
+              ],
+              "source_meanRGB": [
+                41.79228243021346,
+                45.58682266009852,
+                41.97844827586207
+              ]
+            }
+          },
+          "fine_patch_uncertainty": "Two lowcontrast lobes in one lowerleft brown patch group, pale angular tiny marks stay soft as source. Not a claim of readable buckles/prongs/eyelets; no semantic shape completion. Small lowcontrast lower swatches keep broad source wash/shadows without newly resolved sole treads/laces.",
+          "proof_before_prompt_at_utc": "2026-10-08T03:52:46.125359+00:00",
+          "full_original_privately_inspected": true
+        },
+        "before_call_prompt_assert": {
+          "id": 6815,
+          "proved_source_counts": {
+            "whole_source_width": 256,
+            "whole_source_height": 128,
+            "major_painted_UV_swatch_groups": 8,
+            "large_middle_gray_fields": 2,
+            "upperright_flat_skin_color_fields": 1,
+            "lowerleft_faint_brown_patch_groups": 1,
+            "lowerleft_soft_brown_lobes": 2,
+            "new_resolved_hardware_allowed": 0,
+            "new_resolved_punched_holes_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "strict_regular_print_or_weave_claimed": false
+          },
+          "prompt_constraints": {
+            "whole_source_width": 256,
+            "whole_source_height": 128,
+            "major_painted_UV_swatch_groups": 8,
+            "large_middle_gray_fields": 2,
+            "upperright_flat_skin_color_fields": 1,
+            "lowerleft_faint_brown_patch_groups": 1,
+            "lowerleft_soft_brown_lobes": 2,
+            "new_resolved_hardware_allowed": 0,
+            "new_resolved_punched_holes_allowed": 0,
+            "new_resolved_buttons_allowed": 0,
+            "new_resolved_buckles_allowed": 0,
+            "strict_regular_print_or_weave_claimed": false
+          },
+          "assert_prompt_constraints_equal_proved_source_counts": true,
+          "phase_and_bounds_text_asserted_before_call": true,
+          "exact_prompt": "Faithful HD edit of this COMPLETE original clothing/legs diffuse UV atlas6815. Original whole256x128 opaque canvas, reference exact nearest8x2048x1024. Preserve the whole WIDE2:1 atlas with all original UV boundaries, island silhouettes, clipped corners, color fields and black gaps in precisely the same normalized positions. No crop, bbox, padding, letterbox, zoom, recentering or registration. The reference is the exact edit target, not inspiration for a new garment.\r\n\r\nThe source inventory and native UV bounds were privately proved BEFORE this request: exactly 8 existing painted UV swatch groups, including 2 middle gray fields, 1 upper-right flat skin-color field, 1 lower-left faint brown patch group with 2 soft brown lobes, plus the original large left blue-black field, lower middle brown-gray strip, small lower-right brown-gray wash and lower-right blue-black field. Middle gray fields begin at native x95, their original soft horizontal boundary is native y34. The skin-color field begins at native x186 and ends at native y82 inclusive; retain this clipped upper-right rectangle touching TOP and RIGHT. The remaining lower strip/patch boundaries are irregular source shapes: follow the exact original canvas rather than making new rectangles. Preserve the original inset opaque black shape inside the left dark field, all lowcontrast pale marks, dark separators and tiny clipped source pieces.\r\n\r\nKeep ALL the source colors subdued and painted, with low-contrast gradients, the same weak existing folds and softly washed shading. Refine only existing soft transitions with extremely fine matte paint variation at intended4x scale. Do not add photographic leather, coarse woven fabric, plaid, checkers, tread grids, curls, scratches, hatching, outlined rims, raised edges, strongly resolved folds or bright seams. The gray fields stay soft neutral gray: source middle-gray meanRGB approximately110.9/110.8/110.9, not warmer/cooler, more textured or higher contrast. The blue-black fields stay original muted blue-gray/green-black and maintain the source weak folds and exact corner forms, not newly lit shiny footwear.\r\n\r\nThe flat skin-color field stays only the original broad soft ochre/tan painted COLOR wash, meanRGB approximately156.4/108.0/59.6, including the same weak original highlight near its right side and dark rightmost edge. No anatomy, skin pores, freckles, wrinkles, beautification, changed identity or added highlights. Retain its source palette relative to gray and blue-black fields.\r\n\r\nThe two lowcontrast lower-left brown lobes and their tiny pale angular marks MUST remain soft indistinct original paint patches at exact source bounds. Do not interpret them as readable buckles, prongs, eyelets, laces, holes, stitching or new garment hardware. The lower-middle and small lower-right swatches also stay lowcontrast washed shapes, not new tread parts or extra objects. Exactly 0 new resolved hardware, 0 new punched holes, 0 new buttons and 0 new buckles are allowed. There is no claimed regular print/weave pattern here: source pixel blocks are sampling of soft original paint, not directions for a newly sharpened grid.\r\n\r\nActual source alpha is255 across the entire canvas, including1283 opaque RGB-black pixels. All black-looking gaps remain opaque black; do not make holes or transparency. Preserve UV/layout/material identity/count/phase and source-scale tonal relationships. No new stitching, ornaments, seams, closures, objects, glyphs or text. Output only this complete faithful softly painted material atlas.\r\n"
+        },
+        "actual_alpha": {
+          "source_alpha_extrema": [
+            255,
+            255
+          ],
+          "raw_alpha_extrema": [
+            255,
+            255
+          ],
+          "source_Apositive_RGBblack_texels": 1283,
+          "source_center_RGBA": [
+            115,
+            117,
+            115,
+            255
+          ],
+          "sourceA_complete_4x_exact": true,
+          "opaque_dark_pixels_are_not_transparent_holes": true
+        },
+        "private_numeric_proof": {
+          "id": 6815,
+          "gain": 0.995697021484375,
+          "source_stored_luma": 66.66200827636719,
+          "actual_stored_luma": 66.65850952415467,
+          "rounding": "Nearest 8-bit RGB lookup",
+          "premultiplied": false,
+          "source_alpha_exact_nearest4x": true,
+          "dimensions": [
+            1024,
+            512
+          ],
+          "method": "Whole raw Lanczos tological4x; production match_cell uniform scalar/sourceA only. NativeRGB diagnostic explicitly premultiplies when TypeTransparent, then inverse wholeLanczos. No art RGB repair or source composite."
+        },
+        "regions": {
+          "middle_gray": {
+            "native_rect": [
+              100,
+              38,
+              180,
+              96
+            ],
+            "source_meanRGB": [
+              110.93469827586208,
+              110.79181034482758,
+              110.93469827586208
+            ],
+            "generated_meanRGB": [
+              111.21227101293104,
+              110.59027478448276,
+              111.88974946120689
+            ],
+            "source_luma_std": 10.087031480650383,
+            "generated_luma_std": 10.71642962513218,
+            "native_luma_correlation": 0.9811790170314627
+          },
+          "skin": {
+            "native_rect": [
+              188,
+              3,
+              250,
+              80
+            ],
+            "source_meanRGB": [
+              156.36217008797655,
+              108.03330540427315,
+              59.59991621281944
+            ],
+            "generated_meanRGB": [
+              164.54353005865102,
+              108.72955069124424,
+              57.434423439463764
+            ],
+            "source_luma_std": 9.655975194909699,
+            "generated_luma_std": 9.405902744287914,
+            "native_luma_correlation": 0.9554769597696011
+          },
+          "blueblack": {
+            "native_rect": [
+              3,
+              3,
+              90,
+              59
+            ],
+            "source_meanRGB": [
+              41.79228243021346,
+              45.58682266009852,
+              41.97844827586207
+            ],
+            "generated_meanRGB": [
+              36.55721469622332,
+              41.59654659277504,
+              39.72778119868637
+            ],
+            "source_luma_std": 5.714011187080111,
+            "generated_luma_std": 6.3814133359079275,
+            "native_luma_correlation": 0.9543565040918655
+          },
+          "tiny_brown_patch": {
+            "native_rect": [
+              31,
+              108,
+              70,
+              127
+            ],
+            "source_meanRGB": [
+              13.396761133603238,
+              10.319838056680162,
+              7.9298245614035086
+            ],
+            "generated_meanRGB": [
+              15.091261808367072,
+              9.92661943319838,
+              7.0895748987854255
+            ],
+            "source_luma_std": 11.123661348050927,
+            "generated_luma_std": 10.583660815103432,
+            "native_luma_correlation": 0.9377074777535308
+          }
+        },
+        "full_source_raw_numeric_sourceA4x_and_native_privately_inspected": true,
+        "no_crop_padding_bbox_registration_or_artistic_RGB_source_composite": true,
+        "leftfield_luma25_phase": {
+          "110": {
+            "source_x": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ]
+          },
+          "115": {
+            "source_x": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": [
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ]
+          },
+          "120": {
+            "source_x": [
+              0,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": [
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ]
+          },
+          "123": {
+            "source_x": [
+              4,
+              5,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": [
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ]
+          },
+          "125": {
+            "source_x": [
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": [
+              22,
+              23,
+              24,
+              25,
+              26
+            ]
+          },
+          "126": {
+            "source_x": [
+              24,
+              25,
+              26
+            ],
+            "generated4x_cellmean_x": []
+          },
+          "127": {
+            "source_x": [],
+            "generated4x_cellmean_x": []
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Eight actual typed diffuse sources privately inspected with fresh historical/release/original fullRGBA/dimensions and allaccepted/q/raw/held/refusal/sameRGBA exclusions. Three original-only built-in calls, immediate exactprompt/raw/refSHA/call saved. Source part/count/phase and nativebounds assertions exist before final prompts/calls. No face/teeth, no UI fallback, no blanket allremaining/pattern/alpha unsuitability claim.",
+  "shared_metadata_game_build_git_Cpp": "Root only; untouched by worker.6830/clothing15/16 and all previous stable packages untouched."
+}
