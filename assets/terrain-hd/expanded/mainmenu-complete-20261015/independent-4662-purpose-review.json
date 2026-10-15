@@ -1,0 +1,278 @@
+{
+  "status": "source-qualified-for-versioned-art-generation-subject-to-native-and-live-review",
+  "id": 4662,
+  "reviewer": "/root/menu_independent_review",
+  "utc": "2026-10-15T05:50:44.036466+00:00",
+  "scope": "Read-only independent purpose/source review; no Game launch, image generation, code/shared metadata/Git writes. This new exclusive report is the only write.",
+  "source_audit_SHA256": "78a10b467111cf05c11bcd5494314116f38495517ff1f54a688750d24b0c87e9",
+  "historical_database": "G:\\SS\\Silent-Storm\\Complete\\game.db",
+  "historical_database_SHA256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+  "typed_material_record": {
+    "ID": 2907,
+    "TextureID": 4662,
+    "BRDFID": 0,
+    "BumpID": 4664,
+    "SpecColor": 0,
+    "TemplateID": 1871,
+    "GlossID": 4665,
+    "MirrorID": 4662,
+    "CastShadow": 1,
+    "SpecFactor": 0.0,
+    "RndWeight": 1.0,
+    "MetalMirror": 1.0,
+    "DielMirror": 0.0,
+    "Alpha": "opaque",
+    "AddressMode": "Clamp",
+    "Flags": ""
+  },
+  "actual_selected_resource": 16781878,
+  "selected_full_RGBA": {
+    "resource_id": 16781878,
+    "historical_MMP_SHA256": "27302f97b426ff9f9c3a30a46587d2b6d5e41f0705505289e9e2d411fe17b101",
+    "release_MMP_SHA256": "27302f97b426ff9f9c3a30a46587d2b6d5e41f0705505289e9e2d411fe17b101",
+    "RGBA_SHA256": "892bfa39173306081137e0ffef746b390d79a26e0566c52365c527a40a9c3883",
+    "exact_historical_release_RGBA": true,
+    "full_RGBA": "assets/terrain-hd/expanded/mainmenu-complete-20261015/source/4662-resource-16781878-RGBA.png",
+    "native_format": 6,
+    "size": [
+      256,
+      256
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  },
+  "primary_reference": {
+    "resource_id": 4662,
+    "historical_MMP_SHA256": "209440f94499d5d2e31fc3692fea51d1a41f0261e4d1bad8255b13f9b23afa17",
+    "release_MMP_SHA256": "209440f94499d5d2e31fc3692fea51d1a41f0261e4d1bad8255b13f9b23afa17",
+    "RGBA_SHA256": "ba2fa9e8b26ea7443fa9a9040a88807722c306e5f315d516f664e639cb0bd48e",
+    "exact_historical_release_RGBA": true,
+    "full_RGBA": "assets/terrain-hd/expanded/mainmenu-complete-20261015/source/4662-resource-4662-RGBA.png",
+    "native_format": 3,
+    "size": [
+      256,
+      256
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  },
+  "classification": "Mixed painted diffuse RGB and metal reflection-tint RGB; full alpha carries reflection strength. The opaque diffuse consumer does not make alpha disposable.",
+  "visual_source_inspection": [
+    "Complete selected source whole RGB: painted crashed Opel metal panels, grille/windows/trim; artistic color atlas, not a grayscale-only control texture.",
+    "Complete selected alpha: graded gray metal, white trim, black recess/control patches; different from RGB geometry and must remain independent.",
+    "Complete primary RGBA privately viewed; selection qualification uses UC whole RGBA, not primary alpha."
+  ],
+  "numeric_source_checks": {
+    "actual_RGBA_SHA256": "892bfa39173306081137e0ffef746b390d79a26e0566c52365c527a40a9c3883",
+    "primary_RGBA_SHA256": "ba2fa9e8b26ea7443fa9a9040a88807722c306e5f315d516f664e639cb0bd48e",
+    "primary_selected_RGB_MAE": 1.7968902587890625,
+    "primary_selected_A_MAE": 3.2205657958984375,
+    "selected_A_unique_count": 256,
+    "selected_A_extrema": [
+      0,
+      255
+    ],
+    "selected_A_zero_pixels": 8597,
+    "selected_nonzero_RGB_pixels_with_A_zero": 8568
+  },
+  "renderer_proof": [
+    {
+      "file": "Main/GMatShare.cpp",
+      "lines": "43-58,72-74",
+      "finding": "Same texture share resolves TextureID and MirrorID with material Clamp addressing; both are passed to CreateMaterial."
+    },
+    {
+      "file": "Main/GMaterial.cpp",
+      "lines": "90-98,125-133",
+      "finding": "For MetalMirror1/DielMirror0, high path renders bumped cube reflection to register then RO_REG_MUL_TEXTURE with pMirror. BumpedMirror alone does not imply mirror-map nonuse."
+    },
+    {
+      "file": "Main/GRenderExecute.cpp",
+      "lines": "690-696,714-720",
+      "finding": "Fallback GlossedMirror binds pMirror as t1; RO_REG_MUL_TEXTURE uses PTextureTexture with registered reflection t0 and pMirror t1."
+    },
+    {
+      "file": "Main/GfxShaders.txt",
+      "lines": "1170-1179,2297-2303",
+      "finding": "Both paths multiply mirror texture full RGBA; RGB is color tint and A contributes reflection blend amount."
+    },
+    {
+      "file": "Main/GTexture.cpp",
+      "lines": "14-23",
+      "finding": "gfx_texture_usedxt0 selects UC alias for bIsDXT."
+    },
+    {
+      "file": "DBFormat/DataFormat.cpp",
+      "lines": "969-971",
+      "finding": "Format dxt3 marks4662 bIsDXT, so actual resource16781878."
+    }
+  ],
+  "code_SHA256": {
+    "Main/GMatShare.cpp": "7d3afa8c838e40fb63b77c3f98bda0a1f68d9d76d97a375d97deb1889067883e",
+    "Main/GMaterial.cpp": "bc36776a7d76c29ce8c21d89f3a6c76fac09f5926cadcb186aeadc4c79c26570",
+    "Main/GRenderExecute.cpp": "bf282f51cc6521fcf544cf46024c4a2d0689631ba76b9e94e006f5cac5ed3ebe",
+    "Main/GfxShaders.txt": "854427f4245ef02833ab4e07389ab9cc73767ac11c32deed5c8a19d4a0506eb1",
+    "Main/GTexture.cpp": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+    "DBFormat/DataFormat.cpp": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159"
+  },
+  "generation_qualification": {
+    "allowed": true,
+    "requirements": [
+      "Preserve complete UC authored alpha using full-source4x pipeline; do not regenerate alpha.",
+      "Preserve original painted gray/rust metal material, hue, dark areas, UV island boundaries, grille/window/trim count and positions.",
+      "Do not premultiply ordinary source RGB or infer RGB visibility/fill from alpha:8568 source pixels intentionally have RGB at A0.",
+      "Numerically calibrate RGB to selected actual source. No new glossy regions, painted highlights, rust footprints, holes or geometry.",
+      "Mirror response changes with enhanced RGB detail by design; alpha/reflection coefficients/material DB and technical4664/4665 stay untouched.",
+      "Review generated whole RGB independently of alpha plus actual native fullRGBA, all mips/aliases and actual main-menu HD off/on/restored reflection appearance before acceptance."
+    ]
+  },
+  "technical_originals": [
+    {
+      "id": 4664,
+      "retain_original": true,
+      "material": 2907,
+      "field": "BumpID",
+      "reason": "Typed normal/bump channels",
+      "typed_record": {
+        "ID": 2907,
+        "TextureID": 4662,
+        "BRDFID": 0,
+        "BumpID": 4664,
+        "SpecColor": 0,
+        "TemplateID": 1871,
+        "GlossID": 4665,
+        "MirrorID": 4662,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 1.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": ""
+      },
+      "actual_selected_resource": 4664,
+      "historical_release_RGBA_exact": true,
+      "art_generation_recommended": false
+    },
+    {
+      "id": 4665,
+      "retain_original": true,
+      "material": 2907,
+      "field": "GlossID",
+      "reason": "Typed specular/gloss channels",
+      "typed_record": {
+        "ID": 2907,
+        "TextureID": 4662,
+        "BRDFID": 0,
+        "BumpID": 4664,
+        "SpecColor": 0,
+        "TemplateID": 1871,
+        "GlossID": 4665,
+        "MirrorID": 4662,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 1.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": ""
+      },
+      "actual_selected_resource": 16781881,
+      "historical_release_RGBA_exact": true,
+      "art_generation_recommended": false
+    },
+    {
+      "id": 5600,
+      "retain_original": true,
+      "material": 2912,
+      "field": "BumpID",
+      "reason": "Typed normal/bump channels",
+      "typed_record": {
+        "ID": 2912,
+        "TextureID": 4679,
+        "BRDFID": 0,
+        "BumpID": 5600,
+        "SpecColor": 0,
+        "TemplateID": 1874,
+        "GlossID": 0,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": ""
+      },
+      "actual_selected_resource": 16782816,
+      "historical_release_RGBA_exact": true,
+      "art_generation_recommended": false
+    },
+    {
+      "id": 5601,
+      "retain_original": true,
+      "material": 2914,
+      "field": "BumpID",
+      "reason": "Typed normal/bump channels",
+      "typed_record": {
+        "ID": 2914,
+        "TextureID": 4680,
+        "BRDFID": 0,
+        "BumpID": 5601,
+        "SpecColor": 0,
+        "TemplateID": 1875,
+        "GlossID": 0,
+        "MirrorID": 0,
+        "CastShadow": 1,
+        "SpecFactor": 0.0,
+        "RndWeight": 1.0,
+        "MetalMirror": 0.0,
+        "DielMirror": 0.0,
+        "Alpha": "opaque",
+        "AddressMode": "Clamp",
+        "Flags": ""
+      },
+      "actual_selected_resource": 16782817,
+      "historical_release_RGBA_exact": true,
+      "art_generation_recommended": false
+    }
+  ],
+  "accepted_preservation": {
+    "ids": [
+      4642,
+      4651,
+      4653,
+      4655,
+      4659,
+      4661,
+      4723,
+      4729,
+      4730
+    ],
+    "all9_source_records_unchanged": true,
+    "all9_production_PNG_SHA256_unchanged": true,
+    "no_claim_yet_for_final_native_build": true
+  },
+  "fonts_caption_preservation": {
+    "snapshot_files_SHA256_unchanged": true,
+    "files": {
+      "Main/VectorFontRasterizer.cpp": "ef2b25617340cf8c93d6f5776417ebeebeb84f9854f4dbfcabdbfbb330d2bd2a",
+      "Main/VectorFonts.cpp": "3fdf6ee29b78a7c5a23bc8d3771c2f4b1f1d33efe508dd60e065e7a0cef65f0f",
+      "Main/GLocale.cpp": "51a270c058b7de38a68c4a21fbc75f72cbfee5c94d20600c7e49d374badcf67e",
+      "Main/UIML.cpp": "4606121190ab9c496144f8c8c85149317232b3edccc760e720a31e53005c008f",
+      "Main/iMainMenu.cpp": "43477c2dbdb808a7a2ea7bf772cd850516100ed02776cc78794feb0073853f37"
+    }
+  },
+  "limitations": [
+    "This qualifies source purpose only; no generated4662 asset is accepted by this report.",
+    "Actual runtime use of either reflection render path and current camera visibility are not certified without coordinator Game diagnostics.",
+    "This review does not claim every33 folder texture is visible in current camera."
+  ]
+}

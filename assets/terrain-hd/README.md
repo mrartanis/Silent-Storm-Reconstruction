@@ -1,6 +1,11 @@
+Current scope (15 October 2026): complete all artwork in the exact MainMenu folder;
+fonts/captions/rendering are explicitly excluded. Completed33 resources:29 HD
+(9 prior preserved +20 new) and4 individually technical originals. Other unfinished
+categories stay paused. See expanded/mainmenu-complete-20261015/category-final.json.
+
 # HD textures
 
-Current user scope (9 October 2026): finish entire heads/hair, clothing and world
+Previous user scope (9 October 2026): finish entire heads/hair, clothing and world
 categories. Other unfinished categories are paused. One agent owns each whole
 category and performs visual and scripted review, with versioned artistic repairs
 of unaccepted results. One coordinator owns shared metadata and publication;
@@ -33,13 +38,13 @@ The offline HD pack expands the original five-asset landscape prototype to the
 requested terrain, trees, buildings and environment. `expanded/queue.json`
 records exact per-resource coverage and processing status; `res-hd/manifest.json`
 records what is actually installed. Pending entries are not advertised as HD.
-The completed pack contains **2,817 HD textures**: 178 terrain assets, 30 tree
+The completed pack contains **2,837 HD textures**: 178 terrain assets, 30 tree
 assets, 1,758 building/environment assets, 263 clothing, 145 equipment, 71 weapons,
-176 head/hair textures, 103 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
+176 head/hair textures, 123 interface textures, 84 effects, 4 camp atlases, 2 training targets and 3 miscellaneous artwork maps.
 All 2,349 world-scope resources have a recorded disposition. The shared queue
-contains 3,320 records, including 851 accepted new-group textures, the original
+contains 3,344 records, including 871 accepted new-group textures, the original
 6265 structural gradient and 15 newly recorded missing historical sources.
-Original fallback covers 258 technical maps,
+Original fallback covers 262 technical maps,
 157 structural/solid masks, 63 unavailable historical sources, one release mismatch
 and 24 resource IDs whose original-preserving image generation was unavailable
 (including three new actual refusals and four related resources without separate calls). No entries in that queue remain pending.
@@ -53,7 +58,7 @@ Separate character, equipment, weapon, face, interface and effect inventories
 are now under `expanded/groups`. They include 1,803 exact release-matched
 originals and 15 missing sources. Their source queues are preparation snapshots;
 current acceptance is established only by sources.json, shared queue and native
-validation. There remain 847 verified originals outside the shared queue, including next
+validation. There remain 828 verified originals outside the shared queue, including next
 raw packets awaiting coordinator review/import/calibration/native validation.
 Typed DB usage, deferred control maps/cursors/fonts and reproducible commands
 are recorded in `expanded/groups/README.md`. The full 5,801-texture DB
@@ -1085,3 +1090,33 @@ and expanded/coordinator-category-final-clothing-complete-20261008.json.
 World, heads/hair and clothing are complete for available artwork; the remaining
 847 verified group sources belong to paused categories. Older ready/held reports
 remain frozen history; authoritative whole-category reports supersede them.
+
+
+## Main-menu artwork completed, 15 October 2026
+
+All33 MainMenu-folder resources are accounted for:20 new HD,9 previous HD
+unchanged,4 original bump/gloss controls. All20 whole actual sourceRGBA match
+historical/release, use the actual selected UC alias for typed DXT, retain full
+sourceA at4x and logical UV/material scale.28 genuine built-in imagegen calls
+include versioned artistic repairs; one4662v2 BEFORE is input-only and was never
+called. Tiny printed ink identity is visually preserved without claiming semantic
+OCR of unreadable source print. Logo v2 layers preserve smooth sign material and
+sampled flash geometry.4662 keeps straight painted reflection-tint RGB with full
+control A;4801 has an individual source-stored loader/blend proof and scalar gain.
+
+Whole Game target build and native validation pass:2,837 textures/5,674 aliases/
+151 archives/9,186,162,162 bytes. The initial missing time.h build attempt was
+resolved with the existing documented command-local UCRTContentRoot; no SDK
+installation or source change. All2,817 previous source objects/PNG/native payloads
+remain unchanged.20 actual decoded native maps and28 unoccluded mainmenu/GPU
+frames were independently reviewed; actual HD on/off/on and six representative
+GPU IDs pass,120 frames at59.95FPS. Ordinary no-harness exact user binary shows
+mainmenu presence; its partially desktop-occluded cached capture is not used as
+flash/full-art evidence. All own runs were closed normally; user saves/config,
+launcher, Game binary, fonts and1,999 tracked code files are preserved.
+
+Authoritative frozen reports: expanded/mainmenu-complete-20261015/category-final.json,
+independent-native-runtime-visual-review-final.json and portable-evidence-relocations.json.
+Raw/source/reference/prompt/numeric files are ordinary Git assets; private QA
+PNG/BMP/HTML and built RES remain local. Remaining verified sources outside the
+shared queue828 (UI545); other categories remain paused.
