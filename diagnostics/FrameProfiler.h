@@ -14,7 +14,8 @@ enum Stage { App, Events, Interface, World, Scene, UI, Present, Submit,
   GeometryIB, GeometryFlush, GeometryRename, IndexBounds, DrawFlush, RenderApply,
   SceneHSR, SceneList, SceneLights, SceneExecute, SceneTransparent, UIPortraits,
   SceneSort, SceneTriangles, CPUVertexCombine, CPUIndexCombine, CPUPositionTransform,
-  CPUMeshCombine, CPULightmapCombine, CPUOtherCombine, Count };
+  CPUMeshCombine, CPULightmapCombine, CPUOtherCombine,
+  NetSegment, NetSnapshot, NetGraph, NetApply, NetEncode, NetHandle, NetSerializer, NetReconstruct, Count };
 inline const char* Name(int i) {
   static const char* names[] = {"app","events","interface","world","scene","ui",
     "present","submit","vertex_pack","head","morph","face_texture",
@@ -22,7 +23,8 @@ inline const char* Name(int i) {
     "geometry_vb","geometry_ib","geometry_flush","geometry_rename","index_bounds","draw_flush","render_apply",
     "scene_hsr","scene_list","scene_lights","scene_execute","scene_transparent","ui_portraits",
     "scene_sort","scene_triangles","cpu_vertex_combine","cpu_index_combine","cpu_position_transform",
-    "cpu_mesh_combine","cpu_lightmap_combine","cpu_other_combine"};
+    "cpu_mesh_combine","cpu_lightmap_combine","cpu_other_combine",
+    "net_segment","net_snapshot","net_graph","net_apply","net_encode","net_handle","net_serializer","net_reconstruct"};
   return names[i];
 }
 using Clock = std::chrono::steady_clock;

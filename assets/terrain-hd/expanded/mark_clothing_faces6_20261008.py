@@ -1,0 +1,15 @@
+from pathlib import Path
+import subprocess,sys
+B=Path(__file__).resolve().parent
+ready={
+2005:'Full raw and corrected canvas viewed; original tall camouflage patch footprints, center black angular opening, two source belt strips, buckle and source side stud groups retained. Fine painted washes refined without new cloth weave. Side hardware contrast stronger but remains original count and locations.',
+3924:'Full raw and corrected canvas viewed; existing hooded upside-down face, two round eye marks, gray rim, angular tan camouflage and original upper leaf cluster retained. Leaf paint stronger within existing cluster, no new separate clusters; complete source alpha restored.',
+4366:'Full raw and corrected canvas viewed; source upside-down tan-pink face, closed small mouth, eyes, ear, top dark glove fields and jagged dark brown hair retained. Fine painted hair highlights refined, no new anatomy or photographic skin pores.',
+4443:'Full raw and corrected canvas viewed; source soft upside-down tan face, closed mouth, weak eyes, ear, two four-band hand groups and original dark brown jagged hair map retained. Fine painted hair highlights stronger without new objects or anatomy.',
+4449:'Full raw and corrected canvas viewed; original upside-down hooded face, round eye marks, gray hood rim, source upper/middle/right leafy cluster placements and four-band hands retained. Individual leaf paint more defined within source clusters, complete selected source alpha restored.',
+4504:'Full raw and corrected canvas viewed; source upside-down face, closed little mouth, eye marks, ear, top hand bands and jagged dark brown hair map retained. Fine painted hair shading stronger with source dark/light relationship maintained.',
+5729:'Full raw and corrected canvas viewed; large source field stays nearly flat brown, no invented face, hair or anatomy. Existing small ear, two hand-band groups, tiny angled dark field and source black gaps retained. Only weak painted modulation added inside original fields.',
+6365:'Full raw and corrected canvas viewed; very dim source brown face and dark hair remain dim with soft original facial marks, ear, hand bands and closed mouth. Fine paint more defined without new teeth, facial wrinkles or objects.',
+6431:'Full raw and corrected canvas viewed; actual primary-source upside-down face, dark glove fields, ear, little closed mouth and jagged dark brown hair retained. Fine painted hair highlights stronger but no new objects or pores.'}
+for i,r in ready.items():subprocess.run([sys.executable,str(B/'work_clothing_complete_20261008.py'),'mark',str(i),'v1','ready',r],check=True)
+for i in [1870,2933,3256,3306]:subprocess.run([sys.executable,str(B/'work_clothing_complete_20261008.py'),'mark',str(i),'v1','held','Full raw and corrected canvas viewed; panel layout broad retained but new granular metal wear, overly defined chips/rims and small hardware reinterpretation change source softly painted material. Conservative artistic repair prepared.'],check=True)

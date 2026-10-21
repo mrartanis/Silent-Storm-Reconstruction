@@ -94,6 +94,8 @@ target_link_libraries(s2_full_Main PUBLIC s2_portable_effects s2_vector_fonts s2
 s2_copy_fonts(Game)
 include("${root}/cmake/HDTextures.cmake")
 s2_build_hd_textures(Game)
+include("${root}/cmake/NetworkIdentity.cmake")
+s2_build_network_identity(Game)
 target_link_libraries(s2_full_ADOImport PUBLIC s2_portable_database)
 add_dependencies(s2_full_Main S2BgfxShaders)
 find_package(ZLIB REQUIRED)

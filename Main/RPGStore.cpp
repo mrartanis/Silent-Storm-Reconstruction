@@ -189,6 +189,12 @@ void CStore::Take( IInventoryItem *item )
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+bool CStore::TakeNetworkItem(IInventoryItem* item) {
+  const auto saved=eFilter;
+  for(int category=0;category<FLT_MAXVALUE;++category)for(const auto& entry:itemsMapsSet[category]->GetItems())
+    if(entry.pItem.GetPtr()==item){eFilter=static_cast<EStoreFilter>(category);Take(item);eFilter=saved;return true;}
+  return false;
+}
 // @0x2b0da0. Stock firearms form one row each. The weapon occupies the left side and freshly-created
 // compatible clips fill the unused cells to its right. Equipped squad weapons use bForce=true, which
 // suppresses the weapon itself and contributes only its ammunition to the vendor map.
@@ -220,6 +226,9 @@ void CStore::PlaceItem( SStoreItem *pRow, bool bWeapon, bool bForce, const CTPoi
 		{
 			const CTPoint<int> &sWeaponSize = pItem->GetSize();
 			CTPoint<int> sMapSize = pMap->GetSize();
+			// The unrestricted network catalog includes human weapons wider than
+			// the retail shop's ten columns. Grow before the unchecked grid stamp.
+			sMapSize.x = Max( sMapSize.x, sWeaponSize.x );
 			pMap->SetSize( sMapSize.x, Max( sMapSize.y, nBottom + sWeaponSize.y ) );
 
 			int nClipX = 0;

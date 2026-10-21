@@ -98,6 +98,7 @@ public:
 	SDeployData deployData;
 	CObj<CStore> pStore;			// retail +0x28, save tag 3: the per-player vendor stock model (RPGStore.h)
 	bool bAIPlayer = false;			// retail +0x54, save tag 8: AI-controlled player flag (retail ctor @0x29a7c0 clears it)
+	int networkSupplyLevel = 0; // transient, network preparation only; never changes campaign saves
 	int nMoney = 0;		// the player's cash (release: read by the Player*Money script bindings)
 	// (the Jan03 transient storeItemsList is GONE -- the store stock lives on pStore->itemsSet,
 	// serialized at tag 3 like retail; wMain.cpp's store flow operates on it directly.)

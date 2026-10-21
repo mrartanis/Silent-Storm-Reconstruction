@@ -88,6 +88,26 @@ cmake --build build --config Release
 Результаты появятся в **`build\Release\`** - `Game.exe` и инструменты (`DataImport`,
 `PkgBuilder`, `FontGen`, `TexConv`, `TexMipStrip`, `ShaderCompiler`).
 
+`build.bat`, `build-debug.bat` и игровые скрипты в `diagnostics` включают
+HD-текстуры по умолчанию. Переносите каталог `res-hd` вместе с `Game.exe`.
+`Build-Lab.ps1` также включает проверенный HD-пак в архив сборки;
+для явного отключения используйте `-NoHDTextures`.
+
+Для самодостаточного Windows x64 архива с игровыми данными и HD-паком:
+
+```powershell
+python diagnostics/Package-Game.py --game-data C:/Games/SilentStorm --build build/Release --crt-runtime "C:/Path/To/VC/Redist/MSVC/14.44.35112/x64/Microsoft.VC143.CRT" --output SilentStorm-Windows-x64.7z
+```
+
+Укажите каталог готовой сборки и каталог библиотек Visual C++ x64 из Visual
+Studio и установите 7-Zip. Для `.7z` используется непрерывное сжатие LZMA2,
+уровень 9, словарь 512 МиБ; `--dictionary-mib 1024` увеличивает словарь.
+Распаковка требует память под выбранный словарь. Рядом остаётся готовая
+распакованная сборка. Расширение `.zip` выбирает прежний ZIP-формат.
+Упаковщик проверяет все части HD-пака и целостность архива, добавляет
+`Play.cmd`, инструкцию и контрольную сумму. Отсутствующий или повреждённый
+HD-пак останавливает упаковку. Опция `--no-hd-textures` отключает его явно.
+
 Для отладки запустите **`build-debug.bat`** (собирает конфигурацию `RelWithDebInfo`),
 откройте **`build\A5.sln`** в Visual Studio и запустите отладку проекта `Game`.
 CMake попытается подсунуть вашу папку с игрой в рабочий каталог отладчика, если

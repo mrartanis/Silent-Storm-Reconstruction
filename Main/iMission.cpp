@@ -177,8 +177,22 @@ bool CMission::InitializeNetwork(std::shared_ptr<S2Net::NetworkWorld> world, std
 	bCanSave = false; bCanRestart = false;
 	networkWorld->BindSession(networkSession);
 	pWorld = networkWorld->Match().world.GetPtr();
-	return Initialize(networkWorld->Match().templateID,networkWorld->Match().variantID,
+	bool ok=Initialize(networkWorld->Match().templateID,networkWorld->Match().variantID,
 		nullptr,vector<string>(),networkWorld->Match().game);
+  if(ok && networkWorld->IsPreparing())networkPreparationControls=CreateNetworkPreparationControls(this,networkWorld,networkSession);
+  return ok;
+}
+bool CMission::OpenNetworkBaseService(NWorld::CUnit* target)
+{
+  if(!networkWorld || !networkWorld->IsPreparing())return false;
+  const auto& staff=networkWorld->Match().baseServices;
+  for(size_t role=0;role<staff.size();++role)if(staff[role].GetPtr()==target) {
+    if(role==0)networkPreparationControls->SendMessage(networkPreparationControls,NUI::SEvent(NUI::EVENT_NOTIFY,"net_base_roster"));
+    if(role==1)networkSession->Submit(networkWorld->PreparationCommand(S2Net::PreparationAction::Heal));
+    if(role==2)SetPanelState(PANEL_STORE|PANEL_INVENTORY,true);
+    return true;
+  }
+  return false;
 }
 void CMission::StopAction()
 {
@@ -337,7 +351,7 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 	bUpdated = false;
 	bForceUpdateNextFrame = true;
 
-	NDb::CAmbientLightReal *pLight = GetWorld()->GetDefaultLight();
+	NDb::CAmbientLightReal *pLight = networkWorld?networkWorld->Match().ambient.GetPtr():GetWorld()->GetDefaultLight();
 	if ( pLight )
 		GetScene()->SetAmbient( pLight );
 	else
@@ -482,7 +496,12 @@ bool CMission::Initialize( int _nTemplateID, int _nVariantID, NScenario::CScenar
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::Terminate()
 {
-	if (networkSession) { networkSession->Finish("Player left"); return; }
+	if (networkSession) {
+		// A roster rebuild or the agreed battle start replaces the scene while
+		// retaining the same connection. Leaving the active scene ends it.
+		if (pWorld.GetPtr()==networkWorld->Match().world.GetPtr())networkSession->Finish("Player left");
+		return;
+	}
 	// retail @0x1fbc30: save this zone's world for re-entry ONLY when it is the scenario base,
 	// a linked (multi-template) zone, or the script enabled the "reenter" feature. Carried
 	// corpses are dropped from the world first (they leave in their carrier's arms), then the
@@ -516,7 +535,7 @@ void CMission::DoEvent( NWorld::CCommand *pCmd )
 	if (networkSession && dynamic_cast<NWorld::CCmdCallScriptFunction*>(pCmd)) {
 		CObj<NWorld::CCommand> hold(pCmd);return;
 	}
-	if (networkSession && networkSession->LocalSlot()!=0 && dynamic_cast<NWorld::CCmdInterfaceEvent*>(pCmd)) {
+	if (networkSession && networkSession->LocalSlot()!=0 && !networkWorld->IsPreparing() && dynamic_cast<NWorld::CCmdInterfaceEvent*>(pCmd)) {
 		CObj<NWorld::CCommand> hold(pCmd);return;
 	}
 	if (networkSession) { networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return; }
@@ -670,7 +689,7 @@ bool CMission::CanDoCommand( NWorld::CCommand *pCmd )
 {
 	CObj<NWorld::CCommand> pHold( pCmd );
 	if ( CDynamicCast<NWorld::CCmdEndOfTurn>( pCmd ) )
-		return GetUITime() - tLastCurrentPlayerChange > 2000;
+		return !(networkWorld && networkWorld->IsPreparing()) && GetUITime() - tLastCurrentPlayerChange > 2000;
 
 	return true;
 }
@@ -1174,10 +1193,11 @@ void CMission::Step()
 	if (networkSession)
 	{
 		networkSession->Poll();
+    if(pWorld.GetPtr()!=networkWorld->Match().world.GetPtr()){OpenNetworkMission(networkWorld,networkSession);return;}
 		if(networkWorld->TakePreviewUpdated())bForceUpdateNextFrame=true;
 		auto error=networkWorld->TakeCommandError();
 		if(error!=NWorld::UCR_OK)ShowError(this,error);
-		if (networkSession->IsHost() && networkSession->State() == S2Net::SessionState::Playing)
+		if (!networkWorld->IsPreparing() && networkSession->IsHost() && networkSession->State() == S2Net::SessionState::Playing)
 		{
 			int winner = networkWorld->Match().Winner();
 			if (winner != -2) networkSession->Finish(winner == -1 ? "Draw" : winner == 0 ? "Host won" : "Client won");

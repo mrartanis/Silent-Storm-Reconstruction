@@ -539,6 +539,7 @@ bool CStateFriend::OnLButtonUp( int nX, int nY )
 		return true;
 
 	// retail CStateFriend::OnLButtonUp @0x1d9b70: probe whether a hero can talk to the target. On
+	if(GetMission()->OpenNetworkBaseService(pUnit))return true;
 	// UCR_OK issue CCmdTalk to every selected unit (start the dialog); on UCR_NOT_HERO (0x13) issue
 	// CCmdNotHeroWantsToTalk to each instead -- that fires the CAckNPCInteraction bark rather than talk.
 	SActionInfo sInfo;

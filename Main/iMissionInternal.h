@@ -89,6 +89,7 @@ class CMission: public CMissionBase
   std::shared_ptr<S2Net::NetworkSession> networkSession;
   bool networkLeaveRequested = false;
   std::shared_ptr<S2Net::NetworkWorld> networkWorld;
+  CObj<NUI::CWindow> networkPreparationControls;
 private:
 	NInput::CBind bindStartOfTurn, bindEndOfTurn, bindNextEnemy; 
 	NInput::CBind bindSaveMenu, bindLoadMenu; 
@@ -236,6 +237,7 @@ public:
 	NDb::CString* GetLeaveBlockReason() const { return pBlockReason; }
 	virtual bool IsSpecialFirstMissionMode() const { return bSpecialFirstMissionMode; }	// retail @0x19def0 (mission vtbl+0xf8)
 	void OnSnapshotRestored();	// restart.sav in-place resume: rebuild building shells + camera height source
+	bool OpenNetworkBaseService(NWorld::CUnit*) override;
 	// retail NGame::CMission::operator& @0x1a03a0 -- tag 1 = the CMissionBase chunk (non-virtual
 	// base chain), own tags 2..39 with the retail gaps at 27/35 preserved
 	ZEND int operator&( CStructureSaver &f ) { f.Add(1,(CMissionBase*)this); f.Add(2,&nTemplateID); f.Add(3,&nVariantID); f.Add(4,&pZone); f.Add(5,&bUpdated); f.Add(6,&bForceUpdateNextFrame); f.Add(7,&pState); f.Add(8,&pStateTarget); f.Add(9,&updatedStatesSet); f.Add(10,&bTrackIsReady); f.Add(11,&bTrackActionExecuted); f.Add(12,&pTrackTarget); f.Add(13,&pTrackPlayerInHand); f.Add(14,&pTrackPlayer); f.Add(15,&selectedUnits); f.Add(16,&actionsInfoSet); f.Add(17,&nSequence); f.Add(18,&nFramesSameCameraPosition); f.Add(19,&vPrevCameraPosition); f.Add(20,&rTraceRay); f.Add(21,&sTraceResult); f.Add(22,&nPanelsState); f.Add(23,&eActionIconsSet); f.Add(24,&pLightSource); f.Add(25,&pIntersectHolder); f.Add(26,&testWeatherEffect); f.Add(28,&pVisibleTracker); f.Add(29,&pIntersectLineHolder); f.Add(30,&buildingSchemas); f.Add(31,&bLoseSignalSended); f.Add(32,&bLeaveBlockedByScript); f.Add(33,&pBlockReason); f.Add(34,&bSpecialFirstMissionMode); f.Add(36,&bScenarioGameOver); f.Add(37,&pPWLImage); f.Add(38,&pPrevCurrentPlayer); f.Add(39,&bEnableFeatureReenter); return 0; }

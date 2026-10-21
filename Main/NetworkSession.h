@@ -3,6 +3,7 @@
 #include <chrono>
 #include <functional>
 #include <map>
+#include <deque>
 
 namespace S2Net {
 enum class SessionState { Idle, Waiting, Connecting, Loading, Playing, Finishing, Finished, Failed };
@@ -32,6 +33,8 @@ class NetworkSession {
   std::uint64_t nextRequest=1, nextEvent=1, lastEvent=0, lastCommand=0, lastQuery=0;
   std::map<std::uint64_t,Bytes> commandResults;
   std::map<std::uint64_t,bool> pending;
+  std::deque<Packet> incoming;
+  std::size_t incomingBytes=0;
   std::chrono::steady_clock::time_point deadline,nextTick,finishDeadline;
   std::chrono::steady_clock::time_point lastDiagnostic;
   void Log(const std::string&) const;

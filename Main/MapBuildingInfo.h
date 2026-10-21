@@ -36,6 +36,7 @@ struct SMapBuilding
 		CVec3 color;
 		int nFloor;
 		bool bLightmap;
+		int operator&(CStructureSaver &f) { f.Add(2,&color); f.Add(3,&nFloor); f.Add(4,&bLightmap); return 0; }
 	};
 
 	CDBPtr<NDb::CTemplVariant> pVariant;
@@ -72,6 +73,9 @@ struct SMapBuilding
 		f.Add( 5, &pSWMap );
 		f.Add( 6, &stories );
 		f.Add( 7, &ptAlignTo );
+		// Retail saves rebuild these runtime lights. A network replica must
+		// receive the server's exact room lighting before its first scene build.
+		if (f.IsNetwork()) f.Add(8, &lights);
 		return 0;
 	}
 };

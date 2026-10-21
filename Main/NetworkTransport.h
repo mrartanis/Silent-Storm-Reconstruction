@@ -6,7 +6,7 @@
 
 namespace S2Net {
 using Bytes = std::vector<std::uint8_t>;
-constexpr std::uint32_t ProtocolVersion = 2;
+constexpr std::uint32_t ProtocolVersion = 4;
 constexpr std::uint16_t DefaultPort = 7780;
 enum class Message : std::uint32_t {
   Hello = 1, Welcome, Initial, Ready, State, Command, CommandResult,

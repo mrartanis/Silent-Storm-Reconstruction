@@ -6,6 +6,11 @@
 #include <climits>
 #include <stdexcept>
 #include <unordered_set>
+#pragma push_macro("for")
+#undef for
+#include <chrono>
+#include <cstdlib>
+#pragma pop_macro("for")
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // save-load load-trace diagnostic (dev harness) -- see BasicChunk1.h
 bool g_bSaveLoadDiag = false;
@@ -492,19 +497,33 @@ void CStructureSaver::StoreObject( CObjectBase *pObject )
 	std::uint32_t wireID = 0;
 	if (network && pObject)
 	{
+		if (network->externalReferences && network->externalRegistry)
+		{
+			auto found = network->externalRegistry->ids.find(pObject);
+			if (found != network->externalRegistry->ids.end())
+			{
+				wireID = found->second;
+				RawData(&wireID, 4);
+				return;
+			}
+		}
 		if (network->externalReferences && network->ids.count(pObject))
 		{
 			wireID = network->ids.at(pObject);
 			RawData(&wireID, 4);
 			return;
 		}
-		if (network->include && !network->include(pObject)) pObject = nullptr;
 	}
 	if ( pObject != 0 )
 	{
 		CPObjectsHash::iterator it = storedObjects.find( pObject );
 		if ( it == storedObjects.end() )
 		{
+			// Repeated references were already admitted during this save.
+			if (network && network->include && !network->include(pObject)) {
+				RawData(&wireID, 4);
+				return;
+			}
 			if ( nextWireID == 0 )
 				throw SFileIOError( "too many serialized objects" );
 			wireID = network ? network->Identify(pObject) : nextWireID++;
@@ -526,6 +545,16 @@ CObjectBase* CStructureSaver::LoadObject()
 		CObjectsHash::iterator pFound = objects.find( wireID );
 		if ( pFound != objects.end() )
 			return pFound->second;
+		if (network && network->externalReferences)
+		{
+			auto found = network->refs.find(wireID);
+			if (found != network->refs.end()) return found->second;
+			if (network->externalRegistry)
+			{
+				auto external = network->externalRegistry->refs.find(wireID);
+				if (external != network->externalRegistry->refs.end()) return external->second;
+			}
+		}
 		if (network) throw SFileIOError("unresolved network object reference");
 		ASSERT(0);
 		// here  we are in problem - stored object does not exist
@@ -536,8 +565,9 @@ CObjectBase* CStructureSaver::LoadObject()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CStructureSaver::StartChunk( const chunk_id idChunk, int nChunkNumber )
 {
-	CChunkLevel &last = chunks.back();
 	chunks.push_back(CChunkLevel());
+	// push_back may reallocate the stack; acquire the parent afterwards.
+	CChunkLevel &last = chunks[chunks.size()-2];
 	if ( IsReading() )
 	{
 		bool bRes = GetShortChunk( last, idChunk, chunks.back(), nChunkNumber );
@@ -627,12 +657,11 @@ void CStructureSaver::Start( bool bRead )
 	CDataStream &res = destStream;
 	//
 	chunks.clear();
+	chunks.reserve(32);
 	obj.Clear();
 	data.Clear();
 	chunks.push_back(CChunkLevel());
 	bIsReading = bRead;
-	if (network && bRead && network->externalReferences)
-		objects = network->refs;
 	if ( g_bWireAudit && bRead )
 	{
 		NWireAudit::frames.clear();
@@ -688,7 +717,8 @@ void CStructureSaver::Start( bool bRead )
 			if (network && network->externalReferences && !bValid)
 				throw SFileIOError("external packet contains an invalid object");
 			if (network && network->externalReferences &&
-				(wireID < 0x80000000u || objects.count(wireID)))
+				(wireID < 0x80000000u || objects.count(wireID) || network->refs.count(wireID) ||
+				 (network->externalRegistry && network->externalRegistry->refs.count(wireID))))
 				throw SFileIOError("external packet redefines a world object");
 			if (network && (!wireID || (!network->externalReferences && objects.count(wireID))))
 				throw SFileIOError("duplicate or zero network object ID");
@@ -819,6 +849,13 @@ void CStructureSaver::Finish()
 	ASSERT( chunks.size() == 1 );
 	if ( !IsReading() )
 	{
+		// Opt-in diagnostic, bounded to a few snapshots; never enabled in normal
+		// play. Attribute native world serialization cost to concrete classes.
+		static thread_local unsigned profileSnapshots = 0;
+		const bool profile = network && !network->externalReferences &&
+			std::getenv("S2_NETWORK_SERIALIZER_PROFILE") && profileSnapshots < 12;
+		struct SProfile { double ms=0; unsigned count=0; std::size_t bytes=0; };
+		std::map<const std::type_info*,SProfile> profiles;
 		// Retail Finish (v1.2 0x812a53..0x812a85): version is a separate, unpacked chunk.
 		// Payloads remain unpacked here, so no compression marker (chunk 3) is emitted.
 		CMemoryStream version;
@@ -833,10 +870,9 @@ void CStructureSaver::Finish()
 		// store referenced objects
 		data.Clear();
 		chunks.back().Clear();
-		for ( int nObject = 1; !toStore.empty(); ++nObject )
+		for ( int nObject = 1; static_cast<std::size_t>(nObject) <= toStore.size(); ++nObject )
 		{
-			CObjectBase *pObject = toStore.front();
-			toStore.pop_front();
+			CObjectBase *pObject = toStore[nObject-1];
 			// save object type and its server pointer
 			int nTypeID = pSSClasses->GetObjectTypeID( pObject );
 			bool bValid = IsValid( pObject );
@@ -857,7 +893,13 @@ void CStructureSaver::Finish()
 			//
 			if ( StartChunk( 1, 1 ) )
 			{
+				const auto started = profile ? std::chrono::steady_clock::now() : std::chrono::steady_clock::time_point();
+				const int before = data.GetSize();
 				(*pObject)&( *this );
+				if(profile) {
+					const double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-started).count();
+					auto& row=profiles[&typeid(*pObject)];row.ms+=ms;++row.count;row.bytes+=data.GetSize()-before;
+				}
 				FinishChunk();
 			}
 			FinishChunk();
@@ -866,6 +908,14 @@ void CStructureSaver::Finish()
 		WriteShortChunkSave( res, 0, obj );
 		AlignDataFileSize();
 		WriteShortChunkSave( res, 2, data );
+		if(profile) {
+			if(auto* output=std::fopen("_network_serialization_profile.tsv","a")) {
+				for(const auto& entry:profiles)std::fprintf(output,"%u\t%s\t%u\t%.6f\t%zu\n",
+					profileSnapshots,entry.first->name(),entry.second.count,entry.second.ms,entry.second.bytes);
+				std::fclose(output);
+			}
+			++profileSnapshots;
+		}
 	}
 	if (network && IsReading() && !network->externalReferences)
 	{

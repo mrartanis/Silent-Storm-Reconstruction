@@ -1,0 +1,1150 @@
+[
+  {
+    "id": 5023,
+    "known_native_count_weak_phase": "Warm diagonal brown/gray weapon assembly on green authoringfield with several lower pale strips and upper dark rectangular fields. Thin lane/connector count not proven; actual UI622 rifle storebutton. Genuine pending no mechanical invention.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "7e855ca7b80fc4d517db48149ad1d64ba12ddff5ef56783f7d699204eea2203a",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "7783f12b5185122e4229e3c0fa7070ecb82213c930d4768da0fcec8c310db564",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5023,
+      "actual_UITexture_records": [
+        {
+          "ID": 622,
+          "R_800x600": 0,
+          "R_1024x768": 5023,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Rifles"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5026,
+    "known_native_count_weak_phase": "Dimgrayscale corresponding diagonal assembly, multiple thin pale/dark lanes and small junctionwash. Precise native lane/connector count not confidently proven. Actual UI623 rifle disabled Store365; genuine pending.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "372b22074dd76e3f9b19c07ccf8d9e0493f82a4b59c5d0d6c62ae62ade757c7e",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "000e3b05103d50f3ff5de6bcbdafe0c3c6abb48cb2092b4037d8b16a157721c5",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5026,
+      "actual_UITexture_records": [
+        {
+          "ID": 623,
+          "R_800x600": 0,
+          "R_1024x768": 5026,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Rifles Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5028,
+    "known_native_count_weak_phase": "Diagonal brown body/gray lowerband with upper tilted gray bright patch and thin dark loopwash on greenfield. Tiny lane/dot/loop boundaries unresolved, actual UI624SMG Store361. Genuine pending, no sourcepixelblock interpretedhardware.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "695c6cef0e2bd77c927beaf03e0b219f7881a79b5d182a17503e62ef6e87b7ec",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "24ab56ddd03ef2304b445ebb5cff02a63faa193fa34302a4d2c8d1e092517dfd",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5028,
+      "actual_UITexture_records": [
+        {
+          "ID": 624,
+          "R_800x600": 0,
+          "R_1024x768": 5028,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store SMGs"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5030,
+    "known_native_count_weak_phase": "Dimgray long diagonal body, one small tilted pale upper-right field plus dark loop/gray lowerband. Full tinyjunction count uncertain; actual UI625SMG disabled Store361. Genuine pending.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "5cde67c97914e3414ea506b92fe31e48790aebc8d9bf2b0595924f33fabc0010",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "7cb39e307a2860cb896ec1c82dbb8505aae002ad7ce9f1e8ae492262ccc47d4d",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5030,
+      "actual_UITexture_records": [
+        {
+          "ID": 625,
+          "R_800x600": 0,
+          "R_1024x768": 5030,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store SMGs Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5032,
+    "known_native_count_weak_phase": "Two dimgray elongated painted fields upper and lower with faint dark connecting forms/one lower dark loop. Thin slots/lanes/connector phase insufficiently proved. Actual UI627heavyWeapon disabled Store375. Genuine pending no new vents/triggerparts.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "c197492331d21982bdbc4b092055b287887ab554cd4743a3a780b4bf6bc9a764",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "db972064c354990e611fb273d6a6f33027e2934318749415c087dc296c2aab17",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5032,
+      "actual_UITexture_records": [
+        {
+          "ID": 627,
+          "R_800x600": 0,
+          "R_1024x768": 5032,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Heavy Weapons Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5035,
+    "known_native_count_weak_phase": "One muted blue-black rounded oval body on greenfield, scattered pale-gray marks and thin right-side gray band with lower pale endpoint. Exact internal cell/rib/highlight phase not proven, actual UI630grenades Store369. Genuine pending, no guessed grids.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "0dcc0841ed0220a951e964578864b987bdffe69aa96f9ef1fce3bc72c4e72326",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "e5bfbed83087eb0f753f396ec01b969cdca1a3876b2a0e47cabc1993c8b75c6f",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5035,
+      "actual_UITexture_records": [
+        {
+          "ID": 630,
+          "R_800x600": 0,
+          "R_1024x768": 5035,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Grenades"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json",
+        "source-check-ui-twenty-seventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json",
+      "source-check-ui-twenty-seventh.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5036,
+    "known_native_count_weak_phase": "One dimgray oval mass with several palegray patches and thin right/bottom band; exact interior patch/cell count unproven at native48. UI631grenades disabled Store369. Genuine pending without regularizing geometry.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "9251c8be2cf21fa39f49875ead992078d3a67980bd26430b0cc7e2019f7fe3ee",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "fa16584492deb4d26472f1fc88aaa1bad2beff888d76ada99112e16ff0159e4d",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5036,
+      "actual_UITexture_records": [
+        {
+          "ID": 631,
+          "R_800x600": 0,
+          "R_1024x768": 5036,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Grenades Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5037,
+    "known_native_count_weak_phase": "Exactly ONE broad beige-gray rounded trapezoidal painted body wash, ONE curved dark tan/gray upper strap-like band/wash and ONE tiny original pale cool-gray dot at the left bodyedge. Preserve all original existing lower-left dark folds/edgewash, upper-right unequal lightpatches and entire muted green/brown authoringfield. Full native48/sourceA0..255/fullUV/soft mattepaint/nativepatternscale. Actual UI632Other Store363. No new buckle/button/hardware/fabric weave, no physical reinterpretation of weak patches. Both resourceIDs checked BEFORE: i fmt6 exacthistorical/release/original; release+historical aliasabsent; actual Format8888→bIsDXTfalse→selector i at usedxt0.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "b286d8cc0a33c3a7ce2210da962cc19f121ee2f60647b494f0fcc724fdca5115",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "30a5cdb222fbd30dc5aea3ebe470bd37a6e2c0ab3b843758d7b8f8e5cc322715",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5037,
+      "actual_UITexture_records": [
+        {
+          "ID": 632,
+          "R_800x600": 0,
+          "R_1024x768": 5037,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store Other"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-sixty-eighth.json",
+        "source-check-ui-twenty-seventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-sixty-eighth.json",
+      "source-check-ui-twenty-seventh.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5039,
+    "known_native_count_weak_phase": "One dark round lower-right assembly with two curved pale parallel bands and several small upper-left gray forks/lanes on greenfield. Full tiny count/endpoint phase not proved. Actual UI634PKWeapons Store373. Genuine pending no new chambers/gears.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "ced0c75587c866033c8c14d3e7f3ff4fc097baed4a4d223dc8d3e5bbd1385b65",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "dace653cbe7bbce5ddc82743fb8ab9ea8c4d2ad7903b06dc1e735b66a935f6c1",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5039,
+      "actual_UITexture_records": [
+        {
+          "ID": 634,
+          "R_800x600": 0,
+          "R_1024x768": 5039,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store PKWeapons"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-seventieth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-seventieth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5040,
+    "known_native_count_weak_phase": "Dimgray corresponding lower-right rounded wash/two pale bands with multiple upper-left junctionstrokes, source48. Exact tinyfork count/phase unresolved. Actual UI635PKWeapons disabled Store373; genuine pending.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "a7e80d0e1c6313eaff51fad488b77c66ad882af9659ceb3004e2ae4436bd676c",
+    "sourceA_sha256": "be6b405f13b29ad12d9f6c3dcf4236273a11289a632fe0db5ba83916dc14fb42",
+    "sourcePNG_sha256": "ed098f120a5945bf4300ded563e07f89d6d27e35a8d70ba34f41b108e88b2c5f",
+    "dimensions": [
+      48,
+      48
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      4,
+      4,
+      44,
+      44
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5040,
+      "actual_UITexture_records": [
+        {
+          "ID": 635,
+          "R_800x600": 0,
+          "R_1024x768": 5040,
+          "R_1280x960": 0,
+          "R_1600x1200": 0,
+          "UserName": "Store PKWeapons Disabled"
+        }
+      ],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/iStorePanel.cpp",
+          "first_line": 355,
+          "last_line": 375,
+          "source_excerpt": "355: \t\t}\n356: \tcase EVENT_TEMPLATELOAD:\n357: \t\t{\n358: \t\t\tpStoreSlotView = new CSlotScroll( sEvent.pLoader->GetControl( \"slot\" ), pMission );\n359: \n360: \t\t\tpSMG = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"submachinegun\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n361: \t\t\tpSMG->Set( NDb::GetUITexture( 624 ), NDb::GetUITexture( 625 ), CComplexButton::UNCHECKED );\n362: \t\t\tpOthers = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"others\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n363: \t\t\tpOthers->Set( NDb::GetUITexture( 632 ), NDb::GetUITexture( 633 ), CComplexButton::UNCHECKED );\n364: \t\t\tpRifles = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"rifles\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n365: \t\t\tpRifles->Set( NDb::GetUITexture( 622 ), NDb::GetUITexture( 623 ), CComplexButton::UNCHECKED );\n366: \t\t\tpPistols = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pistols\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n367: \t\t\tpPistols->Set( NDb::GetUITexture( 620 ), NDb::GetUITexture( 621 ), CComplexButton::UNCHECKED );\n368: \t\t\tpGrenades = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"grenades\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n369: \t\t\tpGrenades->Set( NDb::GetUITexture( 630 ), NDb::GetUITexture( 631 ), CComplexButton::UNCHECKED );\n370: \t\t\tpColdSteel = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"coldsteel\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n371: \t\t\tpColdSteel->Set( NDb::GetUITexture( 628 ), NDb::GetUITexture( 629 ), CComplexButton::UNCHECKED );\n372: \t\t\tpPKWeapons = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"pkweapons\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n373: \t\t\tpPKWeapons->Set( NDb::GetUITexture( 634 ), NDb::GetUITexture( 635 ), CComplexButton::UNCHECKED );\n374: \t\t\tpHeavyWeapon = new CComplexButtonFlash( sEvent.pLoader->GetControl( \"heavyweapon\" ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 352 ), NDb::GetUITexture( 566 ), NDb::GetUITexture( 408 ) );\n375: \t\t\tpHeavyWeapon->Set( NDb::GetUITexture( 626 ), NDb::GetUITexture( 627 ), CComplexButton::UNCHECKED );",
+          "sha256": "85d30897a8a8d24b8cc2d25940eace4820d0b10e38e6a74e422be6331f2d4659"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Precise UITexture ID explicitly fetched in the captured actual runtime code; typed registration to this source proven. Actual button normal/disabled Set, action CreateButtonв†’typed GetUITexture, or explicit AddImageState is captured individually. No current live scene visibility claim.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json",
+        "source-check-ui-seventieth.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json",
+      "source-check-ui-seventieth.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5043,
+    "known_native_count_weak_phase": "Exactly ONE authored yellow numeral2-shaped mirrored/rotated-looking stored contour on black32x64 canvas; one uniformyellowfill with darker outline and existing antialias. Source pixel orientation preserved, do not transform according to name. Actual transparent Material3189→Template2042→Model5172/Template3446→Geometry2323 Digit; UnitTracker332 chooses3444+nDigit for nDigit2 then CreateMesh356. Individual functional APdigit original-purpose recommendation rootpending; no glyph-category ban.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "c9399d59d8880a24721234ab8a2dde64483c0b211bb8bec7ab32a8a906a2f87b",
+    "sourceA_sha256": "5f0ad0c83802dbd69278c837dd225b269a9a2a46c5e1cc99e13d1f34d5d43177",
+    "sourcePNG_sha256": "a44117f96826b4ca2a298ad8a54405dadfa5d9a7fff2603e910e1546d9b1d0ed",
+    "dimensions": [
+      32,
+      64
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      2,
+      8,
+      30,
+      57
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5043,
+      "actual_UITexture_records": [],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/UnitTracker.cpp",
+          "first_line": 303,
+          "last_line": 356,
+          "source_excerpt": "303: \n304: \tint nValue = nTargetAP;\n305: \tCVec2 vSize( 0, 0 );\n306: \tdo\n307: \t{\n308: \t\tint nDigit = nValue % 10;\n309: \t\tnValue /= 10;\n310: \n311: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n312: \t\tif ( !IsValid( pDigit->pGeometry ) )\n313: \t\t\tcontinue;\n314: \n315: \t\tvSize.x += pDigit->pGeometry->boundSize.x;\n316: \t\tvSize.y = Max( vSize.y, pDigit->pGeometry->boundSize.y );\n317: \t} while( nValue > 0 );\n318: \n319: \tnValue = nTargetAP;\n320: \tCVec2 vShift = vSize / 2;\n321: \tdo\n322: \t{\n323: \t\tint nDigit = nValue % 10;\n324: \t\tnValue /= 10;\n325: \n326: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n327: \t\tif ( !pMission->IsRealTime() )\n328: \t\t{\n329: \t\t\tif ( !pRPG->CanSpendAP( points.back().nAP ) )\n330: \t\t\t\tpDigit = NDb::GetModel( 3454 + nDigit );\n331: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n332: \t\t\t\tpDigit = NDb::GetModel( 3444 + nDigit );\n333: \t\t}\n334: \n335: \t\tif ( !IsValid( pDigit->pGeometry ) )\n336: \t\t\tcontinue;\n337: \n338: \t\tconst CVec3 &vBounds = pDigit->pGeometry->boundSize;\n339: \n340: \t\tSHMatrix sTranslate, sRotate;\n341: \t\tIdentity( &sTranslate );\n342: \t\tsTranslate._14 = vShift.x - vBounds.x;\n343: \t\tsTranslate._24 = vShift.y;\n344: \t\tsTranslate._34 = 0.20f;\n345: \t\tMakeMatrix( &sRotate, CVec3( 0, 0, 0 ), vDir );\n346: \n347: \t\tSFBTransform sTransform;\n348: \t\tMultiply( &sTransform.forward, sRotate, sTranslate );\n349: \t\tsTransform.forward._14 += vTargetPos.x;\n350: \t\tsTransform.forward._24 += vTargetPos.y;\n351: \t\tsTransform.forward._34 += vTargetPos.z;\n352: \t\tInvertMatrix( &sTransform.backward, sTransform.forward );\n353: \n354: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n355: \t\tdigidGroupsSet.push_back( pGroup );\n356: \t\tdigidNodesSet.push_back( pScene->CreateMesh( pDigit, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );",
+          "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Actual typed Material to MaterialTemplate to Model/ModelTemplate chain resolves Template3446/3447 for stored2/3. UnitTracker332 GetModel3444+nDigit and CreateMesh356 prove AP path numeral consumption, not UITextures fetch and not worker live scene.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false,
+      "actual_typed_model_consumer_chain": [
+        {
+          "actual_material": {
+            "ID": 3189,
+            "TextureID": 5043,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2042,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2042,
+            "UserName": "2 Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5172,
+                "Material0": 2042,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3446,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3446,
+                "UserName": "2 Yellow"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ]
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  },
+  {
+    "id": 5044,
+    "known_native_count_weak_phase": "Exactly ONE authored yellow numeral3-shaped contour on black32x64 canvas, existing darkyellow outline and flatfill/alpha. Actual transparent Material3190→Template2043→Model5173/Template3447→Geometry2323 Digit; UnitTracker332 3444+nDigit for3/CreateMesh356. Individual functional APdigit original-purpose recommendation rootpending, sourcewholeglyph deliberately retained unchanged.",
+    "fullRGBA_RGB_A_wholeNN_privately_viewed": true,
+    "sourceRGBA_sha256": "821862a757e7f24a68aac91fe4afe922acebe04343765c4c6e903ed1cb1abb8f",
+    "sourceA_sha256": "a9895f011454c0276fc85c95d80213b8c31e666c1c4871ac58999e5541085865",
+    "sourcePNG_sha256": "cb08575538ce407c4ab031d5dc31fb1e03aa955661bec5f992033e18eb2dc73e",
+    "dimensions": [
+      32,
+      64
+    ],
+    "sourceA_extrema": [
+      0,
+      255
+    ],
+    "sourceA_positive_bbox": [
+      2,
+      7,
+      31,
+      57
+    ],
+    "actual_UI_consumer_proof": {
+      "id": 5044,
+      "actual_UITexture_records": [],
+      "actual_runtime_source_excerpts": [
+        {
+          "file": "DBFormat/DataInterface.h",
+          "first_line": 63,
+          "last_line": 80,
+          "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+          "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+        },
+        {
+          "file": "DBFormat/DataInterface.cpp",
+          "first_line": 117,
+          "last_line": 127,
+          "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+          "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+        },
+        {
+          "file": "Main/UnitTracker.cpp",
+          "first_line": 303,
+          "last_line": 356,
+          "source_excerpt": "303: \n304: \tint nValue = nTargetAP;\n305: \tCVec2 vSize( 0, 0 );\n306: \tdo\n307: \t{\n308: \t\tint nDigit = nValue % 10;\n309: \t\tnValue /= 10;\n310: \n311: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n312: \t\tif ( !IsValid( pDigit->pGeometry ) )\n313: \t\t\tcontinue;\n314: \n315: \t\tvSize.x += pDigit->pGeometry->boundSize.x;\n316: \t\tvSize.y = Max( vSize.y, pDigit->pGeometry->boundSize.y );\n317: \t} while( nValue > 0 );\n318: \n319: \tnValue = nTargetAP;\n320: \tCVec2 vShift = vSize / 2;\n321: \tdo\n322: \t{\n323: \t\tint nDigit = nValue % 10;\n324: \t\tnValue /= 10;\n325: \n326: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n327: \t\tif ( !pMission->IsRealTime() )\n328: \t\t{\n329: \t\t\tif ( !pRPG->CanSpendAP( points.back().nAP ) )\n330: \t\t\t\tpDigit = NDb::GetModel( 3454 + nDigit );\n331: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n332: \t\t\t\tpDigit = NDb::GetModel( 3444 + nDigit );\n333: \t\t}\n334: \n335: \t\tif ( !IsValid( pDigit->pGeometry ) )\n336: \t\t\tcontinue;\n337: \n338: \t\tconst CVec3 &vBounds = pDigit->pGeometry->boundSize;\n339: \n340: \t\tSHMatrix sTranslate, sRotate;\n341: \t\tIdentity( &sTranslate );\n342: \t\tsTranslate._14 = vShift.x - vBounds.x;\n343: \t\tsTranslate._24 = vShift.y;\n344: \t\tsTranslate._34 = 0.20f;\n345: \t\tMakeMatrix( &sRotate, CVec3( 0, 0, 0 ), vDir );\n346: \n347: \t\tSFBTransform sTransform;\n348: \t\tMultiply( &sTransform.forward, sRotate, sTranslate );\n349: \t\tsTransform.forward._14 += vTargetPos.x;\n350: \t\tsTransform.forward._24 += vTargetPos.y;\n351: \t\tsTransform.forward._34 += vTargetPos.z;\n352: \t\tInvertMatrix( &sTransform.backward, sTransform.forward );\n353: \n354: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n355: \t\tdigidGroupsSet.push_back( pGroup );\n356: \t\tdigidNodesSet.push_back( pScene->CreateMesh( pDigit, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );",
+          "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+        },
+        {
+          "file": "Main/iCommonUI.cpp",
+          "first_line": 253,
+          "last_line": 268,
+          "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+          "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+        }
+      ],
+      "precise_runtime_consumer_proven": true,
+      "consumer_qualification": "Actual typed Material to MaterialTemplate to Model/ModelTemplate chain resolves Template3446/3447 for stored2/3. UnitTracker332 GetModel3444+nDigit and CreateMesh356 prove AP path numeral consumption, not UITextures fetch and not worker live scene.",
+      "prior_source_only_scopes": [
+        "source-check-ui-eleventh.json"
+      ],
+      "prior_builtin_calls": 0,
+      "prior_catalogue_not_claimed_whole_viewed": true,
+      "current_live_scene_verified": false,
+      "actual_typed_model_consumer_chain": [
+        {
+          "actual_material": {
+            "ID": 3190,
+            "TextureID": 5044,
+            "BRDFID": 0,
+            "BumpID": 0,
+            "SpecColor": 0,
+            "TemplateID": 2043,
+            "GlossID": 0,
+            "MirrorID": 0,
+            "CastShadow": 0,
+            "SpecFactor": 0.0,
+            "RndWeight": 1.0,
+            "MetalMirror": 0.0,
+            "DielMirror": 0.0,
+            "Alpha": "transparent",
+            "AddressMode": "Clamp",
+            "Flags": ""
+          },
+          "actual_template": {
+            "ID": 2043,
+            "UserName": "3 Yellow"
+          },
+          "actual_model_consumers": [
+            {
+              "slot": "Material0",
+              "model": {
+                "ID": 5173,
+                "Material0": 2043,
+                "Material1": 0,
+                "GeometryID": 2323,
+                "Material2": 0,
+                "Material3": 0,
+                "SkeletonID": 0,
+                "TemplateID": 3447,
+                "RPGArmorID": 0,
+                "RndWeight": 1.0,
+                "Flags": ""
+              },
+              "model_template": {
+                "ID": 3447,
+                "UserName": "3 Yellow"
+              },
+              "geometry": {
+                "ID": 2323,
+                "AIGeometryID": 0,
+                "AIGeometry2ID": 0,
+                "TriCountMaterial1": 0,
+                "TriCountMaterial2": 0,
+                "SizeX": 0.15625,
+                "SizeY": 0.3125,
+                "SizeZ": 0.0,
+                "CenterX": 0.078125,
+                "CenterY": -0.15625,
+                "CenterZ": 0.0,
+                "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                "UserName": "Digit",
+                "RootJoint": "Digit"
+              }
+            }
+          ],
+          "actual_complexhead_hair_consumers": [],
+          "actual_transformablehair_consumers": [],
+          "direct_heads_material_consumers": [],
+          "direct_races_material_consumers": []
+        }
+      ]
+    },
+    "prior_source_only_audit_files": [
+      "source-check-ui-eleventh.json"
+    ],
+    "prior_builtin_calls": 0,
+    "current_live_scene_verified": false
+  }
+]

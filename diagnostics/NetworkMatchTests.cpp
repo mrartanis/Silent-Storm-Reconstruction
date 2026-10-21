@@ -7,20 +7,27 @@
 #endif
 #include "../Main/NetworkMatch.h"
 #include "../Main/NetworkWorld.h"
+#include "../Main/aiGrid.h"
 #include "../Main/GSceneUtils.h"
 #include "../Main/wUnitServer.h"
 #include "../Main/wUnitCommands.h"
 #include "../Main/RPGUnitMission.h"
 #include "../Main/RPGUnit.h"
+#include "../Main/RPGStore.h"
+#include "../Main/rpgPerk.h"
+#include "../DBFormat/DataPerk.h"
 #include "../Main/RPGItem.h"
 #include "../Main/wUICommands.h"
 #include "../Main/wExplTracker.h"
 #include "../Main/BuildingGrid.h"
 #include "../Main/wBuilding.h"
+#include "../Main/MakeBuilding.h"
 #include "../Main/wMine.h"
 #include "../Main/wObject.h"
 #include "../Main/wUnitStates.h"
 #include "../Main/NetworkIdentity.h"
+#include "../Main/wBuilding.h"
+#include "../Main/MakeBuilding.h"
 #include "../Misc/RandomGen.h"
 #include <cstdlib>
 #include "../Main/rpgDiplomacy.h"
@@ -40,6 +47,7 @@ static void Require(bool condition, const char* message) {
 int main(int argc,char** argv) {
   if (argc != 3 && argc != 4 && argc != 5 && argc != 6) return 2;
   try {
+    std::setvbuf(stdout,nullptr,_IONBF,0);
     // The grenade/destruction scenario must replay the same real trajectory:
     // a clock-seeded throw can legitimately miss the selected building.
     GlobalGameRandom().SeedForHarness(42);
@@ -47,6 +55,145 @@ int main(int argc,char** argv) {
     CFileStream db; db.OpenRead(argv[1]);
     NDatabase::Serialize(db,CStructureSaver::READ);
     NGScene::AddResourceDir(argv[2]);
+    if(argc==4 && std::string(argv[3])=="--preparation") {
+      Require(!S2Net::IsNetworkMapLargeEnough(16,16) && !S2Net::IsNetworkMapLargeEnough(32,32),"small maps retained");
+      Require(!S2Net::IsNetworkMapLargeEnough(16,128) && S2Net::IsNetworkMapLargeEnough(64,64),"map dimensions filter");
+      auto maps=S2Net::GetNetworkEncounterMaps();Require(!maps.empty(),"filter removed every encounter");
+      for(auto map:maps){auto* t=NDb::GetTemplate(map.templateID);Require(S2Net::IsNetworkMapLargeEnough(t->nWidth,t->nHeight),"small encounter offered");}
+      std::printf("PREPARATION selectable large maps=%zu first=%d\n",maps.size(),maps.front().variantID);std::fflush(stdout);
+      std::set<int> previous;
+      for(int level=1;level<=14;++level) {
+        auto items=S2Net::GetNetworkSupplyItems(level);std::set<int> current(items.begin(),items.end());
+        Require(!current.empty() && std::includes(current.begin(),current.end(),previous.begin(),previous.end()),"supply is not monotonic");
+        for(int id:items) {
+          auto* item=NDb::GetRPGItem(id);auto* record=item->pSuccessor.GetPtr();
+          Require(!dynamic_cast<NDb::CPanzerklein*>(record),"panzerklein unlocked");
+          if(auto* w=dynamic_cast<NDb::CRPGWeapon*>(record))Require(w->nPanzerkleinType==0 && w->pWeaponType->eStoreWeaponType!=NDb::SWT_PK_WEAPON,"PK weapon unlocked");
+        }
+        previous=current;std::printf("SUPPLY level=%d items=%zu\n",level,items.size());
+      }
+      auto recruits=S2Net::GetNetworkRecruitIDs();Require(recruits.size()>=6,"missing recruits");
+      for(int id:recruits)for(int level:{1,5,10,20}) {
+        auto unit=S2Net::CreateNetworkRecruit(id,level);
+        Require(unit->Skills(NDb::ST_LEVEL)==level && unit->GetPerksTree()->GetPerkPoints()==level-1,"starting level/perk points");
+        Require(unit->GetInventory()->GetItems().empty() && !unit->GetInventory()->Get(NDb::SLOT_1) && !unit->GetInventory()->Get(NDb::SLOT_2),"recruit smuggled equipment");
+        Require(unit->fXP==unit->GetXPForSkill(NDb::ST_LEVEL,level),"starting XP mismatch");
+        int before=unit->Skills(NDb::ST_LEVEL);unit->AddXP(1);Require(unit->Skills(NDb::ST_LEVEL)==before,"first XP gain skipped levels");
+      }
+      {auto low=S2Net::CreateNetworkRecruit(recruits.front(),1),high=S2Net::CreateNetworkRecruit(recruits.front(),20);Require(high->Skills(NDb::ST_SHOOTING)>low->Skills(NDb::ST_SHOOTING),"level did not improve skills");}
+      // Real worlds and replica; same commands as the native panels and network UI.
+      for(int count:{1,6}) {
+        S2Net::NetworkMatchPreset preset;preset.prepareOnBase=true;preset.squadSize=count;preset.startingLevel=5;preset.supplyLevel=14;
+        preset.mapVariant=maps.front().variantID;preset.useEncounterDeployment=true;
+        S2Net::NetworkWorld host(true,preset),client(false);client.Apply(host.Initial(),true);
+        auto code=[](const S2Net::Bytes& bytes){size_t pos=8;return S2Net::Get32(bytes,pos);};
+        auto sync=[&]{auto delta=host.Segment();client.Apply(delta,false);for(auto event:host.DrainEvents()){host.PresentEvent(event);client.PresentEvent(event);}
+          if(host.IsPreparing())while(CObj<NWorld::CUICmd> ui=client.Match().world->GetUICommand())host.Handle(1,client.EncodeCommand(new NWorld::CCmdInterfaceEvent(ui->GetID())),false);
+          while(CObj<NWorld::CUICmd> ui=host.SlotMatch(0).world->GetUICommand())host.Handle(0,host.EncodeCommand(new NWorld::CCmdInterfaceEvent(ui->GetID())),false);};
+        auto settled=[&]{for(int i=0;i<300;++i){sync();if(i>=30 && !host.SlotMatch(0).world->IsExecuting() && !host.SlotMatch(1).world->IsExecuting())return;}throw std::runtime_error("base actions never settled");};
+        Require(host.IsPreparing() && client.IsPreparing(),"base phase not replicated");
+        auto* replicaPaths=dynamic_cast<NAI::CPathNetwork*>(client.Match().world->GetPathNetwork());
+        auto* hostPaths=dynamic_cast<NAI::CPathNetwork*>(host.SlotMatch(1).world->GetPathNetwork());
+        Require(replicaPaths && hostPaths && !replicaPaths->GetWaysCalcer() && hostPaths->GetWaysCalcer(),"path search cache leaked to replica or removed on host");
+        for(int layer=0;layer<replicaPaths->GetNumLayers();++layer)
+          Require(!replicaPaths->GetColourer(layer) && hostPaths->GetColourer(layer),"path colour cache leaked to replica or removed on host");
+        Require(client.Match().ambient && client.Match().ambient.GetPtr()!=host.SlotMatch(1).ambient.GetPtr(),"ambient light missing on replica");
+        auto serverBuildings=host.SlotMatch(1).world->GetBuildingsForHarness();
+        auto clientBuildings=client.Match().world->GetBuildingsForHarness();
+        Require(serverBuildings.size()==clientBuildings.size(),"base buildings lost");
+        size_t roomLights=0;auto replicaBuilding=clientBuildings.begin();
+        for(auto building:serverBuildings) {
+          auto clientBuilding=*replicaBuilding++;
+          auto* shell=dynamic_cast<NBuilding::CBuildingInfoHold*>(clientBuilding->GetSceneHandle());
+          Require(shell && !shell->GetInfo().info.empty(),"replica building shell missing");
+          const auto& lights=building->info.lights;const auto& replicaLights=clientBuilding->info.lights;
+          Require(lights.size()==replicaLights.size(),"room lights missing on replica");roomLights+=lights.size();
+          for(size_t i=0;i<lights.size();++i)Require(lights[i].color==replicaLights[i].color && lights[i].nFloor==replicaLights[i].nFloor && lights[i].bLightmap==replicaLights[i].bLightmap,"room light changed on replica");
+        }
+        // Some base variants use only the global ambient. Exercise the
+        // network-only local light field with a nonempty room-light fixture.
+        SMapBuilding::SAmbientLight sample;sample.color=CVec3(.2f,.3f,.4f);sample.nFloor=0;sample.bLightmap=true;
+        host.SlotMatch(1).world->GetBuildingsForHarness().front()->info.lights.push_back(sample);
+        sync();
+        const auto& receivedLights=client.Match().world->GetBuildingsForHarness().front()->info.lights;
+        Require(!receivedLights.empty() && receivedLights.back().color==sample.color,"room light delta lost");
+        Require(client.Match().baseServices.size()==3,"base staff not replicated");
+        for(auto staff:client.Match().baseServices)Require(staff && staff->CanTalk(),"base staff cannot interact");
+        Require(host.SlotMatch(0).world.GetPtr()!=host.SlotMatch(1).world.GetPtr(),"bases share a world");
+        for(unsigned slot=0;slot<2;++slot) {
+          auto& base=host.SlotMatch(slot);Require(base.variantID==5246 && base.game->players[slot]->mercs.size()==size_t(count),"base roster size");
+          Require(base.players[1-slot]->GetPlayerUnits().empty(),"opponent spawned in private base");
+          Require(!base.world->GetCurrentPlayer(),"base is not real time");
+          Require(base.baseServices.size()==3,"base staff missing");
+          for(auto staff:base.baseServices)Require(base.world->GetDiplomacyState(base.players[slot],staff->GetPlayer())==NDb::DS_ALLY,"staff is not friendly");
+          Require(code(host.Handle(slot,host.PreparationCommand(S2Net::PreparationAction::Heal),false))==NWorld::UCR_OK,"medic unavailable");
+          auto* unit=base.players[slot]->GetPlayerUnits().front().GetPtr();
+          auto* inventory=unit->GetUnitRPG()->GetInventory();
+          vector<CPtr<NRPG::IInventoryItem>> stock;base.game->players[slot]->pStore->GetItemsForDiagnostics(&stock);
+          NRPG::IInventoryItem* weapon=nullptr;
+          for(auto item:stock)if(dynamic_cast<NRPG::IWeaponItem*>(item.GetPtr())){weapon=item;break;}
+          Require(weapon!=nullptr,"free supply has no weapon");int itemID=weapon->GetDBItem()->GetRecordID();
+          NWorld::SItem src(nullptr,NWorld::SItem::STORAGE,weapon,base.players[slot]),hand(nullptr,NWorld::SItem::HAND),dst(unit,NWorld::SItem::SLOT,NDb::SLOT_1);
+          auto request=host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdMoveInventoryItem(src,hand)));
+          Require(code(host.Handle(slot,request,false))==NWorld::UCR_OK,"native store pickup rejected");host.Handle(slot,host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdContinue)),false);settled();
+          NWorld::SItem held;
+          Require(base.players[slot]->GetInHandItem(&held) && held.pUnit==unit && held.pItem && held.pItem->GetDBItem()->GetRecordID()==itemID,"store pickup lost cursor owner");
+          Require(code(host.Handle(slot,host.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))!=NWorld::UCR_OK,"ready accepted with held item");
+          // The native drag state sends HAND with a null item, resolving it on the server.
+          hand.pUnit=unit;
+          request=host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdMoveInventoryItem(hand,dst)));
+          Require(code(host.Handle(slot,request,false))==NWorld::UCR_OK,"native cursor drop rejected");host.Handle(slot,host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdContinue)),false);settled();
+          Require(!base.players[slot]->GetInHandItem(&held),"cursor drop left an item held");
+          Require(inventory->Get(NDb::SLOT_1) && inventory->Get(NDb::SLOT_1)->GetDBItem()->GetRecordID()==itemID,"native store transfer did not execute");
+          Require(code(host.Handle(1-slot,request,false))!=NWorld::UCR_OK,"opponent can equip another squad");
+          vector<CPtr<NRPG::CPerk>> perks;unit->GetUnitRPG()->GetRPGUnit()->GetPerksTree()->GetAvailablePerks(&perks);Require(!perks.empty(),"no starting perks");
+          request=host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdTakePerk(perks.front()->GetDBPerk()->GetRecordID())));
+          Require(code(host.Handle(slot,request,false))==NWorld::UCR_OK,"perk request rejected");host.Handle(slot,host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdContinue)),false);settled();
+          Require(unit->GetUnitRPG()->GetRPGUnit()->GetPerksTree()->GetPerkPoints()==3,"perk was not spent exactly once");
+          auto before=unit->GetPosition().GetCP();auto point=unit->GetPosition().pos;
+          bool moved=false;for(int d=0;d<8 && !moved;++d) {
+            auto target=point;int x=int(point.p.GetX())+NAI::nMoveShift[d][0],y=int(point.p.GetY())+NAI::nMoveShift[d][1];if(x<0 || y<0)continue;target.p.SetXY(x,y);target.p.SetFinal(0);
+            request=host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdPath(target)));
+            if(code(host.Handle(slot,request,false))==NWorld::UCR_OK){host.Handle(slot,host.EncodeCommand(new NWorld::CCmdSetCommand(unit,new NWorld::CCmdContinue)),false);settled();moved=unit->GetPosition().GetCP()!=before;}
+          }
+          Require(moved,"could not walk on base");
+        }
+        // Readiness is independent, and rejected input never changes a roster.
+        auto stale=host.PreparationCommand(S2Net::PreparationAction::Ready,0,1);
+        Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,0,999999),false))!=NWorld::UCR_OK,"invalid recruit accepted");
+        Require(code(host.Handle(0,stale,false))==NWorld::UCR_OK,"first readiness rejected");sync();Require(client.IsReady(0) && !client.IsReady(1),"readiness not replicated");
+        int replacement=0;for(int id:recruits){bool used=false;for(auto unit:host.SlotMatch(0).game->players[0]->mercs)if(unit->GetRPGPersID()==id)used=true;if(!used){replacement=id;break;}}
+        Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,0,replacement),false))==NWorld::UCR_OK,"roster selection rejected");sync();
+        Require(!host.IsReady(0) && host.SlotMatch(0).game->players[0]->mercs.front()->GetRPGPersID()==replacement,"roster change did not reset ready");
+        Require(code(host.Handle(0,stale,false))!=NWorld::UCR_OK,"stale preparation command accepted");
+        Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))==NWorld::UCR_OK,"host ready rejected");
+        Require(code(host.Handle(1,client.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))==NWorld::UCR_OK,"client ready rejected");
+        sync();Require(!host.IsPreparing() && !client.IsPreparing(),"did not launch battle");
+        Require(host.Match().variantID==preset.mapVariant && client.Match().variantID==preset.mapVariant,"battle map not preserved");
+        for(unsigned side=0;side<2;++side)Require(host.Match().players[side]->GetPlayerUnits().size()==size_t(count),"battle lost roster");
+        Require(host.Match().game->players[1]->mercs.front()->GetPerksTree()->GetPerkPoints()==3,"battle lost purchased perk");
+        Require(host.Match().game->players[1]->mercs.front()->GetInventory()->Get(NDb::SLOT_1)!=nullptr,"battle lost equipment");
+        Require(host.Match().game->players[0]->networkSupplyLevel==0,"base supply remained active in battle");
+        Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))!=NWorld::UCR_OK,"preparation reopened during battle");
+        // A completed transition must reopen tactical commands on both sides,
+        // rather than leaving the one-frame launch barrier permanently closed.
+        auto* battleUnit=host.Match().players[0]->GetPlayerUnits().front().GetPtr();
+        auto oldPosition=battleUnit->GetPosition().GetCP();auto battlePoint=battleUnit->GetPosition().pos;
+        bool battleMoved=false;
+        for(int d=0;d<8 && !battleMoved;++d) {
+          auto target=battlePoint;int x=int(battlePoint.p.GetX())+NAI::nMoveShift[d][0],y=int(battlePoint.p.GetY())+NAI::nMoveShift[d][1];if(x<0 || y<0)continue;target.p.SetXY(x,y);target.p.SetFinal(0);
+          auto request=host.EncodeCommand(new NWorld::CCmdSetCommand(battleUnit,new NWorld::CCmdPath(target)));
+          if(code(host.Handle(0,request,false))==NWorld::UCR_OK){host.Handle(0,host.EncodeCommand(new NWorld::CCmdSetCommand(battleUnit,new NWorld::CCmdContinue)),false);settled();battleMoved=battleUnit->GetPosition().GetCP()!=oldPosition;}
+        }
+        Require(battleMoved,"tactical movement blocked after preparation");
+        Require(code(host.Handle(0,host.EncodeCommand(new NWorld::CCmdEndOfTurn),false))==NWorld::UCR_OK,"end turn blocked after preparation");settled();
+        Require(host.Match().world->GetCurrentPlayer()==host.Match().players[1].GetPtr() && client.Match().world->GetCurrentPlayer()==client.Match().players[1].GetPtr(),"post-base turn did not replicate");
+        auto* clientUnit=client.Match().players[1]->GetPlayerUnits().front().GetPtr();
+        Require(code(host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(clientUnit,new NWorld::CCmdWishPose(NAI::CROUCH))),false))==NWorld::UCR_OK,"client commands blocked after preparation");
+        for(int i=0;i<5;++i)sync();std::printf("PREPARATION PASSED count=%d base walk/equip/perks/ownership/ready/roster/transition/replica\n",count);std::fflush(stdout);
+      }
+      std::puts("Network preparation tests passed");return 0;
+    }
     if(argc>=4 && std::string(argv[3])=="--maps") {
       auto maps=S2Net::GetNetworkEncounterMaps();Require(!maps.empty(),"no encounter maps");
       std::set<int> variants;
@@ -128,6 +275,12 @@ int main(int argc,char** argv) {
       for(auto aimValue:{NWorld::CSAP_1AP,NWorld::CSAP_10AP,NWorld::CSAP_MAX,NWorld::CSAP_ALL})capabilities.push_back(new NWorld::CCmdCollectSnipeAP(aimValue));
       for(auto capability:capabilities)client->Preview(unit,capability,&start,&full,true);
       until([&]{bool resolved=true;for(auto capability:capabilities)if(client->Preview(unit,capability,&start,&full,true)==NWorld::UCR_PENDING)resolved=false;return resolved;});
+      // Cursor and slot windows issue different requests of the same command
+      // type each frame. Both exact keys must resolve despite sharing a lane.
+      CObj<NWorld::CCmd> pick=new NWorld::CCmdMoveInventoryItem(NWorld::SItem(unit,NWorld::SItem::SLOT,NDb::SLOT_1),NWorld::SItem(unit,NWorld::SItem::HAND));
+      CObj<NWorld::CCmd> transfer=new NWorld::CCmdMoveInventoryItem(NWorld::SItem(unit,NWorld::SItem::SLOT,NDb::SLOT_1),NWorld::SItem(unit,NWorld::SItem::SLOT,NDb::SLOT_2));
+      until([&]{auto a=client->Preview(unit,pick,&start,&full);auto b=client->Preview(unit,transfer,&start,&full);return a!=NWorld::UCR_PENDING && b!=NWorld::UCR_PENDING;});
+      Require(client->Preview(unit,pick,&start,&full)==NWorld::UCR_OK,"native inventory pickup preview failed");
       Require(unit->GetCurrentPath()!=nullptr,"server path not available to client overlay");
       auto* selected=unit;auto* world=client->Match().world.GetPtr();
       CDGPtr<CFuncBase<STime>> clock(world->GetTime());clock.Refresh();auto oldTime=world->GetTime()->GetValue();

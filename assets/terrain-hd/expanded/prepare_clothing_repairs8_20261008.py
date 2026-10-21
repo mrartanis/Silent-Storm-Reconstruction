@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,subprocess,sys
+B=Path(__file__).resolve().parent
+soft='Exact source full mechanical UV map. Preserve all softly painted source panels, openings and tiny paint marks. Keep broad washed fields smooth, NO surface stipple, metal grain, new scratches, rust/chips or sharply outlined rims. No new panels, rivets or hardware. Resolve only source softly painted diffuse forms. '
+nums='CRITICAL existing center red source stamp reads23: second shape consists of TWO right-curving lobes, no left vertical stem. Keep EXACT23, NOT25. Retain original small red rectangular stamp silhouette, its scale and muted opacity; no newly clean typography. Copy the source white stencil-like blocks and all tiny glyph paint exactly as image2, no additional letters. '
+rows=[
+(3313,'v2',soft+'Preserve source brown/blue broad angular camouflage footprints, original upper-right cream stencil pixel shapes, left openings and small lower source slots. Keep original brush-soft low contrast rather than added granular weathering.'),
+(2011,'v3','Exact whole original olive/brown camouflage legs map, source panel layout, broad patch footprints, black gaps and buckles unchanged. Keep gray/tan narrow vertical source binding at native x209:213 on this256x128 canvas: its maximum width four native pixels must never widen or shift. Copy EXACT original faint rung paint sequence, its variable color and original missing/suppressed dark intervals. The upper y33..52 segment is faint and interrupted, NOT a regular zipper. Between nativey54..72, keep pale bands54,56,58,60,62 then dark64, then pale66,68,70,72; the y74 band is dark/suppressed, then pale76 and regular even rows78..118. Do not replace source dark64 or74 with bright bands or suppress source68/70/72. Use image2 to preserve the whole original binding pixel phase, no added texture, weave, sharper teeth or new paint.'),
+(2933,'v3',soft+nums+'Preserve original blue-gray palette, paired original white block shapes on left panels and all existing red/white tiny marks.'),
+(3256,'v3',soft+nums+'Preserve original broad brown camouflage boundaries and existing black-white source emblems, no new patterns.'),
+(3306,'v3',soft+nums+'Preserve exact original red triangular tooth-like painted pattern on its existing pale left field: source count, phase, scale and silhouette unchanged.')]
+for i,v,d in rows:subprocess.run([sys.executable,str(B/'prepare_guided_clothing_complete_20261008.py'),str(i),v,d],check=True,stdout=subprocess.DEVNULL)
+(B/'generation-clothing-complete-20261008-repairs8.json').write_text(json.dumps([{'id':i,'version':v}for i,v,d in rows])+'\n',encoding='utf-8');print('Five remaining targeted artistic repairs prepared',[(i,v)for i,v,d in rows])

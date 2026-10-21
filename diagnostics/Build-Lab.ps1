@@ -1,4 +1,4 @@
-param(
+﻿param(
  [string]$LabRoot='G:\SS\lab',
  [string]$ArchiveRoot,
  [string]$BuildDirectory,
@@ -7,6 +7,8 @@ param(
  [string]$BuildId=(Get-Date -Format 'yyyyMMdd-HHmmss'),
  [ValidateRange(1,64)][int]$BuildJobs=[Math]::Min([Environment]::ProcessorCount,12),
  [switch]$NativeMedia,
+ [switch]$NoHDTextures,
+ [string]$PythonExecutable,
  [string]$FFmpegRoot,
  [string]$MiniaudioIncludeDir,
  [string]$SDL3Root='G:\SS\lab\tools\sdl3-3.4.16\SDL3-3.4.16',
@@ -39,6 +41,8 @@ Set-Content -LiteralPath "$archive\source.patch" -Value '' -NoNewline
 & $cmake --version | Set-Content "$archive\cmake-version.txt"
 $build=if($BuildDirectory){[IO.Path]::GetFullPath($BuildDirectory)}else{Join-Path $LabRoot $(if($Architecture -eq 'x64'){'build-x64'}else{'build-x86'})}
 $configureArgs=@('--fresh','-S',$repo,'-B',$build,'-G','Visual Studio 17 2022','-A',$Architecture,"-DCMAKE_GENERATOR_INSTANCE=$ToolRoot","-DS2_GAME_DIR=$LabRoot\baseline","-DSDL3_DIR=$SDL3Root\cmake","-DS2_BGFX_CMAKE_ROOT=$BgfxCMakeRoot","-DS2_BGFX_DIR=$BgfxRoot","-DS2_BIMG_DIR=$BimgRoot","-DS2_BX_DIR=$BxRoot")
+$configureArgs+="-DS2_BUILD_HD_TEXTURES=$(if($NoHDTextures){'OFF'}else{'ON'})"
+if($PythonExecutable){$configureArgs+="-DPython3_EXECUTABLE=$PythonExecutable"}
 if($NativeMedia){
  $configureArgs+=@('-DS2_BUILD_MEDIA_PROBE=ON','-DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON','-DS2_ENABLE_NATIVE_MUSIC=ON','-DS2_ENABLE_NATIVE_SFX=ON','-DS2_ENABLE_NATIVE_VIDEO=ON',"-DS2_FFMPEG_ROOT=$FFmpegRoot","-DS2_MINIAUDIO_INCLUDE_DIR=$MiniaudioIncludeDir")
 }
@@ -49,7 +53,7 @@ $targets=@('Game','zlib')
 if($NativeMedia){$targets+='s2_bink_compat'}
 & $cmake --build $build --config RelWithDebInfo --target @targets --parallel $BuildJobs -- /v:minimal 2>&1 | Tee-Object "$archive\build.log"
 if($LASTEXITCODE){throw 'Build failed'}
-foreach($file in 'Game.exe','Game.pdb','zlib.dll','zlib.pdb','SDL3.dll'){
+foreach($file in 'Game.exe','network-version.txt','Game.pdb','zlib.dll','zlib.pdb','SDL3.dll'){
  Copy-Item -LiteralPath "$build\RelWithDebInfo\$file" -Destination $archive
 }
 if($Architecture -eq 'x64'){
@@ -63,9 +67,22 @@ if($Architecture -eq 'x64'){
  }
 }
 Copy-Item "$build\RelWithDebInfo\fonts" "$archive\fonts" -Recurse
+if(!$NoHDTextures){
+ $hdPack=Join-Path $build 'RelWithDebInfo\res-hd'
+ $hdManifest=Join-Path $hdPack 'manifest.json'
+ if(!(Test-Path -LiteralPath $hdManifest -PathType Leaf)){throw 'HD texture pack missing from build output'}
+ $hd=Get-Content -LiteralPath $hdManifest -Raw | ConvertFrom-Json
+ if(!$hd.textures.Count -or !$hd.archives.Count){throw 'HD texture pack is empty'}
+ foreach($part in $hd.archives){
+  $partPath=Join-Path $hdPack $part.file
+  if(!(Test-Path -LiteralPath $partPath -PathType Leaf)){throw "Missing HD archive: $($part.file)"}
+  if((Get-FileHash -LiteralPath $partPath -Algorithm SHA256).Hash -ne $part.sha256){throw "HD archive hash mismatch: $($part.file)"}
+ }
+ Copy-Item -LiteralPath $hdPack -Destination "$archive\res-hd" -Recurse
+}
 Copy-Item "$build\CMakeCache.txt" $archive
 Copy-Item $PSScriptRoot "$archive\diagnostics" -Recurse
-[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;Graphics='bgfx';BgfxRoot=$BgfxRoot;BimgRoot=$BimgRoot;BxRoot=$BxRoot;BgfxCMakeRoot=$BgfxCMakeRoot;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;ToolRoot=$ToolRoot;BuildDirectory=$build;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
+[ordered]@{Commit=$sha;BuildId=$BuildId;Configuration='RelWithDebInfo';Architecture=$(if($Architecture -eq 'x64'){'x64'}else{'x86'});BuildJobs=$BuildJobs;Graphics='bgfx';BgfxRoot=$BgfxRoot;BimgRoot=$BimgRoot;BxRoot=$BxRoot;BgfxCMakeRoot=$BgfxCMakeRoot;NativeMedia=[bool]$NativeMedia;NativeSFX=[bool]$NativeMedia;HDTextures=(!$NoHDTextures);ToolRoot=$ToolRoot;BuildDirectory=$build;CreatedUtc=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content "$archive\build.json"
 Get-ChildItem $archive -File | Where-Object Name -ne 'hashes.csv' | Get-FileHash -Algorithm SHA256 | Select-Object Path,Hash | Export-Csv "$archive\hashes.csv" -NoTypeInformation
 Write-Output "Archived build: $archive"
 

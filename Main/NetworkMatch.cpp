@@ -12,10 +12,14 @@
 #include "RPGUnit.h"
 #include "RPGUnitMission.h"
 #include "RPGItem.h"
+#include "RPGStore.h"
+#include "rpgPerk.h"
+#include "RPGMerc.h"
 #include "wUnitServer.h"
 #include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataMap.h"
+#include "../DBFormat/DataMisc.h"
 #include "ChapterInfo.h"
 #include "GlobalInfo.h"
 #include <algorithm>
@@ -194,6 +198,7 @@ void CWorld::PrepareNetworkDeployment(int count) {
 }
 
 namespace S2Net {
+bool IsNetworkMapLargeEnough(int width,int height) { return width>=32 && height>=32 && static_cast<long long>(width)*height>=2048; }
 vector<NetworkMapChoice> GetNetworkEncounterMaps() {
   std::map<int,wstring> regions;
   auto* globalTable=NDatabase::GetTable<NDb::CGlobalMap>();
@@ -219,7 +224,7 @@ vector<NetworkMapChoice> GetNetworkEncounterMaps() {
     int ordinal=0;
     for(const auto& sector:sectors) {
       if(sector.eType!=RANDOM || sector.pointsSet.empty())continue;
-      auto* map=NDb::GetTemplate(sector.nTemplate);if(!map)continue;
+      auto* map=NDb::GetTemplate(sector.nTemplate);if(!map || !IsNetworkMapLargeEnough(map->nWidth,map->nHeight))continue;
       ++ordinal;vector<NDb::CTemplVariant*> variants;
       for(size_t index=0;index<map->variants.size();++index) {
         auto* variant=map->variants[index].GetPtr();
@@ -286,27 +291,92 @@ void SupplementEquipment(NRPG::CGlobalPlayer* squad,const NetworkMatchPreset::Eq
   for(int count=0;count<equipment.clearingTools;++count)place(tool,5);
 }
 }
-NetworkMatch CreateNetworkMatch(const NetworkMatchPreset& preset) {
-  if(preset.personas.empty() || preset.rules.firstSlot>1 || preset.rules.segmentMilliseconds!=50)
-    throw std::runtime_error("unsupported network match rules");
-  NetworkMatch match;
-  auto* variant=NDb::GetTemplVariant(preset.mapVariant);
-  if(!variant || !IsValid(variant->pTemplate) || variant->bNoAttack)
-    throw std::runtime_error("Network map is unavailable or prohibits combat");
+namespace {
+void ValidatePreset(const NetworkMatchPreset& p) {
+  if(p.squadSize<1 || p.squadSize>6 || p.startingLevel<1 || p.startingLevel>20 || p.supplyLevel<1 || p.supplyLevel>14 ||
+     p.rules.firstSlot>1 || p.rules.segmentMilliseconds!=50)throw std::runtime_error("unsupported network match rules");
+}
+bool HumanEquipment(NDb::CRPGItem* item) {
+  if(!item || !IsValid(item->pSuccessor))return false;
+  auto* record=item->pSuccessor.GetPtr();
+  if(auto* weapon=dynamic_cast<NDb::CRPGWeapon*>(record))return weapon->nPanzerkleinType==0 && IsValid(weapon->pWeaponType) && weapon->pWeaponType->eStoreWeaponType!=NDb::SWT_PK_WEAPON;
+  if(auto* melee=dynamic_cast<NDb::CRPGMeleeWeapon*>(record))return melee->nPanzerkleinType==0 && melee->GetRecordID()!=1;
+  if(auto* grenade=dynamic_cast<NDb::CRPGGrenade*>(record))return grenade->nPanzerkleinWeapon==0;
+  if(auto* grenade=dynamic_cast<NDb::CRPGEngGrenade*>(record))return grenade->nPanzerkleinWeapon==0;
+  return dynamic_cast<NDb::CRPGMineDetector*>(record) || dynamic_cast<NDb::CRPGFirstAid*>(record) || dynamic_cast<NDb::CRPGMine*>(record) || dynamic_cast<NDb::CRPGTool*>(record) || dynamic_cast<NDb::CRPGPicklock*>(record);
+}
+void AddSquadPlayers(NetworkMatch& match) {
+  for(int slot=0;slot<2;++slot) {
+    CObj<NAI::CSequenceCommander> commander=new NAI::CSequenceCommander(match.world);
+    match.players[slot]=dynamic_cast<NWorld::CPlayer*>(match.world->AddPlayer(slot?L"Client":L"Host",match.game->players[slot],commander));
+    commander->SetPlayer(match.players[slot]);
+  }
+}
+}
+vector<int> GetNetworkRecruitIDs() {
+  vector<int> result;auto* table=NDatabase::GetTable<NDb::CRPGPers>();if(!table)return result;
+  CDBIterator<NDb::CRPGPers> it(*table);
+  while(it.MoveNext()) {auto* p=it.Get();if(p && p->bCanHired && IsValid(p->pClass) && IsValid(p->pSide) && p->pSide->GetRecordID()==1 && !IsValid(p->pPanzerklein))result.push_back(p->GetRecordID());}
+  std::sort(result.begin(),result.end());return result;
+}
+vector<int> GetNetworkSupplyItems(int level) {
+  if(level<1 || level>14)throw std::runtime_error("invalid network supply level");
+  std::set<int> allowed;std::set<int> ammoGroups;
+  auto* items=NDatabase::GetTable<NDb::CRPGItem>();if(!items)return {};
+  CDBIterator<NDb::CRPGItem> it(*items);
+  while(it.MoveNext()) {
+    auto* item=it.Get();if(!HumanEquipment(item))continue;
+    bool unlocked=level==14;
+    if(!unlocked) {
+      auto* stores=NDatabase::GetTable<NDb::CRPGStoreItem>();CDBIterator<NDb::CRPGStoreItem> rows(*stores);
+      while(rows.MoveNext()) {auto* row=rows.Get();if(row->pItem.GetPtr()==item && IsValid(row->pSide) && row->pSide->GetRecordID()==1 && row->nRating<=level)unlocked=true;}
+    }
+    if(!unlocked)continue;
+    allowed.insert(item->GetRecordID());
+    if(auto* w=dynamic_cast<NDb::CRPGWeapon*>(item->pSuccessor.GetPtr()))if(IsValid(w->pInnerClip))ammoGroups.insert(w->pInnerClip->nAmmoGroup);
+  }
+  CDBIterator<NDb::CRPGItem> clips(*items);
+  while(clips.MoveNext())if(auto* clip=dynamic_cast<NDb::CRPGClip*>(clips.Get()->pSuccessor.GetPtr()))
+    if(ammoGroups.count(clip->nAmmoGroup))allowed.insert(clips.Get()->GetRecordID());
+  return vector<int>(allowed.begin(),allowed.end());
+}
+void RefreshNetworkStore(NRPG::CGlobalPlayer* player) {
+  if(!player || player->networkSupplyLevel<1)return;
+  if(!player->pStore)player->pStore=new NRPG::CStore(player);
+  auto* store=player->pStore.GetPtr();const int level=player->networkSupplyLevel;
+  if(level<14) {store->Update(level,player->mercs);return;}
+  // One renewable row per item, independent of campaign factions and prices.
+  // Taking any item replenishes its row after the transfer completes.
+  auto allowed=GetNetworkSupplyItems(14);
+  for(int id:allowed) {
+    NRPG::SStoreItem* row=nullptr;
+    for(auto& entry:store->ItemsSet())if(entry.pRPGItem && entry.pRPGItem->GetRecordID()==id && entry.eType==NRPG::SStoreItem::CONST_QUANTITY){row=&entry;break;}
+    if(!row) {NRPG::SStoreItem entry;entry.nRating=0;entry.eType=NRPG::SStoreItem::CONST_QUANTITY;entry.fQuantity=1;entry.pRPGItem=NDb::GetRPGItem(id);store->ItemsSet().push_back(entry);row=&store->ItemsSet().back();}
+    row->fQuantity=1;
+    while(row->itemsList.size()<1) {CObj<NRPG::IInventoryItem> item=NRPG::CreateItem(row->pRPGItem->pSuccessor);if(!item)break;row->itemsList.push_back(item);}
+  }
+  store->Update(0,player->mercs);
+}
+CObj<NRPG::CUnit> CreateNetworkRecruit(int persona,int level) {
+  auto recruits=GetNetworkRecruitIDs();if(std::find(recruits.begin(),recruits.end(),persona)==recruits.end() || level<1 || level>20)throw std::runtime_error("invalid network recruit");
+  CObj<NRPG::CUnit> unit=NRPG::CreateMerc(NDb::GetPers(persona),nullptr,true);
+  // A fresh network recruit brings no campaign loadout or pre-spent perks.
+  auto* inv=unit->GetInventory();for(int slot=0;slot<NDb::N_SLOTS;++slot)inv->TakeOff(static_cast<NDb::ESlot>(slot));
+  auto backpack=inv->GetItems();for(const auto& item:backpack)inv->Take(item.pItem);
+  unit->SetXPLevel(level);unit->fXP=unit->GetXPForSkill(NDb::ST_LEVEL,level);
+  unit->Skills(NDb::ST_LEVEL).SetXPPart(level);unit->Skills(NDb::ST_LEVEL).SetProgress(0);unit->Skills(NDb::ST_LEVEL).Reset();
+  auto* tree=unit->GetPerksTree();tree->AddPerkPoints(-tree->GetPerkPoints());tree->AddPerkPoints(level-1);
+  return unit;
+}
+NetworkMatch CreatePreparedNetworkMatch(const NetworkMatchPreset& preset,NRPG::CGlobalPlayer* first,NRPG::CGlobalPlayer* second) {
+  ValidatePreset(preset);
+  if(!first || !second || first==second || first->mercs.empty() || second->mercs.empty())throw std::runtime_error("invalid independent network squads");
+  NetworkMatch match;auto* variant=NDb::GetTemplVariant(preset.mapVariant);
+  if(!variant || !IsValid(variant->pTemplate) || variant->bNoAttack)throw std::runtime_error("Network map is unavailable or prohibits combat");
   match.variantID=preset.mapVariant;match.templateID=variant->pTemplate->GetRecordID();
-  match.game = NRPG::CreateGlobalGame();
-  match.game->nCurrentTemplateID=match.templateID;
-  CObj<NRPG::CGlobalPlayer> first = NRPG::CreateGlobalPlayer(preset.personas);
-  if (first->mercs.size() != preset.personas.size())
-    throw std::runtime_error("network preset contains an unavailable persona");
-  SupplementEquipment(first,preset.equipment);
-  match.game->players.push_back(first);
-  CMemoryStream copy;
-  { CStructureSaver save(copy, CStructureSaver::WRITE); save.Add(1,&first); }
-  copy.Seek(0);
-  CObj<NRPG::CGlobalPlayer> second;
-  { CStructureSaver load(copy, CStructureSaver::READ); load.Add(1,&second); }
-  match.game->players.push_back(second);
+  match.game=NRPG::CreateGlobalGame();match.game->nCurrentTemplateID=match.templateID;
+  match.game->players.push_back(first);match.game->players.push_back(second);
+  first->networkSupplyLevel=second->networkSupplyLevel=0;
   match.world = new NWorld::CWorld(match.game);
   match.world->bNetworkArena = true;
   match.world->bNetworkEncounterDeployment=preset.useEncounterDeployment;
@@ -314,7 +384,7 @@ NetworkMatch CreateNetworkMatch(const NetworkMatchPreset& preset) {
   match.world->CreateRandom(preset.mapVariant, vector<string>(), true,
     list<CPtr<NScenario::CScenarioClue>>(), 0, &post, SRandomSeed(preset.seed));
   if (!post || !post->scripts.empty()) throw std::runtime_error("network map construction failed");
-  match.world->PrepareNetworkDeployment(static_cast<int>(preset.personas.size()));
+  match.world->PrepareNetworkDeployment(static_cast<int>((std::max)(first->mercs.size(),second->mercs.size())));
   for (int slot = 0; slot < 2; ++slot) {
     CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(match.world);
     match.players[slot] = dynamic_cast<NWorld::CPlayer*>(match.world->AddPlayer(
@@ -330,6 +400,55 @@ NetworkMatch CreateNetworkMatch(const NetworkMatchPreset& preset) {
   }
   match.world->RunPostInit(post);
   match.world->GivePlayerTurn(match.players[preset.rules.firstSlot]);
+  match.ambient=match.world->GetDefaultLight();
+  return match;
+}
+NetworkMatch CreateNetworkMatch(const NetworkMatchPreset& preset) {
+  ValidatePreset(preset);if(preset.personas.empty())throw std::runtime_error("empty network squad");
+  CObj<NRPG::CGlobalPlayer> first=NRPG::CreateGlobalPlayer(preset.personas);
+  if(first->mercs.size()!=preset.personas.size())throw std::runtime_error("network preset contains an unavailable persona");
+  SupplementEquipment(first,preset.equipment);
+  CMemoryStream copy;{CStructureSaver save(copy,CStructureSaver::WRITE);save.Add(1,&first);}copy.Seek(0);
+  CObj<NRPG::CGlobalPlayer> second;{CStructureSaver load(copy,CStructureSaver::READ);load.Add(1,&second);}
+  return CreatePreparedNetworkMatch(preset,first,second);
+}
+NetworkMatch CreateNetworkBase(const NetworkMatchPreset& preset,unsigned slot,NRPG::CGlobalPlayer* existing) {
+  ValidatePreset(preset);if(slot>1)throw std::runtime_error("invalid base owner");
+  NetworkMatch match;match.variantID=5246;auto* variant=NDb::GetTemplVariant(match.variantID);
+  if(!variant || !variant->pTemplate)throw std::runtime_error("Network base is unavailable");
+  match.templateID=variant->pTemplate->GetRecordID();match.game=NRPG::CreateGlobalGame();match.game->nCurrentTemplateID=match.templateID;
+  match.game->nHotSeatTechLevel=preset.supplyLevel;
+  for(unsigned side=0;side<2;++side) {
+    CObj<NRPG::CGlobalPlayer> squad=side==slot?existing:nullptr;
+    if(!squad) {
+      squad=NRPG::CreateGlobalPlayer(vector<int>());
+      if(side==slot)for(int i=0;i<preset.squadSize;++i)squad->mercs.push_back(CreateNetworkRecruit(preset.personas.at(i),preset.startingLevel));
+    }
+    if(side==slot){squad->networkSupplyLevel=preset.supplyLevel;RefreshNetworkStore(squad);}
+    match.game->players.push_back(squad);
+  }
+  match.world=new NWorld::CWorld(match.game);match.world->bNetworkArena=true;match.world->bNetworkEncounterDeployment=true;
+  CObj<NWorld::CPostWorldCreateInfo> post;
+  match.world->CreateRandom(match.variantID,vector<string>(),true,list<CPtr<NScenario::CScenarioClue>>(),0,&post,SRandomSeed(preset.seed));
+  if(!post || !post->scripts.empty())throw std::runtime_error("network base construction failed");
+  if(match.world->networkSpawnPositions[0].empty())match.world->networkSpawnPositions[0].push_back(CVec3(FP_GRID_STEP,8*FP_GRID_STEP,0));
+  match.world->networkSpawnPositions[1]=match.world->networkSpawnPositions[0];
+  match.world->PrepareNetworkDeployment(preset.squadSize);
+  match.world->networkDeployment[1]=match.world->networkDeployment[0];
+  AddSquadPlayers(match);match.world->RunPostInit(post);
+  vector<CPtr<NRPG::IUnitMission>> staff;
+  for(const char* name:{"BOSS","MED","STORB"}) {
+    auto* unit=match.world->GetUnitServer(name);
+    if(!unit)throw std::runtime_error("Missing network base service NPC");
+    unit->SetCanTalk(true);match.baseServices.push_back(unit);staff.push_back(unit->GetUnitRPG());
+  }
+  for(int side=0;side<2;++side) {
+    match.world->GetDiplomacy()->SetDiplomacyState(2,staff,side,NDb::DS_ALLY);
+    vector<CPtr<NRPG::IUnitMission>> party;
+    for(auto unit:match.players[side]->GetPlayerUnits())party.push_back(static_cast<NWorld::CUnitServer*>(unit.GetPtr())->GetUnitRPG());
+    match.world->GetDiplomacy()->SetDiplomacyState(side,party,2,NDb::DS_ALLY);
+  }
+  match.ambient=match.world->GetDefaultLight();
   return match;
 }
 int NetworkMatch::Winner() const {

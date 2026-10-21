@@ -1,0 +1,750 @@
+{
+  "batch": "ui-seventy-fourth",
+  "root_only_classification": true,
+  "recommendations": [
+    {
+      "id": 5043,
+      "status": "individual-original-purpose-recommendation-coordinator-pending",
+      "source_check": {
+        "id": 5043,
+        "source_record": {
+          "id": 5043,
+          "texture": {
+            "ID": 5043,
+            "Width": 32,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 1799895052,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\TacticView\\Digits\\2_1.tga",
+            "Format": "8888",
+            "UserName": "2 Yellow",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3189,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "transparent",
+                "AddressMode": "Clamp",
+                "TemplateID": 2042,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 5172,
+                    "field": "Material0",
+                    "material_template_id": 2042,
+                    "geometry_id": 2323,
+                    "geometry": "Interface\\Cursors\\CursorFace.mb",
+                    "model_template_id": 3446,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            32,
+            64
+          ],
+          "source_sha256": "b4c0763ce3ade325c2f9dd60d4e2506a23f5ee9a272823f995be9cbdde955f23",
+          "source_rgba_sha256": "c9399d59d8880a24721234ab8a2dde64483c0b211bb8bec7ab32a8a906a2f87b",
+          "release_rgba_sha256": "c9399d59d8880a24721234ab8a2dde64483c0b211bb8bec7ab32a8a906a2f87b",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5043.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5043,
+          "texture": {
+            "ID": 5043,
+            "Width": 32,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 1799895052,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\TacticView\\Digits\\2_1.tga",
+            "Format": "8888",
+            "UserName": "2 Yellow",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            32,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              32,
+              64
+            ],
+            "mips": 1,
+            "file_bytes": 8216,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3189,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 2042,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5172,
+                  "field": "Material0",
+                  "material_template_id": 2042,
+                  "geometry_id": 2323,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 3446,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3189,
+              "TextureID": 5043,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2042,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 0,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2042,
+              "UserName": "2 Yellow"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 5172,
+                  "Material0": 2042,
+                  "Material1": 0,
+                  "GeometryID": 2323,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3446,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3446,
+                  "UserName": "2 Yellow"
+                },
+                "geometry": {
+                  "ID": 2323,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.15625,
+                  "SizeY": 0.3125,
+                  "SizeZ": 0.0,
+                  "CenterX": 0.078125,
+                  "CenterY": -0.15625,
+                  "CenterZ": 0.0,
+                  "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                  "UserName": "Digit",
+                  "RootJoint": "Digit"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "transparent"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "b4c0763ce3ade325c2f9dd60d4e2506a23f5ee9a272823f995be9cbdde955f23",
+        "release_mmp_sha256": "b4c0763ce3ade325c2f9dd60d4e2506a23f5ee9a272823f995be9cbdde955f23",
+        "original_png_sha256": "a44117f96826b4ca2a298ad8a54405dadfa5d9a7fff2603e910e1546d9b1d0ed",
+        "source_rgba_sha256": "c9399d59d8880a24721234ab8a2dde64483c0b211bb8bec7ab32a8a906a2f87b",
+        "source_rgb_sha256": "b6bae75af09d8902256900d9f3dd5796a68034cc46927ab320207a140387f53e",
+        "source_alpha_sha256": "5f0ad0c83802dbd69278c837dd225b269a9a2a46c5e1cc99e13d1f34d5d43177",
+        "dimensions": [
+          32,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+        "additional_actual_typed_UI_consumer_proof": {
+          "id": 5043,
+          "actual_UITexture_records": [],
+          "actual_runtime_source_excerpts": [
+            {
+              "file": "DBFormat/DataInterface.h",
+              "first_line": 63,
+              "last_line": 80,
+              "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+              "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+            },
+            {
+              "file": "DBFormat/DataInterface.cpp",
+              "first_line": 117,
+              "last_line": 127,
+              "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+              "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+            },
+            {
+              "file": "Main/UnitTracker.cpp",
+              "first_line": 303,
+              "last_line": 356,
+              "source_excerpt": "303: \n304: \tint nValue = nTargetAP;\n305: \tCVec2 vSize( 0, 0 );\n306: \tdo\n307: \t{\n308: \t\tint nDigit = nValue % 10;\n309: \t\tnValue /= 10;\n310: \n311: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n312: \t\tif ( !IsValid( pDigit->pGeometry ) )\n313: \t\t\tcontinue;\n314: \n315: \t\tvSize.x += pDigit->pGeometry->boundSize.x;\n316: \t\tvSize.y = Max( vSize.y, pDigit->pGeometry->boundSize.y );\n317: \t} while( nValue > 0 );\n318: \n319: \tnValue = nTargetAP;\n320: \tCVec2 vShift = vSize / 2;\n321: \tdo\n322: \t{\n323: \t\tint nDigit = nValue % 10;\n324: \t\tnValue /= 10;\n325: \n326: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n327: \t\tif ( !pMission->IsRealTime() )\n328: \t\t{\n329: \t\t\tif ( !pRPG->CanSpendAP( points.back().nAP ) )\n330: \t\t\t\tpDigit = NDb::GetModel( 3454 + nDigit );\n331: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n332: \t\t\t\tpDigit = NDb::GetModel( 3444 + nDigit );\n333: \t\t}\n334: \n335: \t\tif ( !IsValid( pDigit->pGeometry ) )\n336: \t\t\tcontinue;\n337: \n338: \t\tconst CVec3 &vBounds = pDigit->pGeometry->boundSize;\n339: \n340: \t\tSHMatrix sTranslate, sRotate;\n341: \t\tIdentity( &sTranslate );\n342: \t\tsTranslate._14 = vShift.x - vBounds.x;\n343: \t\tsTranslate._24 = vShift.y;\n344: \t\tsTranslate._34 = 0.20f;\n345: \t\tMakeMatrix( &sRotate, CVec3( 0, 0, 0 ), vDir );\n346: \n347: \t\tSFBTransform sTransform;\n348: \t\tMultiply( &sTransform.forward, sRotate, sTranslate );\n349: \t\tsTransform.forward._14 += vTargetPos.x;\n350: \t\tsTransform.forward._24 += vTargetPos.y;\n351: \t\tsTransform.forward._34 += vTargetPos.z;\n352: \t\tInvertMatrix( &sTransform.backward, sTransform.forward );\n353: \n354: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n355: \t\tdigidGroupsSet.push_back( pGroup );\n356: \t\tdigidNodesSet.push_back( pScene->CreateMesh( pDigit, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );",
+              "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+            },
+            {
+              "file": "Main/iCommonUI.cpp",
+              "first_line": 253,
+              "last_line": 268,
+              "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+              "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+            }
+          ],
+          "precise_runtime_consumer_proven": true,
+          "consumer_qualification": "Actual typed Material to MaterialTemplate to Model/ModelTemplate chain resolves Template3446/3447 for stored2/3. UnitTracker332 GetModel3444+nDigit and CreateMesh356 prove AP path numeral consumption, not UITextures fetch and not worker live scene.",
+          "prior_source_only_scopes": [
+            "source-check-ui-eleventh.json"
+          ],
+          "prior_builtin_calls": 0,
+          "prior_catalogue_not_claimed_whole_viewed": true,
+          "current_live_scene_verified": false,
+          "actual_typed_model_consumer_chain": [
+            {
+              "actual_material": {
+                "ID": 3189,
+                "TextureID": 5043,
+                "BRDFID": 0,
+                "BumpID": 0,
+                "SpecColor": 0,
+                "TemplateID": 2042,
+                "GlossID": 0,
+                "MirrorID": 0,
+                "CastShadow": 0,
+                "SpecFactor": 0.0,
+                "RndWeight": 1.0,
+                "MetalMirror": 0.0,
+                "DielMirror": 0.0,
+                "Alpha": "transparent",
+                "AddressMode": "Clamp",
+                "Flags": ""
+              },
+              "actual_template": {
+                "ID": 2042,
+                "UserName": "2 Yellow"
+              },
+              "actual_model_consumers": [
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 5172,
+                    "Material0": 2042,
+                    "Material1": 0,
+                    "GeometryID": 2323,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 3446,
+                    "RPGArmorID": 0,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "model_template": {
+                    "ID": 3446,
+                    "UserName": "2 Yellow"
+                  },
+                  "geometry": {
+                    "ID": 2323,
+                    "AIGeometryID": 0,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 0.15625,
+                    "SizeY": 0.3125,
+                    "SizeZ": 0.0,
+                    "CenterX": 0.078125,
+                    "CenterY": -0.15625,
+                    "CenterZ": 0.0,
+                    "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                    "UserName": "Digit",
+                    "RootJoint": "Digit"
+                  }
+                }
+              ],
+              "actual_complexhead_hair_consumers": [],
+              "actual_transformablehair_consumers": [],
+              "direct_heads_material_consumers": [],
+              "direct_races_material_consumers": []
+            }
+          ]
+        },
+        "prior_builtin_calls": 0,
+        "actual_both_resource_aliases_source_proof": {
+          "id": 5043,
+          "historical_alias_file_present": false,
+          "alias_id": 16782259,
+          "base_header": [
+            5262669,
+            6,
+            1799895052,
+            32,
+            64,
+            1
+          ],
+          "base_payload_sha256": "b4c0763ce3ade325c2f9dd60d4e2506a23f5ee9a272823f995be9cbdde955f23",
+          "base_RGBA_sha256": "c9399d59d8880a24721234ab8a2dde64483c0b211bb8bec7ab32a8a906a2f87b",
+          "base_dimensions": [
+            32,
+            64
+          ],
+          "source_original_equals_base_RGBA": true,
+          "actual_DB_Texture_Format": "8888",
+          "alias_present": false,
+          "exact_lookup_error": "KeyError(16782259)",
+          "base_alias_fullRGBA_dimensions_exact": null,
+          "absence_does_not_imply_base_is_actual_runtime": true,
+          "actual_bIsDXT_from_DBFormat": false,
+          "code_derived_actual_resource_id_usedxt0": 5043,
+          "actual_selected_RGBA_equals_original_under_current_DB_code": true,
+          "qualification": "Current actualDB Format import and selector code proves resource i at usedxt0; both release and historical alias absence recorded BEFORE any tool. No worker liveGPU capture."
+        },
+        "both_resource_aliases_proof_file": "G:/SS/Silent-Storm-Reconstruction/build/ui-seventy-fourth-private/both-resource-aliases-source-proof.json",
+        "both_resource_aliases_proof_sha256": "123ee08fbdbad671261da93c830f42855a4505a6d7c9ba5c215707139b1737ac"
+      },
+      "literal_source_count_and_actual_runtime_reason": "Exactly ONE authored yellow numeral2-shaped mirrored/rotated-looking stored contour on black32x64 canvas; one uniformyellowfill with darker outline and existing antialias. Source pixel orientation preserved, do not transform according to name. Actual transparent Material3189→Template2042→Model5172/Template3446→Geometry2323 Digit; UnitTracker332 chooses3444+nDigit for nDigit2 then CreateMesh356. Individual functional APdigit original-purpose recommendation rootpending; no glyph-category ban.",
+      "builtin_calls": 0,
+      "shared_disposition_unmodified": true,
+      "no_global_alpha_name_or_family_ban": true
+    },
+    {
+      "id": 5044,
+      "status": "individual-original-purpose-recommendation-coordinator-pending",
+      "source_check": {
+        "id": 5044,
+        "source_record": {
+          "id": 5044,
+          "texture": {
+            "ID": 5044,
+            "Width": 32,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 2052276237,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\TacticView\\Digits\\3_1.tga",
+            "Format": "8888",
+            "UserName": "3 Yellow",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "category": "interface-v5",
+          "role": "typed-db-color-candidate",
+          "status": "pending",
+          "usage": {
+            "direct_texture_uses": [
+              {
+                "table": "Materials",
+                "id": 3190,
+                "field": "TextureID",
+                "role": "color",
+                "Alpha": "transparent",
+                "AddressMode": "Clamp",
+                "TemplateID": 2043,
+                "consumers": [
+                  {
+                    "table": "Models",
+                    "id": 5173,
+                    "field": "Material0",
+                    "material_template_id": 2043,
+                    "geometry_id": 2323,
+                    "geometry": "Interface\\Cursors\\CursorFace.mb",
+                    "model_template_id": 3447,
+                    "flags": ""
+                  }
+                ]
+              }
+            ],
+            "ui_links": []
+          },
+          "review_requirements": [
+            "Inspect decoded original before imagegen; resolve UV and atlas layout.",
+            "Preserve original logical size, alpha, material, repeat/detail scale and character identity.",
+            "Do not infer acceptance from historical/release equality; inspect normalized generation privately."
+          ],
+          "logical_size": [
+            32,
+            64
+          ],
+          "source_sha256": "88e3968b6132dc79f697ee051732fd121587eba83bd94f5239d8affb6eebe5a4",
+          "source_rgba_sha256": "821862a757e7f24a68aac91fe4afe922acebe04343765c4c6e903ed1cb1abb8f",
+          "release_rgba_sha256": "821862a757e7f24a68aac91fe4afe922acebe04343765c4c6e903ed1cb1abb8f",
+          "source_native_format": 6,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "original_png": "expanded/original/5044.png",
+          "source_match": "Exact decoded RGBA and dimensions match release"
+        },
+        "fresh_actual_usage": {
+          "id": 5044,
+          "texture": {
+            "ID": 5044,
+            "Width": 32,
+            "Height": 64,
+            "NMips": 1,
+            "AverageColor": 2052276237,
+            "InstantLoad": 1,
+            "MappingSize": 2.0,
+            "BumpGain": 1.0,
+            "SrcName": "Interface v5.0\\TacticView\\Digits\\3_1.tga",
+            "Format": "8888",
+            "UserName": "3 Yellow",
+            "Type": "Transparent",
+            "AddrType": "Clamp",
+            "StorageType": "Ordinary"
+          },
+          "logical_size": [
+            32,
+            64
+          ],
+          "historical_header": {
+            "available": true,
+            "native_format": 6,
+            "physical_size": [
+              32,
+              64
+            ],
+            "mips": 1,
+            "file_bytes": 8216,
+            "release_rgba_match": "not checked by scope audit"
+          },
+          "disposition": "candidate-source-pixel-validation-required",
+          "technical_reasons": [],
+          "direct_texture_uses": [
+            {
+              "table": "Materials",
+              "id": 3190,
+              "field": "TextureID",
+              "role": "color",
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "TemplateID": 2043,
+              "consumers": [
+                {
+                  "table": "Models",
+                  "id": 5173,
+                  "field": "Material0",
+                  "material_template_id": 2043,
+                  "geometry_id": 2323,
+                  "geometry": "Interface\\Cursors\\CursorFace.mb",
+                  "model_template_id": 3447,
+                  "flags": ""
+                }
+              ]
+            }
+          ],
+          "ui_links": [],
+          "source_pixel_validation": "required before adding to generation queue",
+          "layout_validation": "private original/UV/atlas inspection required; no guessed layout"
+        },
+        "fresh_actual_typed_material_model_chains": [
+          {
+            "actual_material": {
+              "ID": 3190,
+              "TextureID": 5044,
+              "BRDFID": 0,
+              "BumpID": 0,
+              "SpecColor": 0,
+              "TemplateID": 2043,
+              "GlossID": 0,
+              "MirrorID": 0,
+              "CastShadow": 0,
+              "SpecFactor": 0.0,
+              "RndWeight": 1.0,
+              "MetalMirror": 0.0,
+              "DielMirror": 0.0,
+              "Alpha": "transparent",
+              "AddressMode": "Clamp",
+              "Flags": ""
+            },
+            "actual_template": {
+              "ID": 2043,
+              "UserName": "3 Yellow"
+            },
+            "actual_model_consumers": [
+              {
+                "slot": "Material0",
+                "model": {
+                  "ID": 5173,
+                  "Material0": 2043,
+                  "Material1": 0,
+                  "GeometryID": 2323,
+                  "Material2": 0,
+                  "Material3": 0,
+                  "SkeletonID": 0,
+                  "TemplateID": 3447,
+                  "RPGArmorID": 0,
+                  "RndWeight": 1.0,
+                  "Flags": ""
+                },
+                "model_template": {
+                  "ID": 3447,
+                  "UserName": "3 Yellow"
+                },
+                "geometry": {
+                  "ID": 2323,
+                  "AIGeometryID": 0,
+                  "AIGeometry2ID": 0,
+                  "TriCountMaterial1": 0,
+                  "TriCountMaterial2": 0,
+                  "SizeX": 0.15625,
+                  "SizeY": 0.3125,
+                  "SizeZ": 0.0,
+                  "CenterX": 0.078125,
+                  "CenterY": -0.15625,
+                  "CenterZ": 0.0,
+                  "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                  "UserName": "Digit",
+                  "RootJoint": "Digit"
+                }
+              }
+            ],
+            "actual_complexhead_hair_consumers": [],
+            "actual_transformablehair_consumers": [],
+            "direct_heads_material_consumers": [],
+            "direct_races_material_consumers": []
+          }
+        ],
+        "actual_material_alpha_modes": [
+          "transparent"
+        ],
+        "fresh_database_sha256": "4fba80928fb654c693d845376b79ff649f8b4b6edaeac8b82db7d38de6ef828c",
+        "historical_release_original_fullRGBA_dimensions_exact": true,
+        "historical_release_exact_native_bytes": true,
+        "historical_mmp_sha256": "88e3968b6132dc79f697ee051732fd121587eba83bd94f5239d8affb6eebe5a4",
+        "release_mmp_sha256": "88e3968b6132dc79f697ee051732fd121587eba83bd94f5239d8affb6eebe5a4",
+        "original_png_sha256": "cb08575538ce407c4ab031d5dc31fb1e03aa955661bec5f992033e18eb2dc73e",
+        "source_rgba_sha256": "821862a757e7f24a68aac91fe4afe922acebe04343765c4c6e903ed1cb1abb8f",
+        "source_rgb_sha256": "53674b1ae963b3a97c7159df90d85e26dcc6506faa0b0f3bc2b44f048a0e42c4",
+        "source_alpha_sha256": "a9895f011454c0276fc85c95d80213b8c31e666c1c4871ac58999e5541085865",
+        "dimensions": [
+          32,
+          64
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "full_source_privately_inspected": true,
+        "full_native_original_RGBA_RGB_A_NN_privately_inspected": true,
+        "additional_actual_typed_UI_consumer_proof": {
+          "id": 5044,
+          "actual_UITexture_records": [],
+          "actual_runtime_source_excerpts": [
+            {
+              "file": "DBFormat/DataInterface.h",
+              "first_line": 63,
+              "last_line": 80,
+              "source_excerpt": "63: class CUITexture: public CDBRecord\n64: {\n65: \tOBJECT_BASIC_METHODS(CUITexture);\n66: public:\n67: \tint nWidth;\n68: \tint nHeight;\n69: \tCPtr<CTexture> pTextures[UIM_MAX];\n70: \n71: \tvirtual void Import();\n72: \tint operator&( CStructureSaver &f );\n73: };\n74: ////////////////////////////////////////////////////////////////////////////////////////////////////\n75: class CUIContainer;\n76: class CUIControl: public CDBRecord\n77: {\n78: \tOBJECT_BASIC_METHODS(CUIControl);\n79: public:\n80: \tEUIControl  type;",
+              "sha256": "43c7a700c107185b663ec483d26ee4a9f4d05031df581dbc3d3d494b1a71dda7"
+            },
+            {
+              "file": "DBFormat/DataInterface.cpp",
+              "first_line": 117,
+              "last_line": 127,
+              "source_excerpt": "117: }\n118: ////////////////////////////////////////////////////////////////////////////////////////////////////\n119: // CUITexture\n120: ////////////////////////////////////////////////////////////////////////////////////////////////////\n121: void CUITexture::Import()\n122: {\n123: \tNDatabase::ImportField( \"R_800x600\",   &pTextures[UIM_800x600] );\n124: \tNDatabase::ImportField( \"R_1024x768\",  &pTextures[UIM_1024x768] );\n125: \tNDatabase::ImportField( \"R_1280x960\",  &pTextures[UIM_1280x1024] );\n126: \tNDatabase::ImportField( \"R_1600x1200\", &pTextures[UIM_1600x1200] );\n127: ",
+              "sha256": "2faa3f98822ea049ed685110dec01fbc299132458c724506c9f3fd4867139c57"
+            },
+            {
+              "file": "Main/UnitTracker.cpp",
+              "first_line": 303,
+              "last_line": 356,
+              "source_excerpt": "303: \n304: \tint nValue = nTargetAP;\n305: \tCVec2 vSize( 0, 0 );\n306: \tdo\n307: \t{\n308: \t\tint nDigit = nValue % 10;\n309: \t\tnValue /= 10;\n310: \n311: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n312: \t\tif ( !IsValid( pDigit->pGeometry ) )\n313: \t\t\tcontinue;\n314: \n315: \t\tvSize.x += pDigit->pGeometry->boundSize.x;\n316: \t\tvSize.y = Max( vSize.y, pDigit->pGeometry->boundSize.y );\n317: \t} while( nValue > 0 );\n318: \n319: \tnValue = nTargetAP;\n320: \tCVec2 vShift = vSize / 2;\n321: \tdo\n322: \t{\n323: \t\tint nDigit = nValue % 10;\n324: \t\tnValue /= 10;\n325: \n326: \t\tCPtr<NDb::CModel> pDigit = NDb::GetModel( 1585 + nDigit );\n327: \t\tif ( !pMission->IsRealTime() )\n328: \t\t{\n329: \t\t\tif ( !pRPG->CanSpendAP( points.back().nAP ) )\n330: \t\t\t\tpDigit = NDb::GetModel( 3454 + nDigit );\n331: \t\t\telse if ( !pRPG->CanSpendAP( points.back().nAP + nAttackAP ) )\n332: \t\t\t\tpDigit = NDb::GetModel( 3444 + nDigit );\n333: \t\t}\n334: \n335: \t\tif ( !IsValid( pDigit->pGeometry ) )\n336: \t\t\tcontinue;\n337: \n338: \t\tconst CVec3 &vBounds = pDigit->pGeometry->boundSize;\n339: \n340: \t\tSHMatrix sTranslate, sRotate;\n341: \t\tIdentity( &sTranslate );\n342: \t\tsTranslate._14 = vShift.x - vBounds.x;\n343: \t\tsTranslate._24 = vShift.y;\n344: \t\tsTranslate._34 = 0.20f;\n345: \t\tMakeMatrix( &sRotate, CVec3( 0, 0, 0 ), vDir );\n346: \n347: \t\tSFBTransform sTransform;\n348: \t\tMultiply( &sTransform.forward, sRotate, sTranslate );\n349: \t\tsTransform.forward._14 += vTargetPos.x;\n350: \t\tsTransform.forward._24 += vTargetPos.y;\n351: \t\tsTransform.forward._34 += vTargetPos.z;\n352: \t\tInvertMatrix( &sTransform.backward, sTransform.forward );\n353: \n354: \t\tNGScene::CLightGroup *pGroup = pScene->CreateLightGroup();\n355: \t\tdigidGroupsSet.push_back( pGroup );\n356: \t\tdigidNodesSet.push_back( pScene->CreateMesh( pDigit, sTransform, NGScene::SFullRoomInfo( pGroup ) ) );",
+              "sha256": "4750755f7cf77fad6dfa960b6a4933b1235cad6c1189743524e6538242f0770a"
+            },
+            {
+              "file": "Main/iCommonUI.cpp",
+              "first_line": 253,
+              "last_line": 268,
+              "source_excerpt": "253: void CComplexButton::Set( NDb::CUITexture *pIcon, NDb::CUITexture *pIconDisabled, EState eState, const string &szID )\n254: {\n255: \tpDisabled->SetImage( pIconDisabled );\n256: \n257: \tpNormalUpIcon->SetImage( pIcon );\n258: \tpNormalDownIcon->SetImage( pIcon );\n259: \n260: \tpCheckedUpIcon->SetImage( pIcon );\n261: \tpCheckedDownIcon->SetImage( pIcon );\n262: \n263: \tpNormalUpCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n264: \tpNormalDownCheck->SetStyle( STYLE_VISIBLE, eState != NORMAL );\n265: \n266: \tSetChecked( eState == CHECKED );\n267: \tSetNotifyID( szID );\n268: }",
+              "sha256": "ddbae8f0bbfc6e6f7018660b065169db23a53c95fa5a20e6b49a18ecacb467c8"
+            }
+          ],
+          "precise_runtime_consumer_proven": true,
+          "consumer_qualification": "Actual typed Material to MaterialTemplate to Model/ModelTemplate chain resolves Template3446/3447 for stored2/3. UnitTracker332 GetModel3444+nDigit and CreateMesh356 prove AP path numeral consumption, not UITextures fetch and not worker live scene.",
+          "prior_source_only_scopes": [
+            "source-check-ui-eleventh.json"
+          ],
+          "prior_builtin_calls": 0,
+          "prior_catalogue_not_claimed_whole_viewed": true,
+          "current_live_scene_verified": false,
+          "actual_typed_model_consumer_chain": [
+            {
+              "actual_material": {
+                "ID": 3190,
+                "TextureID": 5044,
+                "BRDFID": 0,
+                "BumpID": 0,
+                "SpecColor": 0,
+                "TemplateID": 2043,
+                "GlossID": 0,
+                "MirrorID": 0,
+                "CastShadow": 0,
+                "SpecFactor": 0.0,
+                "RndWeight": 1.0,
+                "MetalMirror": 0.0,
+                "DielMirror": 0.0,
+                "Alpha": "transparent",
+                "AddressMode": "Clamp",
+                "Flags": ""
+              },
+              "actual_template": {
+                "ID": 2043,
+                "UserName": "3 Yellow"
+              },
+              "actual_model_consumers": [
+                {
+                  "slot": "Material0",
+                  "model": {
+                    "ID": 5173,
+                    "Material0": 2043,
+                    "Material1": 0,
+                    "GeometryID": 2323,
+                    "Material2": 0,
+                    "Material3": 0,
+                    "SkeletonID": 0,
+                    "TemplateID": 3447,
+                    "RPGArmorID": 0,
+                    "RndWeight": 1.0,
+                    "Flags": ""
+                  },
+                  "model_template": {
+                    "ID": 3447,
+                    "UserName": "3 Yellow"
+                  },
+                  "geometry": {
+                    "ID": 2323,
+                    "AIGeometryID": 0,
+                    "AIGeometry2ID": 0,
+                    "TriCountMaterial1": 0,
+                    "TriCountMaterial2": 0,
+                    "SizeX": 0.15625,
+                    "SizeY": 0.3125,
+                    "SizeZ": 0.0,
+                    "CenterX": 0.078125,
+                    "CenterY": -0.15625,
+                    "CenterZ": 0.0,
+                    "SrcName": "Interface\\Cursors\\CursorFace.mb",
+                    "UserName": "Digit",
+                    "RootJoint": "Digit"
+                  }
+                }
+              ],
+              "actual_complexhead_hair_consumers": [],
+              "actual_transformablehair_consumers": [],
+              "direct_heads_material_consumers": [],
+              "direct_races_material_consumers": []
+            }
+          ]
+        },
+        "prior_builtin_calls": 0,
+        "actual_both_resource_aliases_source_proof": {
+          "id": 5044,
+          "historical_alias_file_present": false,
+          "alias_id": 16782260,
+          "base_header": [
+            5262669,
+            6,
+            2052276237,
+            32,
+            64,
+            1
+          ],
+          "base_payload_sha256": "88e3968b6132dc79f697ee051732fd121587eba83bd94f5239d8affb6eebe5a4",
+          "base_RGBA_sha256": "821862a757e7f24a68aac91fe4afe922acebe04343765c4c6e903ed1cb1abb8f",
+          "base_dimensions": [
+            32,
+            64
+          ],
+          "source_original_equals_base_RGBA": true,
+          "actual_DB_Texture_Format": "8888",
+          "alias_present": false,
+          "exact_lookup_error": "KeyError(16782260)",
+          "base_alias_fullRGBA_dimensions_exact": null,
+          "absence_does_not_imply_base_is_actual_runtime": true,
+          "actual_bIsDXT_from_DBFormat": false,
+          "code_derived_actual_resource_id_usedxt0": 5044,
+          "actual_selected_RGBA_equals_original_under_current_DB_code": true,
+          "qualification": "Current actualDB Format import and selector code proves resource i at usedxt0; both release and historical alias absence recorded BEFORE any tool. No worker liveGPU capture."
+        },
+        "both_resource_aliases_proof_file": "G:/SS/Silent-Storm-Reconstruction/build/ui-seventy-fourth-private/both-resource-aliases-source-proof.json",
+        "both_resource_aliases_proof_sha256": "123ee08fbdbad671261da93c830f42855a4505a6d7c9ba5c215707139b1737ac"
+      },
+      "literal_source_count_and_actual_runtime_reason": "Exactly ONE authored yellow numeral3-shaped contour on black32x64 canvas, existing darkyellow outline and flatfill/alpha. Actual transparent Material3190→Template2043→Model5173/Template3447→Geometry2323 Digit; UnitTracker332 3444+nDigit for3/CreateMesh356. Individual functional APdigit original-purpose recommendation rootpending, sourcewholeglyph deliberately retained unchanged.",
+      "builtin_calls": 0,
+      "shared_disposition_unmodified": true,
+      "no_global_alpha_name_or_family_ban": true
+    }
+  ]
+}

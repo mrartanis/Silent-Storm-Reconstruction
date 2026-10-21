@@ -9,7 +9,7 @@ NetworkSession::NetworkSession(Compatibility identity,SessionCallbacks handlers)
 NetworkSession::~NetworkSession(){Finish("Player left");transport.Close();}
 void NetworkSession::Log(const std::string& message) const {
   auto socket=transport.Diagnostics();
-  NetworkLog(std::string(host?"host":"client")+" phase="+std::to_string(static_cast<int>(state))+" revision="+std::to_string(callbacks.revision?callbacks.revision():0)+" event="+std::to_string(host?nextEvent-1:lastEvent)+" pending="+std::to_string(pending.size())+" queued="+std::to_string(socket.queuedBytes)+" buffered="+std::to_string(socket.receiveBytes)+" operation="+socket.operation+" os="+std::to_string(socket.systemError)+" "+message);
+  NetworkLog(std::string(host?"host":"client")+" phase="+std::to_string(static_cast<int>(state))+" revision="+std::to_string(callbacks.revision?callbacks.revision():0)+" event="+std::to_string(host?nextEvent-1:lastEvent)+" pending="+std::to_string(pending.size())+" queued="+std::to_string(socket.queuedBytes)+" application="+std::to_string(incomingBytes)+" buffered="+std::to_string(socket.receiveBytes)+" operation="+socket.operation+" os="+std::to_string(socket.systemError)+" "+message);
 }
 Bytes NetworkSession::Hello() const {
   Bytes data;Put32(data,ProtocolVersion);PutString(data,compatibility.build);
@@ -33,12 +33,12 @@ void NetworkSession::Fail(const std::string& error) {
   status=error;
   auto failure=transport.Diagnostics();
   if(failure.systemError) status+=" (OS "+std::to_string(failure.systemError)+")";
-  state=SessionState::Failed;pending.clear();transport.Close();
+  state=SessionState::Failed;pending.clear();incoming.clear();incomingBytes=0;transport.Close();
 }
 void NetworkSession::Finish(const std::string& reason) {
   if(state==SessionState::Finished || state==SessionState::Failed || state==SessionState::Finishing) return;
   Log("finish requested "+reason);
-  status=reason;pending.clear();
+  status=reason;pending.clear();incoming.clear();incomingBytes=0;
   if(transport.Status()!=Connection::Connected) {state=SessionState::Finished;transport.Close();return;}
   // End follows every confirmed delta. Drain it over ordinary nonblocking
   // polls instead of closing after a single (bounded) send budget.
@@ -161,13 +161,28 @@ void NetworkSession::Poll() {
       for(const auto& packet:packets) if(packet.type==Message::End || packet.type==Message::Reject) {
         Handle(packet);return;
       }
+      for(const auto& packet:incoming) if(packet.type==Message::End || packet.type==Message::Reject) {
+        Handle(packet);return;
+      }
     }
     if(!host && !helloSent && transport.Status()==Connection::Connected) {
       transport.Send({Message::Hello,0,Hello()});helloSent=true;
     }
-    for(const auto& packet:packets) {
+    // Loading or a slow frame can leave many ordered world revisions waiting.
+    // Retain them between frames instead of applying the entire backlog in one
+    // UI step. Preserve the same bounded memory policy as the transport.
+    constexpr std::size_t MaxIncoming=64*1024*1024;
+    for(auto& packet:packets) {
+      if(packet.data.size()>MaxIncoming-incomingBytes || incoming.size()>=65536)
+        throw std::runtime_error("Network application queue overflow");
+      incomingBytes+=packet.data.size();incoming.push_back(std::move(packet));
+    }
+    const auto receiveStarted=std::chrono::steady_clock::now();
+    while(!incoming.empty()) {
+      auto packet=std::move(incoming.front());incoming.pop_front();incomingBytes-=packet.data.size();
       Handle(packet);
       if(state==SessionState::Failed || state==SessionState::Finished) return;
+      if(std::chrono::steady_clock::now()-receiveStarted>std::chrono::milliseconds(12))break;
     }
     if(transport.Status()==Connection::Failed) {Fail(transport.Error());return;}
     auto now=std::chrono::steady_clock::now();
@@ -182,6 +197,7 @@ void NetworkSession::Poll() {
       // Bounded catch-up keeps the UI responsive. Never accelerate because
       // an individual spectator cannot see the currently executing action.
       int ticks=0;
+      const auto workStarted=std::chrono::steady_clock::now();
       while(now>=nextTick && ticks++<8) {
         // Keep ordered deltas intact when the peer reads slowly. Bounded
         // backpressure pauses the common clock instead of overflowing memory.
@@ -191,6 +207,15 @@ void NetworkSession::Poll() {
         if(callbacks.drainEvents) for(const auto& event:callbacks.drainEvents()) {
           transport.Send({Message::Event,nextEvent++,event});
           if(callbacks.event) callbacks.event(event);
+        }
+        // A bounded tick count alone can still block the UI for seconds when
+        // snapshots are expensive. Stop catch-up on a wall-time budget too.
+        if(std::chrono::steady_clock::now()-workStarted>std::chrono::milliseconds(12)) {
+          const auto finished=std::chrono::steady_clock::now();
+          // Retain the 20 Hz clock when a tick fits inside its 50 ms period.
+          // Only discard overdue catch-up, not the rest of the current period.
+          if(nextTick<finished)nextTick=finished;
+          break;
         }
       }
     }

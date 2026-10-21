@@ -16,8 +16,9 @@ if not defined SDL3_DIR (
     pause
     exit /b 1
 )
-cmake -S "%~dp0." -B "%~dp0build" -A x64 "-DSDL3_DIR=%SDL3_DIR%" || (pause & exit /b 1)
+cmake -S "%~dp0." -B "%~dp0build" -A x64 "-DSDL3_DIR=%SDL3_DIR%" -DS2_BUILD_HD_TEXTURES=ON || (pause & exit /b 1)
 cmake --build "%~dp0build" --config Release || (pause & exit /b 1)
 echo.
 echo [OK] Build finished -- see  build\Release\Game.exe
+echo [OK] HD textures included in  build\Release\res-hd
 pause

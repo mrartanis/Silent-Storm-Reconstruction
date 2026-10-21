@@ -1,0 +1,261 @@
+{
+  "path": "Main/GTexture.cpp",
+  "complete_file_SHA256": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+  "exact_lines": [
+    {
+      "line": 1,
+      "text": "#include \"StdAfx.h\""
+    },
+    {
+      "line": 2,
+      "text": "#include \"../diagnostics/TextureResidency.h\""
+    },
+    {
+      "line": 3,
+      "text": "#include \"GfxBuffers.h\""
+    },
+    {
+      "line": 4,
+      "text": "#include \"GTexture.h\""
+    },
+    {
+      "line": 5,
+      "text": "#include \"GPixelFormat.h\""
+    },
+    {
+      "line": 6,
+      "text": "#include \"mmpFormat.h\""
+    },
+    {
+      "line": 7,
+      "text": "#include \"..\\Misc\\StrProc.h\""
+    },
+    {
+      "line": 8,
+      "text": "#include \"..\\MiscDll\\Commands.h\""
+    },
+    {
+      "line": 9,
+      "text": "#include \"..\\DBFormat\\DataFormat.h\""
+    },
+    {
+      "line": 10,
+      "text": "#include \"SWTexture.h\""
+    },
+    {
+      "line": 11,
+      "text": "#include \"..\\Misc\\HPTimer.h\""
+    },
+    {
+      "line": 12,
+      "text": ""
+    },
+    {
+      "line": 13,
+      "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+    },
+    {
+      "line": 14,
+      "text": "bool bDXTModeOn = true;"
+    },
+    {
+      "line": 15,
+      "text": "static int GetRealTextureID( NDb::CTexture *pTex )"
+    },
+    {
+      "line": 16,
+      "text": "{"
+    },
+    {
+      "line": 17,
+      "text": "\tint nID = pTex->GetRecordID();"
+    },
+    {
+      "line": 18,
+      "text": "\tif ( bDXTModeOn )"
+    },
+    {
+      "line": 19,
+      "text": "\t\treturn nID;"
+    },
+    {
+      "line": 20,
+      "text": "\tif ( pTex->bIsDXT )"
+    },
+    {
+      "line": 21,
+      "text": "\t\treturn nID | 0x01000000;"
+    },
+    {
+      "line": 22,
+      "text": "\treturn nID;"
+    },
+    {
+      "line": 23,
+      "text": "}"
+    },
+    {
+      "line": 24,
+      "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+    },
+    {
+      "line": 25,
+      "text": "namespace NGScene"
+    },
+    {
+      "line": 26,
+      "text": "{"
+    },
+    {
+      "line": 27,
+      "text": "bool bTextureStreaming = false;"
+    },
+    {
+      "line": 28,
+      "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+    },
+    {
+      "line": 29,
+      "text": "// CTextureLoader"
+    },
+    {
+      "line": 30,
+      "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+    },
+    {
+      "line": 31,
+      "text": "template <class TPixel>"
+    },
+    {
+      "line": 32,
+      "text": "void LoadTextureData( NGfx::CTexture *pTexture, int _nX, int _nY, int _nSizeX, int _nSizeY, "
+    },
+    {
+      "line": 146,
+      "text": "\t\tpRequest = new CFileRequest( \"Textures\", GetRealTextureID( pTex ) );"
+    },
+    {
+      "line": 161,
+      "text": "\t\t\tCResourceFileOpener file( \"LRTextures\", GetRealTextureID( pTex ) );"
+    },
+    {
+      "line": 322,
+      "text": "\tREGISTER_VAR_EX( \"gfx_texture_usedxt\", NGlobal::VarBoolHandler, &bDXTModeOn, 1, true )"
+    }
+  ],
+  "CTexture_Format_import": {
+    "path": "DBFormat/DataFormat.cpp",
+    "complete_file_SHA256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+    "exact_lines": [
+      {
+        "line": 950,
+        "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+      },
+      {
+        "line": 951,
+        "text": "void CTexture::Import()"
+      },
+      {
+        "line": 952,
+        "text": "{"
+      },
+      {
+        "line": 953,
+        "text": "\tNDatabase::ImportField( \"Width\", &nWidth );"
+      },
+      {
+        "line": 954,
+        "text": "\tNDatabase::ImportField( \"Height\", &nHeight );"
+      },
+      {
+        "line": 955,
+        "text": "\tNDatabase::ImportField( \"BumpGain\", &fGain );"
+      },
+      {
+        "line": 956,
+        "text": "\tstring szType;"
+      },
+      {
+        "line": 957,
+        "text": "\tNDatabase::ImportField( \"Type\", &szType );"
+      },
+      {
+        "line": 958,
+        "text": "\tif ( szType == \"2D\" )"
+      },
+      {
+        "line": 959,
+        "text": "\t\tusage = TEXTURE_USAGE_2D;"
+      },
+      {
+        "line": 960,
+        "text": "\telse if ( szType == \"Transparent\" )"
+      },
+      {
+        "line": 961,
+        "text": "\t\tusage = TEXTURE_USAGE_TRANSPARENT;"
+      },
+      {
+        "line": 962,
+        "text": "\telse if ( szType == \"TransparentAdd\" )"
+      },
+      {
+        "line": 963,
+        "text": "\t\tusage = TEXTURE_USAGE_TRANSPARENT;"
+      },
+      {
+        "line": 964,
+        "text": "\telse"
+      },
+      {
+        "line": 965,
+        "text": "\t\tusage = TEXTURE_USAGE_ORDINARY;"
+      },
+      {
+        "line": 966,
+        "text": "\tint nAverageColor = 0;"
+      },
+      {
+        "line": 967,
+        "text": "\tNDatabase::ImportField( \"AverageColor\", &nAverageColor );"
+      },
+      {
+        "line": 968,
+        "text": "\tdwAverageColor = static_cast<DWORD>( nAverageColor );"
+      },
+      {
+        "line": 969,
+        "text": "\tstring szFormat;"
+      },
+      {
+        "line": 970,
+        "text": "\tNDatabase::ImportField( \"Format\", &szFormat );"
+      },
+      {
+        "line": 971,
+        "text": "\tbIsDXT = szFormat.substr( 0, 3 ) == \"dxt\";"
+      },
+      {
+        "line": 972,
+        "text": "\tNDatabase::ImportField( \"InstantLoad\", &bInstantLoad );"
+      },
+      {
+        "line": 973,
+        "text": "}"
+      },
+      {
+        "line": 974,
+        "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+      },
+      {
+        "line": 975,
+        "text": "// CCubeTexture"
+      },
+      {
+        "line": 976,
+        "text": "////////////////////////////////////////////////////////////////////////////////////////////////////"
+      }
+    ]
+  },
+  "qualification": "Current exact dispatch code: gfx_texture_usedxt true uses i; false AND bIsDXT uses i|0x01000000; false AND NOT bIsDXT retains i. CTexture::Import bIsDXT = Format.substr(0,3)==dxt proved separately and applied per actual DB row. Runtime state supplied by root report, not measured by worker."
+}

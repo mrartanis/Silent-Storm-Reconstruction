@@ -17,11 +17,14 @@ int main(){try{
   Require(other.Structure()==replica.Structure(),"record codec round trip");
   auto unchanged=host.Capture(replica.Structure(),false);
   Require(unchanged.size()<40,"unchanged bodies transmitted");other.Apply(unchanged,false);
+  Require(other.Structure(true).size()<other.Structure().size()/4,
+          "replica reconstruction copied an unchanged body");
   replica.Apply(Delta(1,1,{1,2,3}),false);
   other.Apply(host.Capture(replica.Structure(),false),false);
   Require(other.Structure()==replica.Structure(),"updated body mismatch");
   auto checkpoint=other.Structure();auto revision=other.Revision();
-  for(auto malformed:std::vector<Bytes>{Delta(0,1,{3}),Bytes{1},Delta(revision,0,{3}),Delta(revision,99,{},true)}){
+  auto lateFailure=Delta(revision,1,{9,8,7});lateFailure.push_back(0);
+  for(auto malformed:std::vector<Bytes>{Delta(0,1,{3}),Bytes{1},Delta(revision,0,{3}),Delta(revision,99,{},true),lateFailure}){
     bool rejected=false;try{other.Apply(malformed,false);}catch(const std::exception&){rejected=true;}
     Require(rejected && other.Structure()==checkpoint && other.Revision()==revision,"invalid update changed graph");
   }

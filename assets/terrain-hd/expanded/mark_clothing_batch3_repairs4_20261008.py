@@ -1,0 +1,17 @@
+from pathlib import Path
+import subprocess,sys
+B=Path(__file__).resolve().parent
+records=[
+(1884,'v1','ready','Whole saved raw and corrected entire canvas viewed. Source left long fold/slit, central two small lower buckles, right oval five horizontal bars and border retained; painted folds slightly stronger, no new material or hardware.'),
+(2151,'v1','ready','Whole raw and corrected canvas viewed. Top belt and buckle, paired left straps, right Y and olive triangle, source fold fields and black gaps retained; fine painted modulation stronger without new hardware.'),
+(2153,'v1','ready','Whole raw and corrected canvas viewed. Existing leather and gray fields retained. Numerical source/inverse upper binding has 45 maxima at same native x38,40,...126; no added phase or bands. Fine leather paint slightly stronger.'),
+(2235,'v2','ready','Whole raw and corrected canvas viewed. Source six buttons, five belt loops, two upper outlined fields, lower gray buckle and colored decoration kept. Fine painted diffuse modulation stronger without textile weave or added objects. v1 was source-only preparation and never called.'),
+(2353,'v1','ready','Whole raw and corrected canvas viewed. Source red cross, two lower fasteners, left belt and one buckle, upper small square and two side small squares preserved. Existing painted shading retained, no new objects.'),
+(2443,'v1','ready','Whole raw and corrected canvas viewed. Four original pockets, belt square buckle, center buttons, pointed lower gray fields and faint right horizontal mark retained; source dark blue-gray painted material preserved.'),
+(2542,'v1','ready','Whole raw and corrected canvas viewed. Paired upper pockets, center belt buckle, lower straps and buckles, dark barred fields, lower opening and right tiny paint marks preserved. Fine painted shading stronger without new hardware.'),
+(3069,'v2','ready','Whole source native RGB re-viewed and full raw/corrected canvas viewed. Muted tan-pink source skin and dark brown hair relationship retained with finer painted hair highlights; upside-down face, small closed mouth, eyes, ear, paired hand groups and jagged silhouette kept. No new teeth or objects.'),
+(3878,'v2','ready','Whole source RGB re-viewed and saved raw/corrected canvas viewed. Bottom two native paint groups retained as blue left and pale gray right irregular blocks; v1 invented circles resolved. Gray left/brown right fields, bands and lower pointed paint shapes kept. Fine paint stronger without new label text.'),
+(3880,'v2','ready','Whole source RGB re-viewed and saved raw/corrected canvas viewed. Bottom two native paint groups retained as blue left and pale gray right irregular blocks; v1 invented circles resolved. Blue left/dark gray right fields, three pale dots, bands and lower pointed shapes kept.'),
+(3884,'v2','ready','Whole source RGB re-viewed and saved raw/corrected canvas viewed. Bottom two native paint groups retained as blue left and pale gray right irregular blocks; v1 invented circles resolved. Gray left/blue right fields, three pale dots, bands and lower pointed shapes kept.'),
+(2011,'v1','held','Whole saved raw/corrected canvas viewed. Camouflage broad patches retained but narrow vertical binding brighter rungs move sideways and alter suppressed intervals; requires artistic retry preserving exact band location and phase.')]
+for i,v,s,r in records:subprocess.run([sys.executable,str(B/'work_clothing_complete_20261008.py'),'mark',str(i),v,s,r],check=True)

@@ -1,0 +1,42 @@
+{
+  "scope": "equipment-fifty-first",
+  "read_only_code_refs": [
+    {
+      "path": "Main/GTexture.cpp",
+      "file_SHA256": "edfec3a48668a2a41d472b534127b690f9e6325b41b171f06b48a1e0ff28758d",
+      "line_start_1based": 14,
+      "line_end_1based": 22,
+      "source_excerpt": "bool bDXTModeOn = true;\nstatic int GetRealTextureID( NDb::CTexture *pTex )\n{\n\tint nID = pTex->GetRecordID();\n\tif ( bDXTModeOn )\n\t\treturn nID;\n\tif ( pTex->bIsDXT )\n\t\treturn nID | 0x01000000;\n\treturn nID;"
+    },
+    {
+      "path": "DBFormat/DataFormat.cpp",
+      "file_SHA256": "2823097afb3260541d8914754abe5faea6dfbf9ac867444a823be29de0f01159",
+      "line_start_1based": 965,
+      "line_end_1based": 973,
+      "source_excerpt": "\t\tusage = TEXTURE_USAGE_ORDINARY;\n\tint nAverageColor = 0;\n\tNDatabase::ImportField( \"AverageColor\", &nAverageColor );\n\tdwAverageColor = static_cast<DWORD>( nAverageColor );\n\tstring szFormat;\n\tNDatabase::ImportField( \"Format\", &szFormat );\n\tbIsDXT = szFormat.substr( 0, 3 ) == \"dxt\";\n\tNDatabase::ImportField( \"InstantLoad\", &bInstantLoad );\n}"
+    },
+    {
+      "path": "Game/Main.cpp",
+      "file_SHA256": "c6efe78a5e345bc7bc9c68550f4db3c165c7ac4872573e0d7d310b2f20217528",
+      "line_start_1based": 1305,
+      "line_end_1based": 1310,
+      "source_excerpt": "\t\telse if ( szParams[i] == \"-nvrulez\" )\n\t\t\tNGlobal::SetVar( \"gfx_fix_nv_np2_hack\", 1 );\n\t\telse if ( szParams[i] == \"-dxtoff\" )\n\t\t\tNGlobal::SetVar( \"gfx_texture_usedxt\", 0 );\n\n\t\tif ( szParams[i] == \"-nosound\" )"
+    }
+  ],
+  "typed_Texture_formats": {
+    "5235": "dxt1",
+    "5236": "dxt1",
+    "5239": "dxt1",
+    "5240": "dxt1",
+    "5245": "dxt1",
+    "5249": "dxt1",
+    "5250": "dxt1",
+    "5251": "dxt1",
+    "5331": "dxt1",
+    "5372": "dxt1",
+    "5433": "dxt1",
+    "5435": "dxt1"
+  },
+  "current_runtime_selection": "Parent gfx_texture_usedxt=0; GetRealTextureID i|0x01000000 if Texture.bIsDXT=true, elsei. Allselected Formatprefixdxt makesbIsDXTtrue accordingactualconstructor. Worker actualGPU notrun.",
+  "uncompressed_alias_discrepancy_disclosed_beforetool": true
+}

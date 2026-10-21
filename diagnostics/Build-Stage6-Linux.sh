@@ -6,7 +6,7 @@ previous=${2:?verified stage-4 dependency directory}
 vendor=${3:?SDL3/bgfx/FFmpeg vendor directory}
 arch=${4:?x64 or arm64}
 mkdir -p "$base/evidence"
-common=( -DS2_BUILD_GAME=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
+common=( -DS2_BUILD_GAME=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DS2_BUILD_HD_TEXTURES=ON
   -DS2_BGFX_CMAKE_ROOT="$vendor/bgfx.cmake-probe"
   -DS2_BGFX_DIR="$vendor/bgfx-81d81fba72c42d348c589514c774bbfe01e110fa"
   -DS2_BIMG_DIR="$vendor/bimg-87aaad3ac882e741889fdd4263224e5d12c26f99"

@@ -11,6 +11,11 @@
 #include "NetworkWorld.h"
 #include "NetworkIdentity.h"
 #include "ModManager.h"
+#include "RPGUnit.h"
+#include "RPGUnitMission.h"
+#include "wUnitServer.h"
+#include "../DBFormat/DataRPG.h"
+#include "../DBFormat/DataFormat.h"
 #include "G2DView.h"
 #include "GfxRender.h"
 #include "GfxUtils.h"
@@ -37,6 +42,7 @@ unsigned ValidPort(const wstring& value) {
   return port && port<=65535 ? port : 0;
 }
 wstring NetworkStatusText(const string& message) {
+  if(message=="Invalid preparation settings")return L"\u0411\u043e\u0439\u0446\u043e\u0432: 1\u20136, \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0431\u043e\u0439\u0446\u043e\u0432: 1\u201320, \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u0435: 1\u201314";
   if(message=="Match already has two players")return L"\u041a \u043c\u0430\u0442\u0447\u0443 \u0443\u0436\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u044b \u0434\u0432\u0430 \u0438\u0433\u0440\u043e\u043a\u0430.";
   if(message=="Checking game data...")return L"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430 \u0438\u0433\u0440\u043e\u0432\u044b\u0445 \u0434\u0430\u043d\u043d\u044b\u0445...";
   if(message=="Waiting for the second player")return L"\u041e\u0436\u0438\u0434\u0430\u043d\u0438\u0435 \u0432\u0442\u043e\u0440\u043e\u0433\u043e \u0438\u0433\u0440\u043e\u043a\u0430. \u00ab\u041d\u0430\u0437\u0430\u0434\u00bb \u2014 \u043e\u0442\u043c\u0435\u043d\u0430.";
@@ -91,7 +97,9 @@ class NetworkControls:public NUI::CWindow {
   enum { MapsPerPage=16 };
  public:
   NetworkControls() {}
-  CMObj<NUI::CEdit> address,port;
+  CMObj<NUI::CEdit> address,port,squadSize,startingLevel,supplyLevel;
+  CMObj<NUI::CHoverButton> preparation;
+  bool useBase=true;
   CMObj<NUI::CText> status,mapName;
   CMObj<NUI::CHoverButton> create,connect,back,previousMap,nextMap;
   CMObj<NUI::CHoverButton> mapPicker,mapRows[MapsPerPage],previousPage,nextPage,closeList;
@@ -103,11 +111,11 @@ class NetworkControls:public NUI::CWindow {
       auto* text=new CText(SWindowInfo(this,SPoint(x,y),SPoint(width,50),id));
       text->SetText(wstring(Font)+value);return text;
     };
-    label("title",260,150,500,Caption);
-    label("ip_label",260,235,180,L"IP (IPv4)");label("port_label",260,300,180,L"\u041f\u043e\u0440\u0442");
-    address=new CEdit(SWindowInfo(this,SPoint(465,235),SPoint(300,50),"net_address"));
+    label("title",260,70,500,Caption);
+    label("ip_label",260,145,180,L"IP (IPv4)");label("port_label",260,200,180,L"\u041f\u043e\u0440\u0442");
+    address=new CEdit(SWindowInfo(this,SPoint(465,145),SPoint(300,50),"net_address"));
     address->SetTextFormat(Font);address->SetEditSize(15);address->SetText(NGlobal::GetVar("net_address",wstring(L"127.0.0.1")).GetString());
-    port=new CEdit(SWindowInfo(this,SPoint(465,300),SPoint(160,50),"net_port"));
+    port=new CEdit(SWindowInfo(this,SPoint(465,200),SPoint(160,50),"net_port"));
     port->SetTextFormat(Font);port->SetMode(CEdit::NUMERIC);port->SetEditSize(5);port->SetText(std::to_wstring(NGlobal::GetVar("net_port",7780).GetInt()));
     auto button=[this](const char* id,int x,int y,int width,const wstring& caption) {
       auto* b=new CHoverButton(SWindowInfo(this,SPoint(x,y),SPoint(width,60),id));
@@ -115,16 +123,25 @@ class NetworkControls:public NUI::CWindow {
       b->AddTextState(CHoverButton::STATE_HOVER,L"<font face=System size=20pt color=yellow>"+caption);
       b->AddTextState(CHoverButton::STATE_DISABLED,L"<font face=System size=20pt color=gray>"+caption);return b;
     };
-    label("map_label",260,365,520,L"\u041a\u0430\u0440\u0442\u0430 \u043f\u0440\u0438 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0438 \u043c\u0430\u0442\u0447\u0430");
-    previousMap=button("net_map_previous",145,410,60,L"<");
-    nextMap=button("net_map_next",825,410,60,L">");
-    mapName=label("net_map",230,425,565,L"");
-    mapPicker=button("net_map_list",230,410,565,L"");
+    label("map_label",260,255,520,L"\u041a\u0430\u0440\u0442\u0430 \u043f\u0440\u0438 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0438 \u043c\u0430\u0442\u0447\u0430");
+    previousMap=button("net_map_previous",145,295,60,L"<");
+    nextMap=button("net_map_next",825,295,60,L">");
+    mapName=label("net_map",230,310,565,L"");
+    mapPicker=button("net_map_list",230,295,565,L"");
     maps=S2Net::GetNetworkEncounterMaps();UpdateMapName();
-    create=button("net_create",145,505,230,L"\u0421\u043e\u0437\u0434\u0430\u0442\u044c");
-    connect=button("net_connect",395,505,230,L"\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f");
-    back=button("net_back",645,505,230,L"\u041d\u0430\u0437\u0430\u0434");
-    status=label("net_status",145,605,740,L"");
+    preparation=button("net_preparation",145,360,300,L"\u041d\u0430 \u0431\u0430\u0437\u0435");
+    auto number=[&](const char* id,int x,int y,const wchar_t* caption,int initial) {
+      label((string(id)+"_label").c_str(),x,y,420,caption);
+      auto* edit=new CEdit(SWindowInfo(this,SPoint(700,y),SPoint(90,45),id));edit->SetTextFormat(Font);edit->SetMode(CEdit::NUMERIC);edit->SetEditSize(2);edit->SetText(std::to_wstring(initial));return edit;
+    };
+    squadSize=number("net_squad_size",465,365,L"\u0411\u043e\u0439\u0446\u043e\u0432 (1\u20136)",6);
+    startingLevel=number("net_starting_level",145,425,L"\u0423\u0440\u043e\u0432\u0435\u043d\u044c \u0431\u043e\u0439\u0446\u043e\u0432 (1\u201320)",1);
+    supplyLevel=number("net_supply_level",145,480,L"\u0423\u0440\u043e\u0432\u0435\u043d\u044c \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u044f (1\u201314)",1);
+
+    create=button("net_create",145,550,230,L"\u0421\u043e\u0437\u0434\u0430\u0442\u044c");
+    connect=button("net_connect",395,550,230,L"\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f");
+    back=button("net_back",645,550,230,L"\u041d\u0430\u0437\u0430\u0434");
+    status=label("net_status",145,640,740,L"");
     for(int row=0;row<MapsPerPage;++row) {
       mapRows[row]=button(("net_map_pick_"+std::to_string(row)).c_str(),145,210+26*row,740,L"");
       mapRows[row]->SetSize(SPoint(740,26));
@@ -136,7 +153,7 @@ class NetworkControls:public NUI::CWindow {
   }
   void ShowMapList(bool open) {
     mapList=open;
-    for(const char* id:{"ip_label","port_label","net_address","net_port","map_label","net_map","net_map_list","net_map_previous","net_map_next","net_create","net_connect","net_back","net_status"})
+    for(const char* id:{"ip_label","port_label","net_address","net_port","map_label","net_map","net_map_list","net_map_previous","net_map_next","net_create","net_connect","net_back","net_status","net_preparation","net_squad_size_label","net_squad_size","net_starting_level_label","net_starting_level","net_supply_level_label","net_supply_level"})
       GetChildByID(id)->ShowWindow(open?NUI::SWTYPE_HIDE:NUI::SWTYPE_SHOW);
     for(int row=0;row<MapsPerPage;++row)mapRows[row]->ShowWindow(open && mapPage*MapsPerPage+row<maps.size()?NUI::SWTYPE_SHOW:NUI::SWTYPE_HIDE);
     for(auto* control:{previousPage.GetPtr(),nextPage.GetPtr(),closeList.GetPtr()})control->ShowWindow(open?NUI::SWTYPE_SHOW:NUI::SWTYPE_HIDE);
@@ -164,6 +181,7 @@ class NetworkControls:public NUI::CWindow {
       if((event.szID=="net_map_previous" || event.szID=="net_map_next") && !maps.empty()) {
         selectedMap=(event.szID=="net_map_next"?selectedMap+1:selectedMap+maps.size()-1)%maps.size();UpdateMapName();return true;
       }
+      if(event.szID=="net_preparation"){useBase=!useBase;return true;}
       if(event.szID=="net_create" && start){start(true);return true;}
       if(event.szID=="net_connect" && start){start(false);return true;}
       if(event.szID=="net_back" && cancel){cancel();return true;}
@@ -182,18 +200,19 @@ class NetworkControls:public NUI::CWindow {
       if(!base || !S2Fonts::Rasterize(string(base)+"fonts/"+S2Fonts::FamilyFile("System"),pixels,&fontAtlas,&error))return;
       fontPixels=pixels;canvasKey.clear();
     }
-    wstring key=address->GetText()+L"|"+port->GetText()+L"|"+MapCaption()+L"|"+NetworkStatusText(displayedStatus);
+    wstring key=std::to_wstring(useBase)+L"|"+squadSize->GetText()+L"|"+startingLevel->GetText()+L"|"+supplyLevel->GetText()+L"|"+address->GetText()+L"|"+port->GetText()+L"|"+MapCaption()+L"|"+NetworkStatusText(displayedStatus);
     key+=std::to_wstring(width)+L","+std::to_wstring(height);
     key+=(mapList?L"list":L"form")+std::to_wstring(mapPage);
-    for(auto* control:{create.GetPtr(),connect.GetPtr(),back.GetPtr(),previousMap.GetPtr(),nextMap.GetPtr(),mapPicker.GetPtr(),previousPage.GetPtr(),nextPage.GetPtr(),closeList.GetPtr()}) {
+    for(auto* control:{create.GetPtr(),connect.GetPtr(),back.GetPtr(),previousMap.GetPtr(),nextMap.GetPtr(),mapPicker.GetPtr(),previousPage.GetPtr(),nextPage.GetPtr(),closeList.GetPtr(),preparation.GetPtr()}) {
       key+=control->IsMouseCover()?L"h":L"-";
       key+=control->GetStyle(NUI::STYLE_ENABLED)?L"e":L"d";
     }
     if(mapList)for(auto& row:mapRows)key+=row->IsMouseCover()?L"h":L"-";
     const bool blink=(S2Platform::Milliseconds()/500)%2==0;
-    key+=address->IsActive()?L"a":port->IsActive()?L"p":L"-";
-    key+=std::to_wstring(address->GetCursorPosition())+L","+std::to_wstring(port->GetCursorPosition());
-    if(address->IsActive() || port->IsActive())key+=blink?L"1":L"0";
+    for(auto* edit:{address.GetPtr(),port.GetPtr(),squadSize.GetPtr(),startingLevel.GetPtr(),supplyLevel.GetPtr()}) {
+      key+=edit->IsActive()?L"a":L"-";key+=std::to_wstring(edit->GetCursorPosition());
+      if(edit->IsActive())key+=blink?L"1":L"0";
+    }
     if(key!=canvasKey || !canvas) {
       if(!canvas || canvas->GetXSize()!=width || canvas->GetYSize()!=height)
         canvas=NGfx::MakeTexture(width,height,1,NGfx::SPixel8888::ID,NGfx::REGULAR,NGfx::CLAMP);
@@ -246,6 +265,11 @@ class NetworkControls:public NUI::CWindow {
       button(connect,L"\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u0442\u044c\u0441\u044f");
       button(back,L"\u041d\u0430\u0437\u0430\u0434");text(status,NetworkStatusText(displayedStatus),0,white);
       button(previousMap,L"<");button(nextMap,L">");
+      button(preparation,useBase?L"\u041f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430: \u043d\u0430 \u0431\u0430\u0437\u0435":L"\u041f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430: \u0431\u044b\u0441\u0442\u0440\u044b\u0439 \u0431\u043e\u0439");
+      for(auto* edit:{squadSize.GetPtr(),startingLevel.GetPtr(),supplyLevel.GetPtr()})text(edit,edit->GetText(),0,useBase?white:gray,edit->IsActive()?edit->GetCursorPosition():-1);
+      text(GetChildByID("net_squad_size_label"),L"\u0411\u043e\u0439\u0446\u043e\u0432 (1\u20136)",0,white);
+      text(GetChildByID("net_starting_level_label"),L"\u0423\u0440\u043e\u0432\u0435\u043d\u044c \u0431\u043e\u0439\u0446\u043e\u0432 (1\u201320)",0,white);
+      text(GetChildByID("net_supply_level_label"),L"\u0423\u0440\u043e\u0432\u0435\u043d\u044c \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u044f (1\u201314)",0,white);
       }
       canvasKey=key;
     }
@@ -265,7 +289,7 @@ class NetworkControls:public NUI::CWindow {
     auto number=ValidPort(port->GetText());if(number)NGlobal::SetVar("net_port",int(number));
     NGlobal::SaveConfig(".\\cfg\\config.cfg");
   }
-  void Enable(bool enabled){create->SetStyle(NUI::STYLE_ENABLED,enabled && !maps.empty());connect->SetStyle(NUI::STYLE_ENABLED,enabled);address->SetStyle(NUI::STYLE_ENABLED,enabled);port->SetStyle(NUI::STYLE_ENABLED,enabled);
+  void Enable(bool enabled){for(auto* edit:{squadSize.GetPtr(),startingLevel.GetPtr(),supplyLevel.GetPtr()})edit->SetStyle(NUI::STYLE_ENABLED,enabled && useBase);preparation->SetStyle(NUI::STYLE_ENABLED,enabled);create->SetStyle(NUI::STYLE_ENABLED,enabled && !maps.empty());connect->SetStyle(NUI::STYLE_ENABLED,enabled);address->SetStyle(NUI::STYLE_ENABLED,enabled);port->SetStyle(NUI::STYLE_ENABLED,enabled);
     previousMap->SetStyle(NUI::STYLE_ENABLED,enabled && maps.size()>1);nextMap->SetStyle(NUI::STYLE_ENABLED,enabled && maps.size()>1);
     mapPicker->SetStyle(NUI::STYLE_ENABLED,enabled && !maps.empty());}
 };
@@ -325,6 +349,11 @@ class NetworkScreen:public CMissionBase {
       host=authoritative;world.reset();session.reset();
       if(host) {
         preset.mapVariant=controls->SelectedVariant();preset.useEncounterDeployment=true;
+        preset.prepareOnBase=controls->useBase;
+        if(preset.prepareOnBase) {
+          preset.squadSize=ValidPort(controls->squadSize->GetText());preset.startingLevel=ValidPort(controls->startingLevel->GetText());preset.supplyLevel=ValidPort(controls->supplyLevel->GetText());
+          if(preset.squadSize<1 || preset.squadSize>6 || preset.startingLevel<1 || preset.startingLevel>20 || preset.supplyLevel<1 || preset.supplyLevel>14)throw std::runtime_error("Invalid preparation settings");
+        }
         if(!preset.mapVariant)throw std::runtime_error("No random encounter maps available");
       }
       SetStatus("Checking game data...");controls->Enable(false);
@@ -339,7 +368,7 @@ class NetworkScreen:public CMissionBase {
   void Autostart(int role,unsigned port,const string& address,int variant) {
     if(role){controls->port->SetText(std::to_wstring(port));controls->address->SetText(wstring(address.begin(),address.end()));}
     if(variant && !controls->SelectVariant(variant)){SetStatus("Selected map is not a random encounter");return;}
-    if(role)Start(role==1);
+    if(role){controls->useBase=false;Start(role==1);}
   }
   void Step() {
     try {
@@ -375,7 +404,73 @@ class NetworkScreen:public CMissionBase {
  protected:
   ~NetworkScreen(){if(cancelled)cancelled->store(true);}
 };
+class PreparationControls:public NUI::CWindow {
+  OBJECT_NOCOPY_METHODS(PreparationControls);
+  CPtr<CMission> mission;
+  std::shared_ptr<S2Net::NetworkWorld> world;
+  std::shared_ptr<S2Net::NetworkSession> session;
+  CMObj<NUI::CText> info,crew[6];
+  CMObj<NUI::CHoverButton> ready,store,roster,previous[6],next[6];
+  bool rosterOpen=false;
+ public:
+  PreparationControls() {}
+  PreparationControls(CMission* m,std::shared_ptr<S2Net::NetworkWorld> w,std::shared_ptr<S2Net::NetworkSession> s):
+    CWindow(NUI::SWindowInfo(m->GetInterface(),NUI::SPoint(0,60),NUI::SPoint(1024,380),"net_base_controls")),mission(m),world(w),session(s) {
+    using namespace NUI;
+    auto button=[&](const string& id,int x,int y,int width,const wchar_t* value){auto* b=new CHoverButton(SWindowInfo(this,SPoint(x,y),SPoint(width,38),id));b->AddTextState(CHoverButton::STATE_NORMAL,wstring(Font)+value);b->AddTextState(CHoverButton::STATE_HOVER,L"<font face=System size=20pt color=yellow>"+wstring(value));return b;};
+    info=new CText(SWindowInfo(this,SPoint(20,0),SPoint(984,35),"net_base_status"));
+    roster=button("net_base_roster",20,36,200,L"\u0411\u043e\u0439\u0446\u044b");store=button("net_base_store",235,36,260,L"\u0421\u043a\u043b\u0430\u0434 \u0438 \u0438\u043d\u0432\u0435\u043d\u0442\u0430\u0440\u044c");ready=button("net_base_ready",780,36,224,L"\u0413\u043e\u0442\u043e\u0432 / \u043d\u0435 \u0433\u043e\u0442\u043e\u0432");
+    for(int i=0;i<world->Preset().squadSize;++i) {
+      previous[i]=button("net_recruit_previous_"+std::to_string(i),20,82+42*i,40,L"<");
+      next[i]=button("net_recruit_next_"+std::to_string(i),430,82+42*i,40,L">");
+      crew[i]=new CText(SWindowInfo(this,SPoint(65,90+42*i),SPoint(360,35),"net_recruit_"+std::to_string(i)));
+    }
+    ShowRoster(false);
+    SetStyle(NUI::STYLE_TOPMOST,true);
+    ShowWindow(NUI::SWTYPE_SHOW);
+  }
+  void ShowRoster(bool open) {rosterOpen=open;SetSize(NUI::SPoint(1024,open?380:90));for(int i=0;i<world->Preset().squadSize;++i)for(auto* c:{static_cast<NUI::CWindow*>(crew[i].GetPtr()),static_cast<NUI::CWindow*>(previous[i].GetPtr()),static_cast<NUI::CWindow*>(next[i].GetPtr())})c->ShowWindow(open?NUI::SWTYPE_SHOW:NUI::SWTYPE_HIDE);}
+  bool ProcessMessage(const NUI::SEvent& event) override {
+    if(event.nEvent==NUI::EVENT_NOTIFY) {
+      const unsigned slot=session->LocalSlot();
+      if(event.szID=="net_base_roster"){ShowRoster(!rosterOpen);return true;}
+      if(event.szID=="net_base_store"){ShowRoster(false);mission->SetPanelState(PANEL_STORE|PANEL_INVENTORY,true);return true;}
+      if(event.szID=="net_base_ready"){session->Submit(world->PreparationCommand(S2Net::PreparationAction::Ready,0,!world->IsReady(slot)));return true;}
+      auto recruits=S2Net::GetNetworkRecruitIDs();const auto& units=world->Match().game->players[slot]->mercs;
+      for(size_t i=0;i<units.size();++i)if(event.szID=="net_recruit_next_"+std::to_string(i) || event.szID=="net_recruit_previous_"+std::to_string(i)) {
+        const bool forward=event.szID=="net_recruit_next_"+std::to_string(i);
+        auto found=std::find(recruits.begin(),recruits.end(),units[i]->GetRPGPersID());size_t at=found-recruits.begin();
+        for(size_t step=1;step<=recruits.size();++step) {
+          size_t pick=(at+(forward?step:recruits.size()-step))%recruits.size();bool used=false;
+          for(auto unit:units)if(unit->GetRPGPersID()==recruits[pick])used=true;
+          if(!used){session->Submit(world->PreparationCommand(S2Net::PreparationAction::ChooseRecruit,i,recruits[pick]));break;}
+        }
+        return true;
+      }
+    }
+    return CWindow::ProcessMessage(event);
+  }
+  void Draw(const STime& time,NGScene::I2DGameView* view) override {
+    const bool equipment=mission->GetPanelState(PANEL_ALL)!=0;
+    SetStyle(NUI::STYLE_TRANSPARENT,equipment);
+    for(auto* control:{static_cast<NUI::CWindow*>(info.GetPtr()),static_cast<NUI::CWindow*>(roster.GetPtr()),static_cast<NUI::CWindow*>(store.GetPtr()),static_cast<NUI::CWindow*>(ready.GetPtr())})
+      control->SetStyle(NUI::STYLE_VISIBLE,!equipment);
+    for(int i=0;i<world->Preset().squadSize;++i)
+      for(auto* control:{static_cast<NUI::CWindow*>(crew[i].GetPtr()),static_cast<NUI::CWindow*>(previous[i].GetPtr()),static_cast<NUI::CWindow*>(next[i].GetPtr())})
+        control->SetStyle(NUI::STYLE_VISIBLE,!equipment && rosterOpen);
+    if(equipment)return;
+    const unsigned slot=session->LocalSlot();
+    info->SetText(wstring(Font)+L"\u0411\u0430\u0437\u0430 \u00b7 \u0421\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u0435 "+std::to_wstring(world->Preset().supplyLevel)+L" \u00b7 \u0411\u043e\u0439\u0446\u044b \u0443\u0440. "+std::to_wstring(world->Preset().startingLevel)+
+      (world->IsReady(slot)?L" \u00b7 \u0412\u044b \u0433\u043e\u0442\u043e\u0432\u044b":L" \u00b7 \u041f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430")+(world->IsReady(1-slot)?L" \u00b7 \u0421\u043e\u043f\u0435\u0440\u043d\u0438\u043a \u0433\u043e\u0442\u043e\u0432":L" \u00b7 \u0421\u043e\u043f\u0435\u0440\u043d\u0438\u043a \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f"));
+    const auto& units=world->Match().game->players[slot]->mercs;
+    for(size_t i=0;i<units.size();++i)crew[i]->SetText(wstring(Font)+std::to_wstring(i+1)+L". "+units[i]->GetName()+L" \u00b7 "+(units[i]->GetPers()->pClass->pToolTip?units[i]->GetPers()->pClass->pToolTip->szStr:L""));
+    CWindow::Draw(time,view);
+  }
+};
+
 }
+void OpenNetworkMission(std::shared_ptr<S2Net::NetworkWorld> world,std::shared_ptr<S2Net::NetworkSession> session) {NMainLoop::Command(new NetworkMission(world,session));}
+CObj<NUI::CWindow> CreateNetworkPreparationControls(CMission* mission,std::shared_ptr<S2Net::NetworkWorld> world,std::shared_ptr<S2Net::NetworkSession> session) {return new PreparationControls(mission,world,session);}
 void CICNetworkMenu::Exec() {
   ResetStack();
   CObj<NetworkScreen> screen=new NetworkScreen;screen->Initialize(status);screen->Autostart(role,port,ip,variant);

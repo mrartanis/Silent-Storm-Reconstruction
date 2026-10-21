@@ -300,7 +300,7 @@ public:
 	{
 		f.Add(2,&nLayer); f.Add(3,&nFloor); f.Add(4,&tiles); f.Add(6,&transitions); f.Add(7,&ladders);
 		f.Add(8,&ladderEntrances); f.Add(9,&pGroup); f.Add(10,&bHappySave);
-		if ( !f.IsReading() && bHappySave )
+		if ( !f.IsReading() && (bHappySave || f.IsNetwork()) )
 		{
 			CObj<CMapColourer> pNull;
 			f.Add(11,&pNull);
@@ -436,14 +436,21 @@ private:
 	ZEND int operator&( CStructureSaver &f )
 	{
 		f.Add(2,&pMap); f.Add(3,&layers); f.Add(4,&lockedPlaces); f.Add(5,&dynLockedPlaces);
-		if ( !f.IsReading() && bHappySave )
+		if ( !f.IsReading() && (bHappySave || f.IsNetwork()) )
 		{
 			bool bFalse = false;
 			f.Add(6,&bFalse);
 		}
 		else
 			f.Add(6,&bColouringConstructed);
-		f.Add(7,&oldAccountPoints); f.Add(8,&pWaysCalcer); f.Add(9,&flippers); f.Add(10,&flippersHash);
+		f.Add(7,&oldAccountPoints);
+		// Replicas ask the authoritative host for paths; search history and
+		// recolouring caches have no presentation state to synchronize.
+		if ( !f.IsReading() && f.IsNetwork() ) {
+			CObj<CColouredWaysCalcer> pNull;
+			f.Add(8,&pNull);
+		} else f.Add(8,&pWaysCalcer);
+		f.Add(9,&flippers); f.Add(10,&flippersHash);
 		f.Add(11,&bFreeze); f.Add(12,&groups); f.Add(13,&mineTempLocks);
 		f.Add(14,&bDoNotFlipAnything); f.Add(15,&bHappySave); f.Add(16,&pJobManager); f.Add(17,&bUpdated);
 		return 0;

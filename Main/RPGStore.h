@@ -42,7 +42,7 @@ class CStore: public CObjectBase
 	OBJECT_BASIC_METHODS( CStore );
 	ZDATA
 	CPtr<CGlobalPlayer>         pPlayer;       // +0x0c  owning player (CPtr copy AddRefs)
-	EStoreFilter               eFilter;        // +0x10  active category
+	EStoreFilter               eFilter = FLT_OTHERS;        // +0x10  active category
 	vector<bool>               flagsSet;       // +0x14  per-category "panel dirty" flags
 	vector<SStoreItem>         itemsSet;       // +0x20  priced stock rows (reuses NRPG::SStoreItem)
 	vector< CObj<CItemsMap> >  itemsMapsSet;   // +0x2c  one placement grid per category
@@ -50,7 +50,7 @@ class CStore: public CObjectBase
 	// (DoDataVector<bool>), 5=itemsSet, 6=itemsMapsSet. flagsSet serializes through the framework's
 	// dedicated std::vector<bool> path (BasicChunk1.h), which writes the exact retail
 	// DoDataVector<bool> blob layout despite this build's bit-packed vector<bool>.
-	ZEND int operator&( CStructureSaver &f ) { f.Add( 2, &pPlayer ); f.Add( 3, &eFilter ); f.Add( 4, &flagsSet ); f.Add( 5, &itemsSet ); f.Add( 6, &itemsMapsSet ); return 0; }
+	ZEND int operator&( CStructureSaver &f ) { f.Add( 2, &pPlayer ); {auto localFilter=eFilter;f.Add( 3, &eFilter );if(f.IsNetwork() && f.IsReading())eFilter=localFilter;} f.Add( 4, &flagsSet ); f.Add( 5, &itemsSet ); f.Add( 6, &itemsMapsSet ); return 0; }
 
 public:
 	CStore() {}                                       // default (saveload New / DestroyContents)
@@ -66,7 +66,8 @@ public:
 	bool FindPlace( const IInventoryItem *item, CTPoint<int> *pPos );      // @0x2b0550 (vtbl +0x1c)
 	void SetSize( int newX, int newY );                                   // @0x2b0560 (vtbl +0x24)
 	CTPoint<int> GetSize();                                               // @0x2b0570 (vtbl +0x28)
-	void Take( IInventoryItem *item );                                    // @0x2b0630 (vtbl +0x10)
+	void Take( IInventoryItem *item );
+	bool TakeNetworkItem(IInventoryItem* item);                                    // @0x2b0630 (vtbl +0x10)
 	bool Place( const CTPoint<int> &point, IInventoryItem *item );          // @0x2b1060
 	void Update( int nLevel, const vector< CObj<CUnit> > &units );          // @0x2b1350
 	bool HasMappedItems() const;                                           // live-view initialization probe

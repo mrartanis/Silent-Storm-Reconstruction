@@ -40,7 +40,7 @@ int main() {
       Require(std::search(wire.begin(),wire.end(),nativeVtable.begin(),nativeVtable.end())==wire.end(),
               "empty polymorphic base leaked a native vtable into the protocol");
       input.Apply(output.Capture(wire,initial),initial);
-      auto assembled=input.Structure(); CMemoryStream received;
+      auto assembled=input.Structure(!initial); CMemoryStream received;
       received.Write(assembled.data(),static_cast<int>(assembled.size())); received.Seek(0);
       {CStructureSaver load(received,CStructureSaver::READ,&client); load.Add(1,&replica);}
     };
@@ -83,6 +83,28 @@ int main() {
     file.Seek(0); CObj<NetworkTestNode> restored;
     {CStructureSaver load(file,CStructureSaver::READ);load.Add(1,&restored);}
     Require(restored && restored->value==source->value && restored->child,"ordinary save regression");
+    // Frequent UI previews reference the world, but must not copy its registry
+    // or serialize/mutate its objects as part of a temporary command packet.
+    CObj<NetworkTestNode> request=new NetworkTestNode;
+    request->value=991;request->parent=source;
+    const auto hostCount=host.ids.size(),clientCount=client.ids.size();
+    CStructureNetworkContext commandWriter,commandReader;
+    commandWriter.externalReferences=commandReader.externalReferences=true;
+    commandWriter.externalRegistry=&host;commandReader.externalRegistry=&client;
+    commandWriter.nextID=0x80000000u;
+    CMemoryStream commandStream;
+    {CStructureSaver save(commandStream,CStructureSaver::WRITE,&commandWriter);save.Add(1,&request);}
+    commandStream.Seek(0);CObj<NetworkTestNode> decodedRequest;
+    {CStructureSaver load(commandStream,CStructureSaver::READ,&commandReader);load.Add(1,&decodedRequest);}
+    Require(decodedRequest && decodedRequest->value==991 && decodedRequest->parent.GetPtr()==replica.GetPtr(),
+            "borrowed command world reference did not resolve");
+    Require(commandWriter.ids.size()==1 && commandReader.refs.size()==1 &&
+            host.ids.size()==hostCount && client.ids.size()==clientCount,
+            "command materialized or modified the world registry");
+    file.Seek(0);bool worldOverrideRejected=false;
+    try {CStructureSaver load(file,CStructureSaver::READ,&commandReader);load.Add(1,&decodedRequest);}
+    catch(const SFileIOError&) {worldOverrideRejected=true;}
+    Require(worldOverrideRejected && replica->value==source->value,"command overwrote a borrowed world object");
     source->child->Invalidate();
     CStructureNetworkContext transientWriter,transientReader;
     transientWriter.externalReferences=transientReader.externalReferences=true;

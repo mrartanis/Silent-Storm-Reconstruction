@@ -96,6 +96,9 @@ struct CStructureNetworkContext
 	std::vector<CPtr<CObjectBase> > changed;
 	std::uint32_t nextID = 1;
 	bool externalReferences = false;
+	// Command packets borrow the immutable world registry for this synchronous
+	// save/read. Their temporary objects stay in the local maps above.
+	const CStructureNetworkContext *externalRegistry = nullptr;
 	std::uint32_t Identify(CObjectBase *p);
 };
 class CStructureSaver
@@ -122,9 +125,10 @@ private:
 	CMemoryStream obj;
 	// objects data
 	CMemoryStream data;
-	std::list<CChunkLevel> chunks;
-	typedef std::list<CChunkLevel>::iterator CChunkLevelIterator;
-	typedef std::list<CChunkLevel>::reverse_iterator CChunkLevelReverseIterator;
+	// Contiguous stack avoids an allocation for every nested field.
+	std::vector<CChunkLevel> chunks;
+	typedef std::vector<CChunkLevel>::iterator CChunkLevelIterator;
+	typedef std::vector<CChunkLevel>::reverse_iterator CChunkLevelReverseIterator;
 	bool bIsReading;
 	// file format version. Stored as top-level chunk id 4 (value, 4 bytes). Absent in legacy
 	// files => v0. The release stamps v1 and packs the payload chunks 0/2/1 with CNetCompressor
@@ -138,7 +142,7 @@ private:
 	typedef std::unordered_map<CObjectBase*,std::uint32_t> CPObjectsHash;
 	CPObjectsHash storedObjects;
 	std::uint32_t nextWireID;
-	std::list<CObjectBase*> toStore;
+	std::vector<CObjectBase*> toStore;
 
 	bool ReadShortChunk( CChunkLevel &src, int &nPos, CChunkLevel &res );
 	bool WriteShortChunk( CChunkLevel &dst, chunk_id dwID, const unsigned char *pData, int nLength );

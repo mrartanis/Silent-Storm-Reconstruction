@@ -13,6 +13,7 @@
 #include "RPGGame.h"
 #include "RPGBullet.h"
 #include "rpgGlobal.h"
+#include "NetworkMatch.h"
 #include "RPGStore.h"    // NRPG::CStore -- the serialized vendor stock (CGlobalPlayer tag 3)
 #include "RPGUnitInfo.h"
 #include "wObject.h"
@@ -369,6 +370,7 @@ void CPlayer::GetStoreItems( list<CPtr<NRPG::IInventoryItem> > *pItems )
 	pItems->clear();
 	if ( !IsValid( pGlobalPlayer ) || !IsValid( pGlobalPlayer->pStore ) )
 		return;
+	if(pGlobalPlayer->networkSupplyLevel) {vector<CPtr<NRPG::IInventoryItem>> items;pGlobalPlayer->pStore->GetItemsForDiagnostics(&items);for(auto item:items)pItems->push_back(item);return;}
 	vector<NRPG::SMapItem> *pMapItems = pGlobalPlayer->pStore->GetItems();
 	for ( int i = 0; i < (int)pMapItems->size(); ++i )
 		pItems->push_back( (*pMapItems)[i].pItem.GetPtr() );
@@ -378,6 +380,7 @@ bool CPlayer::TakeStoreItem( NRPG::IInventoryItem *pItem )
 {
 	if ( !IsValid( pGlobalPlayer ) || !IsValid( pGlobalPlayer->pStore ) )
 		return false;
+	if(pGlobalPlayer->networkSupplyLevel)return pGlobalPlayer->pStore->TakeNetworkItem(pItem);
 	vector<NRPG::SMapItem> *pItems = pGlobalPlayer->pStore->GetItems();
 	for ( int i = 0; i < (int)pItems->size(); ++i )
 		if ( (*pItems)[i].pItem.GetPtr() == pItem )
@@ -401,6 +404,7 @@ void CPlayer::PlaceStoreItem( NRPG::IInventoryItem *pItem )
 // let the serialized CStore perform its one-shot unlock/regeneration/rebuild pass.
 void CPlayer::UpdateStore()
 {
+	if(IsValid(pGlobalPlayer) && pGlobalPlayer->networkSupplyLevel){S2Net::RefreshNetworkStore(pGlobalPlayer);return;}
 	if ( !IsValid( pGlobalGame ) || !IsValid( pGlobalPlayer ) )
 		return;
 	if ( !IsValid( pGlobalPlayer->pStore ) )
@@ -1465,8 +1469,13 @@ void CWorld::AddAIPlayer( const wstring &wsName, int nScenarioPlayerID )
 {
 	CPlayer *pPlayer = new CPlayer( L"AI Player", pGlobalGame, 0, nScenarioPlayerID );
 	RegisterPlayer( pPlayer );
-	CPtr<NAI::CAICommander> pAICommander = new NAI::CAICommander( this, pPlayer );
-	pPlayer->SetCommander( pAICommander );
+	if(bNetworkArena && !bAttackAllowed) {
+		// Base service NPCs stand in the preparation room; no campaign AI.
+		pPlayer->SetCommander(new NWorld::CCommander);
+	}else {
+		CPtr<NAI::CAICommander> pAICommander = new NAI::CAICommander( this, pPlayer );
+		pPlayer->SetCommander( pAICommander );
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::CreateAIUnits( const SMapInfo &mapInfo, const ClueToSlot &personClueToSlot, 
@@ -1552,7 +1561,7 @@ void CWorld::CreateAIUnits( const SMapInfo &mapInfo, const ClueToSlot &personClu
 
 		ASSERT( IsValid( pUnitServer ) );
 		// create routes
-		if ( IsValid( pUnitServer ) && !pUnitServer->IsEmptyPK() )
+		if ( IsValid( pUnitServer ) && !pUnitServer->IsEmptyPK() && !(bNetworkArena && !bAttackAllowed) )
 		{
 			// CAITaskCommander removal: the map-deploy route glue is now the free NAI::CreateUnitRoute
 			// @0x96d20, which resolves the AI commander + unit itself and installs a per-unit CAIRouteLogic
@@ -1742,7 +1751,29 @@ void CWorld::CreateRandom( int nVariantID, const vector<string> &params,
 			if(!unit.bSlot && IsValid(unit.pPers) && unit.nScenarioPlayer>=0 && unit.nScenarioPlayer<16 &&
 			   authoredDiplomacy->GetDiplomacyState(unit.nScenarioPlayer,0)==NDb::DS_ENEMY)
 				authoredNetworkSpawns[1].push_back(unit.pos);
-		mapInfo.units.clear();
+		if(nVariantID==5246) {
+			// Keep the authored base staff, with an independent neutral player.
+			list<SMapUnit> staff;
+			SMapPosition office={};bool hasOffice=false;
+			for(const auto& unit:mapInfo.units) {
+				string name;MakeUpperName(unit.szName,&name);
+				if(name=="BOSS"){office=unit.pos;hasOffice=true;}
+			}
+			for(auto unit:mapInfo.units) {
+				string name;MakeUpperName(unit.szName,&name);
+				if(name=="BOSS" || name=="MED" || name=="STORB") {
+					unit.nScenarioPlayer=2;
+					// Campaign scripts teleport the party between isolated rooms.
+					// Gather the network services in the starting office instead.
+					if(hasOffice && name!="BOSS") {
+						unit.pos=office;
+						unit.pos.ptPos+=name=="MED"?CVec3(FP_GRID_STEP,2*FP_GRID_STEP,0):CVec3(2*FP_GRID_STEP,-2*FP_GRID_STEP,0);
+					}
+					staff.push_back(unit);
+				}
+			}
+			mapInfo.units=staff;
+		}else mapInfo.units.clear();
 		mapInfo.groups.clear();
 		mapInfo.scripts.clear();
 		mapInfo.waypoints.clear();
@@ -3421,6 +3452,11 @@ static bool bForceTurnBased = false;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CWorld::IsTBSRealTimeModePossible() const
 {
+	// Each preparation world contains one human squad and an empty opponent.
+	// Its network supply flag is cleared before constructing the combat world.
+	if ( bNetworkArena && IsValid(pGlobalGame) )
+		for (auto player : pGlobalGame->players)
+			if (player && player->networkSupplyLevel > 0) return true;
 	// retail IsRealTimePossible @0x364f10 head (raw disasm; NB: its `this` is the CTBSWorld base at
 	// CWorld+8 -- the IsBase vcall goes through [this-8], so raw member offsets are shifted by -8):
 	// the BASE zone short-circuits TRUE (IWorld vtbl+0x1dc IsBase); then the script's turn-based wish
