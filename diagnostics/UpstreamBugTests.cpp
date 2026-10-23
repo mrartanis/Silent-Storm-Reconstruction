@@ -37,6 +37,7 @@
 #include "../Main/aiDoorCollider.h"
 #include "../Main/scFlowChartItems.h"
 #include "../Main/scFlowChart.h"
+#include "../Main/RPGGame.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -566,6 +567,35 @@ static void PKPlacement()
     Require(position.IsFinal() && CanPlacePK(network.GetPtr(), position, 0), "flying PK restoration was rejected");
 }
 
+static void CriticalIDs(const char* databasePath)
+{
+    CFileStream database;
+    database.OpenRead(databasePath);
+    NDatabase::Serialize(database, CStructureSaver::READ);
+    CObj<NRPG::CUnit> unit = new NRPG::CUnit;
+    CObj<NRPG::IUnitMission> mission = NRPG::CreateUnit(unit);
+    for (bool enable : {false, true}) {
+        CMemoryStream saved;
+        { CStructureSaver writer(saved, CStructureSaver::WRITE);
+          std::vector<int> empty; writer.Add(20, &empty); }
+        saved.Seek(0);
+        { CStructureSaver reader(saved, CStructureSaver::READ);
+          static_cast<CObjectBase*>(mission.GetPtr())->operator&(reader); }
+        if (enable) mission->EnableCriticals(); else mission->DisableCriticals();
+        CMemoryStream result;
+        { CStructureSaver writer(result, CStructureSaver::WRITE);
+          static_cast<CObjectBase*>(mission.GetPtr())->operator&(writer); }
+        result.Seek(0);
+        std::vector<int> states;
+        { CStructureSaver reader(result, CStructureSaver::READ); reader.Add(20, &states); }
+        Require(states.size() == NDb::N_CRIT_TYPES, "critical toggle did not repair a restored short state vector");
+        for (int state : states)
+            Require(state == (enable ? NRPG::CS_ENABLED : NRPG::CS_DISABLED), "critical toggle left a stale status");
+    }
+    Require(int(NDb::C_PANZERKLEIN_AXIS) == 16 && int(NDb::C_PANZERKLEIN_BROKEN) == 19,
+        "PK critical identifiers do not match the retail database and save format");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -589,6 +619,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "clue-slots")) ClueSlotSelection();
         else if (!std::strcmp(mode, "conclusions") && argc == 4) ConclusionRouting(argv[2], argv[3]);
         else if (!std::strcmp(mode, "pk-placement")) PKPlacement();
+        else if (!std::strcmp(mode, "critical-ids") && argc == 3) CriticalIDs(argv[2]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

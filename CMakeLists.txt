@@ -817,6 +817,7 @@ add_test(NAME UpstreamClueSlots COMMAND UpstreamBugTests clue-slots)
 add_test(NAME UpstreamPKPlacement COMMAND UpstreamBugTests pk-placement)
 if(S2_GAME_DIR)
   add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+  add_test(NAME UpstreamCriticalIDs COMMAND UpstreamBugTests critical-ids "${S2_GAME_DIR}/game.db")
   set_tests_properties(UpstreamConclusions PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 60)
 endif()
 add_executable(NativeAnimationPathTests

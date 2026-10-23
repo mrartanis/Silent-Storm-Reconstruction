@@ -155,6 +155,7 @@ if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
   add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions
     "${S2_GAME_DB_PATH}" "${_s2_upstream_res_dir}")
   set_tests_properties(UpstreamConclusions PROPERTIES WORKING_DIRECTORY "${_s2_upstream_game_dir}" TIMEOUT 60)
+  add_test(NAME UpstreamCriticalIDs COMMAND UpstreamBugTests critical-ids "${S2_GAME_DB_PATH}")
 endif()
 add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
