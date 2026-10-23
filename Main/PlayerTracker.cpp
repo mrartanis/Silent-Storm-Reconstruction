@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "GView.h"
 #include "G2DView.h"
 #include "iMain.h"
@@ -256,6 +257,7 @@ NRPG::CGlobalPlayer* CPlayerTracker::GetGlobalPlayer() const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CPlayerTracker::Update( bool bActive )
 {
+  S2Perf::Scope measured(S2Perf::MissionPlayer);
 	list<NWorld::CUnit*> activeUnitsList;
 	vector< CPtr<NWorld::CUnit> > playerUnitsSet;
 	pPlayer->GetUnits( &playerUnitsSet );

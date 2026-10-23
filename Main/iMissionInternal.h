@@ -87,9 +87,9 @@ class CMission: public CMissionBase
 {
 	OBJECT_BASIC_METHODS(CMission)
   std::shared_ptr<S2Net::NetworkSession> networkSession;
-  bool networkLeaveRequested = false;
   std::shared_ptr<S2Net::NetworkWorld> networkWorld;
   CObj<NUI::CWindow> networkPreparationControls;
+  CObj<NUI::CWindow> networkMenuControls;
 private:
 	NInput::CBind bindStartOfTurn, bindEndOfTurn, bindNextEnemy; 
 	NInput::CBind bindSaveMenu, bindLoadMenu; 

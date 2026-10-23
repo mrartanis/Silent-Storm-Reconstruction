@@ -42,8 +42,38 @@ class CSyncSrc: public CObjectBase
 	vector<SObject> objects;
 	int nVersion;
 public:
-	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&freeIDs); f.Add(3,&objects); f.Add(4,&nVersion); return 0; }
+	ZEND int operator&( CStructureSaver &f ) {
+		f.Add(2,&freeIDs); f.Add(3,&objects); f.Add(4,&nVersion);
+		if ( f.IsReading() && f.IsNetwork() ) {
+			bNetworkReplica = true;
+			// Compare against the last authoritative stamps, not locally changed
+			// stamps: a client cache update can advance or even coincide with the
+			// server's next version. Keep presentation notifications monotonic.
+			int count = Max( objects.size(), networkWireVersions.size() );
+			for ( int i = 1; i < count; ++i ) {
+				int version = i < objects.size() ? objects[i].nVersion : -1;
+				T *object = i < objects.size() ? objects[i].pObject.GetPtr() : 0;
+				if ( i >= networkWireVersions.size() || networkWireVersions[i] != version || networkWireObjects[i].GetPtr() != object )
+					TouchPresentation( i );
+			}
+			networkWireVersions.resize( objects.size() );networkWireObjects.resize( objects.size() );
+			for ( int i = 1; i < objects.size(); ++i ) {
+				networkWireVersions[i] = objects[i].nVersion;networkWireObjects[i] = objects[i].pObject;
+			}
+		}
+		return 0;
+	}
 private:
+	// Derived replica state: deliberately absent from saves and network bodies.
+	bool bNetworkReplica = false;
+	unsigned long long presentationVersion = 0;
+	vector<unsigned long long> presentationVersions;
+	vector<int> networkWireVersions;
+	vector<CPtr<T> > networkWireObjects;
+	void TouchPresentation( int nID ) {
+		if ( presentationVersions.size() <= nID ) presentationVersions.resize( nID + 1, 0 );
+		presentationVersions[nID] = ++presentationVersion;
+	}
 	bool Has( T *p ) { for ( int k = 0; k < objects.size(); ++k ) if ( objects[k].pObject == p ) return true; return false; }
 	void EraseLink( int nID )
 	{
@@ -60,6 +90,7 @@ private:
 		objects[f.nNext].nPrev = nID;
 		f.nNext = nID;
 		o.nVersion = ++nVersion;
+		if ( bNetworkReplica ) TouchPresentation( nID );
 	}
 	void MoveToHead( int nID )
 	{
@@ -110,6 +141,9 @@ class CSyncDst
 	ZDATA
 	CObj<CSyncSrc<T> > pSource;
 	int nVersion;
+	// Per-consumer replica notification state, also off the wire.
+	unsigned long long presentationVersion = 0;
+	vector<unsigned long long> presentationVersions;
 public:
 	ZEND int operator&( CStructureSaver &f ) { f.Add(2,&pSource); f.Add(3,&nVersion); return 0; }
 protected:
@@ -120,6 +154,21 @@ public:
 	{
 		pSource->Refresh();
 		const CSyncSrc<T> &src = *pSource;
+		if ( src.bNetworkReplica ) {
+			if ( presentationVersion != src.presentationVersion ) {
+				const auto currentVersion = src.presentationVersion;
+				const int count = src.presentationVersions.size();
+				presentationVersions.resize( count, 0 );
+				for ( int nID = 1; nID < count; ++nID ) {
+					if ( presentationVersions[nID] == src.presentationVersions[nID] ) continue;
+					presentationVersions[nID] = src.presentationVersions[nID];
+					VisitObject( nID, nID < src.objects.size() ? src.objects[nID].pObject.GetPtr() : 0 );
+				}
+				presentationVersion = currentVersion;
+			}
+			nVersion = src.nVersion;
+			return;
+		}
 		for ( int nID = src.objects[0].nNext; nID != 0; nID = src.objects[nID].nNext )
 		{
 			const typename CSyncSrc<T>::SObject &o = src.objects[nID];
@@ -130,7 +179,7 @@ public:
 		nVersion = src.nVersion;
 	}
 	CSyncDst( CSyncSrc<T> *_pSrc = 0 ): pSource(_pSrc), nVersion(-1) {}
-	virtual void SetNewSource( CSyncSrc<T> *_pSrc ) { pSource = _pSrc; nVersion = -1; }
+	virtual void SetNewSource( CSyncSrc<T> *_pSrc ) { pSource = _pSrc; nVersion = -1; presentationVersion = 0; presentationVersions.clear(); }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T,class TFinal>

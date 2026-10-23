@@ -148,6 +148,14 @@ public:
 	virtual void SetMusic( NDb::EMusicType eType );
 	virtual void FadeOutMusic();
 	virtual void Draw( CTransformStack *pTS );
+	SceneDiagnostics Inspect() const {
+    SceneDiagnostics result;
+    for(auto sound:sounds)if(IsValid(sound) && IsValid(sound->pSound) && NFMSound::IsPlaying(sound->pSound)) {
+      ++result.playing3D;
+      if(sound->pDBSample && (sound->pDBSample->bLoop || sound->pDBSample->nEndingSamples>0))++result.looping3D;
+    }
+    return result;
+  }
 
 	// retail @0x304d80 (ISoundScene vtbl+0x28): freeze/resume every live channel -- effects, 3D
 	// sounds, 2D sounds, in that order. The music stream is NOT touched (retail menus keep music).
@@ -351,6 +359,9 @@ void CSoundScene::FadeOutMusic()
 	SetMusic( NDb::MT_AMBIENT );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+SceneDiagnostics InspectSoundScene(ISoundScene* scene) {
+  auto* concrete=dynamic_cast<CSoundScene*>(scene);return concrete?concrete->Inspect():SceneDiagnostics();
+}
 void CSoundScene::Draw( CTransformStack *pTS )
 {
 	for ( list< CPtr<CSound> >::iterator it = sounds.begin(); it != sounds.end(); )

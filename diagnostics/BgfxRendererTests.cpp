@@ -13,6 +13,9 @@
 #include "../Main/2DSceneSW.h"
 #include "../Main/Interface.h"
 #include "../Main/UICommCtrls.h"
+#include "../Main/GView.h"
+#include "../Main/UIWrap.h"
+#include "../DBFormat/DataFormat.h"
 #include "../Main/GInit.h"
 #include "../MiscDll/Commands.h"
 #include "../Main/DisplayLayout.h"
@@ -22,6 +25,27 @@
 #include "FrameProfiler.h"
 
 namespace {
+class FixtureModelDraw : public NUI::CModelDraw {
+public:
+  void Seed() { pModel=new NDb::CModel;pRender=new CVersioningBase;bParentScene=true; }
+  bool HasRender() const { return IsValid(pRender); }
+};
+bool CheckScrolledModelClip(NUI::CWindow* root) {
+  CObj<NUI::CWindow> viewport=new NUI::CWindow(NUI::SWindowInfo(root,NUI::SPoint(80,60),NUI::SPoint(200,120)));
+  CObj<NUI::CWindow> icon=new NUI::CWindow(NUI::SWindowInfo(viewport,NUI::SPoint(20,20),NUI::SPoint(100,50)));
+  CObj<FixtureModelDraw> draw=new FixtureModelDraw;
+  draw->SetWindow(NUI::SRect(0,0,100,50));
+  for(const auto& position:{NUI::SPoint(20,-80),NUI::SPoint(20,121),NUI::SPoint(-101,20),NUI::SPoint(201,20)}) {
+    icon->SetPosition(position);draw->Seed();draw->Draw(icon,0,nullptr);
+    if(draw->HasRender())return false;
+  }
+  // An icon crossing either edge is still drawn and clipped normally.
+  for(const auto& position:{NUI::SPoint(20,-10),NUI::SPoint(20,110),NUI::SPoint(20,20)}) {
+    icon->SetPosition(position);draw->Seed();draw->Draw(icon,0,nullptr);
+    if(!draw->HasRender())return false;
+  }
+  return true;
+}
 class FixtureSWTexture : public CPtrFuncBase<NGScene::CSWTextureData> {
   void Recalc() override {}
 public:
@@ -616,6 +640,7 @@ int RunDisplay() {
     int pw=0,ph=0; SDL_GetWindowSizeInPixels(S2Platform::Window(),&pw,&ph);
     if(pw!=m.pixelWidth || ph!=m.pixelHeight || m.CanvasWidth()<1023.99f || m.CanvasHeight()<767.99f) return 21;
     CObj<NUI::CWindow> root=new NUI::CWindow(NUI::SWindowInfo(0,NUI::SPoint(0,0),NUI::SPoint(1024,768),"desktop"));
+    if(!CheckScrolledModelClip(root))return 181;
     CObj<NUI::CWindow> edge=new NUI::CWindow(NUI::SWindowInfo(root,NUI::SPoint(900,700),NUI::SPoint(100,50)));
     edge->EnableAdaptiveLayout();
     const auto first=edge->GetPosition(); const auto second=edge->GetPosition();

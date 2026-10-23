@@ -213,6 +213,9 @@ public:
 class CExecMove: public CPathConflictsRemover
 {
 	OBJECT_BASIC_METHODS(CExecMove);
+public:
+	bool IsJumpInProgress() const { return dynamic_cast<CCmdJump*>(pCurCmd.GetPtr()) != 0; }
+private:
 	ZDATA_(CPathConflictsRemover)
 	list<CObj<CCommand> > commandsQueue;
 	CObj<CCommand> pCurCmd;
@@ -882,6 +885,11 @@ void CExecMove::AnimationFinished()
 		Failed();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+bool CanPauseMoveForNetwork( CCommandExecute *pExec )
+{
+	auto* move = pExec ? dynamic_cast<CExecMove*>( pExec->GetPathConflictsRemover() ) : 0;
+	return !move || !move->IsJumpInProgress();
+}
 void CExecMove::Cancel()
 {
 	// @0x3b8cf0 -- retail makes Cancel a no-op while a CCmdJump is in flight: a jump

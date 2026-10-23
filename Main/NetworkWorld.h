@@ -15,12 +15,14 @@ class NetworkWorld {
   NetworkGraph graph;
   NetworkMatch match, otherBase;
   bool preparing=false, ready[2]={false,false}, launchBattle=false;
+  bool launchAnnounced=false;
   unsigned generation=0;
   bool rebuildBase[2]={false,false}, refreshSupply[2]={false,false};
   Bytes HandlePreparation(unsigned,const Bytes&);
   NetworkMatch& ForSlot(unsigned slot) {return host && preparing && slot==1?otherBase:match;}
   bool host;
   bool previewUpdated=false;
+  bool rosterOpen=false; // Local UI state, independent of roster updates.
   std::uint64_t appliedRevision=0;
   NetworkMatchPreset preset;
   std::set<std::pair<unsigned,int>> pendingUI;
@@ -52,6 +54,7 @@ class NetworkWorld {
   Bytes Segment();
   void Apply(const Bytes&,bool initial);
   Bytes EncodeCommand(NWorld::CCommand*);
+  Bytes StopActionCommand() const;
   Bytes Handle(unsigned slot,const Bytes&,bool preview);
   std::vector<Bytes> DrainEvents();
   void PresentEvent(const Bytes&);
@@ -66,6 +69,9 @@ class NetworkWorld {
   const NetworkMatch& Match() const {return match;}
   NetworkMatch& SlotMatch(unsigned slot) {return ForSlot(slot);}
   bool IsPreparing() const {return preparing;}
+  bool IsStartingBattle() const {return preparing && launchBattle;}
+  bool IsRosterOpen() const {return rosterOpen;}
+  void SetRosterOpen(bool open) {rosterOpen=open;}
   bool IsReady(unsigned slot) const {return slot<2 && ready[slot];}
   unsigned Generation() const {return generation;}
   const NetworkMatchPreset& Preset() const {return preset;}

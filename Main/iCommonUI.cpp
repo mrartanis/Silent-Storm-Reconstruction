@@ -1253,6 +1253,8 @@ bool CSlot::CanHandleState( NGame::IState *pState ) const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSlot::SetSize( const SPoint &sSize )
 {
+	if ( GetSize() != sSize )
+		itemsSet.clear();
 	CWindow::SetSize( sSize );
 	if ( IsValid( pHilight ) )
 		pHilight->SetSize( sSize );
@@ -1272,6 +1274,7 @@ void CSlot::SetSlotSize( int _nWidth, int _nHeight )
 	if ( bUnchanged )
 		return;
 
+	itemsSet.clear();
 	hilights.SetSizes( nWidth, nHeight );
 	const SPoint &sSize = pSlotView->GetSize();
 	for ( int nTempY = 0; nTempY < nHeight; nTempY++ )
@@ -1338,11 +1341,11 @@ static bool IsCompatibleItems( NRPG::IInventoryItem *pWeaponSide, NRPG::IInvento
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CSlot::Draw( const STime &sTime, NGScene::I2DGameView *pView )
 {
-	const SPoint &sSize = pSlotView->GetSize();
-	SPoint sCellSize( sSize.x / nWidth, sSize.y / nHeight );
-
 	vector<SItem> newInventoryItemsSet;
 	GetItemsList( &newInventoryItemsSet );
+	// Store filtering can resize the grid while producing the item list.
+	const SPoint &sSize = pSlotView->GetSize();
+	SPoint sCellSize( sSize.x / nWidth, sSize.y / nHeight );
 
 	vector<SItem> newItemsSet( newInventoryItemsSet.size() );
 	for ( int nTemp = 0; nTemp < newInventoryItemsSet.size(); nTemp++ )

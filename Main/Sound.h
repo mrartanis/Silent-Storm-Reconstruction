@@ -22,6 +22,7 @@ namespace NSound
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class CSound;
 class CSoundEffect;
+struct SceneDiagnostics {int playing3D=0,looping3D=0;};
 class ISound2D : public CObjectBase
 {
 public:
@@ -55,6 +56,7 @@ public:
 ISoundScene* CreateSoundScene( NDb::CTMusic *pAmbient, NDb::CTMusic *pCombat, CFuncBase<STime> *pTime );
 bool InitSound( HWND hWnd );
 bool SetModeFromConfig();
+SceneDiagnostics InspectSoundScene(ISoundScene*);
 void DoneSound();
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

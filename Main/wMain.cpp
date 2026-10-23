@@ -222,6 +222,18 @@ void CPlayer::GetUnits( CUnitSet *pRes ) const
 	for ( int k = 0; k < units.size(); ++k )
 		pRes->push_back( units[k].GetPtr() );
 }
+// Keep tactical actors in the same order as the preparation roster after a replacement.
+void CPlayer::OrderNetworkSquad()
+{
+  TPlayerUnitSet ordered;
+  for(auto merc:pGlobalPlayer->mercs) {
+    auto found=std::find_if(units.begin(),units.end(),[&](const auto& unit){return unit->GetUnitRPG()->GetRPGUnit()==merc.GetPtr();});
+    if(found==units.end())throw std::runtime_error("Missing network squad actor");
+    ordered.push_back(*found);
+  }
+  if(ordered.size()!=units.size())throw std::runtime_error("Unexpected network squad actor");
+  units=ordered;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail NWorld::HPToCondition @0x3869c0: fraction of HP lost -> health-condition bucket.
 static SEnemyInfo::ECondition HPToCondition( int nCurHP, int nMaxHP )

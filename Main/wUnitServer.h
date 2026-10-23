@@ -267,6 +267,8 @@ public:
 	// retail CUnitServer::CheckSpot @0x3bfe30: one distance-roll to unhide a spotted enemy (this=spotter).
 	bool CheckSpot( CUnitServer *pTarget );
 	bool HasCommand() const { return IsValid( pCurrentCmd ); } //pExec->IsValid(); }// && commandsQueue.empty(); }
+	// Called between simulation segments by the network host's Stop request.
+	void PauseNetworkAction();
 	// The path-conflict remover of this unit's current executor (pExec -> IExecMove), or null.
 	// Used by CPathConflictsRemover::CheckLockerState to walk the who-locks-whom chain.
 	CPathConflictsRemover* GetPathConflictsRemover();

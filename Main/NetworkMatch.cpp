@@ -368,9 +368,17 @@ CObj<NRPG::CUnit> CreateNetworkRecruit(int persona,int level) {
   auto* tree=unit->GetPerksTree();tree->AddPerkPoints(-tree->GetPerkPoints());tree->AddPerkPoints(level-1);
   return unit;
 }
+bool IsNetworkSquadValid(NRPG::CGlobalPlayer* squad,int count) {
+  if(!squad || squad->mercs.size()!=size_t(count))return false;
+  std::set<int> personas;
+  for(auto unit:squad->mercs)
+    if(!unit || !unit->GetPers() || unit->IsDead() || !personas.insert(unit->GetPers()->GetRecordID()).second)return false;
+  return true;
+}
 NetworkMatch CreatePreparedNetworkMatch(const NetworkMatchPreset& preset,NRPG::CGlobalPlayer* first,NRPG::CGlobalPlayer* second) {
   ValidatePreset(preset);
   if(!first || !second || first==second || first->mercs.empty() || second->mercs.empty())throw std::runtime_error("invalid independent network squads");
+  if(!IsNetworkSquadValid(first,preset.squadSize) || !IsNetworkSquadValid(second,preset.squadSize))throw std::runtime_error("invalid network roster: each fighter must be unique");
   NetworkMatch match;auto* variant=NDb::GetTemplVariant(preset.mapVariant);
   if(!variant || !IsValid(variant->pTemplate) || variant->bNoAttack)throw std::runtime_error("Network map is unavailable or prohibits combat");
   match.variantID=preset.mapVariant;match.templateID=variant->pTemplate->GetRecordID();
@@ -394,6 +402,7 @@ NetworkMatch CreatePreparedNetworkMatch(const NetworkMatchPreset& preset,NRPG::C
   for (int slot = 0; slot < 2; ++slot) {
     NWorld::CPlayer::CUnitSet units;
     match.players[slot]->GetUnits(&units);
+    match.players[slot]->OrderNetworkSquad();
     vector<CPtr<NRPG::IUnitMission>> rpg;
     for (auto unit : units) rpg.push_back(static_cast<NWorld::CUnitServer*>(unit.GetPtr())->GetUnitRPG());
     match.world->GetDiplomacy()->SetDiplomacyState(slot, rpg, 1-slot, NDb::DS_ENEMY);

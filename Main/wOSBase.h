@@ -118,6 +118,7 @@ public:
 
 	// for debug purposes:
 	int GetDBObjectID() const;
+	NDb::CObject* GetDBObjectForHarness() const { return pDbObject; }
 	virtual void SetDestroyStage( int nStage );
 	virtual int GetHP();             // luaObjectGetHP @0x2e9260 (delegates to the RPG object's nVP)
 	int GetDestroyStage();           // luaObjectGetDestroyStage @0x2e8ec0 (delegates to the RPG object)

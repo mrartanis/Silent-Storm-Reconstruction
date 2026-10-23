@@ -40,6 +40,7 @@ struct NetworkPose {
 constexpr std::uint32_t PreparationMagic=0x50455250;
 constexpr std::uint32_t HitMagic=0x5449484e;
 constexpr std::uint32_t PreviewMagic=0x5652504e;
+constexpr std::uint32_t StopActionMagic=0x504f5453;
 template<class F> auto NetworkCall(F f) -> decltype(f()) {
   try { return f(); }
   catch(const SFileIOError& error) { throw std::runtime_error(error.szError); }
@@ -107,7 +108,7 @@ Bytes NetworkWorld::Snapshot(bool initial) {
     save.Add(13,&visibleMatch.baseServices);save.Add(14,&visibleMatch.ambient);
     save.Add(2,&match.variantID);save.Add(3,&match.templateID);save.Add(4,&poses);
     save.Add(6,&preparing);save.Add(7,&ready[0]);save.Add(8,&ready[1]);save.Add(9,&generation);
-    save.Add(10,&preset.squadSize);save.Add(11,&preset.startingLevel);save.Add(12,&preset.supplyLevel); }
+    save.Add(10,&preset.squadSize);save.Add(11,&preset.startingLevel);save.Add(12,&preset.supplyLevel);save.Add(15,&launchBattle); }
   S2Perf::Scope capture(S2Perf::NetGraph);
   return graph.Capture(stream.GetBuffer(),static_cast<std::size_t>(stream.GetSize()),initial);
 }
@@ -131,6 +132,7 @@ Bytes NetworkWorld::Segment() {
       base=CreateNetworkBase(preset,slot,squad);rebuildBase[slot]=false;++generation;
       if(slot==0)RegisterLocalWorld();
     }
+    if(launchBattle && !launchAnnounced) {launchAnnounced=true;return Snapshot(false);}
     if(launchBattle) {
       CObj<NRPG::CGlobalPlayer> first=match.game->players[0],second=otherBase.game->players[1];
       match=CreatePreparedNetworkMatch(preset,first,second);otherBase=NetworkMatch();preparing=false;launchBattle=false;++generation;
@@ -166,7 +168,7 @@ void NetworkWorld::Apply(const Bytes& delta,bool initial) {
     load.Add(13,&match.baseServices);load.Add(14,&match.ambient);
     load.Add(2,&match.variantID);load.Add(3,&match.templateID);load.Add(4,&poses);
     load.Add(6,&preparing);load.Add(7,&ready[0]);load.Add(8,&ready[1]);load.Add(9,&generation);
-    load.Add(10,&preset.squadSize);load.Add(11,&preset.startingLevel);load.Add(12,&preset.supplyLevel); }
+    load.Add(10,&preset.squadSize);load.Add(11,&preset.startingLevel);load.Add(12,&preset.supplyLevel);load.Add(15,&launchBattle); }
   if(!match.world) throw std::runtime_error("Initial state has no world");
   {
     auto& base=match;auto* world=base.world.GetPtr();
@@ -225,6 +227,18 @@ Bytes NetworkWorld::Handle(unsigned slot,const Bytes& bytes,bool preview) {
   if(bytes.size()>=4){size_t at=0;if(Get32(bytes,at)==PreparationMagic)return preview?Result(UCR_INVALID_COMMAND,0,0,Revision()):HandlePreparation(slot,bytes);}
   if(launchBattle || (preparing && rebuildBase[slot]))return Result(UCR_UNAVAILABLE,0,0,Revision());
   auto& match=ForSlot(slot);
+  if(bytes.size()>=4) {
+    size_t at=0;
+    if(Get32(bytes,at)==StopActionMagic) {
+      if(bytes.size()!=4 || preview || (!preparing && match.world->GetCurrentPlayer()!=match.players[slot].GetPtr()))return Result(UCR_UNAVAILABLE,0,0,Revision());
+      // CCmdCancel and the campaign's global interrupt discard the order.
+      // Pause only this network squad, preserving explicit orders for Continue.
+      match.players[slot]->GetCommander()->ClearList();
+      for(auto unit:match.players[slot]->GetPlayerUnits())unit->PauseNetworkAction();
+      if(preparing)ready[slot]=false;
+      return Result(UCR_OK,0,0,Revision());
+    }
+  }
   PreviewKind purpose=PreviewKind::Action;
   Bytes commandBytes=bytes;
   if(preview && bytes.size()>=4) {
@@ -338,7 +352,17 @@ Bytes NetworkWorld::Handle(unsigned slot,const Bytes& bytes,bool preview) {
       if(auto* shot=dynamic_cast<CCmdShootObject*>(action->GetCmd()))
         valid=!shot->pTarget && shot->eHL>=NAI::HL_ANY && shot->eHL<NAI::N_HL && shot->nExtraAttackAP>=0;
     if(!valid)return Result(UCR_INVALID_COMMAND,0,0,Revision());
-    if(!dynamic_cast<CCmdContinue*>(action->GetCmd())) result=unit->CanDo(action->GetCmd(),&start,&full);
+    if(auto* next=dynamic_cast<CCmdContinue*>(action->GetCmd())) {
+      if(preview) {
+        result=unit->CanDo(next,&start,&full);
+        if(result==UCR_NOT_ENOUGH_AP && unit->GetCurrentPath() && unit->GetAP()>0 && start<=unit->GetAP())result=UCR_OK;
+      }
+    } else {
+      // Native move orders may outlive this turn: the executor spends AP one
+      // step at a time. Only previews need the cost of the complete route.
+      if(!preview && dynamic_cast<CCmdPath*>(action->GetCmd()))result=unit->CanDo(action->GetCmd(),nullptr,nullptr);
+      else result=unit->CanDo(action->GetCmd(),&start,&full);
+    }
   }else if(!dynamic_cast<CCmdCancel*>(command.GetPtr()))
     result=UCR_INVALID_COMMAND;
   if(!preview && (result==UCR_OK || result==UCR_OK_RELOAD)) {
@@ -361,6 +385,9 @@ Bytes NetworkWorld::Handle(unsigned slot,const Bytes& bytes,bool preview) {
 Bytes NetworkWorld::PreparationCommand(PreparationAction action,int index,int value) const {
   Bytes data;Put32(data,PreparationMagic);Put32(data,generation);Put32(data,static_cast<unsigned>(action));Put32(data,index);Put32(data,value);return data;
 }
+Bytes NetworkWorld::StopActionCommand() const {
+  Bytes data;Put32(data,StopActionMagic);return data;
+}
 Bytes NetworkWorld::HandlePreparation(unsigned slot,const Bytes& bytes) {
   using namespace NWorld;
   if(!preparing || launchBattle)return Result(UCR_UNAVAILABLE,0,0,Revision());
@@ -371,15 +398,26 @@ Bytes NetworkWorld::HandlePreparation(unsigned slot,const Bytes& bytes) {
   SItem hand;if(base.world->IsExecuting() || base.players[slot]->GetInHandItem(&hand))return Result(UCR_UNAVAILABLE,0,0,Revision());
   if(action==static_cast<unsigned>(PreparationAction::ChooseRecruit)) {
     if(index>=squad->mercs.size() || rebuildBase[slot])return Result(UCR_INVALID_COMMAND,0,0,Revision());
+    if(base.players[slot]->GetCommander()->HasCommands())return Result(UCR_UNAVAILABLE,0,0,Revision());
     auto recruits=GetNetworkRecruitIDs();if(std::find(recruits.begin(),recruits.end(),int(value))==recruits.end())return Result(UCR_INVALID_COMMAND,0,0,Revision());
-    for(auto unit:squad->mercs)if(unit->GetRPGPersID()==int(value))return Result(UCR_INVALID_COMMAND,0,0,Revision());
+    for(auto unit:squad->mercs)if(unit->GetPers()->GetRecordID()==int(value))return Result(UCR_INVALID_COMMAND,0,0,Revision());
     CObj<NRPG::CUnit> replacement=CreateNetworkRecruit(value,preset.startingLevel);
+    CObj<CUnitServer> previous;
+    for(auto actor:base.players[slot]->GetPlayerUnits())if(actor->GetUnitRPG()->GetRPGUnit()==squad->mercs[index].GetPtr())previous=actor;
+    if(!previous)return Result(UCR_INVALID_COMMAND,0,0,Revision());
+    auto position=previous->GetPosition().pos.p;
     auto* inventory=squad->mercs[index]->GetInventory();
     for(int i=0;i<NDb::N_SLOTS;++i){CObj<NRPG::IInventoryItem> item=inventory->TakeOff(static_cast<NDb::ESlot>(i));if(item)squad->pStore->Place(CTPoint<int>(-1,-1),item);}
     auto items=inventory->GetItems();for(auto& entry:items){CObj<NRPG::IInventoryItem> item=entry.pItem;inventory->Take(item);squad->pStore->Place(CTPoint<int>(-1,-1),item);}
-    squad->mercs[index]=replacement;ready[slot]=false;rebuildBase[slot]=true;
+    squad->mercs[index]=replacement;ready[slot]=false;
+    base.world->RemoveUnit(previous);
+    base.world->AddUnitInGame(position,NRPG::CreateUnit(replacement),base.players[slot]);
+    base.players[slot]->OrderNetworkSquad();
+    ++generation;previews.clear();currentPreviews.clear();previewUpdated=true;
+    RefreshNetworkStore(squad);
+    if(slot==0)RegisterLocalWorld();
   } else if(action==static_cast<unsigned>(PreparationAction::Ready)) {
-    if(index || value>1 || rebuildBase[0] || rebuildBase[1] || squad->mercs.size()!=static_cast<size_t>(preset.squadSize))return Result(UCR_INVALID_COMMAND,0,0,Revision());
+    if(index || value>1 || rebuildBase[0] || rebuildBase[1] || !IsNetworkSquadValid(squad,preset.squadSize))return Result(UCR_INVALID_COMMAND,0,0,Revision());
     if(value && (match.world->IsExecuting() || otherBase.world->IsExecuting()))return Result(UCR_UNAVAILABLE,0,0,Revision());
     if(value)for(unsigned side=0;side<2;++side) {
       if(ForSlot(side).players[side]->GetCommander()->HasCommands())return Result(UCR_UNAVAILABLE,0,0,Revision());
@@ -464,6 +502,7 @@ std::uint64_t NetworkWorld::PreviewContext(NWorld::CUnitServer* unit) const {
   Put32(state,unit->GetAP());Put32(state,rpg->GetTotalVP());
   Put32(state,unit->GetPosition().pos.p.GetBits());Put32(state,unit->GetPosition().GetPose());
   Put32(state,world->IsUnitActive(unit));
+  Put32(state,unit->HasCommand());Put32(state,unit->IsPerformingAction());
   Put32(state,world->GetCurrentPlayer()?world->GetCurrentPlayer()->GetScenarioPlayerID():0xffffffffu);
   auto* weapon=rpg->GetWeaponItem();Put32(state,weapon?weapon->GetAmmoQuantity():0);
   Put32(state,weapon?weapon->GetShootMode():0);

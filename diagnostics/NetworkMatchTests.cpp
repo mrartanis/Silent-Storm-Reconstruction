@@ -24,6 +24,8 @@
 #include "../Main/MakeBuilding.h"
 #include "../Main/wMine.h"
 #include "../Main/wObject.h"
+#include "../Main/wInterfaceVisitors.h"
+#include "../DBFormat/DataGeometry.h"
 #include "../Main/wUnitStates.h"
 #include "../Main/NetworkIdentity.h"
 #include "../Main/wBuilding.h"
@@ -44,6 +46,22 @@
 static void Require(bool condition, const char* message) {
   if (!condition) throw std::runtime_error(message);
 }
+class ObjectRenderProbe : public CSyncDst<NWorld::IVisObj>, public NWorld::IRenderVisitor {
+  NWorld::IVisObj* target;
+  void VisitObject(int, NWorld::IVisObj* object) override {
+    if(object==target) { ++visits;models.clear();object->Visit(this); }
+  }
+public:
+  int visits=0;
+  vector<int> models;
+  ObjectRenderProbe(NWorld::CWorld* world,NWorld::IVisObj* object) : CSyncDst(world->GetActive()),target(object) {}
+  void AddMesh(NDb::CModel* model,const SFBTransform&,NGScene::CLightGroup*,int,int) override {
+    if(model) {
+      models.push_back(model->pGeometry ? model->pGeometry->GetRecordID() : 0);
+      for(int i=0;i<NDb::N_MODEL_MATERIALS;++i)models.push_back(model->pMaterials[i] ? model->pMaterials[i]->GetRecordID() : 0);
+    }
+  }
+};
 int main(int argc,char** argv) {
   if (argc != 3 && argc != 4 && argc != 5 && argc != 6) return 2;
   try {
@@ -55,6 +73,32 @@ int main(int argc,char** argv) {
     CFileStream db; db.OpenRead(argv[1]);
     NDatabase::Serialize(db,CStructureSaver::READ);
     NGScene::AddResourceDir(argv[2]);
+    if(argc==4 && std::string(argv[3])=="--object-stages") {
+      S2Net::NetworkWorld host(true),client(false);client.Apply(host.Initial(),true);
+      auto remote=client.Match().world->GetObjectsForHarness().begin();
+      int checked=0;
+      for(auto object:host.Match().world->GetObjectsForHarness()) {
+        auto* replica=remote++->GetPtr();
+        auto* db=object->GetDBObjectForHarness();
+        if(!db || db->GetStagesQuantity()<3 || object->GetDestroyStage()!=0)continue;
+        ObjectRenderProbe local(host.Match().world,object),peer(client.Match().world,replica);
+        local.Sync();peer.Sync();
+        Require(local.models==peer.models,"initial object presentation differs");
+        for(int stage=1;stage<db->GetStagesQuantity();++stage) {
+          object->SetDestroyStage(stage);
+          client.Apply(host.Segment(),false);local.Sync();int before=peer.visits;peer.Sync();
+          std::printf("STAGE CHECK db=%d stage=%d remote=%d localvisits=%d peervisits=%d previous=%d\n",object->GetDBObjectID(),stage,replica->GetDestroyStage(),local.visits,peer.visits,before);
+          Require(replica->GetDestroyStage()==object->GetDestroyStage(),"object stage did not replicate");
+          Require(peer.visits>before,"object renderer missed intermediate damage stage");
+          Require(local.models==peer.models,"damaged object model differs on client");
+          for(int i=0;i<4;++i){client.Apply(host.Segment(),false);local.Sync();peer.Sync();}
+          std::printf("OBJECT db=%d stage=%d models=%zu visits=%d\n",object->GetDBObjectID(),stage,peer.models.size(),peer.visits);
+        }
+        if(++checked==3)break;
+      }
+      Require(checked>0,"no multistage object tested");
+      std::puts("Intermediate object damage presentation passed");return 0;
+    }
     if(argc==4 && std::string(argv[3])=="--preparation") {
       Require(!S2Net::IsNetworkMapLargeEnough(16,16) && !S2Net::IsNetworkMapLargeEnough(32,32),"small maps retained");
       Require(!S2Net::IsNetworkMapLargeEnough(16,128) && S2Net::IsNetworkMapLargeEnough(64,64),"map dimensions filter");
@@ -75,6 +119,7 @@ int main(int argc,char** argv) {
       auto recruits=S2Net::GetNetworkRecruitIDs();Require(recruits.size()>=6,"missing recruits");
       for(int id:recruits)for(int level:{1,5,10,20}) {
         auto unit=S2Net::CreateNetworkRecruit(id,level);
+        if(level==1 && unit->GetRPGPersID()!=id)std::printf("PERSONA record=%d gameplay-id=%d\n",id,unit->GetRPGPersID());
         Require(unit->Skills(NDb::ST_LEVEL)==level && unit->GetPerksTree()->GetPerkPoints()==level-1,"starting level/perk points");
         Require(unit->GetInventory()->GetItems().empty() && !unit->GetInventory()->Get(NDb::SLOT_1) && !unit->GetInventory()->Get(NDb::SLOT_2),"recruit smuggled equipment");
         Require(unit->fXP==unit->GetXPForSkill(NDb::ST_LEVEL,level),"starting XP mismatch");
@@ -158,16 +203,34 @@ int main(int argc,char** argv) {
           }
           Require(moved,"could not walk on base");
         }
+        // Repeated edits on both private bases must not replace the map or leave
+        // stale actors linked to a different global mercenary.
+        for(int edit=0;edit<12;++edit) {
+          unsigned side=count>1 ? edit%2 : 0;auto& current=host.SlotMatch(side);auto* originalWorld=current.world.GetPtr();
+          // Keep client slot 0 equipped for the transition assertions below.
+          auto* party=current.game->players[side].GetPtr();int at=side ? 1+(edit/2)%(count-1) : (edit/2)%count;
+          int duplicate=party->mercs[(at+1)%count]->GetPers()->GetRecordID();
+          Require(code(host.Handle(side,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,at,duplicate),false))!=NWorld::UCR_OK,"duplicate recruit accepted");
+          int pick=0;for(int id:recruits){bool used=false;for(auto merc:party->mercs)if(merc->GetPers()->GetRecordID()==id)used=true;if(!used){pick=id;break;}}
+          Require(code(host.Handle(side,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,at,pick),false))==NWorld::UCR_OK,"repeated replacement rejected");sync();
+          Require(current.world.GetPtr()==originalWorld,"recruit replacement reloaded base");
+          Require(S2Net::IsNetworkSquadValid(party,count),"replacement invalidated roster");
+          Require(current.players[side]->GetPlayerUnits().size()==size_t(count),"replacement lost an actor");
+          for(int slot=0;slot<count;++slot)Require(current.players[side]->GetPlayerUnits()[slot]->GetUnitRPG()->GetRPGUnit()==party->mercs[slot].GetPtr(),"actor/roster identity mismatch");
+          if(side==1)for(int slot=0;slot<count;++slot)Require(client.Match().players[1]->GetPlayerUnits()[slot]->GetUnitRPG()->GetRPGUnit()==client.Match().game->players[1]->mercs[slot].GetPtr(),"replica actor/roster identity mismatch");
+        }
         // Readiness is independent, and rejected input never changes a roster.
         auto stale=host.PreparationCommand(S2Net::PreparationAction::Ready,0,1);
         Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,0,999999),false))!=NWorld::UCR_OK,"invalid recruit accepted");
         Require(code(host.Handle(0,stale,false))==NWorld::UCR_OK,"first readiness rejected");sync();Require(client.IsReady(0) && !client.IsReady(1),"readiness not replicated");
-        int replacement=0;for(int id:recruits){bool used=false;for(auto unit:host.SlotMatch(0).game->players[0]->mercs)if(unit->GetRPGPersID()==id)used=true;if(!used){replacement=id;break;}}
+        int replacement=0;for(int id:recruits){bool used=false;for(auto unit:host.SlotMatch(0).game->players[0]->mercs)if(unit->GetPers()->GetRecordID()==id)used=true;if(!used){replacement=id;break;}}
         Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,0,replacement),false))==NWorld::UCR_OK,"roster selection rejected");sync();
-        Require(!host.IsReady(0) && host.SlotMatch(0).game->players[0]->mercs.front()->GetRPGPersID()==replacement,"roster change did not reset ready");
+        Require(!host.IsReady(0) && host.SlotMatch(0).game->players[0]->mercs.front()->GetPers()->GetRecordID()==replacement,"roster change did not reset ready");
         Require(code(host.Handle(0,stale,false))!=NWorld::UCR_OK,"stale preparation command accepted");
         Require(code(host.Handle(0,host.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))==NWorld::UCR_OK,"host ready rejected");
         Require(code(host.Handle(1,client.PreparationCommand(S2Net::PreparationAction::Ready,0,1),false))==NWorld::UCR_OK,"client ready rejected");
+        sync();Require(host.IsStartingBattle() && client.IsStartingBattle(),"match start not announced to both sides");
+        Require(code(host.Handle(1,client.PreparationCommand(S2Net::PreparationAction::ChooseRecruit,0,recruits.front()),false))!=NWorld::UCR_OK,"roster changed during launch");
         sync();Require(!host.IsPreparing() && !client.IsPreparing(),"did not launch battle");
         Require(host.Match().variantID==preset.mapVariant && client.Match().variantID==preset.mapVariant,"battle map not preserved");
         for(unsigned side=0;side<2;++side)Require(host.Match().players[side]->GetPlayerUnits().size()==size_t(count),"battle lost roster");
@@ -190,9 +253,120 @@ int main(int argc,char** argv) {
         Require(host.Match().world->GetCurrentPlayer()==host.Match().players[1].GetPtr() && client.Match().world->GetCurrentPlayer()==client.Match().players[1].GetPtr(),"post-base turn did not replicate");
         auto* clientUnit=client.Match().players[1]->GetPlayerUnits().front().GetPtr();
         Require(code(host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(clientUnit,new NWorld::CCmdWishPose(NAI::CROUCH))),false))==NWorld::UCR_OK,"client commands blocked after preparation");
-        for(int i=0;i<5;++i)sync();std::printf("PREPARATION PASSED count=%d base walk/equip/perks/ownership/ready/roster/transition/replica\n",count);std::fflush(stdout);
+        for(int i=0;i<5;++i)sync();
+        for(unsigned side=0;side<2;++side)for(int at=0;at<count;++at) {
+          Require(host.Match().players[side]->GetPlayerUnits()[at]->GetUnitRPG()->GetRPGUnit()==host.Match().game->players[side]->mercs[at].GetPtr(),"battle actor/global identity mismatch");
+          Require(client.Match().players[side]->GetPlayerUnits()[at]->GetUnitRPG()->GetRPGUnit()==client.Match().game->players[side]->mercs[at].GetPtr(),"battle replica/global identity mismatch");
+        }
+        // A replaced recruit must retain the same identity in HUD/global state
+        // when damaged, rather than leaving a healthy orphan on the base.
+        auto* changed=host.Match().players[0]->GetPlayerUnits().front().GetPtr();
+        changed->GetUnitRPG()->MakeDirectDamage(100000);
+        sync();
+        auto* remoteChanged=client.Match().players[0]->GetPlayerUnits().front().GetPtr();
+        Require(changed->GetUnitRPG()->GetTotalVP()==remoteChanged->GetUnitRPG()->GetTotalVP(),"replaced fighter damage differs on replica");
+        Require(remoteChanged->GetUnitRPG()->GetRPGUnit()==client.Match().game->players[0]->mercs[0].GetPtr(),"HUD retained healthy orphan recruit");
+        std::printf("PREPARATION PASSED count=%d base walk/equip/perks/ownership/ready/roster/transition/replica/damage\n",count);std::fflush(stdout);
       }
       std::puts("Network preparation tests passed");return 0;
+    }
+    if(argc==4 && std::string(argv[3])=="--stop-resume") {
+      S2Net::NetworkWorld host(true),client(false);client.Apply(host.Initial(),true);
+      auto sync=[&]{client.Apply(host.Segment(),false);};
+      auto code=[](const S2Net::Bytes& bytes){size_t pos=8;return S2Net::Get32(bytes,pos);};
+      for(int i=0;i<20;++i)sync();
+      host.Match().world->GivePlayerTurn(host.Match().players[1]);sync();
+      Require(code(host.Handle(0,host.StopActionCommand(),false))!=NWorld::UCR_OK,"opponent stopped active player's action");
+      Require(code(host.Handle(1,client.StopActionCommand(),true))!=NWorld::UCR_OK,"stop preview mutated commander");
+      auto* actor=host.Match().players[1]->GetPlayerUnits().front().GetPtr();
+      auto* replica=client.Match().players[1]->GetPlayerUnits().front().GetPtr();
+      auto before=actor->GetPosition();NAI::SPosition destination;bool found=false;
+      auto* net=dynamic_cast<NAI::CPathNetwork*>(host.Match().world->GetPathNetwork());
+      auto& grid=net->GetLayer(before.pos.p.GetLayer())->tiles;
+      for(int distance:{12,16,24})for(auto delta:{CTPoint<int>(distance,0),CTPoint<int>(0,distance),CTPoint<int>(-distance,0),CTPoint<int>(0,-distance)}) {
+        int x=int(before.pos.p.GetX())+delta.x,y=int(before.pos.p.GetY())+delta.y;
+        if(x<0 || y<0 || x>=grid.GetXSize() || y>=grid.GetYSize())continue;
+        auto target=before.pos;target.p.SetXY(x,y);target.p.SetFinal(0);
+        if(!net->IsNativePassable(target.p) || net->IsLocked(target.p))continue;
+        CObj<NWorld::CCmd> path=new NWorld::CCmdPath(target);int start=0,full=0;
+        auto result=actor->CanDo(path,&start,&full);
+        if((result==NWorld::UCR_OK || result==NWorld::UCR_NOT_ENOUGH_AP) && full>8 && start<actor->GetAP()){destination=target;found=true;break;}
+      }
+      Require(found,"no long route for stop/resume fixture");
+      auto target=replica->GetPosition().pos;target.p=destination.p;
+      Require(code(host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(replica,new NWorld::CCmdPath(target))),false))==NWorld::UCR_OK,"stop fixture move rejected");
+      host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(replica,new NWorld::CCmdContinue)),false);
+      for(int i=0;i<20 && !actor->IsPerformingAction();++i)sync();
+      Require(actor->IsPerformingAction(),"stop fixture never started");
+      Require(code(host.Handle(1,client.StopActionCommand(),false))==NWorld::UCR_OK,"native stop rejected");
+      for(int i=0;i<120;++i)sync();
+      Require(!actor->IsPerformingAction() && actor->HasCommand() && actor->GetCurrentPath(),"Stop discarded the order needed by Continue");
+      auto stopped=actor->GetPosition();int ap=actor->GetAP();
+      for(int i=0;i<20;++i)sync();
+      Require(actor->GetPosition().pos.p.GetBits()==stopped.pos.p.GetBits(),"stopped route resumed without a click");
+      auto resume=client.EncodeCommand(new NWorld::CCmdSetCommand(replica,new NWorld::CCmdContinue));
+      Require(code(host.Handle(1,resume,true))==NWorld::UCR_OK,"Continue unavailable after Stop");
+      Require(code(host.Handle(1,resume,false))==NWorld::UCR_OK,"Continue rejected after Stop");
+      for(int i=0;i<160;++i){sync();if(actor->GetPosition().pos.p.GetBits()!=stopped.pos.p.GetBits() && !actor->IsPerformingAction())break;}
+      Require(actor->GetPosition().pos.p.GetBits()!=stopped.pos.p.GetBits() && actor->GetAP()<ap,"Continue did not resume stopped route");
+      Require(replica->GetPosition().pos.p.GetBits()==actor->GetPosition().pos.p.GetBits() && replica->GetAP()==actor->GetAP(),"continued route replica differs");
+      std::puts("Network Stop preserves route and Continue resumes it");return 0;
+    }
+    if(argc==4 && std::string(argv[3])=="--partial-move") {
+      S2Net::NetworkWorld host(true),client(false);client.Apply(host.Initial(),true);
+      for(int tick=0;tick<20;++tick)client.Apply(host.Segment(),false);
+      host.Match().world->GivePlayerTurn(host.Match().players[1]);
+      auto* actor=host.Match().players[1]->GetPlayerUnits().front().GetPtr();
+      auto before=actor->GetPosition();NAI::SPosition destination;int start=0,full=0;bool found=false;
+      for(int distance:{8,12,16,24})for(auto delta:{CTPoint<int>(distance,0),CTPoint<int>(0,distance),CTPoint<int>(-distance,0),CTPoint<int>(0,-distance)}) {
+        auto* net=dynamic_cast<NAI::CPathNetwork*>(host.Match().world->GetPathNetwork());
+        auto& grid=net->GetLayer(before.pos.p.GetLayer())->tiles;
+        int x=int(before.pos.p.GetX())+delta.x,y=int(before.pos.p.GetY())+delta.y;
+        if(x<0 || y<0 || x>=grid.GetXSize() || y>=grid.GetYSize())continue;
+        auto target=before.pos;target.p.SetXY(target.p.GetX()+delta.x,target.p.GetY()+delta.y);target.p.SetFinal(0);
+        if(!net->IsNativePassable(target.p) || net->IsLocked(target.p))continue;
+        CObj<NWorld::CCmd> path=new NWorld::CCmdPath(target,NAI::PF_DEFAULT);
+        if(actor->CanDo(path,&start,&full)==NWorld::UCR_OK && full>start+4) {destination=target;found=true;break;}
+      }
+      Require(found,"no affordable-first-step long route for fixture");
+      CObj<NWorld::CCmd> selectedRoute=new NWorld::CCmdPath(destination,NAI::PF_DEFAULT);
+      actor->CanDo(selectedRoute,&start,&full);
+      int budget=start+2;actor->GetUnitRPG()->SpendAP(actor->GetAP()-budget);
+      client.Apply(host.Segment(),false);
+      auto* replica=client.Match().players[1]->GetPlayerUnits().front().GetPtr();
+      Require(actor->CanDo(selectedRoute,&start,&full)==NWorld::UCR_NOT_ENOUGH_AP,"fixture route fits in this turn");
+      auto remoteDestination=replica->GetPosition().pos;remoteDestination.p=destination.p;
+      CObj<NWorld::CCmd> route=new NWorld::CCmdPath(remoteDestination,NAI::PF_DEFAULT);
+      auto result=host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(replica,route)),false);size_t pos=8;
+      Require(S2Net::Get32(result,pos)==NWorld::UCR_OK,"long move rejected instead of queued");
+      host.Handle(1,client.EncodeCommand(new NWorld::CCmdSetCommand(replica,new NWorld::CCmdContinue)),false);
+      for(int tick=0;tick<180;++tick) {
+        client.Apply(host.Segment(),false);
+        if(actor->GetPosition().pos.p.GetBits()!=before.pos.p.GetBits() && !host.Match().world->IsExecuting())break;
+      }
+      Require(actor->GetPosition().pos.p.GetBits()!=before.pos.p.GetBits(),"partial move made no progress");
+      Require(actor->GetAP()>=0 && actor->GetAP()<budget,"partial move did not respect AP budget");
+      Require(actor->GetPosition().pos.p.GetBits()!=destination.p.GetBits(),"unaffordable destination reached");
+      Require(replica->GetPosition().pos.p.GetBits()==actor->GetPosition().pos.p.GetBits() && replica->GetAP()==actor->GetAP(),"partial move replica differs");
+      Require(actor->GetCurrentPath()!=nullptr,"partial route was discarded");
+      actor->GetUnitRPG()->StartNewTurn(actor->GetPosition().GetCP());
+      CObj<NWorld::CCmdContinue> resume=new NWorld::CCmdContinue;
+      actor->CanDo(resume,&start,&full);
+      budget=start+2;actor->GetUnitRPG()->SpendAP(actor->GetAP()-budget);
+      client.Apply(host.Segment(),false);
+      Require(actor->CanDo(resume,&start,&full)==NWorld::UCR_NOT_ENOUGH_AP,"continued route already fits in budget");
+      before=actor->GetPosition();
+      auto request=client.EncodeCommand(new NWorld::CCmdSetCommand(replica,resume));
+      auto preview=host.Handle(1,request,true);pos=8;
+      Require(S2Net::Get32(preview,pos)==NWorld::UCR_OK,"continue button disabled for affordable partial path");
+      auto resumed=host.Handle(1,request,false);pos=8;Require(S2Net::Get32(resumed,pos)==NWorld::UCR_OK,"continue rejected");
+      for(int tick=0;tick<180;++tick) {
+        client.Apply(host.Segment(),false);
+        if(actor->GetPosition().pos.p.GetBits()!=before.pos.p.GetBits() && !host.Match().world->IsExecuting())break;
+      }
+      Require(actor->GetPosition().pos.p.GetBits()!=before.pos.p.GetBits(),"continue made no progress");
+      Require(actor->GetAP()>=0 && actor->GetAP()<budget,"continued movement exceeded AP budget");
+      std::printf("Partial movement respects AP: budget=%d remaining=%d total-route=%d\n",budget,actor->GetAP(),full);return 0;
     }
     if(argc>=4 && std::string(argv[3])=="--maps") {
       auto maps=S2Net::GetNetworkEncounterMaps();Require(!maps.empty(),"no encounter maps");

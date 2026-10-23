@@ -46,6 +46,9 @@
 #include "../Main/RPGStore.h"
 #include "../Main/rpgCheatConstants.h"
 #include "../Main/wUnitServer.h"
+#include "../Main/wOSBase.h"
+#include "../Main/aiGrid.h"
+#include "../Main/Sound.h"
 #include "../Main/GAnimation.h"
 #include "../Main/UICommCtrls.h"
 #include "../Main/Transform.h"
@@ -755,7 +758,24 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 		NGScene::ReleaseUITextureProbeResource();
 		return false;
 	}
-	else if(sCmd.compare(0,8,"uipoint ")==0 || sCmd.compare(0,8,"uihover ")==0) {
+	else if(sCmd.compare(0,6,"uikey ")==0 || sCmd.compare(0,7,"uitype ")==0) {
+    if(auto* ui=NUI::CurrentInterfaceForDiagnostics()) {
+      if(sCmd.compare(0,6,"uikey ")==0)ui->ProcessMessage(NUI::SEvent(NUI::EVENT_WINKEY,atoi(sCmd.c_str()+6)));
+      else for(wchar_t c:NStr::ToUnicode(sCmd.substr(7)))ui->ProcessMessage(NUI::SEvent(NUI::EVENT_WINCHAR,int(c)));
+    }
+  }
+  else if(sCmd.compare(0,10,"uiinspect ")==0) {
+    auto* window=HarnessFindWindow(NUI::CurrentInterfaceForDiagnostics(),sCmd.substr(10));
+    NUI::CText* text=dynamic_cast<NUI::CText*>(window);
+    if(auto* button=dynamic_cast<NUI::CButton*>(window))text=dynamic_cast<NUI::CText*>(button->GetState(0)->GetChildByID(""));
+    SaveLoadDiag("[ui-text] id=%s active=%d value=",sCmd.substr(10).c_str(),window && window->IsActive());
+    wstring content;
+    if(auto* edit=dynamic_cast<NUI::CEdit*>(window))content=edit->GetText();
+    else if(text)content=text->GetText();
+    for(wchar_t c:content)SaveLoadDiag("%04x",unsigned(c));
+    SaveLoadDiag("\n");
+  }
+  else if(sCmd.compare(0,8,"uipoint ")==0 || sCmd.compare(0,8,"uihover ")==0) {
 		// Hover and click can be sent on separate frames so native drag targets
 		// update exactly as they do when a player moves the mouse before clicking.
 		int x=-1,y=-1;bool ok=false;
@@ -794,6 +814,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 			const int local=mission->GetActivePlayer()->GetPlayer()->GetScenarioPlayerID();
 			const int turn=world->GetCurrentPlayer()?world->GetCurrentPlayer()->GetScenarioPlayerID():-1;
 			SaveLoadDiag("[network] local=%d turn=%d replica=%d time=%u executing=%d\n",local,turn,world->bNetworkReplica,world->GetTime()->GetValue(),world->IsExecuting());
+      ICamera::SCameraPos camera;mission->GetCamera()->GetPlacement(&camera);
+      SaveLoadDiag("[network-camera] center=%.3f,%.3f,%.3f\n",camera.ptAnchor.x,camera.ptAnchor.y,camera.ptAnchor.z);
             NWorld::SItem held;
             if(mission->GetActivePlayer()->GetPlayer()->GetInHandItem(&held)) {
                 auto* owner=dynamic_cast<NWorld::CUnitServer*>(held.pUnit.GetPtr());
@@ -803,9 +825,84 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 			NWorld::IPlayer::CUnitSet units;mission->GetActivePlayer()->GetPlayer()->GetUnits(&units);
 			for(size_t i=0;i<units.size();++i){auto* unit=static_cast<NWorld::CUnitServer*>(units[i].GetPtr());auto p=unit->GetPosition().GetCP();auto* weapon=unit->GetUnitRPG()->GetWeaponItem();
 				SaveLoadDiag("[network] unit=%u ap=%d ammo=%d pose=%d command=%d pos=%.3f,%.3f,%.3f hp=%d grid=%u,%u mode=%d\n",unsigned(i),unit->GetAP(),weapon?weapon->GetAmmoQuantity():-1,unit->GetPosition().GetPose(),unit->HasCommand(),p.x,p.y,p.z,unit->GetUnitRPG()->GetTotalVP(),unit->GetPosition().pos.p.GetX(),unit->GetPosition().pos.p.GetY(),weapon?int(weapon->GetShootMode()):-1);}
+      for(size_t i=0;i<units.size();++i) {
+        auto* unit=static_cast<NWorld::CUnitServer*>(units[i].GetPtr());auto* weapon=unit->GetUnitRPG()->GetWeaponItem();
+        auto* merc=unit->GetUnitRPG()->GetRPGUnit();
+        SaveLoadDiag("[network-persona] unit=%u record=%d gameplay=%d\n",unsigned(i),merc->GetPers()->GetRecordID(),merc->GetRPGPersID());
+        SaveLoadDiag("[network-weapon] unit=%u db=%d longburst=%d\n",unsigned(i),weapon?weapon->GetDBWeapon()->GetRecordID():0,weapon && weapon->IsShootModeSupported(NDb::SM_LongBurst));
+      }
 			for(int side=0;side<2;++side) {NWorld::IPlayer::CUnitSet team;world->GetPlayerByID(side)->GetUnits(&team);
 				for(size_t i=0;i<team.size();++i){auto* unit=static_cast<NWorld::CUnitServer*>(team[i].GetPtr());auto p=unit->GetPosition().GetCP();SaveLoadDiag("[network] team=%d fighter=%u alive=%d pos=%.3f,%.3f,%.3f\n",side,unsigned(i),unit->CanFight(),p.x,p.y,p.z);}}
-		}else if(sCmd=="netstaff" || sCmd.compare(0,14,"netfocusstaff ")==0) {
+		}else if(sCmd=="netobjects" || sCmd.compare(0,15,"netobjectstage ")==0 || sCmd.compare(0,15,"netobjectfocus ")==0) {
+      int target=-1,stage=-1;
+      if(sCmd.compare(0,15,"netobjectstage ")==0)sscanf(sCmd.c_str()+15,"%d %d",&target,&stage);
+      if(sCmd.compare(0,15,"netobjectfocus ")==0)target=atoi(sCmd.c_str()+15);
+      int index=0;
+      for(auto object:world->GetObjectsForHarness()) {
+        auto* db=object->GetDBObjectForHarness();auto position=object->GetPosition().ptPos;
+        if(index==target) {
+          if(stage>=0 && !world->bNetworkReplica && db && stage<db->GetStagesQuantity())object->SetDestroyStage(stage);
+          if(sCmd.compare(0,15,"netobjectfocus ")==0) {
+            ICamera::SCameraPos camera;mission->GetCamera()->GetPlacement(&camera);camera.ptAnchor=position;camera.fRod=14;mission->GetCamera()->SetPlacement(camera);
+          }
+        }
+        if(sCmd=="netobjects" || index==target)SaveLoadDiag("[network-object] index=%d db=%d stage=%d stages=%d pos=%.3f,%.3f,%.3f\n",index,object->GetDBObjectID(),object->GetDestroyStage(),db?db->GetStagesQuantity():0,position.x,position.y,position.z);
+        ++index;
+      }
+    }else if(sCmd=="netcontinuestatus" && !world->bNetworkReplica) {
+      for(int side=0;side<2;++side) {
+        NWorld::IPlayer::CUnitSet units;world->GetPlayerByID(side)->GetUnits(&units);
+        for(size_t i=0;i<units.size();++i) {
+          auto* unit=static_cast<NWorld::CUnitServer*>(units[i].GetPtr());int start=-1,full=-1;
+          CObj<NWorld::CCmd> resume=new NWorld::CCmdContinue;
+          auto result=unit->CanDo(resume,&start,&full);
+          SaveLoadDiag("[network-continue] side=%d unit=%u result=%d start=%d full=%d ap=%d active=%d performing=%d command=%d path=%d\n",side,unsigned(i),int(result),start,full,unit->GetAP(),world->IsUnitActive(unit),unit->IsPerformingAction(),unit->HasCommand(),unit->GetCurrentPath()!=nullptr);
+        }
+      }
+    }else if(sCmd=="netaudio") {
+      auto stats=NSound::InspectSoundScene(mission->GetSoundScene());
+      SaveLoadDiag("[network-audio] playing3d=%d looping3d=%d\n",stats.playing3D,stats.looping3D);
+    }else if(sCmd=="netvisible" || sCmd=="netselectall") {
+      if(sCmd=="netselectall") {
+        NWorld::IPlayer::CUnitSet units;mission->GetActivePlayer()->GetPlayer()->GetUnits(&units);
+        for(size_t i=0;i<units.size();++i)mission->Select(units[i],i!=0);
+      }
+      list<CPtr<NWorld::CUnit>> visible;mission->GetActivePlayer()->GetPlayer()->GetVisible(&visible);
+      int enemies=0;for(auto unit:visible)if(!unit->IsDead() && unit->GetPlayer()!=mission->GetActivePlayer()->GetPlayer())++enemies;
+      SaveLoadDiag("[network-visible] units=%u enemies=%d\n",unsigned(visible.size()),enemies);
+    }else if(sCmd.compare(0,13,"nettestplace ")==0 && !world->bNetworkReplica) {
+      int side=-1,index=-1,x=-1,y=-1;
+      if(sscanf(sCmd.c_str()+13,"%d %d %d %d",&side,&index,&x,&y)==4 && side>=0 && side<2) {
+        NWorld::IPlayer::CUnitSet units;world->GetPlayerByID(side)->GetUnits(&units);
+        if(index>=0 && index<int(units.size())) {
+          auto* unit=static_cast<NWorld::CUnitServer*>(units[index].GetPtr());auto position=unit->GetPosition();
+          position.pos.p.SetXY(x,y);position.pos.p.SetFinal(0);position.pos.SetNetwork(world->GetPathNetwork());
+          if(world->GetPathNetwork()->IsNativePassable(position.pos.p) && !world->GetPathNetwork()->IsLocked(position.pos.p)) {
+            auto facing=position.pos.p;facing.SetXY(x+(side?-1:1),y);
+            position.pos.p.SetDirection(world->GetPathNetwork()->GetDir(position.pos.p,facing));
+            world->GetPathNetwork()->Unlock(unit);unit->SetPosition(position);unit->animator.PlaceUnit(position);
+            SaveLoadDiag("[network-fixture] placed side=%d unit=%d grid=%d,%d\n",side,index,x,y);
+          }else SaveLoadDiag("[network-fixture] blocked\n");
+        }
+      }
+    }else if(sCmd.compare(0,10,"nettestap ")==0 && !world->bNetworkReplica) {
+      int side=-1,index=-1,ap=-1;
+      if(sscanf(sCmd.c_str()+10,"%d %d %d",&side,&index,&ap)==3 && side>=0 && side<2 && ap>=0) {
+        NWorld::IPlayer::CUnitSet units;world->GetPlayerByID(side)->GetUnits(&units);
+        if(index>=0 && index<int(units.size())) {
+          auto* unit=static_cast<NWorld::CUnitServer*>(units[index].GetPtr());
+          if(ap<=unit->GetUnitRPG()->GetSkillMaxValue(NDb::ST_AP))unit->GetUnitRPG()->SpendAP(unit->GetAP()-ap);
+        }
+      }
+    }else if(sCmd.compare(0,14,"nettestdamage ")==0 && !world->bNetworkReplica) {
+      int side=-1,index=-1,damage=-1;
+      if(sscanf(sCmd.c_str()+14,"%d %d %d",&side,&index,&damage)==3 && side>=0 && side<2 && damage>=0 && damage<=1000000) {
+        NWorld::IPlayer::CUnitSet units;world->GetPlayerByID(side)->GetUnits(&units);
+        if(index>=0 && index<int(units.size()))static_cast<NWorld::CUnitServer*>(units[index].GetPtr())->GetUnitRPG()->MakeDirectDamage(damage);
+      }
+    }else if(sCmd.compare(0,12,"nettestturn ")==0 && !world->bNetworkReplica) {
+      int side=atoi(sCmd.c_str()+12);if(side>=0 && side<2)world->GivePlayerTurn(world->GetPlayerByID(side));
+    }else if(sCmd=="netstaff" || sCmd.compare(0,14,"netfocusstaff ")==0) {
             string targetName;
             if(auto* target=dynamic_cast<NWorld::CUnitServer*>(mission->GetStateTarget()))world->GetUnitName(target,&targetName);
             SaveLoadDiag("[network-staff-target] name=%s state=%s\n",targetName.c_str(),typeid(*mission->GetState()).name());
@@ -831,6 +928,7 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 				SaveLoadDiag("[network-ui] action=%d available=%d ok=%d result=%d ap=%d,%d\n",action,info.bAvailable,info.bOk,info.eResult,info.nMinAP,info.nMaxAP);
 			}
 		}else if(sCmd=="netturn")mission->Command(new NWorld::CCmdEndOfTurn);
+    else if(sCmd=="netcancel")mission->StopAction();
 		else {
 			char verb[24]={};int index=-1,a=0,b=0;
 			const int fields=sscanf(sCmd.c_str(),"%23s %d %d %d",verb,&index,&a,&b);
@@ -838,6 +936,8 @@ static bool HarnessPoll()   // returns false to request main-loop exit
 			if(fields>=2 && index>=0 && index<int(units.size())) {
 				auto* unit=static_cast<NWorld::CUnitServer*>(units[index].GetPtr());
 				if(string(verb)=="netmove" && fields==4) {auto destination=unit->GetPosition().pos;destination.p.SetXY(destination.p.GetX()+a,destination.p.GetY()+b);destination.p.SetFinal(0);mission->Command(unit,new NWorld::CCmdPath(destination));}
+				else if(string(verb)=="netfocus")mission->FocusCameraOnUnit(unit);
+        else if(string(verb)=="netlook" && fields==4) {auto destination=unit->GetPosition().pos;destination.p.SetXY(destination.p.GetX()+a,destination.p.GetY()+b);mission->Command(unit,new NWorld::CCmdLook(destination));}
 				else if(string(verb)=="netshoot" && fields==4)mission->Command(unit,new NWorld::CCmdShootTile(unit->GetPosition().GetCP()+CVec3(float(a),float(b),1)));
 				else if(string(verb)=="netreload")mission->Command(unit,new NWorld::CCmdReload);
 				else if(string(verb)=="netgrenade") {

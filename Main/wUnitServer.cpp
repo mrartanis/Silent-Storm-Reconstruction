@@ -698,6 +698,22 @@ void CUnitServer::CancelAction()
 		pExec = 0;
 	}
 }
+void CUnitServer::PauseNetworkAction()
+{
+	if ( !GetWorld()->bNetworkArena || GetWorld()->bNetworkReplica || bIsRunningForcedAction || !IsCancelableExec( pExec ) || !CanPauseMoveForNetwork( pExec ) )
+		return;
+	CObj<CCmd> pending = pCurrentCmd;
+	if ( CDynamicCast<IExecMove>( pExec ) && CanFight() && IsAddedToVisitor() )
+		animator.PlaceUnit( GetPosition() );
+	CancelAction();
+	// Unlike a simulation interrupt, this request runs outside the executor's
+	// own stack. It is safe to release it now and rebuild from the paused tile
+	// when Continue is clicked, without losing the explicit player order.
+	pExec = 0;
+	pAutoRunCmd = 0;
+	bCallTimeLabel = false;
+	pCurrentCmd = pending;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitServer::FallFromHigh( float fHeightDiff )
 {

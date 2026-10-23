@@ -156,6 +156,7 @@ public:
 	virtual void GetTrappedObjectsList( list<CPtr<CObjectBase> > *pRes ) const ;
 	virtual void GetSounds( vector<IVisObj*> *pRes );
 	void GetUnitsRPGs( vector< CPtr<NRPG::IUnitMission> > *pRes ) const;
+	void OrderNetworkSquad();
 	////
 	virtual int GetScenarioPlayerID() const { return nScenarioPlayerID; }
 	virtual void SetCheat( int nCheat, bool bOn );

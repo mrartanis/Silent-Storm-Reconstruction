@@ -1160,7 +1160,10 @@ void CIBCombiner::Recalc()
 				value[i].nTris = 0;
 				continue;
 			}
-			if ( nOffset + pObjInfo->GetPositions().size() > 65535 )
+			// The full vertex stream includes UV seams: its index range can be
+			// much larger than the merged positions used by LT_POSITION.
+			const int nPartVertices = lt == LT_POSITION ? pObjInfo->GetPositions().size() : pObjInfo->GetVertices().size();
+			if ( nOffset + nPartVertices > 65535 )
 			{
 				nLargeOffset += nOffset;
 				nOffset = 0;
@@ -1205,10 +1208,7 @@ void CIBCombiner::Recalc()
 				tDest.i2 = tSrc.i2 + nOffset;
 				tDest.i3 = tSrc.i3 + nOffset;
 			}
-			if ( lt == LT_POSITION )
-				nOffset += pObjInfo->GetPositions().size();
-			else
-				nOffset += pObjInfo->GetVertices().size();
+			nOffset += nPartVertices;
 		}
 		return;
 	}

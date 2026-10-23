@@ -15,6 +15,7 @@ vector<int> GetNetworkRecruitIDs();
 vector<int> GetNetworkSupplyItems(int level);
 void RefreshNetworkStore(NRPG::CGlobalPlayer* player);
 CObj<NRPG::CUnit> CreateNetworkRecruit(int persona,int level);
+bool IsNetworkSquadValid(NRPG::CGlobalPlayer* squad,int count);
 // Future team selection fills this same preset before the host builds the world.
 struct NetworkMatchPreset {
   int mapVariant = 810;

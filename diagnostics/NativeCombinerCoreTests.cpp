@@ -8,11 +8,80 @@
 #include "../FileIO/BasicChunk1.h"
 #include "../Main/GCombiner.h"
 #include "../Main/GCompactVectorTransform.h"
+#if defined(_WIN32)
+#include "../Main/GGeometry.h"
+#endif
 
 #include <cstdint>
 #include <cstdio>
 
 namespace {
+#if defined(_WIN32)
+class CTestMesh : public CPtrFuncBase<NGScene::CObjectInfo> {
+  OBJECT_NOCOPY_METHODS(CTestMesh);
+protected:
+  bool NeedUpdate() override { return false; }
+  void Recalc() override {}
+public:
+  CTestMesh() {}
+  explicit CTestMesh(NGScene::CObjectInfo* mesh) { pValue = mesh; }
+};
+class CGeometryPart : public NGScene::IPart {
+  OBJECT_NOCOPY_METHODS(CGeometryPart);
+public:
+  CGeometryPart() {}
+  explicit CGeometryPart(CTestMesh* mesh) : IPart(mesh, nullptr, false) {}
+};
+class CTestParts : public CFuncBase<vector<CPtr<NGScene::IPart>>> {
+  OBJECT_NOCOPY_METHODS(CTestParts);
+protected:
+  bool NeedUpdate() override { return false; }
+public:
+  void Add(NGScene::IPart* part) { value.push_back(part); }
+};
+bool CheckSeamedMeshIndexBoundary() {
+  // UV seams keep distinct vertices while merging their geometric positions.
+  // Two legal 16-bit meshes together need a second base-vertex batch.
+  const int vertices = 39999;
+  NGScene::CObjectInfo::SData data;
+  data.verts.resize(vertices);
+  vector<STriangle> triangles;
+  for (int i = 0; i < vertices; ++i) {
+    auto& v = data.verts[i];
+    v.pos = CVec3(i % 3 == 1 ? 1.f : 0.f, i % 3 == 2 ? 1.f : 0.f, 0.f);
+    v.tex = CVec2(float(i) / vertices, 0.f);
+    if (i % 3 == 0) {
+      STriangle triangle; triangle.i1 = i; triangle.i2 = i + 1; triangle.i3 = i + 2;
+      triangles.push_back(triangle);
+    }
+  }
+  data.geometry.SetTriangles(triangles);
+  CObj<NGScene::CObjectInfo> mesh = new NGScene::CObjectInfo;
+  mesh->Assign(data);
+  if (mesh->GetVertices().size() != vertices || mesh->GetPositions().size() != 3) return false;
+  CObj<CTestMesh> node = new CTestMesh(mesh);
+  CObj<CGeometryPart> first = new CGeometryPart(node), second = new CGeometryPart(node);
+  CObj<CTestParts> parts = new CTestParts;
+  parts->Add(first); parts->Add(second);
+  CObj<NGScene::CIBCombiner> indices = new NGScene::CIBCombiner(parts, NGScene::LT_NONE, NGScene::IBTT_VERTICES);
+  ++nDGCurrentFrame;
+  CDGPtr<NGScene::CIBCombiner> pointer(indices.GetPtr()); pointer.Refresh();
+  const auto& lists = indices->GetValue();
+  if (lists.size() != 2 || lists[1].nBaseIndex != vertices) {
+    std::printf("seamed mesh base index=%d expected=%d\n", lists.size() == 2 ? lists[1].nBaseIndex : -1, vertices);
+    return false;
+  }
+  for (int part = 0; part < 2; ++part) {
+    for (int t = 0; t < lists[part].nTris; ++t) {
+      const auto& triangle = lists[part].pTri[t];
+      const int base = lists[part].nBaseIndex;
+      for (int index : {int(triangle.i1), int(triangle.i2), int(triangle.i3)})
+        if (base + index < part * vertices || base + index >= (part + 1) * vertices) return false;
+    }
+  }
+  return true;
+}
+#endif
 bool CheckPackedBasis() {
   // Explicit MMX fixtures: identity, 90-degree yaw, 90-degree pitch.
   const NGfx::SCompactTransformer transforms[] = {
@@ -62,6 +131,9 @@ std::uint64_t Digest(CMemoryStream& stream) {
 } // namespace
 
 int main() {
+#if defined(_WIN32)
+  if (!CheckSeamedMeshIndexBoundary()) return 8;
+#endif
   if (!CheckPackedBasis()) return 7;
   NGScene::SStaticTrackers trackers;
   CObj<NGScene::CPerMaterialCombiner> combiner =

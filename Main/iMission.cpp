@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "NetworkWorld.h"
 #include "iNetworkMenu.h"
+#include "../diagnostics/FrameProfiler.h"
 #include "DisplayLayout.h"
 #if !defined(_WIN32)
 #include <filesystem>
@@ -180,6 +181,12 @@ bool CMission::InitializeNetwork(std::shared_ptr<S2Net::NetworkWorld> world, std
 	bool ok=Initialize(networkWorld->Match().templateID,networkWorld->Match().variantID,
 		nullptr,vector<string>(),networkWorld->Match().game);
   if(ok && networkWorld->IsPreparing())networkPreparationControls=CreateNetworkPreparationControls(this,networkWorld,networkSession);
+  if(ok) {
+    NWorld::IPlayer::CUnitSet units;
+    pActivePlayer->GetPlayer()->GetUnits(&units);
+    for(auto unit:units)if(unit && !unit->IsDead()) {FocusCameraOnUnit(unit);break;}
+    networkMenuControls=CreateNetworkMatchMenu(this,networkSession);
+  }
   return ok;
 }
 bool CMission::OpenNetworkBaseService(NWorld::CUnit* target)
@@ -197,9 +204,7 @@ bool CMission::OpenNetworkBaseService(NWorld::CUnit* target)
 void CMission::StopAction()
 {
 	if (!networkSession) { CMissionBase::StopAction(); return; }
-	vector<CPtr<IUnitTracker> > selected;
-	GetSelectedUnits(&selected);
-	for (auto unit : selected) Command(new NWorld::CCmdCancel(unit->GetUnit()));
+	if(!networkWorld->IsStartingBattle())networkSession->Submit(networkWorld->StopActionCommand());
 }
 void CMission::PauseGame(bool state)
 {
@@ -521,7 +526,10 @@ void CMission::Terminate()
 void CMission::Command( NWorld::CCommand *pCmd )
 {
 	bForceUpdateNextFrame = true;
-	if (networkSession) { networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return; }
+	if (networkSession) {
+    if(networkWorld->IsStartingBattle()){CObj<NWorld::CCommand> held=pCmd;return;}
+    networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return;
+  }
 
 	ASSERT( pCmd );
 	pActivePlayer->GetCommander()->Do( pCmd );
@@ -538,7 +546,10 @@ void CMission::DoEvent( NWorld::CCommand *pCmd )
 	if (networkSession && networkSession->LocalSlot()!=0 && !networkWorld->IsPreparing() && dynamic_cast<NWorld::CCmdInterfaceEvent*>(pCmd)) {
 		CObj<NWorld::CCommand> hold(pCmd);return;
 	}
-	if (networkSession) { networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return; }
+	if (networkSession) {
+    if(networkWorld->IsStartingBattle()){CObj<NWorld::CCommand> held=pCmd;return;}
+    networkSession->Submit(networkWorld->EncodeCommand(pCmd)); return;
+  }
 
 	ASSERT( pCmd );
 	pActivePlayer->GetCommander()->DoEvent( pCmd );
@@ -801,6 +812,7 @@ static int UCRRetailOrdinal( NWorld::EUnitCommandResult eRes )
 // ordinal > 4 == beyond NOT_ENOUGH_AP) and differ, the total collapses to UCR_UNAVAILABLE.
 NWorld::EUnitCommandResult CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoTarget, int *pnMinAP, int *pnMaxAP, bool *pbEnoughAPToStart )
 {
+  S2Perf::Scope measured(S2Perf::MissionActions);
 	CObj<NWorld::CCmd> pHolder( pCmd );
 	vector< CPtr<IUnitTracker> > unitsSet;
 	GetSelectedUnits( &unitsSet );
@@ -854,6 +866,8 @@ NWorld::EUnitCommandResult CMission::CanDoCommand( NWorld::CCmd *pCmd, bool bNoT
 			? networkWorld->Preview(static_cast<NWorld::CUnitServer*>(pUnit.GetPtr()),pCmd,&nStartAP,&nFullAP,bNoTarget)
 			: pUnit->CanDo( pCmd, &nStartAP, &nFullAP );
 		bPending = bPending || eRes == NWorld::UCR_PENDING;
+    if(networkSession && dynamic_cast<NWorld::CCmdContinue*>(pCmd) && eRes==NWorld::UCR_NOT_ENOUGH_AP &&
+       pUnit->GetCurrentPath() && pUnit->GetRPG()->GetAP()>0 && nStartAP<=pUnit->GetRPG()->GetAP())eRes=NWorld::UCR_OK;
 
 		// retail min/max fold over the full-action AP; units reporting -1 are skipped
 		if ( nFullAP != -1 )
@@ -1192,7 +1206,7 @@ void CMission::Step()
 {
 	if (networkSession)
 	{
-		networkSession->Poll();
+		{S2Perf::Scope measured(S2Perf::NetPoll);networkSession->Poll();}
     if(pWorld.GetPtr()!=networkWorld->Match().world.GetPtr()){OpenNetworkMission(networkWorld,networkSession);return;}
 		if(networkWorld->TakePreviewUpdated())bForceUpdateNextFrame=true;
 		auto error=networkWorld->TakeCommandError();
@@ -1204,8 +1218,7 @@ void CMission::Step()
 		}
 		if (networkSession->State() == S2Net::SessionState::Finished || networkSession->State() == S2Net::SessionState::Failed)
 		{
-			if (networkLeaveRequested) NMainLoop::Command(new CICMainMenu());
-			else NMainLoop::Command(new CICNetworkMenu(0,7780,"127.0.0.1",networkSession->Status()));
+			NMainLoop::Command(new CICNetworkMenu(0,7780,"127.0.0.1",networkSession->Status()));
 			return;
 		}
 		bWaitForPartFinished = false;
@@ -1287,6 +1300,7 @@ void CMission::Step()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::InternalStep()
 {
+  S2Perf::Scope measured(S2Perf::MissionStep);
 	// retail CMission::GameStep @0x2017a0 head: track the world current-player; on a change stamp
 	// tLastCurrentPlayerChange with the UI clock (the @0x1fbf10 end-of-turn 2s cooldown reads it).
 	NWorld::IPlayer *pCurrentPlayer = pWorld->GetCurrentPlayer();
@@ -1411,8 +1425,19 @@ void CMission::InternalStep()
 		// v1.2 0x602443..0x6024f3: busy state bypasses normal hover selection.
 		if ( IsPlayerTurn() )
 			actionsInfoSet[UA_STOP].SetValid();
-		ResetState();
-		CommandState( new CStateWait() );
+    if(networkSession) {
+      // ResetState probes the entire hover-state pool before we replace it
+      // with Wait. With six selected soldiers this recalculates paths and
+      // attacks every spectator frame, although no local order can be issued.
+      if(!dynamic_cast<CStateWait*>(pState.GetPtr())) {
+        pState->Terminate();
+        pState=0; // Also release a forced state, as ResetState does.
+        CommandState(new CStateWait());
+      }
+    } else {
+		  ResetState();
+		  CommandState( new CStateWait() );
+    }
 	}
 
 	pState->Step();
@@ -1519,10 +1544,13 @@ bool CMission::ProcessEvent( const NInput::SEvent &sEvent )
 	if (networkSession)
 	{
 		if (bindSaveMenu.ProcessEvent(sEvent) || bindLoadMenu.ProcessEvent(sEvent)) return true;
-		if (bindGameMenu.ProcessEvent(sEvent) || bindEndMission.ProcessEvent(sEvent))
+		if (bindGameMenu.ProcessEvent(sEvent) || bindMainMenu.ProcessEvent(sEvent) || bindPause.ProcessEvent(sEvent) || bindEndMission.ProcessEvent(sEvent))
 		{
-			networkLeaveRequested = true; networkSession->Finish("Player left"); return true;
+			networkMenuControls->SendMessage(networkMenuControls,NUI::SEvent(NUI::EVENT_NOTIFY,"net_match_toggle"));return true;
 		}
+		if(bindCancel.ProcessEvent(sEvent) && networkMenuControls->GetStyle(NUI::STYLE_VISIBLE)) {
+      networkMenuControls->ShowWindow(NUI::SWTYPE_HIDE);return true;
+    }
 	}
 	NInput::SetSection( "game" );
 
@@ -2028,6 +2056,7 @@ bool CMission::ProcessEvent( const NInput::SEvent &sEvent )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CMission::TrackChanges()
 {
+  S2Perf::Scope measured(S2Perf::MissionTrack);
 	bool bUpdated = false;
 
 	CPtr<NWorld::IPlayer> pNewTrackPlayer = pWorld->GetCurrentPlayer();
@@ -2094,6 +2123,7 @@ bool CMission::TrackChanges()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::UpdateState()
 {
+  S2Perf::Scope measured(S2Perf::MissionState);
 	if ( ( pState->GetType() == IState::FORCED ) && pState->Initialize( this ) )
 		return;
 	if ( ( pState->GetType() == IState::TEMPORARY ) && pState->Initialize( this ) )
@@ -2124,6 +2154,7 @@ void CMission::RefreshPointerTarget()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::UpdateSound()
 {
+  S2Perf::Scope measured(S2Perf::MissionAudio);
 	int nEWatch = pWorld->GetEnemyWatchers( pActivePlayer->GetPlayer() );
 	list< CPtr<NWorld::CUnit> > visible;
 	int nVisibleEnemy = 0;
@@ -2230,6 +2261,7 @@ void CMission::SelectWeaponMode( int nInc )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CMission::TraceCursor()
 {
+  S2Perf::Scope measured(S2Perf::MissionTrace);
 	// retail TraceCursor @0x1fec80: the tile ray is ALWAYS re-cast against the LIVE camera every ready
 	// frame (no camera-still gate here) -- that blanket early-return froze rTraceRay/sTraceTile at the
 	// pre-move values, so a click while the camera eased pathfound against a stale/off-map tile ->

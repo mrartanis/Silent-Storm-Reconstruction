@@ -479,7 +479,12 @@ void CModelDraw::Draw( CWindow *pWindow, const STime &sTime, NGScene::I2DGameVie
 
 	SRect sScrWindow( sWindow );
 	SPoint sScrPosition( sWindow.x1, sWindow.y1 );
-	if ( pWindow && !pWindow->ClientToScreen( &sScrPosition, &sScrWindow, false ) )
+	if ( pWindow )
+		pWindow->ClientToScreen( &sScrPosition, &sScrWindow, false );
+	// ClientToScreen(false) preserves the icon's local rectangle and never
+	// reports an empty ancestor clip. Do not keep drawing off-screen catalog
+	// models through the shared slot view after scrolling past them.
+	if ( sScrWindow.x1 >= sScrWindow.x2 || sScrWindow.y1 >= sScrWindow.y2 )
 	{
 		pRender = 0;
 		return;

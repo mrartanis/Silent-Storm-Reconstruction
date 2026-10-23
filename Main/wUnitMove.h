@@ -15,6 +15,7 @@ namespace NAI
 namespace NWorld
 {
 class CCommandExecute;
+bool CanPauseMoveForNetwork( CCommandExecute *pExec );
 class CUnitServer;
 class CPathConflictsRemover;
 enum ENeedActiveItem : int;
