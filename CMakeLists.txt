@@ -805,6 +805,7 @@ add_test(NAME UpstreamFlyingRestoration COMMAND UpstreamBugTests flying-restorat
 add_test(NAME UpstreamSnipingAim COMMAND UpstreamBugTests sniping-aim)
 add_test(NAME UpstreamDecalRebuild COMMAND UpstreamBugTests decal-rebuild)
 add_test(NAME UpstreamDecalProjection COMMAND UpstreamBugTests decal-projection)
+add_test(NAME UpstreamRenderRemoval COMMAND UpstreamBugTests render-removal)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE

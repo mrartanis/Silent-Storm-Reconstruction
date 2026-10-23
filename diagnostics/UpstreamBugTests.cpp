@@ -27,6 +27,7 @@
 #include "../Main/aiCommander.h"
 #include "../Main/aiRouteLogic.h"
 #include "../Main/aiUnit.h"
+#include "../Main/Sync.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -284,6 +285,36 @@ static void IdleAI(const char* databasePath, const char* resourcePath)
     actor->SetTemporaryPosition(original);
 }
 
+class RenderCache;
+class RenderFixture: public CObjectBase
+{
+    OBJECT_BASIC_METHODS(RenderFixture);
+public:
+    void Visit(RenderCache*) {}
+};
+
+class RenderCache: public COrdinarySyncDst<RenderFixture, RenderCache>
+{
+protected:
+    void PostVisit(int, RenderFixture* object) override { cached = object; }
+public:
+    CPtr<RenderFixture> cached;
+    explicit RenderCache(CSyncSrc<RenderFixture>* source): COrdinarySyncDst(source) {}
+};
+
+static void RenderRemoval()
+{
+    CObj<CSetSyncSrc<RenderFixture>> source = new CSetSyncSrc<RenderFixture>;
+    CObj<RenderFixture> object = new RenderFixture;
+    RenderCache cache(source);
+    source->Set(std::vector<RenderFixture*>{object});
+    cache.Sync();
+    Require(cache.cached == object, "invalid render cache test fixture");
+    source->Set(std::vector<RenderFixture*>{});
+    cache.Sync();
+    Require(!cache.cached, "removed render slot retained a live object reference");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -296,6 +327,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "decal-rebuild")) DecalRebuild();
         else if (!std::strcmp(mode, "decal-projection")) DecalProjection();
         else if (!std::strcmp(mode, "ai-idle") && argc == 4) IdleAI(argv[2], argv[3]);
+        else if (!std::strcmp(mode, "render-removal")) RenderRemoval();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
