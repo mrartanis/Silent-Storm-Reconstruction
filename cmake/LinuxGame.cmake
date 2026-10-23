@@ -151,6 +151,7 @@ add_test(NAME UpstreamClueInitialization COMMAND UpstreamBugTests clue-initializ
 add_test(NAME UpstreamStoreDrop COMMAND UpstreamBugTests store-drop)
 add_test(NAME UpstreamInventoryActor COMMAND UpstreamBugTests inventory-actor)
 add_test(NAME UpstreamSlotActor COMMAND UpstreamBugTests slot-actor)
+add_test(NAME UpstreamGeometryHash COMMAND UpstreamBugTests geometry-hash)
 if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
   get_filename_component(_s2_upstream_game_dir "${S2_GAME_DB_PATH}" DIRECTORY)
   get_filename_component(_s2_upstream_res_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)

@@ -6,6 +6,7 @@
 #include "../Misc/Geom.h"
 #endif
 #include "GGeometry.h"
+#include "GGeometryPositionHash.h"
 #include "Bound.h"
 #include "../Misc/StrProc.h"
 #include "../MiscDll/Commands.h"
@@ -180,7 +181,7 @@ struct SCompoundPosKey
 };
 struct CalcCompoundKeyHash
 {
-	int operator()( const SCompoundPosKey &k ) const { SVec3Hash v; return v(k.v); }
+	int operator()( const SCompoundPosKey &k ) const { SGeometryPosHash v; return v(k.v); }
 };
 void CObjectInfo::MergePositions()
 {

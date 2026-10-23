@@ -23,6 +23,8 @@
 #include "../Main/GDecalGeometry.h"
 #include "../Main/GCombiner.h"
 #include "../Main/GSceneUtils.h"
+#include "../Main/GGeometryPositionHash.h"
+using GeometryTestHash = NGScene::SGeometryPosHash;
 #include "../Main/rpgGlobal.h"
 #include "../Main/RPGUnit.h"
 #include "../Main/RPGUnitMission.h"
@@ -791,6 +793,25 @@ static void InventoryTransferActor(bool backpack)
     TransferMission::actor = nullptr; TransferMission::command = nullptr;
 }
 
+static void GeometryHashBuckets()
+{
+    int buckets[4096] = {};
+    GeometryTestHash hash;
+    for (int i = 0; i < 4096; ++i)
+        ++buckets[static_cast<unsigned>(hash(CVec3(i * .25f, 0.f, 0.f))) & 4095];
+    int occupied = 0, largest = 0;
+    for (int count : buckets) { occupied += count != 0; largest = Max(largest, count); }
+    Require(occupied > 2000 && largest < 32,
+        "grid-aligned geometry collapses into masked hash buckets");
+    Require(hash(CVec3(0.f, 0.f, 0.f)) == hash(CVec3(-0.f, 0.f, 0.f)),
+        "equal signed-zero positions have different merge hashes");
+    std::vector<CVec3> positions = {VNULL3, CVec3(-0.f, 0.f, 0.f), CVec3(1,2,3), CVec3(1,2,3), CVec3(2,1,3)};
+    std::vector<WORD> matches;
+    NGScene::MergePositions(&matches, &positions);
+    Require(positions.size() == 3 && matches == std::vector<WORD>({0,0,1,1,2}),
+        "geometry hash changed vertex merge identity or ordering");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -821,6 +842,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "store-drop")) StoreDropPosition();
         else if (!std::strcmp(mode, "inventory-actor")) InventoryTransferActor(true);
         else if (!std::strcmp(mode, "slot-actor")) InventoryTransferActor(false);
+        else if (!std::strcmp(mode, "geometry-hash")) GeometryHashBuckets();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

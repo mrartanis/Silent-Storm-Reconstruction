@@ -6,6 +6,7 @@
 #include "../Misc/Geom.h"
 #endif
 #include "GGeometry.h"
+#include "GGeometryPositionHash.h"
 
 namespace NGScene
 {
@@ -31,7 +32,7 @@ void MergePositions( vector<WORD> *pMatches, vector<CVec3> *pPositions )
 	vector<WORD> &posIndices = *pMatches;
 	posIndices.resize( positions.size() );
 	mergedPositions.reserve( pPositions->size() );
-	typedef unordered_map<CVec3,int,SVec3Hash> CPosHash;
+	typedef unordered_map<CVec3,int,SGeometryPosHash> CPosHash;
 	CPosHash posHash;
 	for ( int k = 0; k < positions.size(); ++k )
 	{
