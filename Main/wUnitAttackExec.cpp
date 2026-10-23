@@ -16,6 +16,9 @@
 #include "RPGItemSet.h" // CRAP
 #include "RPGUnitMission.h"
 #include "RPGGame.h"
+#include "rpgGlobal.h"
+#include "scScenarioTracker.h"
+#include "scFlowChartItems.h"
 #include "aiMap.h"
 #include "aiCollider.h"
 #include "phCollider.h"	// PhysCollideInfo (impact path; the free NAI::CollideInfo was removed)
@@ -487,6 +490,18 @@ static bool IsRectsIntersect( const CTRect<int> &s1, const CTRect<int> &s2 )
 	return false;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+static bool IsInstantClue( NRPG::IInventoryItem *pItem, CUnitServer *pUS )
+{
+	if ( !IsValid( pUS ) || pUS->IsAIUnit() || !IsValid( pItem ) ||
+		!dynamic_cast<NRPG::IClueItem*>( pItem ) || !IsValid( pItem->GetDBItem() ) )
+		return false;
+	NRPG::CGlobalGame *pGame = pUS->GetWorld()->GetGlobalGame();
+	if ( !IsValid( pGame ) || !IsValid( pGame->pScenarioTracker ) )
+		return false;
+	NScenario::CScenarioClue *pClue = pGame->pScenarioTracker->GetClueByItemID( pItem->GetDBItem()->GetRecordID() );
+	return IsValid( pClue ) && pClue->GetDBClue()->bGiveImmediately;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 static EUnitCommandResult CanMoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveItem )
 {
 	CObj<NRPG::IInventoryItem> pItem;
@@ -580,6 +595,8 @@ static EUnitCommandResult CanMoveInventoryItem( CUnitServer *pUS, CCmdMoveInvent
 	{
 		return UCR_OK;
 	}
+	if ( IsInstantClue( pItem, pUS ) )
+		return UCR_OK;
 
 	switch( sTarget.eType )
 	{
@@ -717,6 +734,8 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 
 	SItem sSource = pMoveItem->GetSource();
 	SItem sTarget = pMoveItem->GetTarget();
+	CDynamicCast<CUnitServer> pSourceUnit( sSource.pUnit );
+	CDynamicCast<CUnitServer> pTargetUnit( sTarget.pUnit );
 
 	switch( sSource.eType )
 	{
@@ -809,6 +828,16 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 		pUS->GetWorld()->AddNextUIHint( false );
 		return;
 	}
+	bool bClue = dynamic_cast<NRPG::IClueItem*>( pItem.GetPtr() ) != 0;
+	if ( bClue && IsValid( pSourceUnit ) )
+		pSourceUnit->nClueCount = Max( 0, pSourceUnit->nClueCount - 1 );
+	if ( IsInstantClue( pItem, pTargetUnit ) )
+	{
+		pTargetUnit->GetWorld()->GetGlobalGame()->pScenarioTracker->OnItemTaken(
+			pTargetUnit, pItem, (NDb::ESlot)NDb::N_SLOTS, true );
+		return;
+	}
+	NDb::ESlot clueSlot = (NDb::ESlot)NDb::N_SLOTS;
 
 	if ( g_bSaveLoadDiag )
 	{
@@ -879,6 +908,7 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 			}
 
 			pInventory->Equip( (NDb::ESlot)sTarget.nSlot, pItem );
+			clueSlot = (NDb::ESlot)sTarget.nSlot;
 			break;
 		}
 	case SItem::BACKPACK:
@@ -957,6 +987,7 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 				{
 					bComplete = true;
 					pInventory->Equip( eSlot, pItem );
+					clueSlot = eSlot;
 					break;
 				}
 			}
@@ -978,6 +1009,13 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 		// destroy the item: it was already taken off its source above, so just drop the last
 		// reference (pItem is a CObj) -- the item is removed from the world. (DestroyItemInHand)
 		break;
+	}
+	if ( bClue && IsValid( pTargetUnit ) )
+	{
+		++pTargetUnit->nClueCount;
+		NRPG::CGlobalGame *pGame = pTargetUnit->GetWorld()->GetGlobalGame();
+		if ( IsValid( pGame ) && IsValid( pGame->pScenarioTracker ) )
+			pGame->pScenarioTracker->OnItemTaken( pTargetUnit, pItem, clueSlot, true );
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

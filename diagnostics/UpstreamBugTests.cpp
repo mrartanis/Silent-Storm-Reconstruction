@@ -14,6 +14,7 @@
 #include "../Main/iUnitPanel.h"
 #include "../Main/iDesktopWindow.h"
 #include "../Main/wUnitCommands.h"
+#include "../Main/wUICommands.h"
 #include "../Main/aiGrid.h"
 #include "../Main/aiLocker.h"
 #include "../Main/wUnitServer.h"
@@ -249,17 +250,26 @@ static void DecalProjection()
     Require(transformed->captured == saved, "transformed decal lost its original projection pose");
 }
 
-static CObj<NWorld::CWorld> FixtureWorld(const char* databasePath, const char* resourcePath)
+static CObj<NWorld::CWorld> FixtureWorld(const char* databasePath, const char* resourcePath,
+    bool deployParty = false, CObj<NRPG::CGlobalGame>* retainedGame = nullptr)
 {
     CFileStream database;
     database.OpenRead(databasePath);
     NDatabase::Serialize(database, CStructureSaver::READ);
     NGScene::AddResourceDir(resourcePath);
     CObj<NRPG::CGlobalGame> game = NRPG::CreateGlobalGame(1);
+    if (retainedGame) *retainedGame = game;
+    if (deployParty) game->players.push_back(NRPG::CreateGlobalPlayer(std::vector<int>{54}));
     CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
     CObj<NWorld::CPostWorldCreateInfo> post;
     world->CreateRandom(810, {}, true, {}, 0, &post, SRandomSeed(123));
     Require(post && world->GetPathNetwork(), "mission fixture construction failed");
+    if (deployParty) {
+        CObj<NAI::CSequenceCommander> commander = new NAI::CSequenceCommander(world);
+        auto* player = dynamic_cast<NWorld::CPlayer*>(world->AddPlayer(L"Clue fixture", game->players.front(), commander));
+        Require(player != nullptr, "human party deployment failed");
+        commander->SetPlayer(player);
+    }
     // Deliberately exclude mission scripts: this fixture isolates AI scheduling.
     world->RunPostInit(nullptr);
     return world;
@@ -839,6 +849,63 @@ static void ImmediateClueNotification(const char* databasePath, const char* reso
     Require(other->IsJustFound(), "clearing an immediate clue discarded another pending notification");
 }
 
+static void ImmediateCluePickup(const char* databasePath, const char* resourcePath, bool occupiedHand)
+{
+    CObj<NRPG::CGlobalGame> game;
+    auto world = FixtureWorld(databasePath, resourcePath, true, &game);
+    std::vector<CPtr<NWorld::CUnit>> units;
+    world->GetAllUnits(&units);
+    NWorld::CUnitServer* actor = nullptr;
+    for (auto& candidate : units) {
+        auto* unit = dynamic_cast<NWorld::CUnitServer*>(candidate.GetPtr());
+        if (unit && !unit->IsAIUnit() && unit->CanFight()) { actor = unit; break; }
+    }
+    Require(actor != nullptr, "clue fixture has no human actor");
+    auto* tracker = world->GetGlobalGame()->pScenarioTracker.GetPtr();
+    auto* clue = tracker->GetClueByName("Find_Cipher_key");
+    Require(clue && clue->GetDBClue()->bGiveImmediately && !tracker->IsClueFound(clue), "immediate clue fixture is unavailable");
+    CObj<NRPG::IInventoryItem> item = NRPG::CreateClueItem(NDb::GetRPGItem(clue->GetDBClue()->nItemID));
+    auto* inventory = actor->GetUnitRPG()->GetInventory();
+    CTPoint<int> position;
+    Require(inventory->FindPlace(item, &position) && inventory->Place(position, item), "clue source does not fit the fixture backpack");
+    actor->nClueCount = 1;
+    CObj<NRPG::IInventoryItem> held;
+    if (occupiedHand) {
+        held = NRPG::CreateDummyItem(item->GetDBItem());
+        actor->GetTBSPlayer()->SetInHandItem(NWorld::SItem(actor, NWorld::SItem::HAND, held));
+        CObj<NWorld::CCmdMoveInventoryItem> ordinaryCommand = new NWorld::CCmdMoveInventoryItem(
+            NWorld::SItem(actor, NWorld::SItem::BACKPACK, held), NWorld::SItem(actor, NWorld::SItem::HAND));
+        CObj<NWorld::CExecMoveInventoryItem> ordinary = new NWorld::CExecMoveInventoryItem(actor, ordinaryCommand);
+        Require(ordinary->CanDoIt(actor->GetPosition()) != NWorld::UCR_OK,
+            "ordinary item with a clue DB identity bypassed occupied-hand checks");
+    }
+    CObj<NWorld::CCmdMoveInventoryItem> command = new NWorld::CCmdMoveInventoryItem(
+        NWorld::SItem(actor, NWorld::SItem::BACKPACK, item), NWorld::SItem(actor, NWorld::SItem::HAND));
+    CObj<NWorld::CExecMoveInventoryItem> executor = new NWorld::CExecMoveInventoryItem(actor, command);
+    Require(executor->CanDoIt(actor->GetPosition()) == NWorld::UCR_OK, "an immediate clue requires an empty drag hand");
+    executor->Run();
+    Require(tracker->IsClueFound(clue), "immediate clue transfer did not advance the campaign on pickup");
+    NWorld::SItem after;
+    bool hasHand = actor->GetTBSPlayer()->GetInHandItem(&after);
+    Require(occupiedHand ? hasHand && after.pItem == held : !hasHand,
+        "immediate clue entered the drag hand or replaced its previous item");
+    Require(actor->nClueCount == 0, "consumed immediate clue retained a carrier count");
+    for (const auto& entry : inventory->GetItems())
+        Require(entry.pItem != item, "consumed clue remained in the backpack");
+    int modals = 0;
+    while (auto* raw = world->GetUICommand()) {
+        CObj<NWorld::CUICmd> event = raw;
+        auto* show = dynamic_cast<NWorld::CUICmdShowClue*>(event.GetPtr());
+        if (show && show->pClue == clue) ++modals;
+    }
+    Require(modals == 1, "immediate clue pickup did not open exactly one clue modal");
+    if (auto* goal = clue->GetGoal()) for (auto& task : goal->GetTasks()) {
+        auto tag = task->GetDBTask()->eTag;
+        if (tag == NDb::TT_FIND_ITEM || tag == NDb::TT_TAKE_ITEM || tag == NDb::TT_CARRY_OUT_ITEM)
+            Require(task->GetState() == NScenario::TS_COMPLETED, "immediate clue task did not complete");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -871,6 +938,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "slot-actor")) InventoryTransferActor(false);
         else if (!std::strcmp(mode, "geometry-hash")) GeometryHashBuckets();
         else if (!std::strcmp(mode, "clue-notification") && argc == 4) ImmediateClueNotification(argv[2], argv[3]);
+        else if (!std::strcmp(mode, "clue-pickup") && argc == 4) ImmediateCluePickup(argv[2], argv[3], false);
+        else if (!std::strcmp(mode, "clue-capacity") && argc == 4) ImmediateCluePickup(argv[2], argv[3], true);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

@@ -8,6 +8,8 @@
 //
 #include "wInterface.h"
 #include "wUnitServer.h"
+#include "wMain.h"
+#include "wUICommands.h"
 //
 #include "RPGUnitMission.h"
 #include "RPGMerc.h"
@@ -470,6 +472,50 @@ CScenarioClue* CScenarioTracker::GetClueByPersID( int nPersID ) const
 		return 0;
 	//
 	return pScenarioFlowChart->GetClueByPersID( nPersID );
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+CScenarioClue* CScenarioTracker::GetClueByItemID( int nItemID ) const
+{
+	return bScenarioAvailable ? pScenarioFlowChart->GetClueByItemID( nItemID ) : 0;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CScenarioTracker::OnItemTaken( NWorld::CUnitServer *pUS, NRPG::IInventoryItem *pItem, NDb::ESlot slot, bool bTaken )
+{
+	if ( !IsValid( pUS ) || !IsValid( pItem ) || !dynamic_cast<NRPG::IClueItem*>( pItem ) || pUS->IsAIUnit() )
+		return;
+	InvalidateLeaveZoneCache();
+	if ( !bScenarioAvailable || !IsValid( pItem->GetDBItem() ) )
+		return;
+	CPtr<CScenarioClue> pClue = GetClueByItemID( pItem->GetDBItem()->GetRecordID() );
+	if ( !IsValid( pClue ) || !pClue->GetDBClue()->bGiveImmediately )
+		return;
+	if ( bTaken )
+	{
+		NRPG::IInventory *pInventory = pUS->GetUnitRPG()->GetInventory();
+		CheatTakeClue( pClue, true );
+		if ( slot < NDb::N_SLOTS )
+			pInventory->TakeOff( slot );
+		else
+		{
+			// Pre-placement pickup already removed the source; Take is needed only
+			// when this callback is used after insertion into the backpack.
+			for ( const auto &entry : pInventory->GetItems() )
+				if ( entry.pItem == pItem )
+				{
+					pInventory->Take( pItem );
+					break;
+				}
+		}
+	}
+	pUS->GetWorld()->AddUICommand( new NWorld::CUICmdShowClue( pClue ) );
+	if ( CScenarioGoal *pGoal = pClue->GetGoal() )
+		for ( const auto &task : pGoal->GetTasks() )
+			if ( IsValid( task ) && IsValid( task->GetDBTask() ) )
+			{
+				NDb::ETaskTag tag = task->GetDBTask()->eTag;
+				if ( tag == NDb::TT_FIND_ITEM || tag == NDb::TT_TAKE_ITEM || tag == NDb::TT_CARRY_OUT_ITEM )
+					task->SetState( TS_COMPLETED );
+			}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CScenarioTracker::OnScenarioClueTaken( int nID, bool bUnit )
