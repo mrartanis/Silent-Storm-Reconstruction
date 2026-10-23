@@ -11,6 +11,8 @@
 #include "../Main/GView.h"
 #include "../Main/iMission.h"
 #include "../Main/iGameStates.h"
+#include "../Main/iUnitPanel.h"
+#include "../Main/iDesktopWindow.h"
 #include "../Main/wUnitCommands.h"
 #include "../Main/aiGrid.h"
 #include "../Main/aiLocker.h"
@@ -80,9 +82,10 @@ class AttackMission: public NGame::CMissionBase
     OBJECT_BASIC_METHODS(AttackMission);
 public:
     int probes = 0;
+    int selected = 0;
     void Step() override {}
     bool ProcessEvent(const NInput::SEvent&) override { return false; }
-    int CountSelected() override { return 0; }
+    int CountSelected() override { return selected; }
     bool GetTracePosition(CVec3* position) const override { *position = VNULL3; return true; }
     void CanDoCommand(NWorld::CCmd*, bool, NGame::SActionInfo* info) override {
         ++probes;
@@ -643,6 +646,24 @@ static void IdlePathBlocker(const char* databasePath, const char* resourcePath)
     }
 }
 
+static void HiddenPortraitAck()
+{
+    CObj<AttackMission> mission = new AttackMission;
+    CObj<NUI::CUnitPanel> panel = new NUI::CUnitPanel(NUI::SWindowInfo(), mission);
+    for (int selected : {0, 2}) {
+        mission->selected = selected;
+        CObj<NUI::CAckEvent> event = new NUI::CAckEvent;
+        panel->PlayAckEvent(STime(100), event);
+        Require(event->IsReady(), "voice acknowledgement waits forever for a hidden portrait");
+        const STime end = event->GetEndTime();
+        panel->PlayAckEvent(STime(200), event);
+        Require(event->GetEndTime() == end, "releasing a hidden portrait extended acknowledgement lifetime");
+        event->Cancel();
+        panel->PlayAckEvent(STime(300), event);
+        Require(event->IsComplete(STime(300)), "hidden portrait revived a cancelled acknowledgement");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -668,6 +689,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "pk-placement")) PKPlacement();
         else if (!std::strcmp(mode, "critical-ids") && argc == 3) CriticalIDs(argv[2]);
         else if (!std::strcmp(mode, "idle-blocker") && argc == 4) IdlePathBlocker(argv[2], argv[3]);
+        else if (!std::strcmp(mode, "hidden-portrait")) HiddenPortraitAck();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

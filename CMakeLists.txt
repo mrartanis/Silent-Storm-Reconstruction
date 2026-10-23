@@ -815,6 +815,7 @@ add_test(NAME UpstreamOverlappingDoors COMMAND UpstreamBugTests overlapping-door
 add_test(NAME UpstreamWeaponFamiliarity COMMAND UpstreamBugTests weapon-familiarity)
 add_test(NAME UpstreamClueSlots COMMAND UpstreamBugTests clue-slots)
 add_test(NAME UpstreamPKPlacement COMMAND UpstreamBugTests pk-placement)
+add_test(NAME UpstreamHiddenPortrait COMMAND UpstreamBugTests hidden-portrait)
 if(S2_GAME_DIR)
   add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
   add_test(NAME UpstreamCriticalIDs COMMAND UpstreamBugTests critical-ids "${S2_GAME_DIR}/game.db")
