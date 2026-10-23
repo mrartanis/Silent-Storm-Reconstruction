@@ -33,6 +33,8 @@
 #include "../Main/scriptPtr.h"
 #include "../Main/aiMisc.h"
 #include "../Main/wOSBase.h"
+#include "../Main/aiInterval.h"
+#include "../Main/aiDoorCollider.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -406,6 +408,57 @@ static void PKFixedWeaponPolicy()
     Require(!CanRemovePKWeapon(inventory.GetPtr(), 0), "manual removal of a fixed PK weapon is allowed");
 }
 
+static void DoorCollision()
+{
+    CObj<RenderFixture> first = new RenderFixture, second = new RenderFixture;
+    NAI::SSourceInfo closedA(first, nullptr, 0, NWorld::TS_STATE_CLOSED);
+    NAI::SSourceInfo openA(first, nullptr, 0, NWorld::TS_STATE_OPEN);
+    NAI::SSourceInfo openB(second, nullptr, 0, NWorld::TS_STATE_OPEN);
+    NAI::SDoorColliderAnalyzer analyzer;
+    Require(!analyzer(NAI::SColliderUserInfo(&closedA, 0)), "one door hull blocked by itself");
+    Require(!analyzer(NAI::SColliderUserInfo(&openB, 0)), "inactive hulls from different doors were combined");
+    Require(analyzer(NAI::SColliderUserInfo(&openA, 0)), "both hulls of the same door did not block");
+    analyzer.Clear();
+    Require(!analyzer.IsCollided(), "door collision state survived Clear");
+}
+
+static void OverlappingDoors()
+{
+    CObj<NAI::CPathNetwork> network = new NAI::CPathNetwork;
+    network->CreateLayer(8, 8, VNULL2, 0.f, 0);
+    network->Freeze(true);
+    auto* layer = network->GetLayer(0);
+    for (int y = 0; y < 8; ++y) for (int x = 0; x < 8; ++x)
+        layer->tiles[y][x].nPassable = NAI::CP_STAND;
+    CObj<RenderFixture> first = new RenderFixture, second = new RenderFixture;
+    NAI::SPathPlace key(3, 3, 0), position = key;
+    position.SetPose(NAI::CM_STAND);
+    NAI::CNodesLayer::STile blocked{}, open{};
+    open.nPassable = NAI::CP_STAND;
+    auto* door = network->GetFlipper(first);
+    door->bOpen = false; door->nFixedFlags = NAI::CPathNetwork::F_LOCKED_DOOR;
+    door->locksClosed[key] = blocked; door->locksOpen[key] = open;
+    door = network->GetFlipper(second);
+    door->bOpen = false; door->nFixedFlags = NAI::CPathNetwork::F_LOCKED_DOOR;
+    door->locksClosed[key] = open; door->locksOpen[key] = blocked;
+    layer->tiles[3][3].nFlipper = 2; // The legacy single-door index hides door A.
+    Require(network->IsLocked(position, false), "overlapping door A lost its blocking restriction");
+    Require(!network->IsLocked(position, true), "ignoring doors also blocked an unlocked tile");
+    network->GetFlipper(first)->bOpen = true;
+    Require(!network->IsLocked(position, false), "inactive overlapping door hulls blocked the passage");
+    // Replication restores fields into a live grid. A derived door lookup
+    // must not retain indices into the old serialized flipper arrays.
+    CMemoryStream update;
+    { CStructureSaver saver(update, CStructureSaver::WRITE);
+      std::vector<NAI::CPathNetwork::SFlipper> empty;
+      std::unordered_map<CPtr<CObjectBase>, int, SPtrHash> noDoors;
+      saver.Add(9, &empty); saver.Add(10, &noDoors); }
+    update.Seek(0);
+    { CStructureSaver saver(update, CStructureSaver::READ);
+      static_cast<CObjectBase*>(network.GetPtr())->operator&(saver); }
+    Require(network->GetFlippersAt(position).empty(), "restored grid retained a stale door lookup");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -423,6 +476,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "pk-wear")) ScriptPK(false);
         else if (!std::strcmp(mode, "pk-equipment")) PKEquipmentTransfer();
         else if (!std::strcmp(mode, "pk-fixed-weapon")) PKFixedWeaponPolicy();
+        else if (!std::strcmp(mode, "door-collision")) DoorCollision();
+        else if (!std::strcmp(mode, "overlapping-doors")) OverlappingDoors();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

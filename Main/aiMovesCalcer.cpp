@@ -96,11 +96,11 @@ void CMovesCalcer::TestMove( NAI::CCollider *pCollider, CArray2D<STile> *pRes, c
 							ASSERT( 0 );
 							break;
 					}
-					if ( analyzer.pSrc )
+					for ( int i = 0; i < analyzer.doors.size(); ++i )
 					{
 						// door collision
-						STile &tileF = GetFlipperTile( x, y, analyzer, tile, &tile.nFlipper );
-						STile &tileB = GetFlipperTile( x + shift.x, y + shift.y, analyzer, tileDest, &tileDest.nFlipper );
+						STile &tileF = GetFlipperTile( x, y, analyzer.doors[i], tile, &tile.nFlipper );
+						STile &tileB = GetFlipperTile( x + shift.x, y + shift.y, analyzer.doors[i], tileDest, &tileDest.nFlipper );
 						switch ( nSphereHeight )
 						{
 							case 2:
@@ -120,7 +120,7 @@ void CMovesCalcer::TestMove( NAI::CCollider *pCollider, CArray2D<STile> *pRes, c
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 CMovesCalcer::STile &CMovesCalcer::GetFlipperTile(
-	int x, int y, const SDoorColliderAnalyzer &analyzer, const STile &t, unsigned char *pNFlipper )
+	int x, int y, const SDoorCollision &analyzer, const STile &t, unsigned char *pNFlipper )
 {
 	if ( !IsInArray( pLayer->tiles, x + region.minx, y + region.miny ) )
 	{
@@ -131,6 +131,7 @@ CMovesCalcer::STile &CMovesCalcer::GetFlipperTile(
 	CPtr<CObjectBase> iHateVCPP( analyzer.pSrc );
 	CPathNetwork::SFlipper &flipper = *pNet->GetFlipper( iHateVCPP );
 	*pNFlipper = flipper.nFlipper + 1;
+	pNet->InvalidateFlipperIndex();
 	typedef unordered_map<SPathPlace, STile,SPathPlaceHash> CFHash;
 	CFHash *pHash;
 	if ( analyzer.bInClosed )
@@ -257,11 +258,11 @@ void CMovesCalcer::TestHCMoves( NAI::CCollider *pCollider, CArray2D<STile> *pRes
 			{
 				tileSrc.nMoveHC |= nFwdFlag;
 				tileDst.nMoveHC |= nBackFlag;
-				if ( analyzer.pSrc )
+				for ( int i = 0; i < analyzer.doors.size(); ++i )
 				{
 					// door collision
-					STile &tileF = GetFlipperTile( x, y, analyzer, tileSrc, &tileSrc.nFlipper );
-					STile &tileB = GetFlipperTile( x + shift.x, y + shift.y, analyzer, tileDst, &tileDst.nFlipper );
+					STile &tileF = GetFlipperTile( x, y, analyzer.doors[i], tileSrc, &tileSrc.nFlipper );
+					STile &tileB = GetFlipperTile( x + shift.x, y + shift.y, analyzer.doors[i], tileDst, &tileDst.nFlipper );
 					tileF.nMoveHC &= ~nFwdFlag;
 					tileB.nMoveHC &= ~nBackFlag;
 				}
