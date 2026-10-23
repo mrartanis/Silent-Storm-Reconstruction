@@ -818,6 +818,8 @@ add_test(NAME UpstreamPKPlacement COMMAND UpstreamBugTests pk-placement)
 if(S2_GAME_DIR)
   add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
   add_test(NAME UpstreamCriticalIDs COMMAND UpstreamBugTests critical-ids "${S2_GAME_DIR}/game.db")
+  add_test(NAME UpstreamIdleBlocker COMMAND UpstreamBugTests idle-blocker "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+  set_tests_properties(UpstreamIdleBlocker PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 60)
   set_tests_properties(UpstreamConclusions PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 60)
 endif()
 add_executable(NativeAnimationPathTests

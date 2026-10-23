@@ -998,7 +998,12 @@ NRPG::IUnitMissionInfo* CUnitServer::GetRPG() const
 // CExecMove::CheckLockerState to step the who-locks-whom chain onto the locking unit's own remover.
 CPathConflictsRemover* CUnitServer::GetPathConflictsRemover()
 {
-	return IsValid( pExec ) ? pExec->GetPathConflictsRemover() : 0;
+	// Retail: a prepared route can free a tile only while its action can run.
+	if ( !IsValid( pExec ) || !CanSpendAP( pExec->GetStartAP() ) )
+		return 0;
+	if ( !IsPerformingAction() && !GetWorld()->IsRealTime() )
+		return 0;
+	return pExec->GetPathConflictsRemover();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CUnitServer::Segment()

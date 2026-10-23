@@ -596,6 +596,53 @@ static void CriticalIDs(const char* databasePath)
         "PK critical identifiers do not match the retail database and save format");
 }
 
+class PathProbeExecutor: public NWorld::CCommandExecute
+{
+    OBJECT_BASIC_METHODS(PathProbeExecutor);
+public:
+    static int probes;
+    bool running = false;
+    int cost = 0;
+    int operator&(CStructureSaver& saver) override {
+        saver.Add(2, &running); saver.Add(3, &cost); return 0;
+    }
+    int GetStartAP() const override { return cost; }
+    bool IsExecuting() override { return running; }
+    NWorld::CPathConflictsRemover* GetPathConflictsRemover() override { ++probes; return nullptr; }
+};
+int PathProbeExecutor::probes = 0;
+REGISTER_SAVELOAD_CLASS(0x7f550101, PathProbeExecutor);
+
+static void IdlePathBlocker(const char* databasePath, const char* resourcePath)
+{
+    auto world = FixtureWorld(databasePath, resourcePath);
+    std::vector<CPtr<NWorld::CUnit>> units;
+    world->GetAllUnits(&units);
+    NWorld::CUnitServer* actor = nullptr;
+    for (auto& candidate : units) {
+        auto* unit = dynamic_cast<NWorld::CUnitServer*>(candidate.GetPtr());
+        if (unit && unit->CanFight()) { actor = unit; break; }
+    }
+    Require(actor != nullptr, "path blocker fixture has no actor");
+    world->GivePlayerTurn(dynamic_cast<NWorld::CPlayer*>(actor->GetPlayer()));
+    Require(!world->IsRealTime() && actor->CanSpendAP(0), "path blocker fixture is not in its turn");
+    for (int state = 0; state < 3; ++state) {
+        CObj<PathProbeExecutor> executor = new PathProbeExecutor;
+        executor->running = state != 0;
+        executor->cost = state == 2 ? 100000 : 0;
+        CMemoryStream saved;
+        { CStructureSaver saver(saved, CStructureSaver::WRITE); saver.Add(7, &executor); }
+        saved.Seek(0);
+        { CStructureSaver saver(saved, CStructureSaver::READ);
+          static_cast<CObjectBase*>(actor)->operator&(saver); }
+        PathProbeExecutor::probes = 0;
+        actor->GetPathConflictsRemover();
+        Require(PathProbeExecutor::probes == (state == 1 ? 1 : 0),
+            state == 0 ? "idle unit promises to free its movement tile" :
+            state == 2 ? "unaffordable move promises to free its movement tile" : "running affordable mover was ignored");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -620,6 +667,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "conclusions") && argc == 4) ConclusionRouting(argv[2], argv[3]);
         else if (!std::strcmp(mode, "pk-placement")) PKPlacement();
         else if (!std::strcmp(mode, "critical-ids") && argc == 3) CriticalIDs(argv[2]);
+        else if (!std::strcmp(mode, "idle-blocker") && argc == 4) IdlePathBlocker(argv[2], argv[3]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
