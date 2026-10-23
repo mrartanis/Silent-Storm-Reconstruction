@@ -130,6 +130,7 @@ foreach(test IN ITEMS BgfxRendererTests SDLPlatformInputTests UpstreamBugTests)
     s2_platform bgfx Threads::Threads ${CMAKE_DL_LIBS})
   add_test(NAME ${test} COMMAND ${test})
 endforeach()
+add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
 add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
   add_test(NAME SDLInputConfiguration

@@ -799,6 +799,7 @@ target_precompile_headers(UpstreamBugTests PRIVATE "${root}/Main/StdAfx.h")
 target_link_libraries(UpstreamBugTests PRIVATE Main)
 target_compile_features(UpstreamBugTests PRIVATE cxx_std_17)
 add_test(NAME UpstreamBugTests COMMAND UpstreamBugTests)
+add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE

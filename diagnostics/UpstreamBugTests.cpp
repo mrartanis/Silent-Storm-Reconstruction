@@ -7,9 +7,11 @@
 #endif
 #include "../Main/wMain.h"
 #include "../Main/wUnitGroup.h"
+#include "../Main/iCommonUI.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
+#include <new>
 
 static void Require(bool value, const char* message)
 {
@@ -28,11 +30,24 @@ static void TemporaryGroups()
     }
 }
 
+static void ScrollInitialization()
+{
+    for (unsigned char pattern : {0xff, 0x11}) {
+        void* memory = ::operator new(sizeof(NUI::CScrollWindowBase));
+        std::memset(memory, pattern, sizeof(NUI::CScrollWindowBase));
+        CObj<NUI::CScrollWindowBase> scroll =
+            new(memory) NUI::CScrollWindowBase(NUI::SWindowInfo());
+        Require(scroll->GetValue().x == 0 && scroll->GetValue().y == 0,
+            "new paper window inherits stale scroll offsets");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
         const char* mode = argc > 1 ? argv[1] : "temporary-groups";
         if (!std::strcmp(mode, "temporary-groups")) TemporaryGroups();
+        else if (!std::strcmp(mode, "scroll-initialization")) ScrollInitialization();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
