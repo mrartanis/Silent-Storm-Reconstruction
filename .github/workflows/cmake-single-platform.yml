@@ -1,26 +1,33 @@
-# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
-# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
-name: CMake on a single platform
+name: Windows x64 build and tests
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [develop]
   pull_request:
-    branches: [ "develop" ]
+    branches: [develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: windows-latest
+    runs-on: windows-2022
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
     - uses: actions/setup-python@v5
       with:
@@ -29,18 +36,58 @@ jobs:
     - name: Install offline texture build dependency
       run: python -m pip install Pillow
 
+    - name: Cache pinned native dependencies
+      id: dependencies
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.temp }}/s2-deps
+        key: windows-x64-native-v1-sdl3-3.4.16-bgfx-de08a608
+
+    - name: Install pinned native dependencies
+      if: steps.dependencies.outputs.cache-hit != 'true'
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $dependencies = @(
+          @{ Name = 'SDL3'; Url = 'https://github.com/libsdl-org/SDL/releases/download/release-3.4.16/SDL3-devel-3.4.16-VC.zip'; SHA256 = '1A784CB2A5C64D56FE7A62090FE9D242D9865F235E4EA9678F1A6BA4E693E7DE' },
+          @{ Name = 'bgfx.cmake'; Url = 'https://github.com/bkaradzic/bgfx.cmake/archive/de08a6080b39994ab8a9eddb82e79e18bc3df7bd.zip' },
+          @{ Name = 'bgfx'; Url = 'https://github.com/bkaradzic/bgfx/archive/81d81fba72c42d348c589514c774bbfe01e110fa.zip' },
+          @{ Name = 'bimg'; Url = 'https://github.com/bkaradzic/bimg/archive/87aaad3ac882e741889fdd4263224e5d12c26f99.zip' },
+          @{ Name = 'bx'; Url = 'https://github.com/bkaradzic/bx/archive/25315498841259323e18f549d1ad9d9aba6632cc.zip' }
+        )
+        foreach ($dependency in $dependencies) {
+          $archive = Join-Path $env:RUNNER_TEMP ($dependency.Name + '.zip')
+          $destination = Join-Path $env:RUNNER_TEMP ('s2-deps/' + $dependency.Name)
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+          Invoke-WebRequest -Uri $dependency.Url -OutFile $archive
+          if ($dependency.SHA256 -and (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne $dependency.SHA256) {
+            throw ('Checksum mismatch: ' + $dependency.Name)
+          }
+          tar -xf $archive -C $destination --strip-components=1
+          if ($LASTEXITCODE -ne 0) { throw ('Extraction failed: ' + $dependency.Name) }
+          Remove-Item -LiteralPath $archive
+        }
+
     - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -S ${{github.workspace}}/. -B ${{github.workspace}}/build -A Win32
+      run: >-
+        cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+        -DSDL3_DIR="$env:RUNNER_TEMP/s2-deps/SDL3/cmake"
+        -DS2_BGFX_CMAKE_ROOT="$env:RUNNER_TEMP/s2-deps/bgfx.cmake"
+        -DS2_BGFX_DIR="$env:RUNNER_TEMP/s2-deps/bgfx"
+        -DS2_BIMG_DIR="$env:RUNNER_TEMP/s2-deps/bimg"
+        -DS2_BX_DIR="$env:RUNNER_TEMP/s2-deps/bx"
 
     - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build build --config ${{ env.BUILD_TYPE }} --parallel 4
 
-    #- name: Test
-      #working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      #run: ctest -C ${{env.BUILD_TYPE}}
+    - name: Test
+      run: ctest --test-dir build -C ${{ env.BUILD_TYPE }} --output-on-failure --no-tests=error --timeout 120 --parallel 4
+
+    - name: Save test logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-x64-test-logs
+        path: build/Testing/Temporary/*.log
+        if-no-files-found: ignore
+        retention-days: 7
 
