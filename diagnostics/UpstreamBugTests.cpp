@@ -30,6 +30,8 @@
 #include "../Main/aiCommander.h"
 #include "../Main/aiRouteLogic.h"
 #include "../Main/aiUnit.h"
+#include "../Main/aiPlayer.h"
+#include "../Main/aiReaction.h"
 #include "../Main/Sync.h"
 #include "../Main/A5Script.h"
 #include "../Main/scriptPtr.h"
@@ -41,6 +43,7 @@
 #include "../Main/scFlowChart.h"
 #include "../Main/RPGGame.h"
 #include "../Main/RPGStore.h"
+#include "../Main/UnitTracker.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -706,6 +709,88 @@ static void StoreDropPosition()
         "automatic store placement lost the returned item");
 }
 
+class TransferActor: public NWorld::CUnitServer
+{
+    OBJECT_NOCOPY_METHODS(TransferActor);
+public:
+    int operator&(CStructureSaver&) override { return 0; }
+};
+REGISTER_SAVELOAD_CLASS(0x7f550102, TransferActor);
+
+class TransferMission: public AttackMission
+{
+    OBJECT_BASIC_METHODS(TransferMission);
+public:
+    static CPtr<NWorld::CUnit> actor;
+    static CObj<NWorld::CCmd> command;
+    int operator&(CStructureSaver&) override { return 0; }
+    void Command(NWorld::CUnit* unit, NWorld::CCmd* order, bool) override {
+        actor = unit; command = order;
+    }
+};
+CPtr<NWorld::CUnit> TransferMission::actor;
+CObj<NWorld::CCmd> TransferMission::command;
+REGISTER_SAVELOAD_CLASS(0x7f550103, TransferMission);
+
+class TransferTracker: public NGame::CUnitTracker
+{
+    OBJECT_BASIC_METHODS(TransferTracker);
+public:
+    CObj<TransferActor> unit;
+    int operator&(CStructureSaver& saver) override { saver.Add(2, &unit); return 0; }
+    NWorld::CUnit* GetUnit() const override { return unit; }
+};
+REGISTER_SAVELOAD_CLASS(0x7f550104, TransferTracker);
+
+static void InventoryTransferActor(bool backpack)
+{
+    CObj<TransferMission> mission = new TransferMission;
+    CObj<TransferActor> source = new TransferActor, destination = new TransferActor;
+    CObj<NUI::CSlot> slot = dynamic_cast<NUI::CSlot*>(pSSClasses->CreateObject(
+        backpack ? int(0xB0521142) : int(0xB0521155)));
+    Require(slot != nullptr, "inventory slot class is not registered");
+    CObj<TransferTracker> tracker = new TransferTracker;
+    tracker->unit = destination;
+    CMemoryStream state;
+    { CStructureSaver saver(state, CStructureSaver::WRITE);
+      saver.Add(2, &mission);
+      if (backpack) {
+          saver.Add(3, &tracker);
+      } else {
+          NDb::ESlot hand = NDb::SLOT_1;
+          saver.Add(3, &hand); saver.Add(4, &destination);
+      } }
+    state.Seek(0);
+    { CStructureSaver saver(state, CStructureSaver::READ);
+      static_cast<CObjectBase*>(slot.GetPtr())->operator&(saver); }
+    if (backpack) {
+        CMemoryStream base;
+        CObj<NUI::CWindow> view = new NUI::CWindow(NUI::SWindowInfo());
+        view->SetSize(NUI::SPoint(100, 100));
+        { CStructureSaver saver(base, CStructureSaver::WRITE);
+          int width = 10, height = 10;
+          saver.Add(3, &width); saver.Add(4, &height); saver.Add(8, &view); }
+        base.Seek(0);
+        CStructureSaver saver(base, CStructureSaver::READ);
+        slot->NUI::CSlot::operator&(saver);
+    }
+    slot->SetPosition(NUI::SPoint(0, 0));
+    slot->SetSize(NUI::SPoint(100, 100));
+    CObj<NDb::CRPGItem> record = new NDb::CRPGItem;
+    record->sSize = CTPoint<int>(1, 1);
+    CObj<NRPG::IInventoryItem> item = NRPG::CreateDummyItem(record);
+    NWorld::SItem drag(source, NWorld::SItem::HAND, item);
+    slot->Place(10, 10, drag);
+    Require(TransferMission::actor == source, "inventory transfer executes on the recipient instead of the hand owner");
+    auto* order = dynamic_cast<NWorld::CCmdMoveInventoryItem*>(TransferMission::command.GetPtr());
+    Require(order && order->GetSource().pUnit == source && order->GetTarget().pUnit == slot->GetUnit(),
+        "inventory transfer lost its source or destination");
+    drag.pUnit = nullptr;
+    slot->Place(10, 10, drag);
+    Require(TransferMission::actor == slot->GetUnit(), "ownerless hand did not use the destination actor");
+    TransferMission::actor = nullptr; TransferMission::command = nullptr;
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -734,6 +819,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "hidden-portrait")) HiddenPortraitAck();
         else if (!std::strcmp(mode, "clue-initialization")) ClueInitialization();
         else if (!std::strcmp(mode, "store-drop")) StoreDropPosition();
+        else if (!std::strcmp(mode, "inventory-actor")) InventoryTransferActor(true);
+        else if (!std::strcmp(mode, "slot-actor")) InventoryTransferActor(false);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
