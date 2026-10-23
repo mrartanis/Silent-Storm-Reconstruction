@@ -459,6 +459,24 @@ static void OverlappingDoors()
     Require(network->GetFlippersAt(position).empty(), "restored grid retained a stale door lookup");
 }
 
+static void WeaponFamiliarity()
+{
+    CObj<NRPG::CUnit> unit = new NRPG::CUnit;
+    CObj<NRPG::CWeaponItem> weapon = new NRPG::CWeaponItem;
+    CObj<NRPG::CWeaponItem> other = new NRPG::CWeaponItem;
+    unit->UseWeapon(weapon, 1.f, 100, .1f);
+    unit->UseWeapon(weapon, 2.f, 100, .1f);
+    Require(fabs(unit->GetWeaponAdaptation(weapon) - .2f) < .0001f,
+        "familiarity bonus uses training rate instead of the DB multiplier");
+    unit->UseWeapon(weapon, .5f, 100, .1f);
+    Require(fabs(unit->GetWeaponAdaptation(weapon) - .25f) < .0001f,
+        "changing training rate changed familiarity scaling");
+    unit->UseWeapon(weapon, 200.f, 100, .1f);
+    Require(fabs(unit->GetWeaponAdaptation(weapon) - 10.f) < .0001f,
+        "retail familiarity cap changed");
+    Require(unit->GetWeaponAdaptation(other) == 0.f, "familiarity leaked to another weapon");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -478,6 +496,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "pk-fixed-weapon")) PKFixedWeaponPolicy();
         else if (!std::strcmp(mode, "door-collision")) DoorCollision();
         else if (!std::strcmp(mode, "overlapping-doors")) OverlappingDoors();
+        else if (!std::strcmp(mode, "weapon-familiarity")) WeaponFamiliarity();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

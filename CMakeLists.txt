@@ -812,6 +812,7 @@ add_test(NAME UpstreamPKEquipment COMMAND UpstreamBugTests pk-equipment)
 add_test(NAME UpstreamPKFixedWeapon COMMAND UpstreamBugTests pk-fixed-weapon)
 add_test(NAME UpstreamDoorCollision COMMAND UpstreamBugTests door-collision)
 add_test(NAME UpstreamOverlappingDoors COMMAND UpstreamBugTests overlapping-doors)
+add_test(NAME UpstreamWeaponFamiliarity COMMAND UpstreamBugTests weapon-familiarity)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE

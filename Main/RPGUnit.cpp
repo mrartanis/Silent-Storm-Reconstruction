@@ -795,12 +795,14 @@ float CUnit::GetWeaponAdaptation( IInventoryItem *pItem ) const
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // retail CUnit::UseWeapon @0x2bba60 (disasm-verified): raise familiarity with the weapon in use,
 // decay it for any other weapon; a fully drained counter (<= 0) switches the adapted weapon.
-void CUnit::UseWeapon( IInventoryItem *pItem, float fRate, int nMaxAdaptation, float fOtherRate )
+void CUnit::UseWeapon( IInventoryItem *pItem, float fRate, int nMaxAdaptation, float fMultiplier )
 {
 	if ( pItem == pAdaptatedWeapon )
 	{
 		fAdaptationCounter = Min( (float)nMaxAdaptation, fAdaptationCounter + fRate );
-		fCurrentAdaptation = fRate * fAdaptationCounter;
+		// Retail v1.1 0x6bba92 / v1.2 0x6bbb42: the fourth argument
+		// converts the familiarity counter to its combat bonus.
+		fCurrentAdaptation = fMultiplier * fAdaptationCounter;
 		return;
 	}
 	fAdaptationCounter -= fRate;
@@ -809,7 +811,7 @@ void CUnit::UseWeapon( IInventoryItem *pItem, float fRate, int nMaxAdaptation, f
 		pAdaptatedWeapon = pItem;
 		fAdaptationCounter = 0;
 	}
-	fCurrentAdaptation = fOtherRate * fAdaptationCounter;
+	fCurrentAdaptation = fMultiplier * fAdaptationCounter;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 } // namespace

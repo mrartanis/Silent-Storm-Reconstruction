@@ -356,7 +356,7 @@ public:
 	// retail @0x2bba60: per-shot familiarity update. Same weapon: counter=Min(nMaxAdaptation,counter+fRate),
 	// bonus=fRate*counter. Other weapon: counter-=fRate; drained (<=0) -> switch pAdaptatedWeapon to pItem,
 	// counter=0; bonus=fOtherRate*counter. Called from CreateAttack's adaptation tail.
-	void UseWeapon( IInventoryItem *pItem, float fRate, int nMaxAdaptation, float fOtherRate );
+	void UseWeapon( IInventoryItem *pItem, float fRate, int nMaxAdaptation, float fMultiplier );
 	bool IsHero() const { return bHero; }
 	// retail CUnit::GetSightDistance @0x2ba680: a FLAT 20.0 world units, scaled by perk 0x53's param when
 	// present. (The per-pose CUnitMission::GetSightDistance table is a different, older surface -- retail's
