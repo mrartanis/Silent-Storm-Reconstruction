@@ -133,6 +133,7 @@ endforeach()
 add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
 add_test(NAME UpstreamAttackLocation COMMAND UpstreamBugTests attack-location)
 add_test(NAME UpstreamFlyingRestoration COMMAND UpstreamBugTests flying-restoration)
+add_test(NAME UpstreamSnipingAim COMMAND UpstreamBugTests sniping-aim)
 add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
   add_test(NAME SDLInputConfiguration

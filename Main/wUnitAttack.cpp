@@ -594,7 +594,7 @@ CCommandExecute* CreateActionExecutor( CUnitServer *pUS, CCmd *pCmd, EUnitComman
 							*pError = UCR_CANT_SEE_TARGET;
 							return 0;
 						}
-						return CreateActionQueueOrReload(pUS, pAttackObject.GetPtr(), new CExecSnipeAim(pUS, pUnitTarget), pError);
+						return CreateActionQueueOrReload(pUS, pAttackObject.GetPtr(), new CExecSnipeAim(pUS, pUnitTarget, pAttackObject->eHL), pError);
 					}
 				}
 

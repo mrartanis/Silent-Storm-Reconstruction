@@ -14,6 +14,9 @@
 #include "../Main/wUnitCommands.h"
 #include "../Main/aiGrid.h"
 #include "../Main/aiLocker.h"
+#include "../Main/wUnitServer.h"
+#include "../Main/RPGItem.h"
+#include "../Main/wUnitAttackExec.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
@@ -100,6 +103,31 @@ static void FlyingRestoration()
     Require(network->IsPassable(flight), "flying altitude was treated as a ladder index");
 }
 
+template<class T>
+static auto SnipingCommand(int, NAI::EHitLocation location)
+    -> decltype(new T(nullptr, nullptr, location))
+{
+    return new T(nullptr, nullptr, location);
+}
+
+template<class T>
+static auto SnipingCommand(long, NAI::EHitLocation)
+    -> decltype(new T(nullptr, nullptr)) { return new T(nullptr, nullptr); }
+
+static void SnipingAim()
+{
+    for (auto expected : {NAI::HL_HEAD, NAI::HL_LLEG, NAI::HL_ANY}) {
+        CObj<NWorld::CExecSnipeAim> command = SnipingCommand<NWorld::CExecSnipeAim>(0, expected);
+        CMemoryStream stream;
+        { CStructureSaver saver(stream, CStructureSaver::WRITE);
+          static_cast<CObjectBase*>(command.GetPtr())->operator&(saver); }
+        stream.Seek(0);
+        NAI::EHitLocation actual = NAI::HL_BODY;
+        { CStructureSaver saver(stream, CStructureSaver::READ); saver.Add(3, &actual); }
+        Require(actual == expected, "sniping preparation replaced the requested aim point with the body");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -108,6 +136,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "scroll-initialization")) ScrollInitialization();
         else if (!std::strcmp(mode, "attack-location")) AttackLocationRefresh();
         else if (!std::strcmp(mode, "flying-restoration")) FlyingRestoration();
+        else if (!std::strcmp(mode, "sniping-aim")) SnipingAim();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

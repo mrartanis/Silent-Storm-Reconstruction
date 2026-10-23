@@ -802,6 +802,7 @@ add_test(NAME UpstreamBugTests COMMAND UpstreamBugTests)
 add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
 add_test(NAME UpstreamAttackLocation COMMAND UpstreamBugTests attack-location)
 add_test(NAME UpstreamFlyingRestoration COMMAND UpstreamBugTests flying-restoration)
+add_test(NAME UpstreamSnipingAim COMMAND UpstreamBugTests sniping-aim)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE
