@@ -136,6 +136,13 @@ add_test(NAME UpstreamFlyingRestoration COMMAND UpstreamBugTests flying-restorat
 add_test(NAME UpstreamSnipingAim COMMAND UpstreamBugTests sniping-aim)
 add_test(NAME UpstreamDecalRebuild COMMAND UpstreamBugTests decal-rebuild)
 add_test(NAME UpstreamDecalProjection COMMAND UpstreamBugTests decal-projection)
+if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
+  get_filename_component(_s2_upstream_game_dir "${S2_GAME_DB_PATH}" DIRECTORY)
+  get_filename_component(_s2_upstream_res_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)
+  add_test(NAME UpstreamAIIdle COMMAND UpstreamBugTests ai-idle
+    "${S2_GAME_DB_PATH}" "${_s2_upstream_res_dir}")
+  set_tests_properties(UpstreamAIIdle PROPERTIES WORKING_DIRECTORY "${_s2_upstream_game_dir}" TIMEOUT 60)
+endif()
 add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
   add_test(NAME SDLInputConfiguration

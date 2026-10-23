@@ -19,6 +19,15 @@
 #include "../Main/wUnitAttackExec.h"
 #include "../Main/GDecalGeometry.h"
 #include "../Main/GCombiner.h"
+#include "../Main/GSceneUtils.h"
+#include "../Main/rpgGlobal.h"
+#include "../Main/RPGUnit.h"
+#include "../Main/RPGUnitMission.h"
+#include "../Main/rpgCheatConstants.h"
+#include "../Main/aiCommander.h"
+#include "../Main/aiRouteLogic.h"
+#include "../Main/aiUnit.h"
+#include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
@@ -217,6 +226,64 @@ static void DecalProjection()
     Require(transformed->captured == saved, "transformed decal lost its original projection pose");
 }
 
+static CObj<NWorld::CWorld> FixtureWorld(const char* databasePath, const char* resourcePath)
+{
+    CFileStream database;
+    database.OpenRead(databasePath);
+    NDatabase::Serialize(database, CStructureSaver::READ);
+    NGScene::AddResourceDir(resourcePath);
+    CObj<NRPG::CGlobalGame> game = NRPG::CreateGlobalGame(1);
+    CObj<NWorld::CWorld> world = new NWorld::CWorld(game);
+    CObj<NWorld::CPostWorldCreateInfo> post;
+    world->CreateRandom(810, {}, true, {}, 0, &post, SRandomSeed(123));
+    Require(post && world->GetPathNetwork(), "mission fixture construction failed");
+    // Deliberately exclude mission scripts: this fixture isolates AI scheduling.
+    world->RunPostInit(nullptr);
+    return world;
+}
+
+static void IdleAI(const char* databasePath, const char* resourcePath)
+{
+    auto world = FixtureWorld(databasePath, resourcePath);
+    std::vector<CPtr<NWorld::CUnit>> units;
+    world->GetAllUnits(&units);
+    NWorld::CUnitServer* actor = nullptr;
+    NAI::CAICommander* commander = nullptr;
+    for (auto& entry : units) {
+        auto* unit = dynamic_cast<NWorld::CUnitServer*>(entry.GetPtr());
+        if (!unit || !unit->CanFight()) continue;
+        unit->GetUnitRPG()->GetRPGUnit()->SetCheat(NRPG::CHEAT_NOAI, true);
+        if (!actor) {
+            commander = dynamic_cast<NAI::CAICommander*>(unit->GetPlayer()->GetCommander());
+            if (commander) actor = unit;
+        }
+    }
+    Require(actor && commander, "mission fixture contains no AI actor");
+    world->GivePlayerTurn(dynamic_cast<NWorld::CPlayer*>(actor->GetPlayer()));
+    Require(!world->IsRealTime() && !world->IsSequence() && !world->IsAction(), "AI fixture is not idle in its turn");
+    actor->GetUnitRPG()->GetRPGUnit()->SetCheat(NRPG::CHEAT_NOAI, false);
+    auto* ai = commander->GetAIUnit(actor);
+    Require(ai != nullptr, "AI actor wrapper missing");
+    auto original = actor->GetPosition();
+    auto inactive = original;
+    inactive.pos.p.SetPose(NAI::CM_INACTIVE);
+    for (int routine = 0; routine < 3; ++routine) {
+        CObj<NAI::CAIRouteLogic> route = new NAI::CAIRouteLogic(ai);
+        route->SetCircled(true);
+        if (routine == 1) route->AddCommand(new NAI::CTaskCommandChangePose(NAI::WALK));
+        if (routine == 2) route->AddCommand(new NAI::CTaskCommandGoto(original.pos));
+        route->AddCommand(new NAI::CTaskCommandWait(100));
+        route->AddCommand(new NAI::CTaskCommandChangeDirection(0));
+        ai->SetLogic(route);
+        actor->SetTemporaryPosition(original);
+        Require(!commander->IsEndOfTurn(), "normal AI route was incorrectly skipped");
+        actor->SetTemporaryPosition(inactive);
+        Require(commander->IsEndOfTurn() == (routine != 2),
+            routine == 2 ? "a route with movement was incorrectly skipped" : "inactive stationary AI route blocks the end of turn");
+    }
+    actor->SetTemporaryPosition(original);
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -228,6 +295,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "sniping-aim")) SnipingAim();
         else if (!std::strcmp(mode, "decal-rebuild")) DecalRebuild();
         else if (!std::strcmp(mode, "decal-projection")) DecalProjection();
+        else if (!std::strcmp(mode, "ai-idle") && argc == 4) IdleAI(argv[2], argv[3]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
