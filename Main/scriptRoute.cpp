@@ -92,8 +92,8 @@ static void SetOneWaypointRoute( NWorld::CUnitServer *pUS, NAI::CAIRouteWaypoint
 // (its queued end-move walked the unit back / left half-cancelled exec+lock state), and the NEXT
 // scripted CCmdPath either re-routed a dead executor (silently swallowed in CUnitServer::Do) or
 // FindPath-failed -- the GFirst safe-run / walk-out "robber plays the anim in place, never runs" bug.
-// A unit that cannot take commands (dead/unconscious -- CUnitServer::Do refuses !CanFight) keeps the
-// direct place, matching retail's non-command branch.
+// Retail's direct-place branch tests IsEmptyPK, preserving the parked CRAWL
+// pose and refreshing the shell's world binding after relocation.
 BEGIN_SCRIPT_COMMAND(UnitSetToWaypoint, "us")
 	CDynamicCast<NWorld::CUnitServer> pUS(luaParams[0].p);
 	if (pUS)
@@ -122,16 +122,18 @@ BEGIN_SCRIPT_COMMAND(UnitSetToWaypoint, "us")
 					unitPos.pos = NAI::GetNearestPosition( ptDst, pNet, false, CVec3() );   // retail LookWhereToMoveUnit analog
 				unitPos.bRun = false;
 				unitPos.SetPose( NAI::WALK );
-				if ( pUS->CanFight() )
+				if ( pUS->IsEmptyPK() )
+				{
+					unitPos.SetPose( NAI::CRAWL );
+					pUS->animator.PlaceUnit( unitPos );
+					pUS->SetPosition( unitPos );
+					pUS->Update();
+				}
+				else
 				{
 					pUS->Do( new NWorld::CCmdCancel() );
 					pUS->Do( new NWorld::CCmdSetCommand( pUS, new NWorld::CCmdTeleport( unitPos ) ) );
 					pUS->Do( new NWorld::CCmdSetCommand( pUS, new NWorld::CCmdContinue() ) );
-				}
-				else
-				{
-					pUS->SetPosition( unitPos );
-					pUS->animator.PlaceUnit( unitPos );
 				}
 			}
 		}

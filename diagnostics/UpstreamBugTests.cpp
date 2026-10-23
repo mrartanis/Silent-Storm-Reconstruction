@@ -33,6 +33,7 @@ using GeometryTestHash = NGScene::SGeometryPosHash;
 #include "../Main/rpgCheatConstants.h"
 #include "../Main/aiCommander.h"
 #include "../Main/aiRouteLogic.h"
+#include "../Main/aiRoute.h"
 #include "../Main/aiUnit.h"
 #include "../Main/aiPlayer.h"
 #include "../Main/aiReaction.h"
@@ -43,6 +44,8 @@ using GeometryTestHash = NGScene::SGeometryPosHash;
 #include "../Main/wOSBase.h"
 #include "../Main/aiInterval.h"
 #include "../Main/aiDoorCollider.h"
+#include "../Main/MapBuild.h"
+#include "../DBFormat/DataMap.h"
 #include "../Main/scFlowChartItems.h"
 #include "../Main/scFlowChart.h"
 #include "../Main/scScenarioTracker.h"
@@ -907,7 +910,7 @@ static void ImmediateCluePickup(const char* databasePath, const char* resourcePa
     }
 }
 
-static void DeadPilotShell(const char* databasePath, const char* resourcePath)
+static void PKShellWorld(const char* databasePath, const char* resourcePath, bool extractPilot)
 {
     CObj<NRPG::CGlobalGame> game;
     auto world = FixtureWorld(databasePath, resourcePath, true, &game);
@@ -939,7 +942,34 @@ static void DeadPilotShell(const char* databasePath, const char* resourcePath)
     }
     Require(found, "fixture has no unobstructed PK footprint");
     CObj<NWorld::CUnitServer> shell = world->AddUnitInGame(anchor, NRPG::CreateUnit(suitRecord), nullptr);
-    Require(shell && shell->IsEmptyPK() && shell->WearAsPK(true), "could not prepare a worn PK shell");
+    Require(shell && shell->IsEmptyPK(), "could not create a PK shell");
+    if (!extractPilot) {
+        NAI::SPosition target = shell->GetPosition().pos;
+        bool targetFound = false;
+        for (auto place : places) {
+            place.SetPose(NAI::CM_STAND); place.SetDirection(0);
+            if (!NAI::IsBigLockerPlacePassable(network, place)) continue;
+            target.p = place;
+            if (fabs2(target.GetCP() - shell->GetPosition().GetCP()) > 9.f) { targetFound = true; break; }
+        }
+        Require(targetFound, "fixture has no distant PK waypoint");
+        CObj<NDb::CWaypointName> name = new NDb::CWaypointName;
+        name->szName = "upstream_pk";
+        CObj<CMapWaypoint> authored = new CMapWaypoint;
+        authored->pName = name;
+        authored->pos.ptPos = target.GetCP();
+        world->AddWaypoint(authored);
+        auto* waypoint = world->GetWaypoint(name->szName);
+        Require(waypoint != nullptr, "PK waypoint was not registered");
+        waypoint->pos = target;
+        CObj<NScript::CScript> script = NScript::CreateScript(world);
+        NScript::luaPushCPtr(*script, shell); script->SetGlobal("upstreamShell");
+        RunScript(script, "UnitSetToWaypoint(upstreamShell, 'upstream_pk')");
+        Require(shell->GetPosition().GetPose() == NAI::CRAWL, "scripted PK relocation lost the parked pose");
+        Require(fabs2(shell->GetPosition().GetCP() - target.GetCP()) < .0025f, "scripted empty PK did not reach its waypoint");
+        return;
+    }
+    Require(shell->WearAsPK(true), "could not prepare a worn PK shell");
     pilot->SetPosition(shell->GetPosition());
     pilot->FlipPanzerklein(shell, false, false);
     pilot->GetUnitRPG()->GetRPGUnit()->Kill();
@@ -988,7 +1018,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "clue-notification") && argc == 4) ImmediateClueNotification(argv[2], argv[3]);
         else if (!std::strcmp(mode, "clue-pickup") && argc == 4) ImmediateCluePickup(argv[2], argv[3], false);
         else if (!std::strcmp(mode, "clue-capacity") && argc == 4) ImmediateCluePickup(argv[2], argv[3], true);
-        else if (!std::strcmp(mode, "dead-pilot") && argc == 4) DeadPilotShell(argv[2], argv[3]);
+        else if (!std::strcmp(mode, "dead-pilot") && argc == 4) PKShellWorld(argv[2], argv[3], true);
+        else if (!std::strcmp(mode, "pk-waypoint") && argc == 4) PKShellWorld(argv[2], argv[3], false);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
