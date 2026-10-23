@@ -16,6 +16,7 @@
 #include "../Main/aiLocker.h"
 #include "../Main/wUnitServer.h"
 #include "../Main/RPGItem.h"
+#include "../Main/RPGItemSet.h"
 #include "../Main/wUnitAttackExec.h"
 #include "../Main/GDecalGeometry.h"
 #include "../Main/GCombiner.h"
@@ -370,6 +371,23 @@ static void ScriptPK(bool leave)
     }
 }
 
+static void PKEquipmentTransfer()
+{
+    CObj<NRPG::IInventory> shell = NRPG::CreateInventory(nullptr);
+    CObj<NRPG::IInventory> pilot = NRPG::CreateInventory(nullptr);
+    CObj<NRPG::CWeaponItem> weapon = new NRPG::CWeaponItem;
+    Require(shell->Equip(NDb::SLOT_1, weapon), "invalid PK weapon test fixture");
+    CObj<NDb::CPanzerklein> fixedSuit = new NDb::CPanzerklein;
+    fixedSuit->bSingleSlot = true;
+    pilot->SetPanzerklein(fixedSuit, shell);
+    Require(pilot->Get(NDb::SLOT_1) == weapon, "putting on a fixed-weapon PK lost its weapon");
+    Require(!shell->Get(NDb::SLOT_1), "PK weapon exists in both inventories");
+    Require(!pilot->CanEquip(NDb::SLOT_1, weapon), "manual fixed-weapon replacement became allowed");
+    pilot->SetPanzerklein(nullptr, shell);
+    Require(shell->Get(NDb::SLOT_1) == weapon && !pilot->Get(NDb::SLOT_1),
+        "removing the PK failed to return its weapon to the shell");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -385,6 +403,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "render-removal")) RenderRemoval();
         else if (!std::strcmp(mode, "pk-leave")) ScriptPK(true);
         else if (!std::strcmp(mode, "pk-wear")) ScriptPK(false);
+        else if (!std::strcmp(mode, "pk-equipment")) PKEquipmentTransfer();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
