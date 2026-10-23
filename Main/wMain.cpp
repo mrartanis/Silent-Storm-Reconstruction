@@ -1612,7 +1612,11 @@ void CWorld::CreateUnitGroups( const SMapInfo &mapInfo,
 	{
 		CPtr<CUnitGroup> pUnitGroup = GetUnitGroup( i->first );
 		if ( !IsValid( pUnitGroup ) )
+		{
 			pUnitGroup = CreateUnitGroup( i->first );
+			// Retail 0x369777: only map-defined groups belong to the world registry.
+			unitGroups.push_back( pUnitGroup.GetPtr() );
+		}
 		ASSERT( pUnitGroup->GetID() == i->first );
 		for ( vector<int>::const_iterator u = i->second.units.begin(); u != i->second.units.end(); ++u )
 			pUnitGroup->units.Add( (*pIDToUnit)[ *u ] );
@@ -3695,9 +3699,10 @@ CUnitGroup* CWorld::CreateUnitGroup( int nGroupID )
 			nID = Max( nID, unitGroups[i]->GetID() );
 		++nID;
 	}
-	CPtr<CUnitGroup> pUnitGroup = new CUnitGroup( nID );
-	unitGroups.push_back( pUnitGroup.GetPtr() );
-	return pUnitGroup;
+	// Retail 0x361af0 returns an unregistered group. Visibility queries own
+	// their temporary results; registering them leaks groups and can claim an
+	// ID reserved for a later reinforcement template.
+	return new CUnitGroup( nID );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void CWorld::RemoveUnitGroup( CUnitGroup* pUnitGroup )

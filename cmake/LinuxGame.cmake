@@ -111,7 +111,7 @@ target_link_libraries(Game PRIVATE -Wl,--start-group
   s2_native_lifestudio s2_native_fmod s2_bink_compat -Wl,--end-group
   Threads::Threads ${CMAKE_DL_LIBS})
 
-foreach(test IN ITEMS BgfxRendererTests SDLPlatformInputTests)
+foreach(test IN ITEMS BgfxRendererTests SDLPlatformInputTests UpstreamBugTests)
   add_executable(${test} "${_s2_game_root}/diagnostics/${test}.cpp")
   target_compile_features(${test} PRIVATE cxx_std_17)
   target_compile_definitions(${test} PRIVATE S2_FULL_GAME S2_NATIVE_MUSIC S2_NATIVE_SFX S2_NATIVE_VIDEO LIFESTUDIOHEADAPI_EXPORTS_LIB NDEBUG)
