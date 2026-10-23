@@ -12,6 +12,7 @@
 #include "aiWaypoint.h"
 #include "aiControl.h"
 #include "aiCommander.h"
+#include "aiMisc.h"
 #include "aiUnit.h"
 #include "aiRouteLogic.h"   // NAI::CreateAIRouteLogic / CreateAIRoamingLogic (the per-unit route logic)
 #include "../DBFormat/DataMap.h"
@@ -243,7 +244,7 @@ void SetUnitRoute( NWorld::CUnitServer *pUS, CAIRoute *pRoute, bool bCircled, NA
 	if ( !IsValid( pUS ) || !IsValid( pRoute ) )
 		return;
 	//
-	CDynamicCast<NAI::CAICommander> pAICommander( pUS->GetPlayer()->GetCommander() );
+	CPtr<NAI::CAICommander> pAICommander = NAI::GetAICommander( pUS );
 	if ( IsValid( pAICommander ) )
 	{
 		vector< CPtr<NAI::CTaskSyncObject> > syncs;
@@ -266,7 +267,7 @@ void SetGroupRoute( NWorld::CUnitGroup *pGroup, CAIRoute *pRoute, bool bCircled,
 	for ( int i = 0; i < pGroup->units.GetSize(); ++i )
 	{
 		CPtr<NWorld::CUnitServer> pUS = pGroup->units[ i ];
-		CDynamicCast<NAI::CAICommander> pAICommander( pUS->GetPlayer()->GetCommander() );
+		CPtr<NAI::CAICommander> pAICommander = NAI::GetAICommander( pUS );
 		if ( IsValid( pAICommander ) )
 			InstallRouteLogic( pAICommander, pUS, pRoute, pGroup, syncs, bCircled );
 	}
@@ -280,7 +281,7 @@ void SetUnitRoaming( NWorld::CUnitServer *pUS,
 	if ( !IsValid( pUS ) )
 		return;
 	//
-	CDynamicCast<NAI::CAICommander> pAICommander( pUS->GetPlayer()->GetCommander() );
+	CPtr<NAI::CAICommander> pAICommander = NAI::GetAICommander( pUS );
 	if ( IsValid( pAICommander ) )
 	{
 		NAI::IAIUnit *pAIUnit = pAICommander->GetAIUnit( pUS );
@@ -309,7 +310,7 @@ void CreateUnitRoute( NWorld::CUnitServer *pUnitServer, SMapUnit *pMapUnit )
 	if ( !IsValid( pUnitServer ) || pMapUnit == 0 || !pUnitServer->IsAIUnit() )   // @0x96d20 gate
 		return;
 	//
-	CDynamicCast<NAI::CAICommander> pAICommander( pUnitServer->GetPlayer()->GetCommander() );
+	CPtr<NAI::CAICommander> pAICommander = NAI::GetAICommander( pUnitServer );
 	if ( !IsValid( pAICommander ) )
 		return;
 	NAI::IAIUnit *pAIUnit = pAICommander->GetAIUnit( pUnitServer );

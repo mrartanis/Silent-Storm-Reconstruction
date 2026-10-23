@@ -28,11 +28,17 @@
 #include "../Main/aiRouteLogic.h"
 #include "../Main/aiUnit.h"
 #include "../Main/Sync.h"
+#include "../Main/A5Script.h"
+#include "../Main/scriptPtr.h"
+#include "../Main/aiMisc.h"
+#include "../Main/wOSBase.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
 #include <new>
+
+extern CPtr<NScript::CScript> pScript;
 
 static void Require(bool value, const char* message)
 {
@@ -315,6 +321,55 @@ static void RenderRemoval()
     Require(!cache.cached, "removed render slot retained a live object reference");
 }
 
+class ScriptActor: public NWorld::CUnitServer
+{
+    OBJECT_NOCOPY_METHODS(ScriptActor);
+public:
+    bool shell = false;
+    int orders = 0;
+    CPtr<NWorld::CPlayer> owner;
+    bool IsEmptyPK() const override { return shell; }
+    bool CanFight() const override { return !shell; }
+    NWorld::IPlayer* GetPlayer() const override { return owner; }
+    void Do(NWorld::CCommand* command) override { CObj<NWorld::CCommand> hold = command; ++orders; }
+};
+
+static void RunScript(NScript::CScript* script, const char* code)
+{
+    Require(script->DoString(code) == 0, "script compilation failed");
+    pScript = script;
+    script->ExecuteThreads();
+    pScript = nullptr;
+}
+
+static void ScriptPK(bool leave)
+{
+    CObj<NWorld::CWorld> world = new NWorld::CWorld;
+    CObj<NScript::CScript> script = NScript::CreateScript(world);
+    CObj<ScriptActor> actor = new ScriptActor;
+    CObj<ScriptActor> shell = new ScriptActor;
+    shell->shell = true;
+    NScript::luaPushCPtr(*script, actor); script->SetGlobal("upstreamActor");
+    NScript::luaPushCPtr(*script, shell); script->SetGlobal("upstreamShell");
+    Script::AutoBlock stack(*script);
+    if (leave) {
+        RunScript(script, "upstreamResult = UnitLeavePK(upstreamActor)");
+        Require(script->GetGlobal("upstreamResult").IsNil(), "UnitLeavePK returned a pilot instead of its missing shell");
+    } else {
+        RunScript(script, "UnitWearPK(upstreamActor, upstreamShell)");
+        Require(actor->orders > 0, "UnitWearPK rejected an empty shell because it cannot fight");
+        const int before = actor->orders;
+        RunScript(script, "UnitWearPK(upstreamActor, upstreamActor)");
+        Require(actor->orders == before, "UnitWearPK accepted a living soldier as a shell");
+        CObj<NWorld::CPlayer> owner = new NWorld::CPlayer;
+        CObj<NAI::CAICommander> commander = new NAI::CAICommander;
+        owner->SetCommander(commander);
+        actor->owner = owner; shell->owner = owner;
+        Require(NAI::GetAICommander(actor) == commander, "live pilot lost its AI commander");
+        Require(!NAI::GetAICommander(shell), "empty PK shell acquired an AI commander");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -328,6 +383,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "decal-projection")) DecalProjection();
         else if (!std::strcmp(mode, "ai-idle") && argc == 4) IdleAI(argv[2], argv[3]);
         else if (!std::strcmp(mode, "render-removal")) RenderRemoval();
+        else if (!std::strcmp(mode, "pk-leave")) ScriptPK(true);
+        else if (!std::strcmp(mode, "pk-wear")) ScriptPK(false);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
