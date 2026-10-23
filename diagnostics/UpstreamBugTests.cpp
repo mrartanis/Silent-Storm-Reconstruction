@@ -21,6 +21,7 @@
 #include "../Main/RPGItem.h"
 #include "../Main/RPGItemSet.h"
 #include "../Main/wUnitAttackExec.h"
+#include "../Main/wUnitStates.h"
 #include "../Main/GDecalGeometry.h"
 #include "../Main/GCombiner.h"
 #include "../Main/GSceneUtils.h"
@@ -906,6 +907,53 @@ static void ImmediateCluePickup(const char* databasePath, const char* resourcePa
     }
 }
 
+static void DeadPilotShell(const char* databasePath, const char* resourcePath)
+{
+    CObj<NRPG::CGlobalGame> game;
+    auto world = FixtureWorld(databasePath, resourcePath, true, &game);
+    std::vector<CPtr<NWorld::CUnit>> units;
+    world->GetAllUnits(&units);
+    NWorld::CUnitServer *pilot = nullptr, *rescuer = nullptr;
+    for (auto& candidate : units) {
+        auto* unit = dynamic_cast<NWorld::CUnitServer*>(candidate.GetPtr());
+        if (!unit || !unit->CanFight()) continue;
+        if (!unit->IsAIUnit()) pilot = unit; else if (!rescuer) rescuer = unit;
+    }
+    Require(pilot && rescuer, "dead-pilot fixture has no pilot or rescuer");
+    NDb::CRPGPers* suitRecord = nullptr;
+    auto* table = NDatabase::GetTable<NDb::CRPGPers>();
+    CDBIterator<NDb::CRPGPers> it(*table);
+    while (it.MoveNext()) {
+        auto* record = it.Get();
+        if (record->pPanzerklein && !record->pPanzerklein->bHasNoHead && record->pModel) { suitRecord = record; break; }
+    }
+    Require(suitRecord != nullptr, "fixture database has no regular PK shell");
+    auto* network = world->GetPathNetwork();
+    std::vector<NAI::SPathPlace> places;
+    network->GetNearPlaces(SSphere(pilot->GetPosition().GetCP(), 20.f), &places);
+    NAI::SPathPlace anchor;
+    bool found = false;
+    for (auto place : places) {
+        place.SetPose(NAI::CM_STAND); place.SetDirection(0);
+        if (NAI::IsBigLockerPlacePassable(network, place)) { anchor = place; found = true; break; }
+    }
+    Require(found, "fixture has no unobstructed PK footprint");
+    CObj<NWorld::CUnitServer> shell = world->AddUnitInGame(anchor, NRPG::CreateUnit(suitRecord), nullptr);
+    Require(shell && shell->IsEmptyPK() && shell->WearAsPK(true), "could not prepare a worn PK shell");
+    pilot->SetPosition(shell->GetPosition());
+    pilot->FlipPanzerklein(shell, false, false);
+    pilot->GetUnitRPG()->GetRPGUnit()->Kill();
+    pilot->SetState(new NWorld::CUnitStateDeath(pilot));
+    pilot->SetPosition(pilot->GetPosition());
+    Require(pilot->IsDead() && pilot->IsWearingPK() && network->IsLocked(anchor, true),
+        "dead pilot did not retain the worn footprint");
+    CObj<NWorld::CExecCorpse> spill = new NWorld::CExecCorpse(rescuer, pilot, true);
+    spill->Run();
+    Require(!pilot->IsWearingPK() && shell->IsEmptyPK(), "corpse extraction left the suit occupied");
+    Require(shell->GetPosition().pos.p.GetX() == anchor.GetX() && shell->GetPosition().pos.p.GetY() == anchor.GetY(),
+        "restoring the shell treated its dead pilot as an obstacle and relocated it");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -940,6 +988,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "clue-notification") && argc == 4) ImmediateClueNotification(argv[2], argv[3]);
         else if (!std::strcmp(mode, "clue-pickup") && argc == 4) ImmediateCluePickup(argv[2], argv[3], false);
         else if (!std::strcmp(mode, "clue-capacity") && argc == 4) ImmediateCluePickup(argv[2], argv[3], true);
+        else if (!std::strcmp(mode, "dead-pilot") && argc == 4) DeadPilotShell(argv[2], argv[3]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
