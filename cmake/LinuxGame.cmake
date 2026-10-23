@@ -147,6 +147,7 @@ add_test(NAME UpstreamWeaponFamiliarity COMMAND UpstreamBugTests weapon-familiar
 add_test(NAME UpstreamClueSlots COMMAND UpstreamBugTests clue-slots)
 add_test(NAME UpstreamPKPlacement COMMAND UpstreamBugTests pk-placement)
 add_test(NAME UpstreamHiddenPortrait COMMAND UpstreamBugTests hidden-portrait)
+add_test(NAME UpstreamClueInitialization COMMAND UpstreamBugTests clue-initialization)
 if(S2_GAME_DB_PATH AND S2_RESOURCE_PACKAGE_PATH)
   get_filename_component(_s2_upstream_game_dir "${S2_GAME_DB_PATH}" DIRECTORY)
   get_filename_component(_s2_upstream_res_dir "${S2_RESOURCE_PACKAGE_PATH}" DIRECTORY)

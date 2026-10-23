@@ -816,6 +816,7 @@ add_test(NAME UpstreamWeaponFamiliarity COMMAND UpstreamBugTests weapon-familiar
 add_test(NAME UpstreamClueSlots COMMAND UpstreamBugTests clue-slots)
 add_test(NAME UpstreamPKPlacement COMMAND UpstreamBugTests pk-placement)
 add_test(NAME UpstreamHiddenPortrait COMMAND UpstreamBugTests hidden-portrait)
+add_test(NAME UpstreamClueInitialization COMMAND UpstreamBugTests clue-initialization)
 if(S2_GAME_DIR)
   add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
   add_test(NAME UpstreamCriticalIDs COMMAND UpstreamBugTests critical-ids "${S2_GAME_DIR}/game.db")

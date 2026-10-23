@@ -664,6 +664,17 @@ static void HiddenPortraitAck()
     }
 }
 
+static void ClueInitialization()
+{
+    CObj<NDb::CDBScenarioClue> record = new NDb::CDBScenarioClue;
+    for (unsigned char pattern : {0xff, 0x11}) {
+        void* memory = ::operator new(sizeof(NScenario::CScenarioClue));
+        std::memset(memory, pattern, sizeof(NScenario::CScenarioClue));
+        CObj<NScenario::CScenarioClue> clue = new(memory) NScenario::CScenarioClue(record, 1);
+        Require(clue->GetTemplateID() == 0, "new clue inherits a stale map template ID");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -690,6 +701,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "critical-ids") && argc == 3) CriticalIDs(argv[2]);
         else if (!std::strcmp(mode, "idle-blocker") && argc == 4) IdlePathBlocker(argv[2], argv[3]);
         else if (!std::strcmp(mode, "hidden-portrait")) HiddenPortraitAck();
+        else if (!std::strcmp(mode, "clue-initialization")) ClueInitialization();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
