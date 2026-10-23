@@ -800,6 +800,7 @@ target_link_libraries(UpstreamBugTests PRIVATE Main)
 target_compile_features(UpstreamBugTests PRIVATE cxx_std_17)
 add_test(NAME UpstreamBugTests COMMAND UpstreamBugTests)
 add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
+add_test(NAME UpstreamAttackLocation COMMAND UpstreamBugTests attack-location)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE

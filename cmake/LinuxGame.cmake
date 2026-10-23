@@ -131,6 +131,7 @@ foreach(test IN ITEMS BgfxRendererTests SDLPlatformInputTests UpstreamBugTests)
   add_test(NAME ${test} COMMAND ${test})
 endforeach()
 add_test(NAME UpstreamScrollInitialization COMMAND UpstreamBugTests scroll-initialization)
+add_test(NAME UpstreamAttackLocation COMMAND UpstreamBugTests attack-location)
 add_test(NAME SDLPlatformInvalidDriver COMMAND SDLPlatformInputTests --invalid-driver)
 if(S2_GAME_DIR AND EXISTS "${S2_GAME_DIR}/cfg/input.cfg")
   add_test(NAME SDLInputConfiguration
