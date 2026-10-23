@@ -531,6 +531,41 @@ static void ConclusionRouting(const char* databasePath, const char* resourcePath
     Require(checked > 0, "campaign fixture has no conclusion clues");
 }
 
+template<class Network>
+static auto CanPlacePK(Network* network, const NAI::SPathPlace& place, int)
+    -> decltype(IsBigLockerPlacePassable(network, place))
+{ return IsBigLockerPlacePassable(network, place); }
+template<class Network>
+static bool CanPlacePK(Network* network, const NAI::SPathPlace& place, long)
+{ return NAI::IsBigLockerPassable(network, place); }
+
+static void PKPlacement()
+{
+    CObj<NAI::CPathNetwork> network = new NAI::CPathNetwork;
+    network->CreateLayer(8, 8, VNULL2, 0.f, 0);
+    network->Freeze(true);
+    auto* layer = network->GetLayer(0);
+    NAI::SPathPlace position(3, 3, 0);
+    position.SetPose(NAI::CRAWL);
+    position.SetDirection(0);
+    Require(!CanPlacePK(network.GetPtr(), position, 0), "PK placement accepted an unlocked layer without a floor");
+    layer->tiles[3][3].nPassable = NAI::CP_STAND;
+    Require(!CanPlacePK(network.GetPtr(), position, 0), "PK placement ignored blocked footprint neighbors");
+    for (int y = 0; y < 8; ++y) for (int x = 0; x < 8; ++x)
+        layer->tiles[y][x].nPassable = NAI::CP_STAND;
+    for (int direction = 0; direction < 8; ++direction) {
+        position.SetDirection(direction);
+        Require(CanPlacePK(network.GetPtr(), position, 0), "open standing footprint was rejected");
+        NAI::SPathPlace edge(position);
+        edge.SetXY(0, 0);
+        Require(!CanPlacePK(network.GetPtr(), edge, 0), "PK footprint was clipped at the grid border");
+    }
+    position.SetLayer(200);
+    position.SetFinal(1);
+    position.SetPose(NAI::CM_STAND);
+    Require(position.IsFinal() && CanPlacePK(network.GetPtr(), position, 0), "flying PK restoration was rejected");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -553,6 +588,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "weapon-familiarity")) WeaponFamiliarity();
         else if (!std::strcmp(mode, "clue-slots")) ClueSlotSelection();
         else if (!std::strcmp(mode, "conclusions") && argc == 4) ConclusionRouting(argv[2], argv[3]);
+        else if (!std::strcmp(mode, "pk-placement")) PKPlacement();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

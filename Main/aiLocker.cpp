@@ -49,4 +49,33 @@ EPassable BigLockerPassableState( IPathNetwork *pNet, const NAI::SPathPlace &p )
 	return pNet->GetPassability( p );
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+bool IsBigLockerPlacePassable( IPathNetwork *pNet, const SPathPlace &p )
+{
+	// Flying PKs have no ground footprint; the layer encodes altitude.
+	if ( p.IsFinal() )
+		return pNet->GetPassability( p ) == AIP_YES;
+	// Placement needs standing clearance for the entire PK, even when empty.
+	if ( !p.IsIntegral() )
+		return false;
+	SPathPlace center( p );
+	center.SetPose( CM_STAND );
+	if ( pNet->GetPassability( center ) != AIP_YES )
+		return false;
+	int nDX = nMoveShift[p.GetDirection()][0], nDY = nMoveShift[p.GetDirection()][1];
+	for ( int x = -abs( nDX ); x <= abs( nDX ); ++x )
+		for ( int y = -abs( nDY ); y <= abs( nDY ); ++y )
+		{
+			if ( x && y && x * y != nDX * nDY )
+				continue;
+			if ( p.GetX() + x < 0 || p.GetY() + y < 0 ||
+				p.GetX() + x > 255 || p.GetY() + y > 255 )
+				return false;
+			SPathPlace cell( center );
+			cell.SetXY( p.GetX() + x, p.GetY() + y );
+			if ( pNet->GetPassability( cell ) != AIP_YES )
+				return false;
+		}
+	return IsBigLockerPassable( pNet, center );
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////
 }
