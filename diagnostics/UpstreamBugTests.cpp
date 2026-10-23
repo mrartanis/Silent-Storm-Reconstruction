@@ -388,6 +388,24 @@ static void PKEquipmentTransfer()
         "removing the PK failed to return its weapon to the shell");
 }
 
+template<class T>
+static auto CanRemovePKWeapon(T* inventory, int) -> decltype(inventory->CanTakeOff(NDb::SLOT_1))
+{ return inventory->CanTakeOff(NDb::SLOT_1); }
+template<class T>
+static bool CanRemovePKWeapon(T*, long) { return true; }
+
+static void PKFixedWeaponPolicy()
+{
+    CObj<NRPG::IInventory> inventory = NRPG::CreateInventory(nullptr);
+    Require(CanRemovePKWeapon(inventory.GetPtr(), 0), "normal equipment removal was restricted");
+    CObj<NDb::CPanzerklein> suit = new NDb::CPanzerklein;
+    suit->bSingleSlot = false;
+    inventory->SetPanzerklein(suit, nullptr);
+    Require(CanRemovePKWeapon(inventory.GetPtr(), 0), "removable PK equipment was restricted");
+    suit->bSingleSlot = true;
+    Require(!CanRemovePKWeapon(inventory.GetPtr(), 0), "manual removal of a fixed PK weapon is allowed");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -404,6 +422,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "pk-leave")) ScriptPK(true);
         else if (!std::strcmp(mode, "pk-wear")) ScriptPK(false);
         else if (!std::strcmp(mode, "pk-equipment")) PKEquipmentTransfer();
+        else if (!std::strcmp(mode, "pk-fixed-weapon")) PKFixedWeaponPolicy();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

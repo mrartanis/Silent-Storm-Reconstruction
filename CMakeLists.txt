@@ -809,6 +809,7 @@ add_test(NAME UpstreamRenderRemoval COMMAND UpstreamBugTests render-removal)
 add_test(NAME UpstreamPKLeave COMMAND UpstreamBugTests pk-leave)
 add_test(NAME UpstreamPKWear COMMAND UpstreamBugTests pk-wear)
 add_test(NAME UpstreamPKEquipment COMMAND UpstreamBugTests pk-equipment)
+add_test(NAME UpstreamPKFixedWeapon COMMAND UpstreamBugTests pk-fixed-weapon)
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE
