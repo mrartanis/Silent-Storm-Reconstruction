@@ -936,7 +936,7 @@ static void MoveInventoryItem( CUnitServer *pUS, CCmdMoveInventoryItem *pMoveIte
 	case SItem::STORAGE:
 		{
 			ASSERT( IsValid( sTarget.pPlayer ) );
-			sTarget.pPlayer->PlaceStoreItem( pItem );
+			sTarget.pPlayer->PlaceStoreItem( sTarget.sPosition, pItem );
 			break;
 		}
 	case SItem::UNIT_ANYPLACE:

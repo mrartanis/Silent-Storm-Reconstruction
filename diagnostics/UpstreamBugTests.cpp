@@ -40,6 +40,7 @@
 #include "../Main/scFlowChartItems.h"
 #include "../Main/scFlowChart.h"
 #include "../Main/RPGGame.h"
+#include "../Main/RPGStore.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -675,6 +676,36 @@ static void ClueInitialization()
     }
 }
 
+template<class Player>
+static auto DropInStore(Player* player, const CTPoint<int>& point, NRPG::IInventoryItem* item, int)
+    -> decltype(player->PlaceStoreItem(point, item), void())
+{ player->PlaceStoreItem(point, item); }
+template<class Player>
+static void DropInStore(Player* player, const CTPoint<int>&, NRPG::IInventoryItem* item, long)
+{ player->PlaceStoreItem(item); }
+
+static void StoreDropPosition()
+{
+    CObj<NRPG::CGlobalPlayer> global = new NRPG::CGlobalPlayer;
+    CObj<NWorld::CPlayer> player = new NWorld::CPlayer(L"Store fixture", nullptr, global, 0);
+    CObj<NDb::CRPGItem> record = new NDb::CRPGItem;
+    record->sSize = CTPoint<int>(1, 1);
+    record->nWeight = 0;
+    CObj<NRPG::IInventoryItem> first = NRPG::CreateDummyItem(record);
+    DropInStore(player.GetPtr(), CTPoint<int>(5, 5), first, 0);
+    auto* items = player->GetStoreItems();
+    Require(items->size() == 1 && items->front().sPos == CTPoint<int>(5, 5),
+        "store discarded a valid manual drop position");
+    CObj<NRPG::IInventoryItem> second = NRPG::CreateDummyItem(record);
+    DropInStore(player.GetPtr(), CTPoint<int>(5, 5), second, 0);
+    Require(items->size() == 2 && items->back().sPos != CTPoint<int>(5, 5),
+        "occupied store cell did not use a free fallback");
+    CObj<NRPG::IInventoryItem> third = NRPG::CreateDummyItem(record);
+    DropInStore(player.GetPtr(), CTPoint<int>(-1, -1), third, 0);
+    Require(items->size() == 3 && items->back().sPos.x >= 0 && items->back().sPos.y >= 0,
+        "automatic store placement lost the returned item");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -702,6 +733,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "idle-blocker") && argc == 4) IdlePathBlocker(argv[2], argv[3]);
         else if (!std::strcmp(mode, "hidden-portrait")) HiddenPortraitAck();
         else if (!std::strcmp(mode, "clue-initialization")) ClueInitialization();
+        else if (!std::strcmp(mode, "store-drop")) StoreDropPosition();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
