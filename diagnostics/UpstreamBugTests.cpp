@@ -12,6 +12,8 @@
 #include "../Main/iMission.h"
 #include "../Main/iGameStates.h"
 #include "../Main/wUnitCommands.h"
+#include "../Main/aiGrid.h"
+#include "../Main/aiLocker.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
@@ -87,6 +89,17 @@ static void AttackLocationRefresh()
     Require(mission->probes == 1, "unchanged aim location needlessly refreshed availability");
 }
 
+static void FlyingRestoration()
+{
+    CObj<NAI::CPathNetwork> network = new NAI::CPathNetwork;
+    NAI::SPathPlace flight(10, 10, 200);
+    flight.SetFinal(1); // Layer encodes altitude, not a ground-layer index.
+    Require(network->IsPassable(flight), "flying pocket restore treated altitude as a ground layer");
+    Require(network->GetPassability(flight) == NAI::AIP_YES, "flying passability treated altitude as a ground layer");
+    flight.SetIntegral(0);
+    Require(network->IsPassable(flight), "flying altitude was treated as a ladder index");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -94,6 +107,7 @@ int main(int argc, char** argv)
         if (!std::strcmp(mode, "temporary-groups")) TemporaryGroups();
         else if (!std::strcmp(mode, "scroll-initialization")) ScrollInitialization();
         else if (!std::strcmp(mode, "attack-location")) AttackLocationRefresh();
+        else if (!std::strcmp(mode, "flying-restoration")) FlyingRestoration();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

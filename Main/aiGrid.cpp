@@ -2165,6 +2165,9 @@ bool CPathNetwork::IsNotOnDoor( const SPathPlace &p ) const
 // it maps to CMR_NOT_PASSABLE like AIP_NOT_PASSABLE, so it changes no movement verdict.
 EPassable CPathNetwork::GetPassability( const SPathPlace &p )
 {
+	// Flying places encode altitude in the layer field, not a ground tile.
+	if ( p.IsFinal() )
+		return AIP_YES;
 	if ( !p.IsIntegral() )
 	{
 		// ladder...
@@ -2217,6 +2220,8 @@ EPassable CPathNetwork::GetPassability( const SPathPlace &p )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CPathNetwork::IsPassable( const SPathPlace &p )
 {
+	if ( p.IsFinal() )
+		return true;
 	if ( !p.IsIntegral() )
 	{
 		// ladder...
