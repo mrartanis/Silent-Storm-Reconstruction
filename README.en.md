@@ -1,104 +1,288 @@
-# Silent Storm
+# Silent Storm Reconstruction
 
 *[Русский](README.md) | English*
 
-The Silent Storm source code belongs to Nival; the original repository:
-https://github.com/nival/Silent-Storm
+Reconstruction and modernization of the **Silent Storm v1.2** engine, based on
+[Nival's source code](https://github.com/nival/Silent-Storm), v1.1 PDB files
+(RussianPatch1) and analysis of the v1.2 release. The original Silent Storm
+source code belongs to Nival. This project aims to preserve the original game's
+behavior while bringing its engine to modern 64-bit systems.
 
-This repository contains ongoing work on the source code, with the ultimate goal of
-producing a behaviour-equivalent version of Silent Storm v1.2 by analyzing the
-.pdb files of version v1.1 (RussianPatch1) and decompiling v1.2.
+## What has been implemented
 
-Status as of 2026-10-02: the game uses SDL3 and bgfx on Windows x64,
-Linux x64 and Linux ARM64. Stage 6 implements resizable windows, borderless fullscreen,
-modern resolutions, uniform UI scaling and adaptive layouts, Hor+ camera projection,
-aspect-preserving video and bundled FreeType/Liberation vector fonts.
-Linux is tested with Vulkan/lavapipe; ARM64 runs through QEMU. Physical Linux GPUs,
-Linux HiDPI, macOS and full campaign parity with Steam remain unverified.
-See the [stage 6 report](diagnostics/MODERN-DISPLAY.md) for the resolution/input matrix,
-checks, build commands, evidence and limitations.
-Follow-up fixes cover wide HUD bars, inventory/character layouts, loading artwork,
-mission entry and random encounters on the campaign map. Deferred armorer differences
-and the visual differences in skill indicators are recorded in the
-[known issues log](diagnostics/MANUAL-BUGS-2026-09-23.md).
+Status as of **October 23, 2026**:
 
-HD textures are built alongside Game from PNGs committed to this repository.
-See [HD-TEXTURES.md](HD-TEXTURES.md) for the build, installation and asset workflow
-in Russian, and the [continuation prompt](assets/terrain-hd/CONTINUE-HD-TEXTURES.md)
-for a new Codex session.
+- **64-bit engine and game.** A complete x64 game build, with fixes for pointer
+  size assumptions, legacy inline assembly and 32-bit data structures.
+  Portable resource, save and network state formats; original game data loads
+  without advance conversion.
+- **Replacements for closed libraries.** The game-used functionality of FMOD,
+  Bink and LifeStudio/GDP has been reimplemented with open code: FFmpeg/miniaudio
+  handle sound and music, FFmpeg decodes original Bink movies, and our native
+  LifeStudio implementation handles heads and animation. The modern game build
+  requires none of the original libraries' DLLs or SDKs.
+- **Native facial animation and FaceGen.** Original heads, muscles, bones,
+  macro trees and sequences; expressions, speech, blinking, blending and face
+  generation. Geometry and animation are compared against the original x86
+  library, including a corpus of **6,780 sequences** for a reference head.
+  This is a verified corpus, not a guarantee of identical rendered pixels
+  for every possible FaceGen combination.
+- **Cross-platform game.** SDL3 handles windows, keyboard, mouse, text input,
+  clipboard and system events. The complete game builds for Windows x64,
+  Linux x64 and Linux ARM64; the portable core includes Lua, AI, combat,
+  resources, campaign logic and saves.
+- **bgfx renderer.** The direct D3D9 renderer and DirectInput have been replaced
+  by bgfx and SDL3. Windows uses bgfx's Direct3D 11 backend and Linux uses Vulkan;
+  the game engine no longer depends on the legacy DirectX runtime.
+- **Modern display and interface.** Resizable windows, borderless fullscreen,
+  widescreen resolutions and Hor+ projection, adaptive panels and UI scaling,
+  FreeType/Liberation vector fonts and aspect-preserving movies. Fixes cover
+  inventory, character screens, loading artwork and widescreen hero selection.
+  Native system cursors are also available.
+- **Graphics and performance.** FXAA on the 3D scene without blurring the UI,
+  anisotropic filtering, full texture quality during camera movement/zoom,
+  improved directional shadows with filtered edges. Fixes address lighting
+  flicker, changing shadows, object highlights, startup rendering without focus
+  and hangs when restoring the window. Optimizations cover geometry
+  transformation/uploads, GPU buffers, draw batching and framebuffer reuse;
+  frame profiling tools are included.
+- **HD textures.** **2,837 accepted textures**, enlarged 4× on each axis:
+  world/environment, clothing, heads/hair, equipment, weapons, interface and
+  effects. Available artwork in the world, heads/hair, clothing and main-menu
+  categories is complete; technical masks retain their originals. HD is enabled
+  by default and can be toggled without restarting. Load order is mods → HD →
+  original. The pack is built from PNGs in Git, with no image generation during
+  builds or gameplay. Coverage of all game resources is still incomplete.
+- **Two-player tactical multiplayer.** Direct TCP/IPv4 connections, encounter
+  map selection, separate preparation bases, squads of 1–6 soldiers,
+  levels 1–20 and supply levels 1–14. Character selection, equipment, perks
+  and readiness carry into combat. Movement/AP, shooting, inventory, healing,
+  mines, grenades, destruction, interrupts and match results are synchronized.
+  Quick matches without preparation and Windows ↔ Linux play are supported.
+  World replication and network command handling have been optimized.
+- **Original gameplay fixes.** Mission entry and random encounters, clues and
+  notifications, dialogue, aiming, grenades, Panzerkleins, scripted transitions,
+  state loading and resource database mods. Profile names, save-slot names
+  and save paths support Unicode.
+- **Development tools.** CMake replaces the old Visual Studio solution;
+  automated core/renderer/network checks, x86/x64 comparisons, isolated game
+  runs, FPS measurements and Windows packaging with game data, libraries,
+  fonts and the HD pack.
 
-<div align="center">
-  <table>
-    <tr>
-      <td colspan="3" align="center">
-        <img width="300" alt="Screenshot 2026-07-17 143626" src="https://github.com/user-attachments/assets/a7fa15d4-6be7-491d-abf9-882c63bd00cd" />
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" align="center">
-        <img width="300" alt="Screenshot 2026-07-18 143925" src="https://github.com/user-attachments/assets/b7021f4c-839f-48cc-a508-4541a851f195" />
-        <img width="300" alt="Screenshot 2026-07-18 144009" src="https://github.com/user-attachments/assets/731740e4-74d0-41db-940a-5c687bb2fbd5" />
-      </td>
-    </tr>
-  </table>
-</div>
+## Supported platforms
 
----
+| Platform | Status and verification limits |
+| --- | --- |
+| **Windows x64** | Main game build; MSVC, SDL3, bgfx/D3D11. Graphics, normal input, audio/video, saves and networking are exercised. |
+| **Linux x64** | Complete native game; Clang, SDL3/X11, bgfx/Vulkan. Gameplay and network runs use Xvfb/lavapipe, including Windows ↔ Linux. Physical GPUs, audio devices and HiDPI have not been separately verified. |
+| **Linux ARM64** | Complete AArch64 build; game, graphics and core/network checks have run through QEMU and ARM64 lavapipe. Physical ARM64 hardware and a graphical network client on that hardware remain unverified. |
+| **Windows x86** | Retained as a diagnostic reference for comparisons with the original 32-bit DLLs, rather than the main distribution target. |
+| **macOS** | Game support is not claimed yet: a complete build and run on a real Mac remain unverified. |
+
+A full campaign playthrough and complete behavioral/visual parity with the
+Steam release have not yet been established. The reports below describe tested
+scenarios and remaining differences.
 
 ## Build
 
-### Requirements
-- **Windows** with **Visual Studio 2022** (requires the "Desktop development with
-  C++" workload, MSVC v143, Windows SDK 10) or newer. Tested with VS 2026.
-- **CMake 3.21+**
-- **Python 3.11+ and Pillow** for the default HD pack build; set
-  `Python3_EXECUTABLE` to the interpreter with Pillow installed. New texture
-  brightness calibration also requires NumPy. See [HD-TEXTURES.md](HD-TEXTURES.md).
-- Target game builds are **Windows x64, Linux x64 and Linux ARM64**.
-  Linux requires Clang 18; ARM64 requires its sysroot and host shaderc.
-- **SDL3 3.4.16**: development package containing `cmake/SDL3Config.cmake` and `SDL3.dll`.
-- *Optional:* **DirectX SDK June 2010** (https://www.microsoft.com/en-us/download/details.aspx?id=6812) - only
-  needed to build the `ShaderCompiler` tool; if it's not installed, the tool is
-  skipped automatically.
+### Dependencies
 
-### Building
-Run **`build.bat`**, or execute the following in a terminal from the repository folder:
+- **CMake 3.21+**, **Python 3.11+**, **Pillow**. NumPy is only needed to
+  calibrate new HD textures; Pillow is sufficient to build the existing pack.
+- **SDL3 3.4.16**, development package for the target architecture.
+- **bgfx.cmake v1.161.9510-579**, with the pinned bgfx/bimg/bx trees.
+  Versions, hashes and directory layout: [SDL3 + bgfx](probes/sdl3-bgfx/README.md).
+  Dependencies live outside this repository; CMake does not download bgfx.
+- **FFmpeg 8.1**, a shared development package with headers and libraries for
+  `avformat`, `avcodec`, `avutil`, `swscale` and `swresample`;
+  **miniaudio 0.11.25**, a directory containing `miniaudio.h`.
+- **FreeType 2.14.3** is downloaded by CMake with SHA-256 verification.
+  Set `S2_FREETYPE_SOURCE_DIR` to use a local source tree. Liberation Fonts 2.1.5
+  are bundled in `assets/fonts` and copied into the build.
+- **Silent Storm v1.2 game data** for gameplay and resource tests. Use a separate
+  complete copy of the installation: `game.db`, `start.cfg`, `tree.mma`, `cfg`,
+  `res` and `scripts`. Point `S2_GAME_DIR` at that copy; the build also writes
+  `network-version.txt` into it.
 
-For `build.bat` and `build-debug.bat`, first set the `SDL3_DIR` environment
-variable to the SDL3 3.4.16 package's `cmake` directory.
+HD is built by default. The generated pack alone occupies about **9.2 GB**;
+allow additional space for the PNG-containing clone, dependencies and build.
+`-DS2_BUILD_HD_TEXTURES=OFF` skips pack generation, but does not delete an
+existing pack or change the in-game HD setting.
 
+### Windows x64
+
+Requires **Visual Studio 2022 or newer**, the **Desktop development with C++**
+workload, **MSVC v143** and **Windows SDK 10**. Builds have also been checked
+with VS 2026. Run this PowerShell example from the repository root, replacing
+the paths with your own. Here `bgfx.cmake` is a complete tree containing
+the `bgfx`, `bimg` and `bx` subdirectories.
+
+```powershell
+python -m venv build/hd-python
+$hdPython = (Resolve-Path build/hd-python/Scripts/python.exe).Path
+& $hdPython -m pip install Pillow
+$deps = 'C:/s2-deps'
+
+cmake -S . -B build -A x64 `
+  "-DSDL3_DIR=$deps/SDL3-3.4.16/cmake" `
+  "-DS2_BGFX_CMAKE_ROOT=$deps/bgfx.cmake" `
+  "-DS2_BGFX_DIR=$deps/bgfx.cmake/bgfx" `
+  "-DS2_BIMG_DIR=$deps/bgfx.cmake/bimg" `
+  "-DS2_BX_DIR=$deps/bgfx.cmake/bx" `
+  "-DS2_FFMPEG_ROOT=$deps/ffmpeg-8.1" `
+  "-DS2_MINIAUDIO_INCLUDE_DIR=$deps/miniaudio-0.11.25" `
+  "-DPython3_EXECUTABLE=$hdPython" `
+  -DS2_GAME_DIR=C:/Games/SilentStorm-test `
+  -DS2_BUILD_MEDIA_PROBE=ON -DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON `
+  -DS2_ENABLE_NATIVE_MUSIC=ON -DS2_ENABLE_NATIVE_SFX=ON `
+  -DS2_ENABLE_NATIVE_VIDEO=ON -DS2_BUILD_HD_TEXTURES=ON
+cmake --build build --config Release --parallel
 ```
-cmake -S . -B build -A x64 -DSDL3_DIR=G:/SS/lab/tools/sdl3-3.4.16/SDL3-3.4.16/cmake
-cmake --build build --config Release
+
+Outputs: `build/Release/Game.exe`, DLLs, `fonts`, `res-hd` and
+`network-version.txt`. All native media flags in this example are needed for
+sound, music and movies: the base x64 configuration uses media stubs without
+them. The modern build's `binkw32.dll` is our compatibility library compiled
+for x64, despite its historical filename.
+
+For debugging, build `RelWithDebInfo` and open `build/A5.sln`.
+`build.bat` and `build-debug.bat` wrap Release and RelWithDebInfo builds:
+after full configuration they reuse cached dependency paths/options, and
+the `SDL3_DIR` environment variable must be set. That variable alone is not
+enough for a first build: the bgfx and media settings above are also required.
+
+Additional tools include `DataImport`, `PkgBuilder`, `FontGen`, `TexConv` and
+`TexMipStrip`. The legacy `ShaderCompiler` tool optionally requires DirectX SDK
+June 2010 and is skipped without it. The game renderer uses bgfx's `shaderc`
+and does not require that SDK. `MapEdit`, `Scintilla`, `OpenDynamix` and
+`LSConverter` remain in the source tree but are excluded from the build.
+
+### Linux x64
+
+The verified configuration uses **Clang 18**, Ninja, SDL3 with X11/XInput2,
+Vulkan, FFmpeg, miniaudio, development packages for **libgsf-1, libpng, zlib,
+X11/OpenGL**, and `pkg-config`. XInput2 is required for relative mouse input.
+The paths below refer to dependencies prepared in advance.
+
+```sh
+python3 -m venv build/hd-python
+build/hd-python/bin/python -m pip install Pillow
+deps=/opt/s2-deps
+
+cmake -S . -B build-linux -G Ninja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18 \
+  -DS2_BUILD_GAME=ON \
+  -DSDL3_DIR="$deps/sdl3/lib/cmake/SDL3" \
+  -DS2_BGFX_CMAKE_ROOT="$deps/bgfx.cmake" \
+  -DS2_BGFX_DIR="$deps/bgfx.cmake/bgfx" \
+  -DS2_BIMG_DIR="$deps/bgfx.cmake/bimg" \
+  -DS2_BX_DIR="$deps/bgfx.cmake/bx" \
+  -DS2_BUILD_MEDIA_PROBE=ON -DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON \
+  -DS2_FFMPEG_ROOT="$deps/ffmpeg-8.1" \
+  -DS2_MINIAUDIO_INCLUDE_DIR="$deps/miniaudio-0.11.25" \
+  -DPython3_EXECUTABLE="$PWD/build/hd-python/bin/python" \
+  -DS2_GAME_DIR=/opt/games/SilentStorm-test \
+  -DBGFX_WITH_WAYLAND=OFF -DS2_BUILD_HD_TEXTURES=ON
+cmake --build build-linux --parallel
 ```
 
-The results will appear in **`build\Release\`** - `Game.exe` and the tools
-(`DataImport`, `PkgBuilder`, `FontGen`, `TexConv`, `TexMipStrip`, `ShaderCompiler`).
+Outputs: `build-linux/Game`, `fonts`, `res-hd` and `network-version.txt`.
+The Linux game target enables native media; separate Windows
+`S2_ENABLE_NATIVE_*` flags are unnecessary. Without `S2_BUILD_GAME=ON`, CMake
+builds portable libraries and checks, rather than the complete game.
+The loader must be able to find SDL3/FFmpeg shared libraries, for example
+through `LD_LIBRARY_PATH`.
 
-For debugging, run **`build-debug.bat`** (builds the `RelWithDebInfo` configuration),
-open **`build\A5.sln`** in Visual Studio, and start debugging the `Game` project.
-CMake will try to set your game folder as the debugger's working directory
-automatically; if that fails, you'll need to set it manually: right-click the
-`Game` project - Properties - Debugger - Working Directory. Example:
-`E:/SteamLibrary/steamapps/common/Silent Storm`
+### Linux ARM64
 
-### Running the game
-Use a separate copy of the game data, with `Game.exe`, `SDL3.dll` and the other
-DLLs from your build. Preserve the original installation. The working directory
-must contain `game.db`, `cfg` and the complete `res` directory. Laboratory runs
-use `diagnostics/New-LabRun.ps1` and `Start-LabRun.ps1`.
+Cross-compilation uses
+[LinuxArm64Clang.cmake](cmake/Toolchains/LinuxArm64Clang.cmake). You need Clang 18,
+an ARM64 GCC toolchain and a populated ARM64 sysroot containing all target
+dependencies, including SDL3, FFmpeg, libgsf, libpng and zlib. Add these options
+to the Linux configuration above, removing the explicit
+`CMAKE_C_COMPILER`/`CMAKE_CXX_COMPILER` options:
 
-The game uses SDL3 and bgfx. Copy `fonts` next to the executable so text does
-not depend on installed system fonts. Also copy the entire generated `res-hd`
-directory alongside it for HD textures. The user configuration saves
-`gfx_resolution=WxH`, `gfx_fullscreen=0/1`, `ui_scale=0/75/100/125/150/200`
-and `ui_vector_fonts=0/1`. Mode and scale are available through **Display and interface**
-in the graphics settings. See [MODERN-DISPLAY.md](diagnostics/MODERN-DISPLAY.md).
+```text
+-DCMAKE_TOOLCHAIN_FILE=cmake/Toolchains/LinuxArm64Clang.cmake
+-DS2_ARM64_SYSROOT=/opt/s2-arm64/sysroot
+-DS2_ARM64_GCC_TOOLCHAIN=/usr
+-DS2_BGFX_SHADERC=/opt/s2-host/bin/shaderc
+```
 
-### Notes
-- The imported proprietary libraries fmod / Bink / LifeStudio are **generated at
-  build time** from the committed `.def` export tables in the `third_party/`
-  directory - the original SDKs are not required.
-- `MapEdit`, `Scintilla`, `OpenDynamix`, and `LSConverter` are kept in the
-  repository but are **not built** (for various reasons - `MapEdit` in particular
-  is quite complicated); their source file lists are preserved in `sources.cmake`.
+Use a separate `build-arm64` directory, ARM64 `SDL3_DIR`/`S2_FFMPEG_ROOT`
+paths and the sysroot's `PKG_CONFIG_SYSROOT_DIR`/`PKG_CONFIG_LIBDIR`.
+`shaderc` and Python run on the build host. Tests through QEMU require
+`CMAKE_CROSSCOMPILING_EMULATOR` with `qemu-aarch64-static -L <sysroot>`.
+For a complete environment example, see
+[Build-Stage6-Linux.sh](diagnostics/Build-Stage6-Linux.sh); this laboratory
+script requires prepared dependency directories. Verification and limits:
+[BGFX-LINUX.md](diagnostics/BGFX-LINUX.md),
+[MODERN-DISPLAY.md](diagnostics/MODERN-DISPLAY.md).
+
+## Running and settings
+
+Copy the executable, **all libraries from your build**, `fonts`, the complete
+`res-hd` directory and `network-version.txt` into a separate copy of the game
+data. Launch from that copy: the working directory must contain the original
+game data. On Linux, the corresponding shared libraries must also be available.
+
+Graphics settings expose resolution, window mode, anisotropy, FXAA, VSync,
+FPS and HD. **Display and interface** opens UI scaling and vector font options.
+Main user configuration values: `gfx_resolution=WxH`, `gfx_fullscreen=0/1`,
+`ui_scale=0/75/100/125/150/200` and `ui_vector_fonts=0/1`. Display changes have
+confirmation and automatic rollback. Set `S2_USER_DATA_DIR` to select a separate
+profile/save/settings directory, including when running two game instances.
+
+For multiplayer, open **Network game**: the host creates a match and the second
+player enters its IPv4 address and port (default TCP **7780**; `127.0.0.1` for
+local play). Both sides need compatible builds from identical sources, matching
+game data and active mods; HD does not affect compatibility. The host's TCP
+port must be reachable by the client. Internet matchmaking, automatic resource
+transfer, reconnection, network saves, anti-cheat and a dedicated AI opponent
+mode are not implemented yet. See [NETWORK_MODE.md](diagnostics/NETWORK_MODE.md).
+
+## Checks and packaging
+
+After building all targets:
+
+```powershell
+ctest --test-dir build -C Release --output-on-failure
+& $hdPython assets/terrain-hd/validate_pack.py --pack build/Release/res-hd
+```
+
+On Linux, use `ctest --test-dir build-linux --output-on-failure`.
+Resource tests are registered when `S2_GAME_DIR` contains the required data;
+graphics checks require a display and a working graphics backend. Extended
+scenarios can take a long time. Historical results and known limits are
+recorded in the reports below.
+
+To create a standalone Windows x64 archive from a completed build:
+
+```powershell
+python diagnostics/Package-Game.py --game-data C:/Games/SilentStorm-test --build build/Release --crt-runtime "C:/Path/To/Microsoft.VC143.CRT" --output SilentStorm-Windows-x64.7z
+```
+
+Requires the x64 Visual C++ Runtime from Visual Studio and 7-Zip for `.7z`;
+use `.zip` for ZIP output. The packager includes game data, DLLs, fonts,
+HD, `Play.cmd`, instructions and a checksum, and verifies the pack and archive.
+HD is included by default; explicitly disable it with `--no-hd-textures`.
+The `.7z` format uses LZMA2 with a 512 MiB dictionary, requiring that much
+memory for extraction. An unpacked copy remains alongside the archive.
+
+## Detailed reports
+
+- [Facial animation and FaceGen comparisons with the original](diagnostics/FACE-PARITY.md).
+- [SDL3/bgfx on Windows](diagnostics/BGFX-WINDOWS.md),
+  [Linux x64 and ARM64](diagnostics/BGFX-LINUX.md).
+- [Display, interface, fonts and graphics options](diagnostics/MODERN-DISPLAY.md).
+- [Renderer performance](diagnostics/FRAME-PROFILING.md),
+  [lighting stability](diagnostics/LIGHTING-STABILITY-20261003.md),
+  [startup and window restoration fixes](diagnostics/LAST-THREE-BUGS-2026-10-06.md).
+- [HD pack contents, building and image provenance](HD-TEXTURES.md),
+  [machine-readable coverage](assets/terrain-hd/expanded/coverage.json).
+- [Multiplayer and its checks](diagnostics/NETWORK_MODE.md).
+- [x86 baseline](STAGE0-BASELINE.md), [stabilization log](STABILIZATION.md),
+  [known interface differences](diagnostics/MANUAL-BUGS-2026-09-23.md).
+
+Most detailed reports are currently in Russian.
