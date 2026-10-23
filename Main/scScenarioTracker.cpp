@@ -157,6 +157,9 @@ void CScenarioTracker::CheatTakeClue( CScenarioClue *pClue, bool bImmediately )
 			list< CPtr<CScenarioClue> > cluesToProcess;
 			cluesToProcess.push_back( pClue );
 			ProcessCluesList( cluesToProcess, NDb::OT_CAPTURE );
+			// The immediate modal replaces this clue's chapter-map notification.
+			// Newly unlocked compound clues keep their own pending notifications.
+			pClue->SetJustFound( false );
 		}
 		else
 		{

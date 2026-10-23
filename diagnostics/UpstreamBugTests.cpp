@@ -43,6 +43,7 @@ using GeometryTestHash = NGScene::SGeometryPosHash;
 #include "../Main/aiDoorCollider.h"
 #include "../Main/scFlowChartItems.h"
 #include "../Main/scFlowChart.h"
+#include "../Main/scScenarioTracker.h"
 #include "../Main/RPGGame.h"
 #include "../Main/RPGStore.h"
 #include "../Main/UnitTracker.h"
@@ -812,6 +813,32 @@ static void GeometryHashBuckets()
         "geometry hash changed vertex merge identity or ordering");
 }
 
+static void ImmediateClueNotification(const char* databasePath, const char* resourcePath)
+{
+    CFileStream database;
+    database.OpenRead(databasePath);
+    NDatabase::Serialize(database, CStructureSaver::READ);
+    NGScene::AddResourceDir(resourcePath);
+    CObj<NScenario::CScenarioTracker> tracker = NScenario::CreateScenarioTracker(1);
+    CPtr<NScenario::CScenarioClue> selected, other;
+    auto* table = NDatabase::GetTable<NDb::CDBScenarioClue>();
+    CDBIterator<NDb::CDBScenarioClue> it(*table);
+    while (it.MoveNext()) {
+        auto* record = it.Get();
+        auto* clue = tracker->GetClueByName(record->sSmallDescription);
+        if (!clue) continue;
+        if (!selected && record->bGiveImmediately && clue->GetObjectiveByType(NDb::OT_CAPTURE) && !tracker->IsClueFound(clue))
+            selected = clue;
+        else if (!other) other = clue;
+    }
+    Require(selected && other && selected != other, "campaign fixture has no immediate capturable clue");
+    other->SetJustFound(true);
+    tracker->CheatTakeClue(selected, true);
+    Require(tracker->IsClueFound(selected), "immediate clue capture did not advance the scenario");
+    Require(!selected->IsJustFound(), "immediate clue is announced again on the chapter map");
+    Require(other->IsJustFound(), "clearing an immediate clue discarded another pending notification");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -843,6 +870,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "inventory-actor")) InventoryTransferActor(true);
         else if (!std::strcmp(mode, "slot-actor")) InventoryTransferActor(false);
         else if (!std::strcmp(mode, "geometry-hash")) GeometryHashBuckets();
+        else if (!std::strcmp(mode, "clue-notification") && argc == 4) ImmediateClueNotification(argv[2], argv[3]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
