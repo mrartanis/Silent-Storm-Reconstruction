@@ -505,6 +505,32 @@ static void ClueSlotSelection()
     }
 }
 
+class FullScenarioGraph: public NScenario::CScenarioFlowChartBase
+{
+public:
+    FullScenarioGraph(): CScenarioFlowChartBase(1, true) { Generate(); }
+};
+
+static void ConclusionRouting(const char* databasePath, const char* resourcePath)
+{
+    CFileStream database;
+    database.OpenRead(databasePath);
+    NDatabase::Serialize(database, CStructureSaver::READ);
+    NGScene::AddResourceDir(resourcePath);
+    CObj<FullScenarioGraph> graph = new FullScenarioGraph;
+    std::vector<CPtr<NScenario::CScenarioClue>> clues;
+    graph->GetClues(&clues);
+    int checked = 0;
+    for (auto& clue : clues) {
+        if (clue->GetDBClue()->clueType != NDb::CT_CONCLUSION) continue;
+        ++checked;
+        Require(clue->IsPlaced(), "abstract conclusion was dropped from the campaign graph");
+        Require(clue->GetTemplateID() == 0 && clue->GetParentZones().empty(),
+            "abstract conclusion consumed a physical map slot");
+    }
+    Require(checked > 0, "campaign fixture has no conclusion clues");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -526,6 +552,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "overlapping-doors")) OverlappingDoors();
         else if (!std::strcmp(mode, "weapon-familiarity")) WeaponFamiliarity();
         else if (!std::strcmp(mode, "clue-slots")) ClueSlotSelection();
+        else if (!std::strcmp(mode, "conclusions") && argc == 4) ConclusionRouting(argv[2], argv[3]);
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

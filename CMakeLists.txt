@@ -814,6 +814,10 @@ add_test(NAME UpstreamDoorCollision COMMAND UpstreamBugTests door-collision)
 add_test(NAME UpstreamOverlappingDoors COMMAND UpstreamBugTests overlapping-doors)
 add_test(NAME UpstreamWeaponFamiliarity COMMAND UpstreamBugTests weapon-familiarity)
 add_test(NAME UpstreamClueSlots COMMAND UpstreamBugTests clue-slots)
+if(S2_GAME_DIR)
+  add_test(NAME UpstreamConclusions COMMAND UpstreamBugTests conclusions "${S2_GAME_DIR}/game.db" "${S2_GAME_DIR}/res")
+  set_tests_properties(UpstreamConclusions PROPERTIES WORKING_DIRECTORY "${S2_GAME_DIR}" TIMEOUT 60)
+endif()
 add_executable(NativeAnimationPathTests
   "${root}/diagnostics/NativeAnimationPathTests.cpp")
 target_include_directories(NativeAnimationPathTests PRIVATE

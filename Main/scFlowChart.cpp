@@ -185,6 +185,13 @@ void CScenarioFlowChartBase::PlaceClue( CScenarioClue *pClue )
 	ASSERT( IsValid( pClue ) );
 	if ( pClue->IsPlaced() )
 		return;
+	// Retail conclusions are abstract clues without a physical map slot.
+	if ( pClue->GetDBClue()->clueType == NDb::CT_CONCLUSION )
+	{
+		pClue->SetPlaced();
+		pClue->SetTemplateID( 0 );
+		return;
+	}
 	//
 	vector< CPtr<CScenarioZone> > possibleZones;
 	CDBPtr<NDb::CDBScenarioClue> pDBClue = pClue->GetDBClue();
