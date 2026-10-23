@@ -35,6 +35,8 @@
 #include "../Main/wOSBase.h"
 #include "../Main/aiInterval.h"
 #include "../Main/aiDoorCollider.h"
+#include "../Main/scFlowChartItems.h"
+#include "../Main/scFlowChart.h"
 #include "../DBFormat/DataFormat.h"
 #include <cstdio>
 #include <cstring>
@@ -477,6 +479,32 @@ static void WeaponFamiliarity()
     Require(unit->GetWeaponAdaptation(other) == 0.f, "familiarity leaked to another weapon");
 }
 
+static void ClueSlotSelection()
+{
+    for (auto type : {NDb::CT_ITEM, NDb::CT_PERSON}) {
+        CObj<NDb::CDBScenarioZone> dbZone = new NDb::CDBScenarioZone;
+        CObj<NScenario::CScenarioZone> zone = new NScenario::CScenarioZone(dbZone, 1);
+        dbZone->templatesIDs = {0, 101, 102};
+        std::unordered_map<int, NScenario::CScenarioZone::STemplate> slots;
+        slots[102].nEmptyItemSlots = 1;
+        slots[102].nEmptyPersonSlots = 1;
+        CMemoryStream state;
+        { CStructureSaver saver(state, CStructureSaver::WRITE); saver.Add(13, &slots); }
+        state.Seek(0);
+        { CStructureSaver saver(state, CStructureSaver::READ);
+          static_cast<CObjectBase*>(zone.GetPtr())->operator&(saver); }
+        CObj<NDb::CDBScenarioClue> record = new NDb::CDBScenarioClue;
+        record->clueType = type;
+        CObj<NScenario::CScenarioClue> clue = new NScenario::CScenarioClue(record, 1);
+        zone->PlaceClue(clue);
+        Require(clue->IsPlaced() && clue->GetTemplateID() == 102,
+            "zero-capacity map selected for a clue instead of the available slot");
+        zone->RemoveClue(clue);
+        zone->PlaceClue(clue);
+        Require(clue->GetTemplateID() == 102, "returned clue slot was not available for reuse");
+    }
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -497,6 +525,7 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "door-collision")) DoorCollision();
         else if (!std::strcmp(mode, "overlapping-doors")) OverlappingDoors();
         else if (!std::strcmp(mode, "weapon-familiarity")) WeaponFamiliarity();
+        else if (!std::strcmp(mode, "clue-slots")) ClueSlotSelection();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;

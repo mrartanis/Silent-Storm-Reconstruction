@@ -191,7 +191,9 @@ int CScenarioZone::GetTemplateIDForClue( CScenarioClue *pClue )
 	//
 	int k = 0;
 	int n = ScenarioRandom().Get( 0, nMax );
-	while ( n > 0 )
+	// Retail consumes weights until the draw is negative, including a zero
+	// draw and boundaries after a zero-capacity map.
+	while ( n >= 0 )
 	{
 		if ( templatesIDs[k] > 0 )
 		{
