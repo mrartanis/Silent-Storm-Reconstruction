@@ -17,6 +17,8 @@
 #include "../Main/wUnitServer.h"
 #include "../Main/RPGItem.h"
 #include "../Main/wUnitAttackExec.h"
+#include "../Main/GDecalGeometry.h"
+#include "../Main/GCombiner.h"
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
@@ -128,6 +130,93 @@ static void SnipingAim()
     }
 }
 
+class ExplosionDecal: public NGScene::CExplosionDecalGeometry
+{
+public:
+    ExplosionDecal(): CExplosionDecalGeometry(nullptr, {}, VNULL3, 10.f, 0.f) {}
+    void Rebuild(NGScene::CObjectInfo::SData* result, const NGScene::CObjectInfo& source) {
+        CExplosionDecalGeometry::Recalc(result, source, source.GetPositions());
+    }
+};
+
+static void DecalRebuild()
+{
+    NGScene::CObjectInfo::SData data;
+    for (auto position : {CVec3(-1,-1,0), CVec3(1,-1,0), CVec3(0,1,0)}) {
+        NGScene::SVertex vertex{};
+        vertex.pos = position;
+        data.verts.push_back(vertex);
+    }
+    data.geometry.SetTriangles({STriangle(0,1,2)});
+    CObj<NGScene::CObjectInfo> source = new NGScene::CObjectInfo;
+    source->AssignFast(data);
+    CObj<ExplosionDecal> decal = new ExplosionDecal;
+    NGScene::CObjectInfo::SData result;
+    decal->Rebuild(&result, *source);
+    const auto count = result.verts.size();
+    Require(count == 3, "invalid explosion decal test fixture");
+    for (int reload = 0; reload < 20; ++reload) {
+        decal->Rebuild(&result, *source);
+        Require(result.verts.size() == count, "decal rebuild appends another copy of saved vertices");
+        Require(result.geometry.indices.size() == 3, "decal triangle count changed on rebuild");
+    }
+}
+
+class MeshNode: public CPtrFuncBase<NGScene::CObjectInfo>
+{
+    OBJECT_BASIC_METHODS(MeshNode);
+protected:
+    bool NeedUpdate() override { return false; }
+    void Recalc() override {}
+public:
+    explicit MeshNode(NGScene::CObjectInfo* mesh = nullptr) { pValue = mesh; }
+};
+
+class GeometryPart: public NGScene::IPart
+{
+    OBJECT_BASIC_METHODS(GeometryPart);
+public:
+    NGScene::ETransformType transform = NGScene::TT_NONE;
+    GeometryPart() {}
+    explicit GeometryPart(MeshNode* mesh): IPart(mesh, nullptr, false) {}
+    NGScene::ETransformType GetTransformType() const override { return transform; }
+};
+
+class ProjectionRecorder: public NGScene::CPerPolyDecal
+{
+    OBJECT_BASIC_METHODS(ProjectionRecorder);
+protected:
+    void Recalc(NGScene::CObjectInfo::SData*, const NGScene::CObjectInfo&,
+                const std::vector<CVec3>& positions) override { captured = positions; }
+public:
+    std::vector<CVec3> captured;
+    ProjectionRecorder() {}
+    ProjectionRecorder(GeometryPart* part, const std::vector<CVec3>& saved): CPerPolyDecal(part, saved) {}
+    void Rebuild() { CPerPolyDecal::Recalc(); }
+};
+
+static void DecalProjection()
+{
+    NGScene::CObjectInfo::SData data;
+    for (auto position : {CVec3(1,2,0), CVec3(3,4,0), CVec3(5,6,0)}) {
+        NGScene::SVertex vertex{}; vertex.pos = position; data.verts.push_back(vertex);
+    }
+    data.geometry.SetTriangles({STriangle(0,1,2)});
+    CObj<NGScene::CObjectInfo> mesh = new NGScene::CObjectInfo;
+    mesh->AssignFast(data);
+    CObj<MeshNode> node = new MeshNode(mesh);
+    CObj<GeometryPart> part = new GeometryPart(node);
+    auto saved = mesh->GetPositions();
+    std::reverse(saved.begin(), saved.end());
+    CObj<ProjectionRecorder> terrain = new ProjectionRecorder(part, saved);
+    terrain->Rebuild();
+    Require(terrain->captured == mesh->GetPositions(), "terrain decal reused a stale saved vertex order");
+    part->transform = NGScene::TT_SIMPLE;
+    CObj<ProjectionRecorder> transformed = new ProjectionRecorder(part, saved);
+    transformed->Rebuild();
+    Require(transformed->captured == saved, "transformed decal lost its original projection pose");
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -137,6 +226,8 @@ int main(int argc, char** argv)
         else if (!std::strcmp(mode, "attack-location")) AttackLocationRefresh();
         else if (!std::strcmp(mode, "flying-restoration")) FlyingRestoration();
         else if (!std::strcmp(mode, "sniping-aim")) SnipingAim();
+        else if (!std::strcmp(mode, "decal-rebuild")) DecalRebuild();
+        else if (!std::strcmp(mode, "decal-projection")) DecalProjection();
         else throw std::runtime_error("unknown upstream regression mode");
         std::printf("PASS: %s\n", mode);
         return 0;
