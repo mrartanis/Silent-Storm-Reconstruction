@@ -2,6 +2,8 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+import subprocess
+import sys
 
 spec = importlib.util.spec_from_file_location('identity', Path(__file__).with_name('Generate-NetworkIdentity.py'))
 identity = importlib.util.module_from_spec(spec)
@@ -9,6 +11,17 @@ spec.loader.exec_module(identity)
 
 
 class BuildIdentityTests(unittest.TestCase):
+    def test_engine_release_build_id_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'game.db').write_bytes(b'player data')
+            (root / 'network-build-id.txt').write_text('a' * 64 + '\n', encoding='ascii')
+            output = root / 'network-version.txt'
+            subprocess.run([sys.executable, str(Path(__file__).with_name('Generate-NetworkIdentity.py')),
+                            '--game-data', str(root), '--build-id-file', str(root / 'network-build-id.txt'),
+                            '--output', str(output)], check=True)
+            self.assertEqual(output.read_text().splitlines()[:2], ['S2-NETWORK-1', 'a' * 64])
+
     def test_gameplay_changes_and_visual_overlay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

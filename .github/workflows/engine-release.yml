@@ -1,0 +1,237 @@
+name: Engine release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: engine-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: ${{ matrix.platform }} x64
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            platform: windows
+          - os: ubuntu-24.04
+            platform: linux
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
+    env:
+      S2_BUILD_JOBS: '4'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          # Do not download the multi-gigabyte HD authoring tree.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/assets/terrain-hd/
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Set dependency directory
+        run: echo "S2_DEPS=$RUNNER_TEMP/s2-release-deps" >> "$GITHUB_ENV"
+
+      - name: Select MSVC x64
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Install Linux build and test dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-18 ninja-build pkg-config \
+            libgsf-1-dev libpng-dev zlib1g-dev libx11-dev libxext-dev libxi-dev \
+            libxrandr-dev libxfixes-dev libxcursor-dev libxss-dev libxtst-dev \
+            libgl1-mesa-dev libegl1-mesa-dev libasound2-dev libpulse-dev libudev-dev \
+            libvulkan-dev mesa-vulkan-drivers xvfb
+
+      - name: Cache pinned dependencies
+        id: dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.S2_DEPS }}
+          key: engine-deps-${{ matrix.os }}-${{ hashFiles('.github/scripts/prepare-deps.py', '.github/scripts/build-deps.sh') }}
+
+      - name: Fetch pinned sources
+        if: steps.dependencies.outputs.cache-hit != 'true'
+        run: python .github/scripts/prepare-deps.py --root "$S2_DEPS" --platform '${{ matrix.platform }}'
+
+      - name: Prepare MSYS build tools
+        if: runner.os == 'Windows' && steps.dependencies.outputs.cache-hit != 'true'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          path-type: inherit
+          install: make diffutils
+
+      - name: Build Windows FFmpeg shared libraries
+        if: runner.os == 'Windows' && steps.dependencies.outputs.cache-hit != 'true'
+        shell: msys2 {0}
+        run: bash .github/scripts/build-deps.sh "$S2_DEPS" windows
+
+      - name: Build Linux SDL3 and FFmpeg shared libraries
+        if: runner.os == 'Linux' && steps.dependencies.outputs.cache-hit != 'true'
+        run: bash .github/scripts/build-deps.sh "$S2_DEPS" linux
+
+      - name: Configure Windows engine with native audio and video
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
+            "-DSDL3_DIR=$env:S2_DEPS/SDL3-3.4.16/cmake" `
+            "-DS2_BGFX_CMAKE_ROOT=$env:S2_DEPS/bgfx.cmake" `
+            "-DS2_BGFX_DIR=$env:S2_DEPS/bgfx" `
+            "-DS2_BIMG_DIR=$env:S2_DEPS/bimg" "-DS2_BX_DIR=$env:S2_DEPS/bx" `
+            "-DS2_FFMPEG_ROOT=$env:S2_DEPS/install" "-DS2_MINIAUDIO_INCLUDE_DIR=$env:S2_DEPS" `
+            -DS2_BUILD_MEDIA_PROBE=ON -DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON `
+            -DS2_ENABLE_NATIVE_MUSIC=ON -DS2_ENABLE_NATIVE_SFX=ON -DS2_ENABLE_NATIVE_VIDEO=ON `
+            -DS2_BUILD_HD_TEXTURES=OFF
+
+      - name: Configure Linux game
+        if: runner.os == 'Linux'
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18 \
+            -DS2_BUILD_GAME=ON -DSDL3_DIR="$S2_DEPS/install/lib/cmake/SDL3" \
+            -DS2_BGFX_CMAKE_ROOT="$S2_DEPS/bgfx.cmake" -DS2_BGFX_DIR="$S2_DEPS/bgfx" \
+            -DS2_BIMG_DIR="$S2_DEPS/bimg" -DS2_BX_DIR="$S2_DEPS/bx" \
+            -DS2_BUILD_MEDIA_PROBE=ON -DS2_BUILD_MINIAUDIO_MUSIC_PROBE=ON \
+            -DS2_FFMPEG_ROOT="$S2_DEPS/install" -DS2_MINIAUDIO_INCLUDE_DIR="$S2_DEPS" \
+            -DBGFX_WITH_WAYLAND=OFF -DS2_BUILD_HD_TEXTURES=OFF
+
+      - name: Build engine and tests
+        run: cmake --build build --config Release --parallel "$S2_BUILD_JOBS"
+
+      - name: Verify engine packaging and player-data fingerprinting
+        run: |
+          python diagnostics/EnginePackageTests.py
+          python diagnostics/NetworkIdentityBuildTests.py
+
+      - name: Test Windows engine
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:PATH = "$PWD/build/Release;$PWD/build/_implibs;$PWD/build/_media/Release;$env:S2_DEPS/install/bin;$env:PATH"
+          ctest --test-dir build -C Release --output-on-failure --no-tests=error --timeout 120 --parallel 1
+
+      - name: Test Linux engine with software Vulkan
+        if: runner.os == 'Linux'
+        run: |
+          export LD_LIBRARY_PATH="$S2_DEPS/install/lib"
+          export SDL_VIDEODRIVER=x11
+          export SDL_AUDIODRIVER=dummy
+          export XDG_RUNTIME_DIR="$RUNNER_TEMP/s2-xdg"
+          mkdir -p "$XDG_RUNTIME_DIR"
+          chmod 700 "$XDG_RUNTIME_DIR"
+          export VK_ICD_FILENAMES="$(find /usr/share/vulkan/icd.d -name 'lvp_icd*.json' -print -quit)"
+          test -n "$VK_ICD_FILENAMES"
+          xvfb-run -a -s '-screen 0 1280x1024x24' \
+            ctest --test-dir build -C Release --output-on-failure --no-tests=error --timeout 120 --parallel 1
+
+      - name: Package Windows engine
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ github.ref_type == 'tag' && github.ref_name || format('check-{0}', github.run_number) }}
+        run: |
+          $crt = Get-ChildItem "$env:VCToolsRedistDir/x64/Microsoft.VC*.CRT" -Directory | Select-Object -First 1
+          if (-not $crt) { throw 'MSVC x64 redistributable runtime not found' }
+          python diagnostics/Package-Engine.py --platform windows --build build/Release `
+            --deps "$env:S2_DEPS" --crt-runtime "$($crt.FullName)" `
+            --version "$env:RELEASE_VERSION" --output dist
+
+      - name: Package Linux engine
+        if: runner.os == 'Linux'
+        env:
+          RELEASE_VERSION: ${{ github.ref_type == 'tag' && github.ref_name || format('check-{0}', github.run_number) }}
+        run: |
+          python diagnostics/Package-Engine.py --platform linux --build build \
+            --deps "$S2_DEPS" --version "$RELEASE_VERSION" --output dist
+
+      - name: Save engine archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-${{ matrix.platform }}-x64
+          path: dist/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+      - name: Save diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-${{ matrix.platform }}-logs
+          path: |
+            build/Testing/Temporary/*.log
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            ${{ env.S2_DEPS }}/ffmpeg-build/ffbuild/config.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+  publish:
+    name: Publish tagged engine release
+    needs: build
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: engine-*-x64
+          merge-multiple: true
+          path: dist
+
+      - name: Verify and publish archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          test "$(find . -maxdepth 1 -name '*.sha256' | wc -l)" -eq 2
+          cat ./*.sha256 > SHA256SUMS
+          sha256sum --check SHA256SUMS
+          rm ./*.sha256
+          cat > release-notes.txt <<'NOTES'
+          Engine-only builds for Windows x64 and Linux x64 (Ubuntu 24.04 baseline).
+          Original Silent Storm v1.2 game data and the optional HD texture pack are supplied separately.
+          Runtime libraries, fonts, component notices and minimal setup instructions are included.
+          For multiplayer, generate network-version.txt for your own game data as described in README.txt.
+          Both platform builds and their data-independent tests passed before publication.
+          NOTES
+          options=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
+          # Stage uploads as a draft; publish only after every asset is present.
+          if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > existing-draft.txt 2>/dev/null; then
+            if [[ "$(cat existing-draft.txt)" != true ]]; then
+              echo 'A published release already exists; refusing to replace its assets.' >&2
+              exit 1
+            fi
+          else
+            gh release create "$RELEASE_TAG" --verify-tag --draft --title "$RELEASE_TAG" \
+              --notes-file release-notes.txt "${options[@]}"
+          fi
+          gh release upload "$RELEASE_TAG" ./*.zip ./*.tar.gz SHA256SUMS --clobber
+          gh release edit "$RELEASE_TAG" --draft=false "${options[@]}"

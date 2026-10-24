@@ -1,4 +1,7 @@
 function(s2_build_network_identity target)
+  # Engine-only releases cannot fingerprint data supplied later by the player.
+  file(GENERATE OUTPUT "$<TARGET_FILE_DIR:${target}>/network-build-id.txt"
+    CONTENT "${s2_network_build_id}\n")
   if(NOT S2_GAME_DIR)
     message(STATUS "Set S2_GAME_DIR to generate the network compatibility manifest")
     return()

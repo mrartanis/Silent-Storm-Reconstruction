@@ -85,6 +85,11 @@ scenarios and remaining differences.
 
 ## Build
 
+Engine releases are separate from original game data and the HD pack. The
+**Engine release** workflow builds Windows x64 and Linux x64 for `v*` tags and
+publishes a GitHub Release after successful checks. See
+[RELEASING.md](packaging/RELEASING.md) for tagging and checks without publishing.
+
 ### Dependencies
 
 - **CMake 3.21+**, **Python 3.11+**, **Pillow**. NumPy is only needed to
