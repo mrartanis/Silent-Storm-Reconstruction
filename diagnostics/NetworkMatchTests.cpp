@@ -32,7 +32,7 @@
 #include "../Main/MakeBuilding.h"
 #include "../Misc/RandomGen.h"
 #include <cstdlib>
-#include "../Main/rpgDiplomacy.h"
+#include "../Main/RPGDiplomacy.h"
 #include "../DBFormat/DataFormat.h"
 #include "../DBFormat/DataRPG.h"
 #include "../DBFormat/DataMap.h"

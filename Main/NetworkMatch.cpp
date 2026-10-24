@@ -8,7 +8,7 @@
 #include "NetworkMatch.h"
 #include "aiGrid.h"
 #include "aiCommander.h"
-#include "rpgDiplomacy.h"
+#include "RPGDiplomacy.h"
 #include "RPGUnit.h"
 #include "RPGUnitMission.h"
 #include "RPGItem.h"
