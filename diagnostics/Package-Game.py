@@ -4,7 +4,6 @@ The build must already be complete. Runtime DLLs come from the build output
 and the supplied x64 Microsoft.VC143.CRT directory, never from the old game.
 """
 import argparse
-import importlib.util
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -52,11 +51,7 @@ def package(args):
     add(args.build / 'Game.exe', 'Game.exe')
     identity = args.build / 'network-version.txt'
     build_id = identity.read_text(encoding='ascii').splitlines()[1]
-    spec = importlib.util.spec_from_file_location('network_identity', Path(__file__).with_name('Generate-NetworkIdentity.py'))
-    generator = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(generator)
-    # Fingerprint the actual packaging inputs, including modified gameplay data.
-    generator.generate(args.game_data.resolve(), build_id, identity)
+    # Compatibility is maintained explicitly; do not hash a player's data here.
     add(identity, 'network-version.txt')
     tree(args.build / 'fonts', 'fonts')
     for path in sorted(args.build.glob('*.dll')):

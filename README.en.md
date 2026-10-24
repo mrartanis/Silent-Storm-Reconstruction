@@ -106,8 +106,9 @@ publishes a GitHub Release after successful checks. See
   are bundled in `assets/fonts` and copied into the build.
 - **Silent Storm v1.2 game data** for gameplay and resource tests. Use a separate
   complete copy of the installation: `game.db`, `start.cfg`, `tree.mma`, `cfg`,
-  `res` and `scripts`. Point `S2_GAME_DIR` at that copy; the build also writes
-  `network-version.txt` into it.
+  `res` and `scripts`. Point `S2_GAME_DIR` at that copy. The versioned
+  `network-version.txt` is copied beside the engine and installed with it;
+  players do not generate it from their installed game data.
 
 HD is built by default. The generated pack alone occupies about **9.2 GB**;
 allow additional space for the PNG-containing clone, dependencies and build.

@@ -17,12 +17,13 @@ Compatibility IdentifyGameData(const std::vector<std::string>&,const std::vector
     auto path=std::filesystem::path(database).parent_path()/"network-version.txt";
     std::ifstream input(path,std::ios::binary);
     std::string magic,build,data,extra;
-    auto digest=[](const std::string& value){return value.size()==64 && value.find_first_not_of("0123456789abcdef")==std::string::npos;};
-    if(!(input>>magic>>build>>data) || (input>>extra) || magic!="S2-NETWORK-1" || !digest(build) || !digest(data))
-      throw std::runtime_error("Missing or invalid network-version.txt; rebuild/package the game data");
+    auto version=[](const std::string& value){return !value.empty() && value.size()<=64 && value.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_.-")==std::string::npos;};
+    if(!(input>>magic>>build>>data) || (input>>extra) || magic!="S2-NETWORK-1" || !version(build) || !version(data))
+      throw std::runtime_error("Missing or invalid network-version.txt; copy it from the engine release");
     if(build!=result.build)throw std::runtime_error("Game executable and network-version.txt are from different builds");
     // Ordered mod manifests follow the database overlay order. No resource
     // archives are opened during connection or when recreating a match.
+    if(!result.dataFingerprint.empty())result.dataFingerprint+=':';
     result.dataFingerprint+=data;
   }
   return result;

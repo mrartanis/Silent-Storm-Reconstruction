@@ -33,7 +33,22 @@ No Steam data, historical DLLs, saves, laboratory files or HD textures are
 included. `Package-Game.py` remains the separate local full-game packaging tool.
 HD is built and uploaded independently; the detailed end-user installation guide
 can be maintained separately. Each engine archive already includes a minimal
-README and the one-time network fingerprint generator for the player's data.
+README and the versioned network-version.txt. Players do not generate this file.
+
+## Network compatibility
+
+`network-version.txt` in the repository is the source of truth. Its three lines
+are the format marker (`S2-NETWORK-1`), engine compatibility version (currently
+`1`) and data-family version (`silent-storm-1.2`). CMake copies this exact file
+into both platform builds and embeds the compatibility version in the engine.
+Neither Git commits, compiler/OS differences nor a player's installed files
+change the version automatically. Ordinary compatible changes keep it intact.
+
+Increment the second line when changing wire formats, replicated state or other
+network behavior that cannot interoperate with the previous version. Change the
+third line when deliberately changing the compatible gameplay-data family.
+Mod authors must maintain their own compatible manifests; installed data is no
+longer hashed automatically. Keep the file beside game.db when installing.
 
 The Linux archive bundles SDL3/FFmpeg; system libraries and Vulkan drivers are
 provided by the operating system. It targets the Ubuntu 24.04/glibc 2.39 baseline.

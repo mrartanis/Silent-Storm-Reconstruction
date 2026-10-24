@@ -32,7 +32,9 @@ class EnginePackageTests(unittest.TestCase):
             write(build / name, binary)
         for name in ('game.db', 'res/Textures.res', 'res-hd/Textures.res', 'save/private.sav'):
             write(build / name, b'never distribute')
-        write(build / 'network-build-id.txt', b'a' * 64 + b'\n')
+        manifest = b'S2-NETWORK-1\n1\nsilent-storm-1.2\n'
+        write(build / 'network-version.txt', manifest)
+        write(source / 'network-version.txt', manifest)
         for name in ('msvcp140.dll', 'vcruntime140.dll'):
             write(crt / name, binary)
         for name in ('avcodec-62.dll', 'avformat-62.dll', 'avutil-60.dll', 'swscale-9.dll', 'swresample-6.dll'):
@@ -43,7 +45,7 @@ class EnginePackageTests(unittest.TestCase):
             write(deps / name)
         for name in ('assets/fonts/LICENSE', 'assets/fonts/test.ttf', 'LICENSE.md',
                      'packaging/README-engine.txt', 'packaging/Play.cmd',
-                     'diagnostics/Generate-NetworkIdentity.py', '.github/scripts/build-deps.sh',
+                     '.github/scripts/build-deps.sh',
                      'third_party/squish/LICENSE.txt', 'third_party/zlib/zlib.h',
                      'third_party/libpng/png.h', 'Script/lua.h'):
             write(source / name)
@@ -76,6 +78,14 @@ class EnginePackageTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'Unpackaged runtime dependency'):
                     engine.package(args)
             self.assertEqual(list(args.output.glob('*.zip')), [])
+
+    def test_stale_network_version_blocks_release(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source, args = self.fixture(Path(temporary))
+            (args.build / 'network-version.txt').write_text('S2-NETWORK-1\nold\nsilent-storm-1.2\n')
+            with patch.object(engine, 'ROOT', source):
+                with self.assertRaisesRegex(ValueError, 'different network compatibility version'):
+                    engine.package(args)
 
 
 if __name__ == '__main__':

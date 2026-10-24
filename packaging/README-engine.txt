@@ -11,12 +11,11 @@ Start Play.cmd (Windows) or ./Play.sh (Linux). Saves and settings use the
 engine's normal user-data directory. The original Steam installation can stay
 untouched. Install an optional HD pack as res-hd alongside Game/Game.exe.
 
-For multiplayer, run once after installing/updating the engine or changing
-original gameplay data (Python 3.11+ required for this setup step):
-  Windows: py -3 Generate-NetworkIdentity.py --game-data . --build-id-file network-build-id.txt --output network-version.txt
-  Linux:   python3 Generate-NetworkIdentity.py --game-data . --build-id-file network-build-id.txt --output network-version.txt
-Both players need compatible engine builds and game data. HD does not affect
-the network fingerprint. Never reuse network-version.txt from another build.
+For multiplayer, keep the included network-version.txt alongside game.db.
+No local generation or Python installation is needed. The file declares the
+maintained network compatibility version and game-data family. Compatible
+engine releases share the same version; incompatible changes require an
+explicit version update by maintainers. HD does not change this version.
 
 Linux baseline: Ubuntu 24.04 x86_64 or compatible (glibc 2.39+).
 SDL3 and FFmpeg libraries are included in lib. System dependencies include

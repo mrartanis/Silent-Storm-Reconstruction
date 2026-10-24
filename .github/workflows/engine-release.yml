@@ -129,10 +129,9 @@ jobs:
       - name: Build engine and tests
         run: cmake --build build --config Release --parallel "$S2_BUILD_JOBS"
 
-      - name: Verify engine packaging and player-data fingerprinting
+      - name: Verify engine packaging
         run: |
           python diagnostics/EnginePackageTests.py
-          python diagnostics/NetworkIdentityBuildTests.py
 
       - name: Test Windows engine
         if: runner.os == 'Windows'
@@ -227,7 +226,7 @@ jobs:
           Engine-only builds for Windows x64 and Linux x64 (Ubuntu 24.04 baseline).
           Original Silent Storm v1.2 game data and the optional HD texture pack are supplied separately.
           Runtime libraries, fonts, component notices and minimal setup instructions are included.
-          For multiplayer, generate network-version.txt for your own game data as described in README.txt.
+          The versioned network-version.txt is included and shared by both platform builds.
           Both platform builds and their data-independent tests passed before publication.
           NOTES
           options=()

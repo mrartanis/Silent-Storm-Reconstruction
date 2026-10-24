@@ -52,12 +52,15 @@ def package(args):
         stage.mkdir()
         copy(build / ('Game.exe' if args.platform == 'windows' else 'Game'),
              stage / ('Game.exe' if args.platform == 'windows' else 'Game'))
-        build_id = (build / 'network-build-id.txt').read_text(encoding='ascii').strip()
-        if not re.fullmatch('[0-9a-f]{64}', build_id):
-            raise ValueError('Missing or invalid network build ID')
-        copy(build / 'network-build-id.txt', stage / 'network-build-id.txt')
+        version = (build / 'network-version.txt').read_text(encoding='ascii')
+        if version != (ROOT / 'network-version.txt').read_text(encoding='ascii'):
+            raise ValueError('Build contains a different network compatibility version')
+        lines = version.splitlines()
+        if len(lines) != 3 or lines[0] != 'S2-NETWORK-1' or any(not re.fullmatch('[A-Za-z0-9_.-]{1,64}', token) for token in lines[1:]):
+            raise ValueError('Invalid network compatibility version')
+        build_id = lines[1]
+        copy(build / 'network-version.txt', stage / 'network-version.txt')
         shutil.copytree(ROOT / 'assets/fonts', stage / 'fonts')
-        copy(ROOT / 'diagnostics/Generate-NetworkIdentity.py', stage / 'Generate-NetworkIdentity.py')
         copy(ROOT / 'packaging/README-engine.txt', stage / 'README.txt')
         copy(ROOT / 'LICENSE.md', stage / 'LICENSE.md')
         runtime = stage if args.platform == 'windows' else stage / 'lib'
@@ -124,7 +127,7 @@ def package(args):
         copy(ROOT / '.github/scripts/build-deps.sh', stage / 'dependencies/build-deps.sh')
         revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
         info = {'version': args.version, 'revision': revision, 'platform': args.platform,
-                'architecture': 'x64', 'networkBuild': build_id,
+                'architecture': 'x64', 'networkBuild': build_id, 'networkData': lines[2],
                 'gameData': False, 'hdTextures': False,
                 'sha256': {p.relative_to(stage).as_posix(): sha256(p)
                            for p in sorted(stage.rglob('*')) if p.is_file()}}

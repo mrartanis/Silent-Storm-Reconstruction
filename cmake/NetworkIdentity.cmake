@@ -1,19 +1,10 @@
 function(s2_build_network_identity target)
-  # Engine-only releases cannot fingerprint data supplied later by the player.
-  file(GENERATE OUTPUT "$<TARGET_FILE_DIR:${target}>/network-build-id.txt"
-    CONTENT "${s2_network_build_id}\n")
-  if(NOT S2_GAME_DIR)
-    message(STATUS "Set S2_GAME_DIR to generate the network compatibility manifest")
-    return()
-  endif()
-  find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
+  # Compatibility is versioned explicitly, independently of commit/OS/game data.
   add_custom_target(S2NetworkIdentity
-    COMMAND "${Python3_EXECUTABLE}" "${root}/diagnostics/Generate-NetworkIdentity.py"
-      --game-data "${S2_GAME_DIR}" --build-id "${s2_network_build_id}"
-      --output "$<TARGET_FILE_DIR:${target}>/network-version.txt" --incremental
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-      "$<TARGET_FILE_DIR:${target}>/network-version.txt" "${S2_GAME_DIR}/network-version.txt"
-    COMMENT "Generating network compatibility manifest"
+      "${root}/network-version.txt" "$<TARGET_FILE_DIR:${target}>/network-version.txt"
+    DEPENDS "${root}/network-version.txt"
+    COMMENT "Copying the network compatibility version"
     VERBATIM)
   add_dependencies(${target} S2NetworkIdentity)
 endfunction()

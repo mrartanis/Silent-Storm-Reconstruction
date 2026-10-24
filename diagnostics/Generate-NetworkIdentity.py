@@ -40,11 +40,8 @@ def generate(game_data, build_id, output, incremental=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--game-data', required=True, type=Path)
-    build = parser.add_mutually_exclusive_group(required=True)
-    build.add_argument('--build-id')
-    build.add_argument('--build-id-file', type=Path)
+    parser.add_argument('--build-id', required=True)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--incremental', action='store_true')
     args = parser.parse_args()
-    build_id = args.build_id_file.read_text(encoding='ascii').strip() if args.build_id_file else args.build_id
-    generate(args.game_data.resolve(), build_id, args.output, args.incremental)
+    generate(args.game_data.resolve(), args.build_id, args.output, args.incremental)
