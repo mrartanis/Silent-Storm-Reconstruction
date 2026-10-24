@@ -21,6 +21,8 @@ left unchanged.
 For a check without publishing, select **Actions → Engine release → Run
 workflow** on the branch to test. Its archives remain downloadable as workflow
 artifacts for seven days. A manual run never publishes a release, even on a tag.
+The manual `platform` choice can limit a check to Windows or Linux; tag pushes
+always build and require both platforms.
 
 The workflow uses a sparse checkout that excludes `assets/terrain-hd` and
 explicitly disables HD building. SDL3, bgfx/bimg/bx, miniaudio and FFmpeg inputs

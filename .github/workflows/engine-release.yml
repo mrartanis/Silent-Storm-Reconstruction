@@ -4,6 +4,12 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to verify (manual runs never publish)
+        type: choice
+        options: [all, windows, linux]
+        default: all
 
 permissions:
   contents: read
@@ -19,11 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: windows-2022
-            platform: windows
-          - os: ubuntu-24.04
-            platform: linux
+        include: ${{ fromJSON(inputs.platform == 'windows' && '[{"os":"windows-2022","platform":"windows"}]' || inputs.platform == 'linux' && '[{"os":"ubuntu-24.04","platform":"linux"}]' || '[{"os":"windows-2022","platform":"windows"},{"os":"ubuntu-24.04","platform":"linux"}]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     defaults:
@@ -62,7 +64,7 @@ jobs:
             libgsf-1-dev libpng-dev zlib1g-dev libx11-dev libxext-dev libxi-dev \
             libxrandr-dev libxfixes-dev libxcursor-dev libxss-dev libxtst-dev \
             libgl1-mesa-dev libegl1-mesa-dev libasound2-dev libpulse-dev libudev-dev \
-            libvulkan-dev mesa-vulkan-drivers xvfb
+            libvulkan-dev mesa-vulkan-drivers xvfb openbox x11-utils
 
       - name: Cache pinned dependencies
         id: dependencies
@@ -144,15 +146,13 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           export LD_LIBRARY_PATH="$S2_DEPS/install/lib"
-          export SDL_VIDEODRIVER=x11
           export SDL_AUDIODRIVER=dummy
           export XDG_RUNTIME_DIR="$RUNNER_TEMP/s2-xdg"
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
           export VK_ICD_FILENAMES="$(find /usr/share/vulkan/icd.d -name 'lvp_icd*.json' -print -quit)"
           test -n "$VK_ICD_FILENAMES"
-          xvfb-run -a -s '-screen 0 1280x1024x24' \
-            ctest --test-dir build -C Release --output-on-failure --no-tests=error --timeout 120 --parallel 1
+          bash .github/scripts/test-linux.sh build
 
       - name: Package Windows engine
         if: runner.os == 'Windows'
