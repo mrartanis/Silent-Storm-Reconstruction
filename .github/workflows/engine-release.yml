@@ -229,6 +229,7 @@ jobs:
           The versioned network-version.txt is included and shared by both platform builds.
           Both platform builds and their data-independent tests passed before publication.
           NOTES
+          printf '\n[Installation guide (Russian)](https://github.com/%s/blob/%s/INSTALLATION_RU.md)\n' "$GH_REPO" "$RELEASE_TAG" >> release-notes.txt
           options=()
           if [[ "$RELEASE_TAG" == *-* ]]; then options+=(--prerelease); fi
           # Stage uploads as a draft; publish only after every asset is present.

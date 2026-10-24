@@ -62,6 +62,7 @@ def package(args):
         copy(build / 'network-version.txt', stage / 'network-version.txt')
         shutil.copytree(ROOT / 'assets/fonts', stage / 'fonts')
         copy(ROOT / 'packaging/README-engine.txt', stage / 'README.txt')
+        copy(ROOT / 'INSTALLATION_RU.md', stage / 'INSTALLATION_RU.md')
         copy(ROOT / 'LICENSE.md', stage / 'LICENSE.md')
         runtime = stage if args.platform == 'windows' else stage / 'lib'
         runtime.mkdir(exist_ok=True)

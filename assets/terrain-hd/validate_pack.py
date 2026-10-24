@@ -23,7 +23,7 @@ def chunks(data):
         position=start+length
     assert position==len(data)
 
-def validate(pack):
+def validate(pack, update_queue=True):
     manifest=json.loads((pack/'manifest.json').read_text(encoding='utf-8'))
     assets={a['id']:a for a in manifest['textures']}
     assert len(assets)==len(manifest['textures']), 'Duplicate source IDs'
@@ -93,7 +93,7 @@ def validate(pack):
                        'luma':luma,'source_luma':target,'alpha_valid':True})
     (pack/'validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     queue_path = ROOT / 'expanded/queue.json'
-    if queue_path.exists():
+    if update_queue and queue_path.exists():
         queue = json.loads(queue_path.read_text(encoding='utf-8'))
         for item in queue:
             if item['id'] in assets:
@@ -105,4 +105,6 @@ def validate(pack):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--pack',type=Path,default=ROOT.parents[1]/'res-hd')
-    validate(parser.parse_args().pack)
+    parser.add_argument('--no-update-queue',action='store_true',help='Validate a release without editing authoring metadata')
+    args=parser.parse_args()
+    validate(args.pack, update_queue=not args.no_update_queue)

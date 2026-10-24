@@ -85,6 +85,8 @@ scenarios and remaining differences.
 
 ## Build
 
+Installing a ready-made release, Steam data and HD: [Russian guide](INSTALLATION_RU.md).
+
 Engine releases are separate from original game data and the HD pack. The
 **Engine release** workflow builds Windows x64 and Linux x64 for `v*` tags and
 publishes a GitHub Release after successful checks. See

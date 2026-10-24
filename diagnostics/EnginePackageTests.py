@@ -43,7 +43,7 @@ class EnginePackageTests(unittest.TestCase):
             write(deps / module / 'LICENSE')
         for name in ('miniaudio.h', 'sources.json', 'ffmpeg-8.1.tar.xz', 'ffmpeg-config.log'):
             write(deps / name)
-        for name in ('assets/fonts/LICENSE', 'assets/fonts/test.ttf', 'LICENSE.md',
+        for name in ('assets/fonts/LICENSE', 'assets/fonts/test.ttf', 'LICENSE.md', 'INSTALLATION_RU.md',
                      'packaging/README-engine.txt', 'packaging/Play.cmd',
                      '.github/scripts/build-deps.sh',
                      'third_party/squish/LICENSE.txt', 'third_party/zlib/zlib.h',

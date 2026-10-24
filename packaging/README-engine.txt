@@ -2,6 +2,7 @@ Silent Storm Reconstruction - engine only
 
 This archive contains the x64 engine, runtime libraries and fonts.
 Original Silent Storm v1.2 game data and the optional HD pack are separate.
+Detailed Russian installation guide: INSTALLATION_RU.md.
 
 Use a separate copy of your game installation. Place this archive's contents
 alongside game.db, start.cfg, tree.mma and the complete cfg, res and scripts
