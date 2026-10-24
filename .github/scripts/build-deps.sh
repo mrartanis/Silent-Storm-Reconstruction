@@ -26,5 +26,13 @@ cd "$deps/ffmpeg-build"
   --disable-avdevice --disable-avfilter --disable-x86asm
 make -j"$jobs"
 make install
+if [[ "$platform" == windows ]]; then
+  # FFmpeg's MSVC install puts import libraries beside the DLLs in bin.
+  # Expose the conventional development layout expected by MediaProbe.cmake.
+  mkdir -p "$deps/install/lib"
+  for component in avformat avcodec avutil swscale swresample; do
+    cp "$deps/install/bin/$component.lib" "$deps/install/lib/"
+  done
+fi
 # Keep the build configuration alongside the exact source shipped in releases.
 cp ffbuild/config.log "$deps/ffmpeg-config.log"

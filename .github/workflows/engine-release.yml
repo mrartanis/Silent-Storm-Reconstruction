@@ -65,10 +65,11 @@ jobs:
 
       - name: Cache pinned dependencies
         id: dependencies
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ${{ env.S2_DEPS }}
           key: engine-deps-${{ matrix.os }}-${{ hashFiles('.github/scripts/prepare-deps.py', '.github/scripts/build-deps.sh') }}
+          restore-keys: engine-deps-${{ matrix.os }}-
 
       - name: Fetch pinned sources
         if: steps.dependencies.outputs.cache-hit != 'true'
@@ -90,6 +91,13 @@ jobs:
       - name: Build Linux SDL3 and FFmpeg shared libraries
         if: runner.os == 'Linux' && steps.dependencies.outputs.cache-hit != 'true'
         run: bash .github/scripts/build-deps.sh "$S2_DEPS" linux
+
+      - name: Save completed dependencies
+        if: steps.dependencies.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.S2_DEPS }}
+          key: ${{ steps.dependencies.outputs.cache-primary-key }}
 
       - name: Configure Windows engine with native audio and video
         if: runner.os == 'Windows'
