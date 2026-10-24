@@ -9,7 +9,11 @@ if(S2_FREETYPE_SOURCE_DIR)
   add_subdirectory("${S2_FREETYPE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/freetype" EXCLUDE_FROM_ALL)
 else()
   FetchContent_Declare(freetype
-    URL https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz
+    URL
+      https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz
+      https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz
+    TIMEOUT 120
+    INACTIVITY_TIMEOUT 30
     URL_HASH SHA256=36bc4f1cc413335368ee656c42afca65c5a3987e8768cc28cf11ba775e785a5f)
   FetchContent_MakeAvailable(freetype)
 endif()
