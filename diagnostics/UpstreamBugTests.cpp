@@ -11,6 +11,7 @@
 #include "../Main/GView.h"
 #include "../Main/iMission.h"
 #include "../Main/iGameStates.h"
+#include "../Input/BindInternal.h"
 #include "../Main/iUnitPanel.h"
 #include "../Main/iDesktopWindow.h"
 #include "../Main/wUnitCommands.h"
@@ -57,6 +58,7 @@ using GeometryTestHash = NGScene::SGeometryPosHash;
 #include <cstring>
 #include <stdexcept>
 #include <new>
+#include <cstddef>
 
 extern CPtr<NScript::CScript> pScript;
 
@@ -112,13 +114,27 @@ public:
     void RefreshCursor() { UpdateCursor(); }
 };
 
+static void BindInitialization()
+{
+    for (unsigned char pattern : {0x01, 0x11}) {
+        alignas(NInput::SBindCommand) unsigned char storage[sizeof(NInput::SBindCommand)];
+        std::memset(storage, pattern, sizeof(storage));
+        auto* command = new(storage) NInput::SBindCommand;
+        // Inspect the representation instead of reading an indeterminate bool.
+        Require(storage[offsetof(NInput::SBindCommand, bActive)] == 0,
+            "new input binding inherits an active flag from allocator memory");
+        command->~SBindCommand();
+    }
+    Require(!NInput::CBind("upstream_fresh_binding").IsActive(),
+        "new public binding starts active before the first input frame");
+}
+
 static void AttackLocationRefresh()
 {
     CObj<AttackMission> mission = new AttackMission;
     CObj<AttackState> state = new AttackState;
     state->Attach(mission);
-    // The game samples input before updating its cursor. Without this frame,
-    // CBind's cached active flags have not been populated on a fresh process.
+    // Sample an input frame before updating the cursor, as the game does.
     NInput::SEvent event;
     while (NInput::GetEvent(&event)) {}
     for (const char* name : {"hitlocation_head", "hitlocation_body", "hitlocation_larm",
@@ -998,6 +1014,7 @@ int main(int argc, char** argv)
         if (!std::strcmp(mode, "temporary-groups")) TemporaryGroups();
         else if (!std::strcmp(mode, "scroll-initialization")) ScrollInitialization();
         else if (!std::strcmp(mode, "attack-location")) AttackLocationRefresh();
+        else if (!std::strcmp(mode, "bind-initialization")) BindInitialization();
         else if (!std::strcmp(mode, "flying-restoration")) FlyingRestoration();
         else if (!std::strcmp(mode, "sniping-aim")) SnipingAim();
         else if (!std::strcmp(mode, "decal-rebuild")) DecalRebuild();

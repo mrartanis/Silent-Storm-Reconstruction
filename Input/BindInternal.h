@@ -196,7 +196,7 @@ struct SBindCommand
 
 	SCommand* pCommand;
 
-	SBindCommand(): fDelta( 0.0f ), fSpeed( 0.0f ), dwTime( 0 ), pCommand( 0 ) {}
+	SBindCommand(): bActive( false ), fDelta( 0.0f ), fSpeed( 0.0f ), dwTime( 0 ), pCommand( 0 ) {}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 };
