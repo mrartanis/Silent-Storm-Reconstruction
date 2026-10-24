@@ -117,6 +117,13 @@ static void AttackLocationRefresh()
     CObj<AttackMission> mission = new AttackMission;
     CObj<AttackState> state = new AttackState;
     state->Attach(mission);
+    // The game samples input before updating its cursor. Without this frame,
+    // CBind's cached active flags have not been populated on a fresh process.
+    NInput::SEvent event;
+    while (NInput::GetEvent(&event)) {}
+    for (const char* name : {"hitlocation_head", "hitlocation_body", "hitlocation_larm",
+                            "hitlocation_rarm", "hitlocation_lleg", "hitlocation_rleg"})
+        Require(!NInput::CBind(name).IsActive(), "fixture retained a targeting key");
     // Restore a state aimed at the head. With no held targeting key, the next
     // cursor update changes it to HL_ANY, just as releasing the targeting key.
     CMemoryStream stream;
