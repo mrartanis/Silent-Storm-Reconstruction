@@ -9,7 +9,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: engine-release-${{ github.ref }}
+  # Manual checks never publish, so they need not queue behind an older check.
+  group: engine-release-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
   cancel-in-progress: false
 
 jobs:
